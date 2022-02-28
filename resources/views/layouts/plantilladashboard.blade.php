@@ -18,10 +18,11 @@
 	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
-<link rel="stylesheet" href="css/separate/pages/user.min.css">
+<link rel="stylesheet" href="{{ asset('css/separate/pages/user.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/lib/font-awesome/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/lib/bootstrap/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="with-side-menu">
 
@@ -428,32 +429,28 @@
 	                <span class="lbl">Usuarios</span>
 	            </span>
 	            <ul>
-	                <li><a href="nuevosUsuarios.php"><span class="lbl">Nuevo</span><span class="label label-custom label-pill label-succes">new</span></a></li>
-	                <li><a href="permisosUsuarios.php"><span class="lbl">Permisos</span></a></li>   
+	                <li><a href="{{ route('usuarios.nuevos') }}"><span class="lbl">Nuevo</span><span class="label label-custom label-pill label-succes">new</span></a></li>
+	                <li><a href="{{ route('usuarios.permisos') }}"><span class="lbl">Permisos</span></a></li>   
 	            </ul>
 	        </li>
 
-			<li class="blue with-sub">
-	            <span>
-	                <i class="fa fa-user"></i>
-	                <span class="lbl">Usuarios</span>
-	            </span>
-	            <ul>
-	                <li><a href="acemilaAsociaciones.php"><span class="lbl">Organizaciones</span><span class="label label-custom label-pill label-succes">new</span></a></li>
-	                <li><a href="permisosUsuarios.php"><span class="lbl">Acémilas</span></a></li>   
-	            </ul>
-	        </li>
-
+			
 			<li class="green">
-	            <a href="equipos.php">
+	            <a href="{{ route('organizaciones.acemilas.equipos') }}">
 	                <i class="font-icon glyphicon glyphicon-send"></i>
-	                <span class="lbl">Equipos</span>
+	                <span class="lbl">C. Viaje</span>
 	            </a>
 	        </li>
 
-			<li class="blue">
+			<li class="darkblue">
 	            <a href="equipos.php">
-	                <i class="font-icon glyphicon glyphicon-send"></i>
+	                <i class="fas fa-suitcase glyphicon glyphicon-send"></i>
+	                <span class="lbl">Equipos</span>
+	            </a>
+	        </li>
+			<li class="darkblue">
+	            <a href="{{ route('paquetes.activos.galeria') }}">
+	                <i class="fal fa-backpack glyphicon glyphicon-send"></i>
 	                <span class="lbl">Paquetes</span>
 	            </a>
 	        </li>

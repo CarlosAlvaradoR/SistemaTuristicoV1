@@ -14,9 +14,25 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        //
+        return view('nuevosUsuarios');
     }
 
+    public function mostrarFormularioRegistro(){
+        return view('nuevosUsuarios');
+    }
+    public function mostrarUsuariosPermisos(){
+        return view('permisosUsers');
+    }
+
+
+    public function mostrarTabsOrgaAceEquipo(){
+        return view('organizacionesacemilasguia');
+    }
+
+
+    public function mostrarPaquetesActivos(){
+        return view('paqueteturistico');
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -1,9 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 use App\Models\Personas;
 use App\Models\Tipo_usuarios;
 use App\Models\Usuarios;
+
+
+
+use App\Http\Controllers\UsuariosController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,29 +38,32 @@ Route::get('/', function () {
 Route::get('/iniciodashboard', function () {
     return view('iniciodashboard');
 });
+
+
+
 /** PARA EL NUEVOS USUARIOS */
-Route::get('/newuser', [PersonasController::class, 'index'])->name('usuarios.nuevos');
+Route::get('/newuser', [UsuariosController::class, 'mostrarFormularioRegistro'])->name('usuarios.nuevos');
+
 /** PARA LOS PERMISOS DE LOS USUARIOS */
-Route::get('/permisosusers', function () {
-    return view('permisosUsers');
-});
+Route::get('/users', [UsuariosController::class, 'mostrarUsuariosPermisos'])->name('usuarios.permisos');
+
 /** ORGANIZACIONES - ACÉMILAS - GUÍA */
-Route::get('/organizaciones', function () {
-    return view('organizacionesacemilasguia');
-});
+Route::get('/organitations', [UsuariosController::class, 'mostrarTabsOrgaAceEquipo'])->name('organizaciones.acemilas.equipos');
+
 
 
 
 
 /** PARA LOS PQUETES */
-Route::get('/paquete', function () {
-    return view('paqueteturistico');
-});
+Route::get('/packages', [UsuariosController::class, 'mostrarPaquetesActivos'])->name('paquetes.activos.galeria');
+
 
 
 
 Route::get('/muestrausers', function () {
-    $datos= Tipo_usuarios::all();
+    //$datos= Tipo_usuarios::all();
+    $datos=DB::select('SELECT * FROM personas p
+    INNER JOIN usuarios u on p.idpersona=u.idpersona');
     return $datos;
 });
 
