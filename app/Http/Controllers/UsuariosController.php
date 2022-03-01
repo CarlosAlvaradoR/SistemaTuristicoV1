@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Usuarios;
+use App\Models\Personas;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class UsuariosController extends Controller
 {
     /**
@@ -14,6 +15,7 @@ class UsuariosController extends Controller
      */
     public function index()
     {
+
         return view('nuevosUsuarios');
     }
 
@@ -21,10 +23,12 @@ class UsuariosController extends Controller
         return view('nuevosUsuarios');
     }
     public function mostrarUsuariosPermisos(){
-        return view('permisosUsers');
+        $usuarios=DB::select('SELECT u.idusuarios, p.dni, p.nombres, p.apellidos FROM personas p
+                            INNER JOIN usuarios u on p.idpersona=u.idpersona');
+        return view('permisosUsers', compact('usuarios'));
     }
 
-
+    
     public function mostrarTabsOrgaAceEquipo(){
         return view('organizacionesacemilasguia');
     }

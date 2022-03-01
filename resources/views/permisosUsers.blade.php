@@ -26,91 +26,38 @@
                         
                         <div class="box-typical-body">
                             <div class="table-responsive">
-                                <table id="table-edit" class="table table-bordered table-hover">
+                                <table id="table-sm" class="table table-bordered table-hover table-sm">
                                     <thead>
                                     <tr>
                                         <th width="1">
                                             #
                                         </th>
                                         <th>Nombres</th>
-                                        <th>Estado</th>
-                                        <th class="table-icon-cell">
-                                            <i class="font-icon font-icon-heart"></i>
-                                        </th>
-                                        <th class="table-icon-cell">
-                                            <i class="font-icon font-icon-comment"></i>
-                                        </th>
-                                        <th width="120">Acciones</th>
-                                        <th></th>
+                                        <th>DNI</th>
+                                        <th>Acciones</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Last quarter revene</td>
-                                            <td class="color-blue-grey-lighter">Revene for last quarter in state America for year 2013, whith...</td>
-                                            <td class="table-icon-cell">5</td>
-                                            <td class="table-icon-cell">24</td>
-                                            <td class="table-date"> <a href="" class="btn btn-succes">Edit</a></td>
-                                            <td class="table-photo">
-                                                <img src="img/photo-64-1.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Last quarter revene</td>
-                                            <td class="color-blue-grey-lighter">Revene for last quarter in state America for year 2013, whith...</td>
-                                            <td class="table-icon-cell">5</td>
-                                            <td class="table-icon-cell">24</td>
-                                            <td class="table-date">6 minets ago</td>
-                                            <td class="table-photo">
-                                                <img src="img/photo-64-1.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Last quarter revene</td>
-                                            <td class="color-blue-grey-lighter">Revene for last quarter in state America for year 2013, whith...</td>
-                                            <td class="table-icon-cell">5</td>
-                                            <td class="table-icon-cell">24</td>
-                                            <td class="table-date">6 minets ago</td>
-                                            <td class="table-photo">
-                                                <img src="img/photo-64-1.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Last quarter revene</td>
-                                            <td class="color-blue-grey-lighter">Revene for last quarter in state America for year 2013, whith...</td>
-                                            <td class="table-icon-cell">5</td>
-                                            <td class="table-icon-cell">24</td>
-                                            <td class="table-date">6 minets ago</td>
-                                            <td class="table-photo">
-                                                <img src="img/photo-64-1.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Last quarter revene</td>
-                                            <td class="color-blue-grey-lighter">Revene for last quarter in state America for year 2013, whith...</td>
-                                            <td class="table-icon-cell">5</td>
-                                            <td class="table-icon-cell">24</td>
-                                            <td class="table-date">6 minets ago</td>
-                                            <td class="table-photo">
-                                                <img src="img/photo-64-1.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Last quarter revene</td>
-                                            <td class="color-blue-grey-lighter">Revene for last quarter in state America for year 2013, whith...</td>
-                                            <td class="table-icon-cell">5</td>
-                                            <td class="table-icon-cell">24</td>
-                                            <td class="table-date">6 minets ago</td>
-                                            <td class="table-photo">
-                                                <img src="img/photo-64-1.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
-                                            </td>
-                                        </tr>
+                                        @foreach ($usuarios as $usuario)
+                                            <tr>
+                                                <td>{{$usuario->idusuarios}}</td>
+                                                <td>{{$usuario->nombres.' '.$usuario->apellidos}}</td>
+                                                <td>{{$usuario->dni}}</td>
+                                                <td>
+                                                    <a href="http://google.com" target="_blank" rel="noopener noreferrer">
+                                                        <span class="btn btn-warning btn-sm" onclick="alert('HH')">
+                                                            <span class="fa fa-pencil-square-o"></span>
+                                                        </span>
+                                                    </a>
+                                                    <a href="http://" target="_blank" rel="noopener noreferrer">
+                                                        <span class="btn btn-danger btn-sm" onclick="">
+                                                            <span class="fa fa-trash"></span>
+                                                        </span>
+                                                    </a>
+                                                </td>
+                                            </tr>    
+                                        @endforeach
+                                        
                                     </tbody>
                                 </table>
                             </div>

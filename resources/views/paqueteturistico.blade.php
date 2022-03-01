@@ -3,358 +3,399 @@
 @section('tituloPagina','Paquetes Turísticos')
     
 @section('contenido')
-<div class="container-fluid">
-    <section class="box-typical box-typical-full-height-with-header">
-        <header class="box-typical-header box-typical-header-bordered">
+<header class="page-content-header">
+    <div class="container-fluid">
+        <div class="tbl">
             <div class="tbl-row">
-                <div class="tbl-cell tbl-cell-title">
-                    <h3>The vectors Gallery</h3>
+                <div class="tbl-cell">
+                    <h3>Designers <small class="text-muted">23 candidates</small></h3>
                 </div>
-                <div class="tbl-cell tbl-cell-actions">
-                    <button type="button" class="action-btn view active">
-                        <i class="font-icon font-icon-view-grid"></i>
-                    </button>
-                    <button type="button" class="action-btn view">
-                        <i class="font-icon font-icon-view-rows"></i>
-                    </button>
-                    <button type="button" class="action-btn view">
-                        <i class="font-icon font-icon-view-cascade"></i>
-                    </button>
+                <div class="tbl-cell tbl-cell-action">
+                    <a href="#" class="btn btn-rounded">Add member</a>
                 </div>
             </div>
-        </header>
-        <div class="box-typical-body">
-            <div class="gallery-grid">
-                <div class="gallery-col">
-                    <article class="gallery-item">
-                        <img class="gallery-picture" src="img/gall-img-1.jpg" alt="" height="158">
-                        <div class="gallery-hover-layout">
-                            <div class="gallery-hover-layout-in">
-                                <p class="gallery-item-title">The boxed castle</p>
-                                <p>by Alban Wamigo</p>
-                                <div class="btn-group">
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-cloud"></i>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-trash"></i>
-                                    </button>
-                                </div>
-                                <p>3 days ago</p>
-                            </div>
-                        </div>
-                    </article>
-                </div><!--.gallery-col-->
+        </div>
+    </div>
+</header><!--.page-content-header-->
 
-                <div class="gallery-col">
-                    <article class="gallery-item">
-                        <img class="gallery-picture" src="img/gall-img-2.jpg" alt="" height="158">
-                        <div class="gallery-hover-layout">
-                            <div class="gallery-hover-layout-in">
-                                <p class="gallery-item-title">The boxed castle</p>
-                                <p>by Alban Wamigo</p>
-                                <div class="btn-group">
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-ok"></i>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-del"></i>
-                                    </button>
-                                </div>
-                                <p>3 days ago</p>
-                            </div>
+<div class="container-fluid">
+    <div class="row card-user-grid">
+        <div class="col-sm-6 col-md-4 col-xl-3">
+            <article class="card-user box-typical">
+                
+                <div class="">
+                    <img src="img/photo-184-1.jpg" alt="">
+                </div>
+                <div class="card-user-name">Paquete Tingua</div>
+                <div class="card-user-status">S/. 344.00 </div>
+                <a href="#" class="btn btn-rounded">Ver paquete</a>
+                <div class="card-user-social">
+                    <a href="#">
+                        <i class="font-icon font-icon-fb-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-vk-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-in-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-tw-fill"></i>
+                    </a>
+                </div>
+                <!--<div class="card-user-info-row">
+                    <i class="font-icon font-icon-import"></i>
+                    Imported from Github
+                </div>
+                <div class="card-user-info-row">
+                    <i class="font-icon font-icon-user"></i>
+                    By Wayne Gray
+                </div>-->
+            </article><!--.card-user-->
+        </div>
+        <div class="col-sm-6 col-md-4 col-xl-3">
+            <article class="card-user box-typical">
+                <a href="#" class="card-user-action float-left">
+                    <i class="font-icon font-icon-revers"></i>
+                </a>
+                <div class="card-user-action float-right">
+                    <div class="dropdown dropdown-user-menu">
+                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-option-vertical"></span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant and Verbal</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real Gmat Test</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep Official App</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-users"></span>CATprer Test</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-comments"></span>Third Party Test</a>
                         </div>
-                    </article>
-                </div><!--.gallery-col-->
-
-                <div class="gallery-col">
-                    <article class="gallery-item">
-                        <img class="gallery-picture" src="img/gall-img-3.jpg" alt="" height="158">
-                        <div class="gallery-hover-layout">
-                            <div class="gallery-hover-layout-in">
-                                <p class="gallery-item-title">The boxed castle the boxed castle the boxed castle the boxed castle the boxed castle the</p>
-                                <p>by Alban Wamigo</p>
-                                <div class="btn-group">
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-cloud"></i>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-trash"></i>
-                                    </button>
-                                </div>
-                                <p>3 days ago</p>
-                            </div>
+                    </div>
+                </div>
+                <div class="card-user-photo">
+                    <img src="img/photo-184-1.jpg" alt="">
+                </div>
+                <div class="card-user-name">Douglas Diaz</div>
+                <div class="card-user-status">in disqussion</div>
+                <a href="#" class="btn btn-rounded btn-default">Unfollow</a>
+                <div class="card-user-social">
+                    <a href="#">
+                        <i class="font-icon font-icon-fb-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-vk-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-in-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-tw-fill"></i>
+                    </a>
+                </div>
+                <!--<div class="card-user-info-row">
+                    <i class="font-icon font-icon-import"></i>
+                    Imported from Github
+                </div>
+                <div class="card-user-info-row">
+                    <i class="font-icon font-icon-user"></i>
+                    By Wayne Gray
+                </div>-->
+            </article><!--.card-user-->
+        </div>
+        <div class="col-sm-6 col-md-4 col-xl-3">
+            <article class="card-user box-typical">
+                <a href="#" class="card-user-action float-left">
+                    <i class="font-icon font-icon-revers"></i>
+                </a>
+                <div class="card-user-action float-right">
+                    <div class="dropdown dropdown-user-menu">
+                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-option-vertical"></span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant and Verbal</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real Gmat Test</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep Official App</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-users"></span>CATprer Test</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-comments"></span>Third Party Test</a>
                         </div>
-                    </article>
-                </div><!--.gallery-col-->
-
-                <div class="gallery-col">
-                    <article class="gallery-item">
-                        <img class="gallery-picture" src="img/gall-img-4.jpg" alt="" height="158">
-                        <div class="gallery-hover-layout">
-                            <div class="gallery-hover-layout-in">
-                                <p class="gallery-item-title">The boxed castle</p>
-                                <p>by Alban Wamigo</p>
-                                <div class="btn-group">
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-ok"></i>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-del"></i>
-                                    </button>
-                                </div>
-                                <p>3 days ago</p>
-                            </div>
+                    </div>
+                </div>
+                <div class="card-user-photo">
+                    <img src="img/photo-184-1.jpg" alt="">
+                </div>
+                <div class="card-user-name">Douglas Diaz</div>
+                <div class="card-user-status">in disqussion</div>
+                <a href="#" class="btn btn-rounded">Follow</a>
+                <div class="card-user-social">
+                    <a href="#">
+                        <i class="font-icon font-icon-fb-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-vk-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-in-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-tw-fill"></i>
+                    </a>
+                </div>
+                <!--<div class="card-user-info-row">
+                    <i class="font-icon font-icon-import"></i>
+                    Imported from Github
+                </div>
+                <div class="card-user-info-row">
+                    <i class="font-icon font-icon-user"></i>
+                    By Wayne Gray
+                </div>-->
+            </article><!--.card-user-->
+        </div>
+        <div class="col-sm-6 col-md-4 col-xl-3">
+            <article class="card-user box-typical">
+                <a href="#" class="card-user-action float-left">
+                    <i class="font-icon font-icon-revers"></i>
+                </a>
+                <div class="card-user-action float-right">
+                    <div class="dropdown dropdown-user-menu">
+                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-option-vertical"></span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant and Verbal</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real Gmat Test</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep Official App</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-users"></span>CATprer Test</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-comments"></span>Third Party Test</a>
                         </div>
-                    </article>
-                </div><!--.gallery-col-->
-
-                <div class="gallery-col">
-                    <article class="gallery-item">
-                        <img class="gallery-picture" src="img/gall-img-5.jpg" alt="" height="158">
-                        <div class="gallery-hover-layout">
-                            <div class="gallery-hover-layout-in">
-                                <p class="gallery-item-title">The boxed castle the boxed castle the boxed castle the boxed castle the boxed castle the</p>
-                                <p>by Alban Wamigo</p>
-                                <div class="btn-group">
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-cloud"></i>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-trash"></i>
-                                    </button>
-                                </div>
-                                <p>3 days ago</p>
-                            </div>
+                    </div>
+                </div>
+                <div class="card-user-photo">
+                    <img src="img/photo-184-1.jpg" alt="">
+                </div>
+                <div class="card-user-name">Douglas Diaz</div>
+                <div class="card-user-status">in disqussion</div>
+                <a href="#" class="btn btn-rounded">Follow</a>
+                <div class="card-user-social">
+                    <a href="#">
+                        <i class="font-icon font-icon-fb-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-vk-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-in-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-tw-fill"></i>
+                    </a>
+                </div>
+                <!--<div class="card-user-info-row">
+                    <i class="font-icon font-icon-import"></i>
+                    Imported from Github
+                </div>
+                <div class="card-user-info-row">
+                    <i class="font-icon font-icon-user"></i>
+                    By Wayne Gray
+                </div>-->
+            </article><!--.card-user-->
+        </div>
+        <div class="col-sm-6 col-md-4 col-xl-3">
+            <article class="card-user box-typical">
+                <a href="#" class="card-user-action float-left">
+                    <i class="font-icon font-icon-revers"></i>
+                </a>
+                <div class="card-user-action float-right">
+                    <div class="dropdown dropdown-user-menu">
+                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-option-vertical"></span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant and Verbal</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real Gmat Test</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep Official App</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-users"></span>CATprer Test</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-comments"></span>Third Party Test</a>
                         </div>
-                    </article>
-                </div><!--.gallery-col-->
-
-                <div class="gallery-col">
-                    <article class="gallery-item">
-                        <img class="gallery-picture" src="img/gall-img-6.jpg" alt="" height="158">
-                        <div class="gallery-hover-layout">
-                            <div class="gallery-hover-layout-in">
-                                <p class="gallery-item-title">The boxed castle</p>
-                                <p>by Alban Wamigo</p>
-                                <div class="btn-group">
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-ok"></i>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-del"></i>
-                                    </button>
-                                </div>
-                                <p>3 days ago</p>
-                            </div>
+                    </div>
+                </div>
+                <div class="card-user-photo">
+                    <img src="img/photo-184-1.jpg" alt="">
+                </div>
+                <div class="card-user-name">Douglas Diaz</div>
+                <div class="card-user-status">in disqussion</div>
+                <a href="#" class="btn btn-rounded">Follow</a>
+                <div class="card-user-social">
+                    <a href="#">
+                        <i class="font-icon font-icon-fb-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-vk-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-in-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-tw-fill"></i>
+                    </a>
+                </div>
+                <!--<div class="card-user-info-row">
+                    <i class="font-icon font-icon-import"></i>
+                    Imported from Github
+                </div>
+                <div class="card-user-info-row">
+                    <i class="font-icon font-icon-user"></i>
+                    By Wayne Gray
+                </div>-->
+            </article><!--.card-user-->
+        </div>
+        <div class="col-sm-6 col-md-4 col-xl-3">
+            <article class="card-user box-typical">
+                <a href="#" class="card-user-action float-left">
+                    <i class="font-icon font-icon-revers"></i>
+                </a>
+                <div class="card-user-action float-right">
+                    <div class="dropdown dropdown-user-menu">
+                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-option-vertical"></span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant and Verbal</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real Gmat Test</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep Official App</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-users"></span>CATprer Test</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-comments"></span>Third Party Test</a>
                         </div>
-                    </article>
-                </div><!--.gallery-col-->
-
-                <div class="gallery-col">
-                    <article class="gallery-item">
-                        <img class="gallery-picture" src="img/gall-img-7.jpg" alt="" height="158">
-                        <div class="gallery-hover-layout">
-                            <div class="gallery-hover-layout-in">
-                                <p class="gallery-item-title">The boxed castle the boxed castle the boxed castle the boxed castle the boxed castle the</p>
-                                <p>by Alban Wamigo</p>
-                                <div class="btn-group">
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-cloud"></i>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-trash"></i>
-                                    </button>
-                                </div>
-                                <p>3 days ago</p>
-                            </div>
+                    </div>
+                </div>
+                <div class="card-user-photo">
+                    <img src="img/photo-184-1.jpg" alt="">
+                </div>
+                <div class="card-user-name">Douglas Diaz</div>
+                <div class="card-user-status">in disqussion</div>
+                <a href="#" class="btn btn-rounded">Follow</a>
+                <div class="card-user-social">
+                    <a href="#">
+                        <i class="font-icon font-icon-fb-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-vk-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-in-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-tw-fill"></i>
+                    </a>
+                </div>
+                <!--<div class="card-user-info-row">
+                    <i class="font-icon font-icon-import"></i>
+                    Imported from Github
+                </div>
+                <div class="card-user-info-row">
+                    <i class="font-icon font-icon-user"></i>
+                    By Wayne Gray
+                </div>-->
+            </article><!--.card-user-->
+        </div>
+        <div class="col-sm-6 col-md-4 col-xl-3">
+            <article class="card-user box-typical">
+                <a href="#" class="card-user-action float-left">
+                    <i class="font-icon font-icon-revers"></i>
+                </a>
+                <div class="card-user-action float-right">
+                    <div class="dropdown dropdown-user-menu">
+                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-option-vertical"></span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant and Verbal</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real Gmat Test</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep Official App</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-users"></span>CATprer Test</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-comments"></span>Third Party Test</a>
                         </div>
-                    </article>
-                </div><!--.gallery-col-->
-
-                <div class="gallery-col">
-                    <article class="gallery-item">
-                        <div class="gallery-doc">
-                            <div class="gallery-doc-in">
-                                <i class="font-icon font-icon-page"></i>
-                                <p>Instructions.txt</p>
-                            </div>
+                    </div>
+                </div>
+                <div class="card-user-photo">
+                    <img src="img/photo-184-1.jpg" alt="">
+                </div>
+                <div class="card-user-name">Douglas Diaz</div>
+                <div class="card-user-status">in disqussion</div>
+                <a href="#" class="btn btn-rounded">Follow</a>
+                <div class="card-user-social">
+                    <a href="#">
+                        <i class="font-icon font-icon-fb-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-vk-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-in-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-tw-fill"></i>
+                    </a>
+                </div>
+                <!--<div class="card-user-info-row">
+                    <i class="font-icon font-icon-import"></i>
+                    Imported from Github
+                </div>
+                <div class="card-user-info-row">
+                    <i class="font-icon font-icon-user"></i>
+                    By Wayne Gray
+                </div>-->
+            </article><!--.card-user-->
+        </div>
+        <div class="col-sm-6 col-md-4 col-xl-3">
+            <article class="card-user box-typical">
+                <a href="#" class="card-user-action float-left">
+                    <i class="font-icon font-icon-revers"></i>
+                </a>
+                <div class="card-user-action float-right">
+                    <div class="dropdown dropdown-user-menu">
+                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-option-vertical"></span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant and Verbal</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real Gmat Test</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep Official App</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-users"></span>CATprer Test</a>
+                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-comments"></span>Third Party Test</a>
                         </div>
-                        <div class="gallery-hover-layout">
-                            <div class="gallery-hover-layout-in">
-                                <p class="gallery-item-title">The boxed castle the boxed castle the boxed castle the boxed castle the boxed castle the</p>
-                                <p>by Alban Wamigo</p>
-                                <div class="btn-group">
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-cloud"></i>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-trash"></i>
-                                    </button>
-                                </div>
-                                <p>3 days ago</p>
-                            </div>
-                        </div>
-                    </article>
-                </div><!--.gallery-col-->
-
-                <div class="gallery-col">
-                    <article class="gallery-item">
-                        <img class="gallery-picture" src="img/gall-img-1.jpg" alt="" height="158">
-                        <div class="gallery-hover-layout">
-                            <div class="gallery-hover-layout-in">
-                                <p class="gallery-item-title">The boxed castle</p>
-                                <p>by Alban Wamigo</p>
-                                <div class="btn-group">
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-cloud"></i>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-trash"></i>
-                                    </button>
-                                </div>
-                                <p>3 days ago</p>
-                            </div>
-                        </div>
-                    </article>
-                </div><!--.gallery-col-->
-
-                <div class="gallery-col">
-                    <article class="gallery-item">
-                        <img class="gallery-picture" src="img/gall-img-2.jpg" alt="" height="158">
-                        <div class="gallery-hover-layout">
-                            <div class="gallery-hover-layout-in">
-                                <p class="gallery-item-title">The boxed castle</p>
-                                <p>by Alban Wamigo</p>
-                                <div class="btn-group">
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-ok"></i>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-del"></i>
-                                    </button>
-                                </div>
-                                <p>3 days ago</p>
-                            </div>
-                        </div>
-                    </article>
-                </div><!--.gallery-col-->
-
-                <div class="gallery-col">
-                    <article class="gallery-item">
-                        <img class="gallery-picture" src="img/gall-img-3.jpg" alt="" height="158">
-                        <div class="gallery-hover-layout">
-                            <div class="gallery-hover-layout-in">
-                                <p class="gallery-item-title">The boxed castle the boxed castle the boxed castle the boxed castle the boxed castle the</p>
-                                <p>by Alban Wamigo</p>
-                                <div class="btn-group">
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-cloud"></i>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-trash"></i>
-                                    </button>
-                                </div>
-                                <p>3 days ago</p>
-                            </div>
-                        </div>
-                    </article>
-                </div><!--.gallery-col-->
-
-                <div class="gallery-col">
-                    <article class="gallery-item">
-                        <img class="gallery-picture" src="img/gall-img-4.jpg" alt="" height="158">
-                        <div class="gallery-hover-layout">
-                            <div class="gallery-hover-layout-in">
-                                <p class="gallery-item-title">The boxed castle</p>
-                                <p>by Alban Wamigo</p>
-                                <div class="btn-group">
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-ok"></i>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-del"></i>
-                                    </button>
-                                </div>
-                                <p>3 days ago</p>
-                            </div>
-                        </div>
-                    </article>
-                </div><!--.gallery-col-->
-
-                <div class="gallery-col">
-                    <article class="gallery-item">
-                        <img class="gallery-picture" src="img/gall-img-5.jpg" alt="" height="158">
-                        <div class="gallery-hover-layout">
-                            <div class="gallery-hover-layout-in">
-                                <p class="gallery-item-title">The boxed castle the boxed castle the boxed castle the boxed castle the boxed castle the</p>
-                                <p>by Alban Wamigo</p>
-                                <div class="btn-group">
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-cloud"></i>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-trash"></i>
-                                    </button>
-                                </div>
-                                <p>3 days ago</p>
-                            </div>
-                        </div>
-                    </article>
-                </div><!--.gallery-col-->
-
-                <div class="gallery-col">
-                    <article class="gallery-item">
-                        <img class="gallery-picture" src="img/gall-img-6.jpg" alt="" height="158">
-                        <div class="gallery-hover-layout">
-                            <div class="gallery-hover-layout-in">
-                                <p class="gallery-item-title">The boxed castle</p>
-                                <p>by Alban Wamigo</p>
-                                <div class="btn-group">
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-ok"></i>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-del"></i>
-                                    </button>
-                                </div>
-                                <p>3 days ago</p>
-                            </div>
-                        </div>
-                    </article>
-                </div><!--.gallery-col-->
-
-                <div class="gallery-col">
-                    <article class="gallery-item">
-                        <img class="gallery-picture" src="img/gall-img-7.jpg" alt="" height="158">
-                        <div class="gallery-hover-layout">
-                            <div class="gallery-hover-layout-in">
-                                <p class="gallery-item-title">The boxed castle the boxed castle the boxed castle the boxed castle the boxed castle the</p>
-                                <p>by Alban Wamigo</p>
-                                <div class="btn-group">
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-cloud"></i>
-                                    </button>
-                                    <button type="button" class="btn">
-                                        <i class="font-icon font-icon-trash"></i>
-                                    </button>
-                                </div>
-                                <p>3 days ago</p>
-                            </div>
-                        </div>
-                    </article>
-                </div><!--.gallery-col-->
-
-            </div><!--.gallery-grid-->
-        </div><!--.box-typical-body-->
-    </section><!--.box-typical-->
+                    </div>
+                </div>
+                <div class="card-user-photo">
+                    <img src="img/photo-184-1.jpg" alt="">
+                </div>
+                <div class="card-user-name">Douglas Diaz</div>
+                <div class="card-user-status">in disqussion</div>
+                <a href="#" class="btn btn-rounded">Follow</a>
+                <div class="card-user-social">
+                    <a href="#">
+                        <i class="font-icon font-icon-fb-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-vk-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-in-fill"></i>
+                    </a>
+                    <a href="#">
+                        <i class="font-icon font-icon-tw-fill"></i>
+                    </a>
+                </div>
+                <!--<div class="card-user-info-row">
+                    <i class="font-icon font-icon-import"></i>
+                    Imported from Github
+                </div>
+                <div class="card-user-info-row">
+                    <i class="font-icon font-icon-user"></i>
+                    By Wayne Gray
+                </div>-->
+            </article><!--.card-user-->
+        </div>
+    </div><!--.card-user-grid-->
 </div><!--.container-fluid-->
-<script type="text/javascript" src="js/lib/match-height/jquery.matchHeight.min.js"></script>
-	<script>
-		$(function() {
-			$('.gallery-item').matchHeight({
-				target: $('.gallery-item .gallery-picture')
-			});
-		});
-	</script>  
 @endsection
