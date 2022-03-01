@@ -25,15 +25,17 @@
                 <div class="row">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="alert alert-dismissable alert-success">
-                                 
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                                    ×
-                                </button>
-                                <h4>
-                                    ÉXITO!
-                                </h4> <strong>Muy bien!</strong> Usuario agregado correctamente.
-                            </div>
+                            @if ($mensaje = Session::get('succes'))
+                                <div class="alert alert-dismissable alert-success">
+                                    
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                                        ×
+                                    </button>
+                                    <h4>
+                                        ÉXITO!
+                                    </h4> <strong>Muy bien!</strong> Usuario agregado correctamente.
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <form action="{{ route('usuarios.create') }}" method="POST">
@@ -67,9 +69,17 @@
                                 <label for="inputZip">Teléfono</label>
                                 <input type="text" class="form-control" name="telefono" id="telefono">
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-3">
                                 <label for="inputZip">Correo</label>
                                 <input type="text" class="form-control" name="correo" id="correo">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputZip">Tipo de Usuario</label>
+                                <select id="inputState" name="idtipousuario" id="idtipousuario" class="form-control">
+                                    <option selected>Seleccione...</option>
+                                    <option value="1">Administrador</option>
+                                    <option value="2">Vendedor</option>
+                                </select>
                             </div>
                         </div>
 

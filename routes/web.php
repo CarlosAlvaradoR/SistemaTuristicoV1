@@ -9,6 +9,7 @@ use App\Models\Usuarios;
 
 
 use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\PersonasController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,7 +44,7 @@ Route::get('/iniciodashboard', function () {
 
 /** PARA EL NUEVOS USUARIOS */
 Route::get('/newuser', [UsuariosController::class, 'mostrarFormularioRegistro'])->name('usuarios.nuevos');
-Route::post('/newuser/create', [UsuariosController::class, 'store'])->name('usuarios.create');
+Route::post('/newuser/create', [PersonasController::class, 'store'])->name('usuarios.create');
 
 /** PARA LOS PERMISOS DE LOS USUARIOS */
 Route::get('/users', [UsuariosController::class, 'mostrarUsuariosPermisos'])->name('usuarios.permisos');
