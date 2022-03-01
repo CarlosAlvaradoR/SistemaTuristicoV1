@@ -43,23 +43,15 @@ class UsuariosController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        //Aquí es donde se graban los usuarios
+        //$personas=new Personas();
+        //$personas->dni=$request->post();
+        return $request;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Usuarios  $usuarios
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show(Usuarios $usuarios)
     {
         //

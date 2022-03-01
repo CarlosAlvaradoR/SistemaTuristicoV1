@@ -23,67 +23,84 @@
             <div class="card-block">
                 <h5 class="with-border m-t-0">Formulario de Registro</h5>
                 <div class="row">
-                    <form action="">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-dismissable alert-success">
+                                 
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                                    ×
+                                </button>
+                                <h4>
+                                    ÉXITO!
+                                </h4> <strong>Muy bien!</strong> Usuario agregado correctamente.
+                            </div>
+                        </div>
+                    </div>
+                    <form action="{{ route('usuarios.create') }}" method="POST">
+                        @csrf
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputCity">DNI</label>
-                                <input type="text" class="form-control" id="inputCity">
+                                <input type="text" class="form-control" name="dni" id="dni">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputState">Nombres</label>
-                                <input type="text" class="form-control" id="inputCity">
+                                <input type="text" class="form-control" name="nombres" id="nombres">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputZip">Apellidos</label>
-                                <input type="text" class="form-control" id="inputZip">
+                                <input type="text" class="form-control" name="apellidos" id="apellidos">
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputZip">Género</label>
-                                <select id="inputState" class="form-control">
+                                <select id="inputState" name="genero" id="genero" class="form-control">
                                     <option selected>Seleccione...</option>
-                                    <option>Masculino</option>
-                                    <option>Femenino</option>
+                                    <option value="1">Masculino</option>
+                                    <option value="2">Femenino</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputZip">Dirección</label>
-                                <input type="text" class="form-control" id="inputZip">
+                                <input type="text" class="form-control" name="direccion" id="direccion">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputZip">Teléfono</label>
-                                <input type="text" class="form-control" id="inputZip">
+                                <input type="text" class="form-control" name="telefono" id="telefono">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputZip">Correo</label>
-                                <input type="text" class="form-control" id="inputZip">
+                                <input type="text" class="form-control" name="correo" id="correo">
                             </div>
                         </div>
+
+                        <!--  BUTTONS-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                    </div>
+                                    <div class="col-md-2">
+                                        
+                                        <button type="submit" class="btn">
+                                            Aceptar
+                                        </button>
+                                        
+                                    </div>
+                                    <div class="col-md-2">
+                                        
+                                        <button type="button" class="btn btn-danger">
+                                            Cancelar
+                                        </button>
+                                    </div>
+                                    <div class="col-md-4">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END BUTTONS-->
                     </form>
                 </div><!--.row-->
 
-                <h5 class="with-border m-t-lg">Opciones</h5>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-4">
-                            </div>
-                            <div class="col-md-2">
-                                
-                                <button type="button" onclick="alert('Botón Aceptar')" class="btn btn-primary">
-                                    Aceptar
-                                </button>
-                            </div>
-                            <div class="col-md-2">
-                                
-                                <button type="button" class="btn btn-danger">
-                                    Cancelar
-                                </button>
-                            </div>
-                            <div class="col-md-4">
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
     </div><!--.container-fluid-->
