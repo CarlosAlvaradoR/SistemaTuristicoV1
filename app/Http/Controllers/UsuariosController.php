@@ -37,6 +37,12 @@ class UsuariosController extends Controller
     public function mostrarPaquetesActivos(){
         return view('paqueteturistico');
     }
+    public function formularionuevospaquetes(){
+        return view('formulariopaquetesnuevos');
+    }//
+    public function detallepaquetes(){
+        return view('detallespaquete');
+    }
     /**
      * Show the form for creating a new resource.
      *

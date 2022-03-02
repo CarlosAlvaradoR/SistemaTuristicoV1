@@ -11,7 +11,7 @@
                     <h3>Paquetes Disponibles <small class="text-muted">23 Paquetes</small></h3>
                 </div>
                 <div class="tbl-cell tbl-cell-action">
-                    <a href="#" class="btn btn-rounded">Nuevo Paquete</a>
+                    <a href="{{ route('paquetes.formulario.nuevo') }}" class="btn btn-rounded">Nuevo Paquete</a>
                 </div>
             </div>
         </div>
@@ -19,6 +19,7 @@
 </header><!--.page-content-header-->
 
 <div class="container-fluid">
+    
     <div class="row card-user-grid">
         <div class="col-sm-6 col-md-4 col-xl-3">
             <article class="card-user box-typical" style="border-radius: 19px">
@@ -28,7 +29,7 @@
                 </div>
                 <div class="card-user-name">Paquete Tingua</div>
                 <div class="card-user-status">S/. 344.00 </div>
-                <a href="#" class="btn btn-rounded">Ver paquete</a>
+                <a href="{{ route('paquetes.detalles') }}" class="btn btn-rounded">Ver paquete</a>
                 <div class="card-user-social">
                     <a href="#">
                         <i class="font-icon font-icon-fb-fill"></i>
@@ -96,7 +97,7 @@
                 </div>
                 <div class="card-user-name">Paquete Tingua</div>
                 <div class="card-user-status">S/. 344.00 </div>
-                <a href="#" class="btn btn-rounded">Ver paquete</a>
+                <a href="{{ route('paquetes.detalles') }}" class="btn btn-rounded">Ver paquete</a>
                 <div class="card-user-social">
                     <a href="#">
                         <i class="font-icon font-icon-fb-fill"></i>
@@ -126,7 +127,7 @@
             <article class="card-user box-typical" style="border-radius: 19px">
                 
                 <div class="">
-                    <img src="img/photo-184-1.jpg" style="height: 110px;" alt="">
+                    <img src="img/huancayo2.jpg" style="height: 110px;" alt="">
                 </div>
                 <div class="card-user-name">Paquete Tingua</div>
                 <div class="card-user-status">S/. 344.00 </div>

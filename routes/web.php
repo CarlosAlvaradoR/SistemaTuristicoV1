@@ -58,7 +58,8 @@ Route::get('/organitations', [UsuariosController::class, 'mostrarTabsOrgaAceEqui
 
 /** PARA LOS PQUETES */
 Route::get('/packages', [UsuariosController::class, 'mostrarPaquetesActivos'])->name('paquetes.activos.galeria');
-
+Route::get('/packagescreate', [UsuariosController::class, 'formularionuevospaquetes'])->name('paquetes.formulario.nuevo');
+Route::get('/packagesdetails', [UsuariosController::class, 'detallepaquetes'])->name('paquetes.detalles');
 
 
 
