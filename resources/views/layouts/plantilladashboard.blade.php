@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="{{ asset('css/lib/font-awesome/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/lib/bootstrap/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/lib/datatables-net/datatables.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/separate/vendor/datatables-net.min.css') }}">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="with-side-menu">
@@ -454,6 +456,12 @@
 	                <span class="lbl">Paquetes</span>
 	            </a>
 	        </li>
+			<li class="darkblue">
+	            <a href="{{ route('paquetes.activos.galeria') }}">
+	                <i class="fas fa-mountain glyphicon glyphicon-send"></i>
+	                <span class="lbl">Reservas</span>
+	            </a>
+	        </li>
 
 	    </ul>
 	
@@ -504,11 +512,16 @@
 
 
 
-	<script src="js/lib/jquery/jquery.min.js"></script>
+	<script src="{{ asset('js/lib/jquery/jquery.min.js') }}"></script>
 	<script src="{{ asset('js/lib/tether/tether.min.js') }}"></script>
 	<script src="{{ asset('js/lib/bootstrap/bootstrap.min.js') }}"></script>
 	<script src="{{ asset('js/plugins.js') }}"></script>
-
+	<script src="js/lib/datatables-net/datatables.min.js"></script>
+	<script>
+		$(function() {
+			$('#example').DataTable();
+		});
+	</script>
 <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
