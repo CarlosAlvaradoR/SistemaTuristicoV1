@@ -62,6 +62,12 @@ Route::get('/packagescreate', [UsuariosController::class, 'formularionuevospaque
 Route::get('/packagesdetails', [UsuariosController::class, 'detallepaquetes'])->name('paquetes.detalles');
 
 
+/*** PARA LAS RESERVAS */
+Route::get('/reserved', [UsuariosController::class, 'mostrarFormularioReservaNivelAdmin'])->name('reservas.formulario.nivel.admin');
+
+
+
+
 
 Route::get('/muestrausers', function () {
     //$datos= Tipo_usuarios::all();

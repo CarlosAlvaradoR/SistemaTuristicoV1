@@ -43,6 +43,9 @@ class UsuariosController extends Controller
     public function detallepaquetes(){
         return view('detallespaquete');
     }
+    public function mostrarFormularioReservaNivelAdmin(){
+        return view('reservas/formularioreservar');
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -18,12 +18,13 @@
 	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
-<link rel="stylesheet" href="{{ asset('css/separate/pages/user.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/separate/pages/user.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/lib/font-awesome/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/lib/bootstrap/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/lib/datatables-net/datatables.min.css') }}">
-<link rel="stylesheet" href="{{ asset('css/separate/vendor/datatables-net.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/separate/vendor/datatables-net.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/separate/pages/files.min.css') }}">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="with-side-menu">
@@ -457,7 +458,7 @@
 	            </a>
 	        </li>
 			<li class="darkblue">
-	            <a href="{{ route('paquetes.activos.galeria') }}">
+	            <a href="{{ route('reservas.formulario.nivel.admin') }}">
 	                <i class="fas fa-mountain glyphicon glyphicon-send"></i>
 	                <span class="lbl">Reservas</span>
 	            </a>
