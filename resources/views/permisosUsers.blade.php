@@ -54,6 +54,11 @@
                                                             <span class="fa fa-trash"></span>
                                                         </span>
                                                     </a>
+                                                    <a href="http://" title="Permisos" target="_blank" rel="noopener noreferrer">
+                                                        <span class="btn btn-info btn-sm" onclick="">
+                                                            <span class="fas fa-eye"></span>
+                                                        </span>
+                                                    </a>
                                                 </td>
                                             </tr>    
                                         @endforeach

@@ -8,10 +8,10 @@
         <div class="tbl">
             <div class="tbl-row">
                 <div class="tbl-cell">
-                    <h3>Designers <small class="text-muted">23 candidates</small></h3>
+                    <h3>Paquetes Disponibles <small class="text-muted">23 Paquetes</small></h3>
                 </div>
                 <div class="tbl-cell tbl-cell-action">
-                    <a href="#" class="btn btn-rounded">Add member</a>
+                    <a href="#" class="btn btn-rounded">Nuevo Paquete</a>
                 </div>
             </div>
         </div>
@@ -21,10 +21,10 @@
 <div class="container-fluid">
     <div class="row card-user-grid">
         <div class="col-sm-6 col-md-4 col-xl-3">
-            <article class="card-user box-typical">
+            <article class="card-user box-typical" style="border-radius: 19px">
                 
                 <div class="">
-                    <img src="img/photo-184-1.jpg" alt="">
+                    <img src="img/huancayo.jpg" style="height: 110px;" alt="">
                 </div>
                 <div class="card-user-name">Paquete Tingua</div>
                 <div class="card-user-status">S/. 344.00 </div>
@@ -53,31 +53,16 @@
                 </div>-->
             </article><!--.card-user-->
         </div>
+
         <div class="col-sm-6 col-md-4 col-xl-3">
-            <article class="card-user box-typical">
-                <a href="#" class="card-user-action float-left">
-                    <i class="font-icon font-icon-revers"></i>
-                </a>
-                <div class="card-user-action float-right">
-                    <div class="dropdown dropdown-user-menu">
-                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-option-vertical"></span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant and Verbal</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real Gmat Test</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep Official App</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-users"></span>CATprer Test</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-comments"></span>Third Party Test</a>
-                        </div>
-                    </div>
+            <article class="card-user box-typical" style="border-radius: 19px">
+                
+                <div class="">
+                    <img src="img/huancayo.jpg" style="height: 110px;" alt="">
                 </div>
-                <div class="card-user-photo">
-                    <img src="img/photo-184-1.jpg" alt="">
-                </div>
-                <div class="card-user-name">Douglas Diaz</div>
-                <div class="card-user-status">in disqussion</div>
-                <a href="#" class="btn btn-rounded btn-default">Unfollow</a>
+                <div class="card-user-name">Paquete Tingua</div>
+                <div class="card-user-status">S/. 344.00 </div>
+                <a href="#" class="btn btn-rounded">Ver paquete</a>
                 <div class="card-user-social">
                     <a href="#">
                         <i class="font-icon font-icon-fb-fill"></i>
@@ -102,31 +87,16 @@
                 </div>-->
             </article><!--.card-user-->
         </div>
+
         <div class="col-sm-6 col-md-4 col-xl-3">
-            <article class="card-user box-typical">
-                <a href="#" class="card-user-action float-left">
-                    <i class="font-icon font-icon-revers"></i>
-                </a>
-                <div class="card-user-action float-right">
-                    <div class="dropdown dropdown-user-menu">
-                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-option-vertical"></span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant and Verbal</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real Gmat Test</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep Official App</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-users"></span>CATprer Test</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-comments"></span>Third Party Test</a>
-                        </div>
-                    </div>
+            <article class="card-user box-typical" style="border-radius: 19px">
+                
+                <div class="">
+                    <img src="img/huancayo.jpg" style="height: 110px;" alt="">
                 </div>
-                <div class="card-user-photo">
-                    <img src="img/photo-184-1.jpg" alt="">
-                </div>
-                <div class="card-user-name">Douglas Diaz</div>
-                <div class="card-user-status">in disqussion</div>
-                <a href="#" class="btn btn-rounded">Follow</a>
+                <div class="card-user-name">Paquete Tingua</div>
+                <div class="card-user-status">S/. 344.00 </div>
+                <a href="#" class="btn btn-rounded">Ver paquete</a>
                 <div class="card-user-social">
                     <a href="#">
                         <i class="font-icon font-icon-fb-fill"></i>
@@ -151,31 +121,16 @@
                 </div>-->
             </article><!--.card-user-->
         </div>
+
         <div class="col-sm-6 col-md-4 col-xl-3">
-            <article class="card-user box-typical">
-                <a href="#" class="card-user-action float-left">
-                    <i class="font-icon font-icon-revers"></i>
-                </a>
-                <div class="card-user-action float-right">
-                    <div class="dropdown dropdown-user-menu">
-                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-option-vertical"></span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant and Verbal</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real Gmat Test</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep Official App</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-users"></span>CATprer Test</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-comments"></span>Third Party Test</a>
-                        </div>
-                    </div>
+            <article class="card-user box-typical" style="border-radius: 19px">
+                
+                <div class="">
+                    <img src="img/photo-184-1.jpg" style="height: 110px;" alt="">
                 </div>
-                <div class="card-user-photo">
-                    <img src="img/photo-184-1.jpg" alt="">
-                </div>
-                <div class="card-user-name">Douglas Diaz</div>
-                <div class="card-user-status">in disqussion</div>
-                <a href="#" class="btn btn-rounded">Follow</a>
+                <div class="card-user-name">Paquete Tingua</div>
+                <div class="card-user-status">S/. 344.00 </div>
+                <a href="#" class="btn btn-rounded">Ver paquete</a>
                 <div class="card-user-social">
                     <a href="#">
                         <i class="font-icon font-icon-fb-fill"></i>
@@ -200,202 +155,8 @@
                 </div>-->
             </article><!--.card-user-->
         </div>
-        <div class="col-sm-6 col-md-4 col-xl-3">
-            <article class="card-user box-typical">
-                <a href="#" class="card-user-action float-left">
-                    <i class="font-icon font-icon-revers"></i>
-                </a>
-                <div class="card-user-action float-right">
-                    <div class="dropdown dropdown-user-menu">
-                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-option-vertical"></span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant and Verbal</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real Gmat Test</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep Official App</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-users"></span>CATprer Test</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-comments"></span>Third Party Test</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-user-photo">
-                    <img src="img/photo-184-1.jpg" alt="">
-                </div>
-                <div class="card-user-name">Douglas Diaz</div>
-                <div class="card-user-status">in disqussion</div>
-                <a href="#" class="btn btn-rounded">Follow</a>
-                <div class="card-user-social">
-                    <a href="#">
-                        <i class="font-icon font-icon-fb-fill"></i>
-                    </a>
-                    <a href="#">
-                        <i class="font-icon font-icon-vk-fill"></i>
-                    </a>
-                    <a href="#">
-                        <i class="font-icon font-icon-in-fill"></i>
-                    </a>
-                    <a href="#">
-                        <i class="font-icon font-icon-tw-fill"></i>
-                    </a>
-                </div>
-                <!--<div class="card-user-info-row">
-                    <i class="font-icon font-icon-import"></i>
-                    Imported from Github
-                </div>
-                <div class="card-user-info-row">
-                    <i class="font-icon font-icon-user"></i>
-                    By Wayne Gray
-                </div>-->
-            </article><!--.card-user-->
-        </div>
-        <div class="col-sm-6 col-md-4 col-xl-3">
-            <article class="card-user box-typical">
-                <a href="#" class="card-user-action float-left">
-                    <i class="font-icon font-icon-revers"></i>
-                </a>
-                <div class="card-user-action float-right">
-                    <div class="dropdown dropdown-user-menu">
-                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-option-vertical"></span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant and Verbal</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real Gmat Test</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep Official App</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-users"></span>CATprer Test</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-comments"></span>Third Party Test</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-user-photo">
-                    <img src="img/photo-184-1.jpg" alt="">
-                </div>
-                <div class="card-user-name">Douglas Diaz</div>
-                <div class="card-user-status">in disqussion</div>
-                <a href="#" class="btn btn-rounded">Follow</a>
-                <div class="card-user-social">
-                    <a href="#">
-                        <i class="font-icon font-icon-fb-fill"></i>
-                    </a>
-                    <a href="#">
-                        <i class="font-icon font-icon-vk-fill"></i>
-                    </a>
-                    <a href="#">
-                        <i class="font-icon font-icon-in-fill"></i>
-                    </a>
-                    <a href="#">
-                        <i class="font-icon font-icon-tw-fill"></i>
-                    </a>
-                </div>
-                <!--<div class="card-user-info-row">
-                    <i class="font-icon font-icon-import"></i>
-                    Imported from Github
-                </div>
-                <div class="card-user-info-row">
-                    <i class="font-icon font-icon-user"></i>
-                    By Wayne Gray
-                </div>-->
-            </article><!--.card-user-->
-        </div>
-        <div class="col-sm-6 col-md-4 col-xl-3">
-            <article class="card-user box-typical">
-                <a href="#" class="card-user-action float-left">
-                    <i class="font-icon font-icon-revers"></i>
-                </a>
-                <div class="card-user-action float-right">
-                    <div class="dropdown dropdown-user-menu">
-                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-option-vertical"></span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant and Verbal</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real Gmat Test</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep Official App</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-users"></span>CATprer Test</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-comments"></span>Third Party Test</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-user-photo">
-                    <img src="img/photo-184-1.jpg" alt="">
-                </div>
-                <div class="card-user-name">Douglas Diaz</div>
-                <div class="card-user-status">in disqussion</div>
-                <a href="#" class="btn btn-rounded">Follow</a>
-                <div class="card-user-social">
-                    <a href="#">
-                        <i class="font-icon font-icon-fb-fill"></i>
-                    </a>
-                    <a href="#">
-                        <i class="font-icon font-icon-vk-fill"></i>
-                    </a>
-                    <a href="#">
-                        <i class="font-icon font-icon-in-fill"></i>
-                    </a>
-                    <a href="#">
-                        <i class="font-icon font-icon-tw-fill"></i>
-                    </a>
-                </div>
-                <!--<div class="card-user-info-row">
-                    <i class="font-icon font-icon-import"></i>
-                    Imported from Github
-                </div>
-                <div class="card-user-info-row">
-                    <i class="font-icon font-icon-user"></i>
-                    By Wayne Gray
-                </div>-->
-            </article><!--.card-user-->
-        </div>
-        <div class="col-sm-6 col-md-4 col-xl-3">
-            <article class="card-user box-typical">
-                <a href="#" class="card-user-action float-left">
-                    <i class="font-icon font-icon-revers"></i>
-                </a>
-                <div class="card-user-action float-right">
-                    <div class="dropdown dropdown-user-menu">
-                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-option-vertical"></span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant and Verbal</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real Gmat Test</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep Official App</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-users"></span>CATprer Test</a>
-                            <a class="dropdown-item" href="#"><span class="font-icon font-icon-comments"></span>Third Party Test</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-user-photo">
-                    <img src="img/photo-184-1.jpg" alt="">
-                </div>
-                <div class="card-user-name">Douglas Diaz</div>
-                <div class="card-user-status">in disqussion</div>
-                <a href="#" class="btn btn-rounded">Follow</a>
-                <div class="card-user-social">
-                    <a href="#">
-                        <i class="font-icon font-icon-fb-fill"></i>
-                    </a>
-                    <a href="#">
-                        <i class="font-icon font-icon-vk-fill"></i>
-                    </a>
-                    <a href="#">
-                        <i class="font-icon font-icon-in-fill"></i>
-                    </a>
-                    <a href="#">
-                        <i class="font-icon font-icon-tw-fill"></i>
-                    </a>
-                </div>
-                <!--<div class="card-user-info-row">
-                    <i class="font-icon font-icon-import"></i>
-                    Imported from Github
-                </div>
-                <div class="card-user-info-row">
-                    <i class="font-icon font-icon-user"></i>
-                    By Wayne Gray
-                </div>-->
-            </article><!--.card-user-->
-        </div>
+
+        
     </div><!--.card-user-grid-->
 </div><!--.container-fluid-->
 @endsection
