@@ -93,5 +93,18 @@
     
 
 
+
+
+
+
+
+
+
+
+<!--
+
+http://www.forosdelweb.com/f13/obtener-solo-valor-tr-con-onclick-1004289/
+
+-->
     
 @endsection
