@@ -46,6 +46,24 @@ class UsuariosController extends Controller
     public function mostrarFormularioReservaNivelAdmin(){
         return view('reservas/formularioreservar');
     }
+    public function mostrarinicio(){
+        return view('vistalanding/iniciolanding');
+    }
+    public function mostrarabout(){
+        return view('vistalanding/nosotroslanding');
+    }
+    public function mostrarDestinos(){
+        return view('vistalanding/destinoslanding');
+    }
+    public function mostrarContacto(){
+        return view('vistalanding/contactolanding');
+    }
+    public function mostrarFormularioLogin(){
+        return view('vistalanding/contactolanding');
+    }
+    public function homedash(){
+        return view('iniciodashboard');
+    }
     /**
      * Show the form for creating a new resource.
      *

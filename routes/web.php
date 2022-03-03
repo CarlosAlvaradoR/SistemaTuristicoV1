@@ -10,24 +10,24 @@ use App\Models\Usuarios;
 
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\PersonasController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
 
-Route::get('/', [PersonasController::class, 'index'])->name('personas.index');
-Route::get('/create', [PersonasController::class, 'create'])->name('personas.create');
-Route::get('/edit', [PersonasController::class, 'edit'])->name('personas.edit');
-|
-*/
 
 Route::get('/', function () {
     return view('iniciodashboard');
 });
+
+
+
+//**************************************************************** */
+//RUTAS PARA EL LANDING
+Route::get('/', [UsuariosController::class, 'mostrarinicio'])->name('inicio.landing');//Inicio
+Route::get('/about', [UsuariosController::class, 'mostrarabout'])->name('about.landing');//Inicio 
+Route::get('/destination', [UsuariosController::class, 'mostrarDestinos'])->name('destination.landing');//Mostrar Destinos
+Route::get('/contact', [UsuariosController::class, 'mostrarContacto'])->name('contact.landing');//Mostrar Contacto
+Route::get('/account', [UsuariosController::class, 'mostrarFormularioLogin'])->name('account.landing');//Mostrar Formulario de Inicio de Sesion
+//Route::get('/account', [UsuariosController::class, 'mostrarContacto'])->name('contact.landing');//Mostrar Formulario de nuevos Usuarios
+//**************************************************************** */
+
 
 
 
@@ -36,9 +36,8 @@ Route::get('/', function () {
 // RUTAS PARA EL DASHBOARD
 
 /** PARA EL INICIO */
-Route::get('/iniciodashboard', function () {
-    return view('iniciodashboard');
-});
+Route::get('/homedash', [UsuariosController::class, 'homedash'])->name('home.dashboard');
+
 
 
 
