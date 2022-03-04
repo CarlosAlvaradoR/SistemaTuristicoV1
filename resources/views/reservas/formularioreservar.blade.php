@@ -31,61 +31,174 @@
                 </header><!--.files-manager-header-->
 
                 <div class="files-manager-content">
-                    <div class="files-manager-content-in scrollable-block">
-                        <div class="fm-file-grid">
-                            <div class="fm-file selected">
-                                <div class="fm-file-icon">
-                                    <img src="img/folder.png" alt="">
-                                </div>
-                                <div class="fm-file-name">App design assets</div>
-                                <div class="fm-file-size">7 files, 358 MB</div>
+                    <div class="container-fluid">
+                        <br>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <form role="form">
+                                    <div class="form-group">
+                                         
+                                        <label for="dni">
+                                            Ingrese DNI
+                                        </label>
+                                        <input type="text" class="form-control" id="dni" />
+                                    </div>
+                                    
+                                </form>
                             </div>
-                            <div class="fm-file">
-                                <div class="fm-file-icon">
-                                    <img src="img/folder.png" alt="">
-                                </div>
-                                <div class="fm-file-name">Inspiration</div>
-                                <div class="fm-file-size">144 files, 52 MB</div>
-                            </div>
-                            <div class="fm-file">
-                                <div class="fm-file-icon">
-                                    <img src="img/folder.png" alt="">
-                                </div>
-                                <div class="fm-file-name">2014_projects.rar</div>
-                                <div class="fm-file-size">4 MB</div>
-                            </div>
-                            <div class="fm-file">
-                                <div class="fm-file-icon">
-                                    <img src="img/file.png" alt="">
-                                </div>
-                                <div class="fm-file-name">Inspiration</div>
-                                <div class="fm-file-size">7 files, 358 MB</div>
+                            <div class="col-md-4">
+                                 <br>
+                                <button type="button" class="btn btn-success">
+                                    Buscar
+                                </button>
                             </div>
                         </div>
-                    </div><!--.files-manager-content-in-->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <form role="form">
+                                    <div class="form-group">
+                                        <label for="nombres">
+                                            Nombres
+                                        </label>
+                                        <input type="email" class="form-control" id="nombres" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="apellidos">
+                                            Apellidos
+                                        </label>
+                                        <input type="text" class="form-control" id="apellidos" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="direccion">
+                                            Dirección
+                                        </label>
+                                        <input type="email" class="form-control" id="direccion" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">
+                                            Género
+                                        </label>
+                                        <input type="text" class="form-control" id="exampleInputPassword1" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                            DNI
+                                        </label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">
+                                            Email
+                                        </label>
+                                        <input type="text" class="form-control" id="exampleInputPassword1" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                            Teléfono
+                                        </label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">
+                                            Nacionalidad
+                                        </label>
+                                        <input type="text" class="form-control" id="exampleInputPassword1" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                            Número de Pasaporte
+                                        </label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">
+                                            Ruta de Pasaporte
+                                        </label>
+                                        <input type="text" class="form-control" id="exampleInputPassword1" />
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">
+                                        Submit
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        Submit
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="col-md-4">
+                                <form role="form">
+                                    <div class="form-group">
+                                         
+                                        <label for="idpaquete">
+                                            ID
+                                        </label>
+                                        <input type="text" class="form-control" id="idpaquete" />
+                                    </div>
+                                    <div class="form-group">
+                                         
+                                        <label for="exampleInputEmail1">
+                                            Paquete
+                                        </label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1" />
+                                    </div>
+                                    <div class="form-group">
+                                         
+                                        <label for="exampleInputPassword1">
+                                            Cantidad
+                                        </label>
+                                        <input type="text" class="form-control" id="exampleInputPassword1" />
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">
+                                        Reservar
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="col-md-4">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                #
+                                            </th>
+                                            <th>
+                                                Paquete
+                                            </th>
+                                            <th>
+                                                Detalles
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="click" data-valor="valor">
+                                            <td>
+                                                1
+                                            </td>
+                                            <td class="boton">
+                                                Caminata a Chávin de Hiantar
+                                            </td>
+                                            <td>
+                                                <a href="">Ver</a>
+                                            </td>
+                                        </tr>
+                                        <tr class="click" data-valor="valor">
+                                            <td>
+                                                1
+                                            </td>
+                                            <td class="boton">
+                                                Caminata a Huaraz
+                                            </td>
+                                            <td>
+                                                <a href="">Ver</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div><!--.files-manager-content-->
 
-                <section class="files-manager-aside">
-                    <div class="files-manager-aside-section">
-                        <div class="box-typical-header-sm">PSD</div>
-                        <div class="info-list">
-                            <p>Owner: Mark Osborn</p>
-                            <p>Changed: 08.01.2016  12:45</p>
-                            <p>Downloaded: 9 times</p>
-                            <p>The link was viewed: 83 times</p>
-                        </div>
-                        <a href="#" class="btn btn-rounded"><i class="font-icon-left font-icon-download-3"></i>Download</a>
-                    </div>
-                    <div class="files-manager-aside-section">
-                        <div class="box-typical-header-sm">Share a folder</div>
-                        <input type="text" class="form-control" value="http://yadi.sk/d/kitSdZIXmjnD8"/>
-                        <a href="#" class="soc"><i class="font-icon font-icon-fb-fill"></i></a>
-                        <a href="#" class="soc"><i class="font-icon font-icon-vk-fill"></i></a>
-                        <a href="#" class="soc"><i class="font-icon font-icon-ok-fill"></i></a>
-                        <a href="#" class="soc"><i class="font-icon font-icon-tw-fill"></i></a>
-                        <a href="#" class="soc"><i class="font-icon font-icon-gp-fill"></i></a>
-                    </div>
-                </section><!--.files-manager-aside-->
+                
             </div><!--.files-manager-panel-in-->
         </div><!--.files-manager-panels-->
     </section><!--.files-manager-->
@@ -102,9 +215,7 @@
 
 
 <!--
-
 http://www.forosdelweb.com/f13/obtener-solo-valor-tr-con-onclick-1004289/
-
 -->
     
 @endsection

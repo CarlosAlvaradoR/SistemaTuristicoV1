@@ -457,11 +457,15 @@
 	                <span class="lbl">Paquetes</span>
 	            </a>
 	        </li>
-			<li class="darkblue">
-	            <a href="{{ route('reservas.formulario.nivel.admin') }}">
+			<li class="red with-sub">
+	            <span>
 	                <i class="fas fa-mountain glyphicon glyphicon-send"></i>
 	                <span class="lbl">Reservas</span>
-	            </a>
+	            </span>
+	            <ul>
+	                <li><a href="{{ route('reservas.formulario.nivel.admin') }}"><span class="lbl">Nuevo</span><span class="label label-custom label-pill label-succes">new</span></a></li>
+	                <li><a href="{{ route('usuarios.permisos') }}"><span class="lbl">Pendientes</span></a></li>   
+	            </ul>
 	        </li>
 
 	    </ul>
@@ -524,5 +528,25 @@
 		});
 	</script>
 <script src="{{ asset('js/app.js') }}"></script>
+
+<script>
+	$(document).ready(function(){
+		$(".boton").click(function(e) {
+        e.preventDefault();
+        //var data = $(this).attr("data-valor");
+        //alert(data); 
+		
+		/*var valores = $(this).parents("tr").find("td")[0].innerHTML;
+        console.log(valores);
+		var valores2 = $(this).parents("tr").find("td")[1].innerHTML;
+        
+		$('#idpaquete').val(valores);
+        //alert(valores);
+		*/
+
+        });   
+    
+	});
+</script>
 </body>
 </html>
