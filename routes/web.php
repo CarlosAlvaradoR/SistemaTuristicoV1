@@ -10,7 +10,7 @@ use App\Models\Usuarios;
 
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\PersonasController;
-
+use App\Http\Controllers\PaquetesTuristicosController;
 
 Route::get('/', function () {
     return view('iniciodashboard');
@@ -59,7 +59,7 @@ Route::get('/organitations', [UsuariosController::class, 'mostrarTabsOrgaAceEqui
 Route::get('/packages', [UsuariosController::class, 'mostrarPaquetesActivos'])->name('paquetes.activos.galeria');
 Route::get('/packagescreate', [UsuariosController::class, 'formularionuevospaquetes'])->name('paquetes.formulario.nuevo');
 Route::get('/packagesdetails', [UsuariosController::class, 'detallepaquetes'])->name('paquetes.detalles');
-
+Route::get('/mostrarData', [PaquetesTuristicosController::class, 'index'])->name('paquetes.index');
 
 /*** PARA LAS RESERVAS */
 Route::get('/reserved', [UsuariosController::class, 'mostrarFormularioReservaNivelAdmin'])->name('reservas.formulario.nivel.admin');

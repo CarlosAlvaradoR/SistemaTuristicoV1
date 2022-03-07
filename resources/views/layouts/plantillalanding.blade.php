@@ -57,7 +57,7 @@
                                             <li><a href="{{ route('about.landing') }}">Nosotros</a></li>
                                             <li><a class="" href="{{ route('destination.landing') }}">Destinos</a></l/li>
                                             <li><a href="{{ route('contact.landing') }}">Contacto</a></li>
-                                            <li><a href="scriptslanding/#">Cuenta <i class="ti-angle-down"></i></a>
+                                            <li><a href="#">Cuenta <i class="ti-angle-down"></i></a>
                                                 <ul class="submenu">
                                                         <li><a href="{{ route('usuarios.nuevos') }}">Ingresar</a></li>
                                                         <!--<li><a href="scriptslanding/elements.php">elements</a></li>-->
