@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\PaquetesTuristicos;
+use App\Models\Fotogalerias;
+use App\Models\FotoPaquetes;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,48 +20,51 @@ class PaquetesTuristicosController extends Controller
     public function index()
     {
         //
-        $idpersonas=(DB::select('SELECT * FROM paquetes_turisticos p'));
-        return $idpersonas;
+        $paquetes=(DB::select('SELECT * FROM paquetes_turisticos p'));
+        return view('paqueteturistico', compact('paquetes'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function detallepaquetes(){
+        $galeriaFotos=(DB::select('SELECT fg.descripcionfoto, fg.imagen, f.idfotogaleria, idpaqueteturistico FROM foto_paquetes f
+        INNER JOIN fotogalerias fg on f.idfoto_paquete=fg.idfotogaleria'));
+        //return $galeriaFotos;
+        return view('detallespaquete', compact('galeriaFotos'));
+    }
+
+
     public function create()
     {
         //
+        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'nombre' => 'required',  'imagen_principal' => 'required|image|mimes:jpeg,png,svg|max:1024'
+        ]);
+
+         $paquetesTuristicos = $request->all();
+         
+         if($imagen_principal = $request->file('imagen_principal')) {
+             $rutaGuardarImg = 'imagen/';
+             $imagenPaquete = date('YmdHis'). "." . $imagen_principal->getClientOriginalExtension();
+             $imagen_principal->move($rutaGuardarImg, $imagenPaquete);
+             $paquetesTuristicos['imagen_principal'] = "$imagenPaquete";             
+         }
+         
+         PaquetesTuristicos::create($paquetesTuristicos);
+         return redirect()->route('paquetes.formulario.nuevo')->with("succes","Agregado con éxito");
+        //return "Insertado";
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\PaquetesTuristicos  $paquetesTuristicos
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show(PaquetesTuristicos $paquetesTuristicos)
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PaquetesTuristicos  $paquetesTuristicos
-     * @return \Illuminate\Http\Response
-     */
     public function edit(PaquetesTuristicos $paquetesTuristicos)
     {
         //

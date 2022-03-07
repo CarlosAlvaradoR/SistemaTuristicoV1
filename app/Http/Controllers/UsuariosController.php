@@ -8,14 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class UsuariosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
-
         return view('nuevosUsuarios');
     }
 
@@ -34,15 +29,10 @@ class UsuariosController extends Controller
     }
 
 
-    public function mostrarPaquetesActivos(){
-        return view('paqueteturistico');
-    }
     public function formularionuevospaquetes(){
         return view('formulariopaquetesnuevos');
     }//
-    public function detallepaquetes(){
-        return view('detallespaquete');
-    }
+    
     public function mostrarFormularioReservaNivelAdmin(){
         return view('reservas/formularioreservar');
     }

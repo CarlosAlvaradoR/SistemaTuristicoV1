@@ -11,6 +11,7 @@ use App\Models\Usuarios;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\PersonasController;
 use App\Http\Controllers\PaquetesTuristicosController;
+use App\Http\Controllers\FotogaleriasController;
 
 Route::get('/', function () {
     return view('iniciodashboard');
@@ -56,10 +57,27 @@ Route::get('/organitations', [UsuariosController::class, 'mostrarTabsOrgaAceEqui
 
 
 /** PARA LOS PQUETES */
-Route::get('/packages', [UsuariosController::class, 'mostrarPaquetesActivos'])->name('paquetes.activos.galeria');
+Route::get('/packages', [PaquetesTuristicosController::class, 'index'])->name('paquetes.activos.galeria');
 Route::get('/packagescreate', [UsuariosController::class, 'formularionuevospaquetes'])->name('paquetes.formulario.nuevo');
-Route::get('/packagesdetails', [UsuariosController::class, 'detallepaquetes'])->name('paquetes.detalles');
+Route::post('/pakcagestore', [PaquetesTuristicosController::class, 'store'])->name('paquetes.turisticos.creacion');//CREAR Guardar NUEVOS PAQUETES
+Route::get('/packagesdetails', [PaquetesTuristicosController::class, 'detallepaquetes'])->name('paquetes.detalles');//MUESTRA LOS paquetes en el bucle
 Route::get('/mostrarData', [PaquetesTuristicosController::class, 'index'])->name('paquetes.index');
+
+
+//FotoGalerías
+Route::get('/packagecontrollers', [FotogaleriasController::class, 'index'])->name('foto.galerias');//CREAR Guardar NUEVOS PAQUETES
+
+
+/****************************** */
+
+
+
+
+
+
+
+
+
 
 /*** PARA LAS RESERVAS */
 Route::get('/reserved', [UsuariosController::class, 'mostrarFormularioReservaNivelAdmin'])->name('reservas.formulario.nivel.admin');

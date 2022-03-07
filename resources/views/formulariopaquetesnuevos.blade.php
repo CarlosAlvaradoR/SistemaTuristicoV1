@@ -15,57 +15,74 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <form role="form">
-                                        <div class="form-group">
-                                             
-                                            <label for="exampleInputEmail1">
-                                                Nombre del Paquete
-                                            </label>
-                                            <input type="email" class="form-control" id="exampleInputEmail1" />
-                                        </div>
-                                        <div class="form-group">
-                                             
-                                            <label for="exampleInputPassword1">
-                                                Monto del Paquete
-                                            </label>
-                                            <input type="password" class="form-control" id="exampleInputPassword1" />
-                                        </div>
-                                        <div class="form-group">
-                                             
-                                            <label for="exampleInputPassword1">
-                                                Estado del Paquete
-                                            </label>
-                                            <input type="password" class="form-control" id="exampleInputPassword1" />
-                                        </div>
-                                        
-                                    </form>
-                                </div>
-                                <div class="col-md-6">
-                                    <form role="form">
-                                        
-                                        <div class="form-group">
-                                             
-                                            <label for="exampleInputFile">
-                                                Imagen Principal
-                                            </label>
-                                            <input type="file" class="form-control-file" id="exampleInputFile" />
-                                            <br><br><br>
-                                            <hr>
-                                            <div>
-                                                <button type="button" class="btn btn-primary">
-                                                    Guardar
-                                                </button>
-                                                <button type="button" class="btn btn-danger">
-                                                    Cancelar
-                                                </button>
-                                            </div> 
-                                        </div>
-                                    </form>
+                            @if ($mensaje = Session::get('succes'))
+                                <div class="alert alert-success alert-dismissable">
                                     
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                                        ×
+                                    </button>
+                                    <h4>
+                                        MUY BIEN!
+                                    </h4>Paquete insertado correctamente
                                 </div>
-                            </div>
+                            @endif
+                            
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form action="{{ route('paquetes.turisticos.creacion') }}" method="post" enctype="multipart/form-data">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        
+                                            <div class="form-group">
+                                                 
+                                                <label for="nombre">
+                                                    Nombre del Paquete
+                                                </label>
+                                                <input type="text" name="nombre" class="form-control" id="nombre" />
+                                            </div>
+                                            <div class="form-group">
+                                                 
+                                                <label for="precio">
+                                                    Monto del Paquete
+                                                </label>
+                                                <input type="text" name="precio" class="form-control" id="precio" />
+                                            </div>
+                                            <div class="form-group">
+                                                 
+                                                <label for="estado">
+                                                    Estado del Paquete
+                                                </label>
+                                                <input type="text" name="estado" class="form-control" id="estado" />
+                                            </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        
+                                            
+                                            <div class="form-group">
+                                                 
+                                                <label for="imagen_principal">
+                                                    Imagen Principal
+                                                </label>
+                                                <input type="file" name="imagen_principal" class="form-control-file" id="imagen_principal" accept="image/*" />
+                                                <br><br><br>
+                                                <hr>
+                                                <div>
+                                                    <button type="submit" class="btn btn-primary">
+                                                        Guardar
+                                                    </button>
+                                                    
+                                                    <a href="{{ route('paquetes.activos.galeria') }}" class="btn btn-danger" >Cancelar</a>
+                                                </div> 
+                                            </div>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
