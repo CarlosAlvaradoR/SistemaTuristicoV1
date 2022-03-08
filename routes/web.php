@@ -61,13 +61,14 @@ Route::get('/organitations', [UsuariosController::class, 'mostrarTabsOrgaAceEqui
 Route::get('/packages', [PaquetesTuristicosController::class, 'index'])->name('paquetes.activos.galeria');
 Route::get('/packagescreate', [UsuariosController::class, 'formularionuevospaquetes'])->name('paquetes.formulario.nuevo');
 Route::post('/pakcagestore', [PaquetesTuristicosController::class, 'store'])->name('paquetes.turisticos.creacion');//CREAR Guardar NUEVOS PAQUETES
-Route::get('/packagesdetails', [PaquetesTuristicosController::class, 'detallepaquetes'])->name('paquetes.detalles');//MUESTRA LOS paquetes en el bucle
+Route::get('/packagesdetails/{idpaqueteturistico}', [PaquetesTuristicosController::class, 'detallepaquetes'])->name('paquetes.detalles');//MUESTRA LOS paquetes en el bucle
 Route::get('/mostrarData', [PaquetesTuristicosController::class, 'index'])->name('paquetes.index');
 
 
 //FotoGalerías
 Route::get('/packagecontrollers', [FotogaleriasController::class, 'index'])->name('foto.galerias');//CREAR Guardar NUEVOS PAQUETES
-
+//Mapas
+Route::get('/newMap', [PaquetesTuristicosController::class, 'formularioNuevoMapa'])->name('formulario.nuevo.mapa.paquete');//CREAR Guardar NUEVOS PAQUETES
 
 /****************************** */
 

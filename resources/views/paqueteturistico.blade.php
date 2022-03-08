@@ -1,7 +1,8 @@
 @extends('layouts/plantilladashboard')
 
 @section('tituloPagina','Paquetes Turísticos')
-    
+
+
 @section('contenido')
 <header class="page-content-header">
     <div class="container-fluid">
@@ -31,7 +32,10 @@
                     </div>
                     <div class="card-user-name">{{$paquete->nombre}}</div>
                     <div class="card-user-status">S/. {{$paquete->precio}}</div>
-                    <a href="{{ route('paquetes.detalles') }}" class="btn btn-rounded">Ver paquete</a>
+                    
+                    <a href="{{ route("paquetes.detalles", $paquete->idpaqueteturistico) }}" method="get" class="btn btn-rounded">
+                        Ver Paquete
+                    </a>
                     <div class="card-user-social">
                         <a href="#">
                             <i class="font-icon font-icon-fb-fill"></i>
