@@ -117,13 +117,13 @@
                     <div class="col-xl-4 col-md-6 col-lg-4 ">
                         <div class="footer_widget">
                             <div class="footer_logo">
-                                <a href="scriptslanding/#">
+                                <a href="#">
                                     <img src="scriptslanding/img/footer_logo.png" alt="">
                                 </a>
                             </div>
                             <p>5th flora, 700/D kings road, green <br> lane New York-1782 <br>
-                                <a href="scriptslanding/#">+10 367 826 2567</a> <br>
-                                <a href="scriptslanding/#">contact@carpenter.com</a>
+                                <a href="#">+10 367 826 2567</a> <br>
+                                <a href="#">contact@carpenter.com</a>
                             </p>
                             <div class="socail_links">
                                 <ul>
@@ -160,20 +160,20 @@
                     <div class="col-xl-2 col-md-6 col-lg-2">
                         <div class="footer_widget">
                             <h3 class="footer_title">
-                                Company
+                                Compañía
                             </h3>
                             <ul class="links">
-                                <li><a href="scriptslanding/#">Pricing</a></li>
-                                <li><a href="scriptslanding/#">About</a></li>
-                                <li><a href="scriptslanding/#"> Gallery</a></li>
-                                <li><a href="scriptslanding/#"> Contact</a></li>
+                                <li><a href="scriptslanding/#">Inicio</a></li>
+                                <li><a href="scriptslanding/#">Nosotros</a></li>
+                                <li><a href="scriptslanding/#"> Destinos</a></li>
+                                <li><a href="scriptslanding/#"> Contáctanos</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6 col-lg-3">
                         <div class="footer_widget">
                             <h3 class="footer_title">
-                                Popular destination
+                                Destinos Populares
                             </h3>
                             <ul class="links double_links">
                                 <li><a href="scriptslanding/#">Indonesia</a></li>
@@ -236,7 +236,7 @@
                     <div class="col-xl-12">
                         <p class="copy_right text-center">
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> Derechso Reservados | Empresa <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="scriptslanding/https://colorlib.com" target="_blank">Colorlib</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> Derechso Reservados | Empresa <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://google.com" target="_blank">Charlees Tours</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </p>
                     </div>

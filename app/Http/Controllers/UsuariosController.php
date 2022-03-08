@@ -42,9 +42,7 @@ class UsuariosController extends Controller
     public function mostrarabout(){
         return view('vistalanding/nosotroslanding');
     }
-    public function mostrarDestinos(){
-        return view('vistalanding/destinoslanding');
-    }
+    
     public function mostrarContacto(){
         return view('vistalanding/contactolanding');
     }

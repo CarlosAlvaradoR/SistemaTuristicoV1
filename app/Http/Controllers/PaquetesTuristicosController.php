@@ -24,13 +24,17 @@ class PaquetesTuristicosController extends Controller
         return view('paqueteturistico', compact('paquetes'));
     }
 
-    public function detallepaquetes(){
+    public function detallepaquetes(){ //Lo que se encuentra en los tabs al darle click a un paquete
         $galeriaFotos=(DB::select('SELECT fg.descripcionfoto, fg.imagen, f.idfotogaleria, idpaqueteturistico FROM foto_paquetes f
         INNER JOIN fotogalerias fg on f.idfoto_paquete=fg.idfotogaleria'));
+        $mapaReferencias=(DB::select('SELECT f.descripcionfoto FROM fotogalerias f'));
         //return $galeriaFotos;
-        return view('detallespaquete', compact('galeriaFotos'));
+        return view('detallespaquete', compact('galeriaFotos','mapaReferencias'));
     }
 
+    public function mostrarDestinos(){
+        return view('vistalanding/destinoslanding');
+    }
 
     public function create()
     {
@@ -91,5 +95,10 @@ class PaquetesTuristicosController extends Controller
     public function destroy(PaquetesTuristicos $paquetesTuristicos)
     {
         //
+    }
+
+
+    public function mostrarDetallePaquete(){
+        return view('vistalanding/destinodetails');
     }
 }

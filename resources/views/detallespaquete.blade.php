@@ -137,7 +137,67 @@
                         </div>
                     </div>
                 </div><!--.tab-pane-->
-                <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-2">Tab 2</div><!--.tab-pane-->
+                <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-2">
+                        <div class="container-fluid">
+                            
+                            <div class="col-md-12">
+                                <div class="row">
+                                    
+                                    <div class="col-md-2">
+                                        
+                                        <button type="button" class="btn btn-primary">
+                                            Añadir Ruta
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card-block">
+                                    <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Ruta</th>
+                                                <th>Descripcion</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($mapaReferencias as $mapaReferencia)
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>{{$mapaReferencia->descripcionfoto}}</td>
+                                                    <td>{{$mapaReferencia->descripcionfoto}}</td>
+                                                    <td>
+                                                        <a href="#" target="_blank" rel="noopener noreferrer">
+                                                            <span class="btn btn-warning btn-sm" onclick="alert('HH')">
+                                                                <span class="fa fa-pencil-square-o"></span>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" target="_blank" rel="noopener noreferrer">
+                                                            <span class="btn btn-danger btn-sm" onclick="">
+                                                                <span class="fa fa-trash"></span>
+                                                            </span>
+                                                        </a>
+                                                        <a href=#" title="Permisos" target="_blank" rel="noopener noreferrer">
+                                                            <span class="btn btn-info btn-sm" onclick="">
+                                                                <span class="fas fa-eye"></span>
+                                                            </span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-3">Tab 3</div><!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-4">Tab 4</div><!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-5">Tab 5</div><!--.tab-pane-->

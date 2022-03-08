@@ -94,8 +94,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
 
                         <div class="reset_btn">
@@ -113,7 +111,7 @@
                                 <a href="#" class="prise">$500</a>
                             </div>
                             <div class="place_info">
-                                <a href="destination_details.php"><h3>California</h3></a>
+                                <a href="{{ route('destination.landing.details') }}"><h3>California</h3></a>
                                 <p>United State of America</p>
                                 <div class="rating_days d-flex justify-content-between">
                                     <span class="d-flex justify-content-center align-items-center">
@@ -139,7 +137,7 @@
                                 <a href="#" class="prise">$500</a>
                             </div>
                             <div class="place_info">
-                                <a href="destination_details.php"><h3>Korola Megna</h3></a>
+                                <a href="{{ route('destination.landing.details') }}"><h3>Korola Megna</h3></a>
                                 <p>United State of America</p>
                                 <div class="rating_days d-flex justify-content-between">
                                     <span class="d-flex justify-content-center align-items-center">
@@ -165,7 +163,7 @@
                                 <a href="#" class="prise">$500</a>
                             </div>
                             <div class="place_info">
-                                <a href="destination_details.php"><h3>London</h3></a>
+                                <a href="{{ route('destination.landing.details') }}"><h3>London</h3></a>
                                 <p>United State of America</p>
                                 <div class="rating_days d-flex justify-content-between">
                                     <span class="d-flex justify-content-center align-items-center">
@@ -191,7 +189,7 @@
                                 <a href="#" class="prise">$500</a>
                             </div>
                             <div class="place_info">
-                                <a href="destination_details.php"><h3>Miami Beach</h3></a>
+                                <a href="{{ route('destination.landing.details') }}"><h3>Miami Beach</h3></a>
                                 <p>United State of America</p>
                                 <div class="rating_days d-flex justify-content-between">
                                     <span class="d-flex justify-content-center align-items-center">
@@ -217,7 +215,7 @@
                                 <a href="#" class="prise">$500</a>
                             </div>
                             <div class="place_info">
-                                <a href="destination_details.php"><h3>California</h3></a>
+                                <a href="{{ route('destination.landing.details') }}"><h3>California</h3></a>
                                 <p>United State of America</p>
                                 <div class="rating_days d-flex justify-content-between">
                                     <span class="d-flex justify-content-center align-items-center">
@@ -243,7 +241,7 @@
                                 <a href="#" class="prise">$500</a>
                             </div>
                             <div class="place_info">
-                                <a href="destination_details.php"><h3>Saintmartine Iceland</h3></a>
+                                <a href="{{ route('destination.landing.details') }}"><h3>Saintmartine Iceland</h3></a>
                                 <p>United State of America</p>
                                 <div class="rating_days d-flex justify-content-between">
                                     <span class="d-flex justify-content-center align-items-center">
