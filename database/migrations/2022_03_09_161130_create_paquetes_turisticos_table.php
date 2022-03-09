@@ -19,6 +19,11 @@ class CreatePaquetesTuristicosTable extends Migration
             $table->decimal('precio', 10,2);
             $table->integer('estado');
             $table->string('imagen_principal', 100);
+
+            $table->integer('idtipopaquete')->unsigned();
+
+            $table->foreign('idtipopaquete')->references('idtipopaquete')->on('tipopaquetes');
+
             $table->timestamps();
         });
     }

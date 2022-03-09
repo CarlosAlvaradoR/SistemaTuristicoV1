@@ -28,8 +28,11 @@ class PaquetesTuristicosController extends Controller
         $galeriaFotos=(DB::select('SELECT fg.descripcionfoto, fg.imagen, f.idfotogaleria, idpaqueteturistico FROM foto_paquetes f
         INNER JOIN fotogalerias fg on f.idfoto_paquete=fg.idfotogaleria'));
         $mapaReferencias=(DB::select('SELECT f.descripcionfoto FROM fotogalerias f'));
-        $nombrePaquetes =(DB::select('SELECT nombre FROM paquetes_turisticos p WHERE idpaqueteturistico="$idpaquete " LIMIT 1'));
+        $nombrePaquetes =(DB::select('SELECT nombre FROM paquetes_turisticos p WHERE idpaqueteturistico= '.$idpaquete.' LIMIT 1'));
         //return $galeriaFotos;
+        //$idpaquetes=$idpaquete;
+        //dd($galeriaFotos);
+        //dd($nombrePaquetes);
         return view('detallespaquete', compact('galeriaFotos','mapaReferencias','nombrePaquetes'));
     }
 

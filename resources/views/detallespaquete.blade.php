@@ -9,11 +9,20 @@
             <div class="tbl">
                 <div class="tbl-row">
                     <div class="tbl-cell">
-                        <h3>Viaje Tingua Rumbo a las Maravillas</h3> 
+                        <h3>
+                            @foreach ($nombrePaquetes as $nombrePaquete)
+                                {{$nombrePaquete->nombre}}
+                            @endforeach 
+                           
+                        </h3> 
                         <ol class="breadcrumb breadcrumb-simple">
                             <li><a href="{{ route('paquetes.activos.galeria') }}">Paquetes</a></li>
                             <li><a href="#">Detalles</a></li>
-                            <li class="active">Viaje Tingua Rumbo a las Maravillas</li>
+                            <li class="active">
+                                @foreach ($nombrePaquetes as $nombrePaquete)
+                                {{$nombrePaquete->nombre}}
+                                @endforeach 
+                            </li>
                         </ol>
                     </div>
                 </div>
@@ -84,9 +93,12 @@
                                     
                                     <div class="col-md-2">
                                          
-                                        <button type="button" class="btn btn-primary">
+                                        <button type="button" >
                                             Nueva fotografía
                                         </button>
+                                        <a href="#" class="btn btn-primary">
+                                            Nueva fotografía
+                                        </a>
                                     </div>
                                 </div>
                             </div>

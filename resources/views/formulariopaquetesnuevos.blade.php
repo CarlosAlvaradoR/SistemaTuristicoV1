@@ -60,7 +60,16 @@
                                             </div>
                                     </div>
                                     <div class="col-md-6">
-                                        
+
+                                        <div class="form-group">
+                                            <label for="idtipopaquete">
+                                                Tipo de Paquete
+                                            </label>
+                                            <select id="inputState" name="idtipopaquete" id="idtipopaquete" class="form-control">
+                                                <option selected>Seleccione...</option>
+                                                <option value="1">Turístico</option>
+                                            </select>
+                                        </div>
                                             
                                             <div class="form-group">
                                                  
@@ -68,7 +77,7 @@
                                                     Imagen Principal
                                                 </label>
                                                 <input type="file" name="imagen_principal" class="form-control-file" id="imagen_principal" accept="image/*" />
-                                                <br><br><br>
+                                                <br><br>
                                                 <hr>
                                                 <div>
                                                     <button type="submit" class="btn btn-primary">
