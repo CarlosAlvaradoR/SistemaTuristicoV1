@@ -26,14 +26,16 @@ class PaquetesTuristicosController extends Controller
 
     public function detallepaquetes($idpaquete){ //Lo que se encuentra en los tabs al darle click a un paquete
         $galeriaFotos=(DB::select('SELECT fg.descripcionfoto, fg.imagen, f.idfotogaleria, idpaqueteturistico FROM foto_paquetes f
-        INNER JOIN fotogalerias fg on f.idfoto_paquete=fg.idfotogaleria'));
+        INNER JOIN fotogalerias fg on f.idfoto_paquete=fg.idfotogaleria WHERE idpaqueteturistico='.$idpaquete.''));
         $mapaReferencias=(DB::select('SELECT f.descripcionfoto FROM fotogalerias f'));
         $nombrePaquetes =(DB::select('SELECT nombre FROM paquetes_turisticos p WHERE idpaqueteturistico= '.$idpaquete.' LIMIT 1'));
         //return $galeriaFotos;
-        //$idpaquetes=$idpaquete;
+        //$idpaquetes=[$idpaquete];
+        $idpaquetes=DB::select('SELECT idpaqueteturistico FROM paquetes_turisticos WHERE idpaqueteturistico='.$idpaquete.' LIMIT 1');
         //dd($galeriaFotos);
         //dd($nombrePaquetes);
-        return view('detallespaquete', compact('galeriaFotos','mapaReferencias','nombrePaquetes'));
+        //return ($nombrePaquetes);
+        return view('detallespaquete', compact('galeriaFotos','mapaReferencias','nombrePaquetes','idpaquetes'));
     }
 
     public function mostrarDestinos(){
