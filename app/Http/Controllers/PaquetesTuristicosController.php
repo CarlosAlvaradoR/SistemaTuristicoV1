@@ -27,7 +27,10 @@ class PaquetesTuristicosController extends Controller
     public function detallepaquetes($idpaquete){ //Lo que se encuentra en los tabs al darle click a un paquete
         $galeriaFotos=(DB::select('SELECT fg.descripcionfoto, fg.imagen, f.idfotogaleria, idpaqueteturistico FROM foto_paquetes f
         INNER JOIN fotogalerias fg on f.idfoto_paquete=fg.idfotogaleria WHERE idpaqueteturistico='.$idpaquete.''));
-        $mapaReferencias=(DB::select('SELECT f.descripcionfoto FROM fotogalerias f'));
+        $mapaReferencias=(DB::select('SELECT  m.idmapareferencial,nombreruta, descripcionruta  FROM mapasreferenciales m
+        INNER JOIN mapas_paquetes ma on m.idmapareferencial=ma.idmapareferencial
+        INNER JOIN paquetes_turisticos p on p.idpaqueteturistico=ma.idpaqueteturistico
+        WHERE p.idpaqueteturistico = '.$idpaquete.''));
         $nombrePaquetes =(DB::select('SELECT nombre FROM paquetes_turisticos p WHERE idpaqueteturistico= '.$idpaquete.' LIMIT 1'));
         //return $galeriaFotos;
         //$idpaquetes=[$idpaquete];
@@ -37,6 +40,8 @@ class PaquetesTuristicosController extends Controller
         //return ($nombrePaquetes);
         return view('detallespaquete', compact('galeriaFotos','mapaReferencias','nombrePaquetes','idpaquetes'));
     }
+
+
 
     public function mostrarDestinos(){
         return view('vistalanding/destinoslanding');
@@ -74,30 +79,21 @@ class PaquetesTuristicosController extends Controller
     public function show(PaquetesTuristicos $paquetesTuristicos)
     {
         //
+        
     }
     public function edit(PaquetesTuristicos $paquetesTuristicos)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PaquetesTuristicos  $paquetesTuristicos
-     * @return \Illuminate\Http\Response
-     */
+   
+    
     public function update(Request $request, PaquetesTuristicos $paquetesTuristicos)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\PaquetesTuristicos  $paquetesTuristicos
-     * @return \Illuminate\Http\Response
-     */
+   
     public function destroy(PaquetesTuristicos $paquetesTuristicos)
     {
         //

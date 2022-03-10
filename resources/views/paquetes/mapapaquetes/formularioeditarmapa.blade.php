@@ -50,10 +50,7 @@
                                 <input type="text" class="form-control" name="descripcionruta" id="descripcionruta">
                             </div>
                         </div>
-                        @foreach ($idpaquetes as $idpaquete)
-                            
-                            <input type="text" name="idpaqueteturistico" id="idpaqueteturistico" value="{{$idpaquete->idpaqueteturistico}}" hidden>
-                        @endforeach
+                        
                         
                         <!--  BUTTONS-->
                         <div class="row">

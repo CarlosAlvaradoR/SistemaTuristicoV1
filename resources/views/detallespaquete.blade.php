@@ -182,24 +182,22 @@
                                             @foreach ($mapaReferencias as $mapaReferencia)
                                                 <tr>
                                                     <td>1</td>
-                                                    <td>{{$mapaReferencia->descripcionfoto}}</td>
-                                                    <td>{{$mapaReferencia->descripcionfoto}}</td>
+                                                    <td>{{$mapaReferencia->nombreruta}}</td>
+                                                    <td>{{$mapaReferencia->descripcionruta}}</td>
                                                     <td>
-                                                        <a href="#" target="_blank" rel="noopener noreferrer">
-                                                            <span class="btn btn-warning btn-sm" onclick="alert('HH')">
+                                                       <form action="{{ route("paquetes.detalles.editar.mapas", $mapaReferencia->idmapareferencial) }}" method="GET">
+                                                            <button class="btn btn-warning btn-sm">
                                                                 <span class="fa fa-pencil-square-o"></span>
-                                                            </span>
-                                                        </a>
-                                                        <a href="#" target="_blank" rel="noopener noreferrer">
-                                                            <span class="btn btn-danger btn-sm" onclick="">
-                                                                <span class="fa fa-trash"></span>
-                                                            </span>
-                                                        </a>
-                                                        <a href=#" title="Permisos" target="_blank" rel="noopener noreferrer">
-                                                            <span class="btn btn-info btn-sm" onclick="">
-                                                                <span class="fas fa-eye"></span>
-                                                            </span>
-                                                        </a>
+                                                            </button>
+                                                       </form>
+                                                       <form action="#" method="post">
+                                                            <a href="#" target="_blank" rel="noopener noreferrer">
+                                                                <span class="btn btn-danger btn-sm" onclick="">
+                                                                    <span class="fa fa-trash"></span>
+                                                                </span>
+                                                            </a>
+                                                       </form>
+                                                        
                                                     </td>
                                                 </tr>
                                             @endforeach

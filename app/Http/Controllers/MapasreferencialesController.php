@@ -12,32 +12,22 @@ use Illuminate\Support\Facades\DB;
 
 class MapasreferencialesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
+    
     public function store(Request $request)
     {
        
@@ -54,50 +44,34 @@ class MapasreferencialesController extends Controller
         $mapaPaquetes->idpaqueteturistico=$request->post('idpaqueteturistico');
         $mapaPaquetes->save();
         
-        return "Insertado correctamente";
-        //return redirect()->route("usuarios.nuevos")->with("succes","Agregado con éxito");
+        //return "Insertado correctamente";
+        return redirect()->route("paquetes.detalles.nuevo.paquetes",[$request->post('idpaqueteturistico')])->with("succes","Agregado con éxito");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Mapasreferenciales  $mapasreferenciales
-     * @return \Illuminate\Http\Response
-     */
+   
     public function show(Mapasreferenciales $mapasreferenciales)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Mapasreferenciales  $mapasreferenciales
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Mapasreferenciales $mapasreferenciales)
+    
+    
+    public function edit($id)
     {
         //
+        //echo $id;
+        return view('paquetes/mapapaquetes/formularioeditarmapa');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Mapasreferenciales  $mapasreferenciales
-     * @return \Illuminate\Http\Response
-     */
+    
+    
     public function update(Request $request, Mapasreferenciales $mapasreferenciales)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Mapasreferenciales  $mapasreferenciales
-     * @return \Illuminate\Http\Response
-     */
+    
+    
     public function destroy(Mapasreferenciales $mapasreferenciales)
     {
         //

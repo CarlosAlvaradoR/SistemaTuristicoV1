@@ -64,7 +64,8 @@ Route::get('/packagescreate', [UsuariosController::class, 'formularionuevospaque
 Route::post('/pakcagestore', [PaquetesTuristicosController::class, 'store'])->name('paquetes.turisticos.creacion');//CREAR Guardar NUEVOS PAQUETES
 Route::get('/packages/details/{idpaqueteturistico}', [PaquetesTuristicosController::class, 'detallepaquetes'])->name('paquetes.detalles');//MUESTRA LOS paquetes en el bucle
 Route::get('/packages/details/newMap/{id}', [PaquetesTuristicosController::class, 'formularioNuevoMapa'])->name('paquetes.detalles.nuevo.paquetes');//MUESTRA LOS paquetes en el bucle
-Route::post('/packages/details/newMap/save', [MapasreferencialesController::class, 'store'])->name('paquetes.detalles.guardar.mapas');//MUESTRA LOS paquetes en el bucle
+Route::post('/packages/details/newMap/save', [MapasreferencialesController::class, 'store'])->name('paquetes.detalles.guardar.mapas');//Para agregar rutas a los paquetes
+Route::get('/packages/details/newMap/edit/{id}', [MapasreferencialesController::class, 'edit'])->name('paquetes.detalles.editar.mapas');//Para agregar rutas a los paquetes
 Route::get('/mostrarData', [PaquetesTuristicosController::class, 'index'])->name('paquetes.index');
 
 
