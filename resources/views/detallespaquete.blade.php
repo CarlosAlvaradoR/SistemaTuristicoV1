@@ -93,9 +93,6 @@
                                     
                                     <div class="col-md-2">
                                          
-                                        <button type="button" >
-                                            Nueva fotografía
-                                        </button>
                                         <a href="#" class="btn btn-primary">
                                             Nueva fotografía
                                         </a>
@@ -159,7 +156,7 @@
                                         
                                         @foreach ($idpaquetes as $idpaquete)
                                             
-                                            <a href="{{ route("paquetes.detalles.nuevo.paquetes", $idpaquete->idpaqueteturistico) }}">
+                                            <a href="{{ route("paquetes.detalles.nuevo.paquetes", $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">
                                                 Añadir Ruta
                                             </a>
                                         @endforeach

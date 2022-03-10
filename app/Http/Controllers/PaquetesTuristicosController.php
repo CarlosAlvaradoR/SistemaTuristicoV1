@@ -103,8 +103,11 @@ class PaquetesTuristicosController extends Controller
         //
     }
 
-    public function formularioNuevoMapa(){
-        return view('paquetes/mapapaquetes/formularionuevomapa');
+    public function formularioNuevoMapa($idpaquete){
+        //return $idPaquete;
+        $idpaquetes=(DB::select('SELECT idpaqueteturistico FROM paquetes_turisticos WHERE idpaqueteturistico='.$idpaquete.' LIMIT 1'));
+        
+        return view('paquetes/mapapaquetes/formularionuevomapa',compact('idpaquetes'));
     }
 
 

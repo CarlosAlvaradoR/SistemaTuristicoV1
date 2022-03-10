@@ -12,6 +12,7 @@ use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\PersonasController;
 use App\Http\Controllers\PaquetesTuristicosController;
 use App\Http\Controllers\FotogaleriasController;
+use App\Http\Controllers\MapasreferencialesController;
 
 Route::get('/', function () {
     return view('iniciodashboard');
@@ -63,7 +64,7 @@ Route::get('/packagescreate', [UsuariosController::class, 'formularionuevospaque
 Route::post('/pakcagestore', [PaquetesTuristicosController::class, 'store'])->name('paquetes.turisticos.creacion');//CREAR Guardar NUEVOS PAQUETES
 Route::get('/packages/details/{idpaqueteturistico}', [PaquetesTuristicosController::class, 'detallepaquetes'])->name('paquetes.detalles');//MUESTRA LOS paquetes en el bucle
 Route::get('/packages/details/newMap/{id}', [PaquetesTuristicosController::class, 'formularioNuevoMapa'])->name('paquetes.detalles.nuevo.paquetes');//MUESTRA LOS paquetes en el bucle
-
+Route::post('/packages/details/newMap/save', [MapasreferencialesController::class, 'store'])->name('paquetes.detalles.guardar.mapas');//MUESTRA LOS paquetes en el bucle
 Route::get('/mostrarData', [PaquetesTuristicosController::class, 'index'])->name('paquetes.index');
 
 

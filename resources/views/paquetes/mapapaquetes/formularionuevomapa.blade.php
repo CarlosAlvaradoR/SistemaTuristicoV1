@@ -1,6 +1,6 @@
 @extends('layouts/plantilladashboard')
 
-@section('tituloPagina','Nueva Ruta')
+@section('tituloPagina','Nueva Ruta del Paquete')
     
 @section('contenido')
     <div class="container-fluid">
@@ -38,7 +38,7 @@
                             @endif
                         </div>
                     </div>
-                    <form action="{{ route('usuarios.create') }}" method="POST">
+                    <form action="{{ route('paquetes.detalles.guardar.mapas') }}" method="POST">
                         @csrf
                         <div class="form-row">
                             <div class="form-group col-md-12">
@@ -50,7 +50,11 @@
                                 <input type="text" class="form-control" name="descripcionruta" id="descripcionruta">
                             </div>
                         </div>
-
+                        @foreach ($idpaquetes as $idpaquete)
+                            
+                            <input type="text" name="idpaqueteturistico" id="idpaqueteturistico" value="{{$idpaquete->idpaqueteturistico}}" hidden>
+                        @endforeach
+                        
                         <!--  BUTTONS-->
                         <div class="row">
                             <div class="col-md-12">
@@ -81,5 +85,6 @@
 
             </div>
         </section>
+        
     </div><!--.container-fluid-->
 @endsection
