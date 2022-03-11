@@ -1,6 +1,6 @@
 @extends('layouts/plantilladashboard')
 
-@section('tituloPagina','Nueva Ruta del Paquete')
+@section('tituloPagina','Actualización de la Ruta')
     
 @section('contenido')
     <div class="container-fluid">
@@ -38,47 +38,49 @@
                             @endif
                         </div>
                     </div>
-                    <form action="{{ route('paquetes.detalles.guardar.mapas') }}" method="POST">
-                        @csrf
-                        @foreach ($rutas as $ruta)
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="nombreruta">Nombre de Ruta</label>
-                                    <input type="text" value="{{$ruta->nombreruta}}" class="form-control" name="nombreruta" id="nombreruta">
+                    @foreach ($rutas as $ruta)
+                        <form action="{{ route("paquetes.detalles.actualizar.mapas",$ruta->idmapareferencial) }}" method="POST">
+                            @csrf
+                            @method("PUT")
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="nombreruta">Nombre de Ruta</label>
+                                        <input type="text" value="{{$ruta->nombreruta}}" class="form-control" name="nombreruta" id="nombreruta">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="descripcionruta">Descripción de Ruta</label>
+                                        <input type="text" value="{{$ruta->descripcionruta}}" class="form-control" name="descripcionruta" id="descripcionruta">
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-12">
-                                    <label for="descripcionruta">Descripción de Ruta</label>
-                                    <input type="text" value="{{$ruta->descripcionruta}}" class="form-control" name="descripcionruta" id="descripcionruta">
+                            
+                            
+                            <!--  BUTTONS-->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                        </div>
+                                        <div class="col-md-2">
+                                            
+                                            <button type="submit" class="btn">
+                                                Aceptar
+                                            </button>
+                                            
+                                        </div>
+                                        <div class="col-md-2">
+                                            
+                                            <button type="button" class="btn btn-danger">
+                                                Cancelar
+                                            </button>
+                                        </div>
+                                        <div class="col-md-4">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        @endforeach
-                        
-                        <!--  BUTTONS-->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                    </div>
-                                    <div class="col-md-2">
-                                        
-                                        <button type="submit" class="btn">
-                                            Aceptar
-                                        </button>
-                                        
-                                    </div>
-                                    <div class="col-md-2">
-                                        
-                                        <button type="button" class="btn btn-danger">
-                                            Cancelar
-                                        </button>
-                                    </div>
-                                    <div class="col-md-4">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END BUTTONS-->
-                    </form>
+                            <!-- END BUTTONS-->
+                        </form>
+                    @endforeach
                 </div><!--.row-->
 
             </div>

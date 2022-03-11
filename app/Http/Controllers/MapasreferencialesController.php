@@ -65,9 +65,20 @@ class MapasreferencialesController extends Controller
 
     
     
-    public function update(Request $request, Mapasreferenciales $mapasreferenciales)
+    public function update(Request $request, $id)
     {
         //
+        Mapasreferenciales::where('idmapareferencial',$id)
+        ->update(['nombreruta'=>'FREAYLET ROGELIO','descripcionruta'=>'999999999']);
+        /*$mapasReferenciales = Mapasreferenciales::find('');
+        $mapasReferenciales->idmapareferencial = $id;
+        $mapasReferenciales->nombreruta=$request->post('nombreruta');
+        $mapasReferenciales->descripcionruta=$request->post('descripcionruta');
+        $mapasReferenciales->save();*/
+        $idpaquete=(DB::select('SELECT m.idmapareferencial, mp.idpaqueteturistico FROM mapasreferenciales m
+        INNER JOIN mapas_paquetes mp on mp.idmapareferencial=m.idmapareferencial
+        WHERE m.idmapareferencial= '.$id.' LIMIT 1'));
+        return redirect()->route("paquetes.detalles",[$request->post('')])->with("succes","Agregado con éxito");
     }
 
     
