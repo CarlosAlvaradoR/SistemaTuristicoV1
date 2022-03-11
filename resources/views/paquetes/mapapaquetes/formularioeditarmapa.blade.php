@@ -40,17 +40,18 @@
                     </div>
                     <form action="{{ route('paquetes.detalles.guardar.mapas') }}" method="POST">
                         @csrf
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="nombreruta">Nombre de Ruta</label>
-                                <input type="text" class="form-control" name="nombreruta" id="nombreruta">
+                        @foreach ($rutas as $ruta)
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="nombreruta">Nombre de Ruta</label>
+                                    <input type="text" value="{{$ruta->nombreruta}}" class="form-control" name="nombreruta" id="nombreruta">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="descripcionruta">Descripción de Ruta</label>
+                                    <input type="text" value="{{$ruta->descripcionruta}}" class="form-control" name="descripcionruta" id="descripcionruta">
+                                </div>
                             </div>
-                            <div class="form-group col-md-12">
-                                <label for="descripcionruta">Descripción de Ruta</label>
-                                <input type="text" class="form-control" name="descripcionruta" id="descripcionruta">
-                            </div>
-                        </div>
-                        
+                        @endforeach
                         
                         <!--  BUTTONS-->
                         <div class="row">

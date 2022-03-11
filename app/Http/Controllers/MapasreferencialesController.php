@@ -58,9 +58,9 @@ class MapasreferencialesController extends Controller
     
     public function edit($id)
     {
-        //
+        $rutas=(DB::select('SELECT idmapareferencial, nombreruta, descripcionruta FROM mapasreferenciales m WHERE idmapareferencial = '.$id.' LIMIT 1'));
         //echo $id;
-        return view('paquetes/mapapaquetes/formularioeditarmapa');
+        return view('paquetes/mapapaquetes/formularioeditarmapa',compact('rutas'));
     }
 
     
