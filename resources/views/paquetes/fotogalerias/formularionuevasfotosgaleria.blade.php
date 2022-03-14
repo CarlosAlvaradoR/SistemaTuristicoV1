@@ -56,7 +56,7 @@
 
                                                 @foreach ($idpaquetes as $idpaquete)
                             
-                                                    <input type="text" name="idpaqueteturistico" id="idpaqueteturistico" value="{{$idpaquete->idpaqueteturistico}}" >
+                                                    <input type="text" name="idpaqueteturistico" id="idpaqueteturistico" value="{{$idpaquete->idpaqueteturistico}}" hidden>
                                                 @endforeach
                                                 <br><br>
                                                 <hr>

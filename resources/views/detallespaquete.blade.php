@@ -117,27 +117,33 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php
+                                                $contador = 1;
+                                            @endphp
                                             @foreach ($galeriaFotos as $galeriaFoto)
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td>{{$galeriaFoto->descripcionfoto}}</td>
-                                                    <td>{{$galeriaFoto->imagen}}</td>
                                                     <td>
-                                                        <a href="#" target="_blank" rel="noopener noreferrer">
-                                                            <span class="btn btn-warning btn-sm" onclick="alert('HH')">
-                                                                <span class="fa fa-pencil-square-o"></span>
-                                                            </span>
-                                                        </a>
-                                                        <a href="#" target="_blank" rel="noopener noreferrer">
+                                                        {{$contador++}}
+                                                    </td>
+                                                    <td>{{$galeriaFoto->descripcionfoto}}</td>
+                                                    <td>
+                                                        <img src="/imagen/{{$galeriaFoto->imagen}}" style="height: 60px;" alt="">
+                                                    </td>
+                                                    <td>
+                                                        
+                                                        
+                                                        <form action="{{ route('paquetes.turisticos.edicion.galeria', $galeriaFoto->idfotogaleria ) }}" method="get">
+                                                            
+                                                            <button class="btn btn-warning btn-sm">
+                                                                    <span class="fa fa-pencil-square-o"></span>
+                                                            </button>
+                                                        </form>
+                                                        <a href="#" rel="noopener noreferrer">
                                                             <span class="btn btn-danger btn-sm" onclick="">
                                                                 <span class="fa fa-trash"></span>
                                                             </span>
                                                         </a>
-                                                        <a href=#" title="Permisos" target="_blank" rel="noopener noreferrer">
-                                                            <span class="btn btn-info btn-sm" onclick="">
-                                                                <span class="fas fa-eye"></span>
-                                                            </span>
-                                                        </a>
+                                                        
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -182,9 +188,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php
+                                                $contador = 1;
+                                            @endphp
                                             @foreach ($mapaReferencias as $mapaReferencia)
                                                 <tr>
-                                                    <td>1</td>
+                                                   
+                                                    <td>{{$contador++}}</td>
                                                     <td>{{$mapaReferencia->nombreruta}}</td>
                                                     <td>{{$mapaReferencia->descripcionruta}}</td>
                                                     <td>
@@ -194,8 +204,8 @@
                                                             </button>
                                                        </form>
                                                        <form action="#" method="post">
-                                                            <a href="#" target="_blank" rel="noopener noreferrer">
-                                                                <span class="btn btn-danger btn-sm" onclick="">
+                                                            <a href="#" rel="noopener noreferrer">
+                                                                <span class="btn btn-danger btn-sm">
                                                                     <span class="fa fa-trash"></span>
                                                                 </span>
                                                             </a>

@@ -38,6 +38,9 @@ class PaquetesTuristicosController extends Controller
         //dd($galeriaFotos);
         //dd($nombrePaquetes);
         //return ($nombrePaquetes);
+        //return ('SELECT fg.descripcionfoto, fg.imagen, f.idfotogaleria, idpaqueteturistico FROM foto_paquetes f
+        //INNER JOIN fotogalerias fg on f.idfoto_paquete=fg.idfotogaleria WHERE idpaqueteturistico='.$idpaquete.'');
+        //return $galeriaFotos;
         return view('detallespaquete', compact('galeriaFotos','mapaReferencias','nombrePaquetes','idpaquetes'));
     }
 
