@@ -92,10 +92,13 @@
                                 <div class="row">
                                     
                                     <div class="col-md-2">
-                                         
-                                        <a href="#" class="btn btn-primary">
+                                        @foreach ($idpaquetes as $idpaquete)
+                                        <a href="{{ route('foto.nuevas.galerias', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">
                                             Nueva fotografía
                                         </a>
+                                        @endforeach
+                                            
+                                        
                                     </div>
                                 </div>
                             </div>

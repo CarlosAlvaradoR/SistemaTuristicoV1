@@ -71,7 +71,8 @@ Route::get('/mostrarData', [PaquetesTuristicosController::class, 'index'])->name
 
 
 //FotoGalerías
-Route::get('/packagecontrollers', [FotogaleriasController::class, 'index'])->name('foto.galerias');//CREAR Guardar NUEVOS PAQUETES
+Route::get('/package/details/create/gallery/{idpaquete}', [FotogaleriasController::class, 'index'])->name('foto.nuevas.galerias');//CREAR Guardar NUEVOS PAQUETES
+Route::post('/package/details/create/gallery/create', [FotogaleriasController::class, 'store'])->name('paquetes.turisticos.creacion.galeria');//CREAR Guardar NUEVOS PAQUETES
 //Mapas
 Route::get('/newMap', [PaquetesTuristicosController::class, 'formularioNuevoMapa'])->name('formulario.nuevo.mapa.paquete');//CREAR Guardar NUEVOS PAQUETES
 

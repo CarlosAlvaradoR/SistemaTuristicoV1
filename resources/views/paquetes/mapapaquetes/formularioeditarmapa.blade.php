@@ -63,7 +63,7 @@
                                         <div class="col-md-2">
                                             
                                             <button type="submit" class="btn">
-                                                Aceptar
+                                                Modificar
                                             </button>
                                             
                                         </div>

@@ -21,36 +21,40 @@ class FotogaleriasController extends Controller
         //
         $consulta=DB::select('SELECT fg.descripcionfoto, fg.imagen, f.idfotogaleria, idpaqueteturistico FROM foto_paquetes f
         INNER JOIN fotogalerias fg on f.idfoto_paquete=fg.idfotogaleria');
-        return $consulta;
+        return view('paquetes/fotogalerias/formularionuevasfotosgaleria');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    
+    public function store(Request $request, $idpaquete)
     {
-        //
+        $request->validate([
+            'nombre' => 'descripcionfoto',  'imagen' => 'required|image|mimes:jpeg,png,svg|max:1024'
+        ]);
+
+         $paquetesTuristicos = $request->all();
+         
+         if($imagen_principal = $request->file('imagen')) {
+             $rutaGuardarImg = 'imagen/';
+             $imagenPaquete = date('YmdHis'). "." . $imagen_principal->getClientOriginalExtension();
+             $imagen_principal->move($rutaGuardarImg, $imagenPaquete);
+             $paquetesTuristicos['imagen'] = "$imagenPaquete";             
+         }
+         
+         Fotogalerias::create($paquetesTuristicos);
+
+         //SEGUNDA INSERCION
+
+         return "Insertad correctamente";
+         //return redirect()->route('paquetes.formulario.nuevo')->with("succes","Agregado con éxito");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Fotogalerias  $fotogalerias
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show(Fotogalerias $fotogalerias)
     {
         //
