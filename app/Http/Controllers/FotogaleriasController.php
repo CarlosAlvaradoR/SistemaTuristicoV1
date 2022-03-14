@@ -16,12 +16,15 @@ class FotogaleriasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($idpaquete)
     {
         //
         $consulta=DB::select('SELECT fg.descripcionfoto, fg.imagen, f.idfotogaleria, idpaqueteturistico FROM foto_paquetes f
         INNER JOIN fotogalerias fg on f.idfoto_paquete=fg.idfotogaleria');
-        return view('paquetes/fotogalerias/formularionuevasfotosgaleria');
+
+        $idpaquetes=DB::select('SELECT idpaqueteturistico FROM paquetes_turisticos p WHERE idpaqueteturistico = '.$idpaquete.' LIMIT 1');
+
+        return view('paquetes/fotogalerias/formularionuevasfotosgaleria', compact('idpaquetes'));
     }
 
     
@@ -31,12 +34,11 @@ class FotogaleriasController extends Controller
     }
 
     
-    public function store(Request $request, $idpaquete)
+    public function store(Request $request)
     {
         $request->validate([
             'nombre' => 'descripcionfoto',  'imagen' => 'required|image|mimes:jpeg,png,svg|max:1024'
         ]);
-
          $paquetesTuristicos = $request->all();
          
          if($imagen_principal = $request->file('imagen')) {
@@ -46,12 +48,21 @@ class FotogaleriasController extends Controller
              $paquetesTuristicos['imagen'] = "$imagenPaquete";             
          }
          
-         Fotogalerias::create($paquetesTuristicos);
+        
+        Fotogalerias::create([
+            'descripcionfoto'=>$request->post('descripcionfoto'),
+            'imagen'=>$paquetesTuristicos['imagen']
+        ]);
 
          //SEGUNDA INSERCION
-
-         return "Insertad correctamente";
-         //return redirect()->route('paquetes.formulario.nuevo')->with("succes","Agregado con éxito");
+        
+        $idfotopaquete=(DB::select('SELECT idfotogaleria FROM fotogalerias f ORDER BY idfotogaleria DESC LIMIT 1'));
+        $fotoPaquetes=new FotoPaquetes();
+        $fotoPaquetes->idfotogaleria=($idfotopaquete[0]->idfotogaleria); //Ultimo id
+        $fotoPaquetes->idpaqueteturistico=$request->post('idpaqueteturistico');
+        $fotoPaquetes->save();
+        return "Insertado Correctamente";
+        //return redirect()->route('paquetes.formulario.nuevo')->with("succes","Agregado con éxito");
     }
 
     

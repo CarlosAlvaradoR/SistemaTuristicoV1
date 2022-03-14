@@ -53,6 +53,11 @@
                                                     Imagen Principal
                                                 </label>
                                                 <input type="file" name="imagen" class="form-control-file" id="imagen" accept="image/*" />
+
+                                                @foreach ($idpaquetes as $idpaquete)
+                            
+                                                    <input type="text" name="idpaqueteturistico" id="idpaqueteturistico" value="{{$idpaquete->idpaqueteturistico}}" >
+                                                @endforeach
                                                 <br><br>
                                                 <hr>
                                                 <div>
