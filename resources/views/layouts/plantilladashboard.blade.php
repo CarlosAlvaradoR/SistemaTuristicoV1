@@ -449,11 +449,16 @@
 	                <span class="lbl">Equipos</span>
 	            </a>
 	        </li>
-			<li class="darkblue">
-	            <a href="{{ route('paquetes.activos.galeria') }}">
+			
+			<li class="with-sub blue">
+	            <span>
 	                <i class="fal fa-backpack glyphicon glyphicon-send"></i>
 	                <span class="lbl">Paquetes</span>
-	            </a>
+	            </span>
+	            <ul>
+	                <li><a href="{{ route('paquetes.activos.galeria') }}"><span class="lbl">Nuevo</span><span class="label label-custom label-pill label-succes">new</span></a></li>
+	                <li><a href="{{ route('formulario.nuevo.tipo.paquete') }}"><span class="lbl">Tipos</span></a></li>   
+	            </ul>
 	        </li>
 			<li class="red with-sub">
 	            <span>
@@ -546,5 +551,8 @@
     
 	});
 </script>
+
+@yield('scripts')
+
 </body>
 </html>

@@ -13,6 +13,7 @@ use App\Http\Controllers\PersonasController;
 use App\Http\Controllers\PaquetesTuristicosController;
 use App\Http\Controllers\FotogaleriasController;
 use App\Http\Controllers\MapasreferencialesController;
+use App\Http\Controllers\TipopaquetesController;
 
 Route::get('/', function () {
     return view('iniciodashboard');
@@ -77,6 +78,9 @@ Route::get('/package/details/edit/{id}', [FotogaleriasController::class, 'edit']
 Route::put('/package/details/edit/update/{id}', [FotogaleriasController::class, 'update'])->name('paquetes.turisticos.actualizar.galeria');//Para agregar rutas a los paquetes
 //Mapas
 Route::get('/newMap', [PaquetesTuristicosController::class, 'formularioNuevoMapa'])->name('formulario.nuevo.mapa.paquete');//CREAR Guardar NUEVOS PAQUETES
+
+//Tipos
+Route::get('/types', [TipopaquetesController::class, 'index'])->name('formulario.nuevo.tipo.paquete');//Nuevos tipos de paquetes
 
 /****************************** */
 
