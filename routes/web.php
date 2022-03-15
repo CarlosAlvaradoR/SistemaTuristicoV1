@@ -24,7 +24,7 @@ Route::get('/', function () {
 //RUTAS PARA EL LANDING
 Route::get('/', [UsuariosController::class, 'mostrarinicio'])->name('inicio.landing');//Inicio
 Route::get('/about', [UsuariosController::class, 'mostrarabout'])->name('about.landing');//Inicio 
-Route::get('/destination', [UsuariosController::class, 'mostrarDestinos'])->name('destination.landing');//Mostrar Destinos
+Route::get('/destination', [PaquetesTuristicosController::class, 'mostrarDestinos'])->name('destination.landing');//Mostrar Destinos
 Route::get('/detailsdestinations', [PaquetesTuristicosController::class, 'mostrarDetallePaquete'])->name('destination.landing.details');//Mostrar Detalles Destino Seleccionado
 Route::get('/contact', [UsuariosController::class, 'mostrarContacto'])->name('contact.landing');//Mostrar Contacto
 Route::get('/account', [UsuariosController::class, 'mostrarFormularioLogin'])->name('account.landing');//Mostrar Formulario de Inicio de Sesion
