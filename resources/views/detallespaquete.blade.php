@@ -222,9 +222,247 @@
                         </div>
                     </div>
                 </div><!--.tab-pane-->
-                <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-3">Tab 3</div><!--.tab-pane-->
-                <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-4">Tab 4</div><!--.tab-pane-->
-                <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-5">Tab 5</div><!--.tab-pane-->
+                <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-3">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @foreach ($idpaquetes as $idpaquete)
+                                            <a href="{{ route('index.formulario.nuevo.atractivo', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Añadir Nuevo lugar</a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        #
+                                                    </th>
+                                                    <th>
+                                                        Lugar
+                                                    </th>
+                                                    <th>
+                                                        Atractivo
+                                                    </th>
+                                                    <th>
+                                                        Acciones
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        1
+                                                    </td>
+                                                    <td>
+                                                        Huaraz
+                                                    </td>
+                                                    <td>
+                                                        Olleros
+                                                    </td>
+                                                    <td>
+                                                        <a href="#">Editar</a>
+                                                        <a href="#">Eliminar</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        1
+                                                    </td>
+                                                    <td>
+                                                        Huaraz
+                                                    </td>
+                                                    <td>
+                                                        Parque Huascarán
+                                                    </td>
+                                                    <td>
+                                                        <a href="#">Editar</a>
+                                                        <a href="#">Eliminar</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+                </div><!--.tab-pane-->
+                <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-4">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <!--  route(') }} -->
+                                        @foreach ($idpaquetes as $idpaquete)
+                                            <a href="{{ route('index.formulario.nuevo.itinerario', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Agregar Itinerario</a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        #
+                                                    </th>
+                                                    <th>
+                                                        Itinerario
+                                                    </th>
+                                                    <th>
+                                                        Día
+                                                    </th>
+                                                    <th>
+                                                        Acciones
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        1
+                                                    </td>
+                                                    <td>
+                                                        Caminata por las Orillas
+                                                    </td>
+                                                    <td>
+                                                        Día 1
+                                                    </td>
+                                                    <td>
+                                                        <a href="#">
+                                                            <span class="btn btn-warning btn-sm" >
+                                                                <span class="fa fa-pencil-square-o"></span>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" >
+                                                            <span class="btn btn-danger btn-sm">
+                                                                <span class="fa fa-trash"></span>
+                                                            </span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        2
+                                                    </td>
+                                                    <td>
+                                                        Caminata por las Orillas 2
+                                                    </td>
+                                                    <td>
+                                                        Día 2 y 3
+                                                    </td>
+                                                    <td>
+                                                        <a href="#">
+                                                            <span class="btn btn-warning btn-sm" >
+                                                                <span class="fa fa-pencil-square-o"></span>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" >
+                                                            <span class="btn btn-danger btn-sm">
+                                                                <span class="fa fa-trash"></span>
+                                                            </span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div><!--.tab-pane-->
+                <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-5">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <!--  route(') }} -->
+                                        @foreach ($idpaquetes as $idpaquete)
+                                            <a href="{{ route('index.formulario.nuevo.itinerario', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Agregar Servicios</a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        #
+                                                    </th>
+                                                    <th>
+                                                        Servicio
+                                                    </th>
+                                                    <th>
+                                                        Monto
+                                                    </th>
+                                                    <th>
+                                                        Acciones
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        1
+                                                    </td>
+                                                    <td>
+                                                        Alimentacion en Museo
+                                                    </td>
+                                                    <td>
+                                                        S/. 200
+                                                    </td>
+                                                    <td>
+                                                        <a href="#">
+                                                            <span class="btn btn-warning btn-sm" >
+                                                                <span class="fa fa-pencil-square-o"></span>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" >
+                                                            <span class="btn btn-danger btn-sm">
+                                                                <span class="fa fa-trash"></span>
+                                                            </span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        2
+                                                    </td>
+                                                    <td>
+                                                        Visita al Museo
+                                                    </td>
+                                                    <td>
+                                                        S/. 300
+                                                    </td>
+                                                    <td>
+                                                        <a href="#">
+                                                            <span class="btn btn-warning btn-sm" >
+                                                                <span class="fa fa-pencil-square-o"></span>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" >
+                                                            <span class="btn btn-danger btn-sm">
+                                                                <span class="fa fa-trash"></span>
+                                                            </span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div><!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-6">Tab 6</div><!--.tab-pane-->
             </div><!--.tab-content-->
         </section><!--.tabs-section-->

@@ -102,6 +102,11 @@ class PaquetesTuristicosController extends Controller
         //
     }
 
+    public function formularionuevospaquetes(){
+        $tipos=DB::select('SELECT idtipopaquete, nombretipo FROM tipopaquetes');
+        return view('formulariopaquetesnuevos',compact('tipos'));
+    }//
+
     public function formularioNuevoMapa($idpaquete){
         //return $idPaquete;
         $idpaquetes=(DB::select('SELECT idpaqueteturistico FROM paquetes_turisticos WHERE idpaqueteturistico='.$idpaquete.' LIMIT 1'));
@@ -112,5 +117,23 @@ class PaquetesTuristicosController extends Controller
 
     public function mostrarDetallePaquete(){
         return view('vistalanding/destinodetails');
+    }
+
+
+
+
+    //PARA LOS LUGARES A VISITAR EN UN PAQUETE TURISTICO
+    public function indexformulariolugaresvisitar(){
+
+        return view('paquetes/lugaresVisita/nuevo');
+    }
+
+
+
+
+    //PARA EL ITINERARIO
+    public function indexformularionuevoItinerario(){
+
+        return view('paquetes/itinerario/nuevo');
     }
 }

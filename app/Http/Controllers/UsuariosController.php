@@ -29,9 +29,7 @@ class UsuariosController extends Controller
     }
 
 
-    public function formularionuevospaquetes(){
-        return view('formulariopaquetesnuevos');
-    }//
+    
     
     public function mostrarFormularioReservaNivelAdmin(){
         return view('reservas/formularioreservar');

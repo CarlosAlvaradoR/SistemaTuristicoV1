@@ -61,7 +61,7 @@ Route::get('/organitations', [UsuariosController::class, 'mostrarTabsOrgaAceEqui
 
 /** PARA LOS PAQUETES */
 Route::get('/package', [PaquetesTuristicosController::class, 'index'])->name('paquetes.activos.galeria');
-Route::get('/packagescreate', [UsuariosController::class, 'formularionuevospaquetes'])->name('paquetes.formulario.nuevo');
+Route::get('/package/create', [PaquetesTuristicosController::class, 'formularionuevospaquetes'])->name('paquetes.formulario.nuevo');
 Route::post('/pakcagestore', [PaquetesTuristicosController::class, 'store'])->name('paquetes.turisticos.creacion');//CREAR Guardar NUEVOS PAQUETES
 Route::get('/packages/details/{idpaqueteturistico}', [PaquetesTuristicosController::class, 'detallepaquetes'])->name('paquetes.detalles');//MUESTRA LOS paquetes en el bucle
 Route::get('/packages/details/newMap/{id}', [PaquetesTuristicosController::class, 'formularioNuevoMapa'])->name('paquetes.detalles.nuevo.paquetes');//MUESTRA LOS paquetes en el bucle
@@ -88,8 +88,10 @@ Route::put('/types/edit/save/{idpaquete}', [TipopaquetesController::class, 'upda
 Route::get('/types/delete/{idpaquete}', [TipopaquetesController::class, 'destroy'])->name('formulario.eliminar.tipo.paquete');//Nuevos tipos de paquetes
 
 //Lugares a visitar
+Route::get('/places/{idpaquete}', [PaquetesTuristicosController::class, 'indexformulariolugaresvisitar'])->name('index.formulario.nuevo.atractivo');//Nuevos tipos de paquetes
 
-
+//Itinerario
+Route::get('/package/itinerary/{idpaquete}', [PaquetesTuristicosController::class, 'indexformularionuevoItinerario'])->name('index.formulario.nuevo.itinerario');//Nuevos tipos de paquetes
 /****************************** */
 
 

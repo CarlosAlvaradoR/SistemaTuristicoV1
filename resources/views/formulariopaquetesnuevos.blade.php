@@ -56,7 +56,12 @@
                                                 <label for="estado">
                                                     Estado del Paquete
                                                 </label>
-                                                <input type="text" name="estado" class="form-control" id="estado" />
+                                                <select id="estado" name="estado" id="estado" class="form-control">
+                                                    <option selected>Seleccione...</option>
+                                                    <option value="1">Activo</option>
+                                                    <option value="2">Inactivo</option> 
+                                                </select>
+                                                <!--<input type="text" name="estado" class="form-control" id="estado" />-->
                                             </div>
                                     </div>
                                     <div class="col-md-6">
@@ -65,9 +70,13 @@
                                             <label for="idtipopaquete">
                                                 Tipo de Paquete
                                             </label>
+                                            
                                             <select id="inputState" name="idtipopaquete" id="idtipopaquete" class="form-control">
                                                 <option selected>Seleccione...</option>
-                                                <option value="1">Turístico</option>
+                                                @foreach ($tipos as $tipo)
+                                                    <option value="{{$tipo->idtipopaquete}}">{{$tipo->nombretipo}}</option>
+                                                @endforeach
+                                                
                                             </select>
                                         </div>
                                             
