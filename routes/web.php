@@ -80,7 +80,15 @@ Route::put('/package/details/edit/update/{id}', [FotogaleriasController::class, 
 Route::get('/newMap', [PaquetesTuristicosController::class, 'formularioNuevoMapa'])->name('formulario.nuevo.mapa.paquete');//CREAR Guardar NUEVOS PAQUETES
 
 //Tipos
-Route::get('/types', [TipopaquetesController::class, 'index'])->name('formulario.nuevo.tipo.paquete');//Nuevos tipos de paquetes
+Route::get('/types', [TipopaquetesController::class, 'index'])->name('index.tipo.paquete');//Nuevos tipos de paquetes
+Route::get('/types/new', [TipopaquetesController::class, 'formularioNuevosTipos'])->name('formulario.nuevo.tipo.paquete');//Nuevos tipos de paquetes
+Route::post('/types/save', [TipopaquetesController::class, 'store'])->name('formulario.guardar.tipo.paquete');//Nuevos tipos de paquetes
+Route::get('/types/edit/{idpaquete}', [TipopaquetesController::class, 'edit'])->name('formulario.editar.tipo.paquete');//Nuevos tipos de paquetes
+Route::put('/types/edit/save/{idpaquete}', [TipopaquetesController::class, 'update'])->name('formulario.editar.guardar.tipo.paquete');//Nuevos tipos de paquetes
+Route::get('/types/delete/{idpaquete}', [TipopaquetesController::class, 'destroy'])->name('formulario.eliminar.tipo.paquete');//Nuevos tipos de paquetes
+
+//Lugares a visitar
+
 
 /****************************** */
 
@@ -94,17 +102,15 @@ Route::get('/types', [TipopaquetesController::class, 'index'])->name('formulario
 
 
 /*** PARA LAS RESERVAS */
+//Nuevas Reservas
 Route::get('/reserved', [UsuariosController::class, 'mostrarFormularioReservaNivelAdmin'])->name('reservas.formulario.nivel.admin');
 
+//Reservas Pendientes
+
+/************************************************* */
 
 
 
 
-Route::get('/muestrausers', function () {
-    //$datos= Tipo_usuarios::all();
-    $datos=DB::select('SELECT * FROM personas p
-    INNER JOIN usuarios u on p.idpersona=u.idpersona');
-    return $datos;
-});
 
 

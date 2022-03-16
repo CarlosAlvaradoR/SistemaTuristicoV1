@@ -4,82 +4,69 @@ namespace App\Http\Controllers;
 
 use App\Models\Tipopaquetes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TipopaquetesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
-        return view('paquetes/tipopaquetes/formulariotipos');
+        $tipos=DB::select('SELECT idtipopaquete, nombretipo FROM tipopaquetes');
+        return view('paquetes/tipopaquetes/index', compact('tipos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function formularioNuevosTipos(){
+        return view('paquetes/tipopaquetes/formularioNuevos');
+    }
+
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
         //
+        Tipopaquetes::create([
+            'nombretipo'=> $request->post('nombretipo')
+        ]);
+        
+        return redirect()->route('formulario.nuevo.tipo.paquete')->with("succes","Agregado con éxito"); 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Tipopaquetes  $tipopaquetes
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show(Tipopaquetes $tipopaquetes)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Tipopaquetes  $tipopaquetes
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Tipopaquetes $tipopaquetes)
+    
+    public function edit($id)
     {
         //
+        $tipos=DB::select('SELECT idtipopaquete, nombretipo FROM tipopaquetes where idtipopaquete = '.$id.' LIMIT 1');
+        return view('paquetes/tipopaquetes/editar', compact('tipos'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tipopaquetes  $tipopaquetes
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Tipopaquetes $tipopaquetes)
+    
+    public function update(Request $request, $idtipopaquetes)
     {
-        //
+        // ACTUALIZAR
+        Tipopaquetes::where('idtipopaquete',$idtipopaquetes)
+        ->update(['nombretipo'=>$request->post('nombretipo')]);
+        
+        
+        return redirect()->route("index.tipo.paquete");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Tipopaquetes  $tipopaquetes
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Tipopaquetes $tipopaquetes)
+    
+    public function destroy($idtipopaquetes)
     {
-        //
+        Tipopaquetes::where('idtipopaquete',$idtipopaquetes)
+        ->delete();
+
+        return redirect()->route("index.tipo.paquete");
     }
 }

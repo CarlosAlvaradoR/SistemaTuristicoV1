@@ -457,7 +457,7 @@
 	            </span>
 	            <ul>
 	                <li><a href="{{ route('paquetes.activos.galeria') }}"><span class="lbl">Nuevo</span><span class="label label-custom label-pill label-succes">new</span></a></li>
-	                <li><a href="{{ route('formulario.nuevo.tipo.paquete') }}"><span class="lbl">Tipos</span></a></li>   
+	                <li><a href="{{ route('index.tipo.paquete') }}"><span class="lbl">Tipos</span></a></li>   
 	            </ul>
 	        </li>
 			<li class="red with-sub">
