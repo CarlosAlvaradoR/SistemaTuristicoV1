@@ -38,7 +38,7 @@
                             @endif
                         </div>
                     </div>
-                    <form action="{{ route('paquetes.detalles.guardar.mapas') }}" method="POST">
+                    <form action="{{ route('guardar.itinerario.paquete') }}" method="POST">
                         @csrf
 
                         <div class="container-fluid">
@@ -47,10 +47,10 @@
                                     
                                         <div class="form-group">
                                              
-                                            <label for="lugar">
+                                            <label for="nombreactividad">
                                                 Actividad
                                             </label>
-                                            <input type="text" class="form-control" id="lugar" />
+                                            <input type="text" name="nombreactividad" class="form-control" id="nombreactividad" />
                                         </div>
                                     
                                 </div>
@@ -58,12 +58,16 @@
                                     
                                         <div class="form-group">
                                              
-                                            <label for="atractivo">
+                                            <label for="descripcion">
                                                 Descripción
                                             </label>
-                                            <input type="text" class="form-control" id="atractivo" />
+                                            <input type="text" name="descripcion" class="form-control" id="descripcion" />
                                         </div>
                                     
+                                        @foreach ($idpaquetes  as $idpaquete)
+                                            <input type="text" id="idpaqueteturistico" name="idpaqueteturistico" value="{{$idpaquete->idpaqueteturistico}}" hidden>
+                                        @endforeach
+                                        
                                 </div>
                                 <div class="col-md-2">
                                      

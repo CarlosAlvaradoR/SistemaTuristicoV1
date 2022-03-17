@@ -14,6 +14,7 @@ use App\Http\Controllers\PaquetesTuristicosController;
 use App\Http\Controllers\FotogaleriasController;
 use App\Http\Controllers\MapasreferencialesController;
 use App\Http\Controllers\TipopaquetesController;
+use App\Http\Controllers\ActividadesitinerariosController;
 
 Route::get('/', function () {
     return view('iniciodashboard');
@@ -64,6 +65,8 @@ Route::get('/package', [PaquetesTuristicosController::class, 'index'])->name('pa
 Route::get('/package/create', [PaquetesTuristicosController::class, 'formularionuevospaquetes'])->name('paquetes.formulario.nuevo');
 Route::post('/pakcagestore', [PaquetesTuristicosController::class, 'store'])->name('paquetes.turisticos.creacion');//CREAR Guardar NUEVOS PAQUETES
 Route::get('/packages/details/{idpaqueteturistico}', [PaquetesTuristicosController::class, 'detallepaquetes'])->name('paquetes.detalles');//MUESTRA LOS paquetes en el bucle
+
+//Mapas
 Route::get('/packages/details/newMap/{id}', [PaquetesTuristicosController::class, 'formularioNuevoMapa'])->name('paquetes.detalles.nuevo.paquetes');//MUESTRA LOS paquetes en el bucle
 Route::post('/packages/details/newMap/save', [MapasreferencialesController::class, 'store'])->name('paquetes.detalles.guardar.mapas');//Para agregar rutas a los paquetes
 Route::get('/packages/details/newMap/edit/{id}', [MapasreferencialesController::class, 'edit'])->name('paquetes.detalles.editar.mapas');//Para agregar rutas a los paquetes
@@ -91,7 +94,10 @@ Route::get('/types/delete/{idpaquete}', [TipopaquetesController::class, 'destroy
 Route::get('/places/{idpaquete}', [PaquetesTuristicosController::class, 'indexformulariolugaresvisitar'])->name('index.formulario.nuevo.atractivo');//Nuevos tipos de paquetes
 
 //Itinerario
-Route::get('/package/itinerary/{idpaquete}', [PaquetesTuristicosController::class, 'indexformularionuevoItinerario'])->name('index.formulario.nuevo.itinerario');//Nuevos tipos de paquetes
+Route::get('/package/itinerary/{idpaquete}', [ActividadesitinerariosController::class, 'index'])->name('index.formulario.nuevo.itinerario');//Nuevos tipos de paquetes
+Route::post('/package/itinerary/save', [ActividadesitinerariosController::class, 'store'])->name('guardar.itinerario.paquete');//Nuevos tipos de paquetes
+
+
 /****************************** */
 
 

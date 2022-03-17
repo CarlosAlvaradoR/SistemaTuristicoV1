@@ -131,9 +131,5 @@ class PaquetesTuristicosController extends Controller
 
 
 
-    //PARA EL ITINERARIO
-    public function indexformularionuevoItinerario(){
-
-        return view('paquetes/itinerario/nuevo');
-    }
+    
 }
