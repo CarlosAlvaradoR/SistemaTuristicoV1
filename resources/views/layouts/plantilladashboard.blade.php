@@ -22,7 +22,7 @@
 	<link rel="stylesheet" href="{{ asset('css/separate/vendor/datatables-net.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/separate/pages/files.min.css') }}">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
-
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	
 </head>
 <body class="with-side-menu">

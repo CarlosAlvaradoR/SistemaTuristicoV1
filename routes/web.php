@@ -95,9 +95,10 @@ Route::get('/places/{idpaquete}', [PaquetesTuristicosController::class, 'indexfo
 
 //Itinerario
 Route::get('/package/itinerary/{idpaquete}', [ActividadesitinerariosController::class, 'index'])->name('index.formulario.nuevo.itinerario');//Nuevos tipos de paquetes
-Route::post('/package/itinerary/save', [ActividadesitinerariosController::class, 'store'])->name('guardar.itinerario.paquete');//Nuevos tipos de paquetes
-
-
+Route::post('/package/itinerary/save', [ActividadesitinerariosController::class, 'store'])->name('guardar.itinerario.paquete');
+Route::get('/package/itinerary/edit/{idactividad}', [ActividadesitinerariosController::class, 'edit'])->name('editar.itinerario.paquete');
+Route::put('/package/itinerary/edit/{idactividad}', [ActividadesitinerariosController::class, 'update'])->name('update.itinerario.paquete');//Nuevos tipos de paquetes
+Route::delete('/package/itinerary/delete/{idactividad}', [ActividadesitinerariosController::class, 'destroy'])->name('eliminar.itinerario.paquete');
 /****************************** */
 
 

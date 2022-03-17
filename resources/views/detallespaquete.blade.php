@@ -312,63 +312,49 @@
                                                         #
                                                     </th>
                                                     <th>
-                                                        Itinerario
+                                                        Actividad
                                                     </th>
                                                     <th>
-                                                        Día
+                                                        Descripcion
                                                     </th>
                                                     <th>
                                                         Acciones
                                                     </th>
                                                 </tr>
                                             </thead>
+                                            @php
+                                                $contadorItinerario=1;
+                                            @endphp
                                             <tbody>
-                                                <tr>
-                                                    <td>
-                                                        1
-                                                    </td>
-                                                    <td>
-                                                        Caminata por las Orillas
-                                                    </td>
-                                                    <td>
-                                                        Día 1
-                                                    </td>
-                                                    <td>
-                                                        <a href="#">
-                                                            <span class="btn btn-warning btn-sm" >
-                                                                <span class="fa fa-pencil-square-o"></span>
-                                                            </span>
-                                                        </a>
-                                                        <a href="#" >
-                                                            <span class="btn btn-danger btn-sm">
-                                                                <span class="fa fa-trash"></span>
-                                                            </span>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        2
-                                                    </td>
-                                                    <td>
-                                                        Caminata por las Orillas 2
-                                                    </td>
-                                                    <td>
-                                                        Día 2 y 3
-                                                    </td>
-                                                    <td>
-                                                        <a href="#">
-                                                            <span class="btn btn-warning btn-sm" >
-                                                                <span class="fa fa-pencil-square-o"></span>
-                                                            </span>
-                                                        </a>
-                                                        <a href="#" >
-                                                            <span class="btn btn-danger btn-sm">
-                                                                <span class="fa fa-trash"></span>
-                                                            </span>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                @foreach ($itinerarios as $itinerario)
+                                                    <tr>
+                                                        <td>
+                                                            {{$contadorItinerario++}}
+                                                        </td>
+                                                        <td>
+                                                            {{$itinerario->nombreactividad}}
+                                                        </td>
+                                                        <td>
+                                                            {{$itinerario->descripcion}}
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ route('editar.itinerario.paquete', $itinerario->idactividaditinerario) }}">
+                                                                <span class="btn btn-warning btn-sm" >
+                                                                    <span class="fa fa-pencil-square-o"></span>
+                                                                </span>
+                                                            </a>
+                                                            <form action="{{ route('eliminar.itinerario.paquete', $itinerario->idactividaditinerario) }}" method="POST" class="formEliminarItinerario">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                                    <span class="fa fa-trash"></span>
+                                                                </button>
+                                                            </form>
+                                                            
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                
                                             </tbody>
                                         </table>
                                     </div>
@@ -636,4 +622,35 @@
 
 
     
+@endsection
+
+
+@section('scripts')
+    <script>
+        //
+        (function () {
+  'use strict'
+  var forms = document.querySelectorAll('.formEliminarItinerario')
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {        
+          event.preventDefault()
+          event.stopPropagation()        
+          Swal.fire({
+                title: '¿Confirma la eliminación del registro?',        
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#20c997',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Confirmar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                    Swal.fire('¡Eliminado!', 'El registro ha sido eliminado exitosamente.','success');
+                }
+            })                      
+      }, false)
+    })
+})()
+    </script>
 @endsection

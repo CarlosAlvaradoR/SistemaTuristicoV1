@@ -21,11 +21,7 @@ class ActividadesitinerariosController extends Controller
         return view('paquetes/itinerario/nuevo', compact('idpaquetes'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
         //
@@ -61,31 +57,39 @@ class ActividadesitinerariosController extends Controller
     }
 
     
-    public function edit(Actividadesitinerarios $actividadesitinerarios)
+    public function edit($idActividadItinerario)
     {
-        //
+        $actividadesItinerarios=DB::select('SELECT a.idactividaditinerario, a.nombreactividad, i.descripcion, i.idpaqueteturistico   FROM actividadesitinerarios a
+        INNER JOIN itinerarios_paquetes i on a.idactividaditinerario=i.idactividaditinerario WHERE a.idactividaditinerario= '.$idActividadItinerario.' LIMIT 1');
+        
+        return view('paquetes/itinerario/editar', compact('actividadesItinerarios'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Actividadesitinerarios  $actividadesitinerarios
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Actividadesitinerarios $actividadesitinerarios)
+
+    public function update(Request $request, $idActividadItinerario)
     {
         //
+        Actividadesitinerarios::where('idactividaditinerario',$idActividadItinerario)
+        ->update(['nombreactividad'=>$request->post('nombreactividad')]);
+
+        ItinerariosPaquetes::where('idactividaditinerario',$idActividadItinerario)
+        ->update(['descripcion'=>$request->post('descripcion')]);
+        
+        
+        return redirect()->route("paquetes.detalles",[$request->post('idpaqueteturistico')]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Actividadesitinerarios  $actividadesitinerarios
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Actividadesitinerarios $actividadesitinerarios)
+    
+    public function destroy($idActividadItinerario)
     {
-        //
+        $idPaquete=DB::select('SELECT i.idpaqueteturistico FROM itinerarios_paquetes i WHERE i.idactividaditinerario = '.$idActividadItinerario.' LIMIT 1');
+        //itinerarios_paquetes, descripcion, idpaqueteturistico, , created_at, updated_at
+        ItinerariosPaquetes::where('idactividaditinerario',$idActividadItinerario)
+        ->delete();
+
+        Actividadesitinerarios::where('idactividaditinerario',$idActividadItinerario)
+        ->delete();
+
+        return redirect()->route("paquetes.detalles",[$idPaquete[0]->idpaqueteturistico]);
     }
 }
