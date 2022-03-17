@@ -67,7 +67,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#tabs-2-tab-5" role="tab" data-toggle="tab">
                                 <span class="nav-link-in">
-                                    Servicios
+                                    Pagos por servicios
                                     <span class="label label-pill label-default">4</span>
                                 </span>
                             </a>
@@ -371,7 +371,7 @@
                                     <div class="col-md-12">
                                         <!--  route(') }} -->
                                         @foreach ($idpaquetes as $idpaquete)
-                                            <a href="{{ route('index.formulario.nuevo.itinerario', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Agregar Servicios</a>
+                                            <a href="{{ route('index.formulario.nuevo.itinerario', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Añadir Pago por servicios</a>
                                         @endforeach
                                     </div>
                                 </div>
