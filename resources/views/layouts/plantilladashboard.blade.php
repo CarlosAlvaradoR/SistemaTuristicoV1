@@ -22,6 +22,7 @@
 	<link rel="stylesheet" href="{{ asset('css/separate/vendor/datatables-net.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/separate/pages/files.min.css') }}">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	
 </head>
@@ -525,6 +526,7 @@
 	<script src="{{ asset('js/lib/bootstrap/bootstrap.min.js') }}"></script>
 	<script src="{{ asset('js/plugins.js') }}"></script>
 	<script src="{{ asset('js/lib/datatables-net/datatables.min.js') }}"></script>
+	
 	<script>
 		$(function() {
 			$('#example').DataTable();

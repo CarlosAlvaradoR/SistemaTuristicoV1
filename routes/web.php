@@ -15,6 +15,9 @@ use App\Http\Controllers\FotogaleriasController;
 use App\Http\Controllers\MapasreferencialesController;
 use App\Http\Controllers\TipopaquetesController;
 use App\Http\Controllers\ActividadesitinerariosController;
+use App\Http\Controllers\PagosserviciosController;
+
+
 
 Route::get('/', function () {
     return view('iniciodashboard');
@@ -100,8 +103,12 @@ Route::get('/package/itinerary/edit/{idactividad}', [ActividadesitinerariosContr
 Route::put('/package/itinerary/edit/{idactividad}', [ActividadesitinerariosController::class, 'update'])->name('update.itinerario.paquete');//Nuevos tipos de paquetes
 Route::delete('/package/itinerary/delete/{idactividad}', [ActividadesitinerariosController::class, 'destroy'])->name('eliminar.itinerario.paquete');
 
-//Itinerario
-Route::get('/page/sercices', [ActividadesitinerariosController::class, 'index'])->name('pago.formulario.nuevo.itinerario');//Nuevos tipos de paquetes
+//Servicios
+Route::get('/package/details/services/{idpaquete}', [PagosserviciosController::class, 'index'])->name('index.formulario.nuevo.servicio');//Nuevos tipos de paquetes
+Route::post('/package/details/save', [PagosserviciosController::class, 'store'])->name('guardar.servicio.paquete');
+Route::get('/package/details/services/edit/{idactividad}', [PagosserviciosController::class, 'edit'])->name('editar.servicio.paquete');
+Route::put('/package/details/services/edit/{idactividad}', [PagosserviciosController::class, 'update'])->name('update.servicio.paquete');
+Route::delete('/package/details/services/delete/{idactividad}', [PagosserviciosController::class, 'destroy'])->name('eliminar.servicio.paquete');
 
 /****************************** */
 

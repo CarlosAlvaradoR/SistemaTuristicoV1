@@ -371,7 +371,7 @@
                                     <div class="col-md-12">
                                         <!--  route(') }} -->
                                         @foreach ($idpaquetes as $idpaquete)
-                                            <a href="{{ route('index.formulario.nuevo.itinerario', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Añadir Pago por servicios</a>
+                                            <a href="{{ route('index.formulario.nuevo.servicio', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Añadir Pago por servicios</a>
                                         @endforeach
                                     </div>
                                 </div>
@@ -395,52 +395,37 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>
-                                                        1
-                                                    </td>
-                                                    <td>
-                                                        Alimentacion en Museo
-                                                    </td>
-                                                    <td>
-                                                        S/. 200
-                                                    </td>
-                                                    <td>
-                                                        <a href="#">
-                                                            <span class="btn btn-warning btn-sm" >
-                                                                <span class="fa fa-pencil-square-o"></span>
-                                                            </span>
-                                                        </a>
-                                                        <a href="#" >
-                                                            <span class="btn btn-danger btn-sm">
-                                                                <span class="fa fa-trash"></span>
-                                                            </span>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        2
-                                                    </td>
-                                                    <td>
-                                                        Visita al Museo
-                                                    </td>
-                                                    <td>
-                                                        S/. 300
-                                                    </td>
-                                                    <td>
-                                                        <a href="#">
-                                                            <span class="btn btn-warning btn-sm" >
-                                                                <span class="fa fa-pencil-square-o"></span>
-                                                            </span>
-                                                        </a>
-                                                        <a href="#" >
-                                                            <span class="btn btn-danger btn-sm">
-                                                                <span class="fa fa-trash"></span>
-                                                            </span>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                @php
+                                                    $contServicios=1;
+                                                @endphp
+                                                @foreach ($servicios as $servicio)
+                                                    <tr>
+                                                        <td>
+                                                            {{$contServicios++}}
+                                                        </td>
+                                                        <td>
+                                                            {{$servicio->descripcion}}
+                                                        </td>
+                                                        <td>
+                                                            {{$servicio->monto}}
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ route('editar.servicio.paquete', $servicio->idpagoservicio) }}">
+                                                                <span class="btn btn-warning btn-sm" >
+                                                                    <span class="fa fa-pencil-square-o"></span>
+                                                                </span>
+                                                            </a>
+                                                            <form action="{{ route('eliminar.servicio.paquete', $servicio->idpagoservicio) }}" method="POST" class="formEliminarItinerario">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                                    <span class="fa fa-trash"></span>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                
                                             </tbody>
                                         </table>
                                     </div>
@@ -627,30 +612,29 @@
 
 @section('scripts')
     <script>
-        //
         (function () {
-  'use strict'
-  var forms = document.querySelectorAll('.formEliminarItinerario')
-  Array.prototype.slice.call(forms)
-    .forEach(function (form) {
-      form.addEventListener('submit', function (event) {        
-          event.preventDefault()
-          event.stopPropagation()        
-          Swal.fire({
-                title: '¿Confirma la eliminación del registro?',        
-                icon: 'info',
-                showCancelButton: true,
-                confirmButtonColor: '#20c997',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Confirmar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    this.submit();
-                    Swal.fire('¡Eliminado!', 'El registro ha sido eliminado exitosamente.','success');
-                }
-            })                      
-      }, false)
-    })
-})()
+            'use strict'
+            var forms = document.querySelectorAll('.formEliminarItinerario')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                form.addEventListener('submit', function (event) {        
+                    event.preventDefault()
+                    event.stopPropagation()        
+                    Swal.fire({
+                            title: '¿Confirma la eliminación del registro?',        
+                            icon: 'info',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Confirmar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                this.submit();
+                                Swal.fire('¡Eliminado!', 'El registro ha sido eliminado exitosamente.','success');
+                            }
+                        })                      
+                }, false)
+                })
+            })()
     </script>
 @endsection
