@@ -16,6 +16,7 @@ use App\Http\Controllers\MapasreferencialesController;
 use App\Http\Controllers\TipopaquetesController;
 use App\Http\Controllers\ActividadesitinerariosController;
 use App\Http\Controllers\PagosserviciosController;
+use App\Http\Controllers\CategoriashotelesController;
 
 
 
@@ -109,6 +110,12 @@ Route::post('/package/details/save', [PagosserviciosController::class, 'store'])
 Route::get('/package/details/services/edit/{idactividad}', [PagosserviciosController::class, 'edit'])->name('editar.servicio.paquete');
 Route::put('/package/details/services/edit/{idactividad}', [PagosserviciosController::class, 'update'])->name('update.servicio.paquete');
 Route::delete('/package/details/services/delete/{idactividad}', [PagosserviciosController::class, 'destroy'])->name('eliminar.servicio.paquete');
+
+//Categoría Hoteles
+Route::get('/package/details/categoryHotel/{idpaquete}', [CategoriashotelesController::class, 'index'])->name('index.formulario.nueva.categoria.hotel.paquete');
+Route::post('/package/details/categoryHotel/save', [CategoriashotelesController::class, 'store'])->name('guardar.categoria.hotel.paquete');
+Route::get('/package/details/categoryHotel/edit/{idCategoriaHotel}', [CategoriashotelesController::class, 'edit'])->name('editar.categoria.hotel.paquete');
+
 
 /****************************** */
 

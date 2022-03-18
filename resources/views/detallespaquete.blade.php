@@ -75,7 +75,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#tabs-2-tab-6" role="tab" data-toggle="tab">
                                 <span class="nav-link-in">
-                                    Settings
+                                    Categoría de Hoteles
                                     <span class="label label-pill label-primary">4</span>
                                 </span>
                             </a>
@@ -434,7 +434,73 @@
                         </div>
                     </div> 
                 </div><!--.tab-pane-->
-                <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-6">Tab 6</div><!--.tab-pane-->
+                <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-6">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <!--  route(') }} -->
+                                        @foreach ($idpaquetes as $idpaquete)
+                                            <a href="{{ route('index.formulario.nueva.categoria.hotel.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Categoría de Hoteles</a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        #
+                                                    </th>
+                                                    <th>
+                                                        Descripción
+                                                    </th>
+                                                    
+                                                    <th>
+                                                        Acciones
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php
+                                                    $contCategoriaHoteles=1;
+                                                @endphp
+                                                @foreach ($categoriasHoteles as $categoriasHotele)
+                                                    <tr>
+                                                        <td>
+                                                            {{$contCategoriaHoteles++}}
+                                                        </td>
+                                                        <td>
+                                                            {{$categoriasHotele->descripcion}}
+                                                        </td>
+                                                        
+                                                        <td>
+                                                            <a href="{{ route('editar.categoria.hotel.paquete', $categoriasHotele->idcategoriahotel) }}">
+                                                                <span class="btn btn-warning btn-sm" >
+                                                                    <span class="fa fa-pencil-square-o"></span>
+                                                                </span>
+                                                            </a>
+                                                            <form action="#" method="POST" class="formEliminarItinerario">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                                    <span class="fa fa-trash"></span>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+                </div><!--.tab-pane-->
             </div><!--.tab-content-->
         </section><!--.tabs-section-->
 
