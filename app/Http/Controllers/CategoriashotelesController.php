@@ -52,7 +52,7 @@ class CategoriashotelesController extends Controller
     public function edit($idCategoriaHotel)
     {
         //
-        return $idCategoriaHotel;
+        return view('paquetes/categoriaHoteles/editar');
     }
 
     

@@ -1,0 +1,9 @@
+Tabla Tipos Personales:
+php artisan make:migration create_tipospersonales_table
+php artisan make:model Tipospersonales -r
+
+
+Tabla Tipo Personal Paquete: (Intermedia)
+php artisan make:migration create_paquetesTipospersonales_table
+php artisan make:model PaquetesTipospersonales -r
+

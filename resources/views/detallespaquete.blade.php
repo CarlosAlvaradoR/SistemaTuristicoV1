@@ -512,7 +512,7 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="#tabs-1-tab-1" role="tab" data-toggle="tab">
                                 <span class="nav-link-in">
-                                    <i class="font-icon font-icon-cogwheel"></i>
+                                    <i class="fa fa-skiing-nordic"></i>
                                     Personal Acompañante
                                 </span>
                             </a>
@@ -520,7 +520,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#tabs-1-tab-2" role="tab" data-toggle="tab">
                                 <span class="nav-link-in">
-                                    <span class="glyphicon glyphicon-music"></span>
+                                    <i class="font-icon fa fa-automobile"></i>
                                     Vehículos
                                 </span>
                             </a>
@@ -528,23 +528,24 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#tabs-1-tab-3" role="tab" data-toggle="tab">
                                 <span class="nav-link-in">
-                                    <i class="fa fa-product-hunt"></i>
-                                    Almuerzo
+                                    <i class="font-icon fab fa-free-code-camp"></i>
+                                    Alimentación Campo
                                 </span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#tabs-1-tab-4" role="tab" data-toggle="tab">
                                 <span class="nav-link-in">
-                                    <i class="font-icon font-icon-users"></i>
-                                    Equipo / Implementos --
+                                    
+                                    <i class="font-icon fa fa-box"></i>
+                                    Equipo
                                 </span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#tabs-1-tab-5" role="tab" data-toggle="tab">
                                 <span class="nav-link-in">
-                                    <i class="font-icon font-icon-home"></i>
+                                    <i class="font-icon fa fa-horse"></i>
                                     Acémilas
                                 </span>
                             </a>
@@ -552,8 +553,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#tabs-1-tab-6" role="tab" data-toggle="tab">
                                 <span class="nav-link-in">
-                                    <i class="font-icon font-icon-speed"></i>
-                                    Settings
+                                    <!--<i class="font-icon font-icon-speed"></i>-->
+                                    <i class="font-icon fas fa-utensils"></i>
+                                    Almuerzo Celebración
                                 </span>
                             </a>
                         </li>
@@ -566,6 +568,14 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
+                                <!--  route(') }} -->
+                                @foreach ($idpaquetes as $idpaquete)
+                                    <a href="{{ route('index.formulario.nueva.categoria.hotel.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nuevo Tipo de Personal</a>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -573,13 +583,13 @@
                                                 #
                                             </th>
                                             <th>
-                                                Product
+                                                Tipo de Personal
                                             </th>
                                             <th>
-                                                Payment Taken
+                                                Cantidad
                                             </th>
                                             <th>
-                                                Status
+                                                Acciones
                                             </th>
                                         </tr>
                                     </thead>
@@ -589,82 +599,361 @@
                                                 1
                                             </td>
                                             <td>
-                                                TB - Monthly
+                                                Camarero
                                             </td>
                                             <td>
-                                                01/04/2012
+                                                5
                                             </td>
                                             <td>
-                                                Default
+                                                <a href="#">
+                                                    <span class="btn btn-warning btn-sm" >
+                                                        <span class="fa fa-pencil-square-o"></span>
+                                                    </span>
+                                                </a>
+                                                <form action="#" method="POST" class="formEliminarItinerario">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        <span class="fa fa-trash"></span>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
-                                        <tr class="table-active">
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>
-                                                TB - Monthly
-                                            </td>
-                                            <td>
-                                                01/04/2012
-                                            </td>
-                                            <td>
-                                                Approved
-                                            </td>
-                                        </tr>
-                                        <tr class="table-success">
-                                            <td>
-                                                2
-                                            </td>
-                                            <td>
-                                                TB - Monthly
-                                            </td>
-                                            <td>
-                                                02/04/2012
-                                            </td>
-                                            <td>
-                                                Declined
-                                            </td>
-                                        </tr>
-                                        <tr class="table-warning">
-                                            <td>
-                                                3
-                                            </td>
-                                            <td>
-                                                TB - Monthly
-                                            </td>
-                                            <td>
-                                                03/04/2012
-                                            </td>
-                                            <td>
-                                                Pending
-                                            </td>
-                                        </tr>
-                                        <tr class="table-danger">
-                                            <td>
-                                                4
-                                            </td>
-                                            <td>
-                                                TB - Monthly
-                                            </td>
-                                            <td>
-                                                04/04/2012
-                                            </td>
-                                            <td>
-                                                Call in to confirm
-                                            </td>
-                                        </tr>
+                                        
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div><!--.tab-pane-->
-                <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-2">Tab 2</div><!--.tab-pane-->
-                <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-3">Tab 3</div><!--.tab-pane-->
-                <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-4">Tab 4</div><!--.tab-pane-->
-                <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-5">Tab 5</div><!--.tab-pane-->
-                <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-6">Tab 6</div><!--.tab-pane-->
+                <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-2">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!--  route(') }} -->
+                                @foreach ($idpaquetes as $idpaquete)
+                                    <a href="{{ route('index.formulario.nueva.categoria.hotel.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nuevo Tipo de Personal</a>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                #
+                                            </th>
+                                            <th>
+                                                Descripción
+                                            </th>
+                                            
+                                            <th>
+                                                Cantidad
+                                            </th>
+                                            <th>
+                                                Tipo de Trasnporte
+                                            </th>
+                                            <th>
+                                                Acciones
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                1
+                                            </td>
+                                            <td>
+                                                Un auto para trasnportarse a los lugares mas lejanos, con 12 asientos
+                                            </td>
+                                            <td>
+                                                5
+                                            </td>
+                                            <td>
+                                                Vehículo
+                                            </td>
+                                            <td>
+                                                <a href="#">
+                                                    <span class="btn btn-warning btn-sm" >
+                                                        <span class="fa fa-pencil-square-o"></span>
+                                                    </span>
+                                                </a>
+                                                <form action="#" method="POST" class="formEliminarItinerario">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        <span class="fa fa-trash"></span>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--.tab-pane-->
+                <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-3">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!--  route(') }} -->
+                                @foreach ($idpaquetes as $idpaquete)
+                                    <a href="{{ route('index.formulario.nueva.categoria.hotel.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nuevo Alimentación</a>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                #
+                                            </th>
+                                            <th>
+                                                Descripción
+                                            </th>
+                                            
+                                            <th>
+                                                Tipo Alimentacion
+                                            </th>
+                                            <th>
+                                                Acciones
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                1
+                                            </td>
+                                            <td>
+                                                En el día 1 se comerá carapulcra
+                                            <td>
+                                                Vegetal
+                                            </td>
+                                            <td>
+                                                <a href="#">
+                                                    <span class="btn btn-warning btn-sm" >
+                                                        <span class="fa fa-pencil-square-o"></span>
+                                                    </span>
+                                                </a>
+                                                <form action="#" method="POST" class="formEliminarItinerario">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        <span class="fa fa-trash"></span>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>    
+                </div><!--.tab-pane-->
+                <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-4">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!--  route(') }} -->
+                                @foreach ($idpaquetes as $idpaquete)
+                                    <a href="{{ route('index.formulario.nueva.categoria.hotel.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nuevo Equipo</a>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                #
+                                            </th>
+                                            <th>
+                                                Equipo
+                                            </th>
+                                            
+                                            <th>
+                                                Cantidad
+                                            </th>
+                                            <th>
+                                                Observacion
+                                            </th>
+                                            <th>
+                                                Acciones
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                1
+                                            </td>
+                                            <td>
+                                                Sogas 
+                                            </td>
+                                            <td>
+                                                1 
+                                            </td>
+                                            <td>
+                                                Son necesarias pero no obligatorias
+                                            </td>
+                                            <td>
+                                                <a href="#">
+                                                    <span class="btn btn-warning btn-sm" >
+                                                        <span class="fa fa-pencil-square-o"></span>
+                                                    </span>
+                                                </a>
+                                                <form action="#" method="POST" class="formEliminarItinerario">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        <span class="fa fa-trash"></span>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>     
+                </div><!--.tab-pane-->
+                <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-5">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!--  route(') }} -->
+                                @foreach ($idpaquetes as $idpaquete)
+                                    <a href="{{ route('index.formulario.nueva.categoria.hotel.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nuevas Acémilas</a>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                #
+                                            </th>
+                                            <th>
+                                                Tipo
+                                            </th>
+                                            
+                                            <th>
+                                                Cantidad
+                                            </th>
+                                            
+                                            <th>
+                                                Acciones
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                1
+                                            </td>
+                                            <td>
+                                                Cargueras 
+                                            </td>
+                                            <td>
+                                                7 
+                                            </td>
+                                            <td>
+                                                <a href="#">
+                                                    <span class="btn btn-warning btn-sm" >
+                                                        <span class="fa fa-pencil-square-o"></span>
+                                                    </span>
+                                                </a>
+                                                <form action="#" method="POST" class="formEliminarItinerario">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        <span class="fa fa-trash"></span>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>  
+                </div><!--.tab-pane-->
+                <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-6">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!--  route(') }} -->
+                                @foreach ($idpaquetes as $idpaquete)
+                                    <a href="{{ route('index.formulario.nueva.categoria.hotel.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nuevo Almuerzo Celebración</a>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                #
+                                            </th>
+                                            <th>
+                                                Tipo
+                                            </th>
+                                            
+                                            <th>
+                                                Cantidad
+                                            </th>
+                                            
+                                            <th>
+                                                Acciones
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                1
+                                            </td>
+                                            <td>
+                                                Cargueras 
+                                            </td>
+                                            <td>
+                                                7 
+                                            </td>
+                                            <td>
+                                                <a href="#">
+                                                    <span class="btn btn-warning btn-sm" >
+                                                        <span class="fa fa-pencil-square-o"></span>
+                                                    </span>
+                                                </a>
+                                                <form action="#" method="POST" class="formEliminarItinerario">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        <span class="fa fa-trash"></span>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>  
+                </div><!--.tab-pane-->
             </div><!--.tab-content-->
         </section><!--.tabs-section-->
         

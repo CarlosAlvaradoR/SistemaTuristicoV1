@@ -124,7 +124,7 @@
                     </div>
                     <div class="place_info">
                         <a href="#"><h3>California</h3></a>
-                        <p>United State of America</p>
+                        <p>Amércica Latina - Perú</p>
                         <div class="rating_days d-flex justify-content-between">
                             <span class="d-flex justify-content-center align-items-center">
                                  <i class="fa fa-star"></i> 
@@ -150,7 +150,7 @@
                     </div>
                     <div class="place_info">
                         <a href="#"><h3>Korola Megna</h3></a>
-                        <p>United State of America</p>
+                        <p>Amércica Latina - Perú</p>
                         <div class="rating_days d-flex justify-content-between">
                             <span class="d-flex justify-content-center align-items-center">
                                  <i class="fa fa-star"></i> 
@@ -176,7 +176,7 @@
                     </div>
                     <div class="place_info">
                         <a href="#"><h3>London</h3></a>
-                        <p>United State of America</p>
+                        <p>Amércica Latina - Perú</p>
                         <div class="rating_days d-flex justify-content-between">
                             <span class="d-flex justify-content-center align-items-center">
                                  <i class="fa fa-star"></i> 

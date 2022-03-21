@@ -22,6 +22,7 @@
 	<link rel="stylesheet" href="{{ asset('css/separate/vendor/datatables-net.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/separate/pages/files.min.css') }}">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+	
 
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	
@@ -458,7 +459,8 @@
 	            </span>
 	            <ul>
 	                <li><a href="{{ route('paquetes.activos.galeria') }}"><span class="lbl">Nuevo</span><span class="label label-custom label-pill label-succes">new</span></a></li>
-	                <li><a href="{{ route('index.tipo.paquete') }}"><span class="lbl">Tipos</span></a></li>   
+	                <li><a href="{{ route('index.tipo.paquete') }}"><span class="lbl">Tipos</span></a></li>  
+					<li><a href="{{ route('index.tipo.paquete') }}"><span class="lbl">Tipo Personal</span></a></li>   
 	            </ul>
 	        </li>
 			<li class="red with-sub">
