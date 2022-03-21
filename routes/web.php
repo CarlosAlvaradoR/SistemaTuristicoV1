@@ -118,7 +118,9 @@ Route::post('/package/details/categoryHotel/save', [CategoriashotelesController:
 Route::get('/package/details/categoryHotel/edit/{idCategoriaHotel}', [CategoriashotelesController::class, 'edit'])->name('editar.categoria.hotel.paquete');
 
 //Personal Paquete
-Route::get('/package/details/personal/{idpaquete}', [CategoriashotelesController::class, 'index'])->name('index.nuevo.tipopersonal.paquete');
+Route::get('/package/details/personal/{idpaquete}', [PaquetesTipospersonalesController::class, 'index'])->name('index.nuevo.tipopersonal.paquete');
+Route::post('/package/details/personal/save', [PaquetesTipospersonalesController::class, 'store'])->name('guardar.tipopersonal.paquete');
+
 /****************************** */
 
 

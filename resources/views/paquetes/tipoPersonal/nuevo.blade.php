@@ -21,7 +21,7 @@
 
         <section class="card "> <!-- //- class="box-typical-full-height"-->
             <div class="card-block">
-                <h5 class="with-border m-t-0">Nueva Categoría de Hoteles</h5>
+                <h5 class="with-border m-t-0">Nuevos Personales en el viaje</h5>
                 <div class="row">
                     <div class="row">
                         <div class="col-md-12">
@@ -33,35 +33,47 @@
                                     </button>
                                     <h4>
                                         ÉXITO!
-                                    </h4> <strong>Muy bien!</strong> Pago por servicio añadido correctamente.
+                                    </h4> <strong>Muy bien!</strong> Tipo de Personal añadido correctamente.
                                 </div>
                             @endif
                         </div>
                     </div>
-                    <form action="{{ route('guardar.categoria.hotel.paquete') }}" method="POST">
+                    <form action="{{ route('guardar.tipopersonal.paquete') }}" method="POST">
                         @csrf
 
                         <div class="container-fluid">
                             <div class="row">
-                                
                                 <div class="col-md-5">
                                     
                                         <div class="form-group">
                                              
-                                            <label for="descripcion">
-                                                Descripción
+                                            <label for="cantidad">
+                                                Cantidad
                                             </label>
-                                            <textarea class="form-control" name="descripcion" id="descripcion" rows="3"></textarea>
+                                            <input type="text" name="cantidad" class="form-control" id="cantidad" />
                                         </div>
-                                
+                                    
                                 </div>
                                 <div class="col-md-5">
-                                    <!--
-                                    foreach ($idpaquetes  as $idpaquete)
-                                        <input type="text" id="idpaqueteturistico" name="idpaqueteturistico" value="{{$idpaquete->idpaqueteturistico}}" hidden>
-                                    endforeach-->
-                                
-                            </div>
+                                    
+                                        <div class="form-group">
+                                             
+                                            <label for="idtipopersonal">
+                                                Tipo de Personal
+                                            </label>
+                                            <select id="estado" name="idtipopersonal" id="idtipopersonal" class="form-control">
+                                                <option selected>Seleccione...</option>
+                                                @foreach ($tiposPersonales as $tipo)
+                                                    <option value="{{$tipo->idtipopersonal}}">{{$tipo->nombreTipo}}</option>
+                                                @endforeach 
+                                            </select>
+                                        </div>
+                                    
+                                        @foreach ($idpaquetes  as $idpaquete)
+                                            <input type="text" id="idpaqueteturistico" name="idpaqueteturistico" value="{{$idpaquete->idpaqueteturistico}}" hidden>
+                                        @endforeach
+                                        
+                                </div>
                                 <div class="col-md-2">
                                      
                                     <!--<button type="button" class="btn btn-primary">

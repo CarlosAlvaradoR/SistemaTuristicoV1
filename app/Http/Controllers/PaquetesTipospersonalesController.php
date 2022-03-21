@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\PaquetesTipospersonales;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class PaquetesTipospersonalesController extends Controller
 {
@@ -12,17 +14,15 @@ class PaquetesTipospersonalesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($idpaquete)
     {
         //
-        return view('paquetes/tipoPersonal/nuevo');
+        $idpaquetes=(DB::select('SELECT idpaqueteturistico FROM paquetes_turisticos WHERE idpaqueteturistico='.$idpaquete.' LIMIT 1'));
+        $tiposPersonales=DB::select('SELECT idtipopersonal, nombreTipo FROM tipospersonales');
+        return view('paquetes/tipoPersonal/nuevo', compact('idpaquetes', 'tiposPersonales'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
         //
@@ -37,6 +37,12 @@ class PaquetesTipospersonalesController extends Controller
     public function store(Request $request)
     {
         //
+        $PaquetesTiposPersonal=  new PaquetesTipospersonales();
+        $PaquetesTiposPersonal->cantidad=$request->post('cantidad');
+        $PaquetesTiposPersonal->idtipopersonal=$request->post('idtipopersonal');
+        $PaquetesTiposPersonal->idpaqueteturistico=$request->post('idpaqueteturistico');
+        $PaquetesTiposPersonal->save();
+        return redirect()->route("index.nuevo.tipopersonal.paquete",[$request->post('idpaqueteturistico')])->with("succes","Agregado con éxito");
     }
 
     /**

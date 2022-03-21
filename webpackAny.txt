@@ -7,3 +7,11 @@ Tabla Tipo Personal Paquete: (Intermedia)
 php artisan make:migration create_paquetesTipospersonales_table
 php artisan make:model PaquetesTipospersonales -r
 
+Tabla Tipo Transportes
+php artisan make:migration create_tipotransportes_table
+php artisan make:model Tipotransportes -r
+
+Tabla Paquetes Tipo Transportes
+php artisan make:migration create_paquetesTipotransportes_table
+php artisan make:model PaquetesTipotransportes -r
+

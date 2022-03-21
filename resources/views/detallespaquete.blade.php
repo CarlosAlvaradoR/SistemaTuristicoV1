@@ -570,7 +570,7 @@
                             <div class="col-md-12">
                                 <!--  route(') }} -->
                                 @foreach ($idpaquetes as $idpaquete)
-                                    <a href="{{ route('index.formulario.nueva.categoria.hotel.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nuevo Tipo de Personal</a>
+                                    <a href="{{ route('index.nuevo.tipopersonal.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nuevo Tipo de Personal</a>
                                 @endforeach
                             </div>
                         </div>
@@ -594,31 +594,37 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>
-                                                Camarero
-                                            </td>
-                                            <td>
-                                                5
-                                            </td>
-                                            <td>
-                                                <a href="#">
-                                                    <span class="btn btn-warning btn-sm" >
-                                                        <span class="fa fa-pencil-square-o"></span>
-                                                    </span>
-                                                </a>
-                                                <form action="#" method="POST" class="formEliminarItinerario">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">
-                                                        <span class="fa fa-trash"></span>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                        @php
+                                            $contadorTiposP=1;
+                                        @endphp
+                                        @foreach ($tiposPersonales as $tipoP)
+                                            <tr>
+                                                <td>
+                                                    {{$contadorTiposP++}}
+                                                </td>
+                                                <td>
+                                                    {{$tipoP->nombreTipo}}
+                                                </td>
+                                                <td>
+                                                    {{$tipoP->cantidad}}
+                                                </td>
+                                                <td>
+                                                    <a href="#">
+                                                        <span class="btn btn-warning btn-sm" >
+                                                            <span class="fa fa-pencil-square-o"></span>
+                                                        </span>
+                                                    </a>
+                                                    <form action="#" method="POST" class="formEliminarItinerario">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm">
+                                                            <span class="fa fa-trash"></span>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        
                                         
                                     </tbody>
                                 </table>
@@ -632,7 +638,7 @@
                             <div class="col-md-12">
                                 <!--  route(') }} -->
                                 @foreach ($idpaquetes as $idpaquete)
-                                    <a href="{{ route('index.formulario.nueva.categoria.hotel.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nuevo Tipo de Personal</a>
+                                    <a href="{{ route('index.formulario.nueva.categoria.hotel.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nuevo Vehículo</a>
                                 @endforeach
                             </div>
                         </div>

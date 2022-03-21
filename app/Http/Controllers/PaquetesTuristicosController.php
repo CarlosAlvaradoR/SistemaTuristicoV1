@@ -21,6 +21,7 @@ class PaquetesTuristicosController extends Controller
     {
         //
         $paquetes=(DB::select('SELECT * FROM paquetes_turisticos p'));
+        
         return view('paqueteturistico', compact('paquetes'));
     }
 
@@ -45,7 +46,10 @@ class PaquetesTuristicosController extends Controller
         INNER JOIN itinerarios_paquetes i on a.idactividaditinerario = i.idactividaditinerario WHERE idpaqueteturistico = '.$idpaquete.'');
         $servicios=DB::select('SELECT idpagoservicio, descripcion, monto, idpaqueteturistico FROM pagosservicios p WHERE idpaqueteturistico = '.$idpaquete.'');
         $categoriasHoteles=DB::select('SELECT idcategoriahotel, descripcion, idpaqueteturistico FROM categoriashoteles WHERE idpaqueteturistico= '.$idpaquete.' ');
-        return view('detallespaquete', compact('galeriaFotos','mapaReferencias','nombrePaquetes','idpaquetes', 'itinerarios', 'servicios', 'categoriasHoteles'));
+        $tiposPersonales = DB::select('SELECT p.id, p.cantidad, p.idpaqueteturistico,t.idtipopersonal, t.nombreTipo  FROM paquetes_tipospersonales p
+        INNER JOIN tipospersonales t on t.idtipopersonal=p.idtipopersonal WHERE p.idpaqueteturistico = '.$idpaquete.'');
+        return view('detallespaquete', compact('galeriaFotos','mapaReferencias','nombrePaquetes','idpaquetes', 'itinerarios', 'servicios', 'categoriasHoteles',
+            'tiposPersonales'));
     }
 
 
