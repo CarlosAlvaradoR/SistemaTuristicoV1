@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\PaquetesTipotransportes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class PaquetesTipotransportesController extends Controller
 {
@@ -12,9 +14,12 @@ class PaquetesTipotransportesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($idpaquete)
     {
         //
+        $idpaquetes=(DB::select('SELECT idpaqueteturistico FROM paquetes_turisticos WHERE idpaqueteturistico='.$idpaquete.' LIMIT 1'));
+        $tiposTransportes=DB::select('SELECT idtipotrasnporte, nombretipo FROM tipotransportes');
+        return view('paquetes/transportes/nuevo', compact('idpaquetes','tiposTransportes'));
     }
 
     /**
@@ -58,6 +63,9 @@ class PaquetesTipotransportesController extends Controller
     public function edit(PaquetesTipotransportes $paquetesTipotransportes)
     {
         //
+        $idpaquetes=(DB::select('SELECT idpaqueteturistico FROM paquetes_turisticos WHERE idpaqueteturistico='.$idpaquete.' LIMIT 1'));
+        $tiposTransportes=DB::select('SELECT idtipotrasnporte, nombretipo FROM tipotransportes');
+        return view('paquetes/transportes/editar', compact('idpaquetes','tiposTransportes'));
     }
 
     /**

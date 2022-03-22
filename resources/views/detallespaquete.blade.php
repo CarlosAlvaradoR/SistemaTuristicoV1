@@ -638,7 +638,7 @@
                             <div class="col-md-12">
                                 <!--  route(') }} -->
                                 @foreach ($idpaquetes as $idpaquete)
-                                    <a href="{{ route('index.formulario.nueva.categoria.hotel.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nuevo Vehículo</a>
+                                    <a href="{{ route('index.nuevo.tipo.transporte.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nuevo Vehículo</a>
                                 @endforeach
                             </div>
                         </div>
@@ -680,7 +680,7 @@
                                                 Vehículo
                                             </td>
                                             <td>
-                                                <a href="#">
+                                                <a href="{{ route('editar.tipo.transporte.paquete', 1) }}">
                                                     <span class="btn btn-warning btn-sm" >
                                                         <span class="fa fa-pencil-square-o"></span>
                                                     </span>

@@ -18,7 +18,7 @@ use App\Http\Controllers\ActividadesitinerariosController;
 use App\Http\Controllers\PagosserviciosController;
 use App\Http\Controllers\CategoriashotelesController;
 use App\Http\Controllers\PaquetesTipospersonalesController;
-
+use App\Http\Controllers\PaquetesTipotransportesController;
 
 
 Route::get('/', function () {
@@ -121,6 +121,10 @@ Route::get('/package/details/categoryHotel/edit/{idCategoriaHotel}', [Categorias
 Route::get('/package/details/personal/{idpaquete}', [PaquetesTipospersonalesController::class, 'index'])->name('index.nuevo.tipopersonal.paquete');
 Route::post('/package/details/personal/save', [PaquetesTipospersonalesController::class, 'store'])->name('guardar.tipopersonal.paquete');
 
+//Tipo Transporte Paquete
+Route::get('/package/details/transport/{idpaquete}', [PaquetesTipotransportesController::class, 'index'])->name('index.nuevo.tipo.transporte.paquete');
+
+Route::get('/package/details/transport/edit/{idCategoriaHotel}', [PaquetesTipotransportesController::class, 'edit'])->name('editar.tipo.transporte.paquete');
 /****************************** */
 
 
