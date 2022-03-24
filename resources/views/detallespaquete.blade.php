@@ -666,34 +666,39 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>
-                                                Un auto para trasnportarse a los lugares mas lejanos, con 12 asientos
-                                            </td>
-                                            <td>
-                                                5
-                                            </td>
-                                            <td>
-                                                Vehículo
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('editar.tipo.transporte.paquete', 1) }}">
-                                                    <span class="btn btn-warning btn-sm" >
-                                                        <span class="fa fa-pencil-square-o"></span>
-                                                    </span>
-                                                </a>
-                                                <form action="#" method="POST" class="formEliminarItinerario">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">
-                                                        <span class="fa fa-trash"></span>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                        @php
+                                            $contadorTransportes=1;
+                                        @endphp
+                                        @foreach ($transportesPaquetes as $transportesPaquete)
+                                            <tr>
+                                                <td>
+                                                    {{$contadorTransportes++}}
+                                                </td>
+                                                <td>
+                                                    {{$transportesPaquete->descripcion}}
+                                                </td>
+                                                <td>
+                                                    {{$transportesPaquete->cantidad}}
+                                                </td>
+                                                <td>
+                                                    {{$transportesPaquete->nombretipo}}
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('editar.tipo.transporte.paquete', $transportesPaquete->idpaquete_tipotransporte) }}">
+                                                        <span class="btn btn-warning btn-sm" >
+                                                            <span class="fa fa-pencil-square-o"></span>
+                                                        </span>
+                                                    </a>
+                                                    <form action="#" method="POST" class="formEliminarItinerario">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm">
+                                                            <span class="fa fa-trash"></span>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                         
                                     </tbody>
                                 </table>

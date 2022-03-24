@@ -41,6 +41,14 @@ class PaquetesTipotransportesController extends Controller
     public function store(Request $request)
     {
         //
+        
+        $paquetesTiposTransporte=new PaquetesTipotransportes;
+        $paquetesTiposTransporte->descripcion=$request->post('descripcion');
+        $paquetesTiposTransporte->cantidad=$request->post('cantidad');
+        $paquetesTiposTransporte->idpaqueteturistico=$request->post('idpaqueteturistico');
+        $paquetesTiposTransporte->idtipotrasnporte=$request->post('idtipotrasnporte');
+        $paquetesTiposTransporte->save();
+        return redirect()->route("index.nuevo.tipo.transporte.paquete",[$request->post('idpaqueteturistico')])->with("succes","Agregado con éxito");
     }
 
     /**
@@ -60,32 +68,23 @@ class PaquetesTipotransportesController extends Controller
      * @param  \App\Models\PaquetesTipotransportes  $paquetesTipotransportes
      * @return \Illuminate\Http\Response
      */
-    public function edit(PaquetesTipotransportes $paquetesTipotransportes)
+    public function edit($idPaqueteTipoTransporte)
     {
         //
         $idpaquetes=(DB::select('SELECT idpaqueteturistico FROM paquetes_turisticos WHERE idpaqueteturistico='.$idpaquete.' LIMIT 1'));
-        $tiposTransportes=DB::select('SELECT idtipotrasnporte, nombretipo FROM tipotransportes');
-        return view('paquetes/transportes/editar', compact('idpaquetes','tiposTransportes'));
+        $paquetesTiposTransportes=DB::select('SELECT pt.idpaquete_tipotransporte, pt.descripcion, pt.cantidad, pt.idpaqueteturistico, t.idtipotrasnporte, t.nombretipo FROM paquetes_tipotransportes pt
+        INNER JOIN tipotransportes t on t.idtipotrasnporte = pt.idtipotrasnporte
+        WHERE pt.idpaquete_tipotransporte = '.$idPaqueteTipoTransporte.' LIMIT 1');
+        return view('paquetes/transportes/editar', compact('idpaquetes','paquetesTiposTransportes'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PaquetesTipotransportes  $paquetesTipotransportes
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, PaquetesTipotransportes $paquetesTipotransportes)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\PaquetesTipotransportes  $paquetesTipotransportes
-     * @return \Illuminate\Http\Response
-     */
+   
     public function destroy(PaquetesTipotransportes $paquetesTipotransportes)
     {
         //

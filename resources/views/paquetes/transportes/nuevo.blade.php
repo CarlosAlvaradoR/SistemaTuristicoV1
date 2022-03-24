@@ -21,7 +21,7 @@
 
         <section class="card "> <!-- //- class="box-typical-full-height"-->
             <div class="card-block">
-                <h5 class="with-border m-t-0">Nuevos Personales en el viaje</h5>
+                <h5 class="with-border m-t-0">Nuevos Tipos de Vehículos en el viaje</h5>
                 <div class="row">
                     <div class="row">
                         <div class="col-md-12">
@@ -38,7 +38,7 @@
                             @endif
                         </div>
                     </div>
-                    <form action="{{ route('guardar.tipopersonal.paquete') }}" method="POST">
+                    <form action="{{ route('guardar.tipo.transporte.paquete') }}" method="POST">
                         @csrf
 
                         <div class="container-fluid">
@@ -47,10 +47,10 @@
                                     
                                     <div class="form-group">
                                          
-                                        <label for="cantidad">
+                                        <label for="descripcion">
                                             Descripcion
                                         </label>
-                                        <input type="text" name="cantidad" class="form-control" id="cantidad" />
+                                        <input type="text" name="descripcion" class="form-control" id="descripcion" />
                                     </div>
                                 
                                 </div>
@@ -70,10 +70,10 @@
                                     
                                         <div class="form-group">
                                              
-                                            <label for="idtipopersonal">
+                                            <label for="idpaqueteturistico">
                                                 Tipo de Trasnporte
                                             </label>
-                                            <select id="estado" name="idtipopersonal" id="idtipopersonal" class="form-control">
+                                            <select id="estado" name="idpaqueteturistico" id="idpaqueteturistico" class="form-control">
                                                 <option selected>Seleccione...</option>
                                                 @foreach ($tiposTransportes as $tipo)
                                                     <option value="{{$tipo->idtipotrasnporte}}">{{$tipo->nombretipo}}</option>
@@ -82,7 +82,7 @@
                                         </div>
                                     
                                         @foreach ($idpaquetes  as $idpaquete)
-                                            <input type="text" id="idpaqueteturistico" name="idpaqueteturistico" value="{{$idpaquete->idpaqueteturistico}}" hidden>
+                                            <input type="text" id="idtipotrasnporte" name="idtipotrasnporte" value="{{$idpaquete->idpaqueteturistico}}" hidden>
                                         @endforeach
                                         
                                 </div>
@@ -114,10 +114,9 @@
                                         
                                     </div>
                                     <div class="col-md-2">
-                                        
-                                        <button type="button" class="btn btn-danger">
-                                            Cancelar
-                                        </button>
+                                        @foreach ($idpaquetes  as $idpaquete)
+                                            <a href="{{ route('paquetes.detalles', $idpaquete->idpaqueteturistico) }}" class="btn btn-danger">Cancelar</a>
+                                        @endforeach
                                     </div>
                                     <div class="col-md-4">
                                     </div>
