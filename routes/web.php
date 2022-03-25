@@ -132,7 +132,8 @@ Route::delete('/package/details/trasnport/delete/{idPaqueteTipoTransporte}', [Pa
 //Alimentación en campo
 Route::get('/package/details/alimentacion/{idpaquete}', [PaquetesTipoalimentacionesController::class, 'index'])->name('index.nuevo.alimentacion.campo.paquete');
 Route::post('/package/details/alimentacion/save', [PaquetesTipoalimentacionesController::class, 'store'])->name('guardar.alimentacion.campo.paquete');
-Route::get('/package/details/alimentacion/edit/{idPaqueteTipoTransporte}', [PaquetesTipoalimentacionesController::class, 'edit'])->name('editar.alimentacion.campo.paquete');
+Route::get('/package/details/alimentacion/edit/{idPaqueteTipoAlimentacion}', [PaquetesTipoalimentacionesController::class, 'edit'])->name('editar.alimentacion.campo.paquete');
+Route::put('/package/details/alimentacion/edit/{idPaqueteTipoAlimentacion}', [PaquetesTipoalimentacionesController::class, 'update'])->name('update.alimentacion.campo.paquete');
 /****************************** */
 
 

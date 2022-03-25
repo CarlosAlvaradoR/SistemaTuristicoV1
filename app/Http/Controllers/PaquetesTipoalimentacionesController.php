@@ -69,23 +69,31 @@ class PaquetesTipoalimentacionesController extends Controller
     {
         //
         $idpaquetes=(DB::select('SELECT idpaqueteturistico FROM paquetes_tipoalimentaciones WHERE idpaqueteturistico = '.$idPaqueteTipoAlimentacion.' LIMIT 1'));
-        $paquetesTiposTransportes=DB::select('SELECT pt.idpaquete_tipotransporte, pt.descripcion, pt.cantidad, pt.idpaqueteturistico, t.idtipotrasnporte, t.nombretipo FROM paquetes_tipotransportes pt
-        INNER JOIN tipotransportes t on t.idtipotrasnporte = pt.idtipotrasnporte
-        WHERE pt.idpaquete_tipotransporte = '.$idPaqueteTipoAlimentacion.' LIMIT 1');
-        $tiposTransportes=DB::select('SELECT idtipotrasnporte, nombretipo FROM tipotransportes');
-        return view('paquetes/transportes/editar', compact('idpaquetes','paquetesTiposTransportes','tiposTransportes'));
+        
+        $paquetesTiposalimentaciones=DB::select('SELECT p.idpaquete_tipoalimentacion, p.descripcion, p.idpaqueteturistico , p.idtipoalimentacion, t.nombretipo FROM paquetes_tipoalimentaciones p
+        INNER JOIN tipoalimentaciones t on p.idtipoalimentacion=t.idtipoalimentacion
+        WHERE idpaquete_tipoalimentacion = '.$idPaqueteTipoAlimentacion.' ORDER BY idpaquete_tipoalimentacion LIMIT 1');
+        
+        $tipoAlimentaciones=DB::select('SELECT idtipoalimentacion, nombretipo FROM tipoalimentaciones');
+        
+        return view('paquetes/alimentacionCampo/editar', compact('idpaquetes','paquetesTiposalimentaciones','tipoAlimentaciones'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PaquetesTipoalimentaciones  $paquetesTipoalimentaciones
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, PaquetesTipoalimentaciones $paquetesTipoalimentaciones)
+    
+    public function update(Request $request, $idPaqueteTipoAlimentacion)
     {
         //
+        /**
+         * tipo=DB o request
+         */
+        
+        PaquetesTipoalimentaciones::where('idpaquete_tipoalimentacion',$idPaqueteTipoAlimentacion)
+        ->update(['descripcion'=>$request->post('descripcion'),
+                    'idtipoalimentacion'=>$request->post('idtipoalimentacion')
+        ]);
+        
+        return redirect()->route("paquetes.detalles",[$request->post('idpaqueteturistico')]);
+        
     }
 
     /**
