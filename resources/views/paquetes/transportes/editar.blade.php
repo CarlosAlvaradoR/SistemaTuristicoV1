@@ -39,19 +39,22 @@
                         </div>
                     </div>
                     @foreach ($paquetesTiposTransportes as $paquetesTiposTransporte)
-                        <form action="{{ route('guardar.tipopersonal.paquete') }}" method="POST">
+                        @php
+                            $idTipoPaquetes=$paquetesTiposTransporte->idpaqueteturistico."";
+                        @endphp
+                        <form action="{{ route('update.tipo.transporte.paquete', $paquetesTiposTransporte->idpaquete_tipotransporte) }}" method="POST">
                             @csrf
-
+                            @method('PUT')
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-md-4">
                                         
                                         <div class="form-group">
-                                            
-                                            <label for="cantidad">
+                                           
+                                            <label for="descripcion">
                                                 Descripcion
                                             </label>
-                                            <input type="text" value="{{$paquetesTiposTransporte->descripcion}}" name="cantidad" class="form-control" id="cantidad" />
+                                            <input type="text" value="{{$paquetesTiposTransporte->descripcion}}" name="descripcion" class="form-control" id="descripcion" />
                                         </div>
                                     
                                     </div>
@@ -63,27 +66,33 @@
                                                 <label for="cantidad">
                                                     Cantidad
                                                 </label>
-                                                <input type="text" name="cantidad" class="form-control" id="cantidad" />
+                                                <input type="text" value="{{$paquetesTiposTransporte->cantidad}}" name="cantidad" class="form-control" id="cantidad" />
                                             </div>
                                         
                                     </div>
+
+                                    <input type="text" value="@php
+                                        echo $idTipoPaquetes;
+                                    @endphp" name="idpaqueteturistico" hidden>
+                    @endforeach                  
                                     <div class="col-md-5">
-                                        
+                                      
                                             <div class="form-group">
                                                 
-                                                <label for="idtipopersonal">
+                                                <label for="idtipotrasnporte">
                                                     Tipo de Trasnporte
                                                 </label>
-                                                <select id="estado" name="idtipopersonal" id="idtipopersonal" class="form-control">
+
+                                                <select id="estado" name="idtipotrasnporte" id="idtipotrasnporte" class="form-control">
                                                     <option selected>Seleccione...</option>
-                                                    
-                                                        <!--<option value="$tipo->idtipotrasnporte}}">$tipo->nombretipo}}</option>-->
+                                                    @foreach ($tiposTransportes as $tiposTransporte)
+                                                        <option value="{{$tiposTransporte->idtipotrasnporte}}">{{$tiposTransporte->nombretipo}}</option>
+                                                    @endforeach
+                                                        
                                                      
                                                 </select>
                                             </div>
-                                        
-                                            
-                                            
+                                      
                                     </div>
                                     <div class="col-md-2">
                                         
@@ -108,15 +117,13 @@
                                         <div class="col-md-2">
                                             
                                             <button type="submit" class="btn">
-                                                Agregar
+                                                Actualizar
                                             </button>
                                             
                                         </div>
                                         <div class="col-md-2">
                                             
-                                            <button type="button" class="btn btn-danger">
-                                                Cancelar
-                                            </button>
+                                            <a href="{{ route('paquetes.detalles', $idTipoPaquetes) }}" class="btn btn-danger">Cancelar</a>
                                         </div>
                                         <div class="col-md-4">
                                         </div>
@@ -125,7 +132,7 @@
                             </div>
                             <!-- END BUTTONS-->
                         </form>
-                    @endforeach
+                    
                     
                 </div><!--.row-->
 

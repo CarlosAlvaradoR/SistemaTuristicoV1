@@ -71,22 +71,38 @@ class PaquetesTipotransportesController extends Controller
     public function edit($idPaqueteTipoTransporte)
     {
         //
-        $idpaquetes=(DB::select('SELECT idpaqueteturistico FROM paquetes_turisticos WHERE idpaqueteturistico='.$idpaquete.' LIMIT 1'));
+        $idpaquetes=(DB::select('SELECT pt.idpaqueteturistico FROM paquetes_tipotransportes pt
+        INNER JOIN tipotransportes t on t.idtipotrasnporte = pt.idtipotrasnporte
+        WHERE pt.idpaquete_tipotransporte = '.$idPaqueteTipoTransporte.' LIMIT 1'));
         $paquetesTiposTransportes=DB::select('SELECT pt.idpaquete_tipotransporte, pt.descripcion, pt.cantidad, pt.idpaqueteturistico, t.idtipotrasnporte, t.nombretipo FROM paquetes_tipotransportes pt
         INNER JOIN tipotransportes t on t.idtipotrasnporte = pt.idtipotrasnporte
         WHERE pt.idpaquete_tipotransporte = '.$idPaqueteTipoTransporte.' LIMIT 1');
-        return view('paquetes/transportes/editar', compact('idpaquetes','paquetesTiposTransportes'));
+        $tiposTransportes=DB::select('SELECT idtipotrasnporte, nombretipo FROM tipotransportes');
+        return view('paquetes/transportes/editar', compact('idpaquetes','paquetesTiposTransportes','tiposTransportes'));
     }
 
     
-    public function update(Request $request, PaquetesTipotransportes $paquetesTipotransportes)
+    public function update(Request $request, $idPaqueteTipo)
     {
         //
+        PaquetesTipotransportes::where('idpaquete_tipotransporte',$idPaqueteTipo)
+        ->update(['descripcion'=>$request->post('descripcion'),
+                    'cantidad'=>$request->post('cantidad'),
+                    'idtipotrasnporte'=>$request->post('idtipotrasnporte')
+        ]);
+        
+        return redirect()->route("paquetes.detalles",[$request->post('idpaqueteturistico')]);
     }
 
    
-    public function destroy(PaquetesTipotransportes $paquetesTipotransportes)
+    public function destroy($idPaqueteTipoTransporte)
     {
         //
+        $idPaquete=DB::select('SELECT idpaqueteturistico FROM paquetes_tipotransportes WHERE idpaquete_tipotransporte = '.$idPaqueteTipoTransporte.' LIMIT 1');
+        
+        PaquetesTipotransportes::where('idpaquete_tipotransporte',$idPaqueteTipoTransporte)
+        ->delete();
+
+        return redirect()->route("paquetes.detalles",[$idPaquete[0]->idpaqueteturistico]);
     }
 }

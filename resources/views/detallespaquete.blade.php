@@ -689,7 +689,7 @@
                                                             <span class="fa fa-pencil-square-o"></span>
                                                         </span>
                                                     </a>
-                                                    <form action="#" method="POST" class="formEliminarItinerario">
+                                                    <form action="{{ route('eliminar.tipo.transporte.paquete', $transportesPaquete->idpaquete_tipotransporte) }}" method="POST" class="formEliminarItinerario">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger btn-sm">
