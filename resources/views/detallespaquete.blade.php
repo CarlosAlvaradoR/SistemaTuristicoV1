@@ -712,7 +712,7 @@
                             <div class="col-md-12">
                                 <!--  route(') }} -->
                                 @foreach ($idpaquetes as $idpaquete)
-                                    <a href="{{ route('index.formulario.nueva.categoria.hotel.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nuevo Alimentación</a>
+                                    <a href="{{ route('index.nuevo.alimentacion.campo.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nueva Alimentación Campo</a>
                                 @endforeach
                             </div>
                         </div>
@@ -737,30 +737,36 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>
-                                                En el día 1 se comerá carapulcra
-                                            <td>
-                                                Vegetal
-                                            </td>
-                                            <td>
-                                                <a href="#">
-                                                    <span class="btn btn-warning btn-sm" >
-                                                        <span class="fa fa-pencil-square-o"></span>
-                                                    </span>
-                                                </a>
-                                                <form action="#" method="POST" class="formEliminarItinerario">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">
-                                                        <span class="fa fa-trash"></span>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                        @php
+                                            $contadorACampo=1;
+                                        @endphp
+                                        @foreach ($alimentacionCampos as $alimentacion)
+                                            <tr>
+                                                <td>
+                                                    {{$contadorACampo++}}
+                                                </td>
+                                                <td>
+                                                    {{$alimentacion->descripcion}}
+                                                <td>
+                                                    {{$alimentacion->nombretipo}}
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('editar.alimentacion.campo.paquete', $alimentacion->idpaquete_tipoalimentacion) }}">
+                                                        <span class="btn btn-warning btn-sm" >
+                                                            <span class="fa fa-pencil-square-o"></span>
+                                                        </span>
+                                                    </a>
+                                                    <form action="#" method="POST" class="formEliminarItinerario">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm">
+                                                            <span class="fa fa-trash"></span>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>  
+                                        @endforeach
+                                        
                                         
                                     </tbody>
                                 </table>

@@ -15,3 +15,11 @@ Tabla Paquetes Tipo Transportes
 php artisan make:migration create_paquetesTipotransportes_table
 php artisan make:model PaquetesTipotransportes -r
 
+Tabla TipoAlimentaciones
+php artisan make:migration create_tipoalimentaciones_table
+php artisan make:model Tipoalimentaciones -r
+
+Tabla Paquetes Tipos Alimentaciones: (Intermedia)
+php artisan make:migration create_paquetesTipoalimentaciones_table
+php artisan make:model PaquetesTipoalimentaciones -r
+

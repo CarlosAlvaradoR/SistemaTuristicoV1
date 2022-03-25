@@ -19,6 +19,7 @@ use App\Http\Controllers\PagosserviciosController;
 use App\Http\Controllers\CategoriashotelesController;
 use App\Http\Controllers\PaquetesTipospersonalesController;
 use App\Http\Controllers\PaquetesTipotransportesController;
+use App\Http\Controllers\PaquetesTipoalimentacionesController;
 
 
 Route::get('/', function () {
@@ -129,7 +130,9 @@ Route::put('/package/details/trasnport/edit/{idPaqueteTipoTransporte}', [Paquete
 Route::delete('/package/details/trasnport/delete/{idPaqueteTipoTransporte}', [PaquetesTipotransportesController::class, 'destroy'])->name('eliminar.tipo.transporte.paquete');
 
 //Alimentación en campo
-Route::get('/package/details/alimentacion/{idpaquete}', [PaquetesTipotransportesController::class, 'index'])->name('index.nuevo.alimentacion.campo.paquete');
+Route::get('/package/details/alimentacion/{idpaquete}', [PaquetesTipoalimentacionesController::class, 'index'])->name('index.nuevo.alimentacion.campo.paquete');
+Route::post('/package/details/alimentacion/save', [PaquetesTipoalimentacionesController::class, 'store'])->name('guardar.alimentacion.campo.paquete');
+Route::get('/package/details/alimentacion/edit/{idPaqueteTipoTransporte}', [PaquetesTipoalimentacionesController::class, 'edit'])->name('editar.alimentacion.campo.paquete');
 /****************************** */
 
 
