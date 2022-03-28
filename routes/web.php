@@ -20,6 +20,9 @@ use App\Http\Controllers\CategoriashotelesController;
 use App\Http\Controllers\PaquetesTipospersonalesController;
 use App\Http\Controllers\PaquetesTipotransportesController;
 use App\Http\Controllers\PaquetesTipoalimentacionesController;
+use App\Http\Controllers\PaquetesEquiposController;
+use App\Http\Controllers\PaquetesAcemilasController;
+use App\Http\Controllers\PaquetesTipoalmuerzosController;
 
 
 Route::get('/', function () {
@@ -134,6 +137,17 @@ Route::get('/package/details/alimentacion/{idpaquete}', [PaquetesTipoalimentacio
 Route::post('/package/details/alimentacion/save', [PaquetesTipoalimentacionesController::class, 'store'])->name('guardar.alimentacion.campo.paquete');
 Route::get('/package/details/alimentacion/edit/{idPaqueteTipoAlimentacion}', [PaquetesTipoalimentacionesController::class, 'edit'])->name('editar.alimentacion.campo.paquete');
 Route::put('/package/details/alimentacion/edit/{idPaqueteTipoAlimentacion}', [PaquetesTipoalimentacionesController::class, 'update'])->name('update.alimentacion.campo.paquete');
+
+//Equipos
+Route::get('/package/details/equipo/{idpaquete}', [PaquetesEquiposController::class, 'index'])->name('index.nuevo.equipo.paquete');
+Route::post('/package/details/equipo/save', [PaquetesEquiposController::class, 'store'])->name('guardar.equipo.paquete');
+Route::get('/package/details/equipo/edit/{idPaqueteEquipo}', [PaquetesEquiposController::class, 'edit'])->name('editar.equipo.paquete');
+
+//Acemilas
+Route::get('/package/details/acemilas/{idpaquete}', [PaquetesAcemilasController::class, 'index'])->name('index.nuevo.tipo.acemila.paquete');
+
+//Almuerzo
+Route::get('/package/details/almuerzo/{idpaquete}', [PaquetesTipoalmuerzosController::class, 'index'])->name('index.nuevo.tipo.almuerzo.paquete');
 /****************************** */
 
 

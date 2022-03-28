@@ -23,3 +23,25 @@ Tabla Paquetes Tipos Alimentaciones: (Intermedia)
 php artisan make:migration create_paquetesTipoalimentaciones_table
 php artisan make:model PaquetesTipoalimentaciones -r
 
+Tabla Equipos
+php artisan make:migration create_equipos_table
+php artisan make:model Equipos -r
+
+Tabla Paquetes Equipos
+php artisan make:migration create_paquetesEquipos_table
+php artisan make:model PaquetesEquipos -r
+
+Tabla Tipo Acémilas
+php artisan make:migration create_tiposacemilas_table
+php artisan make:model Tiposacemilas -r
+
+Tabla Paquete Acemilas
+php artisan make:migration create_paquetesAcemilas_table
+php artisan make:model PaquetesAcemilas -r
+
+Tabla Tipo Almuerzo
+php artisan make:migration create_tiposalmuerzos_table
+php artisan make:model Tiposalmuerzos -r
+
+Tabla Paquetes Almuerzos
+php artisan make:migration create_paquetesTipoalmuerzos_table

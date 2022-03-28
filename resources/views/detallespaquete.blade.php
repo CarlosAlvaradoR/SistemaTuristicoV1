@@ -780,7 +780,7 @@
                             <div class="col-md-12">
                                 <!--  route(') }} -->
                                 @foreach ($idpaquetes as $idpaquete)
-                                    <a href="{{ route('index.formulario.nueva.categoria.hotel.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nuevo Equipo</a>
+                                    <a href="{{ route('index.nuevo.equipo.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nuevo Equipo</a>
                                 @endforeach
                             </div>
                         </div>
@@ -808,34 +808,37 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>
-                                                Sogas 
-                                            </td>
-                                            <td>
-                                                1 
-                                            </td>
-                                            <td>
-                                                Son necesarias pero no obligatorias
-                                            </td>
-                                            <td>
-                                                <a href="#">
-                                                    <span class="btn btn-warning btn-sm" >
-                                                        <span class="fa fa-pencil-square-o"></span>
-                                                    </span>
-                                                </a>
-                                                <form action="#" method="POST" class="formEliminarItinerario">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">
-                                                        <span class="fa fa-trash"></span>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                        @foreach ($equipos as $equipo)
+                                            <tr>
+                                                <td>
+                                                    1
+                                                </td>
+                                                <td>
+                                                    {{$equipo->nombre}} 
+                                                </td>
+                                                <td>
+                                                    {{$equipo->cantidad}} 
+                                                </td>
+                                                <td>
+                                                    {{$equipo->observacion}}
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('editar.equipo.paquete', $equipo->idpaquete_equipo) }}">
+                                                        <span class="btn btn-warning btn-sm" >
+                                                            <span class="fa fa-pencil-square-o"></span>
+                                                        </span>
+                                                    </a>
+                                                    <form action="#" method="POST" class="formEliminarItinerario">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm">
+                                                            <span class="fa fa-trash"></span>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        
                                         
                                     </tbody>
                                 </table>
@@ -849,7 +852,7 @@
                             <div class="col-md-12">
                                 <!--  route(') }} -->
                                 @foreach ($idpaquetes as $idpaquete)
-                                    <a href="{{ route('index.formulario.nueva.categoria.hotel.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nuevas Acémilas</a>
+                                    <a href="{{ route('index.nuevo.tipo.acemila.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nuevas Acémilas</a>
                                 @endforeach
                             </div>
                         </div>
@@ -913,7 +916,7 @@
                             <div class="col-md-12">
                                 <!--  route(') }} -->
                                 @foreach ($idpaquetes as $idpaquete)
-                                    <a href="{{ route('index.formulario.nueva.categoria.hotel.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nuevo Almuerzo Celebración</a>
+                                    <a href="{{ route('index.nuevo.tipo.almuerzo.paquete', $idpaquete->idpaqueteturistico) }}" class="btn btn-primary">Nuevo Almuerzo Celebración</a>
                                 @endforeach
                             </div>
                         </div>
