@@ -62,9 +62,14 @@ class PaquetesTipospersonalesController extends Controller
      * @param  \App\Models\PaquetesTipospersonales  $paquetesTipospersonales
      * @return \Illuminate\Http\Response
      */
-    public function edit(PaquetesTipospersonales $paquetesTipospersonales)
+    public function edit($idpaquetesTiposPersonales)
     {
-        //
+        $paqueteTipoPersonal=DB::select('SELECT p.id, p.cantidad, p.idpaqueteturistico FROM paquetes_tipospersonales p
+        INNER JOIN tipospersonales t on t.idtipopersonal=p.idtipopersonal WHERE p.id = '.$idpaquetesTiposPersonales.'');
+        
+        $tiposPersonales=DB::select('SELECT idtipopersonal, nombreTipo FROM tipospersonales');
+
+        return view('paquetes/tipoPersonal/editar', compact('paqueteTipoPersonal','tiposPersonales'));;
     }
 
     /**
@@ -74,9 +79,15 @@ class PaquetesTipospersonalesController extends Controller
      * @param  \App\Models\PaquetesTipospersonales  $paquetesTipospersonales
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PaquetesTipospersonales $paquetesTipospersonales)
+    public function update(Request $request, $idpaquetesTiposPersonales)
     {
-        //
+        
+        PaquetesTipospersonales::where('id',$idpaquetesTiposPersonales)
+        ->update(['cantidad'=>$request->post('cantidad'),
+                    'idtipopersonal'=>$request->post('idtipopersonal')
+        ]);
+        
+        return redirect()->route("paquetes.detalles",[$request->post('idpaqueteturistico')]);
     }
 
     /**
@@ -85,8 +96,14 @@ class PaquetesTipospersonalesController extends Controller
      * @param  \App\Models\PaquetesTipospersonales  $paquetesTipospersonales
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PaquetesTipospersonales $paquetesTipospersonales)
+    public function destroy($idpaquetesTiposPersonales)
     {
         //
+        $idPaquete=DB::select('SELECT idpaqueteturistico FROM paquetes_tipospersonales WHERE id='.$idpaquetesTiposPersonales.'');
+        
+        PaquetesTipospersonales::where('id',$idpaquetesTiposPersonales)
+        ->delete();
+        
+        return redirect()->route("paquetes.detalles",[$idPaquete[0]->idpaqueteturistico]);
     }
 }

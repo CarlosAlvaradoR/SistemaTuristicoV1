@@ -88,6 +88,8 @@ Route::get('/package/details/create/gallery/{idpaquete}', [FotogaleriasControlle
 Route::post('/package/details/create/gallery/create', [FotogaleriasController::class, 'store'])->name('paquetes.turisticos.creacion.galeria');//CREAR Guardar NUEVOS PAQUETES
 Route::get('/package/details/edit/{id}', [FotogaleriasController::class, 'edit'])->name('paquetes.turisticos.edicion.galeria');//CREAR Guardar NUEVOS PAQUETES
 Route::put('/package/details/edit/update/{id}', [FotogaleriasController::class, 'update'])->name('paquetes.turisticos.actualizar.galeria');//Para agregar rutas a los paquetes
+
+
 //Mapas
 Route::get('/newMap', [PaquetesTuristicosController::class, 'formularioNuevoMapa'])->name('formulario.nuevo.mapa.paquete');//CREAR Guardar NUEVOS PAQUETES
 
@@ -101,6 +103,8 @@ Route::get('/types/delete/{idpaquete}', [TipopaquetesController::class, 'destroy
 
 //Lugares a visitar
 Route::get('/places/{idpaquete}', [PaquetesTuristicosController::class, 'indexformulariolugaresvisitar'])->name('index.formulario.nuevo.atractivo');//Nuevos tipos de paquetes
+
+
 
 //Itinerario
 Route::get('/package/itinerary/{idpaquete}', [ActividadesitinerariosController::class, 'index'])->name('index.formulario.nuevo.itinerario');//Nuevos tipos de paquetes
@@ -120,10 +124,15 @@ Route::delete('/package/details/services/delete/{idactividad}', [PagosserviciosC
 Route::get('/package/details/categoryHotel/{idpaquete}', [CategoriashotelesController::class, 'index'])->name('index.formulario.nueva.categoria.hotel.paquete');
 Route::post('/package/details/categoryHotel/save', [CategoriashotelesController::class, 'store'])->name('guardar.categoria.hotel.paquete');
 Route::get('/package/details/categoryHotel/edit/{idCategoriaHotel}', [CategoriashotelesController::class, 'edit'])->name('editar.categoria.hotel.paquete');
+Route::put('/package/details/categoryHotel/edit/{idCategoriaHotel}', [CategoriashotelesController::class, 'update'])->name('update.categoria.hotel.paquete');
+Route::delete('/package/details/categoryHotel/delete/{idCategoriaHotel}', [CategoriashotelesController::class, 'destroy'])->name('eliminar.categoria.hotel.paquete');
 
 //Personal Paquete
 Route::get('/package/details/personal/{idpaquete}', [PaquetesTipospersonalesController::class, 'index'])->name('index.nuevo.tipopersonal.paquete');
 Route::post('/package/details/personal/save', [PaquetesTipospersonalesController::class, 'store'])->name('guardar.tipopersonal.paquete');
+Route::get('/package/details/personal/edit/{idPaqueteTipoPersonal}', [PaquetesTipospersonalesController::class, 'edit'])->name('editar.tipopersonal.paquete');
+Route::put('/package/details/personal/edit/{idPaqueteTipoPersonal}', [PaquetesTipospersonalesController::class, 'update'])->name('update.tipopersonal.paquete');
+Route::delete('/package/details/personal/delete/{idPaqueteTipoPersonal}', [PaquetesTipospersonalesController::class, 'destroy'])->name('eliminar.tipopersonal.paquete');
 
 //Tipo Transporte Paquete
 Route::get('/package/details/transport/{idpaquete}', [PaquetesTipotransportesController::class, 'index'])->name('index.nuevo.tipo.transporte.paquete');
@@ -137,6 +146,7 @@ Route::get('/package/details/alimentacion/{idpaquete}', [PaquetesTipoalimentacio
 Route::post('/package/details/alimentacion/save', [PaquetesTipoalimentacionesController::class, 'store'])->name('guardar.alimentacion.campo.paquete');
 Route::get('/package/details/alimentacion/edit/{idPaqueteTipoAlimentacion}', [PaquetesTipoalimentacionesController::class, 'edit'])->name('editar.alimentacion.campo.paquete');
 Route::put('/package/details/alimentacion/edit/{idPaqueteTipoAlimentacion}', [PaquetesTipoalimentacionesController::class, 'update'])->name('update.alimentacion.campo.paquete');
+Route::delete('/package/details/alimentacion/delete/{idPaqueteTipoAlimentacion}', [PaquetesTipoalimentacionesController::class, 'destroy'])->name('eliminar.alimentacion.campo.paquete');
 
 //Equipos
 Route::get('/package/details/equipo/{idpaquete}', [PaquetesEquiposController::class, 'index'])->name('index.nuevo.equipo.paquete');
@@ -153,7 +163,11 @@ Route::put('/package/details/acemilas/edit/{idPaqueteAcemila}', [PaquetesAcemila
 Route::delete('/package/details/acemilas/delete/{idPaqueteAcemila}', [PaquetesAcemilasController::class, 'destroy'])->name('eliminar.acemila.paquete');
 
 //Almuerzo
-Route::get('/package/details/almuerzo/{idpaquete}', [PaquetesTipoalmuerzosController::class, 'index'])->name('index.nuevo.tipo.almuerzo.paquete');
+Route::get('/package/details/almuerzo/{idpaqueteAlmuerzo}', [PaquetesTipoalmuerzosController::class, 'index'])->name('index.nuevo.tipo.almuerzo.paquete');
+Route::post('/package/details/almuerzo/save', [PaquetesTipoalmuerzosController::class, 'store'])->name('guardar.almuerzo.paquete');
+Route::get('/package/details/almuerzo/edit/{idpaqueteAlmuerzo}', [PaquetesTipoalmuerzosController::class, 'edit'])->name('editar.almuerzo.paquete');
+Route::put('/package/details/almuerzo/edit/{idpaqueteAlmuerzo}', [PaquetesTipoalmuerzosController::class, 'update'])->name('update.almuerzo.paquete');
+Route::delete('/package/details/almuerzo/delete/{idpaqueteAlmuerzo}', [PaquetesTipoalmuerzosController::class, 'destroy'])->name('eliminar.almuerzo.paquete');
 /****************************** */
 
 

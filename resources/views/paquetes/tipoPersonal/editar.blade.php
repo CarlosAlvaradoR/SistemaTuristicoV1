@@ -12,7 +12,7 @@
                         <ol class="breadcrumb breadcrumb-simple">
                             <li><a href="#">Paquetes</a></li>
                             <li><a href="#">Detalles</a></li>
-                            <li class="active">Itinerario</li>
+                            <li class="active">Personal</li>
                         </ol>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
 
         <section class="card "> <!-- //- class="box-typical-full-height"-->
             <div class="card-block">
-                <h5 class="with-border m-t-0">Formulario de Nuevos Servicios</h5>
+                <h5 class="with-border m-t-0">Nuevos Personales en el viaje</h5>
                 <div class="row">
                     <div class="row">
                         <div class="col-md-12">
@@ -33,32 +33,49 @@
                                     </button>
                                     <h4>
                                         ÉXITO!
-                                    </h4> <strong>Muy bien!</strong> Pago por servicio añadido correctamente.
+                                    </h4> <strong>Muy bien!</strong> Tipo de Personal añadido correctamente.
                                 </div>
                             @endif
                         </div>
                     </div>
-                    @foreach ($servicios as $servicio)
-                        <form action="{{ route('update.servicio.paquete', $servicio->idpagoservicio) }}" method="POST">
+                    @foreach ($paqueteTipoPersonal as $tipo)
+                        <form action="{{ route('update.tipopersonal.paquete', $tipo->id) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="container-fluid">
                                 <div class="row">
+                                    <div class="col-md-5">
+                                        
+                                            <div class="form-group">
+                                                
+                                                <label for="cantidad">
+                                                    Cantidad
+                                                </label>
+                                                <input type="text" value="{{$tipo->cantidad}}" name="cantidad" class="form-control" id="cantidad" />
+                                            </div>
+                                            @php
+                                                $idPaquetes=$tipo->idpaqueteturistico;
+                                            @endphp
+                                            <input type="text" id="idpaqueteturistico" name="idpaqueteturistico" value="{{$tipo->idpaqueteturistico}}" hidden>
+                                    </div>
+                    @endforeach                 
                                     
                                     <div class="col-md-5">
                                         
                                             <div class="form-group">
                                                 
-                                                <label for="descripcion">
-                                                    Descripción
+                                                <label for="idtipopersonal">
+                                                    Tipo de Personal
                                                 </label>
-                                                <input type="text" value="{{$servicio->descripcion}}" name="descripcion" class="form-control" id="descripcion" />
+                                                <select id="estado" name="idtipopersonal" id="idtipopersonal" class="form-control">
+                                                    <option selected>Seleccione...</option>
+                                                    @foreach ($tiposPersonales as $tipo)
+                                                        <option value="{{$tipo->idtipopersonal}}">{{$tipo->nombreTipo}}</option>
+                                                    @endforeach 
+                                                </select>
                                             </div>
                                             
-                                            <input type="text" name="idpaqueteturistico" value="{{$servicio->idpaqueteturistico}}" hidden>
-                                            
                                     </div>
-                                    
                                     <div class="col-md-2">
                                         
                                         <!--<button type="button" class="btn btn-primary">
@@ -82,13 +99,13 @@
                                         <div class="col-md-2">
                                             
                                             <button type="submit" class="btn">
-                                                Actualizar
+                                                Agregar
                                             </button>
                                             
                                         </div>
                                         <div class="col-md-2">
-                                           
-                                            <a href="{{ route('paquetes.detalles',$servicio->idpaqueteturistico ) }}" class="btn btn-danger">
+                                            
+                                            <a href="{{ route('paquetes.detalles', $idPaquetes ) }}" class="btn btn-danger">
                                                 Cancelar
                                             </a>
                                         </div>
@@ -99,7 +116,8 @@
                             </div>
                             <!-- END BUTTONS-->
                         </form>
-                    @endforeach
+                    
+                    
                 </div><!--.row-->
 
             </div>

@@ -482,7 +482,7 @@
                                                                     <span class="fa fa-pencil-square-o"></span>
                                                                 </span>
                                                             </a>
-                                                            <form action="#" method="POST" class="formEliminarItinerario">
+                                                            <form action="{{ route('eliminar.categoria.hotel.paquete', $categoriasHotele->idcategoriahotel) }}" method="POST" class="formEliminarItinerario">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit" class="btn btn-danger btn-sm">
@@ -609,12 +609,12 @@
                                                     {{$tipoP->cantidad}}
                                                 </td>
                                                 <td>
-                                                    <a href="#">
+                                                    <a href="{{ route('editar.tipopersonal.paquete', $tipoP->id) }}">
                                                         <span class="btn btn-warning btn-sm" >
                                                             <span class="fa fa-pencil-square-o"></span>
                                                         </span>
                                                     </a>
-                                                    <form action="#" method="POST" class="formEliminarItinerario">
+                                                    <form action="{{ route('eliminar.tipopersonal.paquete', $tipoP->id) }}" method="POST" class="formEliminarItinerario">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger btn-sm">
@@ -756,7 +756,7 @@
                                                             <span class="fa fa-pencil-square-o"></span>
                                                         </span>
                                                     </a>
-                                                    <form action="#" method="POST" class="formEliminarItinerario">
+                                                    <form action="{{ route('eliminar.alimentacion.campo.paquete', $alimentacion->idpaquete_tipoalimentacion) }}" method="POST" class="formEliminarItinerario">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger btn-sm">
@@ -938,11 +938,11 @@
                                                 #
                                             </th>
                                             <th>
-                                                Tipo
+                                                Observación
                                             </th>
                                             
                                             <th>
-                                                Cantidad
+                                                Tipo de Almuerzo
                                             </th>
                                             
                                             <th>
@@ -951,31 +951,37 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>
-                                                Cargueras 
-                                            </td>
-                                            <td>
-                                                7 
-                                            </td>
-                                            <td>
-                                                <a href="#">
-                                                    <span class="btn btn-warning btn-sm" >
-                                                        <span class="fa fa-pencil-square-o"></span>
-                                                    </span>
-                                                </a>
-                                                <form action="#" method="POST" class="formEliminarItinerario">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">
-                                                        <span class="fa fa-trash"></span>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                        @php
+                                            $contadorAlmuerzos=1;
+                                        @endphp
+                                        @foreach ($almuerzos as $almuerzo)
+                                            <tr>
+                                                <td>
+                                                    {{$contadorAlmuerzos++}}
+                                                </td>
+                                                <td>
+                                                    {{$almuerzo->observacion}} 
+                                                </td>
+                                                <td>
+                                                    {{$almuerzo->nombre}}  
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('editar.almuerzo.paquete', $almuerzo->idpaquete_tipoalmuerzo) }}">
+                                                        <span class="btn btn-warning btn-sm" >
+                                                            <span class="fa fa-pencil-square-o"></span>
+                                                        </span>
+                                                    </a>
+                                                    <form action="{{ route('eliminar.almuerzo.paquete', $almuerzo->idpaquete_tipoalmuerzo) }}" method="POST" class="formEliminarItinerario">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm">
+                                                            <span class="fa fa-trash"></span>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        
                                         
                                     </tbody>
                                 </table>

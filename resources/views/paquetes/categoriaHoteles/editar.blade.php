@@ -21,7 +21,7 @@
 
         <section class="card "> <!-- //- class="box-typical-full-height"-->
             <div class="card-block">
-                <h5 class="with-border m-t-0">Formulario de Nuevos Servicios</h5>
+                <h5 class="with-border m-t-0">Nueva Categoría de Hoteles</h5>
                 <div class="row">
                     <div class="row">
                         <div class="col-md-12">
@@ -38,10 +38,14 @@
                             @endif
                         </div>
                     </div>
-                    @foreach ($servicios as $servicio)
-                        <form action="{{ route('update.servicio.paquete', $servicio->idpagoservicio) }}" method="POST">
+                    @foreach ($categoriaHoteles as $categorias)
+                        <form action="{{ route('update.categoria.hotel.paquete', $categorias->idcategoriahotel) }}" method="POST">
                             @csrf
                             @method('PUT')
+
+                            @php
+                                $idPaquetes=$categorias->idpaqueteturistico;
+                            @endphp
                             <div class="container-fluid">
                                 <div class="row">
                                     
@@ -52,13 +56,16 @@
                                                 <label for="descripcion">
                                                     Descripción
                                                 </label>
-                                                <input type="text" value="{{$servicio->descripcion}}" name="descripcion" class="form-control" id="descripcion" />
+                                                <textarea class="form-control" name="descripcion" id="descripcion" rows="3">{{$categorias->descripcion}}</textarea>
                                             </div>
-                                            
-                                            <input type="text" name="idpaqueteturistico" value="{{$servicio->idpaqueteturistico}}" hidden>
-                                            
-                                    </div>
                                     
+                                    </div>
+                                    <div class="col-md-5">
+                                       
+                                            <input type="text" id="idpaqueteturistico" name="idpaqueteturistico" value="{{$categorias->idpaqueteturistico}}" hidden>
+                                       
+                                    
+                                </div>
                                     <div class="col-md-2">
                                         
                                         <!--<button type="button" class="btn btn-primary">
@@ -82,15 +89,16 @@
                                         <div class="col-md-2">
                                             
                                             <button type="submit" class="btn">
-                                                Actualizar
+                                                Agregar
                                             </button>
                                             
                                         </div>
                                         <div class="col-md-2">
-                                           
-                                            <a href="{{ route('paquetes.detalles',$servicio->idpaqueteturistico ) }}" class="btn btn-danger">
+                                            
+                                            <a href="{{ route('paquetes.detalles', $idPaquetes ) }}" class="btn btn-danger">
                                                 Cancelar
                                             </a>
+                                            
                                         </div>
                                         <div class="col-md-4">
                                         </div>
@@ -100,6 +108,7 @@
                             <!-- END BUTTONS-->
                         </form>
                     @endforeach
+                    
                 </div><!--.row-->
 
             </div>

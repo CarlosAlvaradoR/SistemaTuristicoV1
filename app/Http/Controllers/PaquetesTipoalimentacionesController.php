@@ -102,8 +102,14 @@ class PaquetesTipoalimentacionesController extends Controller
      * @param  \App\Models\PaquetesTipoalimentaciones  $paquetesTipoalimentaciones
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PaquetesTipoalimentaciones $paquetesTipoalimentaciones)
+    public function destroy($idPaqueteAlimentacionCampo)
     {
         //
+        $idPaquete=DB::select('SELECT idpaqueteturistico FROM paquetes_tipoalimentaciones WHERE idpaquete_tipoalimentacion = '.$idPaqueteAlimentacionCampo.' LIMIT 1');
+        
+        PaquetesTipoalimentaciones::where('idpaquete_tipoalimentacion',$idPaqueteAlimentacionCampo)
+        ->delete();
+
+        return redirect()->route("paquetes.detalles",[$idPaquete[0]->idpaqueteturistico]);
     }
 }

@@ -52,20 +52,34 @@ class CategoriashotelesController extends Controller
     public function edit($idCategoriaHotel)
     {
         //
-        return view('paquetes/categoriaHoteles/editar');
+        $categoriaHoteles=DB::select('SELECT idcategoriahotel, descripcion, idpaqueteturistico FROM categoriashoteles WHERE idcategoriahotel = '.$idCategoriaHotel.' LIMIT 1');
+        
+
+        return view('paquetes/categoriaHoteles/editar', compact('categoriaHoteles'));
     }
 
     
     
-    public function update(Request $request, Categoriashoteles $categoriashoteles)
+    public function update(Request $request, $idCategoriaHotel)
     {
         //
+        Categoriashoteles::where('idcategoriahotel',$idCategoriaHotel)
+        ->update(['descripcion'=>$request->post('descripcion')
+        ]);
+        
+        return redirect()->route("paquetes.detalles",[$request->post('idpaqueteturistico')]);
     }
 
     
     
-    public function destroy(Categoriashoteles $categoriashoteles)
+    public function destroy($idCategoriaHotel)
     {
         //
+        $idPaquete=DB::select('SELECT idpaqueteturistico FROM categoriashoteles WHERE idcategoriahotel= '.$idCategoriaHotel.' LIMIT 1');
+        
+        Categoriashoteles::where('idcategoriahotel',$idCategoriaHotel)
+        ->delete();
+
+        return redirect()->route("paquetes.detalles",[$idPaquete[0]->idpaqueteturistico]);
     }
 }

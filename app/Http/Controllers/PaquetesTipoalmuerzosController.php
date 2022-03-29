@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\PaquetesTipoalmuerzos;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class PaquetesTipoalmuerzosController extends Controller
 {
@@ -14,7 +16,9 @@ class PaquetesTipoalmuerzosController extends Controller
      */
     public function index($idpaquete)
     {
-        
+        $idpaquetes=(DB::select('SELECT idpaqueteturistico FROM paquetes_turisticos WHERE idpaqueteturistico = '.$idpaquete.' LIMIT 1'));
+        $tiposAlmuerzos=DB::select('SELECT idtipoalmuerzo, nombre FROM tiposalmuerzos');
+        return view('paquetes/almuerzo/nuevo', compact('idpaquetes', 'tiposAlmuerzos'));
     }
 
     /**
@@ -35,7 +39,12 @@ class PaquetesTipoalmuerzosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $paquetesAlmuerzos=  new PaquetesTipoalmuerzos();
+        $paquetesAlmuerzos->observacion=$request->post('observacion');
+        $paquetesAlmuerzos->idtipoalmuerzo=$request->post('idtipoalmuerzo');
+        $paquetesAlmuerzos->idpaqueteturistico=$request->post('idpaqueteturistico');
+        $paquetesAlmuerzos->save();
+        return redirect()->route("index.nuevo.tipo.almuerzo.paquete",[$request->post('idpaqueteturistico')])->with("succes","Agregado con éxito");
     }
 
     /**
@@ -55,9 +64,14 @@ class PaquetesTipoalmuerzosController extends Controller
      * @param  \App\Models\PaquetesTipoalmuerzos  $paquetesTipoalmuerzos
      * @return \Illuminate\Http\Response
      */
-    public function edit(PaquetesTipoalmuerzos $paquetesTipoalmuerzos)
+    public function edit($idpaqueteAlmuerzo)
     {
-        //
+        $paquetesAlmuerzos = DB::select('SELECT p.idpaquete_tipoalmuerzo, p.observacion, p.idtipoalmuerzo, p.idpaqueteturistico, t.nombre FROM paquetes_tipoalmuerzos p
+        INNER JOIN tiposalmuerzos t on p.idtipoalmuerzo=t.idtipoalmuerzo WHERE p.idpaquete_tipoalmuerzo = '.$idpaqueteAlmuerzo.' LIMIT 1');
+        
+        $tiposAlmuerzos=DB::select('SELECT idtipoalmuerzo, nombre FROM tiposalmuerzos');
+
+        return view('paquetes/almuerzo/editar', compact('paquetesAlmuerzos', 'tiposAlmuerzos'));
     }
 
     /**
@@ -67,9 +81,14 @@ class PaquetesTipoalmuerzosController extends Controller
      * @param  \App\Models\PaquetesTipoalmuerzos  $paquetesTipoalmuerzos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PaquetesTipoalmuerzos $paquetesTipoalmuerzos)
+    public function update(Request $request, $idPaqueteAlmuerzo)
     {
-        //
+        PaquetesTipoalmuerzos::where('idpaquete_tipoalmuerzo', $idPaqueteAlmuerzo)
+        ->update(['observacion'=>$request->post('observacion'),
+                    'idtipoalmuerzo'=>$request->post('idtipoalmuerzo')
+        ]);
+        
+        return redirect()->route("paquetes.detalles",[$request->post('idpaqueteturistico')]);
     }
 
     /**
@@ -78,8 +97,14 @@ class PaquetesTipoalmuerzosController extends Controller
      * @param  \App\Models\PaquetesTipoalmuerzos  $paquetesTipoalmuerzos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PaquetesTipoalmuerzos $paquetesTipoalmuerzos)
+    public function destroy($idPaqueteAlmuerzo)
     {
-        //
+        $idPaquete=DB::select('SELECT p.idpaqueteturistico FROM paquetes_tipoalmuerzos p WHERE p.idpaquete_tipoalmuerzo = '.$idPaqueteAlmuerzo.' LIMIT 1');
+        
+        
+        PaquetesTipoalmuerzos::where('idpaquete_tipoalmuerzo',$idPaqueteAlmuerzo)
+        ->delete();
+        
+        return redirect()->route("paquetes.detalles",[$idPaquete[0]->idpaqueteturistico]);
     }
 }

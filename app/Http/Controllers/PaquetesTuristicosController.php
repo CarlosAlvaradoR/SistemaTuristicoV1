@@ -28,13 +28,16 @@ class PaquetesTuristicosController extends Controller
     public function detallepaquetes($idpaquete){ //Lo que se encuentra en los tabs al darle click a un paquete
         $galeriaFotos=(DB::select('SELECT fg.descripcionfoto, fg.imagen, f.idfotogaleria, idpaqueteturistico FROM foto_paquetes f
         INNER JOIN fotogalerias fg on f.idfoto_paquete=fg.idfotogaleria WHERE idpaqueteturistico='.$idpaquete.''));
+        
         $mapaReferencias=(DB::select('SELECT  m.idmapareferencial,nombreruta, descripcionruta  FROM mapasreferenciales m
         INNER JOIN mapas_paquetes ma on m.idmapareferencial=ma.idmapareferencial
         INNER JOIN paquetes_turisticos p on p.idpaqueteturistico=ma.idpaqueteturistico
         WHERE p.idpaqueteturistico = '.$idpaquete.''));
+        
         $nombrePaquetes =(DB::select('SELECT nombre FROM paquetes_turisticos p WHERE idpaqueteturistico= '.$idpaquete.' LIMIT 1'));
         //return $galeriaFotos;
         //$idpaquetes=[$idpaquete];
+        
         $idpaquetes=DB::select('SELECT idpaqueteturistico FROM paquetes_turisticos WHERE idpaqueteturistico='.$idpaquete.' LIMIT 1');
         //dd($galeriaFotos);
         //dd($nombrePaquetes);
@@ -44,10 +47,14 @@ class PaquetesTuristicosController extends Controller
         //return $galeriaFotos;
         $itinerarios=DB::select('SELECT a.idactividaditinerario, a.nombreactividad, i.descripcion FROM actividadesitinerarios a
         INNER JOIN itinerarios_paquetes i on a.idactividaditinerario = i.idactividaditinerario WHERE idpaqueteturistico = '.$idpaquete.'');
+        
         $servicios=DB::select('SELECT idpagoservicio, descripcion, monto, idpaqueteturistico FROM pagosservicios p WHERE idpaqueteturistico = '.$idpaquete.'');
+        
         $categoriasHoteles=DB::select('SELECT idcategoriahotel, descripcion, idpaqueteturistico FROM categoriashoteles WHERE idpaqueteturistico= '.$idpaquete.' ');
+        
         $tiposPersonales = DB::select('SELECT p.id, p.cantidad, p.idpaqueteturistico,t.idtipopersonal, t.nombreTipo  FROM paquetes_tipospersonales p
         INNER JOIN tipospersonales t on t.idtipopersonal=p.idtipopersonal WHERE p.idpaqueteturistico = '.$idpaquete.'');
+        
         $transportesPaquetes = DB::select('SELECT pt.idpaquete_tipotransporte, pt.descripcion, pt.cantidad, pt.idpaqueteturistico, t.idtipotrasnporte, t.nombretipo FROM paquetes_tipotransportes pt
         INNER JOIN tipotransportes t on t.idtipotrasnporte = pt.idtipotrasnporte
         WHERE idpaqueteturistico = '.$idpaquete.'');
@@ -62,8 +69,11 @@ class PaquetesTuristicosController extends Controller
         $acemilas = DB::select('SELECT t.nombre, p.idpaquete_acemila, p.cantidad, p.idtipoacemila, p.idpaqueteturistico FROM tiposacemilas t
         INNER JOIN paquetes_acemilas p on t.idtipoacemila=p.idtipoacemila WHERE p.idpaqueteturistico = '.$idpaquete.'');
 
+        $almuerzos=DB::select('SELECT p.idpaquete_tipoalmuerzo, p.observacion, p.idtipoalmuerzo, p.idpaqueteturistico, t.nombre FROM paquetes_tipoalmuerzos p
+        INNER JOIN tiposalmuerzos t on p.idtipoalmuerzo=t.idtipoalmuerzo WHERE p.idpaqueteturistico = '.$idpaquete.'');
+
         return view('detallespaquete', compact('galeriaFotos','mapaReferencias','nombrePaquetes','idpaquetes', 'itinerarios', 'servicios', 'categoriasHoteles',
-            'tiposPersonales','transportesPaquetes', 'alimentacionCampos', 'equipos', 'acemilas'));
+            'tiposPersonales','transportesPaquetes', 'alimentacionCampos', 'equipos', 'acemilas', 'almuerzos'));
     }
 
 
