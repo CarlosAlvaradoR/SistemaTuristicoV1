@@ -64,7 +64,10 @@ class PaquetesEquiposController extends Controller
     {
         $equipos=DB::select('SELECT p.idpaquete_equipo, p.cantidad, p.observacion,p.idpaqueteturistico, p.idequipo, e.nombre FROM paquetes_equipos p
         INNER JOIN equipos e on e.idequipo=p.idequipo WHERE p.idpaquete_equipo = '.$idPaqueteEquipo.' LIMIT 1');
-        return view('paquetes/equipo/editar', compact('equipos'));;
+        
+        $listasEquipos=DB::select('SELECT idequipo, nombre FROM equipos');
+
+        return view('paquetes/equipo/editar', compact('equipos','listasEquipos'));;
     }
 
     /**
@@ -74,9 +77,15 @@ class PaquetesEquiposController extends Controller
      * @param  \App\Models\PaquetesEquipos  $paquetesEquipos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PaquetesEquipos $paquetesEquipos)
+    public function update(Request $request, $idPaqueteEquipo)
     {
-        //
+        PaquetesEquipos::where('idpaquete_equipo',$idPaqueteEquipo)
+        ->update(['cantidad'=>$request->post('cantidad'),
+                    'observacion'=>$request->post('observacion'),
+                    'idequipo'=>$request->post('idequipo')
+        ]);
+        
+        return redirect()->route("paquetes.detalles",[$request->post('idpaqueteturistico')]);
     }
 
     /**
@@ -85,8 +94,14 @@ class PaquetesEquiposController extends Controller
      * @param  \App\Models\PaquetesEquipos  $paquetesEquipos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PaquetesEquipos $paquetesEquipos)
+    public function destroy($idPaqueteEquipo)
     {
         //
+        $idPaquete=DB::select('SELECT idpaqueteturistico FROM paquetes_equipos WHERE idpaquete_equipo = '.$idPaqueteEquipo.' LIMIT 1');
+        
+        PaquetesEquipos::where('idpaquete_equipo',$idPaqueteEquipo)
+        ->delete();
+
+        return redirect()->route("paquetes.detalles",[$idPaquete[0]->idpaqueteturistico]);
     }
 }

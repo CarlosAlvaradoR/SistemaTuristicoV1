@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\PaquetesAcemilas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class PaquetesAcemilasController extends Controller
 {
@@ -12,17 +14,14 @@ class PaquetesAcemilasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($idpaquete)
     {
-        //
-        return "Cargueras";
+        $idpaquetes=(DB::select('SELECT idpaqueteturistico FROM paquetes_turisticos WHERE idpaqueteturistico = '.$idpaquete.' LIMIT 1'));
+        $tiposAcemilas=DB::select('SELECT idtipoacemila, nombre FROM tiposacemilas');
+        return view('paquetes/acemilasPaquetes/nuevo', compact('idpaquetes', 'tiposAcemilas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
         //
@@ -36,15 +35,14 @@ class PaquetesAcemilasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $paqueteAcemila=  new PaquetesAcemilas();
+        $paqueteAcemila->cantidad=$request->post('cantidad');
+        $paqueteAcemila->idtipoacemila=$request->post('idtipoacemila');
+        $paqueteAcemila->idpaqueteturistico=$request->post('idpaqueteturistico');
+        $paqueteAcemila->save();
+        return redirect()->route("index.nuevo.tipo.acemila.paquete",[$request->post('idpaqueteturistico')])->with("succes","Agregado con éxito");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\PaquetesAcemilas  $paquetesAcemilas
-     * @return \Illuminate\Http\Response
-     */
     public function show(PaquetesAcemilas $paquetesAcemilas)
     {
         //
@@ -56,9 +54,15 @@ class PaquetesAcemilasController extends Controller
      * @param  \App\Models\PaquetesAcemilas  $paquetesAcemilas
      * @return \Illuminate\Http\Response
      */
-    public function edit(PaquetesAcemilas $paquetesAcemilas)
+    public function edit($idpaquetAcemila)
     {
         //
+        $paquetesAcemilas = DB::select('SELECT t.nombre, p.idpaquete_acemila, p.cantidad, p.idtipoacemila, p.idpaqueteturistico FROM tiposacemilas t
+        INNER JOIN paquetes_acemilas p on t.idtipoacemila=p.idtipoacemila WHERE p.idpaquete_acemila= '.$idpaquetAcemila.' LIMIT 1');
+        
+        $tiposAcemilas=DB::select('SELECT idtipoacemila, nombre FROM tiposacemilas');
+
+        return view('paquetes/acemilasPaquetes/editar', compact('paquetesAcemilas', 'tiposAcemilas'));
     }
 
     /**
@@ -68,9 +72,14 @@ class PaquetesAcemilasController extends Controller
      * @param  \App\Models\PaquetesAcemilas  $paquetesAcemilas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PaquetesAcemilas $paquetesAcemilas)
+    public function update(Request $request, $idpaquetAcemila)
     {
-        //
+        PaquetesAcemilas::where('idpaquete_acemila',$idpaquetAcemila)
+        ->update(['cantidad'=>$request->post('cantidad'),
+                    'idtipoacemila'=>$request->post('idtipoacemila')
+        ]);
+        
+        return redirect()->route("paquetes.detalles",[$request->post('idpaqueteturistico')]);
     }
 
     /**
@@ -79,8 +88,13 @@ class PaquetesAcemilasController extends Controller
      * @param  \App\Models\PaquetesAcemilas  $paquetesAcemilas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PaquetesAcemilas $paquetesAcemilas)
+    public function destroy($idpaqueteAcemila)
     {
-        //
+        $idPaquete=DB::select('SELECT idpaqueteturistico FROM paquetes_acemilas WHERE idpaquete_acemila = '.$idpaqueteAcemila.'');
+        
+        PaquetesAcemilas::where('idpaquete_acemila',$idpaqueteAcemila)
+        ->delete();
+
+        return redirect()->route("paquetes.detalles",[$idPaquete[0]->idpaqueteturistico]);
     }
 }

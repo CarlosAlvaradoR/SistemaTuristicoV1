@@ -24,12 +24,12 @@ use App\Http\Controllers\PaquetesEquiposController;
 use App\Http\Controllers\PaquetesAcemilasController;
 use App\Http\Controllers\PaquetesTipoalmuerzosController;
 
-
+/*
 Route::get('/', function () {
     return view('iniciodashboard');
 });
 
-
+*/
 
 //**************************************************************** */
 //RUTAS PARA EL LANDING
@@ -142,9 +142,15 @@ Route::put('/package/details/alimentacion/edit/{idPaqueteTipoAlimentacion}', [Pa
 Route::get('/package/details/equipo/{idpaquete}', [PaquetesEquiposController::class, 'index'])->name('index.nuevo.equipo.paquete');
 Route::post('/package/details/equipo/save', [PaquetesEquiposController::class, 'store'])->name('guardar.equipo.paquete');
 Route::get('/package/details/equipo/edit/{idPaqueteEquipo}', [PaquetesEquiposController::class, 'edit'])->name('editar.equipo.paquete');
+Route::put('/package/details/equipo/edit/{idPaqueteEquipo}', [PaquetesEquiposController::class, 'update'])->name('update.equipo.paquete');
+Route::delete('/package/details/equipo/delete/{idPaqueteEquipo}', [PaquetesEquiposController::class, 'destroy'])->name('eliminar.equipo.paquete');
 
 //Acemilas
-Route::get('/package/details/acemilas/{idpaquete}', [PaquetesAcemilasController::class, 'index'])->name('index.nuevo.tipo.acemila.paquete');
+Route::get('/package/details/acemilas/{idPaqueteAcemila}', [PaquetesAcemilasController::class, 'index'])->name('index.nuevo.tipo.acemila.paquete');
+Route::post('/package/details/acemilas/save', [PaquetesAcemilasController::class, 'store'])->name('guardar.acemila.paquete');
+Route::get('/package/details/acemilas/edit/{idPaqueteAcemila}', [PaquetesAcemilasController::class, 'edit'])->name('editar.acemila.paquete');
+Route::put('/package/details/acemilas/edit/{idPaqueteAcemila}', [PaquetesAcemilasController::class, 'update'])->name('update.acemila.paquete');
+Route::delete('/package/details/acemilas/delete/{idPaqueteAcemila}', [PaquetesAcemilasController::class, 'destroy'])->name('eliminar.acemila.paquete');
 
 //Almuerzo
 Route::get('/package/details/almuerzo/{idpaquete}', [PaquetesTipoalmuerzosController::class, 'index'])->name('index.nuevo.tipo.almuerzo.paquete');

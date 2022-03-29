@@ -1,6 +1,6 @@
 @extends('layouts/plantilladashboard')
 
-@section('tituloPagina','Nueva Ruta del Paquete')
+@section('tituloPagina','Acémilas | Paquete')
     
 @section('contenido')
     <div class="container-fluid">
@@ -8,10 +8,11 @@
             <div class="tbl">
                 <div class="tbl-row">
                     <div class="tbl-cell">
-                        <h3>Tipos</h3>
+                        <h3>Parque Huascaran</h3>
                         <ol class="breadcrumb breadcrumb-simple">
-                            <li><a href="{{ route('index.tipo.paquete') }}">Tipos</a></li>
-                            <li><a href="#">Editar</a></li>
+                            <li><a href="#">Paquetes</a></li>
+                            <li><a href="#">Detalles</a></li>
+                            <li class="active">Itinerario</li>
                         </ol>
                     </div>
                 </div>
@@ -20,7 +21,7 @@
 
         <section class="card "> <!-- //- class="box-typical-full-height"-->
             <div class="card-block">
-                <h5 class="with-border m-t-0">Formulario de Nuevos Tipos de Paquetes</h5>
+                <h5 class="with-border m-t-0">Formulario de Edición de Tipos de Acémilas del Paquete</h5>
                 <div class="row">
                     <div class="row">
                         <div class="col-md-12">
@@ -32,24 +33,69 @@
                                     </button>
                                     <h4>
                                         ÉXITO!
-                                    </h4> <strong>Muy bien!</strong> Tipo de paquete agregado correctamente.
+                                    </h4> <strong>Muy bien!</strong> Pago por servicio añadido correctamente.
                                 </div>
                             @endif
                         </div>
                     </div>
-                    @foreach ($tipos as $tipo)
-                        <form action="{{ route('formulario.editar.guardar.tipo.paquete', $tipo->idtipopaquete) }}" method="POST">
+                    @foreach ($paquetesAcemilas as $tipo)
+                        <form action="{{ route('update.acemila.paquete', $tipo->idpaquete_acemila) }}" method="POST">
                             @csrf
-                            @method("PUT")
+                            @method('PUT')
+
+                            <div class="container-fluid">
+                                <div class="row">
+                                    
+                                    <div class="col-md-5">
+                                        
+                                            <div class="form-group">
+                                                
+                                                <label for="cantidad">
+                                                    Cantidad
+                                                </label>
+                                                <input type="text" value="{{$tipo->cantidad}}" name="cantidad" class="form-control" id="cantidad" />
+                                            </div>
+                                        
+                                    </div>
+                                    <div class="col-md-5">
+                                       
+                                            <input type="text" id="idpaqueteturistico" name="idpaqueteturistico" value="{{$tipo->idpaqueteturistico}}" hidden>
+                                            @php
+                                                $idPaquetes=0;
+                                                $idPaquetes = $tipo->idpaqueteturistico;
+                                            @endphp
+                                       
+                    @endforeach               
+                                    </div>
+                                    <div class="col-md-5">
                             
-                                <div class="form-row">
-                                    <div class="form-group col-md-12">
-                                        <label for="nombretipo">Nombre de Tipo</label>
-                                        <input type="text" value="{{$tipo->nombretipo}}" class="form-control" name="nombretipo" id="nombretipo">
+                                        <div class="form-group">
+                                            
+                                            <label for="idequipo">
+                                                Tipo de Acémila
+                                            </label>
+                                            <select id="idtipoacemila" name="idtipoacemila"  class="form-control">
+                                                <option selected>Seleccione...</option>
+                                                @foreach ($tiposAcemilas as $tipos)
+                                                    <option value="{{$tipos->idtipoacemila}}">{{$tipos->nombre}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    <div class="col-md-2">
+                                        
+                                        <!--<button type="button" class="btn btn-primary">
+                                            Button
+                                        </button> 
+                                        <button type="button" class="btn btn-danger">
+                                            Button
+                                        </button>
+                                    -->
                                     </div>
                                 </div>
-                            
-                            
+                            </div>
                             
                             
                             <!--  BUTTONS-->
@@ -67,9 +113,9 @@
                                         </div>
                                         <div class="col-md-2">
                                             
-                                            <button type="button" class="btn btn-danger">
+                                            <a href="{{ route('paquetes.detalles', $idPaquetes ) }}" class="btn btn-danger">
                                                 Cancelar
-                                            </button>
+                                            </a>
                                         </div>
                                         <div class="col-md-4">
                                         </div>
@@ -78,11 +124,17 @@
                             </div>
                             <!-- END BUTTONS-->
                         </form>
-                    @endforeach
+                    
+                    
                 </div><!--.row-->
 
             </div>
         </section>
         
     </div><!--.container-fluid-->
+@endsection
+
+@section('scripts')
+    <script>
+    </script>
 @endsection

@@ -39,9 +39,9 @@
                         </div>
                     </div>
                     @foreach ($equipos as $equipo)
-                        <form action="{{ route('guardar.equipo.paquete') }}" method="POST">
+                        <form action="{{ route('update.equipo.paquete', $equipo->idpaquete_equipo) }}" method="POST">
                             @csrf
-
+                            @method('PUT')
                             <div class="container-fluid">
                                 <div class="row">
                                     
@@ -66,9 +66,16 @@
                                             <input type="text" value="{{$equipo->observacion}}" name="observacion" class="form-control" id="observacion" />
                                         </div>
 
-                                        <!--foreach ($idpaquetes  as $idpaquete)
-                                            <input type="text" id="idpaqueteturistico" name="idpaqueteturistico" value="{$idpaquete->idpaqueteturistico}}" hidden>
-                                        endforeach-->
+                                        
+
+                                        <!--foreach ($idpaquetes  as $idpaquete)-->
+                                            <input type="text" id="idpaqueteturistico" name="idpaqueteturistico" value="{{$equipo->idpaqueteturistico}}" hidden>
+                                        <!--endforeach-->
+                                        @php
+                                            $idPaquete=0;
+                                            $idPaquete=$equipo->idpaqueteturistico;
+                                            
+                                        @endphp
                                     
                                     </div>
                                     <div class="col-md-5">
@@ -78,10 +85,16 @@
                                             <label for="idequipo">
                                                 Equipo
                                             </label>
-                                            <select id="estado" name="idequipo" id="idequipo" class="form-control">
+                    @endforeach
+                                            
+                                            
+                                            <select  name="idequipo" id="idequipo" class="form-control">
                                                 <option selected>Seleccione...</option>
+                                                    @foreach ($listasEquipos as $listas)
+                                                        <option value="{{$listas->idequipo}}">{{$listas->nombre}}</option>
+                                                    @endforeach
                                                 <!--foreach ($equipos as $equipo)
-                                                    <option value="{$equipo->idequipo}}">{$equipo->nombre}}</option>
+                                                    
                                                 endforeach-->
                                             </select>
                                         </div>
@@ -117,9 +130,9 @@
                                         </div>
                                         <div class="col-md-2">
                                             
-                                            <button type="button" class="btn btn-danger">
+                                            <a href="{{ route('paquetes.detalles', $idPaquete ) }}" class="btn btn-danger">
                                                 Cancelar
-                                            </button>
+                                            </a>
                                         </div>
                                         <div class="col-md-4">
                                         </div>
@@ -128,7 +141,7 @@
                             </div>
                             <!-- END BUTTONS-->
                         </form>
-                    @endforeach
+                    
                     
                 </div><!--.row-->
 

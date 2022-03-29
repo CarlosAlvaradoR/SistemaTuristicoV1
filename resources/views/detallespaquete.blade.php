@@ -808,10 +808,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                            $contadorEquipos=1;
+                                        @endphp
                                         @foreach ($equipos as $equipo)
                                             <tr>
                                                 <td>
-                                                    1
+                                                    {{$contadorEquipos++}}
                                                 </td>
                                                 <td>
                                                     {{$equipo->nombre}} 
@@ -828,7 +831,7 @@
                                                             <span class="fa fa-pencil-square-o"></span>
                                                         </span>
                                                     </a>
-                                                    <form action="#" method="POST" class="formEliminarItinerario">
+                                                    <form action="{{ route('eliminar.equipo.paquete', $equipo->idpaquete_equipo) }}" method="POST" class="formEliminarItinerario">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger btn-sm">
@@ -878,31 +881,37 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>
-                                                Cargueras 
-                                            </td>
-                                            <td>
-                                                7 
-                                            </td>
-                                            <td>
-                                                <a href="#">
-                                                    <span class="btn btn-warning btn-sm" >
-                                                        <span class="fa fa-pencil-square-o"></span>
-                                                    </span>
-                                                </a>
-                                                <form action="#" method="POST" class="formEliminarItinerario">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">
-                                                        <span class="fa fa-trash"></span>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                        @php
+                                            $contadorAcemilas=1;
+                                        @endphp
+                                        @foreach ($acemilas as $acemila)
+                                            <tr>
+                                                <td>
+                                                    {{$contadorAcemilas++}}
+                                                </td>
+                                                <td>
+                                                    {{$acemila->nombre}} 
+                                                </td>
+                                                <td>
+                                                    {{$acemila->cantidad}} 
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('editar.acemila.paquete', $acemila->idpaquete_acemila) }}">
+                                                        <span class="btn btn-warning btn-sm" >
+                                                            <span class="fa fa-pencil-square-o"></span>
+                                                        </span>
+                                                    </a>
+                                                    <form action="{{ route('eliminar.acemila.paquete', $acemila->idpaquete_acemila) }}" method="POST" class="formEliminarItinerario">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm">
+                                                            <span class="fa fa-trash"></span>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        
                                         
                                     </tbody>
                                 </table>
@@ -1001,7 +1010,8 @@
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
                             cancelButtonColor: '#d33',
-                            confirmButtonText: 'Confirmar'
+                            confirmButtonText: 'Confirmar',
+                            cancelButtonText: 'Cancelar'
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 this.submit();

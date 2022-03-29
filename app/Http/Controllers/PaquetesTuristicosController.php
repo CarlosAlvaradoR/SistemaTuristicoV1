@@ -59,8 +59,11 @@ class PaquetesTuristicosController extends Controller
         $equipos=DB::select('SELECT p.idpaquete_equipo, p.cantidad, p.observacion, p.idequipo, e.nombre FROM paquetes_equipos p
         INNER JOIN equipos e on e.idequipo=p.idequipo WHERE p.idpaqueteturistico = '.$idpaquete.'');
         
+        $acemilas = DB::select('SELECT t.nombre, p.idpaquete_acemila, p.cantidad, p.idtipoacemila, p.idpaqueteturistico FROM tiposacemilas t
+        INNER JOIN paquetes_acemilas p on t.idtipoacemila=p.idtipoacemila WHERE p.idpaqueteturistico = '.$idpaquete.'');
+
         return view('detallespaquete', compact('galeriaFotos','mapaReferencias','nombrePaquetes','idpaquetes', 'itinerarios', 'servicios', 'categoriasHoteles',
-            'tiposPersonales','transportesPaquetes', 'alimentacionCampos', 'equipos'));
+            'tiposPersonales','transportesPaquetes', 'alimentacionCampos', 'equipos', 'acemilas'));
     }
 
 
