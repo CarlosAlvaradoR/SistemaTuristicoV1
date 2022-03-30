@@ -137,12 +137,14 @@
                                                             <button class="btn btn-warning btn-sm">
                                                                     <span class="fa fa-pencil-square-o"></span>
                                                             </button>
-                                                        </form>
-                                                        <a href="#" rel="noopener noreferrer">
-                                                            <span class="btn btn-danger btn-sm" onclick="">
+                                                        </form> 
+                                                        <form action="{{ route('eliminar.galeria.paquete', $galeriaFoto->idfotogaleria) }}" method="POST" class="formEliminarItinerario">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger btn-sm">
                                                                 <span class="fa fa-trash"></span>
-                                                            </span>
-                                                        </a>
+                                                            </button>
+                                                        </form>
                                                         
                                                     </td>
                                                 </tr>

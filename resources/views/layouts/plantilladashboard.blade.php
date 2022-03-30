@@ -21,9 +21,13 @@
 	<link rel="stylesheet" href="{{ asset('css/lib/datatables-net/datatables.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/separate/vendor/datatables-net.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/separate/pages/files.min.css') }}">
+	<!--<link rel="stylesheet" href="{ asset('css/separate/vendor/bootstrap-select/bootstrap-select.min.css') }}">
+	<link rel="stylesheet" href="{ asset('css/separate/vendor/select2.min.css') }}">-->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 	
-
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	
+	
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	
 </head>
@@ -460,7 +464,8 @@
 	            <ul>
 	                <li><a href="{{ route('paquetes.activos.galeria') }}"><span class="lbl">Nuevo</span><span class="label label-custom label-pill label-succes">new</span></a></li>
 	                <li><a href="{{ route('index.tipo.paquete') }}"><span class="lbl">Tipos</span></a></li>  
-					<li><a href="{{ route('index.tipo.paquete') }}"><span class="lbl">Tipo Personal</span></a></li>   
+					<li><a href="{{ route('index.tipo.paquete') }}"><span class="lbl">Tipo Personal</span></a></li> 
+					<li><a href="{{ route('index.tipo.paquete') }}"><span class="lbl">Reportes</span></a></li>   
 	            </ul>
 	        </li>
 			<li class="red with-sub">
@@ -522,12 +527,15 @@
 
 
 
-
+	
 	<script src="{{ asset('js/lib/jquery/jquery.min.js') }}"></script>
 	<script src="{{ asset('js/lib/tether/tether.min.js') }}"></script>
 	<script src="{{ asset('js/lib/bootstrap/bootstrap.min.js') }}"></script>
 	<script src="{{ asset('js/plugins.js') }}"></script>
 	<script src="{{ asset('js/lib/datatables-net/datatables.min.js') }}"></script>
+	<!--<script src="{ asset('js/lib/bootstrap-select/bootstrap-select.min.js') }}"></script>-->
+	<!--<script src="{ asset('js/lib/select2/select2.full.min.js') }}"></script>-->
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 	
 	<script>
 		$(function() {

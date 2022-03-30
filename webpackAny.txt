@@ -45,3 +45,17 @@ php artisan make:model Tiposalmuerzos -r
 
 Tabla Paquetes Almuerzos
 php artisan make:migration create_paquetesTipoalmuerzos_table
+
+
+Tabla Lugares
+php artisan make:migration create_lugares_table 
+php artisan make:model Lugares -r
+
+Tabla Atractivos Turisticos
+php artisan make:migration create_atractivosturisticos_table
+php artisan make:model Atractivosturisticos -r
+
+Tabla Paquetes Visita atractivos (INTERMEDIA)
+php artisan make:migration create_paquetesVisitaatractivos_table
+php artisan make:model PaquetesVisitaatractivos -r
+

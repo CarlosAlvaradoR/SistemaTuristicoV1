@@ -23,13 +23,14 @@ use App\Http\Controllers\PaquetesTipoalimentacionesController;
 use App\Http\Controllers\PaquetesEquiposController;
 use App\Http\Controllers\PaquetesAcemilasController;
 use App\Http\Controllers\PaquetesTipoalmuerzosController;
+use App\Http\Controllers\PaquetesVisitaatractivosController;
 
-/*
-Route::get('/', function () {
-    return view('iniciodashboard');
+
+Route::get('/reportes', function () {
+    return view('paquetes/reportes/index');
 });
 
-*/
+
 
 //**************************************************************** */
 //RUTAS PARA EL LANDING
@@ -88,7 +89,7 @@ Route::get('/package/details/create/gallery/{idpaquete}', [FotogaleriasControlle
 Route::post('/package/details/create/gallery/create', [FotogaleriasController::class, 'store'])->name('paquetes.turisticos.creacion.galeria');//CREAR Guardar NUEVOS PAQUETES
 Route::get('/package/details/edit/{id}', [FotogaleriasController::class, 'edit'])->name('paquetes.turisticos.edicion.galeria');//CREAR Guardar NUEVOS PAQUETES
 Route::put('/package/details/edit/update/{id}', [FotogaleriasController::class, 'update'])->name('paquetes.turisticos.actualizar.galeria');//Para agregar rutas a los paquetes
-
+Route::delete('/package/details/delete/{idactividad}', [FotogaleriasController::class, 'destroy'])->name('eliminar.galeria.paquete');
 
 //Mapas
 Route::get('/newMap', [PaquetesTuristicosController::class, 'formularioNuevoMapa'])->name('formulario.nuevo.mapa.paquete');//CREAR Guardar NUEVOS PAQUETES
@@ -102,7 +103,7 @@ Route::put('/types/edit/save/{idpaquete}', [TipopaquetesController::class, 'upda
 Route::get('/types/delete/{idpaquete}', [TipopaquetesController::class, 'destroy'])->name('formulario.eliminar.tipo.paquete');//Nuevos tipos de paquetes
 
 //Lugares a visitar
-Route::get('/places/{idpaquete}', [PaquetesTuristicosController::class, 'indexformulariolugaresvisitar'])->name('index.formulario.nuevo.atractivo');//Nuevos tipos de paquetes
+Route::get('/package/places/{idpaquete}', [PaquetesVisitaatractivosController::class, 'index'])->name('index.formulario.nuevo.atractivo');//Nuevos tipos de paquetes
 
 
 

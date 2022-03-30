@@ -110,8 +110,13 @@ class FotogaleriasController extends Controller
     }
 
     
-    public function destroy(Fotogalerias $fotogalerias)
+    public function destroy($idFotoGaleria)
     {
-        //
+        $idPaquete=DB::select('SELECT i.idpaqueteturistico FROM pagosservicios i WHERE i.idpagoservicio = '.$idPagoServicio.' LIMIT 1');
+        
+        Pagosservicios::where('idpagoservicio',$idPagoServicio)
+        ->delete();
+
+        return redirect()->route("paquetes.detalles",[$idPaquete[0]->idpaqueteturistico]);
     }
 }

@@ -157,7 +157,7 @@ class PaquetesTuristicosController extends Controller
     //PARA LOS LUGARES A VISITAR EN UN PAQUETE TURISTICO
     public function indexformulariolugaresvisitar(){
 
-        return view('paquetes/lugaresVisita/nuevo');
+        
     }
 
 

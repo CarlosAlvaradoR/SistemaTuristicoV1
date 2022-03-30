@@ -44,6 +44,7 @@ class PagosserviciosController extends Controller
         $pagosServicios=  new Pagosservicios();
         $pagosServicios->descripcion=$request->post('descripcion');
         $pagosServicios->monto=$request->post('monto');
+        $pagosServicios->idpaqueteturistico=$request->post('idpaqueteturistico');
         $pagosServicios->save();
         return redirect()->route("index.formulario.nuevo.servicio",[$request->post('idpaqueteturistico')])->with("succes","Agregado con éxito");
     }

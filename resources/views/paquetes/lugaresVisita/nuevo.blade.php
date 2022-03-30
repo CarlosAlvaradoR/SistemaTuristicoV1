@@ -50,7 +50,19 @@
                                             <label for="lugar">
                                                 Lugar
                                             </label>
-                                            <input type="text" class="form-control" id="lugar" />
+                                            
+                                            <select class="select form-control" id="lugar">
+                                                
+                                                <option value='audi'>Audi</option>
+                                                <option value='bmw'>BMW</option>
+                                                <option value='citroen'>Citroen</option>
+                                                <option value='fiat'>Fiat</option>
+                                                <option value='ford'>Ford</option>
+                                                <option value='honda'>Honda</option>
+                                                <option value='hyundai'>Hyundai</option>
+                                                <option value='kia'>Kia</option>
+                                                <option value='mazda'>Mazda</option>
+                                            </select>
                                         </div>
                                     
                                 </div>
@@ -111,4 +123,32 @@
         </section>
         
     </div><!--.container-fluid-->
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.select').select2();
+        });
+    </script>
+
+
+
+
+
+<script>
+    /*$('#lugar').select2({    
+    language: {
+
+        noResults: function() {
+
+        return "No hay resultado";        
+        },
+        searching: function() {
+
+        return "Buscando..";
+        }
+    }
+    });*/
+</script>
 @endsection
