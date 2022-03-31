@@ -15,9 +15,17 @@ class PaquetesVisitaatractivosController extends Controller
      */
     public function index($idpaquete)
     {
-        $idpaquetes=(DB::select('SELECT idpaqueteturistico FROM paquetes_turisticos WHERE idpaqueteturistico = '.$idpaquete.' LIMIT 1'));
-        $tiposAcemilas=DB::select('SELECT idtipoacemila, nombre FROM tiposacemilas');
-        return view('paquetes/lugaresVisita/nuevo', compact('idpaquetes', 'tiposAcemilas'));
+        $paquetes=DB::select('SELECT p.idpaqueteturistico, p.nombre FROM paquetes_turisticos p WHERE p.idpaqueteturistico = '.$idpaquete.' LIMIT 1');
+        
+        $lugaresAtractivos=DB::select('SELECT a.idatractivoturistico, l.nombre, a.descripcion FROM lugares l
+        INNER JOIN atractivosturisticos a on l.idlugar=a.idlugar ORDER BY a.idatractivoturistico DESC');
+        
+        $lugaresPaquete =DB::select('SELECT a.idatractivoturistico, l.nombre, a.descripcion FROM lugares l
+        INNER JOIN atractivosturisticos a on l.idlugar=a.idlugar
+        INNER JOIN paquetes_visitaatractivos p on p.idatractivoturistico=a.idatractivoturistico
+        WHERE p.idpaqueteturistico='.$idpaquete.'');
+        //return $lugaresAtractivos;
+        return view('paquetes/lugaresVisita/nuevo', compact('paquetes','lugaresAtractivos','lugaresPaquete'));
         
     }
 
@@ -39,7 +47,11 @@ class PaquetesVisitaatractivosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $paqueteVisitaAtractivos=  new PaquetesVisitaatractivos();
+        $paqueteVisitaAtractivos->idatractivoturistico=$request->post('idatractivoturistico');
+        $paqueteVisitaAtractivos->idpaqueteturistico=$request->post('idpaqueteturistico');
+        $paqueteVisitaAtractivos->save();
+        return redirect()->route("index.formulario.nuevo.atractivo",[$request->post('idpaqueteturistico')])->with("succes","Agregado con éxito");
     }
 
     /**
