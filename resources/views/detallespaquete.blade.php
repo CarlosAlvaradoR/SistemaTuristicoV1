@@ -255,36 +255,33 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>
-                                                        1
-                                                    </td>
-                                                    <td>
-                                                        Huaraz
-                                                    </td>
-                                                    <td>
-                                                        Olleros
-                                                    </td>
-                                                    <td>
-                                                        <a href="#">Editar</a>
-                                                        <a href="#">Eliminar</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        1
-                                                    </td>
-                                                    <td>
-                                                        Huaraz
-                                                    </td>
-                                                    <td>
-                                                        Parque Huascarán
-                                                    </td>
-                                                    <td>
-                                                        <a href="#">Editar</a>
-                                                        <a href="#">Eliminar</a>
-                                                    </td>
-                                                </tr>
+                                                @php
+                                                    $contVisitaAtractivos=1;
+                                                @endphp
+                                                @foreach ($atractivosVisitaPaquete as $lugarPaquete)
+                                                    <tr>
+                                                        <td>
+                                                            {{$contVisitaAtractivos++}}
+                                                        </td>
+                                                        <td>
+                                                            {{$lugarPaquete->nombre}}
+                                                        </td>
+                                                        <td>
+                                                            {{$lugarPaquete->descripcion}}
+                                                        </td>
+                                                        <td>
+                                                            <form action="{{ route('eliminar.atractivo.lugar.paquete',$lugarPaquete->idpaquete_visitaatractivos) }}" method="POST" class="formEliminarItinerario">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <input type="text" name="option" value="1" hidden>
+                                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                                    <i class="fas fa-minus"></i>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                
                                             </tbody>
                                         </table>
                                     </div>

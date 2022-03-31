@@ -44,7 +44,7 @@
                                     </button>
                                     <h4>
                                         ÉXITO!
-                                    </h4> <strong>Muy bien!</strong> Ruta agregada correctamente.
+                                    </h4> <strong>Muy bien!</strong> Atractivo de Visita agregado correctamente.
                                 </div>
                             @endif
                         </div>
@@ -123,9 +123,14 @@
                                                         {{$lugarPaquete->nombre}} - {{$lugarPaquete->descripcion}}
                                                     </td>
                                                     <td>
-                                                        <button type="submit" class="btn btn-danger btn-sm">
-                                                            <i class="fas fa-minus"></i>
-                                                        </button>
+                                                        <form action="{{ route('eliminar.atractivo.lugar.paquete',$lugarPaquete->idpaquete_visitaatractivos) }}" method="POST" class="formEliminarItinerario">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <input type="text" name="option" value="2" hidden>
+                                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                                <i class="fas fa-minus"></i>
+                                                            </button>
+                                                        </form>
                                                     </td>
                                                 </tr>
                                             @endforeach

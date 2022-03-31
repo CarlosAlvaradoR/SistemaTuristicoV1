@@ -105,7 +105,7 @@ Route::get('/types/delete/{idpaquete}', [TipopaquetesController::class, 'destroy
 //Lugares a visitar
 Route::get('/package/places/{idpaquete}', [PaquetesVisitaatractivosController::class, 'index'])->name('index.formulario.nuevo.atractivo');//Nuevos tipos de paquetes
 Route::post('/package/places/save', [PaquetesVisitaatractivosController::class, 'store'])->name('guardar.atractivo.paquete');
-
+Route::delete('/package/places/delete/{idAtractivo}', [PaquetesVisitaatractivosController::class, 'destroy'])->name('eliminar.atractivo.lugar.paquete');
 
 //Itinerario
 Route::get('/package/itinerary/{idpaquete}', [ActividadesitinerariosController::class, 'index'])->name('index.formulario.nuevo.itinerario');//Nuevos tipos de paquetes
