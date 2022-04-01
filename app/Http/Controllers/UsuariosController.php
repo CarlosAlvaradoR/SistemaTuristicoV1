@@ -31,9 +31,7 @@ class UsuariosController extends Controller
 
     
     
-    public function mostrarFormularioReservaNivelAdmin(){
-        return view('reservas/formularioreservar');
-    }
+    
     public function mostrarinicio(){
         return view('vistalanding/iniciolanding');
     }

@@ -1,3 +1,5 @@
+******************** PAQUETES **********************************
+
 Tabla Tipos Personales:
 php artisan make:migration create_tipospersonales_table
 php artisan make:model Tipospersonales -r
@@ -59,3 +61,19 @@ Tabla Paquetes Visita atractivos (INTERMEDIA)
 php artisan make:migration create_paquetesVisitaatractivos_table
 php artisan make:model PaquetesVisitaatractivos -r
 
+************************************************************************
+
+
+
+************************ RESERVAS **************************************
+Tabla Nacionalidad
+php artisan make:migration create_nacionalidades_table
+php artisan make:model Nacionalidades -r
+
+Tabla Clientes (Intermdia)
+php artisan make:migration create_clientes_table 
+php artisan make:model Clientes -r
+
+
+
+************************************************************************

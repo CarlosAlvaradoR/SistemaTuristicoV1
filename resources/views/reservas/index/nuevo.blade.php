@@ -60,7 +60,7 @@
                                         <label for="nombres">
                                             Nombres
                                         </label>
-                                        <input type="email" class="form-control" id="nombres" />
+                                        <input type="text" class="form-control" id="nombres" />
                                     </div>
                                     <div class="form-group">
                                         <label for="apellidos">
@@ -72,7 +72,7 @@
                                         <label for="direccion">
                                             Dirección
                                         </label>
-                                        <input type="email" class="form-control" id="direccion" />
+                                        <input type="text" class="form-control" id="direccion" />
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">
@@ -84,7 +84,7 @@
                                         <label for="exampleInputEmail1">
                                             DNI
                                         </label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" />
+                                        <input type="text" class="form-control" id="exampleInputEmail1" />
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">
@@ -96,7 +96,7 @@
                                         <label for="exampleInputEmail1">
                                             Teléfono
                                         </label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" />
+                                        <input type="text" class="form-control" id="exampleInputEmail1" />
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">
@@ -108,7 +108,7 @@
                                         <label for="exampleInputEmail1">
                                             Número de Pasaporte
                                         </label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" />
+                                        <input type="text" class="form-control" id="exampleInputEmail1" />
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">
@@ -135,10 +135,10 @@
                                     </div>
                                     <div class="form-group">
                                          
-                                        <label for="exampleInputEmail1">
+                                        <label for="">
                                             Paquete
                                         </label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1" />
+                                        <input type="text" class="form-control" id="" />
                                     </div>
                                     <div class="form-group">
                                          
