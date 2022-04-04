@@ -74,6 +74,9 @@ Tabla Clientes (Intermdia)
 php artisan make:migration create_clientes_table 
 php artisan make:model Clientes -r
 
+Tabla Reservas
+php artisan make:migration create_reservas_table
+php artisan make:model Reservas -r
 
 
 ************************************************************************

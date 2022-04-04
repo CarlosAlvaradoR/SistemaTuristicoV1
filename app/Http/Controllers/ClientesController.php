@@ -85,7 +85,5 @@ class ClientesController extends Controller
         //
     }
 
-    public function mostrarFormularioReservaNivelAdmin(){
-        return view('reservas/index/nuevo');
-    }
+    
 }

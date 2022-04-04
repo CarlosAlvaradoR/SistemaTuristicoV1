@@ -33,53 +33,59 @@
                 <div class="files-manager-content">
                     <div class="container-fluid">
                         <br>
+                        <form action="{{ route('buscar.clientes.reserva') }}" method="GET">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <form role="form">
+                                        <div class="form-group">
+                                             
+                                            <label for="dni">
+                                                Ingrese DNI
+                                            </label>
+                                            <input type="text" class="form-control" name="dni" id="dni" />
+                                        </div>
+                                        
+                                    </form>
+                                </div>
+                                <div class="col-md-4">
+                                     <br>
+                                    <button type="submit" class="btn btn-success">
+                                        Buscar
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <form role="form">
-                                    <div class="form-group">
-                                         
-                                        <label for="dni">
-                                            Ingrese DNI
-                                        </label>
-                                        <input type="text" class="form-control" id="dni" />
-                                    </div>
+                                    <!--foreach ($cliente as $cliente)-->
+                                        <div class="form-group">
+                                            <label for="nombres">
+                                                Nombres
+                                            </label>
+                                            <input type="text" value="" class="form-control" id="nombres" />
+                                            <div class="form-group">
+                                                <label for="apellidos">
+                                                    Apellidos
+                                                </label>
+                                                <input type="text" value="" class="form-control" id="apellidos" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="direccion">
+                                                    Dirección
+                                                </label>
+                                                <input type="text" class="form-control" id="direccion" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">
+                                                    Género
+                                                </label>
+                                                <input type="text" class="form-control" id="exampleInputPassword1" />
+                                            </div>
+                                        </div>
+                                    <!--endforeach-->
                                     
-                                </form>
-                            </div>
-                            <div class="col-md-4">
-                                 <br>
-                                <button type="button" class="btn btn-success">
-                                    Buscar
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <form role="form">
-                                    <div class="form-group">
-                                        <label for="nombres">
-                                            Nombres
-                                        </label>
-                                        <input type="text" class="form-control" id="nombres" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="apellidos">
-                                            Apellidos
-                                        </label>
-                                        <input type="text" class="form-control" id="apellidos" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="direccion">
-                                            Dirección
-                                        </label>
-                                        <input type="text" class="form-control" id="direccion" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">
-                                            Género
-                                        </label>
-                                        <input type="text" class="form-control" id="exampleInputPassword1" />
-                                    </div>
+                                    
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">
                                             DNI
@@ -117,10 +123,10 @@
                                         <input type="text" class="form-control" id="exampleInputPassword1" />
                                     </div>
                                     <button type="submit" class="btn btn-primary">
-                                        Submit
+                                        Agregar
                                     </button>
-                                    <button type="submit" class="btn btn-primary">
-                                        Submit
+                                    <button type="submit" class="btn btn-danger">
+                                        Cancelar
                                     </button>
                                 </form>
                             </div>

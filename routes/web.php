@@ -25,6 +25,7 @@ use App\Http\Controllers\PaquetesAcemilasController;
 use App\Http\Controllers\PaquetesTipoalmuerzosController;
 use App\Http\Controllers\PaquetesVisitaatractivosController;
 use App\Http\Controllers\ClientesController;
+use App\Http\Controllers\ReservasController;
 
 
 Route::get('/reportes', function () {
@@ -183,8 +184,8 @@ Route::delete('/package/details/almuerzo/delete/{idpaqueteAlmuerzo}', [PaquetesT
 Route::get('/reserved/clients/', [ClientesController::class, 'index'])->name('index.nuevos.clientes');
 
 //Nuevas Reservas
-Route::get('/reserved', [ClientesController::class, 'mostrarFormularioReservaNivelAdmin'])->name('reservas.formulario.nivel.admin');
-
+Route::get('/reserved', [ReservasController::class, 'index'])->name('reservas.formulario.nivel.admin');
+Route::get('/reserved/search/clients', [ReservasController::class, 'buscar'])->name('buscar.clientes.reserva');
 //Reservas Pendientes
 
 /************************************************* */
