@@ -1,4 +1,7 @@
 ******************** PAQUETES **********************************
+Categoría de Hoteles
+php artisan make:migration create_categoriashoteles_table 
+php artisan make:model Categoriashoteles -r
 
 Tabla Tipos Personales:
 php artisan make:migration create_tipospersonales_table
