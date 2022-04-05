@@ -14,10 +14,19 @@ class ReservasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $cliente=null;
+        $dni=$request->get('dni');
+        
+        if($dni==null){
+            $dni='89';
+        }
+        $cliente=DB::select('SELECT  c.idcliente, p.dni, p.nombres, p.apellidos, if(p.genero=1,"MASCULINO","FEMENINO") as genero, p.direccion, n.nombre as nacionalidad  FROM personas p
+        INNER JOIN clientes c on p.idpersona=c.idpersona
+        INNER JOIN nacionalidades n on n.idnacionalidad=c.idnacionalidad
+        WHERE p.dni = '.$dni.' LIMIT 1');
+        
         return view('reservas/index/nuevo', compact('cliente'));
     }
 

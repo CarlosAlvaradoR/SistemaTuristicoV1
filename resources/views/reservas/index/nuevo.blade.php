@@ -8,7 +8,10 @@
     <section class="box-typical files-manager">
 
         <div class="files-manager-panel">
-            
+            @php
+                $cantidad=count($cliente);
+                $id="clienteVisible";
+            @endphp
             <div class="">
                 <header class="files-manager-header">
                     <div class="files-manager-header-left">
@@ -33,16 +36,18 @@
                 <div class="files-manager-content">
                     <div class="container-fluid">
                         <br>
-                        <form action="{{ route('buscar.clientes.reserva') }}" method="GET">
+                        <form action="{{ route('reservas.formulario.nivel.admin') }}" method="GET">
                             <div class="row">
                                 <div class="col-md-8">
                                     <form role="form">
                                         <div class="form-group">
                                              
                                             <label for="dni">
-                                                Ingrese DNI
+                                                Ingrese DNI   .. @php
+                                                    echo $cantidad;
+                                                @endphp
                                             </label>
-                                            <input type="text" class="form-control" name="dni" id="dni" />
+                                            <input type="text" class="form-control" value="" name="dni" id="dni" placeholder="ej: 70576811" />
                                         </div>
                                         
                                     </form>
@@ -55,111 +60,161 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="row">
+                        @php
+                            if ($cantidad > 0) {
+                               $id="clientes";
+                            }
+                        @endphp
+                        <div class="row" id="@php echo $id; @endphp" name="cliente" >
+                            <div class="col-md-4">
+                                
+                                <form role="form">
+                                    @foreach ($cliente as $cliente)
+                                        
+                                            
+                                        
+                                        
+
+                                        
+                                </form>
+                                
+                            </div>
                             <div class="col-md-4">
                                 <form role="form">
-                                    <!--foreach ($cliente as $cliente)-->
-                                        <div class="form-group">
-                                            <label for="nombres">
-                                                Nombres
-                                            </label>
-                                            <input type="text" value="" class="form-control" id="nombres" />
-                                            <div class="form-group">
-                                                <label for="apellidos">
-                                                    Apellidos
-                                                </label>
-                                                <input type="text" value="" class="form-control" id="apellidos" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="direccion">
-                                                    Dirección
-                                                </label>
-                                                <input type="text" class="form-control" id="direccion" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">
-                                                    Género
-                                                </label>
-                                                <input type="text" class="form-control" id="exampleInputPassword1" />
+                                    
+                                @endforeach
+                                    
+
+                                   
+                                </form>
+                            </div>
+                            <div class="col-md-4">
+                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div><!--.files-manager-content-->
+
+                <section class="box-typical box-panel">
+                    <header class="box-typical-header">
+                        <div class="tbl-row">
+                            <div class="tbl-cell tbl-cell-title">
+                                <h3>Reservación</h3>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="box-typical-body">
+                        <div id="example-vertical">
+                            <h5>Cliente</h5>
+                            <section class="overflow-auto">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                            <label for="nombres">
+                                                                Nombres
+                                                            </label>
+                                                            <input type="text" name="" value="Carlos Emilio" class="form-control" id="nombres" readonly/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                                <label for="apellidos">
+                                                                    Apellidos
+                                                                </label>
+                                                                
+                                                                <input type="text" value="Alvarado Robles" class="form-control" id="apellidos" readonly/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="direccion">
+                                                            Dirección
+                                                        </label>
+                                                        <input type="text" value="Las Manzaass" class="form-control" id="direccion" readonly/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputPassword1">
+                                                            Género
+                                                        </label>
+                                                        <input type="text" value="MASCULINO" class="form-control" id="exampleInputPassword1" readonly/>
+                                                    </div> 
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">
+                                                                Nacionalidad
+                                                            </label>
+                                                            <input type="text" value="PERUANO" class="form-control" id="exampleInputEmail1" readonly/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                             
+                                                            <label for="exampleInputEmail1">
+                                                                Email address
+                                                            </label>
+                                                            <input type="email" class="form-control" id="exampleInputEmail1" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                             
+                                                            <label for="exampleInputPassword1">
+                                                                Password
+                                                            </label>
+                                                            <input type="password" class="form-control" id="exampleInputPassword1" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                             
+                                                            <label for="exampleInputFile">
+                                                                File input
+                                                            </label>
+                                                            <input type="file" class="form-control-file" id="exampleInputFile" />
+                                                            <p class="help-block">
+                                                                Example block-level help text here.
+                                                            </p>
+                                                        </div>
+                                                        <div class="checkbox">
+                                                             
+                                                            <label>
+                                                                <input type="checkbox" /> Check me out
+                                                            </label>
+                                                        </div> 
+                                                        <button type="submit" class="btn btn-primary">
+                                                            Submit
+                                                        </button>
+                                                    
+                                                </div>
                                             </div>
                                         </div>
-                                    <!--endforeach-->
-                                    
-                                    
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">
-                                            DNI
-                                        </label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1" />
                                     </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">
-                                            Email
-                                        </label>
-                                        <input type="text" class="form-control" id="exampleInputPassword1" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">
-                                            Teléfono
-                                        </label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">
-                                            Nacionalidad
-                                        </label>
-                                        <input type="text" class="form-control" id="exampleInputPassword1" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">
-                                            Número de Pasaporte
-                                        </label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">
-                                            Ruta de Pasaporte
-                                        </label>
-                                        <input type="text" class="form-control" id="exampleInputPassword1" />
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">
-                                        Agregar
-                                    </button>
-                                    <button type="submit" class="btn btn-danger">
-                                        Cancelar
-                                    </button>
-                                </form>
-                            </div>
-                            <div class="col-md-4">
-                                <form role="form">
-                                    <div class="form-group">
+                                </div>
+                            </section>
+                            
+                            <h5>Paquete</h5>
+                            <section class="box-typical">
+                                <div>
+                                      <label for="idpaquete">
+                                        ID
+                                    </label>
+                                    <input type="text" value="{{$cliente->idcliente}}" class="form-control" id="idpaquete" />
+                                </div>
+                                <div class="form-group">
                                          
-                                        <label for="idpaquete">
-                                            ID
-                                        </label>
-                                        <input type="text" class="form-control" id="idpaquete" />
-                                    </div>
-                                    <div class="form-group">
-                                         
-                                        <label for="">
-                                            Paquete
-                                        </label>
-                                        <input type="text" class="form-control" id="" />
-                                    </div>
-                                    <div class="form-group">
-                                         
-                                        <label for="exampleInputPassword1">
-                                            Cantidad
-                                        </label>
-                                        <input type="text" class="form-control" id="exampleInputPassword1" />
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary">
-                                        Reservar
-                                    </button>
-                                </form>
-                            </div>
-                            <div class="col-md-4">
+                                    <label for="">
+                                        Paquete
+                                    </label>
+                                    <input type="text" class="form-control" id="" />
+                                </div>
+                                <div class="form-group">
+                                     
+                                    <label for="exampleInputPassword1">
+                                        Cantidad
+                                    </label>
+                                    <input type="text" class="form-control" id="exampleInputPassword1" />
+                                </div>
+                                <h5>Paquetes Turísticos</h5>
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -199,11 +254,74 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
+                            </section>
+                            <h5>Condiciones</h5>
+                            <section class="overflow-auto">
+                                <h5>Condiciones de Puntualidad</h5>
+                                <input type="text" name="" id="" placeholder="ej. Ser puntual">
+                            </section>
+                            
+                            <h5>Riesgos</h5>
+                            <section class="overflow-auto">
+                                <div class="row m-t-lg">
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="checkbox-bird">
+                                            <input type="checkbox" id="check-bird-8"/>
+                                            <label for="check-bird-8">Muerte</label>
+                                        </div>
+                                        <div class="checkbox-bird">
+                                            <input type="checkbox" id="check-bird"/>
+                                            <label for="check-bird">Caídas</label>
+                                        </div>
+                                    </div>
+                                </div><!--.row-->
+                            </section>
+                            
+                            <h5>Salud</h5>
+                            <section>
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="alert alert-dismissable alert-info">
+                                                 
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                                                    ×
+                                                </button>
+                                                <h4>
+                                                    AVISO
+                                                </h4> <strong>Warning!</strong> En el caso que se considere necesario, suba la autorización médica.
+                                            </div>
+                                            <span class="badge badge-primary"></span> <span class="badge badge-primary">Ficha de Salud</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">    
+                                                    <label for="">
+                                                        Nº de Autorización
+                                                    </label>
+                                                    <input type="text" class="form-control" id="" />
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-md-6">
+                                            <form role="form">
+                                                <div class="form-group">
+                                                     
+                                                    <label for="exampleInputFile">
+                                                        Justificación Médica
+                                                    </label>
+                                                    <input type="file" class="form-control-file" id="exampleInputFile" />
+                                                    
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
-                    </div>
-                </div><!--.files-manager-content-->
-
+                    </div><!--.box-typical-body-->
+                </section>
                 
             </div><!--.files-manager-panel-in-->
         </div><!--.files-manager-panels-->
@@ -224,4 +342,33 @@
 http://www.forosdelweb.com/f13/obtener-solo-valor-tr-con-onclick-1004289/
 -->
     
+@endsection
+
+
+
+@section('scripts')
+    <script>
+       
+        
+        $(document).ready(function(){
+             $('.cliente').hide(); //oculto mediante id
+             $('#clienteVisible').show(); //oculto mediante id
+	    });
+
+        $(function() {
+			
+			$("#example-vertical").steps({
+				headerTag: "h5",
+				bodyTag: "section",
+				transitionEffect: "slideLeft",
+				stepsOrientation: "horizontal",
+                onFinished: function (event, currentIndex)
+				{
+					alert("Submitted!");
+				}
+			});
+            
+		});
+
+    </script>
 @endsection

@@ -25,6 +25,9 @@
 	<link rel="stylesheet" href="{{ asset('css/separate/pages/files.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/separate/vendor/bootstrap-select/bootstrap-select.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/separate/vendor/select2.min.css') }}">
+
+	<link rel="stylesheet" href="{{ asset('css/separate/vendor/jquery-steps.min.css') }}"> <!--PARA LOS SEPARADORES-->
+
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 	
 	<!--<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />-->
@@ -533,6 +536,8 @@
 
 	
 	<script src="{{ asset('js/lib/jquery/jquery.min.js') }}"></script>
+	<script src="{{ asset('js/lib/jquery-validation/jquery.validate.min.js') }}"></script> <!--PARA LOS STEPS-->
+	<script src="{{ asset('js/lib/jquery-steps/jquery.steps.min.js') }}"></script> <!--PARA LOS STEPS-->
 	<script src="{{ asset('js/lib/tether/tether.min.js') }}"></script>
 	<script src="{{ asset('js/lib/bootstrap/bootstrap.min.js') }}"></script>
 	<script src="{{ asset('js/plugins.js') }}"></script>
@@ -541,7 +546,6 @@
 	<script src="{{ asset('js/lib/jquery-tag-editor/jquery.tag-editor.min.js') }}"></script>
 	<script src="{{ asset('js/lib/bootstrap-select/bootstrap-select.min.js') }}"></script>
 	<script src="{{ asset('js/lib/select2/select2.full.min.js') }}"></script>
-	
 	
 	<script>
 		$(function() {
