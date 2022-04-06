@@ -480,12 +480,12 @@
 	            </span>
 	            <ul>
 					<li><a href="{{ route('index.nuevos.clientes') }}"><span class="lbl">Clientes</span><span class="label label-custom label-pill label-success">new</span></a></li>
-	                <li><a href="{{ route('reservas.formulario.nivel.admin') }}"><span class="lbl">Nuevo</span><span class="label label-custom label-pill label-succes">new</span></a></li>
-	                <li><a href="{{ route('usuarios.permisos') }}"><span class="lbl">Pendientes</span></a></li>   
+	                <li><a href="{{ route('reservas.formulario.nivel.admin') }}"><span class="lbl">Nuevo</span><span class="label label-custom label-pill label-success">new</span></a></li>
+	                <li><a href="{{ route('reservas.pendientes') }}"><span class="lbl">Pendientes</span></a></li>
+					<li><a href="{{ route('reservas.pendientes') }}"><span class="lbl">Completado</span></a></li>      
 					<li><a href="{{ route('usuarios.permisos') }}"><span class="lbl">Riesgos</span></a></li>   
 	            </ul>
 	        </li>
-
 	    </ul>
 	
 	    <section>

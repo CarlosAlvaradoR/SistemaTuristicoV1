@@ -22,7 +22,7 @@ class PaquetesTuristicosController extends Controller
         //
         $paquetes=(DB::select('SELECT * FROM paquetes_turisticos p'));
         
-        return view('paqueteturistico', compact('paquetes'));
+        return view('paquetes/index/index', compact('paquetes'));
     }
 
     public function detallepaquetes($idpaquete){ //Lo que se encuentra en los tabs al darle click a un paquete
@@ -76,7 +76,7 @@ class PaquetesTuristicosController extends Controller
         INNER JOIN paquetes_visitaatractivos p on p.idatractivoturistico=a.idatractivoturistico
         WHERE p.idpaqueteturistico = '.$idpaquete.'');
 
-        return view('detallespaquete', compact('galeriaFotos','mapaReferencias','nombrePaquetes','idpaquetes', 'itinerarios', 'servicios', 'categoriasHoteles',
+        return view('paquetes/index/detalle', compact('galeriaFotos','mapaReferencias','nombrePaquetes','idpaquetes', 'itinerarios', 'servicios', 'categoriasHoteles',
             'tiposPersonales','transportesPaquetes', 'alimentacionCampos', 'equipos', 'acemilas', 'almuerzos', 'atractivosVisitaPaquete'));
     }
 
@@ -89,7 +89,8 @@ class PaquetesTuristicosController extends Controller
     public function create()
     {
         //
-        
+        $tipos=DB::select('SELECT idtipopaquete, nombretipo FROM tipopaquetes');
+        return view('paquetes/index/nuevo',compact('tipos'));
     }
 
     
@@ -139,8 +140,7 @@ class PaquetesTuristicosController extends Controller
     }
 
     public function formularionuevospaquetes(){
-        $tipos=DB::select('SELECT idtipopaquete, nombretipo FROM tipopaquetes');
-        return view('formulariopaquetesnuevos',compact('tipos'));
+        
     }//
 
     public function formularioNuevoMapa($idpaquete){

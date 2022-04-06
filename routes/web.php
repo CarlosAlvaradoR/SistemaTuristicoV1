@@ -74,7 +74,7 @@ Route::get('/organitations', [UsuariosController::class, 'mostrarTabsOrgaAceEqui
 
 /** PARA LOS PAQUETES */
 Route::get('/package', [PaquetesTuristicosController::class, 'index'])->name('paquetes.activos.galeria');
-Route::get('/package/create', [PaquetesTuristicosController::class, 'formularionuevospaquetes'])->name('paquetes.formulario.nuevo');
+Route::get('/package/create', [PaquetesTuristicosController::class, 'create'])->name('paquetes.formulario.nuevo');
 Route::post('/pakcages/store', [PaquetesTuristicosController::class, 'store'])->name('paquetes.turisticos.creacion');//CREAR Guardar NUEVOS PAQUETES
 Route::get('/packages/details/{idpaqueteturistico}', [PaquetesTuristicosController::class, 'detallepaquetes'])->name('paquetes.detalles');//MUESTRA LOS paquetes en el bucle
 
@@ -186,7 +186,17 @@ Route::get('/reserved/clients/', [ClientesController::class, 'index'])->name('in
 //Nuevas Reservas
 Route::get('/reserved', [ReservasController::class, 'index'])->name('reservas.formulario.nivel.admin');
 Route::get('/reserved/search/clients', [ReservasController::class, 'buscar'])->name('buscar.clientes.reserva');
+//-POST
+Route::get('/pendiente', [ReservasController::class, 'pendientes'])->name('reservas.pendientes');
+
 //Reservas Pendientes
+
+//Pagos
+Route::get('/pagos', [ReservasController::class, 'prueba'])->name('pagos.reserva');
+
+//Salud
+Route::get('/reserva/salud', [ReservasController::class, 'salud'])->name('salud.cliente.reserva');
+//Ficha - Salud
 
 /************************************************* */
 

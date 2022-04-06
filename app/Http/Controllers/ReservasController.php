@@ -87,6 +87,15 @@ class ReservasController extends Controller
         //
     }
 
+    public function pendientes(){
+        return view('reservas/index/pendiente');
+    }
+    public function prueba(){
+        return view('reservas/index/pago');
+    }
+    public function salud(){
+        return view('reservas/salud/index');
+    }
     public function buscar(Request $request){
         $dni=$request->post('dni');
         $cliente=DB::select('SELECT p.dni, p.nombres, p.apellidos FROM clientes c

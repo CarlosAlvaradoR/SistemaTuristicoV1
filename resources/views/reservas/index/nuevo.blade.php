@@ -39,7 +39,7 @@
                         <form action="{{ route('reservas.formulario.nivel.admin') }}" method="GET">
                             <div class="row">
                                 <div class="col-md-8">
-                                    <form role="form">
+                                    
                                         <div class="form-group">
                                              
                                             <label for="dni">
@@ -50,7 +50,7 @@
                                             <input type="text" class="form-control" value="" name="dni" id="dni" placeholder="ej: 70576811" />
                                         </div>
                                         
-                                    </form>
+                                    
                                 </div>
                                 <div class="col-md-4">
                                      <br>
@@ -60,6 +60,7 @@
                                 </div>
                             </div>
                         </form>
+
                         @php
                             if ($cantidad > 0) {
                                $id="clientes";
@@ -68,7 +69,7 @@
                         <div class="row" id="@php echo $id; @endphp" name="cliente" >
                             <div class="col-md-4">
                                 
-                                <form role="form">
+                                
                                     @foreach ($cliente as $cliente)
                                         
                                             
@@ -76,17 +77,17 @@
                                         
 
                                         
-                                </form>
+                                
                                 
                             </div>
                             <div class="col-md-4">
-                                <form role="form">
+                               
                                     
                                 @endforeach
                                     
 
                                    
-                                </form>
+                               
                             </div>
                             <div class="col-md-4">
                                 
@@ -181,10 +182,12 @@
                                                                 <input type="checkbox" /> Check me out
                                                             </label>
                                                         </div> 
-                                                        <button type="submit" class="btn btn-primary">
-                                                            Submit
-                                                        </button>
-                                                    
+                                                        <form action="{{ route('pagos.reserva') }}" method="get">
+                                                            <button type="submit" class="btn btn-primary" id="botonSubmit">
+                                                                Submit
+                                                            </button>
+                                                        </form>
+                                                                                                            
                                                 </div>
                                             </div>
                                         </div>
@@ -198,7 +201,7 @@
                                       <label for="idpaquete">
                                         ID
                                     </label>
-                                    <input type="text" value="{{$cliente->idcliente}}" class="form-control" id="idpaquete" />
+                                    <input type="text" value="1" class="form-control" id="idpaquete" />
                                 </div>
                                 <div class="form-group">
                                          
@@ -305,7 +308,7 @@
                                             
                                         </div>
                                         <div class="col-md-6">
-                                            <form role="form">
+                                            
                                                 <div class="form-group">
                                                      
                                                     <label for="exampleInputFile">
@@ -314,7 +317,7 @@
                                                     <input type="file" class="form-control-file" id="exampleInputFile" />
                                                     
                                                 </div>
-                                            </form>
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -364,7 +367,21 @@ http://www.forosdelweb.com/f13/obtener-solo-valor-tr-con-onclick-1004289/
 				stepsOrientation: "horizontal",
                 onFinished: function (event, currentIndex)
 				{
-					alert("Submitted!");
+                    Swal.fire({
+                    title: 'Está seguro de enviar la información?',
+                    text: "Verifique haber completado la información!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, guardar!',
+                    cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#botonSubmit').click();
+                        }
+                    });
+					
 				}
 			});
             
