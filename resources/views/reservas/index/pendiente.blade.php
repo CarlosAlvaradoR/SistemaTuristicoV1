@@ -104,7 +104,7 @@
                                                         <i class="fas fa-stethoscope"></i>
                                                     </span>
                                                 </a>
-                                                <a href="#" title="Desertar reserva">
+                                                <a href="{{ route('postergacion.cliente.reserva') }}" title="Desertar reserva">
                                                     <span class="btn btn-danger btn-sm" >
                                                         <i class="fas fa-minus"></i>
                                                     </span>

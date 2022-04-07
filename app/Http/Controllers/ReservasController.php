@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Reservas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Str;
 
 class ReservasController extends Controller
 {
@@ -95,6 +95,14 @@ class ReservasController extends Controller
     }
     public function salud(){
         return view('reservas/salud/index');
+    }
+    public function postergacion(){
+        return view('reservas/eventospostergacion/index');
+    }
+    public function reser(){
+        
+        $slug = Str::slug('Laravel 5 Framework de PHP', '-');
+        return $slug;
     }
     public function buscar(Request $request){
         $dni=$request->post('dni');

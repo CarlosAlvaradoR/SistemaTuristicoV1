@@ -197,7 +197,10 @@ Route::get('/pagos', [ReservasController::class, 'prueba'])->name('pagos.reserva
 //Salud
 Route::get('/reserva/salud', [ReservasController::class, 'salud'])->name('salud.cliente.reserva');
 //Ficha - Salud
+Route::get('/reser', [ReservasController::class, 'reser'])->name('pruebita');
 
+//Postergación de los viajes
+Route::get('/postergacion/reserva', [ReservasController::class, 'postergacion'])->name('postergacion.cliente.reserva');
 /************************************************* */
 
 

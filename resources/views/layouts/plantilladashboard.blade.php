@@ -473,7 +473,7 @@
 					<li><a href="{{ route('index.tipo.paquete') }}"><span class="lbl">Reportes</span></a></li>   
 	            </ul>
 	        </li>
-			<li class="red with-sub">
+			<li class="green with-sub">
 	            <span>
 	                <i class="fas fa-mountain glyphicon glyphicon-send"></i>
 	                <span class="lbl">Reservas</span>
@@ -483,7 +483,9 @@
 	                <li><a href="{{ route('reservas.formulario.nivel.admin') }}"><span class="lbl">Nuevo</span><span class="label label-custom label-pill label-success">new</span></a></li>
 	                <li><a href="{{ route('reservas.pendientes') }}"><span class="lbl">Pendientes</span></a></li>
 					<li><a href="{{ route('reservas.pendientes') }}"><span class="lbl">Completado</span></a></li>      
-					<li><a href="{{ route('usuarios.permisos') }}"><span class="lbl">Riesgos</span></a></li>   
+					<li><a href="{{ route('usuarios.permisos') }}"><span class="lbl">Riesgos</span></a></li>
+					<li><a href="{{ route('usuarios.permisos') }}"><span class="lbl">Eventos</span></a></li> 
+					<li><a href="{{ route('usuarios.permisos') }}"><span class="lbl">Solicitudes</span></a><span class="label label-custom label-pill label-success">new</span></a></li>   
 	            </ul>
 	        </li>
 	    </ul>
