@@ -7,9 +7,9 @@
 ## Instalación en Windows
 
 Una vez teniendo el proyecto en su máquina, ejecute los sihuientes comandos en su terminal
-$ php artisan migrate
-$ php artisan key:generate
-$php artisan migration:refresh
+- $ php artisan migrate
+- $ php artisan key:generate
+- $ php artisan migration:refresh
 
 
 ## Instalación en Ubuntu

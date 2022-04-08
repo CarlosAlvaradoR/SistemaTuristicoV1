@@ -90,7 +90,7 @@ class ReservasController extends Controller
     public function pendientes(){
         return view('reservas/index/pendiente');
     }
-    public function prueba(){
+    public function pagos(){
         return view('reservas/index/pago');
     }
     public function salud(){
@@ -98,6 +98,12 @@ class ReservasController extends Controller
     }
     public function postergacion(){
         return view('reservas/eventospostergacion/index');
+    }
+    public function solicitud(){
+        return view('reservas/solicitud/atencion');
+    }
+    public function atencionSolicitud(){
+        return view('reservas/solicitud/proceso');
     }
     public function reser(){
         

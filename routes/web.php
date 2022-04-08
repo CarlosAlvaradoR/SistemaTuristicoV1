@@ -192,7 +192,7 @@ Route::get('/pendiente', [ReservasController::class, 'pendientes'])->name('reser
 //Reservas Pendientes
 
 //Pagos
-Route::get('/pagos', [ReservasController::class, 'prueba'])->name('pagos.reserva');
+Route::get('/pagos', [ReservasController::class, 'pagos'])->name('pagos.reserva');
 
 //Salud
 Route::get('/reserva/salud', [ReservasController::class, 'salud'])->name('salud.cliente.reserva');
@@ -201,6 +201,11 @@ Route::get('/reser', [ReservasController::class, 'reser'])->name('pruebita');
 
 //Postergación de los viajes
 Route::get('/postergacion/reserva', [ReservasController::class, 'postergacion'])->name('postergacion.cliente.reserva');
+
+//Atención de Solcitudes
+Route::get('/postergacion/reserva/soli', [ReservasController::class, 'solicitud'])->name('atención.cliente.solicitud');
+Route::get('/postergacion/reserva/atencion', [ReservasController::class, 'atencionSolicitud'])->name('atención.cliente.solicitud.revisar');
+
 /************************************************* */
 
 

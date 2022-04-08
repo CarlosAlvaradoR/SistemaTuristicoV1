@@ -485,7 +485,7 @@
 					<li><a href="{{ route('reservas.pendientes') }}"><span class="lbl">Completado</span></a></li>      
 					<li><a href="{{ route('usuarios.permisos') }}"><span class="lbl">Riesgos</span></a></li>
 					<li><a href="{{ route('usuarios.permisos') }}"><span class="lbl">Eventos</span></a></li> 
-					<li><a href="{{ route('usuarios.permisos') }}"><span class="lbl">Solicitudes</span></a><span class="label label-custom label-pill label-success">new</span></a></li>   
+					<li><a href="{{ route('atención.cliente.solicitud') }}"><span class="lbl">Solicitudes</span></a></li>   
 	            </ul>
 	        </li>
 	    </ul>
