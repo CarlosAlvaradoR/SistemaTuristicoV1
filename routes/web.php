@@ -175,7 +175,11 @@ Route::delete('/package/details/almuerzo/delete/{idpaqueteAlmuerzo}', [PaquetesT
 
 
 
+/** PARA TRANSPORTES  ************************/
+Route::get('/transporte', [ReservasController::class, 'transporte'])->name('nuevos.transportes');
 
+
+/*************************************** */
 
 
 
@@ -213,3 +217,7 @@ Route::get('/postergacion/reserva/atencion', [ReservasController::class, 'atenci
 
 
 
+/**** PARA LOS VIAJES **********************/
+Route::get('/viaje', [ReservasController::class, 'viaje'])->name('index.viajes.admin');
+
+/********************************************/

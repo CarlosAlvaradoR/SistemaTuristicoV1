@@ -105,6 +105,12 @@ class ReservasController extends Controller
     public function atencionSolicitud(){
         return view('reservas/solicitud/proceso');
     }
+    public function transporte(){
+        return view('transporte/index');
+    }
+    public function viaje(){
+        return view('viaje/index');
+    }
     public function reser(){
         
         $slug = Str::slug('Laravel 5 Framework de PHP', '-');

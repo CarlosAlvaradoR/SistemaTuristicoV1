@@ -36,18 +36,18 @@
                     <a href="{{ route("paquetes.detalles", $paquete->idpaqueteturistico) }}" method="get" class="btn btn-rounded">
                         Ver Paquete
                     </a>
-                    <div class="card-user-social">
-                        <a href="#">
-                            <i class="font-icon font-icon-fb-fill"></i>
+                    <div class="card-user-social align-items-start">
+                        <a href="#" title="Editar">
+                            <i class="fas fa-edit"></i>
                         </a>
-                        <a href="#">
-                            <i class="font-icon font-icon-vk-fill"></i>
+                        <a href="#" title="Ver Información del Paquete">
+                            <i class="fas fa-eye"></i>
                         </a>
-                        <a href="#">
-                            <i class="font-icon font-icon-in-fill"></i>
+                        <a href="#" title="Inactivar">
+                            <i class="fas fa-minus"></i>
                         </a>
-                        <a href="#">
-                            <i class="font-icon font-icon-tw-fill"></i>
+                        <a href="{{ route('reservas.formulario.nivel.admin') }}" title="Reservar">
+                            <i class="fas fa-map"></i>
                         </a>
                     </div>
                     <!--<div class="card-user-info-row">

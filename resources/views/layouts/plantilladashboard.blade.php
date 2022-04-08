@@ -455,9 +455,16 @@
 	        </li>
 
 			<li class="darkblue">
-	            <a href="equipos.php">
+	            <a href="#">
 	                <i class="fas fa-suitcase glyphicon glyphicon-send"></i>
 	                <span class="lbl">Equipos</span>
+	            </a>
+	        </li>
+
+			<li class="darkblue">
+	            <a href="{{ route('nuevos.transportes') }}">
+					<i class="fas fa-car glyphicon glyphicon-send"></i>
+	                <span class="lbl">Transporte</span>
 	            </a>
 	        </li>
 			
@@ -488,43 +495,21 @@
 					<li><a href="{{ route('atención.cliente.solicitud') }}"><span class="lbl">Solicitudes</span></a></li>   
 	            </ul>
 	        </li>
+
+			<li class="orange with-sub">
+	            <span>
+	                <i class="fas fa-mountain glyphicon glyphicon-send"></i>
+	                <span class="lbl">Viaje</span>
+	            </span>
+	            <ul>
+					<li><a href="{{ route('index.viajes.admin') }}"><span class="lbl">Nuevo</span><span class="label label-custom label-pill label-success">new</span></a></li>
+	                
+	            </ul>
+	        </li>
+
 	    </ul>
 	
-	    <section>
-	        <header class="side-menu-title">Tags</header>
-	        <ul class="side-menu-list">
-	            <li>
-	                <a href="#">
-	                    <i class="tag-color green"></i>
-	                    <span class="lbl">Website</span>
-	                </a>
-	            </li>
-	            <li>
-	                <a href="#">
-	                    <i class="tag-color grey-blue"></i>
-	                    <span class="lbl">Bugs/Errors</span>
-	                </a>
-	            </li>
-	            <li>
-	                <a href="#">
-	                    <i class="tag-color red"></i>
-	                    <span class="lbl">General Problem</span>
-	                </a>
-	            </li>
-	            <li>
-	                <a href="#">
-	                    <i class="tag-color pink"></i>
-	                    <span class="lbl">Questions</span>
-	                </a>
-	            </li>
-	            <li>
-	                <a href="#">
-	                    <i class="tag-color orange"></i>
-	                    <span class="lbl">Ideas</span>
-	                </a>
-	            </li>
-	        </ul>
-	    </section>
+	    
 	</nav><!--.side-menu-->
     
 

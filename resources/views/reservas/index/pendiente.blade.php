@@ -73,17 +73,6 @@
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Datos</th>
-                                            <th>DNI</th>
-                                            <th>Nacionalidad</th>
-                                            <th>Fecha de reserva</th>
-                                            <th>Estado</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
                                     <tr>
                                         <td>1</td>
