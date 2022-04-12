@@ -9,8 +9,8 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="bradcam_text text-center">
-                    <h3>Destinations</h3>
-                    <p>Pixel perfect design with awesome contents</p>
+                    <h3>Destinos</h3>
+                    <p>Elige nuestros mejores paquetes</p>
                 </div>
             </div>
         </div>
@@ -24,27 +24,27 @@
         <div class="row align-items-center">
             <div class="col-lg-3">
                 <div class="form_area">
-                    <h3>Where you want to go?</h3>
+                    <h3>A dónde quieres ir?</h3>
                 </div>
             </div>
             <div class="col-lg-9">
                 <div class="search_wrap">
                     <form class="search_form" action="#">
                         <div class="input_field">
-                            <input type="text" placeholder="Where to go?">
+                            <input type="text" placeholder="A dónde quieres ir ??">
                         </div>
                         <div class="input_field">
-                            <input id="datepicker" placeholder="Date">
+                            <input id="datepicker" placeholder="Fecha">
                         </div>
                         <div class="input_field">
                             <select>
-                                <option data-display="Travel type">Travel type</option>
-                                <option value="1">Some option</option>
-                                <option value="2">Another option</option>
+                                <option data-display="Tipo de Viaje">Tipo de Viaje</option>
+                                <option value="1">Caminata</option>
+                                <option value="2">Turismo</option>
                             </select>
                         </div>
                         <div class="search_btn">
-                            <button class="boxed-btn4 " type="submit" >Search</button>
+                            <button class="boxed-btn4 " type="submit" >Buscar</button>
                         </div>
                     </form>
                 </div>
@@ -60,14 +60,14 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="filter_result_wrap">
-                    <h3>Filter Result</h3>
+                    <h3>Filtrar resultados</h3>
                     <div class="filter_bordered">
                         <div class="filter_inner">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="single_select">
                                         <select>
-                                            <option data-display="Country">Country</option>
+                                            <option data-display="Ciudad">Ciudad</option>
                                             <option value="1">Africa</option>
                                             <option value="2">canada</option>
                                             <option value="4">USA</option>
@@ -77,16 +77,16 @@
                                 <div class="col-lg-12">
                                     <div class="single_select">
                                         <select>
-                                            <option data-display="Travel type">Travel type</option>
-                                            <option value="1">advance</option>
-                                            <option value="2">advance</option>
-                                            <option value="4">premium</option>
+                                            <option data-display="Tipo de Paquete">Tipo de Paquete</option>
+                                            <option value="1">Caminata</option>
+                                            <option value="2">Vuelo</option>
+                                            <option value="4">Caminata en Parque</option>
                                           </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="range_slider_wrap">
-                                        <span class="range">Prise range</span>
+                                        <span class="range">Rango</span>
                                         <div id="slider-range"></div>
                                         <p>
                                             <input type="text" id="amount" readonly style="border:0; color:#7A838B; font-weight:400;">
@@ -97,7 +97,7 @@
                         </div>
 
                         <div class="reset_btn">
-                            <button class="boxed-btn4" type="submit">Reset</button>
+                            <button class="boxed-btn4" type="submit">Buscar</button>
                         </div>
                     </div>
                 </div>
@@ -108,10 +108,10 @@
                         <div class="single_place">
                             <div class="thumb">
                                 <img src="scriptslanding/img/place/1.png" alt="">
-                                <a href="#" class="prise">$500</a>
+                                <a href="#" class="prise">S/. 500</a>
                             </div>
                             <div class="place_info">
-                                <a href="{{ route('destination.landing.details') }}"><h3>California</h3></a>
+                                <a href="{{ route('destination.landing.details') }}"><h3>Máncora</h3></a>
                                 <p>Amércica Latina - Perú</p>
                                 <div class="rating_days d-flex justify-content-between">
                                     <span class="d-flex justify-content-center align-items-center">
@@ -120,11 +120,11 @@
                                          <i class="fa fa-star"></i> 
                                          <i class="fa fa-star"></i> 
                                          <i class="fa fa-star"></i>
-                                         <a href="#">(20 Review)</a>
+                                         <a href="#">(20 visitado)</a>
                                     </span>
                                     <div class="days">
                                         <i class="fa fa-clock-o"></i>
-                                        <a href="#">5 Days</a>
+                                        <a href="#">5 Días</a>
                                     </div>
                                 </div>
                             </div>
@@ -134,10 +134,10 @@
                         <div class="single_place">
                             <div class="thumb">
                                 <img src="scriptslanding/img/place/2.png" alt="">
-                                <a href="#" class="prise">$500</a>
+                                <a href="#" class="prise">S/. 500</a>
                             </div>
                             <div class="place_info">
-                                <a href="{{ route('destination.landing.details') }}"><h3>Korola Megna</h3></a>
+                                <a href="{{ route('destination.landing.details') }}"><h3>Parque Huascarán</h3></a>
                                 <p>Amércica Latina - Perú</p>
                                 <div class="rating_days d-flex justify-content-between">
                                     <span class="d-flex justify-content-center align-items-center">
@@ -146,11 +146,11 @@
                                          <i class="fa fa-star"></i> 
                                          <i class="fa fa-star"></i> 
                                          <i class="fa fa-star"></i>
-                                         <a href="#">(20 Review)</a>
+                                         <a href="#">(20 visitado)</a>
                                     </span>
                                     <div class="days">
                                         <i class="fa fa-clock-o"></i>
-                                        <a href="#">5 Days</a>
+                                        <a href="#">5 Días</a>
                                     </div>
                                 </div>
                             </div>
@@ -160,10 +160,10 @@
                         <div class="single_place">
                             <div class="thumb">
                                 <img src="scriptslanding/img/place/3.png" alt="">
-                                <a href="#" class="prise">$500</a>
+                                <a href="#" class="prise">S/. 500</a>
                             </div>
                             <div class="place_info">
-                                <a href="{{ route('destination.landing.details') }}"><h3>London</h3></a>
+                                <a href="{{ route('destination.landing.details') }}"><h3>Lima</h3></a>
                                 <p>Amércica Latina - Perú</p>
                                 <div class="rating_days d-flex justify-content-between">
                                     <span class="d-flex justify-content-center align-items-center">
@@ -172,11 +172,11 @@
                                          <i class="fa fa-star"></i> 
                                          <i class="fa fa-star"></i> 
                                          <i class="fa fa-star"></i>
-                                         <a href="#">(20 Review)</a>
+                                         <a href="#">(20 visitado)</a>
                                     </span>
                                     <div class="days">
                                         <i class="fa fa-clock-o"></i>
-                                        <a href="#">5 Days</a>
+                                        <a href="#">5 Días</a>
                                     </div>
                                 </div>
                             </div>
@@ -186,10 +186,10 @@
                         <div class="single_place">
                             <div class="thumb">
                                 <img src="scriptslanding/img/place/4.png" alt="">
-                                <a href="#" class="prise">$500</a>
+                                <a href="#" class="prise">S/. 500</a>
                             </div>
                             <div class="place_info">
-                                <a href="{{ route('destination.landing.details') }}"><h3>Miami Beach</h3></a>
+                                <a href="{{ route('destination.landing.details') }}"><h3>Ciudad de Huaraz</h3></a>
                                 <p>Amércica Latina - Perú</p>
                                 <div class="rating_days d-flex justify-content-between">
                                     <span class="d-flex justify-content-center align-items-center">
@@ -198,11 +198,11 @@
                                          <i class="fa fa-star"></i> 
                                          <i class="fa fa-star"></i> 
                                          <i class="fa fa-star"></i>
-                                         <a href="#">(20 Review)</a>
+                                         <a href="#">(20 visitado)</a>
                                     </span>
                                     <div class="days">
                                         <i class="fa fa-clock-o"></i>
-                                        <a href="#">5 Days</a>
+                                        <a href="#">5 Días</a>
                                     </div>
                                 </div>
                             </div>
@@ -212,10 +212,10 @@
                         <div class="single_place">
                             <div class="thumb">
                                 <img src="scriptslanding/img/place/5.png" alt="">
-                                <a href="#" class="prise">$500</a>
+                                <a href="#" class="prise">S/. 500</a>
                             </div>
                             <div class="place_info">
-                                <a href="{{ route('destination.landing.details') }}"><h3>California</h3></a>
+                                <a href="{{ route('destination.landing.details') }}"><h3>Máncora</h3></a>
                                 <p>Amércica Latina - Perú</p>
                                 <div class="rating_days d-flex justify-content-between">
                                     <span class="d-flex justify-content-center align-items-center">
@@ -224,11 +224,11 @@
                                          <i class="fa fa-star"></i> 
                                          <i class="fa fa-star"></i> 
                                          <i class="fa fa-star"></i>
-                                         <a href="#">(20 Review)</a>
+                                         <a href="#">(20 visitado)</a>
                                     </span>
                                     <div class="days">
                                         <i class="fa fa-clock-o"></i>
-                                        <a href="#">5 Days</a>
+                                        <a href="#">5 Días</a>
                                     </div>
                                 </div>
                             </div>
@@ -238,10 +238,10 @@
                         <div class="single_place">
                             <div class="thumb">
                                 <img src="scriptslanding/img/place/6.png" alt="">
-                                <a href="#" class="prise">$500</a>
+                                <a href="#" class="prise">S/. 500</a>
                             </div>
                             <div class="place_info">
-                                <a href="{{ route('destination.landing.details') }}"><h3>Saintmartine Iceland</h3></a>
+                                <a href="{{ route('destination.landing.details') }}"><h3>Ciudad de Caraz</h3></a>
                                 <p>Amércica Latina - Perú</p>
                                 <div class="rating_days d-flex justify-content-between">
                                     <span class="d-flex justify-content-center align-items-center">
@@ -250,11 +250,11 @@
                                          <i class="fa fa-star"></i> 
                                          <i class="fa fa-star"></i> 
                                          <i class="fa fa-star"></i>
-                                         <a href="#">(20 Review)</a>
+                                         <a href="#">(20 visitado)</a>
                                     </span>
                                     <div class="days">
                                         <i class="fa fa-clock-o"></i>
-                                        <a href="#">5 Days</a>
+                                        <a href="#">5 Días</a>
                                     </div>
                                 </div>
                             </div>
@@ -264,7 +264,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="more_place_btn text-center">
-                            <a class="boxed-btn4" href="#">More Places</a>
+                            <a class="boxed-btn4" href="#">Ver más</a>
                         </div>
                     </div>
                 </div>
@@ -273,7 +273,7 @@
     </div>
 </div>
 
-    <!-- newletter_area_start  -->
+    <!-- newletter_area_start 
     <div class="newletter_area overlay">
         <div class="container">
             <div class="row justify-content-center align-items-center">
@@ -307,8 +307,10 @@
             </div>
         </div>
     </div>
-    <!-- newletter_area_end  -->
-<div class="recent_trip_area">
+    newletter_area_end  -->
+
+
+<!--    <div class="recent_trip_area">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-6">
@@ -368,6 +370,6 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 @endsection

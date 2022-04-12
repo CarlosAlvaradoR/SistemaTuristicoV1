@@ -59,8 +59,8 @@
                                             <li><a href="{{ route('contact.landing') }}">Contacto</a></li>
                                             <li><a href="#">Cuenta <i class="ti-angle-down"></i></a>
                                                 <ul class="submenu">
-                                                        <li><a href="{{ route('usuarios.nuevos') }}">Ingresar</a></li>
-                                                        <!--<li><a href="scriptslanding/elements.php">elements</a></li>-->
+                                                        <li><a href="{{ route('login') }}">Ingresar</a></li>
+                                                        <li><a href="{{ route('register') }}">Registrarme</a></li>
                                                 </ul>
                                             </li>
                                             <!--<li><a href="scriptslanding/#">blog <i class="ti-angle-down"></i></a>
@@ -121,9 +121,9 @@
                                     <img src="scriptslanding/img/footer_logo.png" alt="">
                                 </a>
                             </div>
-                            <p>5th flora, 700/D kings road, green <br> lane New York-1782 <br>
+                            <p>Huaraz - Ancash <br> Av. 28 de Julio <br>
                                 <a href="#">+10 367 826 2567</a> <br>
-                                <a href="#">contact@carpenter.com</a>
+                                <a href="#">turismo@gmail.com</a>
                             </p>
                             <div class="socail_links">
                                 <ul>

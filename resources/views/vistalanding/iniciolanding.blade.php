@@ -10,9 +10,9 @@
                 <div class="row align-items-center">
                     <div class="col-xl-12 col-md-12">
                         <div class="slider_text text-center">
-                            <h3>Indonesia</h3>
-                            <p>Pixel perfect design with awesome contents</p>
-                            <a href="#" class="boxed-btn3">Explore Now</a>
+                            <h3>Yungay</h3>
+                            <p>El destino perfecto para tí</p>
+                            <a href="#" class="boxed-btn3">Explorar Más</a>
                         </div>
                     </div>
                 </div>
@@ -23,9 +23,9 @@
                 <div class="row align-items-center">
                     <div class="col-xl-12 col-md-12">
                         <div class="slider_text text-center">
-                            <h3>Australia</h3>
-                            <p>Pixel perfect design with awesome contents</p>
-                            <a href="#" class="boxed-btn3">Explore Now</a>
+                            <h3>Carhuaz</h3>
+                            <p>El mejor lugar para pasear</p>
+                            <a href="#" class="boxed-btn3">Explorar Más</a>
                         </div>
                     </div>
                 </div>
@@ -36,9 +36,9 @@
                 <div class="row align-items-center">
                     <div class="col-xl-12 col-md-12">
                         <div class="slider_text text-center">
-                            <h3>Switzerland</h3>
-                            <p>Pixel perfect design with awesome contents</p>
-                            <a href="#" class="boxed-btn3">Explore Now</a>
+                            <h3>Recuay</h3>
+                            <p>El lugar perfecto</p>
+                            <a href="#" class="boxed-btn3">Explorar Más</a>
                         </div>
                     </div>
                 </div>
@@ -69,9 +69,9 @@
                         </div>
                         <div class="input_field">
                             <select>
-                                <option data-display="Travel type">Tipo de viaje</option>
-                                <option value="1">Some option</option>
-                                <option value="2">Another option</option>
+                                <option data-display="Tipo de Viaje">Tipo de viaje</option>
+                                <option value="1">Caminata</option>
+                                <option value="2">Turístico</option>
                             </select>
                         </div>
                         <div class="search_btn">
@@ -106,7 +106,7 @@
                 <div class="single_place">
                     <div class="thumb">
                         <img src="scriptslanding/img/place/1.png" alt="">
-                        <a href="#" class="prise">$500</a>
+                        <a href="#" class="prise">S/. 500</a>
                     </div>
                     <div class="place_info">
                         <a href="{{ route('destination.landing.details') }}"><h3>Recuay</h3></a>
@@ -118,11 +118,11 @@
                                  <i class="fa fa-star"></i> 
                                  <i class="fa fa-star"></i> 
                                  <i class="fa fa-star"></i>
-                                 <a href="#">(20 Review)</a>
+                                 <a href="#">(20 visitas)</a>
                             </span>
                             <div class="days">
                                 <i class="fa fa-clock-o"></i>
-                                <a href="#">5 Days</a>
+                                <a href="#">5 días</a>
                             </div>
                         </div>
                     </div>
@@ -132,7 +132,7 @@
                 <div class="single_place">
                     <div class="thumb">
                         <img src="scriptslanding/img/place/2.png" alt="">
-                        <a href="#" class="prise">$500</a>
+                        <a href="#" class="prise">S/. 500</a>
                     </div>
                     <div class="place_info">
                         <a href="{{ route('destination.landing.details') }}"><h3>Caminata por Chavin</h3></a>
@@ -144,11 +144,11 @@
                                  <i class="fa fa-star"></i> 
                                  <i class="fa fa-star"></i> 
                                  <i class="fa fa-star"></i>
-                                 <a href="#">(20 Review)</a>
+                                 <a href="#">(20 visitas)</a>
                             </span>
                             <div class="days">
                                 <i class="fa fa-clock-o"></i>
-                                <a href="#">5 Days</a>
+                                <a href="#">5 días</a>
                             </div>
                         </div>
                     </div>
@@ -158,7 +158,7 @@
                 <div class="single_place">
                     <div class="thumb">
                         <img src="scriptslanding/img/place/3.png" alt="">
-                        <a href="#" class="prise">$500</a>
+                        <a href="#" class="prise">S/. 500</a>
                     </div>
                     <div class="place_info">
                         <a href="{{ route('destination.landing.details') }}"><h3>Caraz - Ancash</h3></a>
@@ -170,11 +170,11 @@
                                  <i class="fa fa-star"></i> 
                                  <i class="fa fa-star"></i> 
                                  <i class="fa fa-star"></i>
-                                 <a href="#">(20 Review)</a>
+                                 <a href="#">(20 visitas)</a>
                             </span>
                             <div class="days">
                                 <i class="fa fa-clock-o"></i>
-                                <a href="#">5 Days</a>
+                                <a href="#">5 días</a>
                             </div>
                         </div>
                     </div>
@@ -184,7 +184,7 @@
                 <div class="single_place">
                     <div class="thumb">
                         <img src="scriptslanding/img/place/4.png" alt="">
-                        <a href="#" class="prise">$500</a>
+                        <a href="#" class="prise">S/. 500</a>
                     </div>
                     <div class="place_info">
                         <a href="{{ route('destination.landing.details') }}"><h3>Ciudad de Yungay</h3></a>
@@ -196,11 +196,11 @@
                                  <i class="fa fa-star"></i> 
                                  <i class="fa fa-star"></i> 
                                  <i class="fa fa-star"></i>
-                                 <a href="#">(20 Review)</a>
+                                 <a href="#">(20 visitas)</a>
                             </span>
                             <div class="days">
                                 <i class="fa fa-clock-o"></i>
-                                <a href="#">5 Days</a>
+                                <a href="#">5 días</a>
                             </div>
                         </div>
                     </div>
@@ -210,7 +210,7 @@
                 <div class="single_place">
                     <div class="thumb">
                         <img src="scriptslanding/img/place/5.png" alt="">
-                        <a href="#" class="prise">$500</a>
+                        <a href="#" class="prise">S/. 500</a>
                     </div>
                     <div class="place_info">
                         <a href="{{ route('destination.landing.details') }}"><h3>Huaraz</h3></a>
@@ -222,11 +222,11 @@
                                  <i class="fa fa-star"></i> 
                                  <i class="fa fa-star"></i> 
                                  <i class="fa fa-star"></i>
-                                 <a href="#">(20 Review)</a>
+                                 <a href="#">(20 visitas)</a>
                             </span>
                             <div class="days">
                                 <i class="fa fa-clock-o"></i>
-                                <a href="#">5 Days</a>
+                                <a href="#">5 días</a>
                             </div>
                         </div>
                     </div>
@@ -236,7 +236,7 @@
                 <div class="single_place">
                     <div class="thumb">
                         <img src="scriptslanding/img/place/6.png" alt="">
-                        <a href="#" class="prise">$500</a>
+                        <a href="#" class="prise">S/. 500</a>
                     </div>
                     <div class="place_info">
                         <a href="{{ route('destination.landing.details') }}"><h3>Llanganuco</h3></a>
@@ -248,11 +248,11 @@
                                  <i class="fa fa-star"></i> 
                                  <i class="fa fa-star"></i> 
                                  <i class="fa fa-star"></i>
-                                 <a href="#">(20 Review)</a>
+                                 <a href="#">(20 visitas)</a>
                             </span>
                             <div class="days">
                                 <i class="fa fa-clock-o"></i>
-                                <a href="#">5 Days</a>
+                                <a href="#">5 días</a>
                             </div>
                         </div>
                     </div>

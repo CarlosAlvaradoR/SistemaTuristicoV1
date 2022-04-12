@@ -11,9 +11,9 @@
                     <div class="tbl-cell">
                         <h3>Reservas</h3>
                         <ol class="breadcrumb breadcrumb-simple">
-                            <li><a href="{{ route('paquetes.activos.galeria') }}">Paquetes</a></li>
-                            <li><a href="{{ route('paquetes.detalles', 2) }}">Detalles</a></li>
-                            <li class="active">Atractivos</li>
+                            <li><a href="{{ route('paquetes.activos.galeria') }}">Reservas</a></li>
+                            <li><a href="#">Pendientes</a></li>
+                            <li class="active">Listado</li>
                         </ol>
                     </div>
                 </div>
@@ -42,23 +42,40 @@
                     
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <a id="modal-315109" href="#modal-container-315109" role="button" class="btn" data-toggle="modal">Nuevo</a>
-                                    </div>
-                                    <div class="col-md-4">
-                                    </div>
-                                    <div class="col-md-2">
-                                       
-                                    </div>
-                                    <div class="col-md-2">
-                                         
+                            <div class="col-md-2">
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                                        Todo
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item disabled" href="#">Todo</a> 
+                                        <a class="dropdown-item" href="#">Pendiente</a> 
+                                        <a class="dropdown-item" href="#">Completado</a>
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="form-control">
+                                    <span class="badge badge-default">Fecha Inicial</span> 
+                                    <input type="date" class="form-control" name="" id="">
+                                </div>                                
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-control">
+                                    <span class="badge badge-default">Fecha Final</span> 
+                                    <input type="date" class="form-control" name="" id="">
+                                </div>                                 
+                            </div>
+                            <div class="col-md-4">
+                                 <!--<span class="badge badge-default">Label</span> 
+                                 <span class="badge badge-default">Label</span>-->
+                            </div>
+                            <div class="col-md-2">
+                                 <!--<span class="badge badge-default">Label</span> 
+                                 <span class="badge badge-default">Label</span>-->
+                            </div>
                         </div>
-                        <hr>
+                        <!--<hr>-->
                         <div class="row">
                             <div class="col-md-12">
                                 <table id="clientes" class="display table table-bordered" cellspacing="0" width="100%">
@@ -93,6 +110,11 @@
                                                         <i class="fas fa-stethoscope"></i>
                                                     </span>
                                                 </a>
+                                                <a href="{{ route('index.viajes.admin') }}" onclick="alert('Provisionalmente');" title="Programar Viaje">
+                                                    <span class="btn btn-warning btn-sm" >
+                                                        <i class="fas fa-shuttle-van"></i>
+                                                    </span>
+                                                </a>
                                                 <a href="{{ route('postergacion.cliente.reserva') }}" title="Desertar reserva">
                                                     <span class="btn btn-danger btn-sm" >
                                                         <i class="fas fa-minus"></i>
@@ -118,79 +140,6 @@
         
     </div><!--.container-fluid-->
 
-
-    <div class="modal fade" id="modal-container-315109" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="myModalLabel">
-                        Nuevos Clientes
-                    </h5> 
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="inputCity">DNI</label>
-                                <input type="text" class="form-control" name="dni" id="dni">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputState">Nombres</label>
-                                <input type="text" class="form-control" name="nombres" id="nombres">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputZip">Apellidos</label>
-                                <input type="text" class="form-control" name="apellidos" id="apellidos">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label for="inputZip">Género</label>
-                                <select id="inputState" name="genero" id="genero" class="form-control">
-                                    <option selected>Seleccione...</option>
-                                    <option value="1">Masculino</option>
-                                    <option value="2">Femenino</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label for="inputZip">Dirección</label>
-                                <input type="text" class="form-control" name="direccion" id="direccion">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputZip">Teléfono</label>
-                                <input type="text" class="form-control" name="telefono" id="telefono">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label for="inputZip">Correo</label>
-                                <input type="text" class="form-control" name="correo" id="correo">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label for="inputZip">Nacionalidad</label>
-                                <select id="inputState" name="idtipousuario" id="idtipousuario" class="form-control">
-                                    <option selected>Seleccione...</option>
-                                    <option value="1">Administrador</option>
-                                    <option value="2">Vendedor</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                     
-                    <button type="button" class="btn btn-primary">
-                        Save changes
-                    </button> 
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">
-                        Close
-                    </button>
-                </div>
-            </div>
-            
-        </div>
-        
-    </div>
 
 @endsection
 

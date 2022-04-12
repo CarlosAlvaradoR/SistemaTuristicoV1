@@ -48,6 +48,9 @@ Route::get('/account', [UsuariosController::class, 'mostrarFormularioLogin'])->n
 
 
 
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 // RUTAS PARA EL DASHBOARD
@@ -59,31 +62,31 @@ Route::get('/homedash', [UsuariosController::class, 'homedash'])->name('home.das
 
 
 /** PARA EL NUEVOS USUARIOS */
-Route::get('/newuser', [UsuariosController::class, 'mostrarFormularioRegistro'])->name('usuarios.nuevos');
-Route::post('/newuser/create', [PersonasController::class, 'store'])->name('usuarios.create');
+Route::get('/newuser', [UsuariosController::class, 'mostrarFormularioRegistro'])->name('usuarios.nuevos')->middleware('auth');
+Route::post('/newuser/create', [PersonasController::class, 'store'])->name('usuarios.create')->middleware('auth');
 
 /** PARA LOS PERMISOS DE LOS USUARIOS */
-Route::get('/users', [UsuariosController::class, 'mostrarUsuariosPermisos'])->name('usuarios.permisos');
+Route::get('/users', [UsuariosController::class, 'mostrarUsuariosPermisos'])->name('usuarios.permisos')->middleware('auth');
 
 /** ORGANIZACIONES - ACÉMILAS - GUÍA */
-Route::get('/organitations', [UsuariosController::class, 'mostrarTabsOrgaAceEquipo'])->name('organizaciones.acemilas.equipos');
+Route::get('/organitations', [UsuariosController::class, 'mostrarTabsOrgaAceEquipo'])->name('organizaciones.acemilas.equipos')->middleware('auth');
 
 
 
 
 
 /** PARA LOS PAQUETES */
-Route::get('/package', [PaquetesTuristicosController::class, 'index'])->name('paquetes.activos.galeria');
-Route::get('/package/create', [PaquetesTuristicosController::class, 'create'])->name('paquetes.formulario.nuevo');
-Route::post('/pakcages/store', [PaquetesTuristicosController::class, 'store'])->name('paquetes.turisticos.creacion');//CREAR Guardar NUEVOS PAQUETES
-Route::get('/packages/details/{idpaqueteturistico}', [PaquetesTuristicosController::class, 'detallepaquetes'])->name('paquetes.detalles');//MUESTRA LOS paquetes en el bucle
+Route::get('/package', [PaquetesTuristicosController::class, 'index'])->name('paquetes.activos.galeria')->middleware('auth');
+Route::get('/package/create', [PaquetesTuristicosController::class, 'create'])->name('paquetes.formulario.nuevo')->middleware('auth');
+Route::post('/pakcages/store', [PaquetesTuristicosController::class, 'store'])->name('paquetes.turisticos.creacion')->middleware('auth');//CREAR Guardar NUEVOS PAQUETES
+Route::get('/packages/details/{idpaqueteturistico}', [PaquetesTuristicosController::class, 'detallepaquetes'])->name('paquetes.detalles')->middleware('auth');//MUESTRA LOS paquetes en el bucle
 
 //Mapas
-Route::get('/packages/details/newMap/{id}', [PaquetesTuristicosController::class, 'formularioNuevoMapa'])->name('paquetes.detalles.nuevo.paquetes');//MUESTRA LOS paquetes en el bucle
-Route::post('/packages/details/newMap/save', [MapasreferencialesController::class, 'store'])->name('paquetes.detalles.guardar.mapas');//Para agregar rutas a los paquetes
-Route::get('/packages/details/newMap/edit/{id}', [MapasreferencialesController::class, 'edit'])->name('paquetes.detalles.editar.mapas');//Para agregar rutas a los paquetes
-Route::put('/packages/details/newMap/update/{id}', [MapasreferencialesController::class, 'update'])->name('paquetes.detalles.actualizar.mapas');//Para agregar rutas a los paquetes
-Route::get('/mostrarData', [PaquetesTuristicosController::class, 'index'])->name('paquetes.index');
+Route::get('/packages/details/newMap/{id}', [PaquetesTuristicosController::class, 'formularioNuevoMapa'])->name('paquetes.detalles.nuevo.paquetes')->middleware('auth');//MUESTRA LOS paquetes en el bucle
+Route::post('/packages/details/newMap/save', [MapasreferencialesController::class, 'store'])->name('paquetes.detalles.guardar.mapas')->middleware('auth');//Para agregar rutas a los paquetes
+Route::get('/packages/details/newMap/edit/{id}', [MapasreferencialesController::class, 'edit'])->name('paquetes.detalles.editar.mapas')->middleware('auth');//Para agregar rutas a los paquetes
+Route::put('/packages/details/newMap/update/{id}', [MapasreferencialesController::class, 'update'])->name('paquetes.detalles.actualizar.mapas')->middleware('auth');//Para agregar rutas a los paquetes
+Route::get('/mostrarData', [PaquetesTuristicosController::class, 'index'])->name('paquetes.index')->middleware('auth');
 
 
 //FotoGalerías
@@ -219,5 +222,7 @@ Route::get('/postergacion/reserva/atencion', [ReservasController::class, 'atenci
 
 /**** PARA LOS VIAJES **********************/
 Route::get('/viaje', [ReservasController::class, 'viaje'])->name('index.viajes.admin');
-
+Route::get('/viaje/detalles', [ReservasController::class, 'asignarDetallesViaje'])->name('index.viajes.admin.asignar.detalles');
+Route::get('/viaje/control/inicio', [ReservasController::class, 'viajeControl'])->name('index.viajes.control.admin');
+Route::get('/viaje/control/inicio/detalles', [ReservasController::class, 'viajeControlDetalles'])->name('index.viajes.control.detalles.admin');
 /********************************************/

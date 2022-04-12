@@ -43,11 +43,14 @@
                         <a href="#" title="Ver Información del Paquete">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="#" title="Inactivar">
-                            <i class="fas fa-minus"></i>
+                        <a href="{{ route('index.viajes.admin') }}" title="Asignar Viaje">
+                            <i class="fas fa-shuttle-van"></i>
                         </a>
                         <a href="{{ route('reservas.formulario.nivel.admin') }}" title="Reservar">
                             <i class="fas fa-map"></i>
+                        </a>
+                        <a href="#" title="Inactivar" class="btn-sm btn-danger">
+                            <i class="fas fa-minus"></i>
                         </a>
                     </div>
                     <!--<div class="card-user-info-row">

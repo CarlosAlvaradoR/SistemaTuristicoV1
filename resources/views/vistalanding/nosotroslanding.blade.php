@@ -8,8 +8,8 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="bradcam_text text-center">
-                    <h3>About Us</h3>
-                    <p>Pixel perfect design with awesome contents</p>
+                    <h3>Sobre Nosotros</h3>
+                    <p>Nuestros detalles más relevantes</p>
                 </div>
             </div>
         </div>
@@ -52,20 +52,20 @@
                             <div class="row">
                                 <div class="col-lg-4 col-md-4">
                                     <div class="single_counter text-center">
-                                        <h3  class="counter">378</h3>
-                                        <p>Tour has done successfully</p>
+                                        <h3  class="counter">120</h3>
+                                        <p>Cantidad de Visitas</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4">
                                     <div class="single_counter text-center">
                                         <h3 class="counter">30</h3>
-                                        <p>Yearly tour arrange</p>
+                                        <p>Cantidad de Paquetes Disponibles</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4">
                                     <div class="single_counter text-center">
-                                        <h3 class="counter">2263</h3>
-                                        <p>Happy Clients</p>
+                                        <h3 class="counter">178</h3>
+                                        <p>Clientes Felices</p>
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +82,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="video_wrap text-center">
-                    <h3>Enjoy Video</h3>
+                    <h3>Reproduce nuestra historia</h3>
                     <div class="video_icon">
                         <a class="popup-video video_play_button" href="https://www.youtube.com/watch?v=f59dDEk57i0">
                             <i class="fa fa-play"></i>

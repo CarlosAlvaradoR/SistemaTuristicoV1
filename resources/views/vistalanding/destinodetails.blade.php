@@ -20,15 +20,15 @@
                     <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing.</p>
                     <p>Variations of passages of lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing.</p>
                     <div class="single_destination">
-                        <h4>Day-01</h4>
+                        <h4>Día-01</h4>
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words.</p>
                     </div>
                     <div class="single_destination">
-                        <h4>Day-02</h4>
+                        <h4>Día-02</h4>
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words.</p>
                     </div>
                     <div class="single_destination">
-                        <h4>Day-03</h4>
+                        <h4>Día-03</h4>
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words.</p>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
     </div>
 </div>
 
-<!-- newletter_area_start  -->
+<!-- newletter_area_start  
 <div class="newletter_area overlay">
     <div class="container">
         <div class="row justify-content-center align-items-center">
@@ -104,9 +104,9 @@
         </div>
     </div>
 </div>
-<!-- newletter_area_end  -->
+newletter_area_end  -->
 
-<div class="popular_places_area">
+<!--<div class="popular_places_area">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-6">
@@ -196,6 +196,6 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 @endsection

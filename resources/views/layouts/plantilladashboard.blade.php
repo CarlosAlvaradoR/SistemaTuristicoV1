@@ -13,7 +13,9 @@
 	<link href="{{ asset('img/favicon.png') }}" rel="icon" type="image/png">
 	<link href="{{ asset('img/favicon.ico') }}" rel="shortcut icon">
 
-	
+	<link rel="shortcut icon" type="image/x-icon" href="{{ asset('scriptslanding/img/favicon.png') }}">
+
+	<link rel="stylesheet" href="{{ asset('css/separate/elements/steps.min.css') }}"><!-- PARA LOS STEPS DINÁMICOS Y BONITOS-->
 	<link rel="stylesheet" href="{{ asset('css/separate/pages/user.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/lib/font-awesome/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/lib/bootstrap/bootstrap.min.css') }}">
@@ -199,26 +201,10 @@
 	
 	                    <div class="dropdown dropdown-lang">
 	                        <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                            <span class="flag-icon flag-icon-us"></span>
+	                            <!--<span class="flag-icon flag-icon-peru"></span>-->
+								<i class="flag-icon fas fa-shuttle-van"></i>
 	                        </button>
-	                        <div class="dropdown-menu dropdown-menu-right">
-	                            <div class="dropdown-menu-col">
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-ru"></span>Русский</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-de"></span>Deutsch</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-it"></span>Italiano</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-es"></span>Español</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-pl"></span>Polski</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-li"></span>Lietuviu</a>
-	                            </div>
-	                            <div class="dropdown-menu-col">
-	                                <a class="dropdown-item current" href="#"><span class="flag-icon flag-icon-us"></span>English</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-fr"></span>Français</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-by"></span>Беларускi</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-ua"></span>Українська</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-cz"></span>Česky</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-ch"></span>中國</a>
-	                            </div>
-	                        </div>
+	                        
 	                    </div>
 	
 	                    <div class="dropdown user-menu">
@@ -226,11 +212,20 @@
 	                            <img src="{{ asset('img/avatar-2-64.png') }}" alt="">
 	                        </button>
 	                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
+	                            <a class="dropdown-item" href="#">
+									<span class="font-icon glyphicon glyphicon-user"></span>{{ Auth::user()->name }}
+								</a>
 	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-cog"></span>Settings</a>
 	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-question-sign"></span>Help</a>
 	                            <div class="dropdown-divider"></div>
-	                            <a class="dropdown-item" href="{{ route('inicio.landing') }}"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
+	                            <a class="dropdown-item" href="#" onclick="event.preventDefault();
+									document.getElementById('logout-form').submit();">
+									<span class="font-icon glyphicon glyphicon-log-out"></span>Logout
+								</a>
+								
+								<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+									@csrf
+								</form>
 	                        </div>
 	                    </div>
 	
@@ -411,9 +406,7 @@
 	                                </div>
 	                            </div>
 	                        </div><!--.help-dropdown-->
-	                        <a class="btn btn-nav btn-rounded btn-inline btn-danger-outline" href="http://themeforest.net/item/startui-premium-bootstrap-4-admin-dashboard-template/15228250?ref=themesanytime">
-	                            Buy Theme
-	                        </a>
+	                        
 	                        <div class="site-header-search-container">
 	                            <form class="site-header-search closed">
 	                                <input type="text" placeholder="Search"/>
@@ -490,9 +483,9 @@
 	                <li><a href="{{ route('reservas.formulario.nivel.admin') }}"><span class="lbl">Nuevo</span><span class="label label-custom label-pill label-success">new</span></a></li>
 	                <li><a href="{{ route('reservas.pendientes') }}"><span class="lbl">Pendientes</span></a></li>
 					<li><a href="{{ route('reservas.pendientes') }}"><span class="lbl">Completado</span></a></li>      
-					<li><a href="{{ route('usuarios.permisos') }}"><span class="lbl">Riesgos</span></a></li>
-					<li><a href="{{ route('usuarios.permisos') }}"><span class="lbl">Eventos</span></a></li> 
-					<li><a href="{{ route('atención.cliente.solicitud') }}"><span class="lbl">Solicitudes</span></a></li>   
+					<li><a href="{{ route('usuarios.permisos') }}"><span class="lbl">Riesgos</span><span class="label label-custom label-pill label-danger">new</span></a></li>
+					<li><a href="{{ route('usuarios.permisos') }}"><span class="lbl">Eventos</span><span class="label label-custom label-pill label-danger">new</span></a></li> 
+					<li><a href="{{ route('atención.cliente.solicitud') }}"><span class="lbl">Solicitudes</span><span class="label label-custom label-pill label-danger">new</span></a></li>   
 	            </ul>
 	        </li>
 
@@ -503,8 +496,22 @@
 	            </span>
 	            <ul>
 					<li><a href="{{ route('index.viajes.admin') }}"><span class="lbl">Nuevo</span><span class="label label-custom label-pill label-success">new</span></a></li>
-	                
+	                <li><a href="{{ route('index.viajes.control.admin') }}"><span class="lbl">Componentes</span><span class="label label-custom label-pill label-danger">guia</span></a></li>
 	            </ul>
+	        </li>
+
+			<li class="darkblue">
+	            <a href="#">
+					<i class="fas fa-ticket-alt glyphicon glyphicon-send"></i>
+	                <span class="lbl">Comprobantes</span>
+	            </a>
+	        </li>
+
+			<li class="darkblue">
+	            <a href="#">
+					<i class="fas fa-ticket-alt glyphicon glyphicon-send"></i>
+	                <span class="lbl">Inventario</span>
+	            </a>
 	        </li>
 
 	    </ul>

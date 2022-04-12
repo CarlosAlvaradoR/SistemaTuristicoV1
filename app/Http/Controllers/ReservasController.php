@@ -109,7 +109,16 @@ class ReservasController extends Controller
         return view('transporte/index');
     }
     public function viaje(){
-        return view('viaje/index');
+        return view('viaje/index/index');
+    }
+    public function asignarDetallesViaje(){
+        return view('viaje/index/detalles');
+    }
+    public function viajeControl(){
+        return view('viaje/componentes/index');
+    }
+    public function viajeControlDetalles(){
+        return view('viaje/componentes/detalles');
     }
     public function reser(){
         

@@ -72,12 +72,6 @@
                                 
                                     @foreach ($cliente as $cliente)
                                         
-                                            
-                                        
-                                        
-
-                                        
-                                
                                 
                             </div>
                             <div class="col-md-4">
@@ -151,36 +145,6 @@
                                                                 Nacionalidad
                                                             </label>
                                                             <input type="text" value="PERUANO" class="form-control" id="exampleInputEmail1" readonly/>
-                                                        </div>
-                                                        <div class="form-group">
-                                                             
-                                                            <label for="exampleInputEmail1">
-                                                                Email address
-                                                            </label>
-                                                            <input type="email" class="form-control" id="exampleInputEmail1" />
-                                                        </div>
-                                                        <div class="form-group">
-                                                             
-                                                            <label for="exampleInputPassword1">
-                                                                Password
-                                                            </label>
-                                                            <input type="password" class="form-control" id="exampleInputPassword1" />
-                                                        </div>
-                                                        <div class="form-group">
-                                                             
-                                                            <label for="exampleInputFile">
-                                                                File input
-                                                            </label>
-                                                            <input type="file" class="form-control-file" id="exampleInputFile" />
-                                                            <p class="help-block">
-                                                                Example block-level help text here.
-                                                            </p>
-                                                        </div>
-                                                        <div class="checkbox">
-                                                             
-                                                            <label>
-                                                                <input type="checkbox" /> Check me out
-                                                            </label>
                                                         </div> 
                                                         <form action="{{ route('pagos.reserva') }}" method="get">
                                                             <button type="submit" class="btn btn-primary" id="botonSubmit">
@@ -261,7 +225,10 @@
                             <h5>Condiciones</h5>
                             <section class="overflow-auto">
                                 <h5>Condiciones de Puntualidad</h5>
-                                <input type="text" name="" id="" placeholder="ej. Ser puntual">
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">Condiciones</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="ej: Ser puntual"></textarea>
+                                  </div>
                             </section>
                             
                             <h5>Riesgos</h5>
