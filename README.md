@@ -20,3 +20,5 @@ En caso se necesite reiniciar las migraciones y limpiar todo, aplicar:
 
 
 ## Instalación en Ubuntu
+
+
