@@ -1,6 +1,6 @@
 @extends('layouts/plantilladashboard')
 
-@section('tituloPagina','Comprobantes')
+@section('tituloPagina','Bancos')
     
 @section('contenido')
     <div class="container-fluid">
@@ -9,26 +9,26 @@
             <div class="tbl">
                 <div class="tbl-row">
                     <div class="tbl-cell">
-                        <h3>Comprobantes</h3>
+                        <h3>Bancos</h3>
                         <ol class="breadcrumb breadcrumb-simple">
-                            <li><a href="">Comprobantes</a></li>
+                            <li><a href="">Bancos</a></li>
                             <!--<li><a href="{ route('paquetes.detalles', 2) }}">Reserva</a></li>-->
                             <li class="active">Inicio</li>
                         </ol>
                     </div>
-
                     <div class="tbl-cell tbl-cell-action button">
-                        <a href="{{ route('index.comprobante.crear') }}" class="btn btn-primary">
+                        <a href="{{ route('index.bancos.crear') }}" class="btn btn-rounded btn-block">
                             Nuevo
                         </a>
                     </div>
                 </div>
+                
             </div>
         </header>
         
         <section class="card "> <!-- //- class="box-typical-full-height"-->
             <div class="card-block">
-                <h5 class="with-border m-t-0 font-weight-bold">Lista de Comprobantes</h5>
+                <h5 class="with-border m-t-0">Lista de Bancos</h5>
                 <div class="row">
                     <div class="row">
                         <div class="col-md-12">
@@ -57,13 +57,10 @@
                                                 #
                                             </th>
                                             <th>
-                                                Product
+                                                Banco
                                             </th>
                                             <th>
-                                                Payment Taken
-                                            </th>
-                                            <th>
-                                                Status
+                                                ACCIONES
                                             </th>
                                         </tr>
                                     </thead>
@@ -73,14 +70,12 @@
                                                 1
                                             </td>
                                             <td>
-                                                TB - Monthly
+                                                BCP
                                             </td>
                                             <td>
-                                                01/04/2012
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('index.comprobante.editar') }}">Editar</a>
-                                                <a href="#">Eliminar</a>
+                                                <a href="{{ route('index.bancos.editar') }}">Editar</a>
+                                                <a href="">Modificar</a>
+                                                <a href="">Eliminar</a>
                                             </td>
                                         </tr>
                                     </tbody>

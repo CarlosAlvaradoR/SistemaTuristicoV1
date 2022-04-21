@@ -39,7 +39,7 @@ Route::get('/reportes', function () {
 Route::get('/', [UsuariosController::class, 'mostrarinicio'])->name('inicio.landing');//Inicio
 Route::get('/about', [UsuariosController::class, 'mostrarabout'])->name('about.landing');//Inicio 
 Route::get('/destination', [PaquetesTuristicosController::class, 'mostrarDestinos'])->name('destination.landing');//Mostrar Destinos
-Route::get('/detailsdestinations', [PaquetesTuristicosController::class, 'mostrarDetallePaquete'])->name('destination.landing.details');//Mostrar Detalles Destino Seleccionado
+Route::get('/details/destinations', [PaquetesTuristicosController::class, 'mostrarDetallePaquete'])->name('destination.landing.details');//Mostrar Detalles Destino Seleccionado
 Route::get('/contact', [UsuariosController::class, 'mostrarContacto'])->name('contact.landing');//Mostrar Contacto
 Route::get('/account', [UsuariosController::class, 'mostrarFormularioLogin'])->name('account.landing');//Mostrar Formulario de Inicio de Sesion
 //Route::get('/account', [UsuariosController::class, 'mostrarContacto'])->name('contact.landing');//Mostrar Formulario de nuevos Usuarios
@@ -237,4 +237,28 @@ Route::get('/viaje/control/inicio/detalles', [ReservasController::class, 'viajeC
 Route::get('/comprobante', [ReservasController::class, 'indexComprobante'])->name('index.comprobante');
 Route::get('/comprobante/nuevo', [ReservasController::class, 'nuevoComprobante'])->name('index.comprobante.crear');
 Route::get('/comprobante/editar', [ReservasController::class, 'editarComprobante'])->name('index.comprobante.editar');
+
 //Route::
+
+
+/***  PROVEEDORES */
+Route::get('/proveedores', [ReservasController::class, 'indexProveedores'])->name('index.proveedor');
+Route::get('/proveedores/nuevo', [ReservasController::class, 'nuevoProveedor'])->name('index.proveedor.crear');
+Route::get('/proveedores/editar', [ReservasController::class, 'editarProveedor'])->name('index.proveedor.editar');
+Route::get('/proveedores/cuenta/nuevo', [ReservasController::class, 'cuentaProveedor'])->name('index.proveedor.cuenta.nuevo');
+
+
+/******* BANCOS ********************/
+Route::get('/bancos', [ReservasController::class, 'indexBancos'])->name('index.bancos');
+Route::get('/bancos/crear', [ReservasController::class, 'crearBancos'])->name('index.bancos.crear');
+Route::get('/bancos/editar', [ReservasController::class, 'editarBancos'])->name('index.bancos.editar');
+
+
+/**  TIPOS DE COMPROBANTES */
+Route::get('/tipoComprobantes', [ReservasController::class, 'indexTipoComprobantes'])->name('index.tipoComprobantes');
+Route::get('/tipoComprobantes/nuevo', [ReservasController::class, 'editarTipoComprobantes'])->name('index.tipoComprobantes.nuevo');
+Route::get('/tipoComprobantes/editar', [ReservasController::class, 'editarTipoComprobantes2'])->name('index.tipoComprobantes.editar');
+
+
+/***  PEDIDOS A PROVEEDORES */
+Route::get('/pedidosProveedores', [ReservasController::class, 'indexPedidosProveedores'])->name('index.tipoPedidosProveedores');

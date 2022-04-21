@@ -500,6 +500,13 @@
 	            </ul>
 	        </li>
 
+			<li class="red">
+	            <a href=#">
+					<i class="fas fa-user-tie glyphicon glyphicon-send"></i>
+	                <span class="lbl">Guía</span>
+	            </a>
+	        </li>
+			
 			<li class="darkblue">
 	            <a href="{{ route('index.comprobante') }}">
 					<i class="fas fa-ticket-alt glyphicon glyphicon-send"></i>
@@ -508,9 +515,30 @@
 	        </li>
 
 			<li class="darkblue">
-	            <a href="#">
-					<i class="fas fa-ticket-alt glyphicon glyphicon-send"></i>
-	                <span class="lbl">Inventario</span>
+	            <a href="{{ route('index.proveedor') }}">
+					<i class="fas fa-user-tie glyphicon glyphicon-send"></i>
+	                <span class="lbl">Proveedores</span>
+	            </a>
+	        </li>
+
+			<li class="red">
+	            <a href="{{ route('index.bancos') }}">
+					<i class="fas fa-university glyphicon glyphicon-send"></i>
+	                <span class="lbl">Bancos</span>
+	            </a>
+	        </li>
+
+			<li class="green">
+	            <a href="{{ route('index.tipoComprobantes') }}">
+					<i class="fas fa-money-check glyphicon glyphicon-send"></i>
+	                <span class="lbl">T. Comprobantes</span>
+	            </a>
+	        </li>
+
+			<li class="darkblue">
+	            <a href="{{ route('index.tipoPedidosProveedores') }}">
+					<i class="fas fa-archive glyphicon glyphicon-send"></i>
+	                <span class="lbl">Pedidos</span>
 	            </a>
 	        </li>
 

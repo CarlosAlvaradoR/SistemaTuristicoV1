@@ -143,4 +143,52 @@ class ReservasController extends Controller
     public function editarComprobante(){
         return view('creacionDocumentos/comprobantes/editar');
     }
+
+    public function indexProveedores(){
+        return view('creacionDocumentos/proveedores/index');
+    }
+
+    public function nuevoProveedor(){
+        return view('creacionDocumentos/proveedores/nuevo');
+    }
+
+    public function editarProveedor(){
+        return view('creacionDocumentos/proveedores/editar');
+    }
+
+    public function cuentaProveedor(){
+        return view('creacionDocumentos/proveedores/cuenta');
+    }
+
+
+    /*****  BANCOS */
+    public function indexBancos(){
+        return view('creacionDocumentos/bancos/index');
+    }
+
+    public function crearBancos(){
+        return view('creacionDocumentos/bancos/nuevo');
+    }
+
+    public function editarBancos(){
+        return view('creacionDocumentos/bancos/editar');
+    }
+
+    /*** TIPOS DE COMPROBANTES */
+    public function indexTipoComprobantes(){
+        return view('creacionDocumentos/tipoComprobantes/index');
+    }  
+
+    public function editarTipoComprobantes(){
+        return view('creacionDocumentos/tipoComprobantes/nuevo');
+    } 
+
+    public function editarTipoComprobantes2(){
+        return view('creacionDocumentos/tipoComprobantes/editar');
+    }
+    
+    /*** PEDIDOS A PROVEEDORES */ 
+    public function indexPedidosProveedores(){
+        return view('pedidosProveedores/index/index');
+    }
 }
