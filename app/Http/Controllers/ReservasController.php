@@ -132,4 +132,15 @@ class ReservasController extends Controller
         
         return redirect()->route('reservas.formulario.nivel.admin');
     }
+
+    public function indexComprobante(){
+        return view('creacionDocumentos/comprobantes/index');
+    }
+
+    public function nuevoComprobante(){
+        return view('creacionDocumentos/comprobantes/nuevo');
+    }
+    public function editarComprobante(){
+        return view('creacionDocumentos/comprobantes/editar');
+    }
 }

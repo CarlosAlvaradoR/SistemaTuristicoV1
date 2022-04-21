@@ -226,3 +226,15 @@ Route::get('/viaje/detalles', [ReservasController::class, 'asignarDetallesViaje'
 Route::get('/viaje/control/inicio', [ReservasController::class, 'viajeControl'])->name('index.viajes.control.admin');
 Route::get('/viaje/control/inicio/detalles', [ReservasController::class, 'viajeControlDetalles'])->name('index.viajes.control.detalles.admin');
 /********************************************/
+
+
+
+
+
+
+
+/***********  PARA LOS DOCUMENTOS Y LOS EQUIPOS */
+Route::get('/comprobante', [ReservasController::class, 'indexComprobante'])->name('index.comprobante');
+Route::get('/comprobante/nuevo', [ReservasController::class, 'nuevoComprobante'])->name('index.comprobante.crear');
+Route::get('/comprobante/editar', [ReservasController::class, 'editarComprobante'])->name('index.comprobante.editar');
+//Route::

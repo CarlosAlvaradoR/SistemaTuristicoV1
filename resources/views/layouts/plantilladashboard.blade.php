@@ -501,7 +501,7 @@
 	        </li>
 
 			<li class="darkblue">
-	            <a href="#">
+	            <a href="{{ route('index.comprobante') }}">
 					<i class="fas fa-ticket-alt glyphicon glyphicon-send"></i>
 	                <span class="lbl">Comprobantes</span>
 	            </a>
