@@ -215,12 +215,12 @@
 	                            <a class="dropdown-item" href="#">
 									<span class="font-icon glyphicon glyphicon-user"></span>{{ Auth::user()->name }}
 								</a>
-	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-cog"></span>Settings</a>
-	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-question-sign"></span>Help</a>
+	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-cog"></span>Ajustes</a>
+	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-question-sign"></span>Ayuda</a>
 	                            <div class="dropdown-divider"></div>
 	                            <a class="dropdown-item" href="#" onclick="event.preventDefault();
 									document.getElementById('logout-form').submit();">
-									<span class="font-icon glyphicon glyphicon-log-out"></span>Logout
+									<span class="font-icon glyphicon glyphicon-log-out"></span>Salir
 								</a>
 								
 								<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -325,7 +325,7 @@
 	                        </div>
 	                        <div class="dropdown">
 	                            <button class="btn btn-rounded dropdown-toggle" id="dd-header-add" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                Add
+	                                Añadir
 	                            </button>
 	                            <div class="dropdown-menu" aria-labelledby="dd-header-add">
 	                                <a class="dropdown-item" href="#">Quant and Verbal</a>

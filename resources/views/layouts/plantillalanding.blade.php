@@ -13,20 +13,20 @@
     <!-- Place favicon.ico in the root directory -->
 
     <!-- CSS here -->
-    <link rel="stylesheet" href="scriptslanding/css/bootstrap.min.css">
-    <link rel="stylesheet" href="scriptslanding/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="scriptslanding/css/magnific-popup.css">
-    <link rel="stylesheet" href="scriptslanding/css/font-awesome.min.css">
-    <link rel="stylesheet" href="scriptslanding/css/themify-icons.css">
-    <link rel="stylesheet" href="scriptslanding/css/nice-select.css">
-    <link rel="stylesheet" href="scriptslanding/css/flaticon.css">
-    <link rel="stylesheet" href="scriptslanding/css/gijgo.css">
-    <link rel="stylesheet" href="scriptslanding/css/animate.css">
-    <link rel="stylesheet" href="scriptslanding/css/slick.css">
-    <link rel="stylesheet" href="scriptslanding/css/slicknav.css">
+    <link rel="stylesheet" href="{{ asset('scriptslanding/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('scriptslanding/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('scriptslanding/css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ asset('scriptslanding/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('scriptslanding/css/themify-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('scriptslanding/css/nice-select.css') }}">
+    <link rel="stylesheet" href="{{ asset('scriptslanding/css/flaticon.css') }}">
+    <link rel="stylesheet" href="{{ asset('scriptslanding/css/gijgo.css') }}">
+    <link rel="stylesheet" href="{{ asset('scriptslanding/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('scriptslanding/css/slick.css') }}">
+    <link rel="stylesheet" href="{{ asset('scriptslanding/css/slicknav.css') }}">
     <link rel="stylesheet" href="scriptslanding/https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
 
-    <link rel="stylesheet" href="scriptslanding/css/style.css">
+    <link rel="stylesheet" href="{{ asset('scriptslanding/css/style.css') }}">
     <!-- <link rel="stylesheet" href="scriptslanding/css/responsive.css"> -->
 </head>
 
@@ -63,7 +63,7 @@
                                                         <li><a href="{{ route('register') }}">Registrarme</a></li>
                                                 </ul>
                                             </li>
-                                            <!--<li><a href="scriptslanding/#">blog <i class="ti-angle-down"></i></a>
+                                            <!--<li><a href="#">blog <i class="ti-angle-down"></i></a>
                                                 <ul class="submenu">
                                                     <li><a href="scriptslanding/blog.php">blog</a></li>
                                                     <li><a href="scriptslanding/single-blog.php">single-blog</a></li>
@@ -81,16 +81,16 @@
                                     </div>
                                     <div class="social_links d-none d-xl-block">
                                         <ul>
-                                            <li><a href="scriptslanding/#"> <i class="fa fa-instagram"></i> </a></li>
-                                            <li><a href="scriptslanding/#"> <i class="fa fa-linkedin"></i> </a></li>
-                                            <li><a href="scriptslanding/#"> <i class="fa fa-facebook"></i> </a></li>
-                                            <li><a href="scriptslanding/#"> <i class="fa fa-google-plus"></i> </a></li>
+                                            <li><a href="#"> <i class="fa fa-instagram"></i> </a></li>
+                                            <li><a href="#"> <i class="fa fa-linkedin"></i> </a></li>
+                                            <li><a href="#"> <i class="fa fa-facebook"></i> </a></li>
+                                            <li><a href="#"> <i class="fa fa-google-plus"></i> </a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="seach_icon">
-                                <a data-toggle="modal" data-target="#exampleModalCenter" href="scriptslanding/#">
+                                <a data-toggle="modal" data-target="#exampleModalCenter" href="#">
                                     <i class="fa fa-search"></i>
                                 </a>
                             </div>
@@ -118,7 +118,7 @@
                         <div class="footer_widget">
                             <div class="footer_logo">
                                 <a href="#">
-                                    <img src="scriptslanding/img/footer_logo.png" alt="">
+                                    <img src="{{ asset('scriptslanding/img/footer_logo.png') }}" alt="">
                                 </a>
                             </div>
                             <p>Huaraz - Ancash <br> Av. 28 de Julio <br>
@@ -128,27 +128,27 @@
                             <div class="socail_links">
                                 <ul>
                                     <li>
-                                        <a href="scriptslanding/#">
+                                        <a href="#">
                                             <i class="ti-facebook"></i>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="scriptslanding/#">
+                                        <a href="#">
                                             <i class="ti-twitter-alt"></i>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="scriptslanding/#">
+                                        <a href="#">
                                             <i class="fa fa-instagram"></i>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="scriptslanding/#">
+                                        <a href="#">
                                             <i class="fa fa-pinterest"></i>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="scriptslanding/#">
+                                        <a href="#">
                                             <i class="fa fa-youtube-play"></i>
                                         </a>
                                     </li>
@@ -163,10 +163,10 @@
                                 Compañía
                             </h3>
                             <ul class="links">
-                                <li><a href="scriptslanding/#">Inicio</a></li>
-                                <li><a href="scriptslanding/#">Nosotros</a></li>
-                                <li><a href="scriptslanding/#"> Destinos</a></li>
-                                <li><a href="scriptslanding/#"> Contáctanos</a></li>
+                                <li><a href="#">Inicio</a></li>
+                                <li><a href="#">Nosotros</a></li>
+                                <li><a href="#"> Destinos</a></li>
+                                <li><a href="#"> Contáctanos</a></li>
                             </ul>
                         </div>
                     </div>
@@ -176,14 +176,14 @@
                                 Destinos Populares
                             </h3>
                             <ul class="links double_links">
-                                <li><a href="scriptslanding/#">Indonesia</a></li>
-                                <li><a href="scriptslanding/#">America</a></li>
-                                <li><a href="scriptslanding/#">India</a></li>
-                                <li><a href="scriptslanding/#">Switzerland</a></li>
-                                <li><a href="scriptslanding/#">Italy</a></li>
-                                <li><a href="scriptslanding/#">Canada</a></li>
-                                <li><a href="scriptslanding/#">Franch</a></li>
-                                <li><a href="scriptslanding/#">England</a></li>
+                                <li><a href="#">Indonesia</a></li>
+                                <li><a href="#">America</a></li>
+                                <li><a href="#">India</a></li>
+                                <li><a href="#">Switzerland</a></li>
+                                <li><a href="#">Italy</a></li>
+                                <li><a href="#">Canada</a></li>
+                                <li><a href="#">Franch</a></li>
+                                <li><a href="#">England</a></li>
                             </ul>
                         </div>
                     </div>
@@ -194,33 +194,33 @@
                             </h3>
                             <div class="instagram_feed">
                                 <div class="single_insta">
-                                    <a href="scriptslanding/#">
-                                        <img src="scriptslanding/img/instagram/1.png" alt="">
+                                    <a href="#">
+                                        <img src="{{ asset('scriptslanding/img/instagram/1.png') }}" alt="">
                                     </a>
                                 </div>
                                 <div class="single_insta">
-                                    <a href="scriptslanding/#">
-                                        <img src="scriptslanding/img/instagram/2.png" alt="">
+                                    <a href="#">
+                                        <img src="{{ asset('scriptslanding/img/instagram/2.png') }}" alt="">
                                     </a>
                                 </div>
                                 <div class="single_insta">
-                                    <a href="scriptslanding/#">
-                                        <img src="scriptslanding/img/instagram/3.png" alt="">
+                                    <a href="#">
+                                        <img src="{{ asset('scriptslanding/img/instagram/3.png') }}" alt="">
                                     </a>
                                 </div>
                                 <div class="single_insta">
-                                    <a href="scriptslanding/#">
-                                        <img src="scriptslanding/img/instagram/4.png" alt="">
+                                    <a href="#">
+                                        <img src="{{ asset('scriptslanding/img/instagram/4.png') }}" alt="">
                                     </a>
                                 </div>
                                 <div class="single_insta">
-                                    <a href="scriptslanding/#">
-                                        <img src="scriptslanding/img/instagram/5.png" alt="">
+                                    <a href="#">
+                                        <img src="{{ asset('scriptslanding/img/instagram/5.png') }}" alt="">
                                     </a>
                                 </div>
                                 <div class="single_insta">
-                                    <a href="scriptslanding/#">
-                                        <img src="scriptslanding/img/instagram/6.png" alt="">
+                                    <a href="#">
+                                        <img src="{{ asset('scriptslanding/img/instagram/6.png') }}" alt="">
                                     </a>
                                 </div>
                             </div>
@@ -236,7 +236,7 @@
                     <div class="col-xl-12">
                         <p class="copy_right text-center">
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> Derechso Reservados | Empresa <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://google.com" target="_blank">Charlees Tours</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> Derechos Reservados | Empresa <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://google.com" target="_blank">Charlees Tours</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </p>
                     </div>
@@ -264,37 +264,37 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Derec
 
     <script src="scriptslanding/ https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"> </script> -->
     <!-- JS here -->
-    <script src="scriptslanding/js/vendor/modernizr-3.5.0.min.js"></script>
-    <script src="scriptslanding/js/vendor/jquery-1.12.4.min.js"></script>
-    <script src="scriptslanding/js/popper.min.js"></script>
-    <script src="scriptslanding/js/bootstrap.min.js"></script>
-    <script src="scriptslanding/js/owl.carousel.min.js"></script>
-    <script src="scriptslanding/js/isotope.pkgd.min.js"></script>
-    <script src="scriptslanding/js/ajax-form.js"></script>
-    <script src="scriptslanding/js/waypoints.min.js"></script>
-    <script src="scriptslanding/js/jquery.counterup.min.js"></script>
-    <script src="scriptslanding/js/imagesloaded.pkgd.min.js"></script>
-    <script src="scriptslanding/js/scrollIt.js"></script>
-    <script src="scriptslanding/js/jquery.scrollUp.min.js"></script>
-    <script src="scriptslanding/js/wow.min.js"></script>
-    <script src="scriptslanding/js/nice-select.min.js"></script>
-    <script src="scriptslanding/js/jquery.slicknav.min.js"></script>
-    <script src="scriptslanding/js/jquery.magnific-popup.min.js"></script>
-    <script src="scriptslanding/js/plugins.js"></script>
-    <script src="scriptslanding/js/gijgo.min.js"></script>
-    <script src="scriptslanding/js/slick.min.js"></script>
+    <script src="{{ asset('scriptslanding/js/vendor/modernizr-3.5.0.min.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/vendor/jquery-1.12.4.min.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/popper.min.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/ajax-form.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/waypoints.min.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/jquery.counterup.min.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/imagesloaded.pkgd.min.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/scrollIt.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/jquery.scrollUp.min.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/wow.min.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/nice-select.min.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/jquery.slicknav.min.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/plugins.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/gijgo.min.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/slick.min.js') }}"></script>
    
 
     
     <!--contact js-->
-    <script src="scriptslanding/js/contact.js"></script>
-    <script src="scriptslanding/js/jquery.ajaxchimp.min.js"></script>
-    <script src="scriptslanding/js/jquery.form.js"></script>
-    <script src="scriptslanding/js/jquery.validate.min.js"></script>
-    <script src="scriptslanding/js/mail-script.js"></script>
+    <script src="{{ asset('scriptslanding/js/contact.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/jquery.ajaxchimp.min.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/jquery.form.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('scriptslanding/js/mail-script.js') }}"></script>
 
 
-    <script src="scriptslanding/js/main.js"></script>
+    <script src="{{ asset('scriptslanding/js/main.js') }}"></script>
     <script>
         $('#datepicker').datepicker({
             iconsLibrary: 'fontawesome',

@@ -9,6 +9,11 @@ use App\Models\FotoPaquetes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Str; //SLUG
+
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
+
 
 class PaquetesTuristicosController extends Controller
 {
@@ -82,9 +87,7 @@ class PaquetesTuristicosController extends Controller
 
 
 
-    public function mostrarDestinos(){
-        return view('vistalanding/destinoslanding');
-    }
+    
 
     public function create()
     {
@@ -97,6 +100,7 @@ class PaquetesTuristicosController extends Controller
     public function store(Request $request)
     {
         //
+        //$slug = Str::of('Laravel Framework')->slug('-');
         $request->validate([
             'nombre' => 'required',  'imagen_principal' => 'required|image|mimes:jpeg,png,svg|max:1024'
         ]);
@@ -142,6 +146,15 @@ class PaquetesTuristicosController extends Controller
     public function formularionuevospaquetes(){
         
     }//
+
+    public function mostrarDestinos(){
+
+        $paquetes = PaquetesTuristicos::paginate(4);
+        //$paquetes=(DB::select('SELECT * FROM paquetes_turisticos p'));
+        
+        return view('vistalanding/destinoslanding', compact('paquetes'));
+    }
+
 
     public function formularioNuevoMapa($idpaquete){
         //return $idPaquete;

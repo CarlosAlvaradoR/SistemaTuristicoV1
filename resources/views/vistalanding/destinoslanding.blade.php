@@ -104,40 +104,43 @@
             </div>
             <div class="col-lg-8">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="single_place">
-                            <div class="thumb">
-                                <img src="scriptslanding/img/place/1.png" alt="">
-                                <a href="#" class="prise">S/. 500</a>
-                            </div>
-                            <div class="place_info">
-                                <a href="{{ route('destination.landing.details') }}"><h3>Máncora</h3></a>
-                                <p>Amércica Latina - Perú</p>
-                                <div class="rating_days d-flex justify-content-between">
-                                    <span class="d-flex justify-content-center align-items-center">
-                                         <i class="fa fa-star"></i> 
-                                         <i class="fa fa-star"></i> 
-                                         <i class="fa fa-star"></i> 
-                                         <i class="fa fa-star"></i> 
-                                         <i class="fa fa-star"></i>
-                                         <a href="#">(20 visitado)</a>
-                                    </span>
-                                    <div class="days">
-                                        <i class="fa fa-clock-o"></i>
-                                        <a href="#">5 Días</a>
+                    @foreach ($paquetes as $paquete)
+                        <div class="col-lg-6 col-md-6">
+                            <div class="single_place">
+                                <div class="thumb">
+                                    <img src="https://www.peru.travel/Contenido/Atractivo/Imagen/es/15/1.1/Principal/Centro%20Historico%20de%20Trujillo.jpg" alt="">
+                                    <a href="#" class="prise">S/. {{$paquete->precio}}</a>
+                                </div>
+                                <div class="place_info">
+                                    <a href="{{ route('destination.landing.details') }}"><h3>{{$paquete->nombre}}</h3></a>
+                                    <p>Perú</p>
+                                    <div class="rating_days d-flex justify-content-between">
+                                        <span class="d-flex justify-content-center align-items-center">
+                                            <i class="fa fa-star"></i> 
+                                            <i class="fa fa-star"></i> 
+                                            <i class="fa fa-star"></i> 
+                                            <i class="fa fa-star"></i> 
+                                            <i class="fa fa-star"></i>
+                                            <a href="#">(20 visitado)</a>
+                                        </span>
+                                        <div class="days">
+                                            <i class="fa fa-clock-o"></i>
+                                            <a href="#">5 Días</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
+                        </div>        
+                    @endforeach
+                    
+                    <!--<div class="col-lg-6 col-md-6">
                         <div class="single_place">
                             <div class="thumb">
                                 <img src="scriptslanding/img/place/2.png" alt="">
                                 <a href="#" class="prise">S/. 500</a>
                             </div>
                             <div class="place_info">
-                                <a href="{{ route('destination.landing.details') }}"><h3>Parque Huascarán</h3></a>
+                                <a href="{ route('destination.landing.details') }}"><h3>Parque Huascarán</h3></a>
                                 <p>Amércica Latina - Perú</p>
                                 <div class="rating_days d-flex justify-content-between">
                                     <span class="d-flex justify-content-center align-items-center">
@@ -259,12 +262,20 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="more_place_btn text-center">
-                            <a class="boxed-btn4" href="#">Ver más</a>
+                            <nav class="blog-pagination justify-content-center d-flex">
+                                <ul class="pagination">
+                                    <li class="page-item active">
+                                        {{ $paquetes->links() }}
+                                    </li>
+                                </ul>
+                            </nav>
+                            
+                            <!--<a class="boxed-btn4" href="#">Ver más</a>-->
                         </div>
                     </div>
                 </div>
