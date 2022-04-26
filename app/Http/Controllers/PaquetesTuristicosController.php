@@ -34,10 +34,11 @@ class PaquetesTuristicosController extends Controller
         $galeriaFotos=(DB::select('SELECT fg.descripcionfoto, fg.imagen, f.idfotogaleria, idpaqueteturistico FROM foto_paquetes f
         INNER JOIN fotogalerias fg on f.idfoto_paquete=fg.idfotogaleria WHERE idpaqueteturistico='.$idpaquete.''));
         
-        $mapaReferencias=(DB::select('SELECT  m.idmapareferencial,nombreruta, descripcionruta  FROM mapasreferenciales m
+        $mapaReferencias=(DB::select('SELECT  m.idmapareferencial,ma.imagen_ruta,nombreruta, descripcionruta  FROM mapasreferenciales m
         INNER JOIN mapas_paquetes ma on m.idmapareferencial=ma.idmapareferencial
         INNER JOIN paquetes_turisticos p on p.idpaqueteturistico=ma.idpaqueteturistico
         WHERE p.idpaqueteturistico = '.$idpaquete.''));
+        
         
         $nombrePaquetes =(DB::select('SELECT nombre FROM paquetes_turisticos p WHERE idpaqueteturistico= '.$idpaquete.' LIMIT 1'));
         //return $galeriaFotos;
@@ -183,6 +184,11 @@ class PaquetesTuristicosController extends Controller
         INNER JOIN fotogalerias fg on fg.idfotogaleria=f.idfotogaleria
         WHERE idpaqueteturistico='.$id.'');
 
+        $mapaReferencias=(DB::select('SELECT  m.idmapareferencial,ma.imagen_ruta,nombreruta, descripcionruta  FROM mapasreferenciales m
+        INNER JOIN mapas_paquetes ma on m.idmapareferencial=ma.idmapareferencial
+        INNER JOIN paquetes_turisticos p on p.idpaqueteturistico=ma.idpaqueteturistico
+        WHERE p.idpaqueteturistico = '.$id.' LIMIT 1'));
+
         $lugasresVisita=DB::select('SELECT a.idatractivoturistico, a.descripcion FROM atractivosturisticos a
         INNER JOIN paquetes_visitaatractivos p on a.idatractivoturistico=p.idatractivoturistico
         WHERE idpaqueteturistico='.$id.'');
@@ -207,11 +213,15 @@ class PaquetesTuristicosController extends Controller
         $transportesPaquetes = DB::select('SELECT pt.idpaquete_tipotransporte, pt.descripcion, pt.cantidad, pt.idpaqueteturistico, t.idtipotrasnporte, t.nombretipo FROM paquetes_tipotransportes pt
         INNER JOIN tipotransportes t on t.idtipotrasnporte = pt.idtipotrasnporte
         WHERE idpaqueteturistico = '.$id.'');
-        return view('vistalanding/destinodetails', compact('paquetes','cantidadGalerias','galeriaFotos','lugasresVisita', 'itinerarios', 'alimentacionCampo', 'equipos', 'acemilas', 'categoriasHoteles', 'almuerzos', 'transportesPaquetes'));
+        return view('vistalanding/destinodetails', 
+                    compact('paquetes','cantidadGalerias','galeriaFotos','mapaReferencias',
+                    'lugasresVisita', 'itinerarios', 'alimentacionCampo', 'equipos', 
+                    'acemilas', 'categoriasHoteles', 'almuerzos', 'transportesPaquetes'));
     }
 
-    public function prueba(){
-        return view('vistalanding/destinodetails');
+    public function prueba($id, $slug){
+        //echo "EL ID:".$id.'<br> EL SLUG:'.$slug;
+        //return view('vistalanding/destinodetails');
     }
 
 

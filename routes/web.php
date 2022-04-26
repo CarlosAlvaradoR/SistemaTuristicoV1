@@ -45,7 +45,7 @@ Route::get('/contact', [UsuariosController::class, 'mostrarContacto'])->name('co
 Route::get('/account', [UsuariosController::class, 'mostrarFormularioLogin'])->name('account.landing');//->middleware('auth');//Mostrar Formulario de Inicio de Sesion
 //Route::get('/account', [UsuariosController::class, 'mostrarContacto'])->name('contact.landing')->middleware('auth');//Mostrar Formulario de nuevos Usuarios
 //**************************************************************** */
-
+Route::get('/prueba/{id}/{slug}', [PaquetesTuristicosController::class, 'prueba'])->name('prueba');//->middleware('auth');//Mostrar Formulario de Inicio de Sesion
 
 
 

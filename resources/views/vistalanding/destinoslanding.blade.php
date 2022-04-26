@@ -108,11 +108,11 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="single_place">
                                 <div class="thumb">
-                                    <img src="https://www.peru.travel/Contenido/Atractivo/Imagen/es/15/1.1/Principal/Centro%20Historico%20de%20Trujillo.jpg" alt="">
+                                    <img src="{{ asset('imagen/'.$paquete->imagen_principal) }}" alt="">
                                     <a href="#" class="prise">S/. {{$paquete->precio}}</a>
                                 </div>
                                 <div class="place_info">
-                                    
+                                    <a href="{{ route('prueba', ['id'=>1, 'slug'=>'google']) }}">SPREM</a>
                                     <a href="{{ route('destination.landing.details', $paquete->idpaqueteturistico) }}"><h3>{{$paquete->nombre}}</h3></a>
                                     <p>Perú</p>
                                     <div class="rating_days d-flex justify-content-between">

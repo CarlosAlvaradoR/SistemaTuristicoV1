@@ -39,12 +39,23 @@ class MapasreferencialesController extends Controller
         //idpaqueteturistico
         $idmapareferencial=(DB::select('SELECT idmapareferencial FROM mapasreferenciales m ORDER BY idmapareferencial desc limit 1'));
 
-        $mapaPaquetes=new MapasPaquetes();
-        $mapaPaquetes->idmapareferencial=($idmapareferencial[0]->idmapareferencial);
-        $mapaPaquetes->idpaqueteturistico=$request->post('idpaqueteturistico');
-        $mapaPaquetes->save();
+        //Para la tabla Intermedia
+        //$mapaPaquetes=new MapasPaquetes();
+        //////////
+        $imagen = $request->all();
+
+        if($imagen_principal = $request->file('imagen_ruta')) {
+            $rutaGuardarImg = 'imagen/';
+            $imagenPaquete = date('YmdHis'). "." . $imagen_principal->getClientOriginalExtension();
+            $imagen_principal->move($rutaGuardarImg, $imagenPaquete);
+            $imagen['imagen_ruta'] = "$imagenPaquete";             
+        }
+        $mapaPaquetes= MapasPaquetes::create([
+            "imagen_ruta" => $imagen['imagen_ruta'],
+            "idmapareferencial" => ($idmapareferencial[0]->idmapareferencial),
+            "idpaqueteturistico" => $request->post('idpaqueteturistico')
+        ]);
         
-        //return "Insertado correctamente";
         return redirect()->route("paquetes.detalles.nuevo.paquetes",[$request->post('idpaqueteturistico')])->with("succes","Agregado con éxito");
     }
 

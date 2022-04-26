@@ -38,7 +38,7 @@
                             @endif
                         </div>
                     </div>
-                    <form action="{{ route('paquetes.detalles.guardar.mapas') }}" method="POST">
+                    <form action="{{ route('paquetes.detalles.guardar.mapas') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-row">
                             <div class="form-group col-md-12">
@@ -49,6 +49,14 @@
                                 <label for="descripcionruta">Descripción de Ruta</label>
                                 <input type="text" class="form-control" name="descripcionruta" id="descripcionruta">
                             </div>
+                            <div class="form-group col-md-12">
+                                <label for="imagen_principal">
+                                    Imagen Principal
+                                </label>
+                                <input type="file" name="imagen_ruta" class="form-control-file" id="imagen_principal" accept="image/*" />
+                            </div>
+                            
+                            
                         </div>
                         @foreach ($idpaquetes as $idpaquete)
                             

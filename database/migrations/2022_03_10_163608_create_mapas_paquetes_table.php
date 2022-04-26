@@ -16,6 +16,8 @@ class CreateMapasPaquetesTable extends Migration
         Schema::create('mapas_paquetes', function (Blueprint $table) {
             $table->increments('idmapa_paquete');
 
+            $table->string('imagen_ruta');
+            
             $table->integer('idmapareferencial')->unsigned();
             $table->integer('idpaqueteturistico')->unsigned();
 
