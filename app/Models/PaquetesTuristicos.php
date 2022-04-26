@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class PaquetesTuristicos extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre', 'precio', 'estado','imagen_principal','idtipopaquete'];
+    protected $fillable = ['nombre', 'precio', 'estado','imagen_principal','slug','idtipopaquete'];
 }

@@ -114,7 +114,16 @@ class PaquetesTuristicosController extends Controller
              $paquetesTuristicos['imagen_principal'] = "$imagenPaquete";             
          }
          
-         PaquetesTuristicos::create($paquetesTuristicos);
+         //$paquete=PaquetesTuristicos::create($paquetesTuristicos);
+         $slug=Str::of($request->post('nombre'))->slug('-');
+         $paquetes=PaquetesTuristicos::create([
+            'nombre' => $request->post('nombre'),
+            'precio' => $request->post('precio'),
+            'estado' => $request->post('estado'),
+            'imagen_principal' => $paquetesTuristicos['imagen_principal'],
+            'slug' => $slug,
+            'idtipopaquete' => $request->post('idtipopaquete')    
+         ]);
          return redirect()->route('paquetes.formulario.nuevo')->with("succes","Agregado con éxito");
         //return "Insertado";
     }
@@ -151,7 +160,7 @@ class PaquetesTuristicosController extends Controller
 
         $paquetes = PaquetesTuristicos::paginate(4);
         //$paquetes=(DB::select('SELECT * FROM paquetes_turisticos p'));
-        
+        //return $paquetes;
         return view('vistalanding/destinoslanding', compact('paquetes'));
     }
 
@@ -164,7 +173,44 @@ class PaquetesTuristicosController extends Controller
     }
 
 
-    public function mostrarDetallePaquete(){
+    public function mostrarDetallePaquete($id){
+        $paquetes=DB::select('SELECT nombre, imagen_principal FROM paquetes_turisticos p WHERE idpaqueteturistico = '.$id.' LIMIT 1');
+        
+        //PARA GALERÍAS
+        $cantidadGalerias=DB::select('SELECT COUNT(*) AS cantidad FROM foto_paquetes f WHERE idpaqueteturistico='.$id.'');
+        
+        $galeriaFotos=DB::select('SELECT fg.descripcionfoto, fg.imagen FROM foto_paquetes f
+        INNER JOIN fotogalerias fg on fg.idfotogaleria=f.idfotogaleria
+        WHERE idpaqueteturistico='.$id.'');
+
+        $lugasresVisita=DB::select('SELECT a.idatractivoturistico, a.descripcion FROM atractivosturisticos a
+        INNER JOIN paquetes_visitaatractivos p on a.idatractivoturistico=p.idatractivoturistico
+        WHERE idpaqueteturistico='.$id.'');
+
+        $itinerarios=DB::select('SELECT itinerarios_paquetes, descripcion FROM itinerarios_paquetes i
+        WHERE idpaqueteturistico='.$id.'');
+
+        $alimentacionCampo=DB::select('SELECT descripcion FROM paquetes_tipoalimentaciones p
+        WHERE idpaqueteturistico='.$id.'');
+
+        $equipos=DB::select('SELECT p.idpaquete_equipo, p.cantidad, p.observacion, p.idequipo, e.nombre FROM paquetes_equipos p
+        INNER JOIN equipos e on e.idequipo=p.idequipo WHERE p.idpaqueteturistico = '.$id.'');
+
+        $acemilas = DB::select('SELECT t.nombre, p.idpaquete_acemila, p.cantidad, p.idtipoacemila, p.idpaqueteturistico FROM tiposacemilas t
+        INNER JOIN paquetes_acemilas p on t.idtipoacemila=p.idtipoacemila WHERE p.idpaqueteturistico = '.$id.'');
+
+        $categoriasHoteles=DB::select('SELECT idcategoriahotel, descripcion, idpaqueteturistico FROM categoriashoteles WHERE idpaqueteturistico= '.$id.' ');
+    
+        $almuerzos=DB::select('SELECT p.idpaquete_tipoalmuerzo, p.observacion, p.idtipoalmuerzo, p.idpaqueteturistico, t.nombre FROM paquetes_tipoalmuerzos p
+        INNER JOIN tiposalmuerzos t on p.idtipoalmuerzo=t.idtipoalmuerzo WHERE p.idpaqueteturistico = '.$id.'');
+
+        $transportesPaquetes = DB::select('SELECT pt.idpaquete_tipotransporte, pt.descripcion, pt.cantidad, pt.idpaqueteturistico, t.idtipotrasnporte, t.nombretipo FROM paquetes_tipotransportes pt
+        INNER JOIN tipotransportes t on t.idtipotrasnporte = pt.idtipotrasnporte
+        WHERE idpaqueteturistico = '.$id.'');
+        return view('vistalanding/destinodetails', compact('paquetes','cantidadGalerias','galeriaFotos','lugasresVisita', 'itinerarios', 'alimentacionCampo', 'equipos', 'acemilas', 'categoriasHoteles', 'almuerzos', 'transportesPaquetes'));
+    }
+
+    public function prueba(){
         return view('vistalanding/destinodetails');
     }
 

@@ -109,7 +109,7 @@
                         <a href="#" class="prise">S/. 500</a>
                     </div>
                     <div class="place_info">
-                        <a href="{{ route('destination.landing.details') }}"><h3>Recuay</h3></a>
+                        <a href="{{ route('destination.landing.details', 1) }}"><h3>Recuay</h3></a>
                         <p>Amércica Latina - Perú</p>
                         <div class="rating_days d-flex justify-content-between">
                             <span class="d-flex justify-content-center align-items-center">
@@ -135,7 +135,7 @@
                         <a href="#" class="prise">S/. 500</a>
                     </div>
                     <div class="place_info">
-                        <a href="{{ route('destination.landing.details') }}"><h3>Caminata por Chavin</h3></a>
+                        <a href="{{ route('destination.landing.details', 1) }}"><h3>Caminata por Chavin</h3></a>
                         <p>Amércica Latina - Perú</p>
                         <div class="rating_days d-flex justify-content-between">
                             <span class="d-flex justify-content-center align-items-center">
@@ -161,7 +161,7 @@
                         <a href="#" class="prise">S/. 500</a>
                     </div>
                     <div class="place_info">
-                        <a href="{{ route('destination.landing.details') }}"><h3>Caraz - Ancash</h3></a>
+                        <a href="{{ route('destination.landing.details', 1) }}"><h3>Caraz - Ancash</h3></a>
                         <p>Amércica Latina - Perú</p>
                         <div class="rating_days d-flex justify-content-between">
                             <span class="d-flex justify-content-center align-items-center">
@@ -187,7 +187,7 @@
                         <a href="#" class="prise">S/. 500</a>
                     </div>
                     <div class="place_info">
-                        <a href="{{ route('destination.landing.details') }}"><h3>Ciudad de Yungay</h3></a>
+                        <a href="{{ route('destination.landing.details', 1) }}"><h3>Ciudad de Yungay</h3></a>
                         <p>Amércica Latina - Perú</p>
                         <div class="rating_days d-flex justify-content-between">
                             <span class="d-flex justify-content-center align-items-center">
@@ -213,7 +213,7 @@
                         <a href="#" class="prise">S/. 500</a>
                     </div>
                     <div class="place_info">
-                        <a href="{{ route('destination.landing.details') }}"><h3>Huaraz</h3></a>
+                        <a href="{{ route('destination.landing.details', 1) }}"><h3>Huaraz</h3></a>
                         <p>Amércica Latina - Perú</p>
                         <div class="rating_days d-flex justify-content-between">
                             <span class="d-flex justify-content-center align-items-center">
@@ -239,7 +239,7 @@
                         <a href="#" class="prise">S/. 500</a>
                     </div>
                     <div class="place_info">
-                        <a href="{{ route('destination.landing.details') }}"><h3>Llanganuco</h3></a>
+                        <a href="{{ route('destination.landing.details', 1) }}"><h3>Llanganuco</h3></a>
                         <p>Amércica Latina - Perú</p>
                         <div class="rating_days d-flex justify-content-between">
                             <span class="d-flex justify-content-center align-items-center">
@@ -262,7 +262,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="more_place_btn text-center">
-                    <a class="boxed-btn4" href="#">Más Destinos</a>
+                    <a class="boxed-btn4" href="{{ route('destination.landing') }}">Más Destinos</a>
                 </div>
             </div>
         </div>

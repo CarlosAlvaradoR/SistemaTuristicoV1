@@ -1,6 +1,6 @@
 @extends('layouts/plantillalanding')
 
-@section('titulo','Inicio | Empresa')
+@section('titulo','Detalles de Paquetes Turísticos')
 
 
 @section('contenido')
@@ -112,7 +112,8 @@
                                     <a href="#" class="prise">S/. {{$paquete->precio}}</a>
                                 </div>
                                 <div class="place_info">
-                                    <a href="{{ route('destination.landing.details') }}"><h3>{{$paquete->nombre}}</h3></a>
+                                    
+                                    <a href="{{ route('destination.landing.details', $paquete->idpaqueteturistico) }}"><h3>{{$paquete->nombre}}</h3></a>
                                     <p>Perú</p>
                                     <div class="rating_days d-flex justify-content-between">
                                         <span class="d-flex justify-content-center align-items-center">
@@ -121,11 +122,11 @@
                                             <i class="fa fa-star"></i> 
                                             <i class="fa fa-star"></i> 
                                             <i class="fa fa-star"></i>
-                                            <a href="#">(20 visitado)</a>
+                                            <!--<a href="#">(20 visitado)</a>-->
                                         </span>
                                         <div class="days">
                                             <i class="fa fa-clock-o"></i>
-                                            <a href="#">5 Días</a>
+                                            <!--<a href="#">5 Días</a>-->
                                         </div>
                                     </div>
                                 </div>
@@ -166,7 +167,7 @@
                                 <a href="#" class="prise">S/. 500</a>
                             </div>
                             <div class="place_info">
-                                <a href="{{ route('destination.landing.details') }}"><h3>Lima</h3></a>
+                                <a href="{ route('destination.landing.details') }}"><h3>Lima</h3></a>
                                 <p>Amércica Latina - Perú</p>
                                 <div class="rating_days d-flex justify-content-between">
                                     <span class="d-flex justify-content-center align-items-center">
@@ -192,7 +193,7 @@
                                 <a href="#" class="prise">S/. 500</a>
                             </div>
                             <div class="place_info">
-                                <a href="{{ route('destination.landing.details') }}"><h3>Ciudad de Huaraz</h3></a>
+                                <a href="{ route('destination.landing.details') }}"><h3>Ciudad de Huaraz</h3></a>
                                 <p>Amércica Latina - Perú</p>
                                 <div class="rating_days d-flex justify-content-between">
                                     <span class="d-flex justify-content-center align-items-center">
@@ -218,7 +219,7 @@
                                 <a href="#" class="prise">S/. 500</a>
                             </div>
                             <div class="place_info">
-                                <a href="{{ route('destination.landing.details') }}"><h3>Máncora</h3></a>
+                                <a href="{ route('destination.landing.details') }}"><h3>Máncora</h3></a>
                                 <p>Amércica Latina - Perú</p>
                                 <div class="rating_days d-flex justify-content-between">
                                     <span class="d-flex justify-content-center align-items-center">
@@ -244,7 +245,7 @@
                                 <a href="#" class="prise">S/. 500</a>
                             </div>
                             <div class="place_info">
-                                <a href="{{ route('destination.landing.details') }}"><h3>Ciudad de Caraz</h3></a>
+                                <a href="{ route('destination.landing.details') }}"><h3>Ciudad de Caraz</h3></a>
                                 <p>Amércica Latina - Perú</p>
                                 <div class="rating_days d-flex justify-content-between">
                                     <span class="d-flex justify-content-center align-items-center">

@@ -19,6 +19,7 @@ class CreatePaquetesTuristicosTable extends Migration
             $table->decimal('precio', 10,2);
             $table->integer('estado');
             $table->string('imagen_principal', 100);
+            $table->string('slug')->unique();
 
             $table->integer('idtipopaquete')->unsigned();
 

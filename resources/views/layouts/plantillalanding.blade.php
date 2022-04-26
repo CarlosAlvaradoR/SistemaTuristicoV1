@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- <link rel="manifest" href="scriptslanding/site.webmanifest"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="scriptslanding/img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('scriptslanding/img/favicon.png') }}">
     <!-- Place favicon.ico in the root directory -->
 
     <!-- CSS here -->
@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="{{ asset('scriptslanding/css/animate.css') }}">
     <link rel="stylesheet" href="{{ asset('scriptslanding/css/slick.css') }}">
     <link rel="stylesheet" href="{{ asset('scriptslanding/css/slicknav.css') }}">
-    <link rel="stylesheet" href="scriptslanding/https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
 
     <link rel="stylesheet" href="{{ asset('scriptslanding/css/style.css') }}">
     <!-- <link rel="stylesheet" href="scriptslanding/css/responsive.css"> -->
@@ -45,7 +45,7 @@
                             <div class="col-xl-2 col-lg-2">
                                 <div class="logo">
                                     <a href="{{ route('inicio.landing') }}">
-                                        <img src="scriptslanding/img/logo.png" alt="">
+                                        <img src="{{ asset('scriptslanding/img/logo.png') }}" alt="">
                                     </a>
                                 </div>
                             </div>

@@ -40,7 +40,7 @@ Route::get('/reportes', function () {
 Route::get('/', [UsuariosController::class, 'mostrarinicio'])->name('inicio.landing');//->middleware('auth');//Inicio
 Route::get('/about', [UsuariosController::class, 'mostrarabout'])->name('about.landing');//->middleware('auth');//Inicio 
 Route::get('/destination', [PaquetesTuristicosController::class, 'mostrarDestinos'])->name('destination.landing');//->middleware('auth');//Mostrar Destinos
-Route::get('/detailsdestinations', [PaquetesTuristicosController::class, 'mostrarDetallePaquete'])->name('destination.landing.details');//->middleware('auth');//Mostrar Detalles Destino Seleccionado
+Route::get('/destination/{slug}', [PaquetesTuristicosController::class, 'mostrarDetallePaquete'])->name('destination.landing.details');//->middleware('auth');//Mostrar Detalles Destino Seleccionado
 Route::get('/contact', [UsuariosController::class, 'mostrarContacto'])->name('contact.landing');//->middleware('auth');//Mostrar Contacto
 Route::get('/account', [UsuariosController::class, 'mostrarFormularioLogin'])->name('account.landing');//->middleware('auth');//Mostrar Formulario de Inicio de Sesion
 //Route::get('/account', [UsuariosController::class, 'mostrarContacto'])->name('contact.landing')->middleware('auth');//Mostrar Formulario de nuevos Usuarios
