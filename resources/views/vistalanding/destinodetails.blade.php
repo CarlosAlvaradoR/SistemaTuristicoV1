@@ -6,13 +6,13 @@
 @section('contenido')
 
 @php
+     $rutaImagen="";
     foreach ($paquetes as $paquete) {
        $nombrePaquete = $paquete->nombre;
        $rutaImagen="imagen/".$paquete->imagen_principal;
     }
 @endphp
 <div class="overlay">
-   
     <img class="img-fluid" src='{{ asset($rutaImagen) }}' alt="">
 </div>
 

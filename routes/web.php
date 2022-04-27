@@ -79,6 +79,8 @@ Route::get('/organitations', [UsuariosController::class, 'mostrarTabsOrgaAceEqui
 /** PARA LOS PAQUETES */
 Route::get('/package', [PaquetesTuristicosController::class, 'index'])->name('paquetes.activos.galeria')->middleware('auth');
 Route::get('/package/create', [PaquetesTuristicosController::class, 'create'])->name('paquetes.formulario.nuevo')->middleware('auth');
+Route::get('/packages/{slug}/edit', [PaquetesTuristicosController::class, 'edit'])->name('paquetes.editar')->middleware('auth');//Para agregar rutas a los paquetes
+Route::put('/packages/update/{id}', [PaquetesTuristicosController::class, 'update'])->name('paquetes.update')->middleware('auth');//Para agregar rutas a los paquetes
 Route::post('/pakcages/store', [PaquetesTuristicosController::class, 'store'])->name('paquetes.turisticos.creacion')->middleware('auth');//CREAR Guardar NUEVOS PAQUETES
 Route::get('/packages/details/{idpaqueteturistico}', [PaquetesTuristicosController::class, 'detallepaquetes'])->name('paquetes.detalles')->middleware('auth');//MUESTRA LOS paquetes en el bucle
 

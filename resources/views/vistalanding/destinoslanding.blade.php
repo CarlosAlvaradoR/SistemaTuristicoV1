@@ -108,12 +108,13 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="single_place">
                                 <div class="thumb">
-                                    <img src="{{ asset('imagen/'.$paquete->imagen_principal) }}" alt="">
+                                    <!--<img src="" alt="">-->
+                                    <img src="{{ asset('imagen/'.$paquete->imagen_principal) }}" class="img-circle" alt="Paquete" width="304" height="215">
                                     <a href="#" class="prise">S/. {{$paquete->precio}}</a>
                                 </div>
                                 <div class="place_info">
-                                    <a href="{{ route('prueba', ['id'=>1, 'slug'=>'google']) }}">SPREM</a>
-                                    <a href="{{ route('destination.landing.details', $paquete->idpaqueteturistico) }}"><h3>{{$paquete->nombre}}</h3></a>
+                                    <!--<a href="{ route('prueba', ['id'=>1, 'slug'=>'google']) }}">SPREM</a>-->
+                                    <a href="{{ route('destination.landing.details', $paquete->slug) }}"><h3>{{$paquete->nombre}}</h3></a>
                                     <p>Perú</p>
                                     <div class="rating_days d-flex justify-content-between">
                                         <span class="d-flex justify-content-center align-items-center">

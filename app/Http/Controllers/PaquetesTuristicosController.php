@@ -135,16 +135,66 @@ class PaquetesTuristicosController extends Controller
         //
         
     }
-    public function edit(PaquetesTuristicos $paquetesTuristicos)
+    public function edit($identificadorSlug)
     {
         //
+        $identificador=DB::select('SELECT idpaqueteturistico FROM paquetes_turisticos p WHERE slug= "'.$identificadorSlug.'" LIMIT 1');
+        $id=$identificador[0]->idpaqueteturistico;
+
+        $paqueteDetalles=DB::select('SELECT idpaqueteturistico, nombre, precio, estado, imagen_principal FROM paquetes_turisticos p WHERE idpaqueteturistico='.$id.'');
+        $tipos=DB::select('SELECT idtipopaquete, nombretipo FROM tipopaquetes');
+        return view('paquetes/index/editar', compact('paqueteDetalles', 'tipos'));
     }
 
    
     
-    public function update(Request $request, PaquetesTuristicos $paquetesTuristicos)
+    public function update(Request $request, $id)
     {
         //
+        //return $request;
+        $request->validate([
+            'nombre' => 'required',
+            'precio' => 'required',
+            'estado' => 'required',
+            'idtipopaquete' => 'required|min:1'
+        ]);
+        //$tipoPaquete="";
+        //$estado="";
+        $prod = $request->all();
+        
+        $slug=Str::of($request->post('nombre'))->slug('-');
+        $count=DB::select('SELECT COUNT(slug) as cantidad FROM paquetes_turisticos p WHERE slug="'.$slug.'" AND idpaqueteturistico <> '.$id.'');
+        if ($count[0]->cantidad > 0) {
+            $slug=$slug.'-1';
+        }
+        
+        if($imagen = $request->file('imagen_principal')){
+           //Storage::delete($image_path);
+           $rutaGuardarImg = 'imagen/';
+           $imagenProducto = date('YmdHis') . "." . $imagen->getClientOriginalExtension(); 
+           $imagen->move($rutaGuardarImg, $imagenProducto);
+           $prod['imagen_principal'] = "$imagenProducto";
+           $paqueteUpdate=PaquetesTuristicos::where('idpaqueteturistico', $id)
+                            ->update([
+                                'nombre'=>$request->post('nombre'),
+                                'precio' => $request->post('precio'),
+                                'estado' => $request->post('estado'),
+                                'imagen_principal'=>$prod['imagen_principal'],
+                                'slug' => $slug,
+                                'idtipopaquete' => $request->post('idtipopaquete')
+           ]);
+        }else{
+            $paqueteUpdate=PaquetesTuristicos::where('idpaqueteturistico', $id)
+            ->update([
+                'nombre'=>$request->post('nombre'),
+                'precio' => $request->post('precio'),
+                'estado' => $request->post('estado'),
+                'slug' => $slug,
+                'idtipopaquete' => $request->post('idtipopaquete')
+            ]);
+        }
+        
+        return redirect()->route('paquetes.activos.galeria');
     }
 
    
@@ -174,12 +224,19 @@ class PaquetesTuristicosController extends Controller
     }
 
 
-    public function mostrarDetallePaquete($id){
-        $paquetes=DB::select('SELECT nombre, imagen_principal FROM paquetes_turisticos p WHERE idpaqueteturistico = '.$id.' LIMIT 1');
+    public function mostrarDetallePaquete($identificadorSlug){
+        
+        $idPaquete=(DB::select('SELECT idpaqueteturistico FROM paquetes_turisticos p WHERE slug = "'.$identificadorSlug.'" LIMIT 1'));
+        
+        $id=$idPaquete[0]->idpaqueteturistico;
+        
+        $paquetes=DB::select('SELECT nombre, imagen_principal FROM paquetes_turisticos p WHERE idpaqueteturistico = "'.$id.'" LIMIT 1');
+        
+        //SACANOS EL ID
         
         //PARA GALERÍAS
         $cantidadGalerias=DB::select('SELECT COUNT(*) AS cantidad FROM foto_paquetes f WHERE idpaqueteturistico='.$id.'');
-        
+        //return ('SELECT COUNT(*) AS cantidad FROM foto_paquetes f WHERE idpaqueteturistico='.$id.'');
         $galeriaFotos=DB::select('SELECT fg.descripcionfoto, fg.imagen FROM foto_paquetes f
         INNER JOIN fotogalerias fg on fg.idfotogaleria=f.idfotogaleria
         WHERE idpaqueteturistico='.$id.'');

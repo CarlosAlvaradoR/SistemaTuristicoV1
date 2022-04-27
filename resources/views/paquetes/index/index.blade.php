@@ -28,7 +28,8 @@
                 <article class="card-user box-typical" style="border-radius: 19px">
                     
                     <div class="">
-                        <img src="/imagen/{{$paquete->imagen_principal}}" style="height: 110px;" alt="">
+                        <!--<img src="/" style="height: 110px;" alt="">-->
+                        <img src="{{ asset('imagen/'.$paquete->imagen_principal) }}" class="img-rounded" alt="Cinque Terre" width="220" height="156">
                     </div>
                     <div class="card-user-name">{{$paquete->nombre}}</div>
                     <div class="card-user-status">S/. {{$paquete->precio}}</div>
@@ -37,7 +38,7 @@
                         Ver Paquete
                     </a>
                     <div class="card-user-social align-items-start">
-                        <a href="#" title="Editar">
+                        <a href="{{ route('paquetes.editar', $paquete->slug) }}" title="Editar">
                             <i class="fas fa-edit"></i>
                         </a>
                         <a href="#" title="Ver Información del Paquete">
