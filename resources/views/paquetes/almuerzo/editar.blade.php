@@ -10,9 +10,9 @@
                     <div class="tbl-cell">
                         <h3>Parque Huascaran</h3>
                         <ol class="breadcrumb breadcrumb-simple">
-                            <li><a href="#">Paquetes</a></li>
+                            <li><a href="{{ route('paquetes.activos.galeria') }}">Paquetes</a></li>
                             <li><a href="#">Detalles</a></li>
-                            <li class="active">Itinerario</li>
+                            <li class="active">Almuerzo</li>
                         </ol>
                     </div>
                 </div>

@@ -91,8 +91,19 @@ class MapasreferencialesController extends Controller
 
     
     
-    public function destroy(Mapasreferenciales $mapasreferenciales)
+    public function destroy($idmapareferencial)
     {
-        //
+        //return "Destruyendo";
+        //Consulta Paquete
+        $idPaquete=DB::select('SELECT idpaqueteturistico FROM mapas_paquetes m WHERE idmapareferencial = '.$idmapareferencial.' LIMIT 1');
+        // MAPA PAQUETE
+        $mapaPaquete=MapasPaquetes::where('idmapareferencial',$idmapareferencial)
+        ->delete();
+
+        //MAPA REFERENCIAL
+        $fotoGalerias=Mapasreferenciales::where('idmapareferencial',$idmapareferencial)
+        ->delete();
+
+        return redirect()->route("paquetes.detalles",[$idPaquete[0]->idpaqueteturistico]);
     }
 }

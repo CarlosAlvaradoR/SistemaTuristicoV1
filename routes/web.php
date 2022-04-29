@@ -77,8 +77,8 @@ Route::get('/organitations', [UsuariosController::class, 'mostrarTabsOrgaAceEqui
 
 
 /** PARA LOS PAQUETES */
-Route::get('/package', [PaquetesTuristicosController::class, 'index'])->name('paquetes.activos.galeria')->middleware('auth');
-Route::get('/package/create', [PaquetesTuristicosController::class, 'create'])->name('paquetes.formulario.nuevo')->middleware('auth');
+Route::get('/packages', [PaquetesTuristicosController::class, 'index'])->name('paquetes.activos.galeria')->middleware('auth');
+Route::get('/packages/create', [PaquetesTuristicosController::class, 'create'])->name('paquetes.formulario.nuevo')->middleware('auth');
 Route::get('/packages/{slug}/edit', [PaquetesTuristicosController::class, 'edit'])->name('paquetes.editar')->middleware('auth');//Para agregar rutas a los paquetes
 Route::put('/packages/update/{id}', [PaquetesTuristicosController::class, 'update'])->name('paquetes.update')->middleware('auth');//Para agregar rutas a los paquetes
 Route::post('/pakcages/store', [PaquetesTuristicosController::class, 'store'])->name('paquetes.turisticos.creacion')->middleware('auth');//CREAR Guardar NUEVOS PAQUETES
@@ -90,7 +90,7 @@ Route::post('/packages/details/newMap/save', [MapasreferencialesController::clas
 Route::get('/packages/details/newMap/edit/{id}', [MapasreferencialesController::class, 'edit'])->name('paquetes.detalles.editar.mapas')->middleware('auth');//Para agregar rutas a los paquetes
 Route::put('/packages/details/newMap/update/{id}', [MapasreferencialesController::class, 'update'])->name('paquetes.detalles.actualizar.mapas')->middleware('auth');//Para agregar rutas a los paquetes
 Route::get('/mostrarData', [PaquetesTuristicosController::class, 'index'])->name('paquetes.index')->middleware('auth')->middleware('auth');
-
+Route::delete('/package/details/newMap/delete/{idactividad}', [MapasreferencialesController::class, 'destroy'])->name('eliminar.mapa.paquete')->middleware('auth');
 
 //FotoGalerías
 Route::get('/package/details/create/gallery/{idpaquete}', [FotogaleriasController::class, 'index'])->name('foto.nuevas.galerias')->middleware('auth');//CREAR Guardar NUEVOS PAQUETES

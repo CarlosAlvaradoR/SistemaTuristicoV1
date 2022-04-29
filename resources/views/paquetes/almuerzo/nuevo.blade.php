@@ -10,9 +10,9 @@
                     <div class="tbl-cell">
                         <h3>Parque Huascaran</h3>
                         <ol class="breadcrumb breadcrumb-simple">
-                            <li><a href="#">Paquetes</a></li>
+                            <li><a href="{{ route('paquetes.activos.galeria') }}">Paquetes</a></li>
                             <li><a href="#">Detalles</a></li>
-                            <li class="active">Itinerario</li>
+                            <li class="active">Almuerzo</li>
                         </ol>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
 
         <section class="card "> <!-- //- class="box-typical-full-height"-->
             <div class="card-block">
-                <h5 class="with-border m-t-0">Formulario de Nuevos Equipos del Paquete</h5>
+                <h5 class="with-border m-t-0">Asignación de Almuerzos al Paquete</h5>
                 <div class="row">
                     <div class="row">
                         <div class="col-md-12">

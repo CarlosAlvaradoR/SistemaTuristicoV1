@@ -205,13 +205,13 @@
                                                                 <span class="fa fa-pencil-square-o"></span>
                                                             </button>
                                                        </form>
-                                                       <form action="#" method="post">
-                                                            <a href="#" rel="noopener noreferrer">
-                                                                <span class="btn btn-danger btn-sm">
-                                                                    <span class="fa fa-trash"></span>
-                                                                </span>
-                                                            </a>
-                                                       </form>
+                                                       <form action="{{ route('eliminar.mapa.paquete', $mapaReferencia->idmapareferencial) }}" method="POST" class="formEliminarItinerario">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                                <span class="fa fa-trash"></span>
+                                                            </button>
+                                                        </form>
                                                         
                                                     </td>
                                                 </tr>
@@ -520,7 +520,7 @@
                             <a class="nav-link" href="#tabs-1-tab-2" role="tab" data-toggle="tab">
                                 <span class="nav-link-in">
                                     <i class="font-icon fa fa-automobile"></i>
-                                    Vehículos
+                                    Transporte
                                 </span>
                             </a>
                         </li>

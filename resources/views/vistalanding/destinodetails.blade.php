@@ -138,14 +138,16 @@
                                        
                                        @if ($cont==1)
                                           <div class="carousel-item active"> <!-- -->
-                                             <img class="d-block w-100" alt="Carousel Bootstrap First" src="{{ asset('imagen/'.$galeria->imagen) }}" />
+                                             <img class="d-block w-100" alt="Galería" 
+                                                   src="{{ asset('imagen/'.$galeria->imagen) }}" width="300" height="430" />
                                                 <div class="carousel-caption">
                                                    
                                                 </div>
                                           </div>
                                        @else
                                           <div class="carousel-item"> <!-- { asset('imagen/'.$galeria->imagen) }}-->
-                                             <img class="d-block w-100" alt="Carousel Bootstrap First" src="{{ asset('imagen/'.$galeria->imagen) }}" />
+                                             <img class="d-block w-100" alt="Galería" 
+                                                   src="{{ asset('imagen/'.$galeria->imagen) }}" width="300" height="430"/>
                                                 <div class="carousel-caption">
                                                    
                                                 </div>
