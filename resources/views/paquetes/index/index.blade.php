@@ -44,24 +44,18 @@
                         <a href="#" title="Ver Información del Paquete">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="{{ route('index.viajes.admin') }}" title="Asignar Viaje">
+                        <!--{$paquete->slug}-->
+                        <a href="{{ route('index.viajes.admin', $paquete->slug) }}" title="Asignar Viaje">
                             <i class="fas fa-shuttle-van"></i>
                         </a>
-                        <a href="{{ route('reservas.formulario.nivel.admin') }}" title="Reservar">
+                        <a href="{{ route('reservas.formulario.nivel.admin', $paquete->slug) }}" title="Reservar">
                             <i class="fas fa-map"></i>
                         </a>
                         <a href="#" title="Inactivar" class="btn-sm btn-danger">
                             <i class="fas fa-minus"></i>
                         </a>
                     </div>
-                    <!--<div class="card-user-info-row">
-                        <i class="font-icon font-icon-import"></i>
-                        Imported from Github
-                    </div>
-                    <div class="card-user-info-row">
-                        <i class="font-icon font-icon-user"></i>
-                        By Wayne Gray
-                    </div>-->
+                    
                 </article><!--.card-user-->
             </div>
         @endforeach

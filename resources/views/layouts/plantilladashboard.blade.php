@@ -495,7 +495,7 @@
 	                <span class="lbl">Viaje</span>
 	            </span>
 	            <ul>
-					<li><a href="{{ route('index.viajes.admin') }}"><span class="lbl">Nuevo</span><span class="label label-custom label-pill label-success">new</span></a></li>
+					<li><a href="#"><span class="lbl">Nuevo</span><span class="label label-custom label-pill label-success">new</span></a></li>
 	                <li><a href="{{ route('index.viajes.control.admin') }}"><span class="lbl">Componentes</span><span class="label label-custom label-pill label-danger">guia</span></a></li>
 	            </ul>
 	        </li>

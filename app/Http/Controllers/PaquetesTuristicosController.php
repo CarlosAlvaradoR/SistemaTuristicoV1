@@ -282,7 +282,9 @@ class PaquetesTuristicosController extends Controller
     }
 
 
-
+    public function reservarExterno(){
+        return view('reservas/indexReservaCliente/reservar');
+    }
 
     //PARA LOS LUGARES A VISITAR EN UN PAQUETE TURISTICO
     public function indexformulariolugaresvisitar(){

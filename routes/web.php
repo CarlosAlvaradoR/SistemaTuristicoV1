@@ -26,8 +26,9 @@ use App\Http\Controllers\PaquetesAcemilasController;
 use App\Http\Controllers\PaquetesTipoalmuerzosController;
 use App\Http\Controllers\PaquetesVisitaatractivosController;
 use App\Http\Controllers\ClientesController;
-use App\Http\Controllers\ReservasController;
-
+use App\Http\Controllers\ViajesPaquetesController;
+use App\Http\Controllers\ReservasController;    
+use App\Http\Controllers\PaymentController;
 
 Route::get('/reportes', function () {
     return view('paquetes/reportes/index');
@@ -46,6 +47,20 @@ Route::get('/account', [UsuariosController::class, 'mostrarFormularioLogin'])->n
 //Route::get('/account', [UsuariosController::class, 'mostrarContacto'])->name('contact.landing')->middleware('auth');//Mostrar Formulario de nuevos Usuarios
 //**************************************************************** */
 Route::get('/prueba/{id}/{slug}', [PaquetesTuristicosController::class, 'prueba'])->name('prueba');//->middleware('auth');//Mostrar Formulario de Inicio de Sesion
+
+Route::get('/reservar/paquete', [PaquetesTuristicosController::class, 'reservarExterno'])->name('reservar.cliente')->middleware('auth');//Mostrar Formulario de Inicio de Sesion
+
+
+//PAYPAL
+Route::get('/paypal/pay', [PaymentController::class, 'payWithPayPal'])->name('pagar');
+Route::get('/paypal/status', [PaymentController::class, 'payPalStatus'])->name('status');
+
+//Results
+//Route::get('/results', [FacultadesController::class, 'results'])->name('results');
+Route::get('/results', function () {
+    return "Coorecto, su transacción se realizó de la mejor manera";
+});
+
 
 
 
@@ -194,7 +209,9 @@ Route::get('/transporte', [ReservasController::class, 'transporte'])->name('nuev
 Route::get('/reserved/clients/', [ClientesController::class, 'index'])->name('index.nuevos.clientes')->middleware('auth');
 
 //Nuevas Reservas
-Route::get('/reserved', [ReservasController::class, 'index'])->name('reservas.formulario.nivel.admin')->middleware('auth');
+Route::get('/reserved/{slug?}', [ReservasController::class, 'index'])->name('reservas.formulario.nivel.admin')->middleware('auth');
+Route::post('/reserved/save', [ReservasController::class, 'store'])->name('guardar.reservas')->middleware('auth');
+Route::post('/reserved/save/client', [ReservasController::class, 'storeNewClient'])->name('guardar.reservas.nuevos.clientes')->middleware('auth');
 Route::get('/reserved/search/clients', [ReservasController::class, 'buscar'])->name('buscar.clientes.reserva')->middleware('auth');
 //-POST
 Route::get('/pendiente', [ReservasController::class, 'pendientes'])->name('reservas.pendientes')->middleware('auth');
@@ -224,8 +241,9 @@ Route::get('/postergacion/reserva/atencion', [ReservasController::class, 'atenci
 
 
 /**** PARA LOS VIAJES **********************/
-Route::get('/viaje', [ReservasController::class, 'viaje'])->name('index.viajes.admin')->middleware('auth');
-Route::get('/viaje/detalles', [ReservasController::class, 'asignarDetallesViaje'])->name('index.viajes.admin.asignar.detalles')->middleware('auth');
+Route::get('/viaje/{slug}/programacion', [ViajesPaquetesController::class, 'index'])->name('index.viajes.admin')->middleware('auth');
+Route::post('/viaje/save', [ViajesPaquetesController::class, 'store'])->name('index.viajes.admin.store')->middleware('auth');
+Route::get('/viaje/a/detalles', [ReservasController::class, 'asignarDetallesViaje'])->name('index.viajes.admin.asignar.detalles')->middleware('auth');
 Route::get('/viaje/control/inicio', [ReservasController::class, 'viajeControl'])->name('index.viajes.control.admin')->middleware('auth');
 Route::get('/viaje/control/inicio/detalles', [ReservasController::class, 'viajeControlDetalles'])->name('index.viajes.control.detalles.admin')->middleware('auth');
 /********************************************/

@@ -413,7 +413,9 @@
                       </div>
                    </div>-->
                    <div class="form-group">
-                      <button type="submit" class="button button-contactForm btn_1 boxed-btn">Reservar</button>
+                      <a href="{{ route('reservar.cliente') }}" class="button button-contactForm btn_1 boxed-btn" >Reservar</a>
+                      <a href="{{ route('pagar') }}">Reservar</a>
+                      
                    </div>
                 </form>
              </div>

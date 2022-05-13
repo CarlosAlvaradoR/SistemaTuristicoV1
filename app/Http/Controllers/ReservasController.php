@@ -26,7 +26,8 @@ class ReservasController extends Controller
         INNER JOIN clientes c on p.idpersona=c.idpersona
         INNER JOIN nacionalidades n on n.idnacionalidad=c.idnacionalidad
         WHERE p.dni = '.$dni.' LIMIT 1');
-        
+       // return $cliente;
+       //return redirect()->route("reservas.formulario.nivel.admin",['chiclayo']);
         return view('reservas/index/nuevo', compact('cliente'));
     }
 
@@ -40,6 +41,11 @@ class ReservasController extends Controller
     public function store(Request $request)
     {
         //
+        return $request;
+    }
+
+    public function storeNewClient(Request $request){
+        return $request;
     }
 
     /**
@@ -62,6 +68,7 @@ class ReservasController extends Controller
     public function edit(Reservas $reservas)
     {
         //
+        
     }
 
     /**
@@ -108,9 +115,7 @@ class ReservasController extends Controller
     public function transporte(){
         return view('transporte/index');
     }
-    public function viaje(){
-        return view('viaje/index/index');
-    }
+    
     public function asignarDetallesViaje(){
         return view('viaje/index/detalles');
     }

@@ -8,6 +8,7 @@ php artisan make:migration create_tipospersonales_table
 php artisan make:model Tipospersonales -r
 
 
+
 Tabla Tipo Personal Paquete: (Intermedia)
 php artisan make:migration create_paquetesTipospersonales_table
 php artisan make:model PaquetesTipospersonales -r
@@ -68,6 +69,20 @@ php artisan make:model PaquetesVisitaatractivos -r
 
 
 
+
+
+************************ VIAJES **************************************
+Tabla ViajePaquetes
+php artisan make:migration create_viajesPaquetes_table
+php artisan make:model ViajesPaquetes -r
+
+
+************************************************************************
+
+
+
+
+
 ************************ RESERVAS **************************************
 Tabla Nacionalidad
 php artisan make:migration create_nacionalidades_table
@@ -80,6 +95,19 @@ php artisan make:model Clientes -r
 Tabla Reservas
 php artisan make:migration create_reservas_table
 php artisan make:model Reservas -r
+
+Tabla Eventos Postergación
+php artisan make:migration create_eventopostergaciones_table
+php artisan make:model EventopostergacionesReservas -r
+
+Solicitudes Devoluciones Dinero
+php artisan make:migration create_solicitudesdevoluciones_table
+php artisan make:model Solicitudesdevoluciones -r 
+
+Devolucion Dinero
+php artisan make:migration create_devolucionesdineros_table
+php artisan make:model Devolucionesdineros -r  
+
 
 
 ************************************************************************
