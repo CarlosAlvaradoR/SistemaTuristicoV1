@@ -108,6 +108,29 @@ Devolucion Dinero
 php artisan make:migration create_devolucionesdineros_table
 php artisan make:model Devolucionesdineros -r  
 
+Boletas
+php artisan make:migration create_boletas_table
+php artisan make:model Boletas -r 
+
+Facturas
+php artisan make:migration create_facturas_table
+php artisan make:model Facturas -r
+
+Paypal Pagos
+php artisan make:migration create_paypalpagos_table
+php artisan make:model Paypalpagos -r
+
+Pagos
+php artisan make:migration create_pagos_table
+php artisan make:model Pagos -r
+
+Tipo Reservas
+php artisan make:migration create_tiporeservas_table
+php artisan make:model Tiporeservas -r
+
+Estado Reservas
+php artisan make:migration create_estadoreservas_table
+php artisan make:model Estadoreservas -r
 
 
 ************************************************************************

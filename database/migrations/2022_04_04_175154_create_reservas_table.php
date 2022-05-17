@@ -21,6 +21,12 @@ class CreateReservasTable extends Migration
             $table->integer('idcliente')->unsigned();
             $table->foreign('idcliente')->references('idcliente')->on('clientes');
 
+            $table->unsignedBigInteger('tiporeserva_id');
+            $table->foreign('tiporeserva_id')->references('id')->on('tiporeservas');
+
+            $table->unsignedBigInteger('estadoreserva_id');
+            $table->foreign('estadoreserva_id')->references('id')->on('estadoreservas');
+
             $table->integer('idpaqueteturistico')->unsigned();
             $table->foreign('idpaqueteturistico')->references('idpaqueteturistico')->on('paquetes_turisticos');
 

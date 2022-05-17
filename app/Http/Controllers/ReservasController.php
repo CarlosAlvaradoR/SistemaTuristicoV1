@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservas;
+use App\Models\Personas;
+use App\Models\Clientes;
+use App\Models\Pagos;
+use App\Models\Boletas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ReservasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index(Request $request)
     {
         //
@@ -28,7 +28,10 @@ class ReservasController extends Controller
         WHERE p.dni = '.$dni.' LIMIT 1');
        // return $cliente;
        //return redirect()->route("reservas.formulario.nivel.admin",['chiclayo']);
-        return view('reservas/index/nuevo', compact('cliente'));
+       $paquetes=DB::select('SELECT idpaqueteturistico, nombre FROM paquetes_turisticos');
+
+       $viajes=DB::select('SELECT id, descripcion, date_format(fecha, "%d-%m-%Y") as fecha, hora FROM viajes_paquetes');
+        return view('reservas/index/nuevo', compact('cliente', 'paquetes','viajes'));
     }
 
     
@@ -41,6 +44,30 @@ class ReservasController extends Controller
     public function store(Request $request)
     {
         //
+        return $request;
+        $persona = Personas::create([
+            'dni'=>$request->post('dni'), 
+            'nombres'=>$request->post('nombres'), 
+            'apellidos'=>$request->post('apellidos'), 
+            'genero'=>$request->post('descripcionfoto'), 
+            'direccion'=>$request->post('direccion'), 
+            'telefono'=>$request->post('telefono'), 
+            'correo'=>$request->post('correo')
+        ]);
+
+        $idpersona=(DB::select('SELECT idpersona as idpersona FROM personas ORDER BY idpersona desc limit 1'));
+        $cliente = Clientes::create([
+            'idnacionalidad',
+            'idcliente', 
+            'idnacionalidad, 
+            idpersona, '
+        ]);
+
+        $reservas;
+
+        $pagos;
+
+        $boleta;
         return $request;
     }
 

@@ -209,7 +209,7 @@ Route::get('/transporte', [ReservasController::class, 'transporte'])->name('nuev
 Route::get('/reserved/clients/', [ClientesController::class, 'index'])->name('index.nuevos.clientes')->middleware('auth');
 
 //Nuevas Reservas
-Route::get('/reserved/{slug?}', [ReservasController::class, 'index'])->name('reservas.formulario.nivel.admin')->middleware('auth');
+Route::get('/reserved', [ReservasController::class, 'index'])->name('reservas.formulario.nivel.admin')->middleware('auth');
 Route::post('/reserved/save', [ReservasController::class, 'store'])->name('guardar.reservas')->middleware('auth');
 Route::post('/reserved/save/client', [ReservasController::class, 'storeNewClient'])->name('guardar.reservas.nuevos.clientes')->middleware('auth');
 Route::get('/reserved/search/clients', [ReservasController::class, 'buscar'])->name('buscar.clientes.reserva')->middleware('auth');
