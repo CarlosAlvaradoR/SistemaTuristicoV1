@@ -29,7 +29,6 @@ class CreateReservasTable extends Migration
 
             $table->integer('idpaqueteturistico')->unsigned();
             $table->foreign('idpaqueteturistico')->references('idpaqueteturistico')->on('paquetes_turisticos');
-
             $table->timestamps();
         });
     }

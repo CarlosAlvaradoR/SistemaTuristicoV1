@@ -57,11 +57,10 @@ class ReservasController extends Controller
 
         $idpersona=(DB::select('SELECT idpersona as idpersona FROM personas ORDER BY idpersona desc limit 1'));
         $cliente = Clientes::create([
-            'idnacionalidad',
-            'idcliente', 
-            'idnacionalidad, 
-            idpersona, '
+            'idnacionalidad' => 1, 
+            'idpersona' => $idpersona[0]->idpersona
         ]);
+        
 
         $reservas;
 

@@ -100,6 +100,10 @@ Tabla Eventos Postergación
 php artisan make:migration create_eventopostergaciones_table
 php artisan make:model EventopostergacionesReservas -r
 
+Tabla Eventos Postergacions Reservas
+php artisan make:migration create_eventopostergaciones_reservas_table
+
+
 Solicitudes Devoluciones Dinero
 php artisan make:migration create_solicitudesdevoluciones_table
 php artisan make:model Solicitudesdevoluciones -r 

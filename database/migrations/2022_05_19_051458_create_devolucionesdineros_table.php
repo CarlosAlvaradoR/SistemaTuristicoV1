@@ -21,7 +21,7 @@ class CreateDevolucionesdinerosTable extends Migration
 
             $table->unsignedBigInteger('solicitud_id');
             $table->foreign('solicitud_id')->references('id')->on('solicitudesdevoluciones');
-
+            
             $table->timestamps();
         });
     }

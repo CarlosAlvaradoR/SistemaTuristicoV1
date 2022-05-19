@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEventopostergacionesReservasTable extends Migration
+class CreateSolicitudesdevolucionesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,14 @@ class CreateEventopostergacionesReservasTable extends Migration
      */
     public function up()
     {
-        Schema::create('eventopostergaciones_reservas', function (Blueprint $table) {
+        Schema::create('solicitudesdevoluciones', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha_postergacion');
-            
+            $table->date('fecha_presentacion');
+            $table->integer('estado');
+
             $table->integer('idreserva')->unsigned();
             $table->foreign('idreserva')->references('idreserva')->on('reservas');
-
-            $table->unsignedBigInteger('evento_id');
-            $table->foreign('evento_id')->references('id')->on('eventopostergaciones');
-
+            
             $table->timestamps();
         });
     }
@@ -34,6 +32,6 @@ class CreateEventopostergacionesReservasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('eventopostergaciones_reservas');
+        Schema::dropIfExists('solicitudesdevoluciones');
     }
 }
