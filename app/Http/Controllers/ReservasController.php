@@ -29,9 +29,12 @@ class ReservasController extends Controller
        // return $cliente;
        //return redirect()->route("reservas.formulario.nivel.admin",['chiclayo']);
        $paquetes=DB::select('SELECT idpaqueteturistico, nombre FROM paquetes_turisticos');
-
+       
        $viajes=DB::select('SELECT id, descripcion, date_format(fecha, "%d-%m-%Y") as fecha, hora FROM viajes_paquetes');
-        return view('reservas/index/nuevo', compact('cliente', 'paquetes','viajes'));
+        
+       $nacionalidades=DB::select('SELECT idnacionalidad, nombre FROM nacionalidades');
+
+       return view('reservas/index/nuevo', compact('cliente', 'paquetes','viajes','nacionalidades'));
     }
 
     
@@ -57,12 +60,19 @@ class ReservasController extends Controller
 
         $idpersona=(DB::select('SELECT idpersona as idpersona FROM personas ORDER BY idpersona desc limit 1'));
         $cliente = Clientes::create([
-            'idnacionalidad' => 1, 
+            'idnacionalidad' => $request->post('nacionalidad'), 
             'idpersona' => $idpersona[0]->idpersona
         ]);
         
-
-        $reservas;
+        $idcliente=(DB::select('SELECT idcliente FROM clientes ORDER BY idcliente DESC LIMIT 1'));
+        $reservas = Reservas::create([
+            'fecha_reserva' => date('d-m-Y'), 
+            'observacion' => '', 
+            'idcliente'=>$idcliente[0]->idpersona, 
+            'tiporeserva_id'=> 1, 
+            'estadoreserva_id'=> 1, 
+            'idpaqueteturistico' => $request->post('paquete')
+        ]);
 
         $pagos;
 
@@ -74,23 +84,13 @@ class ReservasController extends Controller
         return $request;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Reservas  $reservas
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Reservas $reservas)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Reservas  $reservas
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit(Reservas $reservas)
     {
         //

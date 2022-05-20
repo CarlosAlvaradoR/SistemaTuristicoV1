@@ -63,7 +63,7 @@
                                 <label for="genero">
                                     Género
                                 </label>
-                                <select id="genero" class="form-control">
+                                <select id="genero" name="genero" class="form-control">
                                     <option value="1">Masculino</option>
                                     <option value="2">Femenino</option>
                                 </select>
@@ -72,7 +72,11 @@
                                 <label for="nacionalidad">
                                     Nacionalidad
                                 </label>
-                                <input type="text" value="PERUANO" class="form-control" name="nacionalidad" id="nacionalidad"/>
+                                <select id="nacionalidad" name="nacionalidad" class="form-control">
+                                    @foreach ($nacionalidades as $nacionalidad)
+                                        <option value="{{$nacionalidad->idnacionalidad}}">{{$nacionalidad->nombre}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>

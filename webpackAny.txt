@@ -76,6 +76,14 @@ Tabla ViajePaquetes
 php artisan make:migration create_viajesPaquetes_table
 php artisan make:model ViajesPaquetes -r
 
+Taba Estado Participantes
+php artisan make:migration create_estadoParticipantes_table 
+php artisan make:model EstadoParticipantes -r
+
+Tabla Viaje Participantes
+php artisan make:migration create_viajeParticipantes_table
+php artisan make:model ViajeParticipantes -r
+
 
 ************************************************************************
 
