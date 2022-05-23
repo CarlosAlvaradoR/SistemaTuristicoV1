@@ -19,13 +19,13 @@ class CreatePagosTable extends Migration
             $table->unsignedBigInteger('boleta_id');
             $table->foreign('boleta_id')->references('id')->on('boletas');
 
-            $table->unsignedBigInteger('factura_id');
+            $table->unsignedBigInteger('factura_id')->nullable();
             $table->foreign('factura_id')->references('id')->on('facturas');
 
-            $table->unsignedBigInteger('paypalpagos_id');
+            $table->unsignedBigInteger('paypalpagos_id')->nullable();
             $table->foreign('paypalpagos_id')->references('id')->on('paypalpagos');
 
-            $table->integer('idreserva')->unsigned();
+            $table->integer('idreserva')->unsigned()->nullable();
             $table->foreign('idreserva')->references('idreserva')->on('reservas');
 
             $table->timestamps();

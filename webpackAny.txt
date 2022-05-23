@@ -84,6 +84,65 @@ Tabla Viaje Participantes
 php artisan make:migration create_viajeParticipantes_table
 php artisan make:model ViajeParticipantes -r
 
+Empresa de Transportes
+php artisan make:migration create_empresastransportes_table
+php artisan make:model Empresastransportes -r
+
+Tabla Tipo de Vehiculos
+php artisan make:migration create_tipovehiculos_table 
+php artisan make:model Tipovehiculos -r
+
+Vehículo
+php artisan make:migration create_vehiculos_table  
+php artisan make:model Vehiculos -r 
+
+Choferes
+php artisan make:migration create_choferes_table
+php artisan make:model Choferes -r 
+
+Tralado Viajes
+php artisan make:migration create_trasladoViajes_table
+php artisan make:model TrasladoViajes -r
+
+Actividad Aclimatación
+php artisan make:migration create_actividadesAclimataciones_table
+php artisan make:model ActividadesAclimataciones -r
+
+Cocinero
+php artisan make:migration create_cocineros_table
+php artisan make:model Cocineros -r
+
+Guia
+php artisan make:migration create_guias_table
+php artisan make:model Guias -r 
+
+Asociacion
+php artisan make:migration create_asociaciones_table
+php artisan make:model Asociaciones -r
+
+Arrieros
+php artisan make:migration create_arrieros_table
+php artisan make:model Arrieros -r
+
+Almuerzos Celebraciones
+php artisan make:migration create_almuerzosCelebraciones_table
+php artisan make:model AlmuerzosCelebraciones -r
+
+Hoteles
+php artisan make:migration create_hoteles_table 
+php artisan make:model Hoteles -r
+
+Hospedajes
+php artisan make:migration create_hospedajes_table
+php artisan make:model Hospedajes -r
+
+Asistentes
+php artisan make:migration create_asistentes_table
+php artisan make:model Asistentes -r 
+
+
+VISTA
+php artisan make:migration create_view_vistaParticipantesPagados_table
 
 ************************************************************************
 

@@ -7,6 +7,7 @@ use App\Models\Personas;
 use App\Models\Clientes;
 use App\Models\Pagos;
 use App\Models\Boletas;
+use App\Models\ViajeParticipantes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -46,13 +47,13 @@ class ReservasController extends Controller
     
     public function store(Request $request)
     {
-        //
-        return $request;
+        //return $request;
+        
         $persona = Personas::create([
             'dni'=>$request->post('dni'), 
             'nombres'=>$request->post('nombres'), 
             'apellidos'=>$request->post('apellidos'), 
-            'genero'=>$request->post('descripcionfoto'), 
+            'genero'=>$request->post('genero'), 
             'direccion'=>$request->post('direccion'), 
             'telefono'=>$request->post('telefono'), 
             'correo'=>$request->post('correo')
@@ -66,19 +67,40 @@ class ReservasController extends Controller
         
         $idcliente=(DB::select('SELECT idcliente FROM clientes ORDER BY idcliente DESC LIMIT 1'));
         $reservas = Reservas::create([
-            'fecha_reserva' => date('d-m-Y'), 
+            'fecha_reserva' => $request->post('fecha-reserva'), //date('d-m-Y)
             'observacion' => '', 
-            'idcliente'=>$idcliente[0]->idpersona, 
-            'tiporeserva_id'=> 1, 
-            'estadoreserva_id'=> 1, 
+            'idcliente'=>$idcliente[0]->idcliente, 
+            'tiporeserva_id'=> 2, 
+            'estadoreserva_id'=> 1,  // ESTO LUEGO SE PUEDE VALIDAR º º   
             'idpaqueteturistico' => $request->post('paquete')
         ]);
+        $idreserva=DB::select('SELECT idreserva FROM reservas ORDER BY idreserva DESC LIMIT 1');
+        
+        $boleta = Boletas::create([
+            'numero' => '2627', 
+            'observaciones' => null, 
+            'monto' => $request->post('monto'), 
+            'fecha_emision' => date('Y-m-d') 
+        ]);
+        $idboleta=DB::select('SELECT id FROM boletas ORDER BY id DESC LIMIT 1');
+        $pagos = Pagos::create([
+            'boleta_id' => $idboleta[0]->id, 
+            'factura_id' => null, 
+            'paypalpagos_id'=> null, 
+            'idreserva' => $idreserva[0]->idreserva
+        ]);
 
-        $pagos;
-
-        $boleta;
-        return $request;
+        if ($request->post('viaje')!="0") {
+            $viajeParticipantes=ViajeParticipantes::create([
+                'viaje_id'=> $request->post('viaje'), 
+                'idreserva'=> $idreserva[0]->idreserva, 
+                'estado_id'=> 1
+            ]);
+        }
+        
+        return redirect()->route('reservas.formulario.nivel.admin')->with("succes","Agregado con éxito");
     }
+
 
     public function storeNewClient(Request $request){
         return $request;
@@ -138,12 +160,11 @@ class ReservasController extends Controller
     public function atencionSolicitud(){
         return view('reservas/solicitud/proceso');
     }
-    public function transporte(){
-        return view('transporte/index');
-    }
-    
-    public function asignarDetallesViaje(){
-        return view('viaje/index/detalles');
+    public function asignarDetallesViaje($id){
+        DB::statement("SET SQL_MODE=''");
+        $datos=DB::select('SELECT * FROM V_Reservas WHERE viaje_id='.$id.'');
+        //return $datos;
+        return view('viaje/index/detalles', compact('datos'));
     }
     public function viajeControl(){
         return view('viaje/componentes/index');

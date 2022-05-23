@@ -77,22 +77,39 @@
                                                     Participante
                                                 </th>
                                                 <th>
+                                                    Estado
+                                                </th>
+                                                <th>
                                                     Acciones
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    1
-                                                </td>
-                                                <td>
-                                                    Carlos Emilio Alvarado Robles
-                                                </td>
-                                                <td>
-                                                    <a href="">Quitar</a>
-                                                </td>
-                                            </tr>
+                                            @php
+                                                $contParticipantes=1;
+                                            @endphp
+                                            @foreach ($datos as $date)
+                                                <tr>
+                                                    <td>
+                                                        {{$contParticipantes++}}
+                                                    </td>
+                                                    <td>
+                                                        {{$date->datos}}
+                                                    </td>
+                                                    <td>
+                                                        @if ($date->estado_pago == 'COMPLETO')
+                                                            <span class="label label-custom label-pill label-success">{{$date->estado_pago}}</span>
+                                                        @else
+                                                            <span class="label label-custom label-pill label-danger">{{$date->estado_pago}}</span>
+                                                        @endif
+                                                        
+                                                    </td>
+                                                    <td>
+                                                        <a href="">Quitar</a>
+                                                    </td>
+                                                </tr> 
+                                            @endforeach
+                                            
                                         </tbody>
                                     </table>
                                 </div>

@@ -84,7 +84,7 @@
                         <button type="button" id="botonAtras" class="btn btn-rounded btn-grey float-left">← Atras</button>
                         <!--<button type="button" onclick="alert('REIRIGIR')" id="botonGuardar" class="btn btn-rounded float-right">Guardar</button>-->
                         <button type="submit" class="btn btn-rounded float-right">Guardar</button>
-                        <a href="{{ route('index.viajes.admin.asignar.detalles') }}" id="botonGuardar" >Guardar</a>
+                        <a href="#" id="botonGuardar" >Guardar</a>
                     </form>
                 </section><!--.steps-icon-block-->
             </div>
@@ -121,7 +121,7 @@
                                             @foreach ($viajes as $viaje)
                                                 <tr>
                                                     <td>
-                                                        {{$viaje->fecha}} -  {{$viaje->hora}}
+                                                        {{$viaje->fecha}} -  {{$viaje->hora}} - {{$viaje->id}}
                                                     </td>
                                                     <td>
                                                         {{$viaje->cantidad_participantes}}
@@ -132,6 +132,7 @@
                                                                 Acciones
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="{{ route('index.viajes.admin.asignar.detalles', $viaje->id) }}"><i class="fas fa-users"></i> Ver Todo</a>
                                                                 <a class="dropdown-item" href="#"><i class="fas fa-users"></i> Participantes</a> 
                                                                 <a class="dropdown-item" href="#"><i class="fas fa-car-alt"></i> Vehiculos</a> 
                                                                 <a class="dropdown-item" href="#">Almuerzos</a>

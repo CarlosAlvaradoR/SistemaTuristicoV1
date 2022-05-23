@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Reservas extends Model
 {
     use HasFactory;
-    protected $fillable = ['fecha_reserva', 'observacion', 'idcliente', 'idpaqueteturistico'];
+    protected $fillable = ['fecha_reserva', 'observacion', 'idcliente', 'tiporeserva_id', 'estadoreserva_id', 'idpaqueteturistico'];
 }

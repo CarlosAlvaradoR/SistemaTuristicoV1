@@ -1,6 +1,6 @@
 @extends('layouts/plantilladashboard')
 
-@section('tituloPagina','Paquetes Turísticos')
+@section('tituloPagina','Reserva de Paquetes')
     
 @section('contenido')
 
@@ -20,6 +20,21 @@
         <form action="{{ route('guardar.reservas') }}" method="post">
             @csrf
             <div class="card-block">
+                @if ($mensaje = Session::get('succes'))
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-success alert-dismissable">
+                                
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                                    ×
+                                </button>
+                                <h4>
+                                    MUY BIEN!
+                                </h4> <strong>Registró correctamente su compra</strong>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-lg-6">
                         <h5 class="m-t-lg with-border m-t-0"><i class="fas fa-chalkboard-teacher"></i> Cliente</h5>
@@ -27,7 +42,7 @@
                         <div class="form-group">
                             <div class="form-group col-md-12">
                                 <label for="dni">DNI</label>
-                                <input type="text" placeholder="ej:70546535" name="dni" class="form-control" id="dni">
+                                <input type="text" placeholder="ej: 70546535" name="dni" class="form-control" id="dni">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="nombres">
@@ -163,6 +178,7 @@
                                     <div class="form-group">    
                                         <label for="viaje">Viaje</label>
                                         <select id="viaje" name="viaje" class="form-control">
+                                                <option value="0" selected>Seleccione...</option>
                                             @foreach ($viajes as $viaje)
                                                 <option value="{{$viaje->id}}">{{$viaje->descripcion}} - {{$viaje->fecha}} {{$viaje->hora}}</option>
                                             @endforeach
@@ -172,9 +188,17 @@
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label for="monto">
+                                            Fecha
+                                        </label>
+                                        <input type="date" placeholder="ej: 300.50" class="form-control" name="fecha-reserva" id="fecha-reserva" /> 
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label for="monto">
                                             Monto
                                         </label>
-                                        <input type="file" class="form-control-file" id="monto" /> 
+                                        <input type="text" placeholder="ej: 300.50" class="form-control" name="monto" id="monto" /> 
                                     </div>
                                 </div>
     
@@ -211,6 +235,10 @@ http://www.forosdelweb.com/f13/obtener-solo-valor-tr-con-onclick-1004289/
 
 @section('scripts')
     <script>
-       
+       $(document).ready(function(){
+            //alert('Hola');
+            $("#paquete").val("-1");
+            //$("#viaje").val("-1");
+        });
     </script>
 @endsection

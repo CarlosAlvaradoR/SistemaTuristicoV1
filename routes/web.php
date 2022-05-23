@@ -29,6 +29,9 @@ use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\ViajesPaquetesController;
 use App\Http\Controllers\ReservasController;    
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\EmpresastransportesController;
+use App\Http\Controllers\VehiculosController;
+use App\Http\Controllers\ChoferesController;
 
 Route::get('/reportes', function () {
     return view('paquetes/reportes/index');
@@ -197,8 +200,6 @@ Route::delete('/package/details/almuerzo/delete/{idpaqueteAlmuerzo}', [PaquetesT
 
 
 /** PARA TRANSPORTES  ************************/
-Route::get('/transporte', [ReservasController::class, 'transporte'])->name('nuevos.transportes')->middleware('auth');
-
 
 /*************************************** */
 
@@ -243,9 +244,23 @@ Route::get('/postergacion/reserva/atencion', [ReservasController::class, 'atenci
 /**** PARA LOS VIAJES **********************/
 Route::get('/viaje/{slug}/programacion', [ViajesPaquetesController::class, 'index'])->name('index.viajes.admin')->middleware('auth');
 Route::post('/viaje/save', [ViajesPaquetesController::class, 'store'])->name('index.viajes.admin.store')->middleware('auth');
-Route::get('/viaje/a/detalles', [ReservasController::class, 'asignarDetallesViaje'])->name('index.viajes.admin.asignar.detalles')->middleware('auth');
+Route::get('/viaje/a/detalles/{id}', [ReservasController::class, 'asignarDetallesViaje'])->name('index.viajes.admin.asignar.detalles')->middleware('auth');
 Route::get('/viaje/control/inicio', [ReservasController::class, 'viajeControl'])->name('index.viajes.control.admin')->middleware('auth');
 Route::get('/viaje/control/inicio/detalles', [ReservasController::class, 'viajeControlDetalles'])->name('index.viajes.control.detalles.admin')->middleware('auth');
+
+/** Transporte */
+Route::get('/transporte', [EmpresastransportesController::class, 'index'])->name('nuevos.transportes')->middleware('auth');
+Route::get('/transporte/create', [EmpresastransportesController::class, 'create'])->name('nueva.empresa')->middleware('auth');
+Route::post('/transporte/create/save', [EmpresastransportesController::class, 'store'])->name('guardar.empresa')->middleware('auth');
+
+Route::get('/transporte/vehiculos/{idempresa}', [VehiculosController::class, 'index'])->name('nueva.vehiculo.empresa')->middleware('auth');
+Route::get('/transporte/vehiculos/create/{idempresa}', [VehiculosController::class, 'create'])->name('nueva.vehiculo.empresa.formulario')->middleware('auth');
+Route::post('/transporte/vehiculos/create/save/{id}', [VehiculosController::class, 'store'])->name('guardar.vehiculo.empresa')->middleware('auth');
+
+Route::get('/transporte/vehiculos/conductor/{idvehiculo}', [ChoferesController::class, 'index'])->name('nuevos.choferes.vehiculo')->middleware('auth');
+Route::post('/transporte/vehiculos/conductor/save/{idvehiculo}', [ChoferesController::class, 'store'])->name('guardar.choferes.vehiculo')->middleware('auth');
+
+
 /********************************************/
 
 
