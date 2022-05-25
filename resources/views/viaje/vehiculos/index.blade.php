@@ -27,7 +27,7 @@
         
         <section class="card "> <!-- //- class="box-typical-full-height"-->
             <div class="card-block">
-                <h5 class="with-border m-t-0">Listado de Vehículos</h5>
+                <h5 class="with-border m-t-0">{{$nombre}} - Listado de Vehículos</h5>
                 <div class="row">
                     <div class="row">
                         <div class="col-md-12">

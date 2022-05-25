@@ -16,13 +16,8 @@ class CreateGuiasTable extends Migration
         Schema::create('guias', function (Blueprint $table) {
             $table->id();
 
-            $table->decimal('monto_pagar', 10,2);
-
             $table->integer('idpersona')->unsigned();
             $table->foreign('idpersona')->references('idpersona')->on('personas');
-
-            $table->unsignedBigInteger('viaje_paquete_id');
-            $table->foreign('viaje_paquete_id')->references('id')->on('viajes_paquetes');
             
             $table->timestamps();
         });

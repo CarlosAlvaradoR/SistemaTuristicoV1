@@ -96,9 +96,17 @@ Vehículo
 php artisan make:migration create_vehiculos_table  
 php artisan make:model Vehiculos -r 
 
+Tipo Licencias Conducir (Licencias para los choferes)
+php artisan make:migration create_tipoLicencias_table
+php artisan make:model TipoLicencias -r
+
 Choferes
 php artisan make:migration create_choferes_table
 php artisan make:model Choferes -r 
+
+Choferes Vehiculos
+php artisan make:migration create_choferesVehiculos_table
+php artisan make:model ChoferesVehiculos -r
 
 Tralado Viajes
 php artisan make:migration create_trasladoViajes_table
@@ -112,9 +120,17 @@ Cocinero
 php artisan make:migration create_cocineros_table
 php artisan make:model Cocineros -r
 
+Cocineros Viajes
+php artisan make:migration create_cocinerosViajes_table
+php artisan make:model CocinerosViajes -r
+
 Guia
 php artisan make:migration create_guias_table
 php artisan make:model Guias -r 
+
+Guias Viajes
+php artisan make:migration create_guiasViajes_table
+
 
 Asociacion
 php artisan make:migration create_asociaciones_table

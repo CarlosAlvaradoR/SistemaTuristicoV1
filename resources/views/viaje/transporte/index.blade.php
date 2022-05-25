@@ -81,7 +81,7 @@
                                                             <button type="button" class="tabledit-edit-button btn btn-sm btn-warning" style="float: none;">
                                                                 <span class="glyphicon glyphicon-pencil"></span>
                                                             </button>
-                                                            <a href="{{ route('nueva.vehiculo.empresa', $empresa->id) }}" class="tabledit-edit-button btn btn-sm btn-success" style="float: none;" title="Añadir Vehículos">
+                                                            <a href="{{ route('nueva.vehiculo.empresa', $empresa->slug) }}" class="tabledit-edit-button btn btn-sm btn-success" style="float: none;" title="Añadir Vehículos">
                                                                 <i class="fas fa-car-side"></i>
                                                             </a>
                                                             <button type="button" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none;">

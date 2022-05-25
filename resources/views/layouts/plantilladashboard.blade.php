@@ -439,6 +439,16 @@
 	            </ul>
 	        </li>
 
+			<li class="green with-sub">
+	            <span>
+	                <i class="fa fa-user"></i>
+	                <span class="lbl">Trabajadores</span>
+	            </span>
+	            <ul>
+	                <li><a href="{{ route('usuarios.nuevos') }}"><span class="lbl">Conductores</span><span class="label label-custom label-pill label-succes">new</span></a></li>
+	                <li><a href="{{ route('usuarios.permisos') }}"><span class="lbl">Guias</span></a></li>   
+	            </ul>
+	        </li>
 			
 			<li class="green">
 	            <a href="{{ route('organizaciones.acemilas.equipos') }}">

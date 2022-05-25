@@ -8,7 +8,7 @@
             <div class="tbl">
                 <div class="tbl-row">
                     <div class="tbl-cell">
-                        <h3>Vehículo</h3>
+                        <h3>Conductores</h3>
                         <ol class="breadcrumb breadcrumb-simple">
                             <li><a href="#">Transporte</a></li>
                             <li><a href="#">Vehículo</a></li>
@@ -23,6 +23,8 @@
             
             <div class="col-xl-6">
                 <section class="box-typical steps-icon-block">
+                    <form action="{{ route('guardar.choferes.vehiculo', $idVehiculo) }}" method="post">
+                        @csrf
                         @if ($mensaje = Session::get('succes'))
                             <div class="row">
                                 <div class="col-md-12">
@@ -51,28 +53,16 @@
 
                                 <div class="steps-numeric-inner">
                                     <div class="row">
-                                        <form action="{{ route('nuevos.choferes.vehiculo', $idVehiculo) }}" method="get">
-											<div class="col-md-12">
-												<div class="row">
-													<div class="form-group col-md-6">
-														<label for="dni">DNI</label>
-														<input type="text" placeholder="ej: 70546535" name="dni" class="form-control" id="dni">
-													</div>
-													<div class="form-group col-md-6">
-														<button class="btn btn-danger">Buscar</button>
-													</div>
-												</div>
-											</div>
-										</form>
-
+                                        
                                         <div class="col-md-12">
                                             <div class="row">
-                    <form action="{{ route('guardar.choferes.vehiculo', $idVehiculo) }}" method="post">
-                                                    @csrf
-                                                                        
-                                                <div class="form-group col-md-12">
+                                                
+                                                <div class="form-group col-md-6">
                                                     <label for="dni">DNI</label>
                                                     <input type="text" placeholder="ej: 70546535" name="dni" class="form-control" id="dni">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <button class="btn btn-danger">Buscar</button>
                                                 </div>
                                                 
                                                 <div class="form-group col-md-12">

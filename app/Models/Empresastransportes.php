@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Empresastransportes extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre_empresa'];
+    protected $fillable = ['nombre_empresa', 'slug'];
 }

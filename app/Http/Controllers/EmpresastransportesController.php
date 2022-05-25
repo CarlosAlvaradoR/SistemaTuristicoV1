@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Empresastransportes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class EmpresastransportesController extends Controller
 {
@@ -12,7 +13,7 @@ class EmpresastransportesController extends Controller
     public function index()
     {
         //
-        $empresas=DB::select('SELECT id, nombre_empresa FROM empresastransportes');
+        $empresas=DB::select('SELECT id, nombre_empresa, slug FROM empresastransportes');
 
         return view('viaje/transporte/index', compact('empresas'));
     }
@@ -37,8 +38,11 @@ class EmpresastransportesController extends Controller
     public function store(Request $request)
     {
         //
+        $slug=Str::slug($request->post('nombre_empresa'), '-');
+        
         $empresa=Empresastransportes::create([
-            'nombre_empresa'=>$request->post('nombre_empresa')
+            'nombre_empresa'=>$request->post('nombre_empresa'),
+            'slug'=> $slug
         ]);
         return redirect()->route('nueva.empresa')->with("succes","Agregado con éxito");
     }

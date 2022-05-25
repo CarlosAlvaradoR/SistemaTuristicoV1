@@ -14,9 +14,15 @@ class ChoferesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index(Request $request ,$id)
     {
         //
+        //return $request;
+        if ($request->get('dni') == null) {
+            $dni='dd';
+        }
+
+        $choferesRegistrados=DB::select('');
         $idVehiculo=$id;
         $choferes=DB::select('SELECT p.nombres, p.apellidos, ch.licencia_conducir, ch.id FROM personas p
         INNER JOIN choferes ch on p.idpersona=ch.idpersona

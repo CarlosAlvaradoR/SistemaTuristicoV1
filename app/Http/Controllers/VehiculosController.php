@@ -13,15 +13,18 @@ class VehiculosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index($slug)
     {
         //
+        $datosEmpresa=DB::select('SELECT id, nombre_empresa FROM empresastransportes WHERE slug="'.$slug.'"');
         $vehiculos = DB::select('SELECT id, descripcion, tipovehiculo_id, empresatransporte_id FROM vehiculos 
-        WHERE empresatransporte_id = '.$id.'');
+        WHERE empresatransporte_id = '.$datosEmpresa[0]->id.'');
         
-        $empresaIds=$id;
+        $empresaIds=$datosEmpresa[0]->id;
+        $nombre=$datosEmpresa[0]->nombre_empresa;
+        
         //return $empresaId;
-        return view('viaje/vehiculos/index', compact('vehiculos', 'empresaIds'));
+        return view('viaje/vehiculos/index', compact('vehiculos', 'empresaIds', 'nombre'));
     }
 
     

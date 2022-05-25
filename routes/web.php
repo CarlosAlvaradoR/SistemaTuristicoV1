@@ -253,13 +253,15 @@ Route::get('/transporte', [EmpresastransportesController::class, 'index'])->name
 Route::get('/transporte/create', [EmpresastransportesController::class, 'create'])->name('nueva.empresa')->middleware('auth');
 Route::post('/transporte/create/save', [EmpresastransportesController::class, 'store'])->name('guardar.empresa')->middleware('auth');
 
-Route::get('/transporte/vehiculos/{idempresa}', [VehiculosController::class, 'index'])->name('nueva.vehiculo.empresa')->middleware('auth');
-Route::get('/transporte/vehiculos/create/{idempresa}', [VehiculosController::class, 'create'])->name('nueva.vehiculo.empresa.formulario')->middleware('auth');
+Route::get('/transporte/vehiculos/{slug}', [VehiculosController::class, 'index'])->name('nueva.vehiculo.empresa')->middleware('auth');
+Route::get('/transporte/vehiculos/create/{idempresa?}', [VehiculosController::class, 'create'])->name('nueva.vehiculo.empresa.formulario')->middleware('auth');
 Route::post('/transporte/vehiculos/create/save/{id}', [VehiculosController::class, 'store'])->name('guardar.vehiculo.empresa')->middleware('auth');
 
 Route::get('/transporte/vehiculos/conductor/{idvehiculo}', [ChoferesController::class, 'index'])->name('nuevos.choferes.vehiculo')->middleware('auth');
 Route::post('/transporte/vehiculos/conductor/save/{idvehiculo}', [ChoferesController::class, 'store'])->name('guardar.choferes.vehiculo')->middleware('auth');
 
+/** Conductores */
+Route::get('/conductores', [ChoferesController::class, 'index2'])->name('nuevos.choferes.vehiculo.2')->middleware('auth');
 
 /********************************************/
 
