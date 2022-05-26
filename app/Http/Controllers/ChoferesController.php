@@ -22,14 +22,22 @@ class ChoferesController extends Controller
             $dni='dd';
         }
 
-        $choferesRegistrados=DB::select('');
+        //$choferesRegistrados=DB::select('');
         $idVehiculo=$id;
-        $choferes=DB::select('SELECT p.nombres, p.apellidos, ch.licencia_conducir, ch.id FROM personas p
-        INNER JOIN choferes ch on p.idpersona=ch.idpersona
-        INNER JOIN vehiculos v on v.id=ch.vehiculo_id
-        WHERE v.id='.$id.'');
+        $choferes=DB::select('SELECT p.nombres, p.apellidos, ch.numero_licencia,ch.id FROM personas p 
+        INNER JOIN choferes ch on p.idpersona=ch.idpersona 
+        INNER JOIN choferes_vehiculos cv on cv.chofer_id=ch.id
+        INNER JOIN vehiculos v on v.id=cv.vehiculo_id WHERE v.id='.$id.'');
         $nacionalidades=DB::select('SELECT idnacionalidad, nombre FROM nacionalidades');
         return view('viaje/conductores/index', compact('nacionalidades', 'idVehiculo', 'choferes'));
+    }
+
+    public function index2(){
+        $nacionalidades=DB::select('SELECT idnacionalidad, nombre FROM nacionalidades');
+        $licencias=DB::select('SELECT id,nombre FROM tipo_licencias');
+        $choferes=DB::select('SELECT p.nombres, p.apellidos, ch.numero_licencia,ch.id FROM personas p
+        INNER JOIN choferes ch on p.idpersona=ch.idpersona');
+        return view('viaje/conductores/indexadmin', compact('nacionalidades','licencias', 'choferes'));
     }
 
     /**
@@ -48,10 +56,26 @@ class ChoferesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $idVehiculo)
+    public function store(Request $request)
     {
         //
         $persona = Personas::create([
+            'dni'=>$request->post('dni'), 
+            'nombres'=>$request->post('nombres'), 
+            'apellidos'=>$request->post('apellidos'), 
+            'genero'=>$request->post('genero'), 
+            'direccion'=>$request->post('direccion'), 
+            'telefono'=>$request->post('telefono'), 
+            'correo'=>$request->post('correo')
+        ]);
+        $idpersona=(DB::select('SELECT idpersona as idpersona FROM personas ORDER BY idpersona desc limit 1'));
+        
+        $choferes=Choferes::create([
+            'numero_licencia'=>$request->post('licencia'),
+            'idpersona' =>$idpersona[0]->idpersona, 
+            'tipolicencia_id'=>$request->post('tipo_licencia')
+        ]);
+        /*$persona = Personas::create([
             'dni'=>$request->post('dni'), 
             'nombres'=>$request->post('nombres'), 
             'apellidos'=>$request->post('apellidos'), 
@@ -67,9 +91,9 @@ class ChoferesController extends Controller
             'tipo'=>$request->post('tipo-chofer-vehiculo'), 
             'idpersona' =>$idpersona[0]->idpersona, 
             'vehiculo_id' => $idVehiculo
-        ]);
-
-        return redirect()->route('nuevos.choferes.vehiculo', [$idVehiculo])->with("succes","Agregado con éxito");
+        ]);*/
+        //return "Aprobado";
+        return redirect()->route('nuevos.choferes.vehiculo.admin')->with("succes","Agregado con éxito");
     }
 
     /**

@@ -130,7 +130,7 @@ php artisan make:model Guias -r
 
 Guias Viajes
 php artisan make:migration create_guiasViajes_table
-
+php artisan make:model GuiasViajes -r
 
 Asociacion
 php artisan make:migration create_asociaciones_table
@@ -139,6 +139,14 @@ php artisan make:model Asociaciones -r
 Arrieros
 php artisan make:migration create_arrieros_table
 php artisan make:model Arrieros -r
+
+Acemilas
+php artisan make:migration create_acemilas_table
+php artisan make:model Acemilas -r
+
+Asociacion Arrieros
+php artisan make:migration create_asociacionArrieros_table
+php artisan make:model AsociacionArrieros -r
 
 Almuerzos Celebraciones
 php artisan make:migration create_almuerzosCelebraciones_table

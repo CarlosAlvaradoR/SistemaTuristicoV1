@@ -21,9 +21,73 @@
 
         <div class="row">
             
-            <div class="col-xl-6">
+            
+            <div class="col-xl-12">
+                <section class="box-typical steps-numeric-block">
+                    <div class="steps-numeric-header">
+                        <div class="steps-numeric-header-in">
+                            <ul>
+                                <li><div class="item"><span class=""></span>Conductores</div></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="steps-numeric-inner">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-bordered table-hover nowrap"  id="example">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    #
+                                                </th>
+                                                <th>
+                                                    Conductor
+                                                </th>
+                                                <th>
+                                                    Licencia
+                                                </th>
+                                                <th>
+                                                    Acciones
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody> <!-- tr y td-->
+                                            @php
+                                                $contChofer=1;
+                                            @endphp
+                                            @foreach ($choferes as $chofer)
+                                                <tr>
+                                                    <td>{{$contChofer++}}</td>
+                                                    <td>{{$chofer->nombres}} {{$chofer->apellidos}}</td>
+                                                    <td>{{$chofer->numero_licencia}}</td>
+                                                    <td>
+                                                        <button type="button" title="Editar" class="tabledit-edit-button btn btn-sm btn-warning" style="float: none;">
+                                                            <span class="glyphicon glyphicon-pencil"></span>
+                                                        </button>
+                                                        <a href="#" class="tabledit-edit-button btn btn-sm btn-success" style="float: none;" title="Asignar Conductores">
+                                                            <i class="far fa-id-card"></i>
+                                                        </a>
+                                                        <a href="" title="Quitar" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none;">
+                                                            <span class="glyphicon glyphicon-trash"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section><!--.steps-numeric-block-->
+            </div>
+
+            <div class="col-xl-4">
                 <section class="box-typical steps-icon-block">
-                    <form action="{{ route('guardar.choferes.vehiculo', $idVehiculo) }}" method="post">
+                    <form action="{{ route('guardar.choferes') }}" method="post">
                         @csrf
                         @if ($mensaje = Session::get('succes'))
                             <div class="row">
@@ -57,12 +121,9 @@
                                         <div class="col-md-12">
                                             <div class="row">
                                                 
-                                                <div class="form-group col-md-6">
+                                                <div class="form-group col-md-12">
                                                     <label for="dni">DNI</label>
                                                     <input type="text" placeholder="ej: 70546535" name="dni" class="form-control" id="dni">
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <button class="btn btn-danger">Buscar</button>
                                                 </div>
                                                 
                                                 <div class="form-group col-md-12">
@@ -109,14 +170,14 @@
                                                         Nacionalidad
                                                     </label>
                                                     <select id="nacionalidad" name="nacionalidad" class="form-control">
-                                                        @foreach ($nacionalidades as $nacionalidad)
-                                                            <option value="{{$nacionalidad->idnacionalidad}}">{{$nacionalidad->nombre}}</option>
-                                                        @endforeach
+                                                       @foreach ($nacionalidades as $nacion)
+                                                           <option value="{{$nacion->idnacionalidad}}">{{$nacion->nombre}}</option>
+                                                       @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-md-12">
                                                     <label for="licencia">
-                                                        Licencia
+                                                       Nº Licencia
                                                     </label>
                                                     <input type="text" name="licencia" class="form-control" id="correo"/>
                                                 </div>
@@ -124,7 +185,11 @@
                                                     <label for="tipo-chofer-vehiculo">
                                                         Tipo
                                                     </label>
-                                                    <input type="text" name="tipo-chofer-vehiculo" class="form-control" id="correo"/>
+                                                    <select id="tipo_licencia" name="tipo_licencia" class="form-control">
+                                                        @foreach ($licencias as $licencia)
+                                                            <option value="{{$licencia->id}}">{{$licencia->nombre}}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -141,66 +206,6 @@
                     </form>
                 </section><!--.steps-icon-block-->
             </div>
- 
-            <div class="col-xl-6">
-                <section class="box-typical steps-numeric-block">
-                    <div class="steps-numeric-header">
-                        <div class="steps-numeric-header-in">
-                            <ul>
-                                <li><div class="item"><span class=""></span>Conductores</div></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="steps-numeric-inner">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Conductor
-                                                </th>
-                                                <th>
-                                                    Licencia
-                                                </th>
-                                                <th>
-                                                    Acciones
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($choferes as $chofer)
-                                                <tr>
-                                                    <td>
-                                                        {{$chofer->nombres}} {{$chofer->apellidos}}
-                                                    </td>
-                                                    <td>
-                                                        {{$chofer->licencia_conducir}}
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" title="Editar" class="tabledit-edit-button btn btn-sm btn-warning" style="float: none;">
-                                                            <span class="glyphicon glyphicon-pencil"></span>
-                                                        </button>
-                                                        <a href="#" class="tabledit-edit-button btn btn-sm btn-success" style="float: none;" title="Asignar Conductores">
-                                                            <i class="far fa-id-card"></i>
-                                                        </a>
-                                                        <a href="" title="Quitar" class="tabledit-delete-button btn btn-sm btn-danger" style="float: none;">
-                                                            <span class="glyphicon glyphicon-trash"></span>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section><!--.steps-numeric-block-->
-            </div>
 
         </div><!--.row-->
         
@@ -209,5 +214,10 @@
 
 @section('scripts')
     <script>
+        $(function() {
+			$('#choferes').DataTable({
+				responsive: true
+			});
+		});
     </script>
 @endsection

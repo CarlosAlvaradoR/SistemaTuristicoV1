@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Vehiculos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class VehiculosController extends Controller
 {
@@ -45,12 +46,15 @@ class VehiculosController extends Controller
     public function store(Request $request, $id)
     {
         //
+        $slug=Str::slug($request->post('nombre_empresa'), '-');
         $vehiculos = Vehiculos::create([
-            'descripcion' => $request->post('descripcion'), 
+            'placa'=> $request->post('placa'),
+            'descripcion' => $request->post('descripcion'),
+            'slug'=> $request->post('placa'), 
             'tipovehiculo_id'=> $request->post('tipo_vehiculo'), 
             'empresatransporte_id'=> $id
         ]);
-        return "Insertado correctamente";
+        return redirect()->route('nueva.vehiculo.empresa.formulario',[$id])->with("succes","Agregado con éxito");
     }
 
     /**

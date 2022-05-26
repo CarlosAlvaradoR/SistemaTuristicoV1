@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Choferes extends Model
+class AsociacionArrieros extends Model
 {
     use HasFactory;
-    protected $fillable = ['numero_licencia', 'idpersona', 'tipolicencia_id'];
 }

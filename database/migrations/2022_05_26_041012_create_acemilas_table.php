@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateArrierosTable extends Migration
+class CreateAcemilasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateArrierosTable extends Migration
      */
     public function up()
     {
-        Schema::create('arrieros', function (Blueprint $table) {
+        Schema::create('acemilas', function (Blueprint $table) {
             $table->id();
+            $table->string('descripcion');
+            $table->decimal('precio', 10,2);
 
-            $table->integer('idpersona')->unsigned();
-            $table->foreign('idpersona')->references('idpersona')->on('personas');
+            $table->unsignedBigInteger('arriero_id');
+            $table->foreign('arriero_id')->references('id')->on('arrieros');
 
             $table->timestamps();
         });
@@ -30,6 +32,6 @@ class CreateArrierosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('arrieros');
+        Schema::dropIfExists('acemilas');
     }
 }

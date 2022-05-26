@@ -261,8 +261,8 @@ Route::get('/transporte/vehiculos/conductor/{idvehiculo}', [ChoferesController::
 Route::post('/transporte/vehiculos/conductor/save/{idvehiculo}', [ChoferesController::class, 'store'])->name('guardar.choferes.vehiculo')->middleware('auth');
 
 /** Conductores */
-Route::get('/conductores', [ChoferesController::class, 'index2'])->name('nuevos.choferes.vehiculo.2')->middleware('auth');
-
+Route::get('/conductores', [ChoferesController::class, 'index2'])->name('nuevos.choferes.vehiculo.admin')->middleware('auth');
+Route::post('/transporte/vehiculos/conductor/save', [ChoferesController::class, 'store'])->name('guardar.choferes')->middleware('auth');
 /********************************************/
 
 
