@@ -1,6 +1,6 @@
 @extends('layouts/plantilladashboard')
 
-@section('tituloPagina','Clientes')
+@section('tituloPagina','Detalles del Viaje')
     
 @section('contenido')
     <div class="container-fluid">
@@ -11,8 +11,8 @@
                     <div class="tbl-cell">
                         <h3>Viajes</h3>
                         <ol class="breadcrumb breadcrumb-simple">
-                            <li><a href="{{ route('paquetes.activos.galeria') }}">Viajes</a></li>
-                            <li><a href="{{ route('paquetes.detalles', 2) }}">Registro</a></li>
+                            <li><a href="">Viajes</a></li>
+                            <li><a href="#!">Registro</a></li>
                             <li class="active">Programación</li>
                         </ol>
                     </div>
@@ -133,37 +133,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-12">
-                                     <a id="modal-659191" href="#modalVehiculo" role="button" class="btn" data-toggle="modal">Agregar Vehículo</a>
-                                    
-                                    <div class="modal fade" id="modalVehiculo" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="myModalLabel">
-                                                        Asignación de Vehículo
-                                                    </h5> 
-                                                    <button type="button" class="close" data-dismiss="modal">
-                                                        <span aria-hidden="true">×</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    ...
-                                                </div>
-                                                <div class="modal-footer">
-                                                     
-                                                    <button type="button" class="btn btn-primary">
-                                                        Save changes
-                                                    </button> 
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                        Close
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                    <br>
+                                    <a href="{{ route('asignar.vehiculo.viaje') }}" class="btn">Asignar vehículo</a>
                                     <table class="table">
                                         <thead>
                                             <tr>

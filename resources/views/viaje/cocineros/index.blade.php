@@ -1,6 +1,6 @@
 @extends('layouts/plantilladashboard')
 
-@section('tituloPagina','Nuevos Vehículo de las Empresas de Transporte')
+@section('tituloPagina','Gestión de Cocineros')
     
 @section('contenido')
     <div class="container-fluid">
@@ -8,10 +8,10 @@
             <div class="tbl">
                 <div class="tbl-row">
                     <div class="tbl-cell">
-                        <h3>Conductores</h3>
+                        <h3>Cocineros</h3>
                         <ol class="breadcrumb breadcrumb-simple">
-                            <li><a href="#">Transporte</a></li>
-                            <li><a href="#">Vehículo</a></li>
+                            <li><a href="#">Cocineros</a></li>
+                            <li><a href="#">Listado</a></li>
                             <li class="active">Nuevo</li>
                         </ol>
                     </div>
@@ -26,7 +26,7 @@
                     <section class="card">
                         
                         <div class="card-block">
-                            <h5 class="with-border m-t-0">Formulario de Clientes</h5>
+                            <h5 class="with-border m-t-0">Lista de Cocineros</h5>
                             <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
@@ -34,10 +34,7 @@
                                         #
                                     </th>
                                     <th>
-                                        Conductor
-                                    </th>
-                                    <th>
-                                        Licencia
+                                        Cocinero
                                     </th>
                                     <th>
                                         Acciones
@@ -50,10 +47,7 @@
                                         #
                                     </th>
                                     <th>
-                                        Conductor
-                                    </th>
-                                    <th>
-                                        Licencia
+                                        Cocinero
                                     </th>
                                     <th>
                                         Acciones
@@ -62,13 +56,12 @@
                                 </tfoot>
                                 <tbody> <!-- tr y td-->
                                     @php
-                                        $contChofer=1;
+                                        $contcocinero=1;
                                     @endphp
-                                    @foreach ($choferes as $chofer)
+                                    @foreach ($cocineros as $cocinero)
                                         <tr>
-                                            <td>{{$contChofer++}}</td>
-                                            <td>{{$chofer->nombres}} {{$chofer->apellidos}}</td>
-                                            <td>{{$chofer->numero_licencia}}</td>
+                                            <td>{{$contcocinero++}}</td>
+                                            <td>{{$cocinero->nombres}} {{$cocinero->apellidos}}</td>
                                             <td>
                                                 <button type="button" title="Editar" class="tabledit-edit-button btn btn-sm btn-warning" style="float: none;">
                                                     <span class="glyphicon glyphicon-pencil"></span>
@@ -91,7 +84,7 @@
                 <div class="col-md-4">
                     <div class="col-xl-12">
                         <section class="box-typical steps-icon-block">
-                            <form action="{{ route('guardar.choferes') }}" method="post">
+                            <form action="{{ route('guardar.cocineros') }}" method="post">
                                 @csrf
                                 @if ($mensaje = Session::get('succes'))
                                     <div class="row">
@@ -103,7 +96,7 @@
                                                 </button>
                                                 <h4>
                                                     Muy Bien!
-                                                </h4>El conductor fue registrado correctamente
+                                                </h4>El cocinero fue registrado correctamente
                                             </div>
                                         </div>
                                     </div>
@@ -111,7 +104,7 @@
                                 <div class="steps-numeric-header">
                                     <div class="steps-numeric-header-in">
                                         <ul>
-                                            <li><div class="item"><span class=""></span>Registro de Choferes</div></li>
+                                            <li><div class="item"><span class=""></span>Registro de Cocineros</div></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -177,22 +170,6 @@
                                                                @foreach ($nacionalidades as $nacion)
                                                                    <option value="{{$nacion->idnacionalidad}}">{{$nacion->nombre}}</option>
                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label for="licencia">
-                                                               Nº Licencia
-                                                            </label>
-                                                            <input type="text" name="licencia" class="form-control" id="correo"/>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label for="tipo-chofer-vehiculo">
-                                                                Tipo
-                                                            </label>
-                                                            <select id="tipo_licencia" name="tipo_licencia" class="form-control">
-                                                                @foreach ($licencias as $licencia)
-                                                                    <option value="{{$licencia->id}}">{{$licencia->nombre}}</option>
-                                                                @endforeach
                                                             </select>
                                                         </div>
                                                     </div>

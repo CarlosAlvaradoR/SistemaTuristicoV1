@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Asociaciones;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AsociacionesController extends Controller
 {
@@ -15,6 +16,8 @@ class AsociacionesController extends Controller
     public function index()
     {
         //
+        $asociaciones=DB::select('SELECT id, nombre, estado FROM asociaciones');
+        return view('viaje/asociaciones/index', compact('asociaciones'));
     }
 
     /**
@@ -36,6 +39,12 @@ class AsociacionesController extends Controller
     public function store(Request $request)
     {
         //
+        $asociaciones=Asociaciones::create([
+            'nombre' => $request->post('nombre'),
+            'estado'=> $request->post('estado')
+        ]);
+
+        return redirect()->route('nuevas.asociaciones')->with("succes","Agregado con éxito");
     }
 
     /**

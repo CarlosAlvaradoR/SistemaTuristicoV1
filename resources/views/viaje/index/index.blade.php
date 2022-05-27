@@ -94,7 +94,7 @@
                     <div class="steps-numeric-header">
                         <div class="steps-numeric-header-in">
                             <ul>
-                                <li><div class="item"><span class=""></span>Fechas Disponibles</div></li>
+                                <li><div class="item"><span class=""></span>Fechas Disponibles - {{$nombre}} </div></li>
                             </ul>
                         </div>
                     </div>

@@ -446,10 +446,19 @@
 	            </span>
 	            <ul>
 	                <li><a href="{{ route('nuevos.choferes.vehiculo.admin') }}"><span class="lbl">Conductores</span><span class="label label-custom label-pill label-succes">new</span></a></li>
-	                <li><a href="{{ route('usuarios.permisos') }}"><span class="lbl">Guias</span></a></li>   
+	                <li><a href="{{ route('nuevos.guias') }}"><span class="lbl">Guias</span></a></li>
+					<li><a href="{{ route('nuevos.cocineros') }}"><span class="lbl">Cocineros</span></a></li>
+					<li><a href="{{ route('nuevos.arrieros') }}"><span class="lbl">Arrieros</span></a></li>   
 	            </ul>
 	        </li>
 			
+			<li class="darkblue">
+	            <a href="{{ route('nuevas.asociaciones') }}">
+					<i class="fas fa-people-carry glyphicon glyphicon-send"></i>
+	                <span class="lbl">Asociaciones</span>
+	            </a>
+	        </li>
+
 			<li class="green">
 	            <a href="{{ route('organizaciones.acemilas.equipos') }}">
 	                <i class="font-icon glyphicon glyphicon-send"></i>

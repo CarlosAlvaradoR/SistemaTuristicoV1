@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Arrieros extends Model
 {
     use HasFactory;
+    protected $fillable = ['idpersona'];
 }

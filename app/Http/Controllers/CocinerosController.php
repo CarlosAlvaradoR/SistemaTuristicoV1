@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cocineros;
+use App\Models\Personas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CocinerosController extends Controller
 {
@@ -15,6 +17,10 @@ class CocinerosController extends Controller
     public function index()
     {
         //
+        $nacionalidades=DB::select('SELECT idnacionalidad, nombre FROM nacionalidades');
+        $cocineros=DB::select('SELECT p.nombres, p.apellidos, co.id FROM personas p
+        INNER JOIN cocineros co on p.idpersona=co.idpersona');
+        return view('viaje/cocineros/index', compact('nacionalidades','cocineros'));
     }
 
     /**
@@ -36,6 +42,22 @@ class CocinerosController extends Controller
     public function store(Request $request)
     {
         //
+        $persona = Personas::create([
+            'dni'=>$request->post('dni'), 
+            'nombres'=>$request->post('nombres'), 
+            'apellidos'=>$request->post('apellidos'), 
+            'genero'=>$request->post('genero'), 
+            'direccion'=>$request->post('direccion'), 
+            'telefono'=>$request->post('telefono'), 
+            'correo'=>$request->post('correo')
+        ]);
+        $idpersona=(DB::select('SELECT idpersona as idpersona FROM personas ORDER BY idpersona desc limit 1'));
+        
+        $cocineros=Cocineros::create([
+            'idpersona' =>$idpersona[0]->idpersona
+        ]);
+
+        return redirect()->route('nuevos.cocineros')->with("succes","Agregado con éxito");
     }
 
     /**

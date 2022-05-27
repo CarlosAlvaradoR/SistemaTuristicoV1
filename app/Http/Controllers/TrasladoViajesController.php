@@ -15,6 +15,7 @@ class TrasladoViajesController extends Controller
     public function index()
     {
         //
+        return view('viaje/index/asignarVehiculos');
     }
 
     /**

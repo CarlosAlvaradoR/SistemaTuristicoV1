@@ -1,6 +1,6 @@
 @extends('layouts/plantilladashboard')
 
-@section('tituloPagina','Nuevos Vehículo de las Empresas de Transporte')
+@section('tituloPagina','Gestión de Guías')
     
 @section('contenido')
     <div class="container-fluid">
@@ -8,10 +8,10 @@
             <div class="tbl">
                 <div class="tbl-row">
                     <div class="tbl-cell">
-                        <h3>Conductores</h3>
+                        <h3>Guías</h3>
                         <ol class="breadcrumb breadcrumb-simple">
-                            <li><a href="#">Transporte</a></li>
-                            <li><a href="#">Vehículo</a></li>
+                            <li><a href="#">Guías</a></li>
+                            <li><a href="#">Listado</a></li>
                             <li class="active">Nuevo</li>
                         </ol>
                     </div>
@@ -34,10 +34,7 @@
                                         #
                                     </th>
                                     <th>
-                                        Conductor
-                                    </th>
-                                    <th>
-                                        Licencia
+                                        Guías
                                     </th>
                                     <th>
                                         Acciones
@@ -50,10 +47,7 @@
                                         #
                                     </th>
                                     <th>
-                                        Conductor
-                                    </th>
-                                    <th>
-                                        Licencia
+                                        Guías
                                     </th>
                                     <th>
                                         Acciones
@@ -62,13 +56,12 @@
                                 </tfoot>
                                 <tbody> <!-- tr y td-->
                                     @php
-                                        $contChofer=1;
+                                        $contguia=1;
                                     @endphp
-                                    @foreach ($choferes as $chofer)
+                                    @foreach ($guias as $guia)
                                         <tr>
-                                            <td>{{$contChofer++}}</td>
-                                            <td>{{$chofer->nombres}} {{$chofer->apellidos}}</td>
-                                            <td>{{$chofer->numero_licencia}}</td>
+                                            <td>{{$contguia++}}</td>
+                                            <td>{{$guia->nombres}} {{$guia->apellidos}}</td>
                                             <td>
                                                 <button type="button" title="Editar" class="tabledit-edit-button btn btn-sm btn-warning" style="float: none;">
                                                     <span class="glyphicon glyphicon-pencil"></span>
@@ -91,7 +84,7 @@
                 <div class="col-md-4">
                     <div class="col-xl-12">
                         <section class="box-typical steps-icon-block">
-                            <form action="{{ route('guardar.choferes') }}" method="post">
+                            <form action="{{ route('guardar.guias') }}" method="post">
                                 @csrf
                                 @if ($mensaje = Session::get('succes'))
                                     <div class="row">
@@ -111,7 +104,7 @@
                                 <div class="steps-numeric-header">
                                     <div class="steps-numeric-header-in">
                                         <ul>
-                                            <li><div class="item"><span class=""></span>Registro de Choferes</div></li>
+                                            <li><div class="item"><span class=""></span>Registro de Guías</div></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -177,22 +170,6 @@
                                                                @foreach ($nacionalidades as $nacion)
                                                                    <option value="{{$nacion->idnacionalidad}}">{{$nacion->nombre}}</option>
                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label for="licencia">
-                                                               Nº Licencia
-                                                            </label>
-                                                            <input type="text" name="licencia" class="form-control" id="correo"/>
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label for="tipo-chofer-vehiculo">
-                                                                Tipo
-                                                            </label>
-                                                            <select id="tipo_licencia" name="tipo_licencia" class="form-control">
-                                                                @foreach ($licencias as $licencia)
-                                                                    <option value="{{$licencia->id}}">{{$licencia->nombre}}</option>
-                                                                @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
