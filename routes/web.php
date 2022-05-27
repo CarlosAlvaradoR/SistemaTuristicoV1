@@ -254,7 +254,8 @@ Route::get('/viaje/control/inicio', [ReservasController::class, 'viajeControl'])
 Route::get('/viaje/control/inicio/detalles', [ReservasController::class, 'viajeControlDetalles'])->name('index.viajes.control.detalles.admin')->middleware('auth');
 
 /** --- Viaje Automóviles */
-Route::get('/viaje/detalles/asignacion/automoviles', [TrasladoViajesController::class, 'index'])->name('asignar.vehiculo.viaje')->middleware('auth');
+Route::get('/viaje/detalles/asignacion/automoviles/{idViaje}', [TrasladoViajesController::class, 'index'])->name('asignar.vehiculo.viaje')->middleware('auth');
+Route::post('/viaje/detalles/asignacion/automoviles/save/{idVehiculo}/{idViaje}', [TrasladoViajesController::class, 'store'])->name('guardar.vehiculo.viaje')->middleware('auth');
 
 
 

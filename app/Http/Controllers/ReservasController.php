@@ -163,8 +163,10 @@ class ReservasController extends Controller
     public function asignarDetallesViaje($id){
         DB::statement("SET SQL_MODE=''");
         $datos=DB::select('SELECT * FROM V_Reservas WHERE viaje_id='.$id.'');
-        //return $datos;
-        return view('viaje/index/detalles', compact('datos'));
+        
+        
+        $idViaje=$id;
+        return view('viaje/index/detalles', compact('datos','idViaje'));
     }
     public function viajeControl(){
         return view('viaje/componentes/index');
