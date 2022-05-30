@@ -202,8 +202,6 @@ Route::put('/package/details/almuerzo/edit/{idpaqueteAlmuerzo}', [PaquetesTipoal
 Route::delete('/package/details/almuerzo/delete/{idpaqueteAlmuerzo}', [PaquetesTipoalmuerzosController::class, 'destroy'])->name('eliminar.almuerzo.paquete')->middleware('auth');
 /****************************** */
 
-
-
 /** PARA TRANSPORTES  ************************/
 
 /*************************************** */
@@ -256,6 +254,7 @@ Route::get('/viaje/control/inicio/detalles', [ReservasController::class, 'viajeC
 /** --- Viaje Automóviles */
 Route::get('/viaje/detalles/asignacion/automoviles/{idViaje}', [TrasladoViajesController::class, 'index'])->name('asignar.vehiculo.viaje')->middleware('auth');
 Route::post('/viaje/detalles/asignacion/automoviles/save/{idVehiculo}/{idViaje}', [TrasladoViajesController::class, 'store'])->name('guardar.vehiculo.viaje')->middleware('auth');
+Route::delete('/viaje/detalles/asignacion/automoviles/delete/{idVehiculo}/{idViaje}', [TrasladoViajesController::class, 'destroy'])->name('eliminar.transporte.viajes')->middleware('auth');
 
 
 

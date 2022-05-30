@@ -26,7 +26,10 @@
                     <section class="card">
                         
                         <div class="card-block">
-                            <h5 class="with-border m-t-0"><button class="btn btn-primary" title="Volver a detalles de Viaje"><i class="fas fa-arrow-circle-left"></i></button> Lista de Vehículos</h5>
+                            <h5 class="with-border m-t-0">
+                                <a href="{{ route('index.viajes.admin.asignar.detalles', [$idViaje]) }}" title="Volver a detalles de Viaje" class="btn btn-primary"><i class="fas fa-arrow-circle-left"></i></a>
+                                Lista de Vehículos
+                            </h5>
                             <table id="example" class="display table table-striped table-bordered" cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
@@ -144,9 +147,14 @@
                                             <td>{{$vprogramado->nombre_empresa}} - {{$vprogramado->placa}}</td>
                                             <td>{{$vprogramado->monto}}</td>
                                             <td>
-                                                <a href="#" class="tabledit-edit-button btn btn-sm btn-danger btn-circle btn-sm" style="float: none;" title="Quitar Vehículo del Vije">
-                                                    <i class="fas fa-minus"></i>
-                                                </a>
+                                                <form action="{{ route('eliminar.transporte.viajes', [$vprogramado->id, $idViaje]) }}" method="POST" class="formEliminarItinerario">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input type="text" name="option" value="2" hidden>
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

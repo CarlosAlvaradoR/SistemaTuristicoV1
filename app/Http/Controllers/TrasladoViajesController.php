@@ -17,14 +17,14 @@ class TrasladoViajesController extends Controller
     {
         //
         $empresasVehiculos=DB::select('SELECT et.nombre_empresa, v.placa, v.id FROM empresastransportes et
-        INNER JOIN vehiculos v on et.id=v.empresatransporte_id');
+        INNER JOIN vehiculos v on et.id=v.empresatransporte_id
+        WHERE v.id NOT IN (SELECT vehiculo_id FROM traslado_viajes)');
 
-        $vehiculosProgramados=DB::select('SELECT et.nombre_empresa, v.placa,tv.monto, v.id FROM empresastransportes et
+        $vehiculosProgramados=DB::select('SELECT et.nombre_empresa, v.placa,tv.monto, tv.id FROM empresastransportes et
         INNER JOIN vehiculos v on et.id=v.empresatransporte_id
         INNER JOIN traslado_viajes tv on tv.vehiculo_id=v.id
         INNER JOIN viajes_paquetes vp on vp.id=tv.viaje_paquete_id
-        WHERE tv.vehiculo_id = '.$id.'');
-
+        WHERE tv.viaje_paquete_id = '.$id.'');
         $idViaje=$id;
 
         return view('viaje/index/asignarVehiculos', compact('empresasVehiculos','vehiculosProgramados' ,'idViaje'));
@@ -96,8 +96,14 @@ class TrasladoViajesController extends Controller
      * @param  \App\Models\TrasladoViajes  $trasladoViajes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TrasladoViajes $trasladoViajes)
+    public function destroy($idTrasladoViajes, $idViajePaquete)
     {
         //
+
+        //$idPaquete=DB::select('SELECT p.idpaqueteturistico FROM paquetes_tipoalmuerzos p WHERE p.idpaquete_tipoalmuerzo = '.$idPaqueteAlmuerzo.' LIMIT 1');
+        $eliminarTrasladoViajes=TrasladoViajes::where('id',$idTrasladoViajes)
+        ->delete();
+        
+        return redirect()->route('asignar.vehiculo.viaje',[$idViajePaquete])->with("succes","Agregado con éxito");
     }
 }
