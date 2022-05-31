@@ -8,11 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class TrasladoViajesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index($id)
     {
         //

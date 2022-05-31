@@ -164,9 +164,14 @@ class ReservasController extends Controller
         DB::statement("SET SQL_MODE=''");
         $datos=DB::select('SELECT * FROM V_Reservas WHERE viaje_id='.$id.'');
         
-        
+        $vehiculosProgramados=DB::select('SELECT et.nombre_empresa, v.placa,tv.monto, tv.id FROM empresastransportes et
+        INNER JOIN vehiculos v on et.id=v.empresatransporte_id
+        INNER JOIN traslado_viajes tv on tv.vehiculo_id=v.id
+        INNER JOIN viajes_paquetes vp on vp.id=tv.viaje_paquete_id
+        WHERE tv.viaje_paquete_id = '.$id.'');
+
         $idViaje=$id;
-        return view('viaje/index/detalles', compact('datos','idViaje'));
+        return view('viaje/index/detalles', compact('datos','idViaje','vehiculosProgramados'));
     }
     public function viajeControl(){
         return view('viaje/componentes/index');

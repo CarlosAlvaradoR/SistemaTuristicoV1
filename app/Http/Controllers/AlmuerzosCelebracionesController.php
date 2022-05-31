@@ -4,17 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\AlmuerzosCelebraciones;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AlmuerzosCelebracionesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    
+    public function index($id)
     {
         //
+
+        
     }
 
     /**
@@ -22,9 +21,16 @@ class AlmuerzosCelebracionesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         //
+        $asociaciones=DB::select('SELECT id, nombre FROM asociaciones');
+
+        $almuerzosAsociaciones=DB::select('SELECT ac.id, ac.descripcion, ac.cantidad, ac.monto, a.nombre FROM almuerzos_celebraciones ac
+        INNER JOIN asociaciones a on a.id=ac.asociacion_id 
+        WHERE ac.viaje_paquete_id = '.$id.'');
+        $idViaje=$id;
+        return view('viaje/index/asignarAlmuerzos', compact('idViaje', 'asociaciones', 'almuerzosAsociaciones'));
     }
 
     /**
@@ -33,9 +39,17 @@ class AlmuerzosCelebracionesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $idViaje)
     {
         //
+        $almuerzosCelebraciones = AlmuerzosCelebraciones::create([
+            'descripcion'=> $request->post('descripcion_almuerzo'), 
+            'cantidad' => $request->post('cantidad_almuerzos'), 
+            'monto' => $request->post('monto_almuerzos'), 
+            'viaje_paquete_id' => $idViaje, 
+            'asociacion_id'=> $request->post('asociacion_pk')
+        ]);
+        return redirect()->route('asignar.almuerzos.viaje',[$idViaje])->with("succes","Agregado con éxito");
     }
 
     /**
@@ -78,8 +92,13 @@ class AlmuerzosCelebracionesController extends Controller
      * @param  \App\Models\AlmuerzosCelebraciones  $almuerzosCelebraciones
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AlmuerzosCelebraciones $almuerzosCelebraciones)
+    public function destroy($idAlmuerzoCelebracion, $idViajePaquete)
     {
         //
+        $eliminarTrasladoViajes=AlmuerzosCelebraciones::where('id',$idAlmuerzoCelebracion)
+        ->delete();
+        
+        return redirect()->route('asignar.almuerzos.viaje',[$idViajePaquete])->with("succes","Agregado con éxito");
+        
     }
 }

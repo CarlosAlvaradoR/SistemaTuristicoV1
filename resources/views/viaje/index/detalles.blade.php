@@ -113,26 +113,54 @@
                                                     #
                                                 </th>
                                                 <th>
-                                                    Participante
+                                                    Empresa
+                                                </th>
+                                                <th>
+                                                    Monto
                                                 </th>
                                                 <th>
                                                     Acciones
                                                 </th>
                                             </tr>
-                                        </thead>
-                                        <tbody>
+                                            </thead>
+                                            <tfoot>
                                             <tr>
-                                                <td>
-                                                    1
-                                                </td>
-                                                <td>
-                                                    Carlos Emilio Alvarado Robles
-                                                </td>
-                                                <td>
-                                                    <a href="">Quitar</a>
-                                                </td>
+                                                <th>
+                                                    #
+                                                </th>
+                                                <th>
+                                                    Empresa
+                                                </th>
+                                                <th>
+                                                    Monto
+                                                </th>
+                                                <th>
+                                                    Acciones
+                                                </th>
                                             </tr>
-                                        </tbody>
+                                            </tfoot>
+                                            <tbody> <!-- tr y td-->
+                                                @php
+                                                    $contV=1;
+                                                @endphp
+                                                @foreach ($vehiculosProgramados as $vprogramado)
+                                                    <tr>
+                                                        <td>{{$contV++}}</td>
+                                                        <td>{{$vprogramado->nombre_empresa}} - {{$vprogramado->placa}}</td>
+                                                        <td>{{$vprogramado->monto}}</td>
+                                                        <td>
+                                                            <form action="{{ route('eliminar.transporte.viajes', [$vprogramado->id, $idViaje]) }}" method="POST" class="formEliminarItinerario">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <input type="text" name="option" value="2" hidden>
+                                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                                    <i class="fas fa-minus"></i>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -155,36 +183,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-12">
-                                     <a id="modal-659191" href="#modalAlmuerzo" role="button" class="btn" data-toggle="modal">Agregar Almuerzo</a>
-                                    
-                                    <div class="modal fade" id="modalAlmuerzo" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="myModalLabel">
-                                                        Asignar Almuerzo
-                                                    </h5> 
-                                                    <button type="button" class="close" data-dismiss="modal">
-                                                        <span aria-hidden="true">×</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    ...
-                                                </div>
-                                                <div class="modal-footer">
-                                                     
-                                                    <button type="button" class="btn btn-primary">
-                                                        Save changes
-                                                    </button> 
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                        Close
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                    </div>
+                                    <a href="{{ route('asignar.almuerzos.viaje', $idViaje) }}" class="btn btn-danger"> Agregar Almuerzo </a>
                                     <br>
                                     <table class="table">
                                         <thead>

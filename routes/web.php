@@ -37,6 +37,7 @@ use App\Http\Controllers\CocinerosController;
 use App\Http\Controllers\ArrierosController;
 use App\Http\Controllers\AsociacionesController;    
 use App\Http\Controllers\TrasladoViajesController;    
+use App\Http\Controllers\AlmuerzosCelebracionesController;    
 
 Route::get('/reportes', function () {
     return view('paquetes/reportes/index');
@@ -256,7 +257,10 @@ Route::get('/viaje/detalles/asignacion/automoviles/{idViaje}', [TrasladoViajesCo
 Route::post('/viaje/detalles/asignacion/automoviles/save/{idVehiculo}/{idViaje}', [TrasladoViajesController::class, 'store'])->name('guardar.vehiculo.viaje')->middleware('auth');
 Route::delete('/viaje/detalles/asignacion/automoviles/delete/{idVehiculo}/{idViaje}', [TrasladoViajesController::class, 'destroy'])->name('eliminar.transporte.viajes')->middleware('auth');
 
-
+/** --- Viaje Almuerzos */
+Route::get('/viaje/detalles/asignacion/almuerzos/{idViaje}', [AlmuerzosCelebracionesController::class, 'create'])->name('asignar.almuerzos.viaje')->middleware('auth');
+Route::post('/viaje/detalles/asignacion/almuerzos/save/{idViaje}', [AlmuerzosCelebracionesController::class, 'store'])->name('guardar.almuerzos.celebracion.viaje')->middleware('auth');
+Route::delete('/viaje/detalles/asignacion/almuerzos/delete/{idAlmuerzoCelebracion}/{idViaje}', [AlmuerzosCelebracionesController::class, 'destroy'])->name('eliminar.almuerzo.celebracion.viajes')->middleware('auth');
 
 
 /** Transporte */
