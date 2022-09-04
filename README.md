@@ -9,6 +9,10 @@
 Una vez teniendo el proyecto en su máquina, necesitará crear un archivo con la extensión .env,
 en el directorio, es recomendable copiar el archivo .env.example y quitarle la extensión .example. 
 Habiendo realizado ello ejecutar el siguiente comando en el terminal:
+- $ npm install
+- $ npm run dev
+Copiar el env. example y e borrar el example
+
 - $ php artisan key:generate  (Permitirá crear una clave local para poder trabajar de manera local)
 
 Para migrar las bases de datos es necesario que se cree una base de datos con un nombre específico, y ese nombre colocarlo en el administrador de mysql en el archivo .env, así como sus credenciales de base de datos local, luego el siguiente comando migrará las tablas ala base de datos:
