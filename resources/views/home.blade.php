@@ -1,23 +1,21 @@
-@extends('layouts.app')
+@extends('layouts/plantilladashboard')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+@section('tituloPagina', 'Usuarios')
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
+@section('contenido')
+    <div class="card-body">
+        @if (session('status'))
+            <div class="alert alert-success" role="alert">
+                {{ session('status') }}
             </div>
-        </div>
+        @endif
+
+        {{ __('You are logged in!') }}
     </div>
-</div>
+    <div class="container-fluid">
+        <h1>Bienvenido a la aplicación - {{ Auth::user()->name }}</h1>
+        <h1>Correo - {{ Auth::user()->email }}</h1>
+        <h1>Estado - {{Auth::check()}}</h1>
+    </div>
+    <!--.container-fluid-->
 @endsection
