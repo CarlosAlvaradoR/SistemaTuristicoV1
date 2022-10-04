@@ -8,19 +8,19 @@ Auth::routes(['verify' => true]);
 
 Route::get('/', function () {
     return view('paquetes_publico.inicio');
-});
+})->name('inicio');
 
 Route::get('/nosotros', function () {
     return view('paquetes_publico.inicio');
-});
+})->name('nosotros');
 
 Route::get('/destinos', function () {
-    return view('paquetes_publico.inicio');
-});
+    return view('paquetes_publico.destinos');
+})->name('destinos');
 
 Route::get('/contacto', function () {
     return view('paquetes_publico.inicio');
-});
+})->name('contacto');
 
 // RUTAS PARA EL DASHBOARD
 

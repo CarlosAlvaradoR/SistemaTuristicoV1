@@ -36,7 +36,9 @@
         <![endif]-->
 
     @include('includes/panel_landing/header')
-
+    
+    @yield('content')
+    
     <!-- slider_area_start -->
     <div class="slider_area">
         <div class="slider_active owl-carousel">

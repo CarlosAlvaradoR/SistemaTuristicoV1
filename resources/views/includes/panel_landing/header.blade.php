@@ -7,7 +7,7 @@
                     <div class="row align-items-center">
                         <div class="col-xl-2 col-lg-2">
                             <div class="logo">
-                                <a href="index.html">
+                                <a href="/">
                                     <img src="{{ asset('landing_assets/img/logo.png') }}" alt="">
                                 </a>
                             </div>
@@ -16,10 +16,10 @@
                             <div class="main-menu  d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a class="active" href="index.html">Inicio</a></li>
-                                        <li><a href="about.html">Nosotros</a></li>
-                                        <li><a class="" href="travel_destination.html">Destinos</a></li>
-                                        <li><a class="" href="travel_destination.html">Contacto</a></li>
+                                        <li><a class="active" href="/">Inicio</a></li>
+                                        <li><a href="{{ route('nosotros') }}">Nosotros</a></li>
+                                        <li><a class="" href="{{ route('destinos') }}">Destinos</a></li>
+                                        <li><a class="" href="{{ route('contacto') }}">Contacto</a></li>
 
 
                                         @if (Auth::check())
