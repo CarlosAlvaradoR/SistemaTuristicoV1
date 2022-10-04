@@ -7,12 +7,20 @@ Auth::routes(['verify' => true]);
 
 
 Route::get('/', function () {
-    return view('iniciodashboard');
+    return view('paquetes_publico.inicio');
 });
 
+Route::get('/nosotros', function () {
+    return view('paquetes_publico.inicio');
+});
 
+Route::get('/destinos', function () {
+    return view('paquetes_publico.inicio');
+});
 
-
+Route::get('/contacto', function () {
+    return view('paquetes_publico.inicio');
+});
 
 // RUTAS PARA EL DASHBOARD
 
@@ -20,15 +28,15 @@ Route::get('/', function () {
 Route::get('/iniciodashboard', function () {
     return view('iniciodashboard');
 });
-/** PARA EL NUEVOS USUARIOS */
+
 Route::get('/nuevosUsuarios', function () {
     return view('nuevosUsuarios');
 });
-/** PARA LOS PERMISOS DE LOS USUARIOS */
+
 Route::get('/permisosusers', function () {
     return view('permisosUsers');
 });
-/** ORGANIZACIONES - ACÉMILAS - GUÍA */
+
 Route::get('/organizaciones', function () {
     return view('organizacionesacemilasguia');
 });
