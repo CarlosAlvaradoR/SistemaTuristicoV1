@@ -34,7 +34,6 @@
 			<div class="wrap-login100">
 				<a href="/">
 					<div class="login100-form-title" style="background-image: url(login_assets/images/bg-01.jpg);">
-                        <i ></i>
 						<span class="login100-form-title-1">
 							@yield('title_content')
 						</span>

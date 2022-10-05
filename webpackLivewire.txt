@@ -1,0 +1,5 @@
+PAQUETES
+
+    ADMIN
+        Para los paquetes:
+        php artisan make:livewire PaquetesAdmin/ShowPaquetes

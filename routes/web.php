@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Livewire\ShowPaquetes;
 
 Auth::routes(['verify' => true]);
 
@@ -46,8 +46,9 @@ Route::get('/organizaciones', function () {
 
 /** PARA LOS PQUETES */
 Route::get('/paquete', function () {
-    return view('paqueteturistico');
-});
+    return view('paquetes_admin.index');
+})->name('paquetes.index');
+//Route::get('/paquete', ShowPaquetes::class)->name('dashboard');
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth', 'verified']);

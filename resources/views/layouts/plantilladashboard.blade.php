@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{ asset('dashboard_assets/css/lib/font-awesome/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dashboard_assets/css/lib/bootstrap/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dashboard_assets/css/main.css') }}">
+    @livewireStyles
 </head>
 
 <body class="with-side-menu">
@@ -53,6 +54,7 @@
     <script src="dashboard_assets/js/plugins.js"></script>
 
     <script src="dashboard_assets/js/app.js"></script>
+    @livewireScripts
 </body>
 
 </html>

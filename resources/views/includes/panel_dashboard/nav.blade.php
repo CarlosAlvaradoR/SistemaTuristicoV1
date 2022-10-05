@@ -33,7 +33,7 @@
         </li>
 
         <li class="blue">
-            <a href="equipos.php">
+            <a href="{{ route('paquetes.index') }}">
                 <i class="font-icon glyphicon glyphicon-send"></i>
                 <span class="lbl">Paquetes</span>
             </a>
