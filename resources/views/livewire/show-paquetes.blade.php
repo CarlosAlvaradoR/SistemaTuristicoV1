@@ -7,7 +7,8 @@
                     <label for="search">
                         Buscar
                     </label>
-                    <input type="text" class="form-control" id="search" placeholder="Buscar paquete" wire:model="search" />
+                    <input type="text" class="form-control" id="search" placeholder="Buscar paquete"
+                        wire:model="search" />
                 </div>
             </div>
         </div>
@@ -51,11 +52,12 @@
             <!--.card-user-->
         </div>
     @endforeach
-    <div class="d-flex">
-        
-        
-            {{ $paquetes->links() }}
-        
-    </div>
-   
+    <nav aria-label="...">
+        <ul class="pagination">
+
+            <li class="page-item" aria-current="page">
+                <a class="page-link" href="#">{{ $paquetes->links() }}</a>
+            </li>
+        </ul>
+    </nav>
 </div>
