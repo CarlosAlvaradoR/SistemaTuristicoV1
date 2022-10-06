@@ -11,6 +11,10 @@ use App\Models\Clientes;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Auth;
+//SPATIE
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class RegisterController extends Controller
 {
@@ -102,6 +106,23 @@ class RegisterController extends Controller
             'persona_id' => $persona_id,
             'user_id' => $user_id
         ]);
+        //Rol de Cliente y genéricamente trabajadores
+        $user_application->assignRole('cliente');
+
         return $user_application;
+    }
+
+
+    protected function redirectTo(){
+        if (Auth::user()->hasRole('cliente')) {
+            return "/cliente/perfil";
+        }
+
+        /*if (Auth::user()->hasRole('admin')) {
+            # code...
+        }*/
+
+
+        return "/home";
     }
 }
