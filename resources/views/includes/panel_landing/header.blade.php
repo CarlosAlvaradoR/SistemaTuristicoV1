@@ -27,6 +27,14 @@
                                                 <ul class="submenu">
                                                     <li><a href="{{ route('login') }}">Mi Perfil</a></li>
                                                     <li><a href="{{ route('register') }}">Mis Paquetes</a></li>
+                                                    <li><a href="{{ route('logout') }}"
+                                                            onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">Salir</a>
+                                                    </li>
+                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                        class="d-none">
+                                                        @csrf
+                                                    </form>
                                                 </ul>
                                             </li>
                                         @else

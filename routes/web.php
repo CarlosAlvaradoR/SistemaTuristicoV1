@@ -22,6 +22,16 @@ Route::get('/contacto', function () {
     return view('paquetes_publico.inicio');
 })->name('contacto');
 
+Route::get('/crear/role', function () {
+    /*$role =Role::create(['name'=>'admin']);
+$role =Role::create(['name'=>'cliente']);
+*/
+})->name('crearRole');
+
+Route::get('/cliente/perfil', function () {
+    return view('perfil_cliente.perfil_cliente');
+})->name('cliente')->middleware('verified', 'auth');
+
 // RUTAS PARA EL DASHBOARD
 
 /** PARA EL INICIO */
