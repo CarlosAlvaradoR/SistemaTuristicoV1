@@ -23,7 +23,7 @@ class CreatePaquetesTuristicosTable extends Migration
 
             $table->unsignedBigInteger('tipo_paquete_id');
             $table->foreign('tipo_paquete_id')->references('id')->on('tipo_paquetes');
-
+            
             $table->timestamps();
         });
     }

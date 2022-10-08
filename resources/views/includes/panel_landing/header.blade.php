@@ -23,10 +23,10 @@
 
 
                                         @if (Auth::check())
-                                            <li><a href="#">Usuario<i class="ti-angle-down"></i></a>
+                                            <li><a href="#" class="bold">{{Auth::user()->name}}<i class="ti-angle-down"></i></a>
                                                 <ul class="submenu">
-                                                    <li><a href="{{ route('login') }}">Mi Perfil</a></li>
-                                                    <li><a href="{{ route('register') }}">Mis Paquetes</a></li>
+                                                    <li><a href="{{ route('cliente.perfil') }}">Mi Perfil</a></li>
+                                                    <li><a href="{{ route('cliente.paquetes') }}">Mis Paquetes</a></li>
                                                     <li><a href="{{ route('logout') }}"
                                                             onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">Salir</a>

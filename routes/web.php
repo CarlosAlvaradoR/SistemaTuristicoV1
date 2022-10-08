@@ -2,7 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ShowPaquetes;
-
+/*use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;*/
+/*$role =Role::create(['name'=>'admin']);
+$role =Role::create(['name'=>'cliente']);*/
 Auth::routes(['verify' => true]);
 
 
@@ -22,16 +25,18 @@ Route::get('/contacto', function () {
     return view('paquetes_publico.inicio');
 })->name('contacto');
 
-Route::get('/crear/role', function () {
-    /*$role =Role::create(['name'=>'admin']);
-$role =Role::create(['name'=>'cliente']);
-*/
-})->name('crearRole');
+/*Route::get('/crear/role', function () {
+    
+
+})->name('crearRole');*/
 
 Route::get('/cliente/perfil', function () {
     return view('perfil_cliente.perfil_cliente');
-})->name('cliente')->middleware('verified', 'auth');
+})->name('cliente.perfil')->middleware('verified', 'auth');
 
+Route::get('/cliente/paquetes', function () {
+    return view('perfil_cliente.paquetes_comprados');
+})->name('cliente.paquetes')->middleware('verified', 'auth');
 // RUTAS PARA EL DASHBOARD
 
 /** PARA EL INICIO */
@@ -57,7 +62,7 @@ Route::get('/organizaciones', function () {
 /** PARA LOS PQUETES */
 Route::get('/paquete', function () {
     return view('paquetes_admin.index');
-})->name('paquetes.index');
+})->name('paquetes.index')->middleware(['auth', 'verified']);
 //Route::get('/paquete', ShowPaquetes::class)->name('dashboard');
 
 
