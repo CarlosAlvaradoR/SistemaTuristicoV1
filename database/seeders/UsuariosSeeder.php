@@ -33,5 +33,22 @@ class UsuariosSeeder extends Seeder
             'password' => bcrypt('123456789'), 
             'persona_id' => 1
         ]);
+
+        $jefferson = Personas::create([
+            'dni'=>'89837441', 
+            'nombre' => 'Jefferson Anthony', 
+            'apellidos' => 'Silvestre Gutierrez', 
+            'genero' => 1, 
+            'telefono' => '98373833', 
+            'dirección' => 'Av. Las Canteras'
+        ]);
+
+        User::create([
+            'name' => 'Jefferson Anthony', 
+            'email' => 'jeff.silvestre.gutierrez@gmail.com', 
+            'email_verified_at' =>'2022-12-12', 
+            'password' => bcrypt('123456789'), 
+            'persona_id' => $jefferson->id
+        ]);
     }
 }

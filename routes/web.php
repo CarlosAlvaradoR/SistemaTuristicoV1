@@ -2,10 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ShowPaquetes;
-/*use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;*/
-/*$role =Role::create(['name'=>'admin']);
-$role =Role::create(['name'=>'cliente']);*/
+
+
 Auth::routes(['verify' => true]);
 
 
