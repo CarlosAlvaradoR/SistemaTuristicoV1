@@ -81,7 +81,7 @@ class RegisterController extends Controller
     {
         //dd($data);
         
-        Personas::create([
+        $persona = Personas::create([
             'dni'=>$data['dni'],
             'nombre'=>$data['name_personal'],
             'apellidos'=>$data['apellido_personal'],
@@ -90,32 +90,35 @@ class RegisterController extends Controller
             'dirección'=>$data['direccion'],
         ]);
         
-        $persona = DB::select('SELECT id FROM personas ORDER BY id DESC LIMIT 1');
-        $persona_id=$persona[0]->id;
+        $persona_id = $persona->id;
+        /*$persona = DB::select('SELECT id FROM personas ORDER BY id DESC LIMIT 1');
+        $persona_id=$persona[0]->id;*/
 
-        $user_application=User::create([
+        $user=User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'persona_id' => $persona_id
         ]);
-        $user = DB::select('SELECT id FROM users ORDER BY id DESC LIMIT 1');
-        $user_id=$user[0]->id;
+        $user_id = $user->id;
 
-        Clientes::create([
+        $cliente = Clientes::create([
             'persona_id' => $persona_id,
             'user_id' => $user_id
         ]);
         //Rol de Cliente y genéricamente trabajadores
-        $user_application->assignRole('cliente');
+        $user->assignRole('cliente');
 
-        return $user_application;
+        return $user;
     }
 
 
     protected function redirectTo(){
         if (Auth::user()->hasRole('cliente')) {
-            return "/cliente/perfil";
+            $id = Auth::user()->id;
+            $persona = User::where('id', '=', $id );
+            return $persona;
+            return redirect()->route("cliente.perfil");
         }
 
         /*if (Auth::user()->hasRole('admin')) {

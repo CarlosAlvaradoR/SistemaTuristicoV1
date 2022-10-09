@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-    <h1>Este es el registro</h1>
     <form class="login100-form validate-form" method="POST" action="{{ route('register') }}">
         @csrf
 

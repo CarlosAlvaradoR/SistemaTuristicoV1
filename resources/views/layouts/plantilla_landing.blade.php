@@ -94,7 +94,8 @@
     <script src="{{ asset('landing_assets/js/jquery.form.js') }}"></script>
     <script src="{{ asset('landing_assets/js/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('landing_assets/js/mail-script.js') }}"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ru.min.js
+    "></script>
 
     <script src="{{ asset('landing_assets/js/main.js') }}"></script>
     <script>
@@ -102,7 +103,8 @@
             iconsLibrary: 'fontawesome',
             icons: {
                 rightIcon: '<span class="fa fa-caret-down"></span>'
-            }
+            },
+            language: 'ru'
         });
     </script>
 </body>

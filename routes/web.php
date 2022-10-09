@@ -17,9 +17,7 @@ Route::get('/nosotros', function () {
     return view('paquetes_publico.inicio');
 })->name('nosotros');
 
-Route::get('/destinos', function () {
-    return view('paquetes_publico.destinos');
-})->name('destinos');
+Route::get('/destinos', [App\Http\Controllers\PaquetesPublicos\PublicPaquetesController::class, 'index'])->name('destinos');
 
 Route::get('/contacto', function () {
     return view('paquetes_publico.inicio');
@@ -29,14 +27,22 @@ Route::get('/contacto', function () {
     
 
 })->name('crearRole');*/
+Route::group(['middleware' => ['auth', 'verified']], function () {
+    //
+    Route::get('/perfil/cliente', [App\Http\Controllers\PaquetesPublicos\ClientePublicoController::class, 'index'])->name('cliente.perfil');
 
-Route::get('/cliente/perfil', function () {
-    return view('perfil_cliente.perfil_cliente');
-})->name('cliente.perfil')->middleware('verified', 'auth');
+    Route::get('/cliente/paquetes', function () {
+        return view('perfil_cliente.paquetes_comprados');
+    })->name('cliente.paquetes');
 
-Route::get('/cliente/paquetes', function () {
-    return view('perfil_cliente.paquetes_comprados');
-})->name('cliente.paquetes')->middleware('verified', 'auth');
+});
+
+/*** PAGOS */
+Route::get('/{paquete_id}/pay', [App\Http\Controllers\PagosPublico\PaymentController::class, 'pay'])->name('payment.pay');
+Route::get('/{paquete_id}/aproved', [App\Http\Controllers\PagosPublico\PaymentController::class, 'aproved'])->name('payment.aproved');
+
+
+
 // RUTAS PARA EL DASHBOARD
 
 /** PARA EL INICIO */

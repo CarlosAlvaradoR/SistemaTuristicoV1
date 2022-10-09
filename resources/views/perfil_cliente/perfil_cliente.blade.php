@@ -2,11 +2,22 @@
 
 
 @section('content')
+   
+    @php
+        $nombre = 'Carlos';
+        $apellidos = 'Alvarado';
+    @endphp
+ 
     <section class="sample-text-area">
         <div class="container box_1170">
             <div class="row">
                 <div class="col-md-6">
-                    <h3 class="text-heading">Bienvenido a su perfil</h3>
+                    <h3 class="text-heading">Bienvenido a su perfil - 
+                    @php
+                        echo $nombre;
+                    @endphp
+                    </h3>
+                    
                 </div>
                 <div class="col-md-6">
                     <a href="">Ver mis paquetes</a>
