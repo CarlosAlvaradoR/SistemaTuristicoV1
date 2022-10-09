@@ -26,13 +26,14 @@ class UsuariosSeeder extends Seeder
             'dirección' => 'Av. Las Canteras'
         ]);
 
-        User::create([
+       $user1 = User::create([
             'name' => 'Carlos Emilio', 
             'email' => 'carlos2000emilioa@gmail.com', 
             'email_verified_at' =>'2022-12-12', 
             'password' => bcrypt('123456789'), 
             'persona_id' => 1
         ]);
+        $user1->assignRole('admin');
 
         $jefferson = Personas::create([
             'dni'=>'89837441', 
@@ -43,12 +44,14 @@ class UsuariosSeeder extends Seeder
             'dirección' => 'Av. Las Canteras'
         ]);
 
-        User::create([
+        $user2 = User::create([
             'name' => 'Jefferson Anthony', 
             'email' => 'jeff.silvestre.gutierrez@gmail.com', 
             'email_verified_at' =>'2022-12-12', 
             'password' => bcrypt('123456789'), 
             'persona_id' => $jefferson->id
         ]);
+        $user2->assignRole('admin');
+
     }
 }

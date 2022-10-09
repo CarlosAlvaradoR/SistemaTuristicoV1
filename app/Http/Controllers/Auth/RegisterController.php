@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Support\Facades\DB;
+//use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Personas;
 use App\Models\Clientes;
@@ -115,10 +115,7 @@ class RegisterController extends Controller
 
     protected function redirectTo(){
         if (Auth::user()->hasRole('cliente')) {
-            $id = Auth::user()->id;
-            $persona = User::where('id', '=', $id );
-            return $persona;
-            return redirect()->route("cliente.perfil");
+            return route("cliente.perfil");
         }
 
         /*if (Auth::user()->hasRole('admin')) {
