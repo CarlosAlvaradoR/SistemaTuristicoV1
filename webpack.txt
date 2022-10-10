@@ -9,3 +9,8 @@ MIGRACIONES Y MÓDELOS
     php artisan make:migration create_paquetes_turisticos_table
     php artisan make:model PaquetesTuristicos -r
     $ php artisan make:seeder PaquetesTuristicosSeeder
+
+    *)Tabla Categoría de Hoteles
+    php artisan make:migration create_categoria_hoteles_table
+    php artisan make:model CategoriaHoteles -r
+    

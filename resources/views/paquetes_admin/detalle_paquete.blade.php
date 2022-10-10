@@ -293,6 +293,7 @@
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-6">
+                    @livewire('show-categoria-hotel-paquetes')
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
