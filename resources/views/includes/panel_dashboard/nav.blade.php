@@ -1,6 +1,11 @@
 <nav class="side-menu">
     <ul class="side-menu-list">
-
+        <li class="blue">
+            <a href="/home">
+                <i class="font-icon glyphicon glyphicon-send"></i>
+                <span class="lbl">Inicio</span>
+            </a>
+        </li>
         <li class="blue with-sub">
             <span>
                 <i class="fa fa-user"></i>
@@ -41,7 +46,7 @@
 
     </ul>
 
-    <section>
+    <!--<section>
         <header class="side-menu-title">Tags</header>
         <ul class="side-menu-list">
             <li>
@@ -75,5 +80,5 @@
                 </a>
             </li>
         </ul>
-    </section>
+    </section>-->
 </nav>

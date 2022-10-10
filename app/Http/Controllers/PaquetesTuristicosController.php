@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PaquetesTuristicos;
+use App\Models\TipoPaquetes;
 use Illuminate\Http\Request;
 
 class PaquetesTuristicosController extends Controller
@@ -15,6 +16,8 @@ class PaquetesTuristicosController extends Controller
     public function index()
     {
         //
+        $paquetes = PaquetesTuristicos::paginate(12);
+        return view('paquetes_admin.index', compact('paquetes'));
     }
 
     /**
@@ -24,7 +27,9 @@ class PaquetesTuristicosController extends Controller
      */
     public function create()
     {
-        //
+        $tipos = TipoPaquetes::all();
+        return view('paquetes_admin.create', compact('tipos'));
+        
     }
 
     /**
@@ -55,9 +60,11 @@ class PaquetesTuristicosController extends Controller
      * @param  \App\Models\PaquetesTuristicos  $paquetesTuristicos
      * @return \Illuminate\Http\Response
      */
-    public function edit(PaquetesTuristicos $paquetesTuristicos)
+    public function edit()
     {
         //
+        $tipos = TipoPaquetes::all();
+        return view('paquetes_admin.editar', compact('tipos'));
     }
 
     /**
@@ -81,5 +88,9 @@ class PaquetesTuristicosController extends Controller
     public function destroy(PaquetesTuristicos $paquetesTuristicos)
     {
         //
+    }
+
+    public function detalle(){
+        return view('paquetes_admin.detalle_paquete');
     }
 }

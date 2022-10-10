@@ -53,5 +53,26 @@ class UsuariosSeeder extends Seeder
         ]);
         $user2->assignRole('admin');
 
+        //CLIENTES
+        $faker = Faker::create();
+        for ($i=1; $i < 51; $i++) { 
+            $persona = Personas::create([
+                'dni'=> $faker->unique()->postcode, 
+                'nombre' => $faker->name, 
+                'apellidos' => $faker->lastname, 
+                'genero' => rand(0, 1), 
+                'telefono' => $faker->phoneNumber, 
+                'dirección' => $faker->address
+            ]);
+    
+           $user = User::create([
+                'name' => $persona->nombre, 
+                'email' => $faker->email, 
+                'email_verified_at' => now(), 
+                'password' => bcrypt('123456789'), 
+                'persona_id' => $persona->id
+            ]);
+            $user->assignRole('cliente');
+        }
     }
 }

@@ -63,11 +63,7 @@ Route::get('/organizaciones', function () {
 
 
 
-/** PARA LOS PQUETES */
-Route::get('/paquete', function () {
-    return view('paquetes_admin.index');
-})->name('paquetes.index')->middleware(['auth', 'verified']);
-//Route::get('/paquete', ShowPaquetes::class)->name('dashboard');
-
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth', 'verified']);
+
+//Paquetes
+require __DIR__ . '/all_routes/paquetes.php';

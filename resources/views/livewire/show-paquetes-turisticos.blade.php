@@ -1,14 +1,15 @@
 <div>
-    {{-- Success is as dangerous as failure. --}}
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group">
-                    <label for="search">
-                        Buscar
-                    </label>
-                    <input type="text" class="form-control" id="search" placeholder="Buscar paquete"
-                        wire:model="search" />
+                <div class="main">
+
+                    <!-- Actual search box -->
+                    <div class="form-group has-search">
+                        <span class="fa fa-search form-control-feedback"></span>
+                        <input type="text" class="form-control" placeholder="Buscar Paquete" wire:model="search">
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -26,11 +27,11 @@
                 <div class="card-user-name">{{ $paquete->nombre }}</div>
                 <div class="card-user-status">S/.{{ $paquete->precio }}</div>
 
-                <a href="{{-- route("paquetes.detalles", $paquete->idpaqueteturistico) --}}" method="get" class="btn btn-rounded">
+                <a href="{{ route('paquetes.detalle') }}" class="btn btn-rounded">
                     Ver Paquete
                 </a>
                 <div class="card-user-social align-items-start">
-                    <a href="{{-- route('paquetes.editar', $paquete->slug) --}}" title="Editar">
+                    <a href="{{ route('paquetes.edit') }}" title="Editar">
                         <i class="fas fa-edit"></i>
                     </a>
                     <a href="#" title="Ver Información del Paquete">
@@ -52,12 +53,8 @@
             <!--.card-user-->
         </div>
     @endforeach
-    <nav aria-label="...">
-        <ul class="pagination">
-
-            <li class="page-item" aria-current="page">
-                <a class="page-link" href="#">{{ $paquetes->links() }}</a>
-            </li>
-        </ul>
-    </nav>
+        <div class="justify-content-end">
+            {{ $paquetes->links() }}
+        </div>
+    
 </div>
