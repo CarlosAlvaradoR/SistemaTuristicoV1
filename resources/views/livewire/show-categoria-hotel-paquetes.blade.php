@@ -7,11 +7,10 @@
             <div class="col-md-4">
             </div>
             <div class="col-md-4">
-                <a id="modal-880003" href="#modal-container-880003" role="button" class="btn" data-toggle="modal">Launch
-                    demo modal</a>
-
-                <div wire:ignore.self class="modal fade" id="modal-container-880003" role="dialog" aria-labelledby="myModalLabel"
-                    aria-hidden="true">
+                <a id="modal-880003" href="#modal-container-880003" role="button" class="btn" data-toggle="modal">Crear
+                    Categoría de Hoteles</a>
+                <div wire:ignore.self class="modal fade" id="modal-container-880003" role="dialog"
+                    aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -24,19 +23,27 @@
                             </div>
                             <div class="modal-body">
                                 <form wire:submit.prevent="save">
+                                    
+                                    @if (session()->has('message'))
+                                        <div class="alert alert-success">
+                                            {{ session('message') }}
+                                        </div>
+                                    @endif
+
                                     <div class="form-group">
+                                        @error('descripcion') <span class="text-danger">{{ $message }}</span> @enderror
                                         <label for="exampleInputEmail1">Descripcion</label>
-                                        <input type="text" wire:model.defer="descripcion" class="form-control" id="exampleInputEmail1"
-                                            aria-describedby="emailHelp">
+                                        <input type="text" wire:model.defer="descripcion" class="form-control"
+                                            id="exampleInputEmail1" aria-describedby="emailHelp">
                                     </div>
+                                    <input type="text" wire:model.defer="idPaquete" value="{{ $idPaquete }}">
                                 </form>
                             </div>
                             <div class="modal-footer">
-
                                 <button type="button" wire:click="save" class="btn btn-primary">
                                     Guardar Cambios
                                 </button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">
                                     Cerrar
                                 </button>
                             </div>
@@ -48,96 +55,52 @@
 
             </div>
         </div>
+        <br>
         <div class="row">
             <div class="col-md-12">
                 <table class="table">
                     <thead>
                         <tr>
                             <th>
-                                #
+                                Nº
                             </th>
                             <th>
-                                Product
+                                Descripción
                             </th>
                             <th>
-                                Payment Taken
-                            </th>
-                            <th>
-                                Status
+                                Acciones
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                01/04/2012
-                            </td>
-                            <td>
-                                Default
-                            </td>
-                        </tr>
-                        <tr class="table-active">
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                01/04/2012
-                            </td>
-                            <td>
-                                Approved
-                            </td>
-                        </tr>
-                        <tr class="table-success">
-                            <td>
-                                2
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                02/04/2012
-                            </td>
-                            <td>
-                                Declined
-                            </td>
-                        </tr>
-                        <tr class="table-warning">
-                            <td>
-                                3
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                03/04/2012
-                            </td>
-                            <td>
-                                Pending
-                            </td>
-                        </tr>
-                        <tr class="table-danger">
-                            <td>
-                                4
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                04/04/2012
-                            </td>
-                            <td>
-                                Call in to confirm
-                            </td>
-                        </tr>
+                        @php
+                            $cont = 1;
+                        @endphp
+                        @foreach ($categorias as $categoria)
+                            <tr>
+                                <td>
+                                    {{ $cont++ }}
+                                </td>
+                                <td>
+                                    {{ $categoria->descripcion }}
+                                </td>
+                                <td>
+                                    <a href="{{-- route('editar.itinerario.paquete', $itinerario->idactividaditinerario) --}}">
+                                        <span class="btn btn-warning btn-sm">
+                                            <span class="fa fa-pencil-square-o"></span>
+                                        </span>
+                                    </a>
+                                    <a action="{{-- route('eliminar.itinerario.paquete', $itinerario->idactividaditinerario) --}}" method="POST" class="formEliminarItinerario">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <span class="fa fa-trash"></span>
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+
                     </tbody>
                 </table>
             </div>

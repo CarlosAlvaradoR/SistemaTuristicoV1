@@ -27,7 +27,7 @@
                 <div class="card-user-name">{{ $paquete->nombre }}</div>
                 <div class="card-user-status">S/.{{ $paquete->precio }}</div>
 
-                <a href="{{ route('paquetes.detalle') }}" class="btn btn-rounded">
+                <a href="{{ route('paquetes.detalle', $paquete) }}" class="btn btn-rounded">
                     Ver Paquete
                 </a>
                 <div class="card-user-social align-items-start">

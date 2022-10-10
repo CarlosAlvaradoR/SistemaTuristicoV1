@@ -16,6 +16,10 @@ class CreateCategoriaHotelesTable extends Migration
         Schema::create('categoria_hoteles', function (Blueprint $table) {
             $table->id();
             $table->text('descripcion');
+            
+            $table->unsignedBigInteger('paquete_id');
+            $table->foreign('paquete_id')->references('id')->on('paquetes_turisticos');
+            
             $table->timestamps();
         });
     }

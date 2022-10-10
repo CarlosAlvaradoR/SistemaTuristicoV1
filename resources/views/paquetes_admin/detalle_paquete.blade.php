@@ -10,7 +10,7 @@
                 <div class="tbl-row">
                     <div class="tbl-cell">
                         <h3>
-                            Paquete Santa Rous
+                            Paquete - {{$paquete->nombre}}
 
                         </h3>
                         <ol class="breadcrumb breadcrumb-simple">
@@ -293,46 +293,9 @@
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-6">
-                    @livewire('show-categoria-hotel-paquetes')
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <!--  route(') }} -->
-
-                                        <a href="{{-- route('index.formulario.nueva.categoria.hotel.paquete', $idpaquete->idpaqueteturistico) --}}" class="btn btn-primary">Categoría de Hoteles</a>
-
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <table class="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>
-                                                        #
-                                                    </th>
-                                                    <th>
-                                                        Descripción
-                                                    </th>
-
-                                                    <th>
-                                                        Acciones
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                
-                                                
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
+                    @livewire('show-categoria-hotel-paquetes', [$paquete->id])
+                    
                 </div>
                 <!--.tab-pane-->
             </div>

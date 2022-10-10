@@ -16,8 +16,8 @@ class PaquetesTuristicosController extends Controller
     public function index()
     {
         //
-        $paquetes = PaquetesTuristicos::paginate(12);
-        return view('paquetes_admin.index', compact('paquetes'));
+        //$paquetes = PaquetesTuristicos::paginate(12);
+        return view('paquetes_admin.index');
     }
 
     /**
@@ -90,7 +90,9 @@ class PaquetesTuristicosController extends Controller
         //
     }
 
-    public function detalle(){
-        return view('paquetes_admin.detalle_paquete');
+    public function detalle($paquetesTuristicos){
+        $paquete = PaquetesTuristicos::findorFail($paquetesTuristicos);
+        //return $paquete;
+        return view('paquetes_admin.detalle_paquete', compact('paquete'));
     }
 }

@@ -9,5 +9,5 @@ class CategoriaHoteles extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['descripcion'];
+    protected $fillable = ['descripcion', 'paquete_id'];
 }
