@@ -9,4 +9,7 @@ class PaquetesTuristicos extends Model
 {
     use HasFactory;
     protected $fillable=['nombre', 'precio', 'estado', 'imagen_principal', 'slug', 'tipo_paquete_id'];
+
+    //protected  $primaryKey = 'slug';
+
 }

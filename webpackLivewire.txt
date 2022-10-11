@@ -6,3 +6,10 @@ PAQUETES
     
     GALERÍAS
         php artisan make:livewire PaquetesAdmin/Galeria/ShowGalerias
+    
+    MAPA PAQUETES
+        php artisan make:livewire PaquetesAdmin/Mapa/ShowMapas
+    
+    VISITA ATRACTIVOS PAQUETES
+        php artisan make:livewire PaquetesAdmin/Lugares/ShowLugaresVisitaPaquetes
+        

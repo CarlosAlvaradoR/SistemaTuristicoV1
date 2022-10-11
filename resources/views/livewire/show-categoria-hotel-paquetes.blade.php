@@ -36,7 +36,7 @@
                                         <input type="text" wire:model.defer="descripcion" class="form-control"
                                             id="exampleInputEmail1" aria-describedby="emailHelp">
                                     </div>
-                                    <input type="text" wire:model.defer="idPaquete" value="{{ $idPaquete }}">
+                                    <input type="text" wire:model.defer="idPaquete" value="{{ $idPaquete }}" hidden>
                                 </form>
                             </div>
                             <div class="modal-footer">

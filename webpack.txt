@@ -17,3 +17,21 @@ MIGRACIONES Y MÓDELOS
         *) Tabla Galerías
         php artisan make:migration create_foto_galerias_table
         php artisan make:model FotoGalerias -r
+
+        *) Tabla Mapa Paquete
+        php artisan make:migration create_mapa_paquetes_table
+        php artisan make:model MapaPaquetes -r
+
+        *) Tabla Lugares
+        php artisan make:migration create_lugares_table
+        php artisan make:model Lugares -r
+
+        *) Tabla Atractivos
+        php artisan make:migration create_atractivos_turisticos_table
+        php artisan make:model AtractivosTuristicos -r
+
+        *) Tabla Visita Atractivos Paquete
+        php artisan make:migration create_visita_atractivos_paquetes_table
+        php artisan make:model VisitaAtractivosPaquetes -r
+
+        

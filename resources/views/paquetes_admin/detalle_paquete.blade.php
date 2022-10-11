@@ -10,7 +10,7 @@
                 <div class="tbl-row">
                     <div class="tbl-cell">
                         <h3>
-                            Paquete - {{$paquete->nombre}}
+                            Paquete - {{ $paquete->nombre }}
 
                         </h3>
                         <ol class="breadcrumb breadcrumb-simple">
@@ -84,89 +84,17 @@
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="tabs-2-tab-1">
                     @livewire('paquetes-admin.galeria.show-galerias', [$paquete->id])
-                    
+
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-2">
-                    <div class="container-fluid">
+                    @livewire('paquetes-admin.mapa.show-mapas', [$paquete->id])
 
-                        <div class="col-md-12">
-                            <div class="row">
-
-                                <div class="col-md-2">
-
-
-                                    <a href="{{-- route('paquetes.detalles.nuevo.paquetes', $idpaquete->idpaqueteturistico) --}}" class="btn btn-primary">
-                                        Añadir Ruta
-                                    </a>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card-block">
-                                    <table id="example" class="display table table-striped table-bordered" cellspacing="0"
-                                        width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Ruta</th>
-                                                <th>Descripcion</th>
-                                                <th>Acciones</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-3">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12">
-
-                                        <a href="{{-- route('index.formulario.nuevo.atractivo', $idpaquete->idpaqueteturistico) --}}" class="btn btn-primary">Añadir Nuevo lugar</a>
-
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <table class="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>
-                                                        #
-                                                    </th>
-                                                    <th>
-                                                        Lugar
-                                                    </th>
-                                                    <th>
-                                                        Atractivo
-                                                    </th>
-                                                    <th>
-                                                        Acciones
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @livewire('paquetes-admin.lugares.show-lugares-visita-paquetes', [$paquete->id])
+                    
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-4">
@@ -258,9 +186,9 @@
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-6">
-                    
+
                     @livewire('show-categoria-hotel-paquetes', [$paquete->id])
-                    
+
                 </div>
                 <!--.tab-pane-->
             </div>
@@ -334,10 +262,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <!--  route(') }} -->
-                               
-                                    <a href="{{-- route('index.nuevo.tipopersonal.paquete', $idpaquete->idpaqueteturistico) --}}"
-                                        class="btn btn-primary">Nuevo Tipo de Personal</a>
-                               
+
+                                <a href="{{-- route('index.nuevo.tipopersonal.paquete', $idpaquete->idpaqueteturistico) --}}" class="btn btn-primary">Nuevo Tipo de Personal</a>
+
                             </div>
                         </div>
                         <div class="row">
@@ -360,7 +287,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+
 
 
                                     </tbody>
@@ -375,10 +302,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <!--  route(') }} -->
-                                
-                                    <a href="{{-- route('index.nuevo.tipo.transporte.paquete', $idpaquete->idpaqueteturistico) --}}"
-                                        class="btn btn-primary">Nuevo Vehículo</a>
-                              
+
+                                <a href="{{-- route('index.nuevo.tipo.transporte.paquete', $idpaquete->idpaqueteturistico) --}}" class="btn btn-primary">Nuevo Vehículo</a>
+
                             </div>
                         </div>
                         <div class="row">
@@ -405,7 +331,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+
 
                                     </tbody>
                                 </table>
@@ -419,10 +345,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <!--  route(') }} -->
-                                
-                                    <a href="{{-- route('index.nuevo.alimentacion.campo.paquete', $idpaquete->idpaqueteturistico) --}}"
-                                        class="btn btn-primary">Nueva Alimentación Campo</a>
-                                
+
+                                <a href="{{-- route('index.nuevo.alimentacion.campo.paquete', $idpaquete->idpaqueteturistico) --}}" class="btn btn-primary">Nueva Alimentación Campo</a>
+
                             </div>
                         </div>
                         <div class="row">
@@ -446,8 +371,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
-                                        
+
+
 
 
                                     </tbody>
@@ -462,9 +387,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <!--  route(') }} -->
-                                
-                                    <a href="{{-- route('index.nuevo.equipo.paquete', $idpaquete->idpaqueteturistico) --}}"
-                                        class="btn btn-primary">Nuevo Equipo</a>
+
+                                <a href="{{-- route('index.nuevo.equipo.paquete', $idpaquete->idpaqueteturistico) --}}" class="btn btn-primary">Nuevo Equipo</a>
                             </div>
                         </div>
                         <div class="row">
@@ -491,7 +415,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+
 
 
                                     </tbody>
@@ -506,10 +430,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <!--  route(') }} -->
-                                
-                                    <a href="{{-- route('index.nuevo.tipo.acemila.paquete', $idpaquete->idpaqueteturistico) --}}"
-                                        class="btn btn-primary">Nuevas Acémilas</a>
-                                
+
+                                <a href="{{-- route('index.nuevo.tipo.acemila.paquete', $idpaquete->idpaqueteturistico) --}}" class="btn btn-primary">Nuevas Acémilas</a>
+
                             </div>
                         </div>
                         <div class="row">
@@ -534,7 +457,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       
+
 
 
                                     </tbody>
@@ -549,10 +472,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <!--  route(') }} -->
-                                
-                                    <a href="{{-- route('index.nuevo.tipo.almuerzo.paquete', $idpaquete->idpaqueteturistico) --}}"
-                                        class="btn btn-primary">Nuevo Almuerzo Celebración</a>
-                                
+
+                                <a href="{{-- route('index.nuevo.tipo.almuerzo.paquete', $idpaquete->idpaqueteturistico) --}}" class="btn btn-primary">Nuevo Almuerzo Celebración</a>
+
                             </div>
                         </div>
                         <div class="row">
@@ -577,7 +499,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+
 
 
                                     </tbody>

@@ -43,7 +43,7 @@
                                         <input type="file" wire:model.defer="foto" class="form-control"
                                             id="foto" aria-describedby="emailHelp">
                                     </div>
-                                    <input type="text" value="{{ $idPaquete }}">
+                                    <input hidden type="text" value="{{ $idPaquete }}">
                                 </form>
                             </div>
                             <div class="modal-footer">
@@ -77,22 +77,32 @@
                     </thead>
                     <tbody>
                         @php
-                            $cont=1;
+                            $cont = 1;
                         @endphp
                         @foreach ($fotos as $f)
                             <tr>
                                 <td>
-                                    {{$cont++}}
+                                    {{ $cont++ }}
                                 </td>
                                 <td>
-                                    {{$f->descripcion}}
+                                    {{ $f->descripcion }}
                                 </td>
                                 <td>
-                                    {{$f->directorio}}
+                                    {{ $f->directorio }}
                                 </td>
                                 <td>
-                                    <a href="">Editar</a>
-                                    <a href="">Eliminar</a>
+                                    <a href="{{-- route('editar.itinerario.paquete', $itinerario->idactividaditinerario) --}}">
+                                        <span class="btn btn-warning btn-sm">
+                                            <span class="fa fa-pencil-square-o"></span>
+                                        </span>
+                                    </a>
+                                    <a action="{{-- route('eliminar.itinerario.paquete', $itinerario->idactividaditinerario) --}}" method="POST" class="formEliminarItinerario">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <span class="fa fa-trash"></span>
+                                        </button>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
