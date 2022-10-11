@@ -83,43 +83,8 @@
 
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="tabs-2-tab-1">
-                    <div class="container-fluid">
-
-                        <div class="col-md-12">
-                            <div class="row">
-
-                                <div class="col-md-2">
-                                    <a href="{{-- route('foto.nuevas.galerias', $idpaquete->idpaqueteturistico) --}}" class="btn btn-primary">
-                                        Nueva fotografía
-                                    </a>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card-block">
-                                    <table id="example" class="display table table-striped table-bordered" cellspacing="0"
-                                        width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Descripción</th>
-                                                <th>Fotografía</th>
-                                                <th>Acciones</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @livewire('paquetes-admin.galeria.show-galerias', [$paquete->id])
+                    
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-2">
