@@ -95,4 +95,8 @@ class PaquetesTuristicosController extends Controller
         //return $paquete;
         return view('paquetes_admin.detalle_paquete', compact('paquete'));
     }
+
+    public function reservar(){
+        return view('reservar_admin.index');
+    }
 }

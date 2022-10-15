@@ -7,6 +7,9 @@
     <form class="login100-form validate-form" method="POST" action="{{ route('login') }}">
         @csrf
         <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+            @error('email')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
             <span class="label-input100">Dirección de correo electrónico</span>
             <input id="email" type="email" class="input100 @error('email') is-invalid @enderror" name="email"
                 value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -17,9 +20,12 @@
         </div>
 
         <div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
+            @error('password')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
             <span class="label-input100">Contraseña</span>
-            <input id="password" type="password" class="input100 @error('password') is-invalid @enderror"
-                name="password" required autocomplete="current-password">
+            <input id="password" type="password" class="input100 @error('password') is-invalid @enderror" name="password"
+                required autocomplete="current-password">
 
             <!--<input class="input100" type="password" name="pass" placeholder="Enter password">-->
             <span class="focus-input100"></span>
@@ -29,7 +35,7 @@
             <div class="contact100-form-checkbox">
                 <!--<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">-->
                 <input class="input-checkbox100" type="checkbox" name="remember" id="remember"
-                                            {{ old('remember') ? 'checked' : '' }}>
+                    {{ old('remember') ? 'checked' : '' }}>
                 <label class="label-checkbox100" for="ckb1">
                     Remember me
                 </label>
@@ -50,7 +56,7 @@
     </form>
 @endsection
 
-{{--@section('content')
+{{-- @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">

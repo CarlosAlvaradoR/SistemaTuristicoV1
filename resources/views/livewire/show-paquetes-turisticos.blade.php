@@ -32,25 +32,26 @@
                 </a>
                 <div class="card-user-social align-items-start">
                     <a href="{{ route('paquetes.edit') }}" title="Editar">
-                        <i class="fas fa-edit"></i>
+                        <i class="fa fa-pencil-square-o"></i>
                     </a>
                     <a href="#" title="Ver Información del Paquete">
-                        <i class="fas fa-eye"></i>
+                        <i class="fa fa-eye"></i>
                     </a>
                     <!--{$paquete->slug}-->
                     <a href="{{-- route('index.viajes.admin', $paquete->slug) --}}" title="Asignar Viaje">
                         <i class="fas fa-shuttle-van"></i>
                     </a>
-                    <a href="{{-- route('reservas.formulario.nivel.admin', $paquete->slug) --}}" title="Reservar">
-                        <i class="fas fa-map"></i>
+                    <a href="{{route('paquetes.reservar')}}" title="Reservar">
+                        <i class="fa fa-cart-plus"></i>
                     </a>
-                    <a href="#" title="Inactivar" class="btn-sm btn-danger">
-                        <i class="fas fa-minus"></i>
+                    <a href="#" title="Inactivar">
+                        <i class="fa fa-minus"></i>
                     </a>
                 </div>
 
             </article>
             <!--.card-user-->
+            {{--https://codepen.io/gungorbudak/pen/ooKNpz--}}
         </div>
     @endforeach
         <div class="justify-content-end">

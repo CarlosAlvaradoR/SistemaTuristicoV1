@@ -5,6 +5,9 @@ namespace App\Http\Controllers\PagosPublico;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PaquetesTuristicos;
+use Illuminate\Support\Facades\DB;
+use Auth;
+
 class PaymentController extends Controller
 {
     //
@@ -72,6 +75,10 @@ class PaymentController extends Controller
 
         
         //Una vez pagada guardamos en la base de datos el pago y lo redirigimos a sus compras
+        $guardar = DB::table('reservas')->insert(['monto_reserva' => 89, 
+            'user_reserva' => 3
+            ]
+        );
         /***
          * create::([]);
          */

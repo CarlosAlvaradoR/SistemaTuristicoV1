@@ -7,3 +7,6 @@ Route::get('/paquetes/turisticos', [App\Http\Controllers\PaquetesTuristicosContr
 Route::get('/paquetes/turisticos/crear', [App\Http\Controllers\PaquetesTuristicosController::class, 'create'])->name('paquetes.create')->middleware(['auth', 'verified']);
 Route::get('/paquetes/turisticos/editar', [App\Http\Controllers\PaquetesTuristicosController::class, 'edit'])->name('paquetes.edit')->middleware(['auth', 'verified']);
 Route::get('/paquetes/turisticos/detalle/{idPaquete}', [App\Http\Controllers\PaquetesTuristicosController::class, 'detalle'])->name('paquetes.detalle')->middleware(['auth', 'verified']);
+
+
+Route::get('/paquetes/reserva', [App\Http\Controllers\PaquetesTuristicosController::class, 'reservar'])->name('paquetes.reservar')->middleware(['auth', 'verified']);
