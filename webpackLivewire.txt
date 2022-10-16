@@ -12,4 +12,9 @@ PAQUETES
     
     VISITA ATRACTIVOS PAQUETES
         php artisan make:livewire PaquetesAdmin/Lugares/ShowLugaresVisitaPaquetes
-        
+
+    ITINERARIO PAQUETES    
+        php artisan make:livewire PaquetesAdmin/Itinerarios/MostrarItinerarios
+
+    BOLETOS PAGAR VIAJE
+        php artisan make:livewire PaquetesAdmin/Boletos/MostrarPagosServicios

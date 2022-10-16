@@ -56,7 +56,7 @@
                             <a class="nav-link" href="#tabs-2-tab-4" role="tab" data-toggle="tab">
                                 <span class="nav-link-in">
                                     Itinerario
-                                    <span class="label label-pill label-warning">4</span>
+                                    <span class="label label-pill label-warning">6</span>
                                 </span>
                             </a>
                         </li>
@@ -98,50 +98,12 @@
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-4">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <!--  route(') }} -->
-
-                                        <a href="{{-- route('index.formulario.nuevo.itinerario', $idpaquete->idpaqueteturistico) --}}" class="btn btn-primary">Agregar Itinerario</a>
-
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <table class="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>
-                                                        #
-                                                    </th>
-                                                    <th>
-                                                        Actividad
-                                                    </th>
-                                                    <th>
-                                                        Descripcion
-                                                    </th>
-                                                    <th>
-                                                        Acciones
-                                                    </th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @livewire('paquetes-admin.itinerarios.mostrar-itinerarios', [$paquete->id])
+                    
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-5">
+                    @livewire('paquetes-admin.boletos.mostrar-pagos-servicios', [$paquete->id])
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
@@ -159,18 +121,7 @@
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th>
-                                                        #
-                                                    </th>
-                                                    <th>
-                                                        Servicio
-                                                    </th>
-                                                    <th>
-                                                        Monto
-                                                    </th>
-                                                    <th>
-                                                        Acciones
-                                                    </th>
+                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>

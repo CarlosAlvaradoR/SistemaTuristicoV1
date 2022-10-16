@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{ asset('dashboard_assets/css/lib/font-awesome/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dashboard_assets/css/lib/bootstrap/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dashboard_assets/css/main.css') }}">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     @livewireStyles
 </head>

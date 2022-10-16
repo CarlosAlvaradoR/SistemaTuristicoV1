@@ -34,4 +34,14 @@ MIGRACIONES Y MÓDELOS
         php artisan make:migration create_visita_atractivos_paquetes_table
         php artisan make:model VisitaAtractivosPaquetes -r
 
+        *) Tabla ActividadesItinerarios
+        php artisan make:migration create_actividades_itinerarios_table
+        php artisan make:model ActividadesItinerarios -r
         
+        *) Tabla Itinerario Paquete
+        php artisan make:migration create_itinerario_paquetes_table
+        php artisan make:model ItinerarioPaquetes -r
+
+        *) Tabla Boleto Pagar Paquetes (Los pagos por servicios)
+        php artisan make:migration create_boletos_pagar_paquetes_table
+        php artisan make:model BoletosPagarPaquetes -r
