@@ -36,6 +36,18 @@
                                         </script>
                                     @endif
 
+                                    @if (session()->has('message2'))
+                                        <script>
+                                            Swal.fire({
+                                                position: 'top-end',
+                                                icon: 'success',
+                                                title: "Pago por servicio eliminado correctamente",
+                                                showConfirmButton: false,
+                                                timer: 1700
+                                            });
+                                        </script>
+                                    @endif
+
                                     <div class="form-group">
                                         @error('descripcion')
                                             <span class="text-danger">{{ $message }}</span>
@@ -55,7 +67,8 @@
                             </div>
                             <div class="modal-footer">
 
-                                <button wire:click="guardarPagosServiciosPaquete" type="button" class="btn btn-primary">
+                                <button wire:click="guardarPagosServiciosPaquete" type="button"
+                                    class="btn btn-primary">
                                     Guardar
                                 </button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -103,21 +116,18 @@
                                     {{ $p->descripcion }}
                                 </td>
                                 <td>
-                                   S/. {{ $p->precio }}
+                                    S/. {{ $p->precio }}
                                 </td>
                                 <td>
-                                    <a href="#"><!--$p->id-->
+                                    <a href="#">
+                                        <!---->
                                         <span class="btn btn-warning btn-sm">
                                             <span class="fa fa-pencil-square-o"></span>
                                         </span>
                                     </a>
-                                    <a action="#" method="POST" class="formEliminarItinerario">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">
-                                            <span class="fa fa-trash"></span>
-                                        </button>
-                                    </a>
+                                    <button title="Quitar Pago por servicio" wire:click="quitarPagosPorServicio({{$p->id}})" class="btn btn-danger btn-sm">
+                                        <span class="fa fa-trash"></span>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach

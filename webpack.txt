@@ -45,3 +45,19 @@ MIGRACIONES Y MÓDELOS
         *) Tabla Boleto Pagar Paquetes (Los pagos por servicios)
         php artisan make:migration create_boletos_pagar_paquetes_table
         php artisan make:model BoletosPagarPaquetes -r
+
+        *) Tabla Tipo Personal
+        php artisan make:migration create_tipo_personales_table
+        php artisan make:model TipoPersonales -r
+
+        *) Tabla Personal Tipo (Que personal acompaña a que paquete)
+        php artisan make:migration create_personal_tipos_table
+        php artisan make:model PersonalTipos -r
+
+        *) Tabla Tipo Transporte
+        php artisan make:migration create_tipo_transportes_table
+        php artisan make:model TipoTransportes -r
+
+        *) Tabla Tipo Transporte Paquete
+        php artisan make:migration create_tipotransporte_paquetes_table
+        php artisan make:model TipotransportePaquetes -r

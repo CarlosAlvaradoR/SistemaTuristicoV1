@@ -39,4 +39,10 @@ class MostrarPagosServicios extends Component
         $this->reset(['descripcion','precio']);
         session()->flash('message', 'Pago por servicio añadido correctamente');    
    }
+
+   public function quitarPagosPorServicio($idPagoPorServicio){
+        $pagosPorServicio = BoletosPagarPaquetes::findOrFail($idPagoPorServicio);
+        $pagosPorServicio->delete();
+        session()->flash('message2', 'Pago por servicio eliminado correctamente'); 
+   }
 }

@@ -104,36 +104,7 @@
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-5">
                     @livewire('paquetes-admin.boletos.mostrar-pagos-servicios', [$paquete->id])
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <!--  route(') }} -->
-
-                                        <a href="{{-- route('index.formulario.nuevo.servicio', $idpaquete->idpaqueteturistico) --}}" class="btn btn-primary">Añadir Pago por
-                                            servicios</a>
-
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <table class="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-6">
@@ -209,46 +180,16 @@
 
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="tabs-1-tab-1">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <!--  route(') }} -->
-
-                                <a href="{{-- route('index.nuevo.tipopersonal.paquete', $idpaquete->idpaqueteturistico) --}}" class="btn btn-primary">Nuevo Tipo de Personal</a>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                #
-                                            </th>
-                                            <th>
-                                                Tipo de Personal
-                                            </th>
-                                            <th>
-                                                Cantidad
-                                            </th>
-                                            <th>
-                                                Acciones
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                    @livewire('paquetes-admin.tipo-personal.mostrar-tipo-personal-paquete', [$paquete->id])
+                    
+                    
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-2">
+                    @livewire('paquetes-admin.tipo-transporte-paquete.mostrar-tipo-transporte-paquete', [$paquete->id])
+                    
+
+
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
@@ -263,22 +204,7 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>
-                                                #
-                                            </th>
-                                            <th>
-                                                Descripción
-                                            </th>
-
-                                            <th>
-                                                Cantidad
-                                            </th>
-                                            <th>
-                                                Tipo de Trasnporte
-                                            </th>
-                                            <th>
-                                                Acciones
-                                            </th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>

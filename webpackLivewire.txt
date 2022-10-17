@@ -18,3 +18,9 @@ PAQUETES
 
     BOLETOS PAGAR VIAJE
         php artisan make:livewire PaquetesAdmin/Boletos/MostrarPagosServicios
+
+    TIPO PERSONAL PAQUETE
+        php artisan make:livewire PaquetesAdmin/TipoPersonal/MostrarTipoPersonalPaquete
+
+    TIPO TRANSPORTE PAQUETE
+        php artisan make:livewire PaquetesAdmin/TipoTransportePaquete/MostrarTipoTransportePaquete
