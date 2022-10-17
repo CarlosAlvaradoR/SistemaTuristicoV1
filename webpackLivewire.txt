@@ -24,3 +24,15 @@ PAQUETES
 
     TIPO TRANSPORTE PAQUETE
         php artisan make:livewire PaquetesAdmin/TipoTransportePaquete/MostrarTipoTransportePaquete
+
+    TIPO ALIMENTACION PAQUETE
+        php artisan make:livewire PaquetesAdmin/TipoAlimentacionPaquete/MostrarTipoAlimentacionPaquete
+
+    EQUIPO PAQUETE
+        php artisan make:livewire PaquetesAdmin/EquipoPaquete/MostrarEquipoPaquetes
+
+    TIPO ACEMILA PAQUETES
+        php artisan make:livewire PaquetesAdmin/TipoAcemilaPaquetes/MostrarTipoAcemilaPaquetes
+
+    TIPO ALMUERZO PAQUETES
+        php artisan make:livewire PaquetesAdmin/TipoAlmuerzoPaquetes/MostrarTipoAlmuerzoPaquetes

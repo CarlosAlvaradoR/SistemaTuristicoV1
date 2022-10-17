@@ -188,202 +188,28 @@
                 <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-2">
                     @livewire('paquetes-admin.tipo-transporte-paquete.mostrar-tipo-transporte-paquete', [$paquete->id])
                     
-
-
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <!--  route(') }} -->
-
-                                <a href="{{-- route('index.nuevo.tipo.transporte.paquete', $idpaquete->idpaqueteturistico) --}}" class="btn btn-primary">Nuevo Vehículo</a>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-3">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <!--  route(') }} -->
-
-                                <a href="{{-- route('index.nuevo.alimentacion.campo.paquete', $idpaquete->idpaqueteturistico) --}}" class="btn btn-primary">Nueva Alimentación Campo</a>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                #
-                                            </th>
-                                            <th>
-                                                Descripción
-                                            </th>
-
-                                            <th>
-                                                Tipo Alimentacion
-                                            </th>
-                                            <th>
-                                                Acciones
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                    @livewire('paquetes-admin.tipo-alimentacion-paquete.mostrar-tipo-alimentacion-paquete', [$paquete->id])
 
 
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-4">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <!--  route(') }} -->
-
-                                <a href="{{-- route('index.nuevo.equipo.paquete', $idpaquete->idpaqueteturistico) --}}" class="btn btn-primary">Nuevo Equipo</a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                #
-                                            </th>
-                                            <th>
-                                                Equipo
-                                            </th>
-
-                                            <th>
-                                                Cantidad
-                                            </th>
-                                            <th>
-                                                Observacion
-                                            </th>
-                                            <th>
-                                                Acciones
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                    @livewire('paquetes-admin.equipo-paquete.mostrar-equipo-paquetes', [$paquete->id])
+                    
+                    
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-5">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <!--  route(') }} -->
+                    @livewire('paquetes-admin.tipo-acemila-paquetes.mostrar-tipo-acemila-paquetes', [$paquete->id])
 
-                                <a href="{{-- route('index.nuevo.tipo.acemila.paquete', $idpaquete->idpaqueteturistico) --}}" class="btn btn-primary">Nuevas Acémilas</a>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                #
-                                            </th>
-                                            <th>
-                                                Tipo
-                                            </th>
-
-                                            <th>
-                                                Cantidad
-                                            </th>
-
-                                            <th>
-                                                Acciones
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-6">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <!--  route(') }} -->
+                    @livewire('paquetes-admin.tipo-almuerzo-paquetes.mostrar-tipo-almuerzo-paquetes', [$paquete->id])
 
-                                <a href="{{-- route('index.nuevo.tipo.almuerzo.paquete', $idpaquete->idpaqueteturistico) --}}" class="btn btn-primary">Nuevo Almuerzo Celebración</a>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                #
-                                            </th>
-                                            <th>
-                                                Observación
-                                            </th>
-
-                                            <th>
-                                                Tipo de Almuerzo
-                                            </th>
-
-                                            <th>
-                                                Acciones
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!--.tab-pane-->
             </div>

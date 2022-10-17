@@ -61,3 +61,41 @@ MIGRACIONES Y MÓDELOS
         *) Tabla Tipo Transporte Paquete
         php artisan make:migration create_tipotransporte_paquetes_table
         php artisan make:model TipotransportePaquetes -r
+
+        *) Tabla Tipo Alimentación (Tipo de Alimentación que se brinda en el campo correspondiente a un paquete)
+        php artisan make:migration create_tipo_alimentaciones_table
+        php artisan make:model TipoAlimentaciones -r
+
+        *) Tabla Tipo Alimentación Paquete -> Alimentación Campo (Tabla Intermedia de Tipo Alimentación Campo y Paquete)
+        php artisan make:migration create_tipoalimentacion_paquetes_table
+        php artisan make:model TipoalimentacionPaquetes -r
+
+        *) Tabla Marca (Marca de los equipos)
+        php artisan make:migration create_marcas_table
+        php artisan make:model Marcas -r
+
+        *) Tabla Equipos (Equipos que se usan)
+        php artisan make:migration create_equipos_table
+        php artisan make:model Equipos -r
+
+        *) Tabla Equipo Paquetes (Tabla Intermedia entre equipos y paquetes)
+        php artisan make:migration create_equipo_paquetes_table
+        php artisan make:model EquipoPaquetes -r
+
+        *) Tabla Tipo Acémila 
+        php artisan make:migration create_tipo_acemilas_table
+        php artisan make:model TipoAcemilas -r
+
+        *) Tabla Tipo Acemila Paquetes
+        php artisan make:migration create_tipoacemila_paquetes_table
+        php artisan make:model TipoacemilaPaquetes -r
+
+        *) Tabla Tipo de Almuerzo
+        php artisan make:migration create_tipo_almuerzos_table
+        php artisan make:model TipoAlmuerzos -r
+
+        *) Tabla Tipo Almuerzo Paquete
+        php artisan make:migration create_tipoalmuerzo_paquetes_table
+        php artisan make:model TipoalmuerzoPaquetes -r
+
+        
