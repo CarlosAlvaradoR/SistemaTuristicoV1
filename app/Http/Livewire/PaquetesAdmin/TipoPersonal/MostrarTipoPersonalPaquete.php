@@ -13,6 +13,8 @@ class MostrarTipoPersonalPaquete extends Component
     public $idPaquete;
     public $cantidad,$tipo_id;
     
+    protected $listeners = ['delete'];
+
     protected $rules = [
         'cantidad' => 'required|numeric|min:1',
         'tipo_id' => 'required'
@@ -45,8 +47,16 @@ class MostrarTipoPersonalPaquete extends Component
         ]);
         $this->reset(['cantidad','tipo_id']);
     }
-
-    public function quitarPersonalTipoPaquetes($idPersonalTipo){
+    public function deleteConfirm($id)
+    {
+        $this->dispatchBrowserEvent('swal-confirm', [
+            'title' => 'Estás seguro que deseas eliminar el dato?',
+            'icon' => 'warning',
+            'id' => $id
+        ]);
+    }
+    
+    public function delete($idPersonalTipo){
         $personal_tipo = PersonalTipos::findOrFail($idPersonalTipo);
         $personal_tipo->delete();
         session()->flash('message2', 'Pago por servicio eliminado correctamente');

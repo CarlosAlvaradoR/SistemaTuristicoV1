@@ -1,120 +1,141 @@
 <div>
-    {{-- The best athlete wants his opponent at his best. --}}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-4">
-            </div>
-            <div class="col-md-4">
-            </div>
-            <div class="col-md-4">
-                <a id="galeriaPaquete" href="#modal-crear-galeriaPaquete" role="button" class="btn"
-                    data-toggle="modal">Nueva Fotografía</a>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalGaleriaPaquete">
+        Nueva Fotografría
+    </button>
 
-                <div wire:ignore.self class="modal fade" id="modal-crear-galeriaPaquete" role="dialog"
-                    aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">
-                                    Crear Galería de Fotos del Paquete
-                                </h5>
-                                <button type="button" class="close" data-dismiss="modal">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form wire:submit.prevent="saveGaleria" role="form" enctype="multipart/form-data">
+    <!-- Modal -->
+    <div wire:ignore.self data-backdrop="static" data-keyboard="false" class="modal fade" id="modalGaleriaPaquete"
+        tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar Fotos al Paquete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <form role="form">
 
-                                    @if ($foto)
-                                        <img src="{{ $foto->temporaryUrl() }}" width="100" height="100">
-                                    @endif
-
-                                    @if (session()->has('message'))
-                                        <div class="alert alert-success">
-                                            {{ session('message') }}
+                                    @if (session()->has('SatisfaccionGaleria'))
+                                        <div class="alert alert-aquamarine alert-fill alert-border-left alert-close alert-dismissible fade in"
+                                            role="alert">
+                                            <button type="button" class="close" data-dismiss="alert"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            {{ session('SatisfaccionGaleria') }}
                                         </div>
                                     @endif
 
                                     <div class="form-group">
+                                        <label for="descripcion_foto">Descripcion</label>
+                                        <textarea class="form-control" wire:model.defer="descripcion" id="descripcion_foto" rows="3"></textarea>
+
                                         @error('descripcion')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
-                                        <label for="exampleInputEmail1">Descripcion</label>
-                                        <input type="text" wire:model.defer="descripcion" class="form-control"
-                                            id="exampleInputEmail1" aria-describedby="emailHelp">
 
-                                        <label for="foto">Fotografía</label>
-                                        <input type="file" wire:model.defer="foto" class="form-control"
-                                            id="foto">
                                     </div>
-                                    <input hidden type="text" value="{{ $idPaquete }}">
+                                    <div class="form-group">
+                                        <label for="foto">Fotografía</label>
+                                        <input type="file" class="form-control-file" wire:model.defer="foto"
+                                            class="form-control" id="foto">
+
+                                        @error('foto')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </form>
                             </div>
-                            <div class="modal-footer">
-
-                                <button wire:click="saveGaleria" type="button" class="btn btn-primary">
-                                    Guardar
-                                </button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                    Close
-                                </button>
+                            <div class="col-md-4">
+                                @if ($foto)
+                                    <img src="{{ $foto->temporaryUrl() }}" width="170" height="170">
+                                @endif
                             </div>
                         </div>
-
                     </div>
-
                 </div>
-
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Descripción</th>
-                            <th>Fotografía</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                            $cont = 1;
-                        @endphp
-                        @foreach ($fotos as $f)
-                            <tr>
-                                <td>
-                                    {{ $cont++ }}
-                                </td>
-                                <td>
-                                    {{ $f->descripcion }}
-                                </td>
-                                <td>
-                                    <img src="{{ asset('/'.$f->directorio) }}" width="100" height="100">
-                                    {{-- '/'.$f->directorio --}}
-                                </td>
-                                <td>
-                                    <a href="{{-- route('editar.itinerario.paquete', $itinerario->idactividaditinerario) --}}">
-                                        <span class="btn btn-warning btn-sm">
-                                            <span class="fa fa-pencil-square-o"></span>
-                                        </span>
-                                    </a>
-                                    <a action="{{-- route('eliminar.itinerario.paquete', $itinerario->idactividaditinerario) --}}" method="POST" class="formEliminarItinerario">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">
-                                            <span class="fa fa-trash"></span>
-                                        </button>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-
-                    </tbody>
-                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" wire:loading.attr="disabled"
+                        data-dismiss="modal">Cerrar</button>
+                    <button type="button" wire:loading.attr="disabled" wire:click="saveGaleria"
+                        class="btn btn-primary">Guardar
+                        Cambios</button>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <br>
+            <table class="table">
+                <div wire:loading>
+                    <span class="text-info">Procesando</span>
+                </div>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Descripción</th>
+                        <th>Fotografía</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $cont = 1;
+                    @endphp
+                    @foreach ($fotos as $f)
+                        <tr>
+                            <td>
+                                {{ $cont++ }}
+                            </td>
+                            <td>
+                                {{ $f->descripcion }}
+                            </td>
+                            <td>
+                                <img src="{{ asset('/' . $f->directorio) }}" class="rounded-circle" width="100" height="100">
+                                {{-- '/'.$f->directorio --}}
+                            </td>
+                            <td>
+                                <a href="{{-- route('editar.itinerario.paquete', $itinerario->idactividaditinerario) --}}">
+                                    <span class="btn btn-warning btn-sm">
+                                        <span class="fa fa-pencil-square-o"></span>
+                                    </span>
+                                </a>
+                                <button type="button" wire:click="deleteConfirm({{ $f->id }})"
+                                    class="btn btn-danger btn-sm" title="Eliminar Foto">
+                                    <span class="fa fa-trash"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
+
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+<script>
+    window.addEventListener('swal-confirmImage', event => {
+        Swal.fire({
+            title: event.detail.title,
+            icon: event.detail.icon,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, quiero eliminarlo!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Livewire.emitTo('paquetes-admin.galeria.show-galerias', 'deleteGaleria', event.detail
+                    .id);
+            }
+        })
+    })
+</script>

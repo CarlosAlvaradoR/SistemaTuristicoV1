@@ -227,32 +227,5 @@
 
 
 @section('scripts')
-    <script>
-        (function() {
-            'use strict'
-            var forms = document.querySelectorAll('.formEliminarItinerario')
-            Array.prototype.slice.call(forms)
-                .forEach(function(form) {
-                    form.addEventListener('submit', function(event) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                        Swal.fire({
-                            title: '¿Confirma la eliminación del registro?',
-                            icon: 'info',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Confirmar',
-                            cancelButtonText: 'Cancelar'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                this.submit();
-                                Swal.fire('¡Eliminado!',
-                                    'El registro ha sido eliminado exitosamente.', 'success');
-                            }
-                        })
-                    }, false)
-                })
-        })()
-    </script>
+    
 @endsection

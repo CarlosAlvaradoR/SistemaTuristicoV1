@@ -115,7 +115,7 @@
                                 </a>
                                 
                                 <button class="btn btn-danger btn-sm" title="Quitar Tipo de Personal" 
-                                    wire:loading.attr="disabled" wire:click="quitarPersonalTipoPaquetes({{ $lv->id }})">
+                                    wire:loading.attr="disabled" wire:click="deleteConfirm({{ $lv->id }})">
                                     <span class="fa fa-minus"></span>
                                 </button>
                             </td>
@@ -127,3 +127,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    window.addEventListener('swal-confirm', event => {
+        Swal.fire({
+            title: event.detail.title,
+            icon: event.detail.icon,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, quiero eliminarlo!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Livewire.emit('delete', event.detail.id);
+            }
+        })
+    })
+</script>

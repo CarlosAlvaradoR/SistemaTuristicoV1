@@ -48,14 +48,14 @@
 
 
 
-
-
-    <script src="{{ asset('dashboard_assets/js/lib/jquery/jquery.min.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!--<script src="{{-- asset('dashboard_assets/js/lib/jquery/jquery.min.js') --}}"></script>-->
     <script src="{{ asset('dashboard_assets/js/lib/tether/tether.min.js') }}"></script>
     <script src="{{ asset('dashboard_assets/js/lib/bootstrap/bootstrap.min.js') }}"></script>
     <script src="{{ asset('dashboard_assets/js/plugins.js') }}"></script>
 
     <script src="{{ asset('dashboard_assets/js/app.js') }}"></script>
+    
     @livewireScripts
 </body>
 
