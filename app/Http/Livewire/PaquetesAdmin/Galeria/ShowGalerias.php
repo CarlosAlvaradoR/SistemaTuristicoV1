@@ -27,9 +27,9 @@ class ShowGalerias extends Component
     }
 
     public function saveGaleria(){
-        FotoGalerias::create([
+        $fotos = FotoGalerias::create([
             'descripcion' => $this->descripcion,
-            'directorio' => 'aaa',
+            'directorio' => 'storage/'.$this->foto->store('fotos','public'),
             'paquete_id' => $this->idPaquete
         ]);
     }

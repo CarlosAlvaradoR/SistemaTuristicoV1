@@ -1,2 +1,5 @@
 PAYPAL
     composer require paypal/rest-api-sdk-php:*
+
+SUBIR ARCHIVOS
+    php artisan storage:link

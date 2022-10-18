@@ -23,7 +23,11 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form wire:submit.prevent="saveGaleria">
+                                <form wire:submit.prevent="saveGaleria" role="form" enctype="multipart/form-data">
+
+                                    @if ($foto)
+                                        <img src="{{ $foto->temporaryUrl() }}" width="100" height="100">
+                                    @endif
 
                                     @if (session()->has('message'))
                                         <div class="alert alert-success">
@@ -41,7 +45,7 @@
 
                                         <label for="foto">Fotografía</label>
                                         <input type="file" wire:model.defer="foto" class="form-control"
-                                            id="foto" aria-describedby="emailHelp">
+                                            id="foto">
                                     </div>
                                     <input hidden type="text" value="{{ $idPaquete }}">
                                 </form>
@@ -88,7 +92,8 @@
                                     {{ $f->descripcion }}
                                 </td>
                                 <td>
-                                    {{ $f->directorio }}
+                                    <img src="{{ asset('/'.$f->directorio) }}" width="100" height="100">
+                                    {{-- '/'.$f->directorio --}}
                                 </td>
                                 <td>
                                     <a href="{{-- route('editar.itinerario.paquete', $itinerario->idactividaditinerario) --}}">
