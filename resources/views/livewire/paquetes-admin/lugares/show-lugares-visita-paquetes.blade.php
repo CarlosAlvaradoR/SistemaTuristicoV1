@@ -117,8 +117,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                    <button type="button" wire:click="saveMapa" class="btn btn-primary">Guardar Cambios</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Terminar</button>
                 </div>
             </div>
         </div>

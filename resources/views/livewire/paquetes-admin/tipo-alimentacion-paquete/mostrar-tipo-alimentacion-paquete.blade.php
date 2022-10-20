@@ -25,12 +25,7 @@
                                     <div wire:loading>
                                         <span class="text-info">Procesando</span>
                                     </div>
-                                    <div class="alert alert-aquamarine alert-fill alert-border-left alert-close alert-dismissible fade in" role="alert">
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                        <strong>Heads Up!</strong> Lorem Ipsum is simply dummy text of the printing and typesetting.
-                                    </div>
+                                    
                                     <div class="form-group">
 
                                         <label for="descripcion">

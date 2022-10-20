@@ -45,7 +45,7 @@
                     ]);
 
                     var options = {
-                        title: 'My Daily Activities'
+                        title: 'Paquetes más comprados'
                     };
 
                     var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -110,8 +110,7 @@
                             position: 'none'
                         },
                         chart: {
-                            title: 'Chess opening moves',
-                            subtitle: 'popularity by percentage'
+                            title: 'Clientes con más compras'
                         },
                         bars: 'horizontal', // Required for Material Bar Charts.
                         axes: {

@@ -49,18 +49,19 @@
                                     @endif
 
                                     <div class="form-group">
+                                        
+                                        <label for="exampleInputEmail1">Descripcion</label>
+                                        <textarea wire:model.defer="descripcion" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                         @error('descripcion')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
-                                        <label for="exampleInputEmail1">Descripcion</label>
-                                        <textarea wire:model.defer="descripcion" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-
-                                        @error('precio')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+                                        
                                         <label for="foto">Monto</label>
                                         <input type="text" placeholder="ej:25.60" wire:model.defer="precio"
                                             class="form-control" id="foto">
+                                        @error('precio')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
 
                                 </form>
