@@ -99,3 +99,16 @@ MIGRACIONES Y MÓDELOS
         php artisan make:model TipoalmuerzoPaquetes -r
 
         
+
+
+
+
+
+
+
+
+
+    MÓDULO RESERVA
+        *) Tabla reservas
+        php artisan make:migration create_reservas_table
+        php artisan make:model Reservas -r

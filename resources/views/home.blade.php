@@ -37,11 +37,11 @@
 
                     var data = google.visualization.arrayToDataTable([
                         ['Task', 'Hours per Day'],
-                        ['Work', 11],
-                        ['Eat', 2],
-                        ['Commute', 2],
-                        ['Watch TV', 2],
-                        ['Sleep', 7]
+                        ['Semana Santa', 11],
+                        ['Paquete 2', 2],
+                        ['Trujillo', 2],
+                        ['Carhuaz', 2],
+                        ['Huascarán', 7]
                     ]);
 
                     var options = {
@@ -64,16 +64,16 @@
 
                 function drawChart() {
                     var data = google.visualization.arrayToDataTable([
-                        ['Task', 'Hours per Day'],
-                        ['Work', 11],
-                        ['Eat', 2],
-                        ['Commute', 2],
-                        ['Watch TV', 2],
-                        ['Sleep', 7]
+                        ['Cátac', 'Hours per Day'],
+                        ['Recuay', 11],
+                        ['Yungay', 2],
+                        ['Barranca Limeña', 2],
+                        ['Lima', 2],
+                        ['Carhuaz', 7]
                     ]);
 
                     var options = {
-                        title: 'My Daily Activities',
+                        title: 'Paquetes con menos compras',
                         is3D: true,
                     };
 
@@ -95,16 +95,16 @@
 
                 function drawStuff() {
                     var data = new google.visualization.arrayToDataTable([
-                        ['Opening Move', 'Percentage'],
-                        ["King's pawn (e4)", 44],
-                        ["Queen's pawn (d4)", 31],
-                        ["Knight to King 3 (Nf3)", 12],
-                        ["Queen's bishop pawn (c4)", 10],
-                        ['Other', 3]
+                        ['Clientes', 'Cantidad'],
+                        ["Juan Rivera", 44],
+                        ["Luis Quizana", 31],
+                        ["Jescenia Melgarejo", 12],
+                        ["Luis Armando Mecías", 10],
+                        ['Julián Arréstegui', 3]
                     ]);
 
                     var options = {
-                        title: 'Chess opening moves',
+                        title: 'Clientes',
                         width: 900,
                         legend: {
                             position: 'none'
@@ -112,12 +112,12 @@
                         chart: {
                             title: 'Clientes con más compras'
                         },
-                        bars: 'horizontal', // Required for Material Bar Charts.
+                        bars: 'vertical', // Required for Material Bar Charts.
                         axes: {
                             x: {
                                 0: {
                                     side: 'top',
-                                    label: 'Percentage'
+                                    label: 'Cantidad'
                                 } // Top x-axis.
                             }
                         },

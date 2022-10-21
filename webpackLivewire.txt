@@ -59,4 +59,5 @@ PAQUETES
 RESERVAS
 
     BUSCAR CLIENTE
+        php artisan make:livewire ReservasAdmin/MostrarFormularioReservas
         

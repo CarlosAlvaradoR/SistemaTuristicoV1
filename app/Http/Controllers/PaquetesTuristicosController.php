@@ -97,11 +97,8 @@ class PaquetesTuristicosController extends Controller
         //
     }
 
-    public function detalle($paquetesTuristicos){
-        
-    }
-
-    public function reservar(){
-        return view('reservar_admin.index');
+    public function reservar(PaquetesTuristicos $slug){
+        $paquete = $slug;
+        return view('reservar_admin.index', compact('paquete'));
     }
 }

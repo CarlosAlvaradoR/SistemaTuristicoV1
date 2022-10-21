@@ -9,4 +9,4 @@ Route::get('/paquetes/editar/{slug}', [App\Http\Controllers\PaquetesTuristicosCo
 Route::get('/paquetes/detalle/{slug}', [App\Http\Controllers\PaquetesTuristicosController::class, 'show'])->name('paquetes.detalle')->middleware(['auth', 'verified']);
 
 
-Route::get('/paquetes/reserva', [App\Http\Controllers\PaquetesTuristicosController::class, 'reservar'])->name('paquetes.reservar')->middleware(['auth', 'verified']);
+Route::get('/paquetes/reserva/{slug}', [App\Http\Controllers\PaquetesTuristicosController::class, 'reservar'])->name('paquetes.reservar')->middleware(['auth', 'verified']);
