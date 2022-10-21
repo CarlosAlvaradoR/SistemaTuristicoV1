@@ -41,7 +41,7 @@ class CrearPaquetes extends Component
             'tipo_paquete_id' => $this->tipo_de_paquete
         ]);
 
-        $this->reset(['nombre','precio','estado','imagen_principal','tipo_de_paquete']);
+        $this->reset(['nombre','precio','precio_en_dolares','estado','imagen_principal','tipo_de_paquete']);
         $this->imagen_principal = null;
         session()->flash('PaqueteSucces', 'Paquete añadido correctamente');
     }

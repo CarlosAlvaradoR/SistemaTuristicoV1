@@ -21,7 +21,7 @@
 
                 <div class="">
                     <!--<img src="/" style="height: 110px;" alt="">-->
-                    <img src="https://revistaelconocedor.com/wp-content/uploads/2018/05/lima4-1024x552.jpg"
+                    <img src="{{ asset('/'.$paquete->imagen_principal) }}"
                         class="img-rounded" alt="Cinque Terre" width="220" height="156">
                 </div>
                 <div class="card-user-name">{{ $paquete->nombre }}</div>
@@ -31,7 +31,7 @@
                     Ver Paquete
                 </a>
                 <div class="card-user-social align-items-start">
-                    <a href="{{ route('paquetes.edit') }}" title="Editar">
+                    <a href="{{ route('paquetes.edit', $paquete) }}" title="Editar">
                         <i class="fa fa-pencil-square-o"></i>
                     </a>
                     <a href="#" title="Ver Información del Paquete">

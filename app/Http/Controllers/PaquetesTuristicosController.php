@@ -65,11 +65,13 @@ class PaquetesTuristicosController extends Controller
      * @param  \App\Models\PaquetesTuristicos  $paquetesTuristicos
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit(PaquetesTuristicos $slug)
     {
         //
-        
-        return view('paquetes_admin.editar', compact('tipos'));
+        $tipos = TipoPaquetes::all();
+        $paquete = $slug;
+        //return $paquete;
+        return view('paquetes_admin.editar', compact('tipos', 'paquete'));
     }
 
     /**

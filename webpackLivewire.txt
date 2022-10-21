@@ -4,6 +4,7 @@ PAQUETES
         Para los paquetes:
         php artisan make:livewire PaquetesAdmin/ShowPaquetes
         php artisan make:livewire PaquetesAdmin/CrearPaquetes
+        php artisan make:livewire PaquetesAdmin/EditarPaquetes
 
     
         GALERÍAS
