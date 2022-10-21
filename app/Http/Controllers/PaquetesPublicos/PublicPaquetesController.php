@@ -16,4 +16,10 @@ class PublicPaquetesController extends Controller
     public function mostrarDetalleDestinos($id){
         return "Esto te muestra el detalle de los destinos";
     }
+
+    public function detalle(PaquetesTuristicos $slug){ //Aquí se obtiene el detalle de los paquetes públicos
+        $paquete = $slug;
+        //return $paquete;
+        return view('paquetes_publico.detalle_paquete', compact('paquete'));
+    }
 }

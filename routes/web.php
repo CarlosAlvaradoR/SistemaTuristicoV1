@@ -16,6 +16,7 @@ Route::get('/nosotros', function () {
 })->name('nosotros');
 
 Route::get('/destinos', [App\Http\Controllers\PaquetesPublicos\PublicPaquetesController::class, 'index'])->name('destinos');
+Route::get('/destinos/detalle/{slug}', [App\Http\Controllers\PaquetesPublicos\PublicPaquetesController::class, 'detalle'])->name('destinos.detalle.publico');
 
 Route::get('/contacto', function () {
     return view('paquetes_publico.inicio');
@@ -36,7 +37,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 });
 
 /*** PAGOS */
-Route::get('/{paquete_id}/pay', [App\Http\Controllers\PagosPublico\PaymentController::class, 'pay'])->name('payment.pay');
+Route::get('/{slugPaquete}/pay', [App\Http\Controllers\PagosPublico\PaymentController::class, 'pay'])->name('payment.pay');
 Route::get('/{paquete_id}/aproved', [App\Http\Controllers\PagosPublico\PaymentController::class, 'aproved'])->name('payment.aproved');
 
 

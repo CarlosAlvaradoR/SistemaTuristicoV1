@@ -5,15 +5,19 @@ namespace App\Http\Controllers\PagosPublico;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PaquetesTuristicos;
+use App\Models\Reservas;
 use Illuminate\Support\Facades\DB;
 use Auth;
 
 class PaymentController extends Controller
 {
     //
-    public function pay($idPaquete){
-        $paquete = PaquetesTuristicos::find($idPaquete);
+    public function pay(PaquetesTuristicos $slugPaquete, Request $request){
+        $paquete = $slugPaquete; 
+        $datos_reserva = $request;
+        //$paquete = PaquetesTuristicos::find($idPaquete);
         //return $paquete;
+        
         $apiContext = new \PayPal\Rest\ApiContext(
                 new \PayPal\Auth\OAuthTokenCredential(
                     config('services.paypal.client_id'),     // ClientID
@@ -41,6 +45,13 @@ class PaymentController extends Controller
             ->setPayer($payer)
             ->setTransactions(array($transaction))
             ->setRedirectUrls($redirectUrls);
+        $reservas = Reservas::create([
+                'fecha_reserva' => $request->fecha_reservacion, 
+                'observacion' => $request->observacion_paquete, 
+                'monto' => $paquete->precio_dolares, 
+                'cliente_id' => Auth::user()->id, 
+                'paquete_id' => $paquete->id
+        ]);
 
         // After Step 3
         try {
@@ -54,6 +65,7 @@ class PaymentController extends Controller
             echo $ex->getData();
         }
         //return $paquete;
+        
     }
 
     public function aproved(Request $request, $id){
@@ -75,13 +87,13 @@ class PaymentController extends Controller
 
         
         //Una vez pagada guardamos en la base de datos el pago y lo redirigimos a sus compras
-        $guardar = DB::table('reservas')->insert(['monto_reserva' => 89, 
+        /*$guardar = DB::table('reservas')->insert(['monto_reserva' => 89, 
             'user_reserva' => 3
             ]
-        );
-        /***
-         * create::([]);
-         */
+        );*/
+        
+         
+        
         return redirect()->route('cliente.paquetes');
     }
 }
