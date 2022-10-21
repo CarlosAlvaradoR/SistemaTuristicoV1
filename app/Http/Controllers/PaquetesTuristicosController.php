@@ -49,9 +49,14 @@ class PaquetesTuristicosController extends Controller
      * @param  \App\Models\PaquetesTuristicos  $paquetesTuristicos
      * @return \Illuminate\Http\Response
      */
-    public function show(PaquetesTuristicos $paquetesTuristicos)
+    public function show(PaquetesTuristicos $slug)
     {
         //
+        //return $slug;
+        //$paquete = PaquetesTuristicos::findorFail($paquetesTuristicos);
+        //return $paquete;
+        $paquete = $slug;
+        return view('paquetes_admin.detalle_paquete', compact('paquete'));
     }
 
     /**
@@ -63,7 +68,7 @@ class PaquetesTuristicosController extends Controller
     public function edit()
     {
         //
-        $tipos = TipoPaquetes::all();
+        
         return view('paquetes_admin.editar', compact('tipos'));
     }
 
@@ -91,9 +96,7 @@ class PaquetesTuristicosController extends Controller
     }
 
     public function detalle($paquetesTuristicos){
-        $paquete = PaquetesTuristicos::findorFail($paquetesTuristicos);
-        //return $paquete;
-        return view('paquetes_admin.detalle_paquete', compact('paquete'));
+        
     }
 
     public function reservar(){

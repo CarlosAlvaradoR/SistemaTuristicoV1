@@ -3,3 +3,6 @@ PAYPAL
 
 SUBIR ARCHIVOS
     php artisan storage:link
+
+LARAVEL SLUGABLE
+    composer require spatie/laravel-sluggable

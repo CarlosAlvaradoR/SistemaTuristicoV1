@@ -3,6 +3,8 @@ PAQUETES
     ADMIN
         Para los paquetes:
         php artisan make:livewire PaquetesAdmin/ShowPaquetes
+        php artisan make:livewire PaquetesAdmin/CrearPaquetes
+
     
         GALERÍAS
             php artisan make:livewire PaquetesAdmin/Galeria/ShowGalerias
