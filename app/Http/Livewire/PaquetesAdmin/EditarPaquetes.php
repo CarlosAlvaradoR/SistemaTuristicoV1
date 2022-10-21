@@ -15,6 +15,16 @@ class EditarPaquetes extends Component
     public $idPaquete, $nombre, $precio, $precio_en_dolares, $estado, $imagen_principal, $tipo_de_paquete;
     public $imagen_principal_nuevo, $slug;
 
+    protected $rules = [
+        'nombre' => 'required',
+        'precio' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+        'precio_en_dolares' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+        'estado' => 'required|integer|min:1',
+        //'imagen_principal' => 'required',
+        'tipo_de_paquete' => 'required',
+    ];
+
+
     public function mount(PaquetesTuristicos $paquete){
         $this->idPaquete = $paquete->id;
         $this->nombre = $paquete->nombre;
@@ -34,6 +44,7 @@ class EditarPaquetes extends Component
 
     public function editarPaquete(){
         //dd(PaquetesTuristicos::find($this->idPaquete));
+        $this->validate();
        if(is_null($this->imagen_principal_nuevo))
         {
             $imagen_nueva_paquete = $this->imagen_principal;

@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use App\Models\User;
 use App\Models\Personas;
+use App\Models\Clientes;
 
 class UsuariosSeeder extends Seeder
 {
@@ -73,6 +74,11 @@ class UsuariosSeeder extends Seeder
                 'persona_id' => $persona->id
             ]);
             $user->assignRole('cliente');
+
+            $cliente = Clientes::create([
+                'persona_id' => $persona->id, 
+                'user_id' => $user->id
+            ]);
         }
     }
 }
