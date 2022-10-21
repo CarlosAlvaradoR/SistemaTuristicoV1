@@ -20,6 +20,7 @@ class PaquetesTuristicosSeeder extends Seeder
             PaquetesTuristicos::create([
                 'nombre' => $faker->firstNameMale,
                  'precio' => $faker->randomNumber(2),
+                 'precio_dolares' => $faker->randomNumber(2),
                  'estado' => rand(0, 1),
                  'imagen_principal' => $faker->lastName,
                  'slug' => $faker->unique()->lastName,
