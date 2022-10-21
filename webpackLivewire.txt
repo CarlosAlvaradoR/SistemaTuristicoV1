@@ -4,35 +4,56 @@ PAQUETES
         Para los paquetes:
         php artisan make:livewire PaquetesAdmin/ShowPaquetes
     
-    GALERÍAS
-        php artisan make:livewire PaquetesAdmin/Galeria/ShowGalerias
-    
-    MAPA PAQUETES
-        php artisan make:livewire PaquetesAdmin/Mapa/ShowMapas
-    
-    VISITA ATRACTIVOS PAQUETES
-        php artisan make:livewire PaquetesAdmin/Lugares/ShowLugaresVisitaPaquetes
+        GALERÍAS
+            php artisan make:livewire PaquetesAdmin/Galeria/ShowGalerias
+        
+        MAPA PAQUETES
+            php artisan make:livewire PaquetesAdmin/Mapa/ShowMapas
+        
+        VISITA ATRACTIVOS PAQUETES
+            php artisan make:livewire PaquetesAdmin/Lugares/ShowLugaresVisitaPaquetes
 
-    ITINERARIO PAQUETES    
-        php artisan make:livewire PaquetesAdmin/Itinerarios/MostrarItinerarios
+        ITINERARIO PAQUETES    
+            php artisan make:livewire PaquetesAdmin/Itinerarios/MostrarItinerarios
 
-    BOLETOS PAGAR VIAJE
-        php artisan make:livewire PaquetesAdmin/Boletos/MostrarPagosServicios
+        BOLETOS PAGAR VIAJE
+            php artisan make:livewire PaquetesAdmin/Boletos/MostrarPagosServicios
 
-    TIPO PERSONAL PAQUETE
-        php artisan make:livewire PaquetesAdmin/TipoPersonal/MostrarTipoPersonalPaquete
+        TIPO PERSONAL PAQUETE
+            php artisan make:livewire PaquetesAdmin/TipoPersonal/MostrarTipoPersonalPaquete
 
-    TIPO TRANSPORTE PAQUETE
-        php artisan make:livewire PaquetesAdmin/TipoTransportePaquete/MostrarTipoTransportePaquete
+        TIPO TRANSPORTE PAQUETE
+            php artisan make:livewire PaquetesAdmin/TipoTransportePaquete/MostrarTipoTransportePaquete
 
-    TIPO ALIMENTACION PAQUETE
-        php artisan make:livewire PaquetesAdmin/TipoAlimentacionPaquete/MostrarTipoAlimentacionPaquete
+        TIPO ALIMENTACION PAQUETE
+            php artisan make:livewire PaquetesAdmin/TipoAlimentacionPaquete/MostrarTipoAlimentacionPaquete
 
-    EQUIPO PAQUETE
-        php artisan make:livewire PaquetesAdmin/EquipoPaquete/MostrarEquipoPaquetes
+        EQUIPO PAQUETE
+            php artisan make:livewire PaquetesAdmin/EquipoPaquete/MostrarEquipoPaquetes
 
-    TIPO ACEMILA PAQUETES
-        php artisan make:livewire PaquetesAdmin/TipoAcemilaPaquetes/MostrarTipoAcemilaPaquetes
+        TIPO ACEMILA PAQUETES
+            php artisan make:livewire PaquetesAdmin/TipoAcemilaPaquetes/MostrarTipoAcemilaPaquetes
 
-    TIPO ALMUERZO PAQUETES
-        php artisan make:livewire PaquetesAdmin/TipoAlmuerzoPaquetes/MostrarTipoAlmuerzoPaquetes
+        TIPO ALMUERZO PAQUETES
+            php artisan make:livewire PaquetesAdmin/TipoAlmuerzoPaquetes/MostrarTipoAlmuerzoPaquetes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+RESERVAS
+
+    BUSCAR CLIENTE
+        

@@ -20,7 +20,8 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <form role="form">
-
+                                    @csrf
+                                    
                                     @if (session()->has('SatisfaccionGaleria'))
                                         <div class="alert alert-aquamarine alert-fill alert-border-left alert-close alert-dismissible fade in"
                                             role="alert">
