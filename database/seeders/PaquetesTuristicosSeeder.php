@@ -25,7 +25,6 @@ class PaquetesTuristicosSeeder extends Seeder
                  'imagen_principal' => $faker->lastName,
                  'slug' => $faker->unique()->lastName,
                  'tipo_paquete_id' => 1 
-
             ]);
         }
     }
