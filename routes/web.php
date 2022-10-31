@@ -29,10 +29,11 @@ Route::get('/contacto', function () {
 Route::group(['middleware' => ['auth', 'verified']], function () {
     //
     Route::get('/perfil/cliente', [App\Http\Controllers\PaquetesPublicos\ClientePublicoController::class, 'index'])->name('cliente.perfil');
+    Route::get('/perfil/paquetes', [App\Http\Controllers\PaquetesPublicos\ClientePublicoController::class, 'mostrarPaquetes'])->name('cliente.paquetes');
 
-    Route::get('/cliente/paquetes', function () {
+    /*Route::get('/cliente/paquetes', function () {
         return view('perfil_cliente.paquetes_comprados');
-    })->name('cliente.paquetes');
+    })->name('j');*/
 
 });
 

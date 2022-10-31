@@ -44,6 +44,13 @@
             </a>
         </li>
 
+        <li class="blue">
+            <a href="{{ route('reservas.admin.index') }}">
+                <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                <span class="lbl">Reservas</span>
+            </a>
+        </li>
+
     </ul>
 
     <!--<section>

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use App\Models\PaquetesTuristicos;
+
 class PaquetesTuristicosSeeder extends Seeder
 {
     /**
@@ -27,5 +28,7 @@ class PaquetesTuristicosSeeder extends Seeder
                  'tipo_paquete_id' => 1 
             ]);
         }
+
+        
     }
 }

@@ -129,9 +129,7 @@
                 <h1>{{ $item->nombre }}</h1>
             @endforeach --}}
         @else
-            <div class="alert alert-danger" role="alert">
-                Cliente no encontrado, por favor créelo
-            </div>
+            
             <div class="box-typical box-typical-padding">
 
                 <h5 class="m-t-lg with-border text-danger">Cliente No Encontrado - {{ $nombre }}</h5>

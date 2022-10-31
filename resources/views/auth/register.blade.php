@@ -20,14 +20,13 @@
             @enderror
 
             <input id="dni" type="text" class="input100 @error('dni') is-invalid @enderror" name="dni"
-                value="{{ old('dni') }}" required autocomplete="dni" autofocus
-                placeholder="Ingrese su DNI">
+                value="{{ old('dni') }}" required autocomplete="dni" autofocus placeholder="Ingrese su DNI">
 
 
             <!--<input class="input100" type="text" name="username" placeholder="Enter username">-->
             <span class="focus-input100"></span>
         </div>
-        
+
         <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
             <span class="label-input100">Nombres Personales</span>
             @error('name_personal')
@@ -39,8 +38,8 @@
                 </div>
             @enderror
 
-            <input id="name_personal" type="text" class="input100 @error('name_personal') is-invalid @enderror" name="name_personal"
-                value="{{ old('name_personal') }}" required autocomplete="name_personal" autofocus
+            <input id="name_personal" type="text" class="input100 @error('name_personal') is-invalid @enderror"
+                name="name_personal" value="{{ old('name_personal') }}" required autocomplete="name_personal" autofocus
                 placeholder="Ingrese su nombre de usuario">
 
 
@@ -59,9 +58,9 @@
                 </div>
             @enderror
 
-            <input id="apellido_personal" type="text" class="input100 @error('apellido_personal') is-invalid @enderror" name="apellido_personal"
-                value="{{ old('apellido_personal') }}" required autocomplete="apellido_personal" autofocus
-                placeholder="Ingrese su nombre de usuario">
+            <input id="apellido_personal" type="text" class="input100 @error('apellido_personal') is-invalid @enderror"
+                name="apellido_personal" value="{{ old('apellido_personal') }}" required autocomplete="apellido_personal"
+                autofocus placeholder="Ingrese su nombre de usuario">
 
 
             <!--<input class="input100" type="text" name="username" placeholder="Enter username">-->
@@ -78,7 +77,7 @@
                     </button>
                 </div>
             @enderror
-
+            
             <input id="genero" type="text" class="input100 @error('genero') is-invalid @enderror" name="genero"
                 value="{{ old('genero') }}" required autocomplete="genero" autofocus
                 placeholder="Ingrese su nombre de usuario">
@@ -99,8 +98,8 @@
                 </div>
             @enderror
 
-            <input id="telefono" type="text" class="input100 @error('telefono') is-invalid @enderror" name="telefono"
-                value="{{ old('telefono') }}" required autocomplete="telefono" autofocus
+            <input id="telefono" type="text" class="input100 @error('telefono') is-invalid @enderror"
+                name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus
                 placeholder="Ingrese su nombre de usuario">
 
 
@@ -119,17 +118,17 @@
                 </div>
             @enderror
 
-            <input id="direccion" type="text" class="input100 @error('direccion') is-invalid @enderror" name="direccion"
-                value="{{ old('direccion') }}" required autocomplete="direccion" autofocus
+            <input id="direccion" type="text" class="input100 @error('direccion') is-invalid @enderror"
+                name="direccion" value="{{ old('direccion') }}" required autocomplete="direccion" autofocus
                 placeholder="Ingrese su dirección">
 
 
             <!--<input class="input100" type="text" name="username" placeholder="Enter username">-->
             <span class="focus-input100"></span>
         </div>
-        
 
-        
+
+
         <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
             <span class="label-input100">Nombre</span>
             @error('name')
@@ -177,8 +176,8 @@
                     </button>
                 </div>
             @enderror
-            <input id="password" type="password" class="input100 @error('password') is-invalid @enderror" name="password"
-                required autocomplete="new-password" placeholder="Ingrese su contraseña">
+            <input id="password" type="password" class="input100 @error('password') is-invalid @enderror"
+                name="password" required autocomplete="new-password" placeholder="Ingrese su contraseña">
 
             <!--input class="input100" type="password" name="pass" placeholder="Enter password">-->
             <span class="focus-input100"></span>
@@ -201,7 +200,7 @@
     </form>
 @endsection
 
-{{--@section('content')
+{{-- @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -286,4 +285,4 @@
             </div>
         </div>
     </div>
-@endsection--}}
+@endsection --}}

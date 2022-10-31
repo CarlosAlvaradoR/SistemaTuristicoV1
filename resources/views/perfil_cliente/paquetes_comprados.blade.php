@@ -15,33 +15,28 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Datos</th>
+                        <th scope="col">Fecha de Reserva</th>
+                        <th scope="col">Monto</th>
                         <th scope="col">Paquete</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Estado</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>                        
-                        <td>Ver</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>                        
-                        <td>Ver</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>                        
-                        <td>Ver</td>
-                    </tr>
+                    @php
+                        $cont = 1;
+                    @endphp
+                    @foreach ($paquetes_clientes as $p)
+                        <tr>
+                            <th scope="row">{{$cont++}}</th>
+                            <td>{{$p->datos}}</td>
+                            <td>{{$p->fecha_reserva}}</td>
+                            <td>{{$p->monto}}</td>
+                            <td>{{$p->paquete}}</td>
+                            <td><a href="">Ver detalles</a></td>
+                        </tr>
+                    @endforeach
+
                 </tbody>
             </table>
         </div>

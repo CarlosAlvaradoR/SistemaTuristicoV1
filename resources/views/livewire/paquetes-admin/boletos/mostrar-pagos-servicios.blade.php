@@ -105,6 +105,8 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <h1>HOOLA</h1>
+                        
                         @php
                             $cont = 1;
                         @endphp

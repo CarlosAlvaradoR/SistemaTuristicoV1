@@ -10,3 +10,9 @@ Route::get('/paquetes/detalle/{slug}', [App\Http\Controllers\PaquetesTuristicosC
 
 
 Route::get('/paquetes/reserva/{slug}', [App\Http\Controllers\PaquetesTuristicosController::class, 'reservar'])->name('paquetes.reservar')->middleware(['auth', 'verified']);
+
+
+
+
+
+Route::get('/reservas', [App\Http\Controllers\ReservasController::class, 'index'])->name('reservas.admin.index')->middleware(['auth', 'verified']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reservas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReservasController extends Controller
 {
@@ -15,6 +16,11 @@ class ReservasController extends Controller
     public function index()
     {
         //
+        $reservas = DB::select('SELECT concat(p.nombre, p.apellidos) as datos, r.fecha_reserva, r.monto, pt.nombre as paquete FROM personas p
+        INNER JOIN clientes c on p.id = c.persona_id
+        INNER JOIN reservas r on r.cliente_id = c.id
+        INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id');
+        return view ('reservar_admin.mostrar_todas_reservas', compact('reservas'));
     }
 
     /**

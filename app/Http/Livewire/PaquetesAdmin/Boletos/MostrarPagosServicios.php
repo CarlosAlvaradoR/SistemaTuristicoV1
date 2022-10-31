@@ -24,7 +24,8 @@ class MostrarPagosServicios extends Component
     public function render()
     {
         $pagos = DB::select('SELECT id, descripcion, precio, paquete_id FROM boletos_pagar_paquetes
-        WHERE paquete_id = 3');
+        WHERE paquete_id = '.$this->idPaquete.'');
+        //dd($pagos);
         return view('livewire.paquetes-admin.boletos.mostrar-pagos-servicios', compact('pagos'));
     }
 
