@@ -12,9 +12,9 @@
                 <span class="lbl">Usuarios</span>
             </span>
             <ul>
-                <li><a href="nuevosUsuarios.php"><span class="lbl">Nuevo</span><span
+                <li><a href="#"><span class="lbl">Nuevo</span><span
                             class="label label-custom label-pill label-succes">new</span></a></li>
-                <li><a href="permisosUsuarios.php"><span class="lbl">Permisos</span></a></li>
+                <li><a href="#"><span class="lbl">Permisos</span></a></li>
             </ul>
         </li>
 
@@ -26,7 +26,7 @@
             <ul>
                 <li><a href="acemilaAsociaciones.php"><span class="lbl">Organizaciones</span><span
                             class="label label-custom label-pill label-succes">new</span></a></li>
-                <li><a href="permisosUsuarios.php"><span class="lbl">Acémilas</span></a></li>
+                <li><a href="#"><span class="lbl">Acémilas</span></a></li>
             </ul>
         </li>
 
@@ -43,7 +43,60 @@
                 <span class="lbl">Paquetes</span>
             </a>
         </li>
+        
+        <li class="gold with-sub">
+            <span>
+                <i class="fa fa-regular fa-calendar"></i>
+                <span class="lbl">Reservas</span>
+            </span>
+            <ul>
+                <li><a href="#"><span class="lbl">Paquetes</span><span
+                            class="label label-custom label-pill label-succes">new</span></a></li>
+                <li><a href="#"><span class="lbl">Ver todas las reservas</span></a></li>
+                <li><a href="#"><span class="lbl">Solicitudes</span></a></li>
+                <li><a href="#"><span class="lbl">Devoluciones (Nuevo)</span></a></li>
+            </ul>
+        </li>
 
+        <li class="green with-sub">
+            <span>
+                <i class="fa fa-solid fa-mountain-sun"></i>
+                <span class="lbl">Viajes</span>
+            </span>
+            <ul>
+                <li><a href="#"><span class="lbl">Ver Todo</span><span
+                            class="label label-custom label-pill label-succes">new</span></a></li>
+                <li><a href="#"><span class="lbl">Empresas</span></a></li>
+                <li><a href="#"><span class="lbl">Chofer</span></a></li>
+                <li><a href="#"><span class="lbl">Cocinero</span></a></li>
+                <li><a href="#"><span class="lbl">Guía</span></a></li>
+                <li><a href="#"><span class="lbl">Arriero</span></a></li>
+            </ul>
+        </li>
+
+        <li class="magenta with-sub">
+            <span>
+                <i class="fa fa-solid fa-cart-shopping"></i>
+                <span class="lbl">Pedidos</span>
+            </span>
+            <ul>
+                <li><a href="#"><span class="lbl">Proveedores</span><span
+                            class="label label-custom label-pill label-danger">new</span></a></li>
+                <li><a href="#"><span class="lbl">Pedidos Proveedor</span></a></li>
+            </ul>
+        </li>
+
+        <li class="orange-red with-sub">
+            <span>
+                <i class="fa fa-vest"></i>
+                <span class="lbl">Equipos</span>
+            </span>
+            <ul>
+                <li><a href="#"><span class="lbl">Ver Todo (Lo Ideal)</span><span
+                            class="label label-custom label-pill label-succes">new</span></a></li>
+                <li><a href="#"><span class="lbl">Marcas</span></a></li>
+            </ul>
+        </li>
     </ul>
 
     <!--<section>
