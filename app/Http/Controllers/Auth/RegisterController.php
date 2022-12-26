@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-//use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Personas;
 use App\Models\Clientes;
@@ -55,9 +54,7 @@ class RegisterController extends Controller
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
-    {   
-        
-        
+    {
         return Validator::make($data, [
             'dni' => ['required', 'string', 'max:255', 'unique:personas'],
             'name_personal' => ['required', 'string', 'max:255'],
@@ -79,8 +76,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        //dd($data);
-        
         $persona = Personas::create([
             'dni'=>$data['dni'],
             'nombre'=>$data['name_personal'],
@@ -111,7 +106,6 @@ class RegisterController extends Controller
 
         return $user;
     }
-
 
     protected function redirectTo(){
         if (Auth::user()->hasRole('cliente')) {

@@ -12,7 +12,7 @@
         "laravel/framework": "^9.0",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.0",
+        "laravel/ui": "^4.1",
         "livewire/livewire": "^2.10",
         "paypal/rest-api-sdk-php": "*",
         "spatie/laravel-permission": "^5.5",
