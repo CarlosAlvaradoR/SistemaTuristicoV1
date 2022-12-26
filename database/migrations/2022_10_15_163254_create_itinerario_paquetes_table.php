@@ -13,7 +13,7 @@ class CreateItinerarioPaquetesTable extends Migration
      */
     public function up()
     {
-        Schema::create('itinerario_paquetes', function (Blueprint $table) {
+        Schema::create('itinerario_paquetes', function (Blueprint $table) {  
             $table->id();
             $table->string('descripcion');
 

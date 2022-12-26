@@ -13,7 +13,7 @@ class CreateActividadesItinerariosTable extends Migration
      */
     public function up()
     {
-        Schema::create('actividades_itinerarios', function (Blueprint $table) {
+        Schema::create('actividades_itinerarios', function (Blueprint $table) {   
             $table->id();
             $table->string('nombre_actividad');
             $table->timestamps();

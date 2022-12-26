@@ -13,7 +13,7 @@ class CreatePersonalTiposTable extends Migration
      */
     public function up()
     {
-        Schema::create('personal_tipos', function (Blueprint $table) {
+        Schema::create('personal_tipos', function (Blueprint $table) {  
             $table->id();
             $table->integer('cantidad');
 

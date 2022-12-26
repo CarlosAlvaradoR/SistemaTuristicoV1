@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ShowPaquetes;
-
+use Illuminate\Support\Facades\Auth;
 
 Auth::routes(['verify' => true]);
 
@@ -17,9 +17,17 @@ Route::get('/nosotros', function () {
 
 Route::get('/destinos', [App\Http\Controllers\PaquetesPublicos\PublicPaquetesController::class, 'index'])->name('destinos');
 
+Route::get('/destinos/detalle/slug.php', function () {
+    return view('paquetes_publico.detalle_destinos');
+})->name('detalles.destino');
+
 Route::get('/contacto', function () {
     return view('paquetes_publico.inicio');
 })->name('contacto');
+
+Route::get('/reservar', function () {
+    return view('reservar_publico.reservar');
+})->name('reservar');
 
 /*Route::get('/crear/role', function () {
     
