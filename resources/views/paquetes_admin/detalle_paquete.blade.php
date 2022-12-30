@@ -14,7 +14,7 @@
 
                         </h3>
                         <ol class="breadcrumb breadcrumb-simple">
-                            <li><a href="{{-- route('paquetes.activos.galeria') --}}">Paquetes</a></li>
+                            <li><a href="{{ route('paquetes.index') }}">Paquetes</a></li>
                             <li><a href="#">Detalles</a></li>
                             <li class="active">
                                 Paquete Santa Rous

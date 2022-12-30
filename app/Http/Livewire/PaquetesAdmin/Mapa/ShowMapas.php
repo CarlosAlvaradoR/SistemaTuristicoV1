@@ -4,11 +4,23 @@ namespace App\Http\Livewire\PaquetesAdmin\Mapa;
 
 use Livewire\Component;
 use App\Models\MapaPaquetes;
+use Livewire\WithFileUploads;
+
+
 class ShowMapas extends Component
 {
-    
+    use WithFileUploads;
+
+
     public $idPaquete;
     public $ruta, $descripcion;
+
+
+    protected $rules = [
+        'ruta' => 'required|image',
+        'descripcion' => 'required',
+    ];
+
 
     public function mount($idPaquete){
         $this->idPaquete = $idPaquete;
@@ -21,8 +33,10 @@ class ShowMapas extends Component
     }
 
     public function saveMapa(){
+        $this->validate();
+
         $mapa = MapaPaquetes::create([
-            'ruta' => $this->ruta,
+            'ruta' => 'storage/'.$this->ruta->store('mapas','public'),
             'descripcion' => $this->descripcion,
             'paquete_id' => $this->idPaquete
         ]);

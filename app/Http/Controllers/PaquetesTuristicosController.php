@@ -104,4 +104,8 @@ class PaquetesTuristicosController extends Controller
     public function reservar(){
         return view('reservar_admin.index');
     }
+
+    public function reservarCrearCliente(){
+        return view('reservar_admin.index');
+    }
 }

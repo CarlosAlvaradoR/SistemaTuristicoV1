@@ -17,19 +17,26 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="inputAddress">Ruta de Imagen</label>
-                            <input wire:model.defer="ruta" type="text" class="form-control" id="inputAddress"
-                                placeholder="Ingrese ruta de la imagen">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputAddress2">Descripción</label>
-                            <input wire:model.defer="descripcion" type="text" class="form-control" id="inputAddress2"
-                                placeholder="Ingrese una descripcion">
-                        </div>
 
-                    </form>
+                    <div class="form-group">
+                        <label for="ruta">Añadir Imagen de la Ruta</label>
+                        <input type="file" class="form-control-file" wire:model.defer="ruta" class="form-control"
+                            id="ruta">
+
+                        @error('ruta')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Descripción</label>
+                        <textarea class="form-control" wire:model.defer="descripcion" id="exampleFormControlTextarea1" rows="3"></textarea>
+
+                        @error('descripcion')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
@@ -61,7 +68,7 @@
                                 {{ $cont++ }}
                             </td>
                             <td>
-                                {{ $f->ruta }}
+                                <img src="{{ asset('/' . $f->ruta) }}" class="rounded-circle" width="100" height="100">
                             </td>
                             <td>
                                 {{ $f->descripcion }}
