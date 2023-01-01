@@ -16,6 +16,10 @@ class CreateActividadesItinerariosTable extends Migration
         Schema::create('actividades_itinerarios', function (Blueprint $table) {   
             $table->id();
             $table->string('nombre_actividad');
+
+            $table->unsignedBigInteger('paquete_id');
+            $table->foreign('paquete_id')->references('id')->on('paquetes_turisticos');
+            
             $table->timestamps();
         });
     }

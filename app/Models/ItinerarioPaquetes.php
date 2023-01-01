@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class ItinerarioPaquetes extends Model
 {
     use HasFactory;
-    protected $fillable = ['descripcion', 'actividad_id','paquete_id'];
+    protected $fillable = ['descripcion', 'actividad_id'];
 }

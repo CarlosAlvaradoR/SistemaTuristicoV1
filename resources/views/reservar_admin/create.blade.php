@@ -19,57 +19,90 @@
     <!--.page-content-header-->
 
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6">
-
-                <div class="row">
-                    <div class="col-md-10">
-
-                        <input type="text" class="form-control" wire:keydown.enter="buscar" wire:model.defer="dni"
-                            placeholder="Ingrese DNI del cliente">
-                    </div>
-                    <div class="col-md-2">
-
-                        <button type="button" wire:click="buscar" class="btn btn-success">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="alert alert-primary" role="alert">
-                Cliente no encontrado ? <a href="{{ route('paquetes.reservar.crear_cliente') }}" class="alert-link">Crea uno
-                    aquí</a>.
-            </div>
-        </div>
-        <br>
+        
         <div class="box-typical box-typical-padding">
 
-            <h5 class="m-t-lg with-border">Cliente Encontrado</h5>
+            <h5 class="m-t-lg with-border text-danger">Cliente No Encontrado</h5>
 
             <div class="row">
                 <div class="col-lg-4">
                     <fieldset class="form-group">
                         <label class="form-label semibold" for="exampleInput">Nombres y Apellidos</label>
-                        <input type="text" readonly value="Carlos Emilio Alvarado Robles" class="form-control"
-                            id="exampleInput" placeholder="First Name">
+                        <input type="text" class="form-control" id="exampleInput" placeholder="First Name">
                         <!--<small class="text-muted text-danger">We'll never share your email with anyone else.</small> -->
                     </fieldset>
                 </div>
                 <div class="col-lg-4">
                     <fieldset class="form-group">
                         <label class="form-label" for="exampleInputEmail1">Email</label>
-                        <input type="email" readonly value="calvarador@unasam.edu.pe" class="form-control"
-                            id="exampleInputEmail1" placeholder="Enter email" value="mail@mail.com">
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email"
+                            value="mail@mail.com">
                     </fieldset>
                 </div>
                 <div class="col-lg-4">
                     <fieldset class="form-group">
                         <label class="form-label" for="exampleInputPassword1">Genero</label>
-                        <input readonly type="text" value="Masculino" class="form-control" id="exampleInputPassword1"
-                            placeholder="Password">
+                        <select id="inputState" class="form-control">
+                            <option selected>Seleccione...</option>
+                            <option>Masculino</option>
+                            <option>Femenino</option>
+                        </select>
+                    </fieldset>
+                </div>
+            </div>
+            <!--.row-->
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label semibold" for="exampleInput">Nombres y Apellidos</label>
+                        <input type="text" class="form-control" id="exampleInput" placeholder="First Name">
+                        <!--<small class="text-muted text-danger">We'll never share your email with anyone else.</small> -->
+                    </fieldset>
+                </div>
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInputEmail1">Email</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email"
+                            value="mail@mail.com">
+                    </fieldset>
+                </div>
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInputPassword1">Genero</label>
+                        <select id="inputState" class="form-control">
+                            <option selected>Seleccione...</option>
+                            <option>Masculino</option>
+                            <option>Femenino</option>
+                        </select>
+                    </fieldset>
+                </div>
+            </div>
+            <!--.row-->
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label semibold" for="exampleInput">Nombres y Apellidos</label>
+                        <input type="text" class="form-control" id="exampleInput" placeholder="First Name">
+                        <!--<small class="text-muted text-danger">We'll never share your email with anyone else.</small> -->
+                    </fieldset>
+                </div>
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInputEmail1">Email</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email"
+                            value="mail@mail.com">
+                    </fieldset>
+                </div>
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInputPassword1">Genero</label>
+                        <select id="inputState" class="form-control">
+                            <option selected>Seleccione...</option>
+                            <option>Masculino</option>
+                            <option>Femenino</option>
+                        </select>
                     </fieldset>
                 </div>
             </div>
@@ -80,8 +113,8 @@
                 <div class="col-md-4 col-sm-6">
                     <fieldset class="form-group">
                         <label class="form-label" for="exampleInputDisabled">Nacionalidad</label>
-                        <input type="email" value="Argentino" class="form-control" id="exampleInputDisabled"
-                            placeholder="First Name" disabled>
+                        <input type="email" class="form-control" id="exampleInputDisabled" placeholder="First Name"
+                            disabled>
                     </fieldset>
                 </div>
                 <div class="col-md-4 col-sm-6">
@@ -124,7 +157,8 @@
 
         </div>
         <!--.box-typical-->
-
     </div>
+    <br>
+    
     <!--.container-fluid-->
 @endsection

@@ -10,4 +10,4 @@ Route::get('/paquetes/detalle/{slug}', [App\Http\Controllers\PaquetesTuristicosC
 
 
 Route::get('/paquetes/reserva', [App\Http\Controllers\PaquetesTuristicosController::class, 'reservar'])->name('paquetes.reservar')->middleware(['auth', 'verified']);
-Route::get('/paquetes/reserva/crear/cliente', [App\Http\Controllers\PaquetesTuristicosController::class, 'reservar'])->name('paquetes.reservar')->middleware(['auth', 'verified']);
+Route::get('/paquetes/reserva/Newcliente', [App\Http\Controllers\PaquetesTuristicosController::class, 'reservarCrearCliente'])->name('paquetes.reservar.crear_cliente')->middleware(['auth', 'verified']);

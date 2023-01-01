@@ -20,10 +20,7 @@ class CreateItinerarioPaquetesTable extends Migration
             $table->unsignedBigInteger('actividad_id');
             $table->foreign('actividad_id')->references('id')->on('actividades_itinerarios');
 
-            $table->unsignedBigInteger('paquete_id');
-            $table->foreign('paquete_id')->references('id')->on('paquetes_turisticos');
-
-            $table->timestamps();
+            $table->timestamps();   
         });
     }
 
