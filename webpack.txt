@@ -98,4 +98,79 @@ MIGRACIONES Y MÓDELOS
         php artisan make:migration create_tipoalmuerzo_paquetes_table
         php artisan make:model TipoalmuerzoPaquetes -r
 
-        
+        *) Tabla Condicion Puntualidades
+        php artisan make:migration create_condicion_puntualidades_table --path=/database/migrations/paquetes
+        php artisan make:model Paquetes/CondicionPuntualidades -r
+
+        *) Tabla Riesgos
+        php artisan make:migration create_riesgos_table --path=/database/migrations/paquetes
+        php artisan make:model Paquetes/Riesgos -r
+
+    MÓDULO RESERVAS
+        *) Tabla Nacionalidades
+        php artisan make:migration create_nacionalidades_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/Nacionalidades -r
+
+        *) Tabla Clientes
+        php artisan make:migration create_clientes_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/Clientes -r
+
+        *) Tabla Pasaportes
+        php artisan make:migration create_pasaportes_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/Pasaportes -r
+
+        *) Tabla Estado Reservas
+        php artisan make:migration create_estado_reservas_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/EstadoReservas -r
+
+        *) Tabla Reservas
+        php artisan make:migration create_reservas_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/Reservas -r
+
+        *) Tabla Evento Postergaciones
+        php artisan make:migration create_evento_postergaciones_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/EventoPostergaciones -r
+
+        *) Tabla Postergacion Eventos
+        php artisan make:migration create_postergacion_reservas_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/PostergacionReservas -r
+
+        *) Tabla Tipo Pagos
+        php artisan make:migration create_tipo_pagos_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/TipoPagos -r
+
+        *) Tabla Boletas
+        php artisan make:migration create_boletas_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/Boletas -r
+
+        *) Tabla Pagos
+        php artisan make:migration create_pagos_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/Pagos -r
+
+        *) Tabla CondicionesAceptadas
+        php artisan make:migration create_condiciones_aceptadas_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/CondicionesAceptadas -r
+
+        *) Tabla Riesgos Aceptados
+        php artisan make:migration create_riesgos_aceptados_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/RiesgosAceptados -r        
+
+        *) Tabla Solicitud Devolucion Dineros
+        php artisan make:migration create_solicitud_devolucion_dineros_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/SolicitudDevolucionDineros -r
+
+        *) Tabla Devolucion Dineros
+        php artisan make:migration create_devolucion_dineros_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/DevolucionDineros -r
+
+        *) Tabla Criterios Medicos
+        php artisan make:migration create_criterios_medicos_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/CriteriosMedicos -r
+
+        *) Tabla Item Fichas Medicas
+        php artisan make:migration create_item_fichas_medicas_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/ItemFichasMedicas -r
+
+        *) Tabla Autorizaciones Medicas
+        php artisan make:migration create_autorizaciones_medicas_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/AutorizacionesMedicas -r
