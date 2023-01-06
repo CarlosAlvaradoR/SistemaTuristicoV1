@@ -51,7 +51,7 @@
                     <a href="{{-- route('index.viajes.admin', $paquete->slug) --}}" title="Asignar Viaje">
                         <i class="fas fa-shuttle-van"></i>
                     </a>
-                    <a href="{{ route('paquetes.reservar') }}" title="Reservar">
+                    <a href="{{ route('paquetes.reservar', $paquete) }}" title="Reservar">
                         <i class="fa fa-cart-plus"></i>
                     </a>
                     <a href="#" title="Inactivar">
