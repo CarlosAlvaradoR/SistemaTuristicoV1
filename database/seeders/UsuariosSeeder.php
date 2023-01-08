@@ -7,6 +7,7 @@ use Faker\Factory as Faker;
 use App\Models\User;
 use App\Models\Personas;
 use App\Models\Clientes;
+use App\Models\Reservas\Nacionalidades;
 
 class UsuariosSeeder extends Seeder
 {
@@ -54,6 +55,21 @@ class UsuariosSeeder extends Seeder
         ]);
         $user2->assignRole('admin');
 
+        //NACIONALIDADES
+        $nacionalidades = Nacionalidades::create([
+            'nombre_nacionalidad' => 'Perú'
+        ]);
+
+        $nacionalidades = Nacionalidades::create([
+            'nombre_nacionalidad' => 'Argentina'
+        ]);
+
+        $nacionalidades = Nacionalidades::create([
+            'nombre_nacionalidad' => 'Brasil'
+        ]);
+
+
+
         //CLIENTES
         $faker = Faker::create();
         for ($i=1; $i < 51; $i++) { 
@@ -77,7 +93,8 @@ class UsuariosSeeder extends Seeder
 
             $cliente = Clientes::create([
                 'persona_id' => $persona->id, 
-                'user_id' => $user->id
+                'user_id' => $user->id,
+                'nacionalidad_id' => rand(1,3)
             ]);
         }
     }

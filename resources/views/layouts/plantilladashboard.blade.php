@@ -9,8 +9,10 @@
 
     <link href="{{ asset('dashboard_assets/img/favicon.144x144.png') }}" rel="apple-touch-icon" type="image/png"
         sizes="144x144">
-    <link href="{{ asset('dashboard_assets/img/favicon.114x114.png') }}" rel="apple-touch-icon" type="image/png" sizes="114x114">
-    <link href="{{ asset('dashboard_assets/img/favicon.72x72.png') }}" rel="apple-touch-icon" type="image/png" sizes="72x72">
+    <link href="{{ asset('dashboard_assets/img/favicon.114x114.png') }}" rel="apple-touch-icon" type="image/png"
+        sizes="114x114">
+    <link href="{{ asset('dashboard_assets/img/favicon.72x72.png') }}" rel="apple-touch-icon" type="image/png"
+        sizes="72x72">
     <link href="{{ asset('dashboard_assets/img/favicon.57x57.png') }}" rel="apple-touch-icon" type="image/png">
     <link href="{{ asset('dashboard_assets/img/favicon.png') }}" rel="icon" type="image/png">
     <link href="{{ asset('dashboard_assets/img/favicon.ico') }}" rel="shortcut icon">
@@ -24,7 +26,9 @@
     <link rel="stylesheet" href="{{ asset('dashboard_assets/css/lib/font-awesome/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dashboard_assets/css/lib/bootstrap/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dashboard_assets/css/main.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     @livewireStyles
@@ -54,8 +58,16 @@
     <script src="{{ asset('dashboard_assets/js/lib/tether/tether.min.js') }}"></script>
     <script src="{{ asset('dashboard_assets/js/lib/bootstrap/bootstrap.min.js') }}"></script>
     <script src="{{ asset('dashboard_assets/js/plugins.js') }}"></script>
-
+    <script src="{{ asset('dashboard_assets/js/lib/jquery-flex-label/jquery.flex.label.js') }}"></script>
     <script src="{{ asset('dashboard_assets/js/app.js') }}"></script>
+
+    <script type="application/javascript">
+        (function($) {
+            $(document).ready(function() {
+                $('.fl-flex-label').flexLabel();
+            });
+        })(jQuery);
+    </script>
     
     @livewireScripts
 </body>

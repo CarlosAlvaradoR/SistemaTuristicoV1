@@ -107,6 +107,7 @@ class PaquetesTuristicosController extends Controller
     }
 
     public function reservarCrearCliente(){
+        
         return view('reservar_admin.create');
     }
 

@@ -59,5 +59,7 @@ PAQUETES
 RESERVAS
 
     RESERVAR CLIENTE
-       php artisan make:livewire ReservasAdmin/Reservas/ReservarCliente 
+       php artisan make:livewire ReservasAdmin/Reservas/ReservarCliente
+
+       php artisan make:livewire ReservasAdmin/Reservas/ReservarClienteNuevo 
         
