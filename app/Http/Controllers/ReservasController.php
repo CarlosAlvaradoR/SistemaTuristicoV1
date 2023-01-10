@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Paquetes\CondicionPuntualidades;
+use App\Models\Paquetes\Riesgos;
+use App\Models\PaquetesTuristicos;
 use App\Models\Reservas\Reservas;
 use Illuminate\Http\Request;
 
@@ -81,5 +84,22 @@ class ReservasController extends Controller
     public function destroy(Reservas $reservas)
     {
         //
+    }
+
+    public function reservar(PaquetesTuristicos $slug){
+        
+        return view('reservar_admin.index', compact('slug'));
+    }
+
+    public function reservarCrearCliente(){
+        
+        return view('reservar_admin.create');
+    }
+
+    public function reservaCondicionesPuntualidad(Reservas $reserva, PaquetesTuristicos $paquete){
+        //$condiciones_puntualidad = CondicionPuntualidades::where('paquete_id','=',$paquete->id);
+        //$riesgos = Riesgos::where('paquete_id','=',$paquete->id);
+
+        return 'AA';
     }
 }

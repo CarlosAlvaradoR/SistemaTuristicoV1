@@ -101,17 +101,4 @@ class PaquetesTuristicosController extends Controller
         
     }
 
-    public function reservar(PaquetesTuristicos $slug){
-        
-        return view('reservar_admin.index', compact('slug'));
-    }
-
-    public function reservarCrearCliente(){
-        
-        return view('reservar_admin.create');
-    }
-
-    public function guardarReserva(Request $request){
-        dd($request->all());
-    }
 }

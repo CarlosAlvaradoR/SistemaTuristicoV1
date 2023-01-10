@@ -75,3 +75,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 //Paquetes
 require __DIR__ . '/all_routes/paquetes.php';
+require __DIR__ . '/all_routes/reservas_gestion.php';

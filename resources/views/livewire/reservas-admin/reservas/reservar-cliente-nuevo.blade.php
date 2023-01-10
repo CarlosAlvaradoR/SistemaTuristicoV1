@@ -209,15 +209,67 @@
             </div>
         </div>
 
+
+        <div class="col-lg-12 ks-panels-column-section">
+            <div class="card">
+                <div class="card-block">
+                    <h5 class="card-title">Autorizaciones Médicas</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="numero_autorizacion">Nº de Autorización</label>
+                            <input type="text" wire:model="numero_autorizacion" class="form-control"
+                                id="numero_autorizacion">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="archivo_autorizacion">Archivo Médico</label>
+                            <input type="file" wire:model="archivo_autorizacion" class="form-control"
+                                id="archivo_autorizacion">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
         <div class="col-lg-6 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
                     <h5 class="card-title">Acciones</h5>
                     <div>
                         <div class="form-group">
-                            <button type="button" wire:click="guardarReservaCliente" class="btn btn-inline">Grabar
+                            <button type="button" wire:click="guardarReservaCliente" wire:loading.attr="disabled"
+                                class="btn btn-inline">Grabar
                                 Reserva</button>
+                            <a href="#!" wire:click="detalle">DetalleArchivo</a>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 ks-panels-column-section">
+            <div class="card">
+                <div class="card-block">
+                    <h5 class="card-title">Validation</h5>
+                    <div>
+                        <fieldset class="form-group has-success">
+                            <div class="fl-flex-label">
+                                <input type="text" class="form-control form-control-success" id="inputSuccess1"
+                                    placeholder="Input with success">
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group has-warning">
+                            <div class="fl-flex-label">
+                                <input type="text" class="form-control form-control-warning"
+                                    placeholder="Input with warning">
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group has-danger">
+                            <div class="fl-flex-label">
+                                <input type="text" class="form-control form-control-danger"
+                                    placeholder="Input with danger">
+                            </div>
+                        </fieldset>
                     </div>
                 </div>
             </div>
@@ -261,4 +313,32 @@
             });
         </script>
     @endif
+
+    <script>
+        $(document).ready(function() {
+            var maxField = 10; //Input fields increment limitation
+            var addButton = $('.add_button'); //Add button selector
+            var wrapper = $('.field_wrapper'); //Input field wrapper
+            var fieldHTML =
+                '<div class="form-row"> <div class="form-group col-md-5"> <label for="numero_autorizacion">Número de Autorización</label> <input type="text" wire:model.defer="numero_autorizacion" name="numero_autorizacion[]" class="form-control" id="numero_autorizacion"> </div> <div class="form-group col-md-5"> <label for="archivo_autorizacion">Archivo de Autorizacion</label> <input type="file" wire:model.defer="archivo_autorizacion" name="archivo_autorizacion[]" class="form-control" id="archivo_autorizacion"> </div> <div class="form-group col-md-2"> <br> <button type="button" class="btn btn-danger remove_button" title="Quitar fila">-</button> </div> </div>'; //New input field html 
+            var x = 1; //Initial field counter is 1
+
+            //Once add button is clicked
+            $(addButton).click(function() {
+                //Check maximum number of input fields
+                if (x < maxField) {
+                    x++; //Increment field counter
+                    $(wrapper).append(fieldHTML); //Add field html
+                }
+            });
+
+            //Once remove button is clicked
+            $(wrapper).on('click', '.remove_button', function(e) {
+                e.preventDefault();
+                $(this).parent('div').parent('div').remove(); //Remove field html
+                x--; //Decrement field counter
+            });
+        });
+    </script>
+
 </div>
