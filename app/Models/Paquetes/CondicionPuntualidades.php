@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class CondicionPuntualidades extends Model
 {
     use HasFactory;
+    protected $fillable = ['descripcion', 'paquete_id'];
 }

@@ -50,7 +50,7 @@
                 <span class="lbl">Reservas</span>
             </span>
             <ul>
-                <li><a href="#"><span class="lbl">Lista de Reservas</span><span
+                <li><a href="{{ route('reservas.index') }}"><span class="lbl">Lista de Reservas</span><span
                             class="label label-custom label-pill label-success">new</span></a></li>
                 <li><a href="#"><span class="lbl">Solicitudes</span></a></li>
                 <li><a href="#"><span class="lbl">Devoluciones (Nuevo)</span></a></li>

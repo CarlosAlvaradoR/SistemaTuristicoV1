@@ -7,6 +7,7 @@ use App\Models\Paquetes\Riesgos;
 use App\Models\PaquetesTuristicos;
 use App\Models\Reservas\Reservas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReservasController extends Controller
 {
@@ -96,10 +97,14 @@ class ReservasController extends Controller
         return view('reservar_admin.create');
     }
 
-    public function reservaCondicionesPuntualidad(Reservas $reserva, PaquetesTuristicos $paquete){
-        //$condiciones_puntualidad = CondicionPuntualidades::where('paquete_id','=',$paquete->id);
-        //$riesgos = Riesgos::where('paquete_id','=',$paquete->id);
+    public function reservaCondicionesPuntualidad(Reservas $reserva){
+        //$sql = "SELECT * FROM condicion_puntualidades WHERE paquete_id = ".$reserva->paquete_id."";
+        $condiciones_puntualidad = CondicionPuntualidades::where('paquete_id','=',$reserva->paquete_id)->get();
+        $riesgos = Riesgos::where('paquete_id','=',$reserva->paquete_id)->get();
+        return view('reservar_admin.condiciones_riesgos.index', compact('reserva'));
+    }
 
-        return 'AA';
+    public function mostrarReservas(){
+        return view('reservar_admin.all_reservas');
     }
 }

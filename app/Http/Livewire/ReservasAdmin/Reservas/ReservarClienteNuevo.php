@@ -136,7 +136,7 @@ class ReservarClienteNuevo extends Component
             ]);
         }
 
-        redirect()->route('paquetes.reservar.condiciones.puntualidad', [$reservas, $this->paquetes_turisticos]); //Id de la reserva, o posible slug
+        redirect()->route('paquetes.reservar.condiciones.puntualidad', [$reservas]); //Id de la reserva, o posible slug
     }
 
     public function detalle()

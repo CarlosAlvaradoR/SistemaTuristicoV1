@@ -62,4 +62,5 @@ RESERVAS
        php artisan make:livewire ReservasAdmin/Reservas/ReservarCliente
 
        php artisan make:livewire ReservasAdmin/Reservas/ReservarClienteNuevo 
-        
+
+       php artisan make:livewire ReservasAdmin/Reservas/ReservarCondicionesRiesgos 

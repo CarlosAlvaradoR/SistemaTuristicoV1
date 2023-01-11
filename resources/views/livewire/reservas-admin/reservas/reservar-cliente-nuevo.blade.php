@@ -198,7 +198,7 @@
 
                         <div class="form-group">
                             <label for="archivo_pago">Seleccionar Archivo de Pago (Opcional)</label>
-                            <input type="file" wire:model.defer="pago_por_reserva" class="form-control"
+                            <input type="file" wire:model.defer="archivo_pago" class="form-control"
                                 id="archivo_pago">
                             @error('pago_por_reserva')
                                 <span class="text-danger">{{ $message }}</span>
