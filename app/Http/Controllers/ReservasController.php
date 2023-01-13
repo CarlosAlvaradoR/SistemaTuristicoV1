@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Paquetes\CondicionPuntualidades;
 use App\Models\Paquetes\Riesgos;
 use App\Models\PaquetesTuristicos;
+use App\Models\Personas;
 use App\Models\Reservas\Reservas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -87,24 +88,58 @@ class ReservasController extends Controller
         //
     }
 
-    public function reservar(PaquetesTuristicos $slug){
-        
+    public function reservar(PaquetesTuristicos $slug)
+    {
+
         return view('reservar_admin.index', compact('slug'));
     }
 
-    public function reservarCrearCliente(){
-        
+    public function reservarCrearCliente()
+    {
+
         return view('reservar_admin.create');
     }
 
-    public function reservaCondicionesPuntualidad(Reservas $reserva){
+    public function reservaCondicionesPuntualidad(Reservas $reserva)
+    {
         //$sql = "SELECT * FROM condicion_puntualidades WHERE paquete_id = ".$reserva->paquete_id."";
-        $condiciones_puntualidad = CondicionPuntualidades::where('paquete_id','=',$reserva->paquete_id)->get();
-        $riesgos = Riesgos::where('paquete_id','=',$reserva->paquete_id)->get();
+        $condiciones_puntualidad = CondicionPuntualidades::where('paquete_id', '=', $reserva->paquete_id)->get();
+        $riesgos = Riesgos::where('paquete_id', '=', $reserva->paquete_id)->get();
         return view('reservar_admin.condiciones_riesgos.index', compact('reserva'));
     }
 
-    public function mostrarReservas(){
-        return view('reservar_admin.all_reservas');
+    public function mostrarReservas()
+    {
+        $reservas = Personas::select(
+            'personas.dni',
+            DB::raw('CONCAT(personas.nombre," " ,personas.apellidos) AS datos'),
+            'pt.nombre',
+            'r.fecha_reserva',
+            //'b.monto',
+            //'SUM(pa.monto) as pago',
+            DB::raw('SUM(pa.monto) as pago'),
+            'er.nombre_estado',
+            'r.id'
+        )
+            ->join('clientes as c', 'personas.id', '=', 'c.persona_id')
+            ->join('reservas  as r', 'r.cliente_id', '=', 'c.id')
+            ->join('paquetes_turisticos as pt', 'pt.id', '=', 'r.paquete_id')
+            ->join('estado_reservas as er', 'er.id', '=', 'r.estado_reservas_id')
+            ->join('pagos as pa', 'pa.reserva_id', '=', 'r.id')
+            //->join('boletas as b', 'pa.reserva_id', '=', 'r.id')
+            ->groupBy('pa.reserva_id')
+            ->orderBy('r.updated_at','DESC')
+            ->get();
+        //return $reservas;
+
+        return view('reservar_admin.all_reservas', compact('reservas'));
+    }
+
+    public function mostrarEventosPostergacionReservas(){
+        return view('reservar_admin.eventos_postergacion.index');
+    }
+
+    public function mostrarSolicitudes(){
+        return view('reservar_admin.solicitudes.index');
     }
 }
