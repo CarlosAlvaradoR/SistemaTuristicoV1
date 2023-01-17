@@ -37,7 +37,22 @@ INNER JOIN estado_reservas er on er.id = r.estado_reservas_id
 INNER JOIN pagos pa on pa.reserva_id = r.id
 INNER JOIN boletas b on b.id = pa.boleta_id
 GROUP BY pa.reserva_id
+
 ORDER BY r.updated_at;
 
+-- CONSULTA PARA VERIFICAR EVENTOS QUE NO ESTAN EN LAS POSTERGACIÓN
 
-SELECT * FROM reservas;
+
+SELECT * FROM evento_postergaciones ep
+WHERE ep.id NOT IN (SELECT pr.evento_postergaciones_id 
+					FROM postergacion_reservas pr WHERE pr.reserva_id = 2);
+
+
+SELECT * FROM postergacion_reservas;
+
+
+
+
+
+
+

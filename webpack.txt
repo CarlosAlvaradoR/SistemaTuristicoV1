@@ -122,6 +122,7 @@ MIGRACIONES Y MÓDELOS
         *) Tabla Estado Reservas
         php artisan make:migration create_estado_reservas_table --path=/database/migrations/reservas
         php artisan make:model Reservas/EstadoReservas -r
+        php artisan make:seeder Reservas/EstadoReservasSeeder
 
         *) Tabla Reservas
         php artisan make:migration create_reservas_table --path=/database/migrations/reservas
@@ -138,6 +139,7 @@ MIGRACIONES Y MÓDELOS
         *) Tabla Tipo Pagos
         php artisan make:migration create_tipo_pagos_table --path=/database/migrations/reservas
         php artisan make:model Reservas/TipoPagos -r
+        php artisan make:seeder Reservas/TipoPagosSeeder
 
         *) Tabla Boletas
         php artisan make:migration create_boletas_table --path=/database/migrations/reservas

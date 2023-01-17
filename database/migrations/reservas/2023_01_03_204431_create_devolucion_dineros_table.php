@@ -18,6 +18,11 @@ return new class extends Migration
             $table->decimal('monto',10,2)->nullable();
             $table->text('observacion')->nullable();
             $table->dateTime('fecha_hora')->nullable();
+
+            $table->unsignedBigInteger('solicitud_devolucion_dinero_id')->nullable();
+            $table->foreign('solicitud_devolucion_dinero_id')->references('id')->on('solicitud_devolucion_dineros');
+
+
             $table->timestamps();
         });
     }

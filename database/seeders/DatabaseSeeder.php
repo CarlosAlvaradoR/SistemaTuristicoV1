@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Reservas\EstadoReservasSeeder;
+use Database\Seeders\Reservas\TipoPagosSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,5 +21,9 @@ class DatabaseSeeder extends Seeder
         $this->call(TipoPaquetesSeeder::class);
         //$this->call(PaquetesTuristicosSeeder::class);
 
+
+        // TODO LO QUE ES DE RESERVAS
+        $this->call(EstadoReservasSeeder::class);
+        $this->call(TipoPagosSeeder::class);
     }
 }

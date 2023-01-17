@@ -92,8 +92,8 @@
                                                     data-toggle="dropdown" aria-haspopup="true"
                                                     aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
                                                 <div class="dropdown-menu"><a class="dropdown-item"
-                                                        href="{{ route('reservas.eventos.postergacion') }}" title="Lenar Evento de Postergación"><i class="fas fa-calendar-week"></i></a><a class="dropdown-item"
-                                                        href="{{ route('reservas.solicitudes.devoluciones')}}" title="Llenar Solicitud de de Devolución"><i class="fa-solid fa-file"></i></a><a class="dropdown-item"
+                                                        href="{{ route('reservas.eventos.postergacion', $r) }}" title="Llenar Evento de Postergación"><i class="fas fa-calendar-week"></i></a><a class="dropdown-item"
+                                                        href="{{ route('reservas.solicitudes.devoluciones', $r)}}" title="Llenar Solicitud de de Devolución"><i class="fa-solid fa-file"></i></a><a class="dropdown-item"
                                                         href="#" title="Añadir Pago restante"><i class="fas fa-money-check-alt"></i></a><a class="dropdown-item"
                                                         href="#" title="Editar Solicitud"><i class="fas fa-file-edit"></i></a>
                                                     

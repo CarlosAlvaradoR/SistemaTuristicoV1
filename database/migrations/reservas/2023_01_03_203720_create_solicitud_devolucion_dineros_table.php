@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('solicitud_devolucion_dineros', function (Blueprint $table) {
             $table->id();
             $table->date('fecha_presentacion');
-            $table->integer('estado');
+            $table->string('estado');
             $table->text('observacion')->nullable();
 
             $table->unsignedBigInteger('reserva_id')->nullable();
