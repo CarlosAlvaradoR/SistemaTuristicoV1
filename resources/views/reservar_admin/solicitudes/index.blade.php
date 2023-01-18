@@ -17,7 +17,7 @@
         </header>
 
 
-        @livewire('reservas-admin.reservas.solicitudes-devolucion.solicitudes-devolucion')
+        @livewire('reservas-admin.reservas.solicitudes-devolucion.solicitudes-devolucion', [$reserva])
         
 
 
