@@ -16,18 +16,16 @@ Route::get('/nosotros', function () {
 })->name('nosotros');
 
 Route::get('/destinos', [App\Http\Controllers\PaquetesPublicos\PublicPaquetesController::class, 'index'])->name('destinos');
+Route::get('/destinos/detalle/{paquete}', [App\Http\Controllers\PaquetesPublicos\PublicPaquetesController::class, 'mostrarDetalleDestinos'])->name('detalles.destino')->middleware(['auth', 'verified']);
 
-Route::get('/destinos/detalle/slug.php', function () {
-    return view('paquetes_publico.detalle_destinos');
-})->name('detalles.destino');
+Route::get('/destinos/detalle/{paquete}/reservar', [App\Http\Controllers\PaquetesPublicos\PublicPaquetesController::class, 'mostrarFormularioReservaPublica'])->name('reservar.formulario.publico')->middleware(['auth', 'verified']);
+
 
 Route::get('/contacto', function () {
     return view('paquetes_publico.inicio');
 })->name('contacto');
 
-Route::get('/reservar', function () {
-    return view('reservar_publico.reservar');
-})->name('reservar');
+
 
 /*Route::get('/crear/role', function () {
     

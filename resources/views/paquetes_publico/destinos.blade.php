@@ -111,7 +111,7 @@
                                     <div class="thumb">
                                         <!--<img src="img/place/1.png" alt="">-->
                                         <img src="https://images.unsplash.com/photo-1577587230708-187fdbef4d91?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVydSUyMGxpbWF8ZW58MHx8MHx8&w=1000&q=80" alt="">
-                                        <a href="{{ route('payment.pay', $paquete) }}" class="prise">$ {{$paquete->precio}}</a>
+                                        <a href="{{ route('detalles.destino', $paquete) }}" class="prise">$ {{$paquete->precio}}</a>
                                     </div>
                                     <div class="place_info">
                                         <a href="destination_details.html">

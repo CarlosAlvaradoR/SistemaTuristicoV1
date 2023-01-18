@@ -13,7 +13,13 @@ class PublicPaquetesController extends Controller
         return view('paquetes_publico.destinos', compact('paquetes'));
     }
 
-    public function mostrarDetalleDestinos($id){
-        return "Esto te muestra el detalle de los destinos";
+    
+    public function mostrarDetalleDestinos(PaquetesTuristicos $paquete){
+        //return $paquete;
+        return view('paquetes_publico.detalle_destinos', compact('paquete'));
+    }
+
+    public function mostrarFormularioReservaPublica(){
+        return view('reservar_publico.reservar');
     }
 }

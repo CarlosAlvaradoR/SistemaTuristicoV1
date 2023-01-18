@@ -20,26 +20,75 @@
     <section class="sample-text-area">
         <div class="container box_1170">
             <h3 class="text-heading">Text Sample</h3>
-            <p class="sample-text">
-                Every avid independent filmmaker has <b>Bold</b> about making that <i>Italic</i> interest documentary,
-                or short
-                film to show off their creative prowess. Many have great ideas and want to “wow”
-                the<sup>Superscript</sup> scene,
-                or video renters with their big project. But once you have the<sub>Subscript</sub> “in the can” (no easy
-                feat), how
-                do you move from a <del>Strike</del> through of master DVDs with the <u>“Underline”</u> marked
-                hand-written title
-                inside a secondhand CD case, to a pile of cardboard boxes full of shiny new, retail-ready DVDs, with UPC
-                barcodes
-                and polywrap sitting on your doorstep? You need to create eye-popping artwork and have your project
-                replicated.
-                Using a reputable full service DVD Replication company like PacificDisc, Inc. to partner with is
-                certainly a
-                helpful option to ensure a professional end result, but to help with your DVD replication project, here
-                are 4 easy
-                steps to follow for good DVD replication results:
+            <div class="comment-form">
+                <h4>Datos de la Reserva</h4>
+                <div class="form-contact comment_form" action="#" id="commentForm">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <input class="form-control" name="fecha_reserva" id="fecha_reserva" type="date"
+                                    placeholder="Name">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <input class="form-control" disabled name="monto_real" id="monto_real" type="text"
+                                    placeholder="Monto del Paquete">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <textarea class="form-control w-100" name="observacion_reserva" id="observacion_reserva" cols="30" rows="3"
+                                    placeholder="Ingrese Observación"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            </p>
+                <h4>Pago</h4>
+                <div class="form-contact comment_form" action="#" id="commentForm">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <input class="form-control" name="pago_reserva" id="pago_reserva" type="text"
+                                    placeholder="Ingrese el Monto del Pago en S/.">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <input class="form-control" name="numero_operacion" id="numero_operacion" type="text"
+                                    placeholder="Ingrese el Nº de Operación">
+                                <h6 class="text-danger">Es obligatorio el Nº de Operación</h6>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input class="form-control" name="archivo_pago" id="archivo_pago" type="file"
+                                    placeholder="Monto del Paquete">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Tipo de Pago</label>
+                                <br>
+                                <select class="form-control" id="exampleFormControlSelect1">
+                                    <option selected>---Seleccione---</option>
+                                    <option>YAPE</option>
+                                    <option>BCP</option>
+                                    <option>PLIN</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <button type="submit" class="button button-contactForm btn_1 boxed-btn">Reservar</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
     <!-- End Sample Area -->

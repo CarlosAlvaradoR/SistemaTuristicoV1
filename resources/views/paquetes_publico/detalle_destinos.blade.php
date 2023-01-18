@@ -470,9 +470,9 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <div class="submit_btn">
-                                        <button class="boxed-btn4" type="submit">Reservar</button>
-                                    </div>
+                                        <a href="{{ route('reservar.formulario.publico', $paquete) }}" class="boxed-btn4">
+                                            Reservar
+                                        </a>
                                 </div>
                             </div>
                         </form>
