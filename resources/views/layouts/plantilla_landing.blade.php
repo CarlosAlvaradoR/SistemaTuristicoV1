@@ -28,6 +28,8 @@
 
     <link rel="stylesheet" href="{{ asset('landing_assets/css/style.css') }}">
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+
+    @livewireStyles
 </head>
 
 <body>
@@ -36,10 +38,10 @@
         <![endif]-->
 
     @include('includes/panel_landing/header')
-    
+
     @yield('content')
-    
-    
+
+
 
 
     @include('includes.panel_landing.footer')
@@ -65,7 +67,7 @@
     </script>
 
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
-    <!-- JS here --> 
+    <!-- JS here -->
     <script src="{{ asset('landing_assets/js/vendor/modernizr-3.5.0.min.js') }}"></script>
     <script src="{{ asset('landing_assets/js/vendor/jquery-1.12.4.min.js') }}"></script>
     <script src="{{ asset('landing_assets/js/popper.min.js') }}"></script>
@@ -95,7 +97,7 @@
     <script src="{{ asset('landing_assets/js/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('landing_assets/js/mail-script.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ru.min.js
-    "></script>
+        "></script>
 
     <script src="{{ asset('landing_assets/js/main.js') }}"></script>
     <script>
@@ -107,6 +109,8 @@
             language: 'ru'
         });
     </script>
+
+    @livewireScripts
 </body>
 
 </html>

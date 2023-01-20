@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->decimal('monto',10,2);
             $table->date('fecha_pago');
+            $table->string('numero_de_operacion',25)->nullable();
+            $table->enum('estado_pago', ['EN PROCESO', 'ACEPTADO','NO ACEPTADO']);
             $table->string('ruta_archivo_pago')->nullable();
 
             $table->unsignedBigInteger('reserva_id')->nullable();

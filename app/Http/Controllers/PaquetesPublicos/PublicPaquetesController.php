@@ -5,6 +5,8 @@ namespace App\Http\Controllers\PaquetesPublicos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PaquetesTuristicos;
+use Illuminate\Support\Facades\Auth;
+
 class PublicPaquetesController extends Controller
 {
     //
@@ -19,7 +21,11 @@ class PublicPaquetesController extends Controller
         return view('paquetes_publico.detalle_destinos', compact('paquete'));
     }
 
-    public function mostrarFormularioReservaPublica(){
-        return view('reservar_publico.reservar');
+    public function mostrarFormularioReservaPublica(PaquetesTuristicos $paquete){
+        return view('reservar_publico.reservar', compact('paquete'));
+    }
+
+    public function store(Request $request){
+        
     }
 }

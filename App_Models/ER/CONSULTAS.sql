@@ -48,7 +48,11 @@ WHERE ep.id NOT IN (SELECT pr.evento_postergaciones_id
 					FROM postergacion_reservas pr WHERE pr.reserva_id = 2);
 
 
-SELECT * FROM postergacion_reservas;
+SELECT ep.id, ep.nombre_evento FROM evento_postergaciones ep
+INNER JOIN postergacion_reservas pr on ep.id=pr.evento_postergaciones_id
+WHERE pr.reserva_id = 22;
+
+SELECT * FROM pagos;
 
 
 

@@ -68,3 +68,11 @@ RESERVAS
        php artisan make:livewire ReservasAdmin/Reservas/EventosPostergacion/EventosPostergacion 
 
        php artisan make:livewire ReservasAdmin/Reservas/SolicitudesDevolucion/SolicitudesDevolucion 
+
+
+RESERVAS PÚBLICAS
+
+    RESERVAR CLIENTE
+       php artisan make:livewire ReservasPublicas/Reservas/FormularioReservas
+
+       

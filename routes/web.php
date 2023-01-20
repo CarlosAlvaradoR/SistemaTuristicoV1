@@ -19,6 +19,7 @@ Route::get('/destinos', [App\Http\Controllers\PaquetesPublicos\PublicPaquetesCon
 Route::get('/destinos/detalle/{paquete}', [App\Http\Controllers\PaquetesPublicos\PublicPaquetesController::class, 'mostrarDetalleDestinos'])->name('detalles.destino')->middleware(['auth', 'verified']);
 
 Route::get('/destinos/detalle/{paquete}/reservar', [App\Http\Controllers\PaquetesPublicos\PublicPaquetesController::class, 'mostrarFormularioReservaPublica'])->name('reservar.formulario.publico')->middleware(['auth', 'verified']);
+Route::post('/destinos/detalle/{paquete}/reservar/save', [App\Http\Controllers\PaquetesPublicos\PublicPaquetesController::class, 'store'])->name('reservar.formulario.publico.save')->middleware(['auth', 'verified']);
 
 
 Route::get('/contacto', function () {
