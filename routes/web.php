@@ -35,11 +35,7 @@ Route::get('/contacto', function () {
 Route::group(['middleware' => ['auth', 'verified']], function () {
     //
     Route::get('/perfil/cliente', [App\Http\Controllers\PaquetesPublicos\ClientePublicoController::class, 'index'])->name('cliente.perfil');
-
-    Route::get('/cliente/paquetes', function () {
-        return view('perfil_cliente.paquetes_comprados');
-    })->name('cliente.paquetes');
-
+    Route::get('/paquetes/reservados', [App\Http\Controllers\PaquetesPublicos\ClientePublicoController::class, 'paquetesDelCliente'])->name('cliente.paquetes');
 });
 
 /*** PAGOS */

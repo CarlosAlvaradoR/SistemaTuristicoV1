@@ -9,21 +9,36 @@
                 <div class="progress-table-wrap">
                     <div class="progress-table">
                         <div class="table-head">
-                            <div class="serial">#</div>
                             <div class="country">Paquete</div>
-                            <div class="visit">Fecha</div>
-                            <div class="percentage">Acciones</div>
+                            <div class="country">Fecha</div>
+                            <div class="country">Estado</div>
+                            <div class="country">Monto</div>
+                            <div class="country">Acciones</div>
                         </div>
-                        <div class="table-row">
-                            <div class="serial">01</div>
-                            <div class="country"> <img src="img/elements/f1.jpg" alt="flag">Canada</div>
-                            <div class="visit">645032</div>
-                            <div class="percentage">
-                                <a href="#" class="genric-btn success small circle arrow">Medium</a>
-                                <a href="#" class="genric-btn info small circle arrow">Medium</a>
-                                <a href="#" class="genric-btn danger small circle arrow">Medium</a>
+                        @foreach ($paquetes_comprados as $p)
+                            <div class="table-row">
+                                <div class="country"> {{ $p->nombre }}</div>
+                                <div class="serial">{{ $p->fecha_reserva }}</div>
+                                <div class="serial">
+                                    {{ $p->nombre_estado }}
+                                    {{--@if ($p->nombre_estados == 'COMPLETADO')
+                                       Medium
+                                    @else
+                                        <a href="#"
+                                            class="genric-btn danger small circle arrow">{{ $p->nombre_estado }}</a>
+                                    @endif--}}
+                                </div>
+                                <div class="serial">
+                                    {{ $p->pago }}
+                                </div>
+                                <div class="percentage">
+                                    <a href="#" class="genric-btn success small circle arrow">Medium</a>
+                                    <a href="#" class="genric-btn info small circle arrow">Medium</a>
+                                    <a href="#" class="genric-btn danger small circle arrow">Medium</a>
+                                </div>
                             </div>
-                        </div>
+                        @endforeach
+
                     </div>
                 </div>
             </div>
