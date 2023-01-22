@@ -10,5 +10,6 @@ Route::post('/paquetes/reserva/save', [App\Http\Controllers\ReservasController::
 
 
 Route::get('/reservas', [App\Http\Controllers\ReservasController::class, 'mostrarReservas'])->name('reservas.index')->middleware(['auth', 'verified']);
+Route::get('/reservas/pagos', [App\Http\Controllers\ReservasController::class, 'pagosRestantes'])->name('reservas.pagos_restantes')->middleware(['auth', 'verified']);
 Route::get('/reservas/eventos-postergacion/{reserva}', [App\Http\Controllers\ReservasController::class, 'mostrarEventosPostergacionReservas'])->name('reservas.eventos.postergacion')->middleware(['auth', 'verified']);
 Route::get('/reservas/solicitudes-devolucion/{reserva}', [App\Http\Controllers\ReservasController::class, 'mostrarSolicitudes'])->name('reservas.solicitudes.devoluciones')->middleware(['auth', 'verified']);

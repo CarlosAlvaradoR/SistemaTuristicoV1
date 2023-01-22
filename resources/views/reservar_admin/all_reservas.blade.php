@@ -81,22 +81,32 @@
                                         <td>{{ $r->pago }}</td>
                                         <td>
                                             @if ($r->nombre_estado == 'COMPLETADO')
-                                                <span class="label label-success">{{$r->nombre_estado}}</span>
+                                                <span class="label label-success">{{ $r->nombre_estado }}</span>
                                             @else
-                                                <span class="label label-danger">{{$r->nombre_estado}}</span>
+                                                <span class="label label-danger">{{ $r->nombre_estado }}</span>
                                             @endif
                                         </td>
-                                        <td style="text-align: center; ">
-                                            <div class="dropdown dropdown-status"><button
-                                                    class="btn btn-primary dropdown-toggle" type="button"
-                                                    data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
-                                                <div class="dropdown-menu"><a class="dropdown-item"
-                                                        href="{{ route('reservas.eventos.postergacion', $r) }}" title="Llenar Evento de Postergación"><i class="fas fa-calendar-week"></i></a><a class="dropdown-item"
-                                                        href="{{ route('reservas.solicitudes.devoluciones', $r)}}" title="Llenar Solicitud de de Devolución"><i class="fa-solid fa-file"></i></a><a class="dropdown-item"
-                                                        href="#" title="Añadir Pago restante"><i class="fas fa-money-check-alt"></i></a><a class="dropdown-item"
-                                                        href="#" title="Editar Solicitud"><i class="fas fa-file-edit"></i></a>
-                                                    
+                                        <td style="white-space: nowrap; width: 1%;">
+                                            <div class="tabledit-toolbar btn-toolbar" style="text-align: left;">
+                                                <div class="btn-group btn-group-sm" style="float: none;">
+                                                    <a href="{{ route('reservas.eventos.postergacion', $r) }}"
+                                                        title="Llenar Evento de Postergación" type="button"
+                                                        class="tabledit-edit-button btn btn-sm btn-primary"
+                                                        style="float: none;"><span class="fas fa-calendar-week"></span>
+                                                    </a>
+                                                    <a href="{{ route('reservas.solicitudes.devoluciones', $r) }}"
+                                                        title="Llenar Solicitud de de Devolución" type="button"
+                                                        class="tabledit-delete-button btn btn-sm btn-primary"
+                                                        style="float: none;"><span class="fa-solid fa-file"></span>
+                                                    </a>
+                                                    <a href="{{ route('reservas.pagos_restantes') }}" title="Añadir Pago restante" type="button"
+                                                        class="tabledit-delete-button btn btn-sm btn-primary"
+                                                        style="float: none;"><span class="fas fa-money-check-alt"></span>
+                                                    </a>
+                                                    <a type="button" title="Editar Solicitud"
+                                                        class="tabledit-delete-button btn btn-sm btn-primary"
+                                                        style="float: none;"><span class="fas fa-file-edit"></span>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </td>

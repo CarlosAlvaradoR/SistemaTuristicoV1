@@ -142,4 +142,8 @@ class ReservasController extends Controller
     public function mostrarSolicitudes(Reservas $reserva){
         return view('reservar_admin.solicitudes.index', compact('reserva'));
     }
+
+    public function pagosRestantes(){
+        return view('reservar_admin.pagos.pagos_restantes');
+    }
 }
