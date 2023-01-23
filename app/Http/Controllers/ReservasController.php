@@ -143,7 +143,7 @@ class ReservasController extends Controller
         return view('reservar_admin.solicitudes.index', compact('reserva'));
     }
 
-    public function pagosRestantes(){
-        return view('reservar_admin.pagos.pagos_restantes');
+    public function pagosRestantes(Reservas $reserva){
+        return view('reservar_admin.pagos.pagos_restantes', compact('reserva'));
     }
 }

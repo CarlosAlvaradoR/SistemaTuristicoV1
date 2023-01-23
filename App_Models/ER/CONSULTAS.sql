@@ -73,7 +73,28 @@ ORDER BY r.updated_at;
 
 
 
+SELECT p.dni, concat(p.nombre, ' ',p.apellidos) as datos, 
+pt.nombre, pt.precio, r.fecha_reserva, SUM(pa.monto) as pago,er.nombre_estado, b.numero_boleta,r.id 
+FROM personas p
+INNER JOIN clientes c on p.id=c.persona_id
+INNER JOIN reservas r on r.cliente_id=c.id
+INNER JOIN paquetes_turisticos pt on pt.id=r.paquete_id
+INNER JOIN estado_reservas er on er.id = r.estado_reservas_id
+INNER JOIN pagos pa on pa.reserva_id = r.id
+INNER JOIN boletas b on b.id = pa.boleta_id
+WHERE r.id = 2
+GROUP BY pa.reserva_id
+LIMIT 1;
 
+
+-- CONOCER LOS PAGOS REALIZADOS POR CADA RESERVA
+SELECT p.fecha_pago, p.monto, p.numero_de_operacion, p.estado_pago,
+p.ruta_archivo_pago,tp.nombre_tipo_pago, b.numero_boleta 
+FROM reservas r
+INNER JOIN pagos p on r.id=p.reserva_id
+INNER JOIN tipo_pagos tp on tp.id = p.tipo_pagos_id
+INNER JOIN boletas b on b.id = p.boleta_id
+WHERE r.id = 2;
 
 
 
