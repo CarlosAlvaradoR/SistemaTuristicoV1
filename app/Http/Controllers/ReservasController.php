@@ -146,4 +146,16 @@ class ReservasController extends Controller
     public function pagosRestantes(Reservas $reserva){
         return view('reservar_admin.pagos.pagos_restantes', compact('reserva'));
     }
+
+    public function mostarTodasLasSolicitudes(){
+        $solicitudes = DB::select("SELECT concat(p.nombre,' ', p.apellidos) as datos, sdv.estado, sdv.fecha_presentacion,
+        pt.nombre, dd.observacion, dd.monto, r.id
+        FROM personas p
+        INNER JOIN clientes c on c.persona_id = p.id
+        INNER JOIN reservas r on r.cliente_id = c.id
+        INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
+        INNER JOIN solicitud_devolucion_dineros sdv on sdv.reserva_id = r.id
+        INNER JOIN devolucion_dineros dd on dd.solicitud_devolucion_dinero_id = sdv.id");
+        return view('reservar_admin.solicitudes.all_solicitudes', compact('solicitudes'));
+    }
 }
