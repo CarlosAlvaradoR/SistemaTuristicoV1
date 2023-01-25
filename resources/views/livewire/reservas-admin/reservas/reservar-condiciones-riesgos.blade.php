@@ -58,7 +58,7 @@
                                     <td>
                                         <button type="button" wire:click="aceptarRiesgo({{ $riesgos->id }})"
                                             class="btn btn-inline btn-success btn-sm">
-                                            
+                                            <i class="fa-solid fa-check"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -66,7 +66,7 @@
 
                         </tbody>
                     </table>
-                </div><i class="fa-solid fa-check"></i>
+                </div>
             </div>
         </div>
         <div class="col-lg-6 ks-panels-column-section">

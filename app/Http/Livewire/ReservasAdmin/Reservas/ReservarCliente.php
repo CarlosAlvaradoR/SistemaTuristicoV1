@@ -60,6 +60,7 @@ class ReservarCliente extends Component
 
             $this->reset(['dni']);
         } else {
+            $this->resetValidation();
             $this->reset(['dni']);
             //dd('No encontrado');
         }
@@ -99,6 +100,12 @@ class ReservarCliente extends Component
             'tipo_pagos_id' => 1,
             'boleta_id' => $boletas->id
         ]);
-        redirect()->route('paquetes.reservar', [$this->paquete]);
+        redirect()->route('paquetes.reservar.condiciones.puntualidad', [$reserva]);
+    }
+
+    public function updated($name, $value)
+    {
+        $this->resetValidation($name);
+        $this->resetErrorBag($name);
     }
 }
