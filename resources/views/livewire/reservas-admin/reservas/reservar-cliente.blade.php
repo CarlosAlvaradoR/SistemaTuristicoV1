@@ -131,11 +131,14 @@
                             <fieldset class="form-group">
                                 <label class="form-label" for="observacion">Observación</label>
                                 <textarea class="form-control" wire:model.defer="observacion" id="observacion" rows="3"></textarea>
+                                @error('observacion')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </fieldset>
                         </div>
 
 
-                        
+
 
                     </div>
                 </div>
@@ -205,11 +208,20 @@
                             <label for="numero_autorizacion">Nº de Autorización</label>
                             <input type="text" wire:model="numero_autorizacion" class="form-control"
                                 id="numero_autorizacion">
+                            @error('numero_autorizacion')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-md-6">
                             <label for="archivo_autorizacion">Archivo Médico</label>
                             <input type="file" wire:model="archivo_autorizacion" class="form-control"
                                 id="archivo_autorizacion">
+                            @error('archivo_autorizacion')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                            @if (session()->has('message-archivo'))
+                                <span class="text-danger"> {{ session('message-archivo') }}</span>
+                            @endif
                         </div>
                     </div>
 

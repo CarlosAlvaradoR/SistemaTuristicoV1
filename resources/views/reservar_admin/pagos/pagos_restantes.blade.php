@@ -14,7 +14,7 @@
                 </ol>
             </div>
         </header>
-        @livewire('reservas-admin.reservas.pagos.pagos-pendientes',[$reserva])
+        @livewire('reservas-admin.reservas.pagos.pagos-pendientes',[$reserva->id])
         
 
     </div>

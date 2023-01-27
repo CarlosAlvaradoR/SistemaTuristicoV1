@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\ReservasAdmin\Reservas;
 
 use App\Models\PaquetesTuristicos;
+use App\Models\Reservas\AutorizacionesMedicas;
 use App\Models\Reservas\Boletas;
 use App\Models\Reservas\Pagos;
 use App\Models\Reservas\Reservas;
@@ -21,8 +22,9 @@ class ReservarCliente extends Component
     public $buscar = '';
     public $archivos = [], $archivos_pago = [];
     public $fecha_reserva, $observacion, $monto = 0; //Para Insertar Reservas
+    public $numero_autorizacion, $archivo_autorizacion; //Para insertar aurtorizaciones Médicas
     public $precio = 0, $paquete_id = 0, $paquete;
-    public $encontrado = false;
+    public $encontrado = false, $insertar_archivo = false;
 
 
     public function mount(PaquetesTuristicos $paquete)
@@ -72,9 +74,20 @@ class ReservarCliente extends Component
         $this->validate(
             [
                 'fecha_reserva' => 'required',
-                'monto' => 'required'
+                'monto' => 'required',
+                'numero_autorizacion' => 'nullable|min:2|max:15',
+                'archivo_autorizacion' => 'nullable|mimes:jpeg,png,pdf|required_if:numero_autorizacion,min:2',
             ]
         );
+
+        if (strlen(trim($this->numero_autorizacion)) >=3) {
+            if (!$this->archivo_autorizacion) {
+                session()->flash('message-archivo', 'El Archivo es Obligatorio siempre y cuando se haya un Nº de Autorización');
+                return;
+            }else {
+                $this->insertar_archivo = true;
+            }
+        }
 
         $reserva = Reservas::create([
             'fecha_reserva' => $this->fecha_reserva,
@@ -100,6 +113,15 @@ class ReservarCliente extends Component
             'tipo_pagos_id' => 1,
             'boleta_id' => $boletas->id
         ]);
+
+        //Archivo de Autorización de Viajes
+        if ($this->insertar_archivo) {
+            $autorizacion = AutorizacionesMedicas::create([
+                'numero_autorizacion' => $this->numero_autorizacion,
+                'ruta_archivo' => 'storage/' . $this->archivo_autorizacion->store('autorizaciones', 'public'),
+                'reserva_id' => $reserva->id
+            ]);
+        }
         redirect()->route('paquetes.reservar.condiciones.puntualidad', [$reserva]);
     }
 

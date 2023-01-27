@@ -72,19 +72,21 @@ ORDER BY r.updated_at;
 
 
 
-
+-- CREAR LA VISTA PARA CONOCER 
+CREATE OR REPLACE VIEW v_informacion_clientes_reserva AS
 SELECT p.dni, concat(p.nombre, ' ',p.apellidos) as datos, 
-pt.nombre, pt.precio, r.fecha_reserva, SUM(pa.monto) as pago,er.nombre_estado, b.numero_boleta,r.id 
+pt.nombre, pt.precio, r.fecha_reserva, SUM(pa.monto) as pago,
+er.nombre_estado, r.id as idReserva 
 FROM personas p
 INNER JOIN clientes c on p.id=c.persona_id
 INNER JOIN reservas r on r.cliente_id=c.id
 INNER JOIN paquetes_turisticos pt on pt.id=r.paquete_id
 INNER JOIN estado_reservas er on er.id = r.estado_reservas_id
 INNER JOIN pagos pa on pa.reserva_id = r.id
-INNER JOIN boletas b on b.id = pa.boleta_id
-WHERE r.id = 2
-GROUP BY pa.reserva_id
-LIMIT 1;
+-- INNER JOIN boletas b on b.id = pa.boleta_id
+-- WHERE r.id = 2
+GROUP BY pa.reserva_id;
+-- LIMIT 1;
 
 
 -- CONOCER LOS PAGOS REALIZADOS POR CADA RESERVA
@@ -106,8 +108,6 @@ INNER JOIN reservas r on r.cliente_id = c.id
 INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
 INNER JOIN solicitud_devolucion_dineros sdv on sdv.reserva_id = r.id
 INNER JOIN devolucion_dineros dd on dd.solicitud_devolucion_dinero_id = sdv.id;
-
-
 
 
 

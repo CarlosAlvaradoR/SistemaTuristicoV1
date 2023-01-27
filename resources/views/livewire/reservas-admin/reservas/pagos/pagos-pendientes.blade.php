@@ -34,7 +34,7 @@
                                 <span class="badge badge-default font-weight-bold">MONTO PAGADO</span>
                             </div>
                             <div class="col-md-9">
-                                <span class="badge badge-default">S/. {{ $monto_pagado }}</span>
+                                <span class="badge badge-default">S/. {{ $monto_pagado[0]->MontoPagado }}</span>
                             </div>
                         </div>
                         <div class="row">
@@ -42,7 +42,11 @@
                                 <span class="badge badge-default font-weight-bold">MONTO RESTANTE</span>
                             </div>
                             <div class="col-md-9">
-                                <span class="label label-pill label-danger">S/. {{ $monto_restante }}</span>
+                                @if ($monto_restante != 0)
+                                    <span class="label label-pill label-danger">S/. {{ $monto_restante }}</span>
+                                @else
+                                    <span class="label label-pill label-success">S/. {{ $monto_restante }}</span>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -53,12 +57,14 @@
             <div class="card">
                 <div class="card-block">
                     <h5 class="card-title">Lista de Pagos Correspondientes a la reserva</h5>
+                    @if ($monto_restante != 0)
+                        <div class="row">
 
-                    <div class="row">
+                            <a id="modal-565707" href="#modal_pagos" role="button" class="btn"
+                                data-toggle="modal">Añadir Pago Restante</a>
+                        </div>
+                    @endif
 
-                        <a id="modal-565707" href="#modal_pagos" role="button" class="btn"
-                            data-toggle="modal">Añadir Pago Restante</a>
-                    </div>
                     <br>
                     <div class="row">
                         <div class="col-md-12">
@@ -92,25 +98,25 @@
                                     @foreach ($pagos as $p)
                                         <tr>
                                             <td>
-                                                {{$p->fecha_pago}}
+                                                {{ $p->fecha_pago }}
                                             </td>
                                             <td>
-                                                {{$p->monto}}
+                                                {{ $p->monto }}
                                             </td>
                                             <td>
-                                                {{$p->numero_de_operacion}}
+                                                {{ $p->numero_de_operacion }}
                                             </td>
                                             <td>
-                                                {{$p->estado_pago}}
+                                                {{ $p->estado_pago }}
                                             </td>
                                             <td>
-                                                {{$p->ruta_archivo_pago}}
+                                                {{ $p->ruta_archivo_pago }}
                                             </td>
                                             <td>
-                                                {{$p->nombre_tipo_pago}}
+                                                {{ $p->nombre_tipo_pago }}
                                             </td>
                                             <td>
-                                                {{$p->numero_boleta}}
+                                                {{ $p->numero_boleta }}
                                             </td>
                                         </tr>
                                     @endforeach
