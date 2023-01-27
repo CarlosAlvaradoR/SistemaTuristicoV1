@@ -128,34 +128,46 @@ class ReservasController extends Controller
             ->join('pagos as pa', 'pa.reserva_id', '=', 'r.id')
             //->join('boletas as b', 'pa.reserva_id', '=', 'r.id')
             ->groupBy('pa.reserva_id')
-            ->orderBy('r.updated_at','DESC')
+            ->orderBy('r.updated_at', 'DESC')
             ->get();
         //return $reservas;
 
         return view('reservar_admin.all_reservas', compact('reservas'));
     }
 
-    public function mostrarEventosPostergacionReservas(Reservas $reserva){
+    public function mostrarEventosPostergacionReservas(Reservas $reserva)
+    {
         return view('reservar_admin.eventos_postergacion.index', compact('reserva'));
     }
 
-    public function mostrarSolicitudes(Reservas $reserva){
+    public function mostrarSolicitudes(Reservas $reserva)
+    {
         return view('reservar_admin.solicitudes.index', compact('reserva'));
     }
 
-    public function pagosRestantes(Reservas $reserva){
+    public function pagosRestantes(Reservas $reserva)
+    {
         return view('reservar_admin.pagos.pagos_restantes', compact('reserva'));
     }
 
-    public function mostarTodasLasSolicitudes(){
-        $solicitudes = DB::select("SELECT concat(p.nombre,' ', p.apellidos) as datos, sdv.estado, sdv.fecha_presentacion,
-        pt.nombre, dd.observacion, dd.monto, r.id
-        FROM personas p
-        INNER JOIN clientes c on c.persona_id = p.id
-        INNER JOIN reservas r on r.cliente_id = c.id
-        INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
-        INNER JOIN solicitud_devolucion_dineros sdv on sdv.reserva_id = r.id
-        INNER JOIN devolucion_dineros dd on dd.solicitud_devolucion_dinero_id = sdv.id");
+    public function mostarTodasLasSolicitudes()
+    {
+        $solicitudes = DB::table('personas as p')
+            ->join('clientes as c', 'c.persona_id', '=', 'p.id')
+            ->join('reservas as r', 'r.cliente_id', '=', 'c.id')
+            ->join('paquetes_turisticos as pt', 'pt.id', '=', 'r.paquete_id')
+            ->join('solicitud_devolucion_dineros as sdv', 'sdv.reserva_id', '=', 'r.id')
+            ->leftJoin('devolucion_dineros as dd', 'dd.solicitud_devolucion_dinero_id', '=', 'sdv.id')
+            ->select(
+                DB::raw('CONCAT(p.nombre," ", p.apellidos) AS datos'),
+                'sdv.estado',
+                'sdv.fecha_presentacion',
+                'pt.nombre',
+                'dd.observacion',
+                'dd.monto',
+                'r.id'
+            )
+            ->paginate(100);
         return view('reservar_admin.solicitudes.all_solicitudes', compact('solicitudes'));
     }
 }

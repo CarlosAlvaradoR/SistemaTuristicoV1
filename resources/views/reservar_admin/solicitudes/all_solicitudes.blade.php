@@ -89,20 +89,25 @@
                             <tbody>
                                 @foreach ($solicitudes as $s)
                                     <tr>
-                                        <td>{{$s->datos}}</td>
-                                        <td>{{$s->estado}}</td>
-                                        <td>{{$s->fecha_presentacion}}</td>
-                                        <td>{{$s->nombre}}</td>
-                                        <td>{{$s->monto}}</td>
-                                        <td>{{$s->observacion}}</td>
+                                        <td>{{ $s->datos }}</td>
+                                        <td>{{ $s->estado }}</td>
+                                        <td>{{ $s->fecha_presentacion }}</td>
+                                        <td>{{ $s->nombre }}</td>
+                                        <td>{{ $s->monto }}</td>
+                                        <td>{{ $s->observacion }}</td>
                                         <td>
-                                            <a href="{{ route('reservas.solicitudes.devoluciones', $s->id) }}">Ver Solicitud</a>
+                                            <a href="{{ route('reservas.solicitudes.devoluciones', $s->id) }}"
+                                                title="Ver Solicitud" type="button"
+                                                class="tabledit-edit-button btn btn-sm btn-primary"
+                                                style="float: none;"><i class="fas fa-eye"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
 
                             </tbody>
                         </table>
+                        {{ $solicitudes->links() }}
                     </div>
                 </div>
             </div>
