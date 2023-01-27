@@ -27,10 +27,11 @@ class ClientePublicoController extends Controller
 
     public function paquetesDelCliente()
     {
+        $cliente = Clientes::select('id')
+            ->where('user_id', '=', Auth::user()->id)
+            ->limit(1)
+            ->first();
         
-        $idUser = Auth::user()->id;
-        $cliente = DB::select("SELECT * FROM clientes WHERE user_id = $idUser LIMIT 1");
-
         $paquetes_comprados = Personas::select(
             'personas.dni',
             DB::raw('CONCAT(personas.nombre," " ,personas.apellidos) AS datos'),
@@ -48,9 +49,9 @@ class ClientePublicoController extends Controller
             ->join('estado_reservas as er', 'er.id', '=', 'r.estado_reservas_id')
             ->join('pagos as pa', 'pa.reserva_id', '=', 'r.id')
             //->join('boletas as b', 'pa.reserva_id', '=', 'r.id')
-            ->where('c.id','=', $cliente[0]->id)
+            ->where('c.id', '=', $cliente->id)
             ->groupBy('pa.reserva_id')
-            ->orderBy('r.updated_at','DESC')
+            ->orderBy('r.updated_at', 'DESC')
             ->get();
         return view('perfil_cliente.paquetes_comprados', compact('paquetes_comprados'));
     }

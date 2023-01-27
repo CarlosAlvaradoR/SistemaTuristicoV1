@@ -57,7 +57,7 @@ class PagosPendientes extends Component
         WHERE p.reserva_id = " . $this->idReserva ."");
 
         $pagos = DB::select("SELECT p.fecha_pago, p.monto, p.numero_de_operacion, p.estado_pago,
-        p.ruta_archivo_pago,tp.nombre_tipo_pago, b.numero_boleta 
+        p.ruta_archivo_pago,tp.nombre_tipo_pago, b.numero_boleta, b.id as idBoleta 
         FROM reservas r
         INNER JOIN pagos p on r.id=p.reserva_id
         INNER JOIN tipo_pagos tp on tp.id = p.tipo_pagos_id
@@ -65,8 +65,9 @@ class PagosPendientes extends Component
         WHERE r.id =" . $this->idReserva . "");
 
         $this->monto_restante = $this->costo_paquete - $this->monto_pagado[0]->MontoPagado;
-
+        $this->idBoleta = $pagos[0]->idBoleta;
         $tipoPagos = TipoPagos::all();
+        
         return view('livewire.reservas-admin.reservas.pagos.pagos-pendientes', compact('pagos', 'tipoPagos'));
     }
 
@@ -82,12 +83,12 @@ class PagosPendientes extends Component
             'fecha_pago' => $this->fecha_de_pago,
             'estado_pago' => $this->estado_de_pago,
             'ruta_archivo_pago' => $ruta, //$this->ruta_archivo_pago, 
-            'reserva_id' => $this->reserva[0]->id,
+            'reserva_id' => $this->idReserva,
             'tipo_pagos_id' => $this->tipo_de_pago,
             'boleta_id' => $this->idBoleta
         ]);
 
-        return redirect()->route('reservas.pagos_restantes', [$this->reserva[0]->id]);
+        return redirect()->route('reservas.pagos_restantes', [$this->idReserva]);
     }
 
     public function editarPagoPorReserva()

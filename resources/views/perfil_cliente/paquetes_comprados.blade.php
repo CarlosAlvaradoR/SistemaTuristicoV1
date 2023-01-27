@@ -32,7 +32,7 @@
                                     {{ $p->pago }}
                                 </div>
                                 <div class="percentage">
-                                    <a href="#" class="genric-btn success small circle arrow">Medium</a>
+                                    <a href="#" class="genric-btn success small circle arrow">Añadir Pago</a>
                                     <a href="#" class="genric-btn info small circle arrow">Medium</a>
                                     <a href="#" class="genric-btn danger small circle arrow">Medium</a>
                                 </div>
