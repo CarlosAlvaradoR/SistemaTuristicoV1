@@ -176,3 +176,105 @@ MIGRACIONES Y MÓDELOS
         *) Tabla Autorizaciones Medicas
         php artisan make:migration create_autorizaciones_medicas_table --path=/database/migrations/reservas
         php artisan make:model Reservas/AutorizacionesMedicas -r
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    MÓDULO VIAJES
+        *) Tabla Viaje Paquetes
+        php artisan make:migration create_viaje_paquetes_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/ViajePaquetes -r
+
+        *) Tabla Participantes
+        php artisan make:migration create_participantes_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/Participantes -r
+
+        *) Tabla Pago Boleto Viajes
+        php artisan make:migration create_pago_boletos_viajes_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/PagoBoletosViajes -r
+
+        *) Tabla Actividades Aclimataciones
+        php artisan make:migration create_actividades_aclimataciones_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/ActividadesAclimataciones -r
+
+        *) Tabla Asistentes
+        php artisan make:migration create_asistentes_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/Asistentes -r
+
+        *) Tabla Cocineros
+        php artisan make:migration create_cocineros_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/Cocineros -r
+
+        *) Tabla Viaje Paquetes Cocineros
+        php artisan make:migration create_viaje_paquetes_cocineros_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/ViajePaquetesCocineros -r
+
+        *) Tabla Asociaciones
+        php artisan make:migration create_asociaciones_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/Asociaciones -r
+
+        *) Tabla Arrieros
+        php artisan make:migration create_arrieros_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/Arrieros -r
+
+        *) Tabla Acemilas Alquiladas
+        php artisan make:migration create_acemilas_alquiladas_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/AcemilasAlquiladas -r
+
+        *) Tabla Guias
+        php artisan make:migration create_guias_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/Guias -r
+
+        *) Tabla Viaje Paquetes Guias
+        php artisan make:migration create_viaje_paquetes_guias_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/ViajePaquetesGuias -r
+
+        *) Tabla Hoteles
+        php artisan make:migration create_hoteles_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/Hoteles -r
+
+        *) Tabla Hospedajes
+        php artisan make:migration create_hospedajes_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/Hospedajes -r
+
+        *) Tabla Almuerzo Celebraciones
+        php artisan make:migration create_almuerzo_celebraciones_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/AlmuerzoCelebraciones -r
+
+        *) Tabla Tipo de Licencias
+        php artisan make:migration create_tipo_licencias_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/TipoLicencias -r
+
+        *) Tabla Choferes
+        php artisan make:migration create_choferes_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/Choferes -r
+
+        *) Tabla Empresa Transportes
+        php artisan make:migration create_empresa_transportes_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/EmpresaTransportes -r
+
+        *) Tabla Tipo Vehiculos
+        php artisan make:migration create_tipo_vehiculos_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/TipoVehiculos -r
+
+        *) Tabla Vehiculos
+        php artisan make:migration create_vehiculos_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/Vehiculos -r
+
+        *) Tabla Vehiculo Choferes
+        php artisan make:migration create_vehiculo_choferes_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/VehiculoChoferes -r
+
+        *) Tabla Traslado Viajes
+        php artisan make:migration create_traslado_viajes_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/TrasladoViajes -r
+
+        *) Tabla Itinerarios Cumplidos
+        php artisan make:migration create_itinerarios_cumplidos_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/ItinerariosCumplidos -r

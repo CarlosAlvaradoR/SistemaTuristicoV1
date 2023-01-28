@@ -2,10 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ShowPaquetes;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
 Auth::routes(['verify' => true]);
 
+/*Route::get('/cmd/{command}', function ($command) {
+    Artisan::call($command);
+    dd(Artisan::output());
+});*/
 
 Route::get('/', function () {
     return view('paquetes_publico.inicio');
