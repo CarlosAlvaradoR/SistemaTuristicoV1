@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PaquetesTuristicos;
 use App\Models\Viajes\ViajePaquetes;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,10 @@ class ViajePaquetesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(PaquetesTuristicos $paquete)
     {
         //
+        return view('viajes_admin.viajes_paquete', compact('paquete'));
     }
 
     /**
@@ -81,5 +83,9 @@ class ViajePaquetesController extends Controller
     public function destroy(ViajePaquetes $viajePaquetes)
     {
         //
+    }
+
+    public function viajeParticipantes(PaquetesTuristicos $paquete, $idViaje){
+        return view('viajes_admin.viajes_participantes', compact('paquete', 'idViaje'));
     }
 }

@@ -118,6 +118,13 @@ INNER JOIN devolucion_dineros dd on dd.solicitud_devolucion_dinero_id = sdv.id;
 
 
 
+--  ////////////////////////// VIAJES /////////////////////////////
+SELECT p.dni, concat(p.nombre, ' ',p.apellidos) as datos,
+r.id as idReserva, r.fecha_reserva 
+FROM personas p
+INNER JOIN clientes c on p.id=c.persona_id
+INNER JOIN reservas r on r.cliente_id=c.id
+WHERE r.paquete_id = 1;
 
 
 

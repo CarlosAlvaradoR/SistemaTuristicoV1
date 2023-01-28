@@ -78,3 +78,16 @@ RESERVAS PÚBLICAS
        php artisan make:livewire ReservasPublicas/Reservas/FormularioReservas
 
        
+
+
+
+
+
+VIAJES
+
+    VIAJE PAQUETE
+       php artisan make:livewire ViajesAdmin/Viajes/Viajes
+       
+       php artisan make:livewire ViajesAdmin/Participantes/Participantes
+
+       
