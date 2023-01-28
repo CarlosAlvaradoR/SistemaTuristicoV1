@@ -48,7 +48,7 @@
                         <i class="fa fa-eye"></i>
                     </a>
                     <!--{$paquete->slug}-->
-                    <a href="{{-- route('index.viajes.admin', $paquete->slug) --}}" title="Asignar Viaje">
+                    <a href="{{ route('paquete.viajes') }}" title="Viajes del Paquete">
                         <i class="fas fa-shuttle-van"></i>
                     </a>
                     <a href="{{ route('paquetes.reservar', $paquete) }}" title="Reservar">
