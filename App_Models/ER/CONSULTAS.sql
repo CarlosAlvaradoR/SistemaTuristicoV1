@@ -129,9 +129,22 @@ WHERE r.paquete_id = 1;
 
 
 
+-- LISTA DE CLIENTES QUE RESERVARON PARA UN DETERMINADO PAQUETE
+SELECT concat(p.nombre, '', p.apellidos) as datos FROM personas p
+INNER JOIN clientes c on p.id = c.persona_id
+INNER join reservas r on c.id = r.cliente_id
+INNER JOIN estado_reservas er on r.estado_reservas_id = er.id
+WHERE er.nombre_estado = 'COMPLETADO'
+	AND r.paquete_id = 2
+ AND r.id NOT IN(SELECT par.reserva_id FROM participantes par);
 
 
-
+-- LOS PARTICIPANTES DEL VIAJE
+SELECT concat(p.nombre, '', p.apellidos) as datos, parti.id FROM personas p
+INNER JOIN clientes c on p.id = c.persona_id
+INNER join reservas r on c.id = r.cliente_id
+INNER JOIN estado_reservas er on r.estado_reservas_id = er.id
+INNER JOIN participantes parti on parti.reserva_id = r.id;
 
 
 

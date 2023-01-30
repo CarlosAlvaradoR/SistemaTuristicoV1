@@ -20,13 +20,15 @@
                             @foreach ($clientes_reservados as $cr)
                                 <tr>
                                     <td>
-                                        {{$cr->datos}}
+                                        {{ $cr->datos }}
                                     </td>
                                     <td>
-                                        {{$cr->fecha_reserva}}
+                                        {{ $cr->fecha_reserva }}
                                     </td>
                                     <td>
-                                        <button type="button" title="Añadir a la lista de Participantes"
+                                        <button type="button"
+                                            wire:click="AsignarParticipanteViaje({{ $cr->idReserva }})"
+                                            title="Añadir a la lista de Participantes"
                                             class="btn btn-sm btn-rounded btn-success">
                                             <i class="fal fa-plus"></i>
                                         </button>
@@ -55,17 +57,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    <button type="button" title="Quitar de la Lista de Participantes"
-                                        class="btn btn-sm btn-rounded btn-danger">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            @foreach ($participantes as $p)
+                                <tr>
+                                    <td>
+                                        {{$p->datos}}
+                                    </td>
+                                    <td>
+                                        <button type="button" wire:click="quitarParticipante({{$p->id}})" title="Quitar de la Lista de Participantes"
+                                            class="btn btn-sm btn-rounded btn-danger">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            
                         </tbody>
                     </table>
                 </div>

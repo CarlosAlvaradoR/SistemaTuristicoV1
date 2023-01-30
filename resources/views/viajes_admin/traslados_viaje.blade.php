@@ -47,7 +47,7 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <a id="modal-532427" href="#modal-container-532427" role="button" class="btn"
+                                <a id="modal-532427" href="#modal-traslado-viajes" role="button" class="btn btn-rounded"
                                     data-toggle="modal">Añadir Traslado de Viajes</a>
                             </div>
                         </div>
@@ -159,34 +159,91 @@
     </div>
     <!--.container-fluid-->
 
-    <!-- MODAL-->
-    <div class="modal fade" id="modal-container-532427" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <!--MODAL --->
+    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal-traslado-viajes"
+        role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">
-                        Modal title
+                        CREAR TRASLADO DE VIAJES
                     </h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
 
-                    <button type="button" class="btn btn-primary">
-                        Save changes
-                    </button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                        Close
-                    </button>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="form">
+                                <div class="form-group">
+                                    <label for="descripcion">
+                                        Descripción <span class="text-danger">(*)</span>
+                                    </label>
+                                    <textarea class="form-control" wire:model.defer="descripcion" id="descripcion" rows="4"></textarea>
+                                    @error('descripcion')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="fecha_viaje">
+                                        Fecha <span class="text-danger">(*)</span>
+                                    </label>
+                                    <input type="date" wire:model.defer="fecha" class="form-control"
+                                        id="fecha_viaje" />
+                                    @error('fecha')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <form role="form">
+                                <div class="form-group">
+                                    <label for="hora_viaje">
+                                        Monto <span class="text-danger">(*)</span>
+                                    </label>
+                                    <input type="text" wire:model.defer="hora" class="form-control"
+                                        id="hora_viaje" />
+                                    @error('hora')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="cantidad_participantes">
+                                        Vehículo <span class="text-danger">(*)</span>
+                                    </label>
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                    @error('cantidad_participantes')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                            Cerrar
+                        </button>
+                        <button type="button" wire:click="saveViaje" class="btn btn-rounded btn-primary">
+                            Guardar
+                        </button>
+
+                    </div>
+
                 </div>
+
             </div>
-
         </div>
-
     </div>
-    <!---->
+    <!-- END MODAL-->
 @endsection
