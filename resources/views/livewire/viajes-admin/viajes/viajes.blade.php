@@ -89,25 +89,35 @@
                                                     style="float: none;">
                                                     <i class="fas fa-map"></i>
                                                 </a>
-                                                <a href="#!" title="Participantes del Viaje"
+                                                <a href="{{ route('paquete.viajes.almuerzos') }}" title="Almuerzos del Viaje"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
-                                                    <i class="fas fa-user-friends"></i>
+                                                    <i class="fas fa-utensils"></i>
                                                 </a>
-                                                <a href="#!" title="Participantes del Viaje"
+                                                <a href="{{ route('paquete.viajes.boletas_pago') }}" title="Boletas de Pago del Viaje"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
-                                                    <i class="fas fa-user-friends"></i>
+                                                    <i class="fas fa-money-check"></i>
                                                 </a>
-                                                <a href="#!" title="Participantes del Viaje"
+                                                <a href="{{ route('paquete.viajes.actividades_aclimatacion') }}" title="Actividades de Aclimatación"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
-                                                    <i class="fas fa-user-friends"></i>
+                                                    <i class="fas fa-snowboarding"></i>
                                                 </a>
-                                                <a href="#!" title="Participantes del Viaje"
+                                                <a href="{{ route('paquete.viajes.hospedaje') }}" title="Hospedajes"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
-                                                    <i class="fas fa-user-friends"></i>
+                                                    <i class="fas fa-hotel"></i>
+                                                </a>
+                                                <a href="{{ route('paquete.viajes.itinerario') }}" title="Itinerarios del Viaje"
+                                                    class="tabledit-edit-button btn btn-sm btn-default"
+                                                    style="float: none;">
+                                                    <i class="fas fa-clipboard-list"></i>
+                                                </a>
+                                                <a href="{{ route('paquete.viajes.arriero') }}" title="Arrieros, Cocineros y Guías"
+                                                    class="tabledit-edit-button btn btn-sm btn-default"
+                                                    style="float: none;">
+                                                    <i class="glyphicon fas fa-users"></i>
                                                 </a>
                                                 <button type="button"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
