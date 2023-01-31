@@ -45,7 +45,7 @@
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <a type="button"
-                                            href="{{ route('paquete.viajes.actividades_aclimatacion.participantes') }}"
+                                            href="{{ route('paquete.viajes.actividades_aclimatacion.participantes', [$paquete, $idViaje ,$a->id]) }}"
                                             title="Añadir Participantes" class="btn btn-sm btn-rounded btn-success">
                                             <i class="fas fa-users"></i>
                                         </a>

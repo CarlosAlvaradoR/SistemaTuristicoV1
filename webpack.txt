@@ -278,3 +278,8 @@ MIGRACIONES Y MÓDELOS
         *) Tabla Itinerarios Cumplidos
         php artisan make:migration create_itinerarios_cumplidos_table --path=/database/migrations/viajes
         php artisan make:model Viajes/ItinerariosCumplidos -r
+
+        /* VISTAS*/
+        php artisan make:migration create_view_v_viaje_clientes_participantes_reservas_table --path=/database/migrations/viajes
+        
+        php artisan make:migration create_view_v_viaje_clientes_participantes_actividades_aclimatacion_table --path=/database/migrations/viajes

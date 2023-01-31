@@ -165,18 +165,31 @@ WHERE pbv.viaje_paquetes_id = 1;
 
 
 
-
+-- ACTIVIDADES DE ACLIMATACIÓN
 SELECT id, descripcion, fecha, monto, viaje_paquetes_id FROM actividades_aclimataciones ac
 WHERE ac.viaje_paquetes_id = 1;
 
 
 
+-- ASISTENTES
+SELECT * FROM asistentes;
+
+-- SELECCIONAR LOS ASISTENTES DE LA RESERVA
+CREATE OR REPLACE VIEW v_viaje_clientes_participantes_reservas AS
+SELECT concat(p.nombre,' ' ,p.apellidos) as datos, par.id, par.viaje_paquetes_id FROM personas p
+INNER JOIN clientes c on p.id = c.persona_id
+INNER JOIN reservas r on r.cliente_id = c.id
+INNER JOIN participantes par on par.reserva_id = r.id;
+-- where par.viaje_paquetes_id = 2; -- where viaje_paquete_id = al parámetro
 
 
-
-
-
-
+-- SELECCIONAR A LOS ASISTENTES QUE ESTÁN PARTICIPANDO EN LAS ACTIVIDADES
+CREATE OR REPLACE VIEW v_viaje_clientes_participantes_actividades_aclimatacion AS
+SELECT concat(p.nombre,' ' ,p.apellidos) as datos, par.id, par.viaje_paquetes_id, a.actividades_aclimataciones_id FROM personas p
+INNER JOIN clientes c on p.id = c.persona_id
+INNER JOIN reservas r on r.cliente_id = c.id
+INNER JOIN participantes par on par.reserva_id = r.id
+INNER JOIN asistentes a on a.participantes_id = par.id;
 
 
 
