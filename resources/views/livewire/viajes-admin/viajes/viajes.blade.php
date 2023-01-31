@@ -81,7 +81,7 @@
                                                 <a href="#!" title="Ver detalles del Paquete"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
-                                                    <i class="fas fa-user-friends"></i>
+                                                    <i class="fa-solid fa-eye"></i>
                                                 </a>
                                                 <a href="{{ route('paquete.viajes.traslados') }}"
                                                     title="Traslados del Viaje"
@@ -89,7 +89,7 @@
                                                     style="float: none;">
                                                     <i class="fas fa-map"></i>
                                                 </a>
-                                                <a href="{{ route('paquete.viajes.almuerzos') }}" title="Almuerzos del Viaje"
+                                                <a href="{{ route('paquete.viajes.almuerzos', [$paquete, $v->id]) }}" title="Almuerzos del Viaje"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
                                                     <i class="fas fa-utensils"></i>
@@ -238,7 +238,7 @@
                         <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
                             Cerrar
                         </button>
-                        <button type="button" wire:click="saveViaje" class="btn btn-rounded btn-primary">
+                        <button type="button" wire:click="guardarAlmuerzoCelebración" class="btn btn-rounded btn-primary">
                             Guardar
                         </button>
 

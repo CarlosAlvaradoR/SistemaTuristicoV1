@@ -90,4 +90,7 @@ VIAJES
        
        php artisan make:livewire ViajesAdmin/Participantes/Participantes
 
+       php artisan make:livewire ViajesAdmin/AlmuerzosCelebracion/Almuerzos
+
+
        

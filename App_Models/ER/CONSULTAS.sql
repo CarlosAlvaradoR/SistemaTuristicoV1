@@ -149,7 +149,13 @@ INNER JOIN participantes parti on parti.reserva_id = r.id;
 
 
 
+-- ALMUERZOS DE CELBRACIÓN DE UN PAQUETE
+SELECT ac.id, ac.descripcion, ac.cantidad, ac.monto, aso.nombre FROM almuerzo_celebraciones ac
+INNER JOIN asociaciones aso on ac.asociaciones_id = aso.id
+WHERE ac.viaje_paquetes_id = 1;
 
+SELECT sum(ac.monto) as Monto from almuerzo_celebraciones ac
+WHERE ac.viaje_paquetes_id = 1;
 
 
 

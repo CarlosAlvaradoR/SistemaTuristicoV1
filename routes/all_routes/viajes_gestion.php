@@ -11,9 +11,7 @@ Route::get('/paquete/name/viajes/traslados', function () {
     return view('viajes_admin.traslados_viaje');
 })->name('paquete.viajes.traslados');
 
-Route::get('/paquete/name/viajes/almuerzos', function () {
-    return view('viajes_admin.viajes_almuerzos');
-})->name('paquete.viajes.almuerzos');
+Route::get('/paquete/{paquete}/viajes/{viaje}/almuerzos', [App\Http\Controllers\ViajePaquetesController::class, 'viajeAlmuerzos'])->name('paquete.viajes.almuerzos')->middleware(['auth', 'verified']);
 
 Route::get('/paquete/name/viajes/boletas-de-pago', function () {
     return view('viajes_admin.viajes_boletas_de_pago');
