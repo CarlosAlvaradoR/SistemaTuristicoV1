@@ -12,14 +12,9 @@ Route::get('/paquete/name/viajes/traslados', function () {
 })->name('paquete.viajes.traslados');
 
 Route::get('/paquete/{paquete}/viajes/{viaje}/almuerzos', [App\Http\Controllers\ViajePaquetesController::class, 'viajeAlmuerzos'])->name('paquete.viajes.almuerzos')->middleware(['auth', 'verified']);
+Route::get('/paquete/{paquete}/viajes/{viaje}/boletas-de-pago', [App\Http\Controllers\ViajePaquetesController::class, 'viajeBoletasPago'])->name('paquete.viajes.boletas_pago')->middleware(['auth', 'verified']);
+Route::get('/paquete/{paquete}/viajes/{viaje}/actividades-de-aclimatacion', [App\Http\Controllers\ViajePaquetesController::class, 'viajeActividadesAclimatacion'])->name('paquete.viajes.actividades_aclimatacion')->middleware(['auth', 'verified']);
 
-Route::get('/paquete/name/viajes/boletas-de-pago', function () {
-    return view('viajes_admin.viajes_boletas_de_pago');
-})->name('paquete.viajes.boletas_pago');
-
-Route::get('/paquete/name/viajes/actividades-de-aclimatacion', function () {
-    return view('viajes_admin.viajes_actividades_aclimatacion');
-})->name('paquete.viajes.actividades_aclimatacion');
 
 Route::get('/paquete/name/viajes/actividades/participants', function () {
     return view('viajes_admin.viajes_actividades_aclimatacion_participantes');

@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class PagoBoletosViajes extends Model
 {
     use HasFactory;
+    protected $fillable = ['descripcion', 'fecha', 'monto', 'viaje_paquetes_id'];
 }

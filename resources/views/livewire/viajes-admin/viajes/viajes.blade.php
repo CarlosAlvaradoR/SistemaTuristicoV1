@@ -55,19 +55,19 @@
                             @foreach ($viajes as $v)
                                 <tr>
                                     <td>
-                                        {{$v->descripcion}}
+                                        {{ $v->descripcion }}
                                     </td>
                                     <td>
-                                        {{$v->fecha}} 
+                                        {{ $v->fecha }}
                                     </td>
                                     <td>
-                                        {{$v->cantidad_participantes}}
+                                        {{ $v->cantidad_participantes }}
                                     </td>
                                     <td>
-                                        {{$v->hora}}
+                                        {{ $v->hora }}
                                     </td>
                                     <td>
-                                        {{$v->estado}}
+                                        {{ $v->estado }}
                                     </td>
                                     <td style="white-space: nowrap; width: 1%;">
                                         <div class="tabledit-toolbar btn-toolbar" style="text-align: left;">
@@ -89,17 +89,20 @@
                                                     style="float: none;">
                                                     <i class="fas fa-map"></i>
                                                 </a>
-                                                <a href="{{ route('paquete.viajes.almuerzos', [$paquete, $v->id]) }}" title="Almuerzos del Viaje"
+                                                <a href="{{ route('paquete.viajes.almuerzos', [$paquete, $v->id]) }}"
+                                                    title="Almuerzos del Viaje"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
                                                     <i class="fas fa-utensils"></i>
                                                 </a>
-                                                <a href="{{ route('paquete.viajes.boletas_pago') }}" title="Boletas de Pago del Viaje"
+                                                <a href="{{ route('paquete.viajes.boletas_pago', [$paquete, $v->id]) }}"
+                                                    title="Boletas de Pago del Viaje"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
                                                     <i class="fas fa-money-check"></i>
                                                 </a>
-                                                <a href="{{ route('paquete.viajes.actividades_aclimatacion') }}" title="Actividades de Aclimatación"
+                                                <a href="{{ route('paquete.viajes.actividades_aclimatacion', [$paquete, $v->id]) }}"
+                                                    title="Actividades de Aclimatación"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
                                                     <i class="fas fa-snowboarding"></i>
@@ -109,12 +112,14 @@
                                                     style="float: none;">
                                                     <i class="fas fa-hotel"></i>
                                                 </a>
-                                                <a href="{{ route('paquete.viajes.itinerario') }}" title="Itinerarios del Viaje"
+                                                <a href="{{ route('paquete.viajes.itinerario') }}"
+                                                    title="Itinerarios del Viaje"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
                                                     <i class="fas fa-clipboard-list"></i>
                                                 </a>
-                                                <a href="{{ route('paquete.viajes.arriero') }}" title="Arrieros, Cocineros y Guías"
+                                                <a href="{{ route('paquete.viajes.arriero') }}"
+                                                    title="Arrieros, Cocineros y Guías"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
                                                     <i class="glyphicon fas fa-users"></i>
@@ -138,39 +143,11 @@
                 </div>
             </div>
         </div>
-        <!--<div class="col-lg-6 ks-panels-column-section">
-            <div class="card">
-                <div class="card-block">
-                    <h5 class="card-title">Validation</h5>
-                    <div>
-                        <fieldset class="form-group has-success">
-                            <div class="fl-flex-label">
-                                <input type="text" class="form-control form-control-success" id="inputSuccess1"
-                                    placeholder="Input with success">
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group has-warning">
-                            <div class="fl-flex-label">
-                                <input type="text" class="form-control form-control-warning"
-                                    placeholder="Input with warning">
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group has-danger">
-                            <div class="fl-flex-label">
-                                <input type="text" class="form-control form-control-danger"
-                                    placeholder="Input with danger">
-                            </div>
-                        </fieldset>
-                    </div>
-                </div>
-            </div>
-        </div>-->
     </div>
-    <!--.container-fluid-->
 
     <!--MODAL --->
-    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false"
-        id="modal-container-918849" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal-container-918849"
+        role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -238,7 +215,8 @@
                         <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
                             Cerrar
                         </button>
-                        <button type="button" wire:click="guardarAlmuerzoCelebración" class="btn btn-rounded btn-primary">
+                        <button type="button" wire:click="guardarAlmuerzoCelebración"
+                            class="btn btn-rounded btn-primary">
                             Guardar
                         </button>
 

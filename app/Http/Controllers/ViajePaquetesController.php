@@ -92,4 +92,12 @@ class ViajePaquetesController extends Controller
     public function viajeAlmuerzos(PaquetesTuristicos $paquete, $idViaje){
         return view('viajes_admin.viajes_almuerzos', compact('paquete', 'idViaje'));
     }
+
+    public function viajeBoletasPago(PaquetesTuristicos $paquete, $idViaje){
+        return view('viajes_admin.viajes_boletas_de_pago', compact('paquete', 'idViaje'));
+    }
+
+    public function viajeActividadesAclimatacion(PaquetesTuristicos $paquete, $idViaje){
+        return view('viajes_admin.viajes_actividades_aclimatacion', compact('paquete', 'idViaje'));
+    }
 }

@@ -158,6 +158,94 @@ SELECT sum(ac.monto) as Monto from almuerzo_celebraciones ac
 WHERE ac.viaje_paquetes_id = 1;
 
 
+-- PAGOS DE BOLETOS DE VIAJES
+SELECT id, descripcion, fecha, monto, viaje_paquetes_id FROM pago_boletos_viajes pbv
+WHERE pbv.viaje_paquetes_id = 1;
+
+
+
+
+
+SELECT id, descripcion, fecha, monto, viaje_paquetes_id FROM actividades_aclimataciones ac
+WHERE ac.viaje_paquetes_id = 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
