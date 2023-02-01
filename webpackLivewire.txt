@@ -98,5 +98,8 @@ VIAJES
        
        php artisan make:livewire ViajesAdmin/ActividadesAclimatacion/ParticipantesActividadesAclimatacion
 
+       php artisan make:livewire ViajesAdmin/Hospedajes/HospedajeViajes
+
+       php artisan make:livewire ViajesAdmin/Itinerarios/ItinerariosCumplidos
 
        

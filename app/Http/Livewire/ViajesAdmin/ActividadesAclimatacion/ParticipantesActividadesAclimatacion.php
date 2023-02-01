@@ -26,6 +26,10 @@ class ParticipantesActividadesAclimatacion extends Component
     {
         $participantes = DB::table('v_viaje_clientes_participantes_reservas')
         ->where('viaje_paquetes_id', $this->idViaje)
+        ->whereNOTIn('id', function ($query) {
+            $query->select('a.participantes_id')->from('asistentes as a')
+            ->where('a.actividades_aclimataciones_id', $this->idActividadAclimatacion);
+        })
         ->get();
         
         $participantes_actividad = DB::table('v_viaje_clientes_participantes_actividades_aclimatacion')
@@ -41,5 +45,9 @@ class ParticipantesActividadesAclimatacion extends Component
             'participantes_id' => $idParticipante, 
             'actividades_aclimataciones_id' => $this->idActividadAclimatacion
         ]);
+    }
+
+    public function Quitar(Asistentes $idAsistente){
+        $eliminar = $idAsistente->delete();
     }
 }

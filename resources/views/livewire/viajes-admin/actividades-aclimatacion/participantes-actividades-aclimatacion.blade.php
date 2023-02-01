@@ -8,6 +8,9 @@
                         <span class="fa fa-search form-control-feedback"></span>
                         <input type="text" class="form-control" placeholder="Buscar Cliente">
                     </div>
+                    <div wire:loading wire:target="Añadir" class="alert alert-primary" role="alert">
+                        <a href="#!" class="alert-link">Cargando ...</a>
+                    </div>
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -57,7 +60,7 @@
                                         {{ $pa->datos }}
                                     </td>
                                     <td>
-                                        <button type="button" wire:click=""
+                                        <button type="button" wire:click="Quitar({{$pa->idAsistente}})"
                                             title="Quitar de la Lista de Participantes"
                                             class="btn btn-sm btn-rounded btn-danger">
                                             <i class="fas fa-minus"></i>

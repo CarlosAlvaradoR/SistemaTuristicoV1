@@ -185,7 +185,7 @@ INNER JOIN participantes par on par.reserva_id = r.id;
 
 -- SELECCIONAR A LOS ASISTENTES QUE ESTÁN PARTICIPANDO EN LAS ACTIVIDADES
 CREATE OR REPLACE VIEW v_viaje_clientes_participantes_actividades_aclimatacion AS
-SELECT concat(p.nombre,' ' ,p.apellidos) as datos, par.id, par.viaje_paquetes_id, a.actividades_aclimataciones_id FROM personas p
+SELECT concat(p.nombre,' ' ,p.apellidos) as datos, par.id, par.viaje_paquetes_id, a.actividades_aclimataciones_id, a.id as idAsistente FROM personas p
 INNER JOIN clientes c on p.id = c.persona_id
 INNER JOIN reservas r on r.cliente_id = c.id
 INNER JOIN participantes par on par.reserva_id = r.id
@@ -193,16 +193,26 @@ INNER JOIN asistentes a on a.participantes_id = par.id;
 
 
 
+select * from v_viaje_clientes_participantes_reservas
+WHERE id NOT IN (SELECT a.participantes_id FROM asistentes as a 
+	WHERE a.actividades_aclimataciones_id = 1)
+AND viaje_paquetes_id = 1;
+
+
+-- CONOCER LOS HOTELES HOSPEDADOS POR VIAJE
+SELECT hos.id, hos.fecha_inicial, hos.fecha_final, hos.monto, h.nombre FROM hospedajes hos
+INNER JOIN hoteles h on h.id = hos.hoteles_id
+WHERE hos.viaje_paquetes_id = 3;
 
 
 
 
-
-
-
-
-
-
+SELECT ai.nombre_actividad,ip.descripcion, ip.actividad_id, ic.fecha_cumplimiento  
+FROM actividades_itinerarios ai
+INNER JOIN itinerario_paquetes ip on ai.id = ip.actividad_id
+left join itinerarios_cumplidos ic on ic.itinerario_paquetes_id = ip.id
+WHERE ai.paquete_id = 1;
+SELECT * FROM itinerarios_cumplidos;
 
 
 

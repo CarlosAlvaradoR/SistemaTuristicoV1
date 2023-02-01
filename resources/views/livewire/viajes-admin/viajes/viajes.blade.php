@@ -45,7 +45,7 @@
                                 <!--<th scope="col">#</th>-->
                                 <th scope="col">VIAJE</th>
                                 <th scope="col">Fecha</th>
-                                <th scope="col">CANT. PARTICIPANTES</th>
+                                <th scope="col">CANT. PART.</th>
                                 <th scope="col">Hora</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Acciones</th>
@@ -67,7 +67,20 @@
                                         {{ $v->hora }}
                                     </td>
                                     <td>
-                                        {{ $v->estado }}
+                                        {{-- $v->estado --}}
+                                        <div class="dropdown dropdown-status"><button
+                                                class="btn btn-success dropdown-toggle" type="button"
+                                                data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">Published</button>
+                                            <div class="dropdown-menu"><a class="dropdown-item"
+                                                    href="#">Draft</a><a class="dropdown-item"
+                                                    href="#">Pending</a><a class="dropdown-item"
+                                                    href="#">Moderation</a><a class="dropdown-item"
+                                                    href="#">Published</a>
+                                                <div class="dropdown-divider"></div><a class="dropdown-item"
+                                                    href="#">Move to Trash</a>
+                                            </div>
+                                        </div>
                                     </td>
                                     <td style="white-space: nowrap; width: 1%;">
                                         <div class="tabledit-toolbar btn-toolbar" style="text-align: left;">
@@ -107,12 +120,13 @@
                                                     style="float: none;">
                                                     <i class="fas fa-snowboarding"></i>
                                                 </a>
-                                                <a href="{{ route('paquete.viajes.hospedaje') }}" title="Hospedajes"
+                                                <a href="{{ route('paquete.viajes.hospedaje', [$paquete, $v->id]) }}"
+                                                    title="Hospedajes"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
                                                     <i class="fas fa-hotel"></i>
                                                 </a>
-                                                <a href="{{ route('paquete.viajes.itinerario') }}"
+                                                <a href="{{ route('paquete.viajes.itinerario', [$paquete, $v->id]) }}"
                                                     title="Itinerarios del Viaje"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
@@ -146,8 +160,8 @@
     </div>
 
     <!--MODAL --->
-    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal-container-918849"
-        role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false"
+        id="modal-container-918849" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -215,8 +229,7 @@
                         <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
                             Cerrar
                         </button>
-                        <button type="button" wire:click="guardarAlmuerzoCelebración"
-                            class="btn btn-rounded btn-primary">
+                        <button type="button" wire:click="saveViaje" class="btn btn-rounded btn-primary">
                             Guardar
                         </button>
 

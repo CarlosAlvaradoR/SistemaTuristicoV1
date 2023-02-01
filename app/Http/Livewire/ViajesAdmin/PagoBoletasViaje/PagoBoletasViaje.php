@@ -30,8 +30,8 @@ class PagoBoletasViaje extends Component
             ->select(DB::raw('SUM(pbv.monto) as Monto'))
             ->where('pbv.viaje_paquetes_id', $this->idViaje)
             ->get();
-        return view(
-            'livewire.viajes-admin.pago-boletas-viaje.pago-boletas-viaje',
+            
+        return view('livewire.viajes-admin.pago-boletas-viaje.pago-boletas-viaje',
             compact('pagos')
         );
     }

@@ -104,4 +104,12 @@ class ViajePaquetesController extends Controller
     public function viajeActividadesAclimatacionParticipantes(PaquetesTuristicos $paquete, $idViaje ,$idActividadAclimatacion){
         return view('viajes_admin.viajes_actividades_aclimatacion_participantes', compact('paquete','idViaje', 'idActividadAclimatacion'));
     }
+
+    public function viajeHospedajes(PaquetesTuristicos $paquete, $idViaje){
+        return view('viajes_admin.viajes_hospedajes', compact('paquete', 'idViaje'));
+    }
+
+    public function viajeItinerarios(PaquetesTuristicos $paquete, $idViaje){
+        return view('viajes_admin.viajes_itinerarios_cumplidos', compact('paquete', 'idViaje'));
+    }
 }
