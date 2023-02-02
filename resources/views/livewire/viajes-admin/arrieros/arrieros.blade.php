@@ -155,70 +155,203 @@
 
                             </div>
                         </div>
-                        {{-- @if ($encontradoComoArriero) --}}
-                        <div class="row">
-                            <div class="col-md-3">
-                                <span class="badge badge-default">INFORMACIÓN:</span>
+                        @if ($encontradoComoPersona && !$encontradoComoArriero)
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <span class="badge badge-default font-weight-bold">INFORMACIÓN:</span>
+                                </div>
+                                <div class="col-md-9">
+                                    <span class="badge badge-default">{{ $nombres_apellidos }}</span>
+                                </div>
+                                <div class="col-md-3">
+                                    <span class="badge badge-default font-weight-bold">TELÉFONO:</span>
+                                </div>
+                                <div class="col-md-9">
+                                    <span class="badge badge-default">{{ $telefono_arriero }}</span>
+                                </div>
+                                <br>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="asociacion">
+                                            Asociación
+                                        </label>
+                                        <select class="form-control" wire:model="asociacion" id="asociacion">
+                                            <option value="0" select>...Seleccione...</option>
+                                            @foreach ($asociaciones as $a)
+                                                <option value="{{ $a->id }}">{{ $a->nombre }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="monto">
+                                            Monto
+                                        </label>
+                                        <input type="text" wire:model.defer="monto" class="form-control"
+                                            id="monto" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="cantidad">
+                                            Cantidad
+                                        </label>
+                                        <input type="text" wire:model.defer="cantidad" class="form-control"
+                                            id="cantidad" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="tipo_de_acemila">
+                                            Tipo de Acémilas
+                                        </label>
+                                        <select class="form-control" wire:model="tipo_de_acemila"
+                                            id="tipo_de_acemila">
+                                            <option value="0" select>...Seleccione...</option>
+                                            @foreach ($tipo_acemilas as $ta)
+                                                <option value="{{ $ta->id }}">{{ $ta->nombre }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-9">
-                                <span class="badge badge-default">{{ $nombres_apellidos }}</span>
-                            </div>
-                            <div class="col-md-3">
-                                <span class="badge badge-default">TELÉFONO</span>
-                            </div>
-                            <div class="col-md-9">
-                                <span class="badge badge-default">{{ $telefono_arriero }}</span>
-                            </div>
-                        </div>
-                        {{-- @endif --}}
+                        @endif
 
-                        {{-- @if (!$encontradoComoPersona) --}}
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">
-                                        DNI
-                                    </label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" />
+                        @if ($encontradoComoArriero)
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <span class="badge badge-default">INFORMACIÓN:</span>
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">
-                                        Nombres
-                                    </label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" />
+                                <div class="col-md-9">
+                                    <span class="badge badge-default">{{ $nombres_apellidos }}</span>
                                 </div>
-                                <div class="form-group">
+                                <div class="col-md-3">
+                                    <span class="badge badge-default">TELÉFONO</span>
+                                </div>
+                                <div class="col-md-9">
+                                    <span class="badge badge-default">{{ $telefono_arriero }}</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="monto">
+                                            Monto
+                                        </label>
+                                        <input type="text" wire:model.defer="monto" class="form-control"
+                                            id="monto" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="cantidad">
+                                            Cantidad
+                                        </label>
+                                        <input type="text" wire:model.defer="cantidad" class="form-control"
+                                            id="cantidad" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="tipo_de_acemila">
+                                            Tipo de Acémilas
+                                        </label>
+                                        <select class="form-control" wire:model="tipo_de_acemila"
+                                            id="tipo_de_acemila">
+                                            <option value="0" select>...Seleccione...</option>
+                                            @foreach ($tipo_acemilas as $ta)
+                                                <option value="{{ $ta->id }}">{{ $ta->nombre }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
 
-                                    <label for="exampleInputPassword1">
-                                        Apellidos
-                                    </label>
-                                    <input type="text" class="form-control" id="exampleInputPassword1" />
+                        @if ($no_existe)
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <fieldset class="form-group">
+                                        <label class="form-label semibold" for="dni_persona">DNI</label>
+                                        <input type="text" class="form-control" wire:model.defer="dni_persona"
+                                            id="dni_persona" placeholder="Ingrese Nº de DNI">
+                                        <!--<small class="text-muted text-danger">We'll never share your email with anyone else.</small>-->
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-4">
+                                    <fieldset class="form-group">
+                                        <label class="form-label semibold" for="nombre">Nombres</label>
+                                        <input type="text" class="form-control" wire:model.defer="nombre"
+                                            id="nombre" placeholder="Enter email" value="ej: Mike Alejandro">
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-4">
+                                    <fieldset class="form-group">
+                                        <label class="form-label semibold" for="apellidos">Apellidos</label>
+                                        <input type="text" class="form-control" wire:model.defer="apellidos"
+                                            id="apellidos" placeholder="Password">
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-4">
+                                    <fieldset class="form-group">
+                                        <label class="form-label semibold" for="genero">Género</label>
+                                        <input type="text" class="form-control" wire:model.defer="genero"
+                                            id="genero" placeholder="Password">
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-4">
+                                    <fieldset class="form-group">
+                                        <label class="form-label semibold" for="telefono">Teléfono</label>
+                                        <input type="tel" class="form-control" wire:model.defer="telefono"
+                                            id="telefono" placeholder="Password">
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-4">
+                                    <fieldset class="form-group">
+                                        <label class="form-label semibold" for="dirección">Dirección</label>
+                                        <input type="text" class="form-control" wire:model.defer="dirección"
+                                            id="dirección" placeholder="Ingrese Dirección">
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-6">
+                                    <fieldset class="form-group">
+                                        <label class="form-label semibold" for="asociacion">Asociación</label>
+                                        <select class="form-control" wire:model="asociacion" id="asociacion">
+                                            <option value="0" select>...Seleccione...</option>
+                                            @foreach ($asociaciones as $a)
+                                                <option value="{{ $a->id }}">{{ $a->nombre }}</option>
+                                            @endforeach
+                                        </select>
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-6">
+                                    <fieldset class="form-group">
+                                        <label class="form-label semibold" for="monto">Monto</label>
+                                        <input type="text" class="form-control" wire:model.defer="monto"
+                                            id="monto" placeholder="ej: 45.70">
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-12">
+                                    <fieldset class="form-group">
+                                        <label class="form-label semibold" for="cantidad">Cantidad de Acémilas</label>
+                                        <input type="text" class="form-control" wire:model.defer="cantidad"
+                                            id="cantidad" placeholder="ej: 5">
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-12">
+                                    <fieldset class="form-group">
+                                        <label class="form-label semibold" for="exampleInputPassword1">Tipo de
+                                            Acémilas</label>
+                                        <select class="form-control" wire:model="tipo_de_acemila"
+                                            id="tipo_de_acemila">
+                                            <option value="0" select>...Seleccione...</option>
+                                            @foreach ($tipo_acemilas as $ta)
+                                                <option value="{{ $ta->id }}">{{ $ta->nombre }}</option>
+                                            @endforeach
+                                        </select>
+                                    </fieldset>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">
-                                        Género
-                                    </label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">
-                                        Teléfono
-                                    </label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" />
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">
-                                        Dirección
-                                    </label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" />
-                                </div>
-                            </div>
-                        </div>
-                        {{-- @endif --}}
+                        @endif
 
                     </div>
                 </div>
@@ -227,9 +360,24 @@
                     <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
                         Cerrar
                     </button>
-                    <button type="button" wire:click="saveViaje" class="btn btn-rounded btn-primary">
-                        Guardar
-                    </button>
+                    @if ($encontradoComoArriero)
+                        <button type="button" wire:click="guardarArrieroAlquilerAcemila"
+                            class="btn btn-rounded btn-primary">
+                            Guardar Info
+                        </button>
+                    @endif
+                    @if ($encontradoComoPersona && !$encontradoComoArriero)
+                        <button type="button" wire:click="guardarArrieroYAñadirAcemilasAlquiladas"
+                            class="btn btn-rounded btn-primary">
+                            Guardar Pers
+                        </button>
+                    @endif
+                    @if ($no_existe)
+                        <button type="button" wire:click="nuevoArriero" class="btn btn-rounded btn-primary">
+                            Guardar
+                        </button>
+                    @endif
+
 
                 </div>
 

@@ -235,7 +235,7 @@ INNER JOIN acemilas_alquiladas aq on aq.arrieros_id = a.id;
 
 
 -- BUSCAR ARRIERO
-SELECT p.dni, concat(p.nombre,' ',p.apellidos) as datos, p.telefono, a.id as idArriero FROM personas p
+SELECT p.id, p.dni, concat(p.nombre,' ',p.apellidos) as datos, p.telefono, a.id as idArriero FROM personas p
 LEFT JOIN arrieros a on a.persona_id = p.id
 WHERE p.dni = '70988855' LIMIT 1;
 
