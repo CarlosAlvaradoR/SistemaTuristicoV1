@@ -17,12 +17,5 @@ Route::get('/paquete/{paquete}/viajes/{viaje}/actividades-de-aclimatacion', [App
 Route::get('/paquete/{paquete}/viajes/{viaje}/actividades/{actividad}/participantes', [App\Http\Controllers\ViajePaquetesController::class, 'viajeActividadesAclimatacionParticipantes'])->name('paquete.viajes.actividades_aclimatacion.participantes')->middleware(['auth', 'verified']);
 Route::get('/paquete/{paquete}/viajes/{viaje}/hospedaje', [App\Http\Controllers\ViajePaquetesController::class, 'viajeHospedajes'])->name('paquete.viajes.hospedaje')->middleware(['auth', 'verified']);
 Route::get('/paquete/{paquete}/viajes/{viaje}/itinerario', [App\Http\Controllers\ViajePaquetesController::class, 'viajeItinerarios'])->name('paquete.viajes.itinerario')->middleware(['auth', 'verified']);
+Route::get('/paquete/{paquete}/viajes/{viaje}/arriero', [App\Http\Controllers\ViajePaquetesController::class, 'viajeArrieros'])->name('paquete.viajes.arriero')->middleware(['auth', 'verified']);
 
-
-Route::get('/paquete/name/viajes/itinerario/x/u', function () {
-    
-})->name('');
-
-Route::get('/paquete/name/viajes/arriero-guia-cocinero', function () {
-    return view('viajes_admin.viajes_arrieros-guia_cocinero');
-})->name('paquete.viajes.arriero');

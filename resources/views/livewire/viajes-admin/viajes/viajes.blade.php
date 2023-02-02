@@ -48,6 +48,7 @@
                                 <th scope="col">CANT. PART.</th>
                                 <th scope="col">Hora</th>
                                 <th scope="col">Estado</th>
+                                <th scope="col">Opciones</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
@@ -67,26 +68,56 @@
                                         {{ $v->hora }}
                                     </td>
                                     <td>
-                                        {{-- $v->estado --}}
+                                        {{ $v->estado }}
+                                    </td>
+                                    <td>
+
                                         <div class="dropdown dropdown-status"><button
                                                 class="btn btn-success dropdown-toggle" type="button"
                                                 data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">Published</button>
-                                            <div class="dropdown-menu"><a class="dropdown-item"
-                                                    href="#">Draft</a><a class="dropdown-item"
-                                                    href="#">Pending</a><a class="dropdown-item"
-                                                    href="#">Moderation</a><a class="dropdown-item"
-                                                    href="#">Published</a>
-                                                <div class="dropdown-divider"></div><a class="dropdown-item"
-                                                    href="#">Move to Trash</a>
+                                                aria-expanded="false">Opciones</button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item"
+                                                    href="{{ route('paquete.viajes.participantes', [$paquete, $v->id]) }}"><i
+                                                        class="fas fa-user-friends"></i> Part. del
+                                                    Viaje</a>
+                                                <a class="dropdown-item" href="#"><i
+                                                        class="fa-solid fa-eye"></i> Detalles del
+                                                    Viaje</a>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('paquete.viajes.traslados') }}"><i
+                                                        class="fas fa-map"></i> Traslados del
+                                                    Viaje</a>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('paquete.viajes.almuerzos', [$paquete, $v->id]) }}"><i
+                                                        class="fas fa-utensils"></i> Almuerzos del Viaje</a>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('paquete.viajes.boletas_pago', [$paquete, $v->id]) }}"><i
+                                                        class="fas fa-money-check"></i> Boletas de Pago del Viaje</a>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('paquete.viajes.actividades_aclimatacion', [$paquete, $v->id]) }}"><i
+                                                        class="fas fa-snowboarding"></i> Actividades de Aclimatación</a>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('paquete.viajes.hospedaje', [$paquete, $v->id]) }}"><i
+                                                        class="fas fa-hotel"></i> Hospedajes</a>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('paquete.viajes.itinerario', [$paquete, $v->id]) }}"><i
+                                                        class="fas fa-clipboard-list"></i> Itinerarios del Viaje</a>
+                                                <a class="dropdown-item"
+                                                    href="#!"><i
+                                                        class="glyphicon fas fa-users"></i> Arrieros, Cocineros y
+                                                    Guías</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="{{ route('paquete.viajes.arriero', [$paquete, $v->id]) }}">Arrieros</a>
+                                                <a class="dropdown-item" href="#">Cocineros</a>
+                                                <a class="dropdown-item" href="#">Guías</a>
                                             </div>
                                         </div>
                                     </td>
                                     <td style="white-space: nowrap; width: 1%;">
                                         <div class="tabledit-toolbar btn-toolbar" style="text-align: left;">
                                             <div class="btn-group btn-group-sm" style="float: none;">
-                                                <a href="{{ route('paquete.viajes.participantes', [$paquete, $v->id]) }}"
-                                                    title="Participantes del Viaje"
+                                                <!--<a href="" title="Participantes del Viaje"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
                                                     <i class="fas fa-user-friends"></i>
@@ -96,48 +127,41 @@
                                                     style="float: none;">
                                                     <i class="fa-solid fa-eye"></i>
                                                 </a>
-                                                <a href="{{ route('paquete.viajes.traslados') }}"
-                                                    title="Traslados del Viaje"
+                                                <a href="" title="Traslados del Viaje"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
                                                     <i class="fas fa-map"></i>
                                                 </a>
-                                                <a href="{{ route('paquete.viajes.almuerzos', [$paquete, $v->id]) }}"
-                                                    title="Almuerzos del Viaje"
+                                                <a href="" title="Almuerzos del Viaje"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
                                                     <i class="fas fa-utensils"></i>
                                                 </a>
-                                                <a href="{{ route('paquete.viajes.boletas_pago', [$paquete, $v->id]) }}"
-                                                    title="Boletas de Pago del Viaje"
+                                                <a href="" title="Boletas de Pago del Viaje"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
                                                     <i class="fas fa-money-check"></i>
                                                 </a>
-                                                <a href="{{ route('paquete.viajes.actividades_aclimatacion', [$paquete, $v->id]) }}"
-                                                    title="Actividades de Aclimatación"
+                                                <a href="" title="Actividades de Aclimatación"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
                                                     <i class="fas fa-snowboarding"></i>
                                                 </a>
-                                                <a href="{{ route('paquete.viajes.hospedaje', [$paquete, $v->id]) }}"
-                                                    title="Hospedajes"
+                                                <a href="" title="Hospedajes"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
                                                     <i class="fas fa-hotel"></i>
                                                 </a>
-                                                <a href="{{ route('paquete.viajes.itinerario', [$paquete, $v->id]) }}"
-                                                    title="Itinerarios del Viaje"
+                                                <a href="" title="Itinerarios del Viaje"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
                                                     <i class="fas fa-clipboard-list"></i>
                                                 </a>
-                                                <a href="{{ route('paquete.viajes.arriero') }}"
-                                                    title="Arrieros, Cocineros y Guías"
+                                                <a href="" title="Arrieros, Cocineros y Guías"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;">
                                                     <i class="glyphicon fas fa-users"></i>
-                                                </a>
+                                                </a>-->
                                                 <button type="button"
                                                     class="tabledit-edit-button btn btn-sm btn-default"
                                                     style="float: none;"><span

@@ -216,14 +216,28 @@ SELECT * FROM itinerarios_cumplidos;
 
 
 
+-- PERSONAS QUE SON ARRIEROS
+CREATE OR REPLACE VIEW v_viaje_personas_arrieros AS
+SELECT concat(p.nombre, ' ', p.apellidos) as datos, a.id as idArriero FROM personas p
+INNER JOIN arrieros a on a.persona_id = p.id;
+
+SELECT * FROM v_viaje_personas_arrieros 
+WHERE idArriero NOT IN (select aq.arrieros_id from acemilas_alquiladas aq WHERE aq.viaje_paquetes_id = 1);
 
 
+-- PERSONAS QUE SON ARRIEROS Y QUE PARTICIPAN DE UN VIAJE
+CREATE OR REPLACE VIEW v_viaje_personas_arrieros_participantes_viaje AS
+SELECT concat(p.nombre, ' ', p.apellidos) as datos, a.id as idArriero, aq.monto, aq.id as idAcemilasAlquiladas,
+aq.viaje_paquetes_id
+FROM personas p
+INNER JOIN arrieros a on a.persona_id = p.id
+INNER JOIN acemilas_alquiladas aq on aq.arrieros_id = a.id;
 
 
-
-
-
-
+-- BUSCAR ARRIERO
+SELECT p.dni, concat(p.nombre,' ',p.apellidos) as datos, p.telefono, a.id as idArriero FROM personas p
+LEFT JOIN arrieros a on a.persona_id = p.id
+WHERE p.dni = '70988855' LIMIT 1;
 
 
 
