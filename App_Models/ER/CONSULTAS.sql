@@ -206,14 +206,13 @@ WHERE hos.viaje_paquetes_id = 3;
 
 
 
-
-SELECT ai.nombre_actividad,ip.descripcion, ip.actividad_id, ic.fecha_cumplimiento  
+-- SELECCIONAR LAS ACTIVIDAES QUE LE CORRESPONDEN AL VIAJE POR PAQUETE
+SELECT ai.nombre_actividad,ip.id,ip.descripcion, ip.actividad_id, ic.fecha_cumplimiento  
 FROM actividades_itinerarios ai
 INNER JOIN itinerario_paquetes ip on ai.id = ip.actividad_id
 left join itinerarios_cumplidos ic on ic.itinerario_paquetes_id = ip.id
 WHERE ai.paquete_id = 1;
 SELECT * FROM itinerarios_cumplidos;
-
 
 
 

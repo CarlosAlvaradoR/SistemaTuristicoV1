@@ -25,7 +25,8 @@ class EditarPaquetes extends Component
     ];
 
 
-    public function mount(PaquetesTuristicos $paquete){
+    public function mount(PaquetesTuristicos $paquete)
+    {
         $this->idPaquete = $paquete->id;
         $this->nombre = $paquete->nombre;
         $this->precio = $paquete->precio;
@@ -42,18 +43,42 @@ class EditarPaquetes extends Component
         return view('livewire.paquetes-admin.editar-paquetes', compact('tipos'));
     }
 
-    public function editarPaquete(){
+    public function editarPaquete()
+    {
         //dd(PaquetesTuristicos::find($this->idPaquete));
         $this->validate();
-       if(is_null($this->imagen_principal_nuevo))
-        {
+
+        //Primero validar que exista una imagen seleccionada -> verificar si existe un archivo anterior -> eliminamos
+        // Si no existe la variable queda igual y se trannscribe a la base de datos
+        if ($this->imagen_principal_nuevo) {
+            if (file_exists(public_path('foto_principal/$this->imagen_principal'))) {
+                $eliminar = unlink($this->imagen_principal);
+                $imagen_nueva_paquete = 'storage/' . $this->imagen_principal_nuevo->store('foto_principal', 'public');
+            } else {
+                $imagen_nueva_paquete = 'storage/' . $this->imagen_principal_nuevo->store('foto_principal', 'public');
+            }
+        } else {
+            $imagen_nueva_paquete = $this->imagen_principal;
+        }
+
+        /*if (file_exists(public_path('foto_principal/$this->imagen_principal'))) { //EXISTE
+            $eliminar = unlink($this->imagen_principal);
+            $imagen_nueva_paquete = 'storage/' . $this->imagen_principal_nuevo->store('foto_principal', 'public');
+        } else { //NO EXISTE
+            if ($this->imagen_principal_nuevo) {
+                $imagen_nueva_paquete = 'storage/' . $this->imagen_principal_nuevo->store('foto_principal', 'public');
+            }
+        }*/
+
+
+        /*if (is_null($this->imagen_principal_nuevo)) {
             $imagen_nueva_paquete = $this->imagen_principal;
             //dd("Está vacío no se modifica");
-        }else{
+        } else {
             $eliminar = unlink($this->imagen_principal);
-            $imagen_nueva_paquete = 'storage/'.$this->imagen_principal_nuevo->store('foto_principal','public');
+            $imagen_nueva_paquete = 'storage/' . $this->imagen_principal_nuevo->store('foto_principal', 'public');
             //dd("No está vacío y se va a eliminar");
-        }
+        }*/
         $paquete = PaquetesTuristicos::findOrFail($this->idPaquete);
         $paquete->nombre = $this->nombre;
         $paquete->precio = $this->precio;
