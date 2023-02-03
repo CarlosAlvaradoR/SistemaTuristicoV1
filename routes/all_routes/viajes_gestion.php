@@ -19,3 +19,14 @@ Route::get('/paquete/{paquete}/viajes/{viaje}/hospedaje', [App\Http\Controllers\
 Route::get('/paquete/{paquete}/viajes/{viaje}/itinerario', [App\Http\Controllers\ViajePaquetesController::class, 'viajeItinerarios'])->name('paquete.viajes.itinerario')->middleware(['auth', 'verified']);
 Route::get('/paquete/{paquete}/viajes/{viaje}/arriero', [App\Http\Controllers\ViajePaquetesController::class, 'viajeArrieros'])->name('paquete.viajes.arriero')->middleware(['auth', 'verified']);
 
+Route::get('/viajes/ver-todo', function () {
+    return view('viajes_admin.ver_todo.ver_todo');
+})->name('viajes.ver_todo');
+
+Route::get('/viajes/empresas-transporte', function () {
+    return view('viajes_admin.empresas_transporte.empresas');
+})->name('viajes.empresas_transporte');
+
+Route::get('/viajes/empresas-transporte/vehiculo', function () {
+    return view('viajes_admin.empresas_transporte.vehiculos.vehiculos');
+})->name('viajes.empresas_transporte.vehiculos');

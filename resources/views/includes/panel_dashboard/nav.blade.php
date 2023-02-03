@@ -63,9 +63,9 @@
                 <span class="lbl">Viajes</span>
             </span>
             <ul>
-                <li><a href="#"><span class="lbl">Ver Todo</span><span
+                <li><a href="{{ route('viajes.ver_todo') }}"><span class="lbl">Ver Todo</span><span
                             class="label label-custom label-pill label-succes">new</span></a></li>
-                <li><a href="#"><span class="lbl">Empresas</span></a></li>
+                <li><a href="{{ route('viajes.empresas_transporte') }}"><span class="lbl">Empresas</span></a></li>
                 <li><a href="#"><span class="lbl">Chofer</span></a></li>
                 <li><a href="#"><span class="lbl">Cocinero</span></a></li>
                 <li><a href="#"><span class="lbl">Guía</span></a></li>

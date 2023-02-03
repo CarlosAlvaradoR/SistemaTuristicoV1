@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('empresa_transportes', function (Blueprint $table) {
             $table->id();
+            $table->string('numero_placa', 10);
             $table->string('nombre_empresa', 45);
             $table->timestamps();
         });
