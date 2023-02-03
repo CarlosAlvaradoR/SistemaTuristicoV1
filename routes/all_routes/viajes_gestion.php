@@ -18,10 +18,8 @@ Route::get('/paquete/{paquete}/viajes/{viaje}/actividades/{actividad}/participan
 Route::get('/paquete/{paquete}/viajes/{viaje}/hospedaje', [App\Http\Controllers\ViajePaquetesController::class, 'viajeHospedajes'])->name('paquete.viajes.hospedaje')->middleware(['auth', 'verified']);
 Route::get('/paquete/{paquete}/viajes/{viaje}/itinerario', [App\Http\Controllers\ViajePaquetesController::class, 'viajeItinerarios'])->name('paquete.viajes.itinerario')->middleware(['auth', 'verified']);
 Route::get('/paquete/{paquete}/viajes/{viaje}/arriero', [App\Http\Controllers\ViajePaquetesController::class, 'viajeArrieros'])->name('paquete.viajes.arriero')->middleware(['auth', 'verified']);
+Route::get('/viajes/ver-todo', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarTodosLosViajes'])->name('viajes.ver_todo')->middleware(['auth', 'verified']);
 
-Route::get('/viajes/ver-todo', function () {
-    return view('viajes_admin.ver_todo.ver_todo');
-})->name('viajes.ver_todo');
 
 Route::get('/viajes/empresas-transporte', function () {
     return view('viajes_admin.empresas_transporte.empresas');

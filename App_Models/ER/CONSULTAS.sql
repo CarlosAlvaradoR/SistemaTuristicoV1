@@ -241,10 +241,14 @@ WHERE p.dni = '70988855' LIMIT 1;
 
 
 
+-- VISTA PARA CONOCER TODOS LOS VIAJES
+CREATE OR REPLACE VIEW v_viajes_all AS
+SELECT pt.id as idPaquete,pt.nombre,pt.slug, vp.descripcion, vp.fecha, vp.cantidad_participantes,
+vp.hora, vp.estado, vp.id as id
+FROM paquetes_turisticos pt
+INNER JOIN viaje_paquetes vp on vp.paquete_id = pt.id;
 
-
-
-
+SELECT * FROM v_viajes_all;
 
 
 
