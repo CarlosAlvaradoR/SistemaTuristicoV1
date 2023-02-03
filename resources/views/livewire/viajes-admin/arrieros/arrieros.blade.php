@@ -132,7 +132,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">
-                        CREAR TRASLADO DE VIAJES
+                        ASIGNAR ARRIEROS AL VIAJE
                     </h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">×</span>
@@ -281,42 +281,42 @@
                                     <fieldset class="form-group">
                                         <label class="form-label semibold" for="nombre">Nombres</label>
                                         <input type="text" class="form-control" wire:model.defer="nombre"
-                                            id="nombre" placeholder="Enter email" value="ej: Mike Alejandro">
+                                            id="nombre" placeholder="Ingrese Nombres" value="ej: Mike Alejandro">
                                     </fieldset>
                                 </div>
                                 <div class="col-lg-4">
                                     <fieldset class="form-group">
                                         <label class="form-label semibold" for="apellidos">Apellidos</label>
                                         <input type="text" class="form-control" wire:model.defer="apellidos"
-                                            id="apellidos" placeholder="Password">
+                                            id="apellidos" placeholder="Ingrese los Apellidos">
                                     </fieldset>
                                 </div>
                                 <div class="col-lg-4">
                                     <fieldset class="form-group">
                                         <label class="form-label semibold" for="genero">Género</label>
                                         <input type="text" class="form-control" wire:model.defer="genero"
-                                            id="genero" placeholder="Password">
+                                            id="genero" placeholder="Ingrese el Género">
                                     </fieldset>
                                 </div>
                                 <div class="col-lg-4">
                                     <fieldset class="form-group">
                                         <label class="form-label semibold" for="telefono">Teléfono</label>
                                         <input type="tel" class="form-control" wire:model.defer="telefono"
-                                            id="telefono" placeholder="Password">
+                                            id="telefono" placeholder="Ingrese el Teléfono">
                                     </fieldset>
                                 </div>
                                 <div class="col-lg-4">
                                     <fieldset class="form-group">
                                         <label class="form-label semibold" for="dirección">Dirección</label>
                                         <input type="text" class="form-control" wire:model.defer="dirección"
-                                            id="dirección" placeholder="Ingrese Dirección">
+                                            id="dirección" placeholder="Ingrese la Dirección">
                                     </fieldset>
                                 </div>
                                 <div class="col-lg-6">
                                     <fieldset class="form-group">
                                         <label class="form-label semibold" for="asociacion">Asociación</label>
                                         <select class="form-control" wire:model="asociacion" id="asociacion">
-                                            <option value="0" select>...Seleccione...</option>
+                                            <option value="0" select>...Seleccione la Asociación...</option>
                                             @foreach ($asociaciones as $a)
                                                 <option value="{{ $a->id }}">{{ $a->nombre }}</option>
                                             @endforeach
@@ -333,7 +333,7 @@
                                 <div class="col-lg-12">
                                     <fieldset class="form-group">
                                         <label class="form-label semibold" for="cantidad">Cantidad de Acémilas</label>
-                                        <input type="text" class="form-control" wire:model.defer="cantidad"
+                                        <input type="number" class="form-control" wire:model.defer="cantidad"
                                             id="cantidad" placeholder="ej: 5">
                                     </fieldset>
                                 </div>
@@ -363,18 +363,18 @@
                     @if ($encontradoComoArriero)
                         <button type="button" wire:click="guardarArrieroAlquilerAcemila"
                             class="btn btn-rounded btn-primary">
-                            Guardar Info
+                            <i class="fas fa-save"></i> Guardar
                         </button>
                     @endif
                     @if ($encontradoComoPersona && !$encontradoComoArriero)
                         <button type="button" wire:click="guardarArrieroYAñadirAcemilasAlquiladas"
                             class="btn btn-rounded btn-primary">
-                            Guardar Pers
+                            <i class="fas fa-save"></i> Guardar
                         </button>
                     @endif
                     @if ($no_existe)
                         <button type="button" wire:click="nuevoArriero" class="btn btn-rounded btn-primary">
-                            Guardar
+                            <i class="fas fa-save"></i> Guardar
                         </button>
                     @endif
 
@@ -466,7 +466,7 @@
                 $('#modalMontoArriero').modal('show')
             });
             window.livewire.on('fecha-itinerario-guarded', msg => {
-                $('#modal-itinerario-fecha-cumplimiento').modal('hide')
+                $('#modalMontoArriero').modal('hide')
             });
             window.livewire.on('category-updated', msg => {
                 $('#theModal').modal('hide')
