@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 class PublicPaquetesController extends Controller
 {
     //
+    public function inicio(){
+        $paquetes = PaquetesTuristicos::paginate(6);
+        return view('paquetes_publico.inicio', compact('paquetes'));
+    }
+
     public function index(){
         $paquetes = PaquetesTuristicos::paginate(10);
         return view('paquetes_publico.destinos', compact('paquetes'));

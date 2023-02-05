@@ -106,42 +106,41 @@
                 <div class="col-lg-8">
                     <div class="row">
                         @foreach ($paquetes as $paquete)
-                            <div class="col-lg-6 col-md-6">
-                                <div class="single_place">
-                                    <div class="thumb">
-                                        <!--<img src="img/place/1.png" alt="">-->
-                                        <img src="https://images.unsplash.com/photo-1577587230708-187fdbef4d91?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVydSUyMGxpbWF8ZW58MHx8MHx8&w=1000&q=80" alt="">
-                                        <a href="{{ route('detalles.destino', $paquete) }}" class="prise">$ {{$paquete->precio}}</a>
-                                    </div>
-                                    <div class="place_info">
-                                        <a href="destination_details.html">
-                                            <h3>{{$paquete->nombre}}</h3>
-                                        </a>
-                                        <p>United State of America</p>
-                                        <div class="rating_days d-flex justify-content-between">
-                                            <span class="d-flex justify-content-center align-items-center">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <a href="#">(20 Review)</a>
-                                            </span>
-                                            <div class="days">
-                                                <i class="fa fa-clock-o"></i>
-                                                <a href="#">5 Days</a>
+                            <a href="{{ route('detalles.destino', $paquete) }}">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="single_place">
+                                        <div class="thumb">
+                                            <!--<img src="img/place/1.png" alt="">-->
+                                            <img src="{{ asset('/' . $paquete->imagen_principal) }}"
+                                                alt="Image" width="100" height="250">
+                                            <a href="#" class="prise">S/.
+                                                {{ $paquete->precio }}</a>
+                                        </div>
+                                        <div class="place_info">
+                                            <a href="#!">
+                                                <h3>{{ $paquete->nombre }}</h3>
+                                            </a>
+                                            <p>Apto a Reservación</p>
+                                            <div class="rating_days d-flex justify-content-between">
+                                                <span class="d-flex justify-content-center align-items-center">
+                                                    <a href="#">(20 Review)</a>
+                                                </span>
+                                                <div class="days">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    <a href="#">5 Days</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         @endforeach
 
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="more_place_btn text-center">
-                                {{$paquetes->links()}}
+                                {{ $paquetes->links() }}
                                 <a class="boxed-btn4" href="#">More Places</a>
                             </div>
                         </div>

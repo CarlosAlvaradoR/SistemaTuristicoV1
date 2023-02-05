@@ -9,9 +9,8 @@
                     <div class="row align-items-center">
                         <div class="col-xl-12 col-md-12">
                             <div class="slider_text text-center">
-                                <h3>Indonesia</h3>
-                                <p>Pixel perfect design with awesome contents</p>
-                                <a href="#" class="boxed-btn3">Explore Now</a>
+                                <h3>Huaraz</h3>
+                                <p>El Mejor Lugar para visitar</p>
                             </div>
                         </div>
                     </div>
@@ -22,9 +21,8 @@
                     <div class="row align-items-center">
                         <div class="col-xl-12 col-md-12">
                             <div class="slider_text text-center">
-                                <h3>Australia</h3>
-                                <p>Pixel perfect design with awesome contents</p>
-                                <a href="#" class="boxed-btn3">Explore Now</a>
+                                <h3>Recuay</h3>
+                                <p>Lo mejor de Áncash para tí</p>
                             </div>
                         </div>
                     </div>
@@ -35,9 +33,8 @@
                     <div class="row align-items-center">
                         <div class="col-xl-12 col-md-12">
                             <div class="slider_text text-center">
-                                <h3>Switzerland</h3>
-                                <p>Pixel perfect design with awesome contents</p>
-                                <a href="#" class="boxed-btn3">Explore Now</a>
+                                <h3>Yungay</h3>
+                                <p>La ciudad de la Hermosura</p>
                             </div>
                         </div>
                     </div>
@@ -64,13 +61,13 @@
                                 <input type="text" placeholder="Escribe lugar">
                             </div>
                             <div class="input_field">
-                                <input id="datepicker" placeholder="Date">
+                                <input id="datepicker" autocomplete="off" placeholder="Date">
                             </div>
                             <div class="input_field">
                                 <select>
-                                    <option data-display="Travel type">Tipo de Viaje</option>
-                                    <option value="1">Some option</option>
-                                    <option value="2">Another option</option>
+                                    <option data-display="Tipo de Viaje">Tipo de Viaje</option>
+                                    <option value="1">Tipo 1</option>
+                                    <option value="2">Tipo 2</option>
                                 </select>
                             </div>
                             <div class="search_btn">
@@ -91,184 +88,46 @@
                 <div class="col-lg-6">
                     <div class="section_title text-center mb_70">
                         <h3>Paquetes Populares</h3>
-                        
+
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="single_place">
-                        <div class="thumb">
-                            <img src="landing_assets/img/place/1.png" alt="">
-                            <a href="#" class="prise">$500</a>
-                        </div>
-                        <div class="place_info">
-                            <a href="destination_details.html">
-                                <h3>California</h3>
-                            </a>
-                            <p>United State of America</p>
-                            <div class="rating_days d-flex justify-content-between">
-                                <span class="d-flex justify-content-center align-items-center">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <a href="#">(20 Review)</a>
-                                </span>
-                                <div class="days">
-                                    <i class="fa fa-clock-o"></i>
-                                    <a href="#">5 Days</a>
+                @foreach ($paquetes as $paquete)
+                    <a href="{{ route('detalles.destino', $paquete) }}">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="single_place">
+                                <div class="thumb">
+                                    <!--<img src="img/place/1.png" alt="">-->
+                                    <img src="{{ asset('/' . $paquete->imagen_principal) }}" alt="Image" width="100"
+                                        height="250">
+                                    <a href="#" class="prise">S/.
+                                        {{ $paquete->precio }}</a>
+                                </div>
+                                <div class="place_info">
+                                    <a href="#!">
+                                        <h3>{{ $paquete->nombre }}</h3>
+                                    </a>
+                                    <p>Apto a Reservación</p>
+                                    <div class="rating_days d-flex justify-content-between">
+                                        <span class="d-flex justify-content-center align-items-center">
+                                            <a href="#">(20 Review)</a>
+                                        </span>
+                                        <div class="days">
+                                            <i class="fa fa-clock-o"></i>
+                                            <a href="#">5 Days</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single_place">
-                        <div class="thumb">
-                            <img src="landing_assets/img/place/2.png" alt="">
-                            <a href="#" class="prise">$500</a>
-                        </div>
-                        <div class="place_info">
-                            <a href="destination_details.html">
-                                <h3>Korola Megna</h3>
-                            </a>
-                            <p>United State of America</p>
-                            <div class="rating_days d-flex justify-content-between">
-                                <span class="d-flex justify-content-center align-items-center">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <a href="#">(20 Review)</a>
-                                </span>
-                                <div class="days">
-                                    <i class="fa fa-clock-o"></i>
-                                    <a href="#">5 Days</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single_place">
-                        <div class="thumb">
-                            <img src="landing_assets/img/place/3.png" alt="">
-                            <a href="#" class="prise">$500</a>
-                        </div>
-                        <div class="place_info">
-                            <a href="destination_details.html">
-                                <h3>London</h3>
-                            </a>
-                            <p>United State of America</p>
-                            <div class="rating_days d-flex justify-content-between">
-                                <span class="d-flex justify-content-center align-items-center">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <a href="#">(20 Review)</a>
-                                </span>
-                                <div class="days">
-                                    <i class="fa fa-clock-o"></i>
-                                    <a href="#">5 Days</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single_place">
-                        <div class="thumb">
-                            <img src="landing_assets/img/place/4.png" alt="">
-                            <a href="#" class="prise">$500</a>
-                        </div>
-                        <div class="place_info">
-                            <a href="destination_details.html">
-                                <h3>Miami Beach</h3>
-                            </a>
-                            <p>United State of America</p>
-                            <div class="rating_days d-flex justify-content-between">
-                                <span class="d-flex justify-content-center align-items-center">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <a href="#">(20 Review)</a>
-                                </span>
-                                <div class="days">
-                                    <i class="fa fa-clock-o"></i>
-                                    <a href="#">5 Days</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single_place">
-                        <div class="thumb">
-                            <img src="landing_assets/img/place/5.png" alt="">
-                            <a href="#" class="prise">$500</a>
-                        </div>
-                        <div class="place_info">
-                            <a href="destination_details.html">
-                                <h3>California</h3>
-                            </a>
-                            <p>United State of America</p>
-                            <div class="rating_days d-flex justify-content-between">
-                                <span class="d-flex justify-content-center align-items-center">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <a href="#">(20 Review)</a>
-                                </span>
-                                <div class="days">
-                                    <i class="fa fa-clock-o"></i>
-                                    <a href="#">5 Days</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single_place">
-                        <div class="thumb">
-                            <img src="landing_assets/img/place/6.png" alt="">
-                            <a href="#" class="prise">$500</a>
-                        </div>
-                        <div class="place_info">
-                            <a href="destination_details.html">
-                                <h3>Saintmartine Iceland</h3>
-                            </a>
-                            <p>United State of America</p>
-                            <div class="rating_days d-flex justify-content-between">
-                                <span class="d-flex justify-content-center align-items-center">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <a href="#">(20 Review)</a>
-                                </span>
-                                <div class="days">
-                                    <i class="fa fa-clock-o"></i>
-                                    <a href="#">5 Days</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    </a>
+                @endforeach
             </div>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="more_place_btn text-center">
-                        <a class="boxed-btn4" href="#">Ver más</a>
+                        <a class="boxed-btn4" href="{{ route('destinos') }}">Ver más</a>
                     </div>
                 </div>
             </div>
@@ -292,7 +151,4 @@
             </div>
         </div>
     </div>
-
-
-
 @endsection

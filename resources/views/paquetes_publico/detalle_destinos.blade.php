@@ -2,11 +2,8 @@
 
 @section('content')
     <!-- header-end -->
-    <div class="destination_banner_wrap overlay">
-        <div class="destination_text text-center">
-            <h3>Paquete Trujillo</h3>
-            <p>El Mejor</p>
-        </div>
+    <div class="overlay">
+        <img src="{{ asset('/' . $paquete->imagen_principal) }}" alt="Image" width="1348" height="800">
     </div>
 
     <div class="destination_details_info">
@@ -451,61 +448,62 @@
 
                     <div class="bordered_1px"></div>
                     <div class="contact_join">
-                        <h3>Contact for join</h3>
-                        <form action="#">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="single_input">
-                                        <input type="text" placeholder="Your Name">
+                            <!--<h3>Contact for join</h3>-->
+                            <form action="#">
+                                <div class="row">
+                                    <!--<div class="col-lg-6 col-md-6">
+                                        <div class="single_input">
+                                            <input type="text" placeholder="Your Name">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="single_input">
+                                            <input type="text" placeholder="Phone no.">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="single_input">
+                                            <textarea name="" id="" cols="30" rows="10"placeholder="Message"></textarea>
+                                        </div>
+                                    </div>-->
+                                    <div class="col-lg-12">
+                                            <a href="{{ route('reservar.formulario.publico', $paquete) }}" class="boxed-btn4">
+                                                Reservar
+                                            </a>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="single_input">
-                                        <input type="text" placeholder="Phone no.">
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="single_input">
-                                        <textarea name="" id="" cols="30" rows="10"placeholder="Message"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                        <a href="{{ route('reservar.formulario.publico', $paquete) }}" class="boxed-btn4">
-                                            Reservar
-                                        </a>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                            </form>
+                        </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- newletter_area_start  -->
-    <div class="newletter_area overlay">
-        <div class="container">
-            <div class="row justify-content-center align-items-center">
-                <div class="col-lg-10">
-                    <div class="row align-items-center">
-                        <div class="col-lg-5">
-                            <div class="newsletter_text">
-                                <h4>Subscribe Our Newsletter</h4>
-                                <p>Subscribe newsletter to get offers and about
-                                    new places to discover.</p>
+    <!--<div class="newletter_area overlay">
+            <div class="container">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-lg-10">
+                        <div class="row align-items-center">
+                            <div class="col-lg-5">
+                                <div class="newsletter_text">
+                                    <h4>Subscribe Our Newsletter</h4>
+                                    <p>Subscribe newsletter to get offers and about
+                                        new places to discover.</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-7">
-                            <div class="mail_form">
-                                <div class="row no-gutters">
-                                    <div class="col-lg-9 col-md-8">
-                                        <div class="newsletter_field">
-                                            <input type="email" placeholder="Your mail">
+                            <div class="col-lg-7">
+                                <div class="mail_form">
+                                    <div class="row no-gutters">
+                                        <div class="col-lg-9 col-md-8">
+                                            <div class="newsletter_field">
+                                                <input type="email" placeholder="Your mail">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-4">
-                                        <div class="newsletter_btn">
-                                            <button class="boxed-btn4 " type="submit">Subscribe</button>
+                                        <div class="col-lg-3 col-md-4">
+                                            <div class="newsletter_btn">
+                                                <button class="boxed-btn4 " type="submit">Subscribe</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -514,7 +512,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </div>-->
     <!-- newletter_area_end  -->
 @endsection
