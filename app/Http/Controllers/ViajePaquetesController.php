@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PaquetesTuristicos;
+use App\Models\Viajes\EmpresaTransportes;
 use App\Models\Viajes\ViajePaquetes;
 use Illuminate\Http\Request;
 
@@ -121,5 +122,13 @@ class ViajePaquetesController extends Controller
     
     public function mostrarTodosLosViajes() {
         return view('viajes_admin.ver_todo.ver_todo');
+    }
+
+    public function mostrarEmpresasTransporte(){
+        return view('viajes_admin.empresas_transporte.empresas');
+    }
+
+    public function mostrarVehiculosEmpresasTransporte(EmpresaTransportes $empresa){
+        return view('viajes_admin.empresas_transporte.vehiculos.vehiculos', compact('empresa'));
     }
 }

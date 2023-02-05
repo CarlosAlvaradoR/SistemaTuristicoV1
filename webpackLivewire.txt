@@ -106,3 +106,7 @@ VIAJES
     
     VIAJE PAQUETE - GENERAL
        php artisan make:livewire ViajesAdmin/Viajes/VerTodo/VerTodo
+
+       php artisan make:livewire ViajesAdmin/Viajes/EmpresasTransporte/EmpresasTransporte
+
+       php artisan make:livewire ViajesAdmin/Viajes/EmpresasTransporte/Vehiculos/Vehiculos

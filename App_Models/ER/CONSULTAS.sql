@@ -252,8 +252,8 @@ SELECT * FROM v_viajes_all;
 
 
 
-
-
+-- SACAR LAS EMPRESAS DE TRANSPORTE
+SELECT * FROM empresa_transportes;
 
 
 
