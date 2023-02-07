@@ -103,6 +103,8 @@ VIAJES
        php artisan make:livewire ViajesAdmin/Itinerarios/ItinerariosCumplidos
 
        php artisan make:livewire ViajesAdmin/Arrieros/Arrieros
+
+       php artisan make:livewire ViajesAdmin/TrasladosViaje/TrasladosViaje
     
     VIAJE PAQUETE - GENERAL
        php artisan make:livewire ViajesAdmin/Viajes/VerTodo/VerTodo

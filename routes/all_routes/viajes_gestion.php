@@ -7,10 +7,7 @@ Route::get('/paquete/{paquete}/viajes', [App\Http\Controllers\ViajePaquetesContr
 Route::get('/paquete/{paquete}/viajes/{viaje}/participantes', [App\Http\Controllers\ViajePaquetesController::class, 'viajeParticipantes'])->name('paquete.viajes.participantes')->middleware(['auth', 'verified']);
 
 
-Route::get('/paquete/name/viajes/traslados', function () {
-    return view('viajes_admin.traslados_viaje');
-})->name('paquete.viajes.traslados');
-
+Route::get('/paquete/{paquete}/viajes/{viaje}/traslados', [App\Http\Controllers\ViajePaquetesController::class, 'trasladoViajes'])->name('paquete.viajes.traslados')->middleware(['auth', 'verified']);
 Route::get('/paquete/{paquete}/viajes/{viaje}/almuerzos', [App\Http\Controllers\ViajePaquetesController::class, 'viajeAlmuerzos'])->name('paquete.viajes.almuerzos')->middleware(['auth', 'verified']);
 Route::get('/paquete/{paquete}/viajes/{viaje}/boletas-de-pago', [App\Http\Controllers\ViajePaquetesController::class, 'viajeBoletasPago'])->name('paquete.viajes.boletas_pago')->middleware(['auth', 'verified']);
 Route::get('/paquete/{paquete}/viajes/{viaje}/actividades-de-aclimatacion', [App\Http\Controllers\ViajePaquetesController::class, 'viajeActividadesAclimatacion'])->name('paquete.viajes.actividades_aclimatacion')->middleware(['auth', 'verified']);
