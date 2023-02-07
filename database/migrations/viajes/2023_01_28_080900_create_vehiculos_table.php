@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('vehiculos', function (Blueprint $table) {
             $table->id();
+            $table->string('numero_placa', 10);
             $table->text('descripcion');
 
             $table->unsignedBigInteger('empresa_transportes_id');

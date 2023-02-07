@@ -257,18 +257,22 @@ SELECT * FROM empresa_transportes;
 
 
 
+-- LISTA DE VEHÍCULOS DE UNA EMPRESA
+SELECT et.nombre_empresa, v.numero_placa, v.descripcion, v.id FROM empresa_transportes et
+INNER JOIN vehiculos v on v.empresa_transportes_id = et.id
+WHERE v.empresa_transportes_id = 1;
 
 
 
+-- CONOCER LAS PERSONAS QUE SON CHOFERES
+CREATE OR REPLACE VIEW v_viajes_pesonas_choferes AS
+SELECT pe.id, concat(pe.nombre,' ' ,pe.apellidos) as datos, pe.dni,pe.telefono, ch.id as idChofer FROM personas pe
+LEFT JOIN choferes ch on pe.id = ch.persona_id;
 
+SELECT * FROM v_viajes_pesonas_choferes
+WHERE dni = '09987' LIMIT 1;
 
-
-
-
-
-
-
-
+SELECT * FROM choferes;
 
 
 

@@ -10,7 +10,7 @@ class EmpresasTransporte extends Component
     public $nombre_empresa, $idSeleccionado;
     public function render()
     {
-        $empresas = EmpresaTransportes::all(['id','nombre_empresa']);
+        $empresas = EmpresaTransportes::all(['id','nombre_empresa','slug']);
         return view('livewire.viajes-admin.viajes.empresas-transporte.empresas-transporte', compact('empresas'));
     }
 

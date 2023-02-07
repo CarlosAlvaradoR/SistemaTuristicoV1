@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('vehiculo_choferes', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('viaje_paquetes_id');
-            $table->foreign('viaje_paquetes_id')->references('id')->on('viaje_paquetes');
-
             $table->unsignedBigInteger('vehiculos_id');
             $table->foreign('vehiculos_id')->references('id')->on('vehiculos');
+
+            $table->unsignedBigInteger('choferes_id');
+            $table->foreign('choferes_id')->references('id')->on('choferes');
 
             $table->timestamps();
         });
