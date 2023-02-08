@@ -116,3 +116,5 @@ VIAJES
        php artisan make:livewire ViajesAdmin/Viajes/Chofer/Chofer
 
        php artisan make:livewire ViajesAdmin/Viajes/Cocinero/Cocinero
+
+       php artisan make:livewire ViajesAdmin/Viajes/Guia/Guia

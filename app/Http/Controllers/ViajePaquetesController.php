@@ -157,4 +157,8 @@ class ViajePaquetesController extends Controller
     {
         return view('viajes_admin.cocinero.cocinero');
     }
+
+    public function mostrarListaGuias(){
+        return view('viajes_admin.guia.guia');
+    }
 }

@@ -303,6 +303,49 @@ inner join cocineros co on co.persona_id = p.id;
 
 
 
+-- CONOCER LAS PERSONAS QUE SON GUIAS Y CUALES NO
+CREATE OR REPLACE VIEW v_viajes_pesonas_guias AS
+SELECT pe.id, concat(pe.nombre,' ' ,pe.apellidos) as datos, pe.dni,pe.telefono, gui.id as idGuia FROM personas pe
+LEFT JOIN guias gui on pe.id = gui.persona_id;
+
+-- SELECCIONAR PERSONAS QUE SON CHOFERES
+select concat(p.nombre, ' ', p.apellidos) as datos, p.dni, gui.id as idGuia from personas p
+inner join guias gui on gui.persona_id = p.id;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

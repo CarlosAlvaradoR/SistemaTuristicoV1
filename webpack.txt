@@ -293,3 +293,5 @@ MIGRACIONES Y MÓDELOS
         php artisan make:migration create_view_v_viajes_pesonas_choferes_table --path=/database/migrations/viajes
         
         php artisan make:migration create_view_v_viajes_pesonas_cocineros_table --path=/database/migrations/viajes
+        
+        php artisan make:migration create_view_v_viajes_pesonas_guias_table --path=/database/migrations/viajes
