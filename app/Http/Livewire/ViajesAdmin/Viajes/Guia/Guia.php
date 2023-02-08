@@ -90,6 +90,17 @@ class Guia extends Component
     
     public function NuevoChofer()
     {
+        $this->validate(
+            [
+                'dni_persona' => 'required|min:3|unique:personas,dni',
+                'nombre' => 'required|min:3',
+                'apellidos' => 'required|min:3',
+                'genero' => 'required|numeric|min:0|max:1',
+                'telefono' => 'required|min:3',
+                'dirección' => 'required|min:3',
+            ]
+        );
+
         $personas = Personas::create(
             [
                 'dni' => $this->dni_persona,

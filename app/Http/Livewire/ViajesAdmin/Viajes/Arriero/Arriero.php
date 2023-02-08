@@ -80,6 +80,12 @@ class Arriero extends Component
 
     public function guardarPersonaArriero()
     { //Guarda la persona que ya existe y los atributos del Cliente
+        $this->validate(
+            [
+                'asociacion' => 'required|min:1',
+            ]
+        );
+
         $arriero = Arrieros::create([
             'persona_id' => $this->idPersona, 
             'asociaciones_id' => $this->asociacion
@@ -96,6 +102,18 @@ class Arriero extends Component
     
     public function nuevoArriero()
     {
+        $this->validate(
+            [
+                'dni_persona' => 'required|min:3|unique:personas,dni',
+                'nombre' => 'required|min:3',
+                'apellidos' => 'required|min:3',
+                'genero' => 'required|numeric|min:0|max:1',
+                'telefono' => 'required|min:3',
+                'dirección' => 'required|min:3',
+                'asociacion' => 'required|min:1',
+            ]
+        );
+
         $personas = Personas::create(
             [
                 'dni' => $this->dni_persona,

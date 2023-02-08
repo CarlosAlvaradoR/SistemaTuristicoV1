@@ -43,7 +43,7 @@
                                         <button type="button" class="tabledit-edit-button btn btn-sm btn-default"
                                             style="float: none;">
                                             <span class="glyphicon glyphicon-pencil"></span>
-                                        </button>   
+                                        </button>
 
                                         <button type="button" class="tabledit-delete-button btn btn-sm btn-default"
                                             style="float: none;">
@@ -173,6 +173,9 @@
                                     </label>
                                     <input type="text" wire:model.defer="numero_licencia" class="form-control"
                                         id="numero_licencia" />
+                                    @error('numero_licencia')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -187,6 +190,9 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    @error('tipo_de_licencia')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -216,7 +222,10 @@
                                     <label class="form-label semibold" for="dni_persona">DNI</label>
                                     <input type="text" class="form-control" wire:model.defer="dni_persona"
                                         id="dni_persona" placeholder="Ingrese Nº de DNI">
-                                    <!--<small class="text-muted text-danger">We'll never share your email with anyone else.</small>-->
+                                    @error('dni_persona')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
+                                    <!---->
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -224,6 +233,9 @@
                                     <label class="form-label semibold" for="nombre">Nombres</label>
                                     <input type="text" class="form-control" wire:model.defer="nombre"
                                         id="nombre" placeholder="Ingrese Nombres" value="ej: Mike Alejandro">
+                                    @error('nombre')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -231,6 +243,9 @@
                                     <label class="form-label semibold" for="apellidos">Apellidos</label>
                                     <input type="text" class="form-control" wire:model.defer="apellidos"
                                         id="apellidos" placeholder="Ingrese los Apellidos">
+                                    @error('apellidos')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -238,6 +253,9 @@
                                     <label class="form-label semibold" for="genero">Género</label>
                                     <input type="text" class="form-control" wire:model.defer="genero"
                                         id="genero" placeholder="Ingrese el Género">
+                                    @error('genero')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -245,6 +263,9 @@
                                     <label class="form-label semibold" for="telefono">Teléfono</label>
                                     <input type="tel" class="form-control" wire:model.defer="telefono"
                                         id="telefono" placeholder="Ingrese el Teléfono">
+                                    @error('telefono')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -252,6 +273,9 @@
                                     <label class="form-label semibold" for="dirección">Dirección</label>
                                     <input type="text" class="form-control" wire:model.defer="dirección"
                                         id="dirección" placeholder="Ingrese la Dirección">
+                                    @error('dirección')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-6">
@@ -261,6 +285,9 @@
                                     </label>
                                     <input type="text" wire:model.defer="numero_licencia" class="form-control"
                                         id="numero_licencia" />
+                                    @error('numero_licencia')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-6">
@@ -275,6 +302,9 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    @error('tipo_de_licencia')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
                                 </fieldset>
                             </div>
                         </div>

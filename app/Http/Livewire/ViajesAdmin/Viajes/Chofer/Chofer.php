@@ -77,6 +77,12 @@ class Chofer extends Component
 
     public function guardarPersonaChofer()
     { //Guarda la persona que ya existe y los atributos del Cliente
+        $this->validate(
+            [
+                'numero_licencia' => 'required|min:3',
+                'tipo_de_licencia' => 'required|min:0',
+            ]
+        );
         $chofer = Choferes::create(
             [
                 'numero_licencia' => $this->numero_licencia,
@@ -93,9 +99,22 @@ class Chofer extends Component
         );*/
     }
 
-    
+
     public function NuevoChofer()
     {
+        $this->validate(
+            [
+                'dni_persona' => 'required|min:3|unique:personas,dni',
+                'nombre' => 'required|min:3',
+                'apellidos' => 'required|min:3',
+                'genero' => 'required|numeric|min:0|max:1',
+                'telefono' => 'required|min:3',
+                'dirección' => 'required|min:3',
+                'numero_licencia' => 'required|min:3',
+                'tipo_de_licencia' => 'required|min:0',
+            ]
+        );
+
         $personas = Personas::create(
             [
                 'dni' => $this->dni_persona,

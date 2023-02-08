@@ -32,14 +32,14 @@
                             @foreach ($arrieros as $a)
                                 <tr>
                                     <td>
-                                        {{strtoupper($a->datos)}}
+                                        {{ strtoupper($a->datos) }}
                                     </td>
                                     <td>
-                                        {{$a->dni}}
+                                        {{ $a->dni }}
                                     </td>
                                     <td>
-                                        {{$a->nombre}}
-                                        {{--$a->idArriero--}}
+                                        {{ $a->nombre }}
+                                        {{-- $a->idArriero --}}
                                     </td>
                                     <td>
                                         <button type="button" class="tabledit-edit-button btn btn-sm btn-default"
@@ -182,6 +182,9 @@
                                             <option value="{{ $a->id }}">{{ $a->nombre }}</option>
                                         @endforeach
                                     </select>
+                                    @error('asociacion')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
                             </div>
                             {{-- <div class="col-md-4">
@@ -275,6 +278,9 @@
                                     <label class="form-label semibold" for="dni_persona">DNI</label>
                                     <input type="text" class="form-control" wire:model.defer="dni_persona"
                                         id="dni_persona" placeholder="Ingrese Nº de DNI">
+                                    @error('dni_persona')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
                                     <!--<small class="text-muted text-danger">We'll never share your email with anyone else.</small>-->
                                 </fieldset>
                             </div>
@@ -283,6 +289,9 @@
                                     <label class="form-label semibold" for="nombre">Nombres</label>
                                     <input type="text" class="form-control" wire:model.defer="nombre"
                                         id="nombre" placeholder="Ingrese Nombres" value="ej: Mike Alejandro">
+                                    @error('nombre')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -290,6 +299,9 @@
                                     <label class="form-label semibold" for="apellidos">Apellidos</label>
                                     <input type="text" class="form-control" wire:model.defer="apellidos"
                                         id="apellidos" placeholder="Ingrese los Apellidos">
+                                    @error('apellidos')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -297,6 +309,9 @@
                                     <label class="form-label semibold" for="genero">Género</label>
                                     <input type="text" class="form-control" wire:model.defer="genero"
                                         id="genero" placeholder="Ingrese el Género">
+                                    @error('genero')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -304,6 +319,9 @@
                                     <label class="form-label semibold" for="telefono">Teléfono</label>
                                     <input type="tel" class="form-control" wire:model.defer="telefono"
                                         id="telefono" placeholder="Ingrese el Teléfono">
+                                    @error('telefono')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -311,6 +329,9 @@
                                     <label class="form-label semibold" for="dirección">Dirección</label>
                                     <input type="text" class="form-control" wire:model.defer="dirección"
                                         id="dirección" placeholder="Ingrese la Dirección">
+                                    @error('dirección')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-12">
@@ -322,6 +343,9 @@
                                             <option value="{{ $a->id }}">{{ $a->nombre }}</option>
                                         @endforeach
                                     </select>
+                                    @error('asociacion')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
                                 </fieldset>
                             </div>
                             {{--  <div class="col-lg-6">
