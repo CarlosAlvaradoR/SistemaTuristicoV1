@@ -285,10 +285,15 @@ SELECT * FROM traslado_viajes;
 
 
 
+-- SELECCIONAR PERSONAS QUE SON CHOFERES
+select concat(p.nombre, ' ', p.apellidos) as datos, p.dni, c.numero_licencia, c.id as idChofer from personas p
+inner join choferes c on c.persona_id = p.id;
 
 
-
-
+-- CONOCER LAS PERSONAS QUE SON COCINEROS Y CUALES NO
+-- CREATE OR REPLACE VIEW v_viajes_pesonas_choferes AS
+SELECT pe.id, concat(pe.nombre,' ' ,pe.apellidos) as datos, pe.dni,pe.telefono, co.id as idCocinero FROM personas pe
+LEFT JOIN cocineros co on pe.id = co.persona_id;
 
 
 

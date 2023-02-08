@@ -20,3 +20,5 @@ Route::get('/viajes/empresas-transporte', [App\Http\Controllers\ViajePaquetesCon
 Route::get('/viajes/empresas-transporte/{empresa}/vehiculo', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarVehiculosEmpresasTransporte'])->name('viajes.empresas_transporte.vehiculos')->middleware(['auth', 'verified']);
 
 
+
+Route::get('/viajes/chofer', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarListaChoferes'])->name('viajes.chofer')->middleware(['auth', 'verified']);

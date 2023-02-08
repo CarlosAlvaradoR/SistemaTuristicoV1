@@ -135,4 +135,8 @@ class ViajePaquetesController extends Controller
     public function mostrarVehiculosEmpresasTransporte(EmpresaTransportes $empresa){
         return view('viajes_admin.empresas_transporte.vehiculos.vehiculos', compact('empresa'));
     }
+
+    public function mostrarListaChoferes(){
+        return view('viajes_admin.chofer.chofer');
+    }
 }

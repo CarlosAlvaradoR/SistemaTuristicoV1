@@ -1,18 +1,15 @@
 <?php
 
-namespace App\Http\Livewire\ViajesAdmin\Viajes\EmpresasTransporte\Vehiculos;
+namespace App\Http\Livewire\ViajesAdmin\Viajes\Chofer;
 
 use App\Models\Personas;
 use App\Models\Viajes\Choferes;
-use App\Models\Viajes\EmpresaTransportes;
 use App\Models\Viajes\TipoLicencias;
-use App\Models\Viajes\TipoVehiculos;
 use App\Models\Viajes\VehiculoChoferes;
-use App\Models\Viajes\Vehiculos as ViajesVehiculos;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class Vehiculos extends Component
+class Chofer extends Component
 {
     public $empresa;
     public $numero_placa, $descripcion, $empresa_transportes_id, $tipo_de_vehiculo, $idSeleccionado; //PARA GUARDAR VEHÍCULO
@@ -28,67 +25,21 @@ class Vehiculos extends Component
     public $dni_persona, $nombre, $apellidos, $genero, $telefono, $dirección;
 
 
-    public function mount(EmpresaTransportes $empresa)
-    {
-        $this->empresa = $empresa;
-    }
-
     public function render()
     {
-        $tipoVehiculos = TipoVehiculos::all(['id', 'nombre_tipo']);
-        $tipoLicencias = TipoLicencias::all(['id', 'nombre_tipo']);
-        $vehiculos = DB::table('empresa_transportes as et')
-            ->join('vehiculos as v', 'v.empresa_transportes_id', '=', 'et.id')
+        $choferes = DB::table('personas as p')
+            ->join('choferes as c', 'c.persona_id', '=', 'p.id')
             ->select(
-                'et.nombre_empresa',
-                'v.numero_placa',
-                'v.descripcion',
-                'v.id'
+                DB::raw('CONCAT(p.nombre, " ", p.apellidos) AS datos'),
+                'p.dni',
+                'c.numero_licencia',
+                'c.id as idChofer'
             )
-            ->where('v.empresa_transportes_id', $this->empresa->id)
             ->get();
-        return view('livewire.viajes-admin.viajes.empresas-transporte.vehiculos.vehiculos',
-            compact('tipoVehiculos', 'vehiculos', 'tipoLicencias')
-        );
+        $tipoLicencias = TipoLicencias::all(['id', 'nombre_tipo']);
+        return view('livewire.viajes-admin.viajes.chofer.chofer', compact('choferes', 'tipoLicencias'));
     }
 
-    public function guardarVehículo()
-    {
-        $vehiculos = ViajesVehiculos::create([
-            'numero_placa' => $this->numero_placa,
-            'descripcion' => $this->descripcion,
-            'empresa_transportes_id' => $this->empresa->id,
-            'tipo_vehiculos_id' => $this->tipo_de_vehiculo
-        ]);
-    }
-
-    public function Edit(ViajesVehiculos $viajes)
-    {
-        $this->idSeleccionado = $viajes->id;
-        $this->numero_placa = $viajes->numero_placa;
-        $this->descripcion = $viajes->descripcion;
-        $this->tipo_de_vehiculo = $viajes->tipo_vehiculos_id;
-
-        $this->emit('show-modal', 'show modal!');
-    }
-
-    public function Actualizar()
-    {
-        $vehiculo = ViajesVehiculos::findOrFail($this->idSeleccionado);
-        $vehiculo->numero_placa = $this->numero_placa;
-        $vehiculo->descripcion = $this->descripcion;
-        $vehiculo->tipo_vehiculos_id = $this->tipo_de_vehiculo;
-
-        $vehiculo->save();
-        $this->emit('close-modal', 'show modal!');
-    }
-
-
-    public function modalNuevoChofer($idViaje)
-    {
-        $this->idVehiculo = $idViaje;
-        $this->emit('show-modal', 'show modal!');
-    }
 
     public function buscarChofer()
     {
@@ -112,6 +63,7 @@ class Vehiculos extends Component
             if ($this->buscar[0]->idChofer) {
                 $this->idChofer = $this->buscar[0]->idChofer;
                 $this->encontradoComoChofer = true;
+                $this->emit('mensaje-info', 'La persona identificada con DNI: ' . $this->dni . ' ya se encuentra registrada como Chofer');
             }
             $this->reset(['dni']);
         } else {
@@ -123,7 +75,7 @@ class Vehiculos extends Component
         }
     }
 
-    public function guardarPersonaCliente()
+    public function guardarPersonaChofer()
     { //Guarda la persona que ya existe y los atributos del Cliente
         $chofer = Choferes::create(
             [
@@ -133,12 +85,12 @@ class Vehiculos extends Component
             ]
         );
 
-        $vehiculo_chofer = VehiculoChoferes::create(
+        /*$vehiculo_chofer = VehiculoChoferes::create(
             [
                 'vehiculos_id' => $this->idVehiculo,
                 'choferes_id' => $chofer->id
             ]
-        );
+        );*/
     }
 
     public function agregarChoferAlVehiculo()
@@ -169,10 +121,10 @@ class Vehiculos extends Component
             'persona_id' => $personas->id
         ]);
 
-        $vehiculo = VehiculoChoferes::create([
+        /*$vehiculo = VehiculoChoferes::create([
             'vehiculos_id' => $this->idVehiculo,
             'choferes_id' => $chofer->id
-        ]);
+        ]);*/
 
         //$this->resetUI();
     }
