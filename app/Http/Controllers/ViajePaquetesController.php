@@ -86,57 +86,75 @@ class ViajePaquetesController extends Controller
         //
     }
 
-    public function viajeParticipantes(PaquetesTuristicos $paquete, $idViaje){
+    public function viajeParticipantes(PaquetesTuristicos $paquete, $idViaje)
+    {
         return view('viajes_admin.viajes_participantes', compact('paquete', 'idViaje'));
     }
 
-    public function trasladoViajes(PaquetesTuristicos $paquete, $idViaje){
+    public function trasladoViajes(PaquetesTuristicos $paquete, $idViaje)
+    {
         return view('viajes_admin.traslados_viaje', compact('paquete', 'idViaje'));
     }
 
-    public function viajeAlmuerzos(PaquetesTuristicos $paquete, $idViaje){
+    public function viajeAlmuerzos(PaquetesTuristicos $paquete, $idViaje)
+    {
         return view('viajes_admin.viajes_almuerzos', compact('paquete', 'idViaje'));
     }
 
-    public function viajeBoletasPago(PaquetesTuristicos $paquete, $idViaje){
+    public function viajeBoletasPago(PaquetesTuristicos $paquete, $idViaje)
+    {
         return view('viajes_admin.viajes_boletas_de_pago', compact('paquete', 'idViaje'));
     }
 
-    public function viajeActividadesAclimatacion(PaquetesTuristicos $paquete, $idViaje){
+    public function viajeActividadesAclimatacion(PaquetesTuristicos $paquete, $idViaje)
+    {
         return view('viajes_admin.viajes_actividades_aclimatacion', compact('paquete', 'idViaje'));
     }
 
-    public function viajeActividadesAclimatacionParticipantes(PaquetesTuristicos $paquete, $idViaje ,$idActividadAclimatacion){
-        return view('viajes_admin.viajes_actividades_aclimatacion_participantes', compact('paquete','idViaje', 'idActividadAclimatacion'));
+    public function viajeActividadesAclimatacionParticipantes(PaquetesTuristicos $paquete, $idViaje, $idActividadAclimatacion)
+    {
+        return view('viajes_admin.viajes_actividades_aclimatacion_participantes', compact('paquete', 'idViaje', 'idActividadAclimatacion'));
     }
 
-    public function viajeHospedajes(PaquetesTuristicos $paquete, $idViaje){
+    public function viajeHospedajes(PaquetesTuristicos $paquete, $idViaje)
+    {
         return view('viajes_admin.viajes_hospedajes', compact('paquete', 'idViaje'));
     }
 
-    public function viajeItinerarios(PaquetesTuristicos $paquete, $idViaje){
+    public function viajeItinerarios(PaquetesTuristicos $paquete, $idViaje)
+    {
         return view('viajes_admin.viajes_itinerarios_cumplidos', compact('paquete', 'idViaje'));
     }
 
-    public function viajeArrieros(PaquetesTuristicos $paquete, $idViaje){
+    public function viajeArrieros(PaquetesTuristicos $paquete, $idViaje)
+    {
         return view('viajes_admin.viajes_arrieros-guia_cocinero', compact('paquete', 'idViaje'));
     }
 
 
-    
-    public function mostrarTodosLosViajes() {
+
+    public function mostrarTodosLosViajes()
+    {
         return view('viajes_admin.ver_todo.ver_todo');
     }
 
-    public function mostrarEmpresasTransporte(){
+    public function mostrarEmpresasTransporte()
+    {
         return view('viajes_admin.empresas_transporte.empresas');
     }
 
-    public function mostrarVehiculosEmpresasTransporte(EmpresaTransportes $empresa){
+    public function mostrarVehiculosEmpresasTransporte(EmpresaTransportes $empresa)
+    {
         return view('viajes_admin.empresas_transporte.vehiculos.vehiculos', compact('empresa'));
     }
 
-    public function mostrarListaChoferes(){
+    public function mostrarListaChoferes()
+    {
         return view('viajes_admin.chofer.chofer');
+    }
+
+    public function mostrarListaCocineros()
+    {
+        return view('viajes_admin.cocinero.cocinero');
     }
 }

@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Livewire\ViajesAdmin\Viajes\Chofer;
+namespace App\Http\Livewire\ViajesAdmin\Viajes\Cocinero;
 
 use App\Models\Personas;
 use App\Models\Viajes\Choferes;
-use App\Models\Viajes\TipoLicencias;
-use App\Models\Viajes\VehiculoChoferes;
+use App\Models\Viajes\Cocineros;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class Chofer extends Component
+class Cocinero extends Component
 {
     public $empresa;
     public $numero_placa, $descripcion, $empresa_transportes_id, $tipo_de_vehiculo, $idSeleccionado; //PARA GUARDAR VEHÍCULO
@@ -17,37 +16,34 @@ class Chofer extends Component
     public $idVehiculo;
 
     /** Para buscar Choferes */
-    public $idChofer = 0;
+    public $idCocinero = 0;
     public $dni, $buscar;
     public $nombres_apellidos, $dni_encontrado, $telefono_arriero, $idPersona;
     public $asociacion;
-    public $encontradoComoPersona = false, $encontradoComoChofer = false, $no_existe = false;
+    public $encontradoComoPersona = false, $encontradoComoCocinero = false, $no_existe = false;
     public $dni_persona, $nombre, $apellidos, $genero, $telefono, $dirección;
 
-
+    
     public function render()
     {
-        $choferes = DB::table('personas as p')
-            ->join('choferes as c', 'c.persona_id', '=', 'p.id')
+        $cocineros = DB::table('personas as p')
+            ->join('cocineros as co', 'co.persona_id', '=', 'p.id')
             ->select(
                 DB::raw('CONCAT(p.nombre, " ", p.apellidos) AS datos'),
                 'p.dni',
-                'c.numero_licencia',
-                'c.id as idChofer'
+                'co.id as idCocinero'
             )
             ->get();
-        $tipoLicencias = TipoLicencias::all(['id', 'nombre_tipo']);
-        return view('livewire.viajes-admin.viajes.chofer.chofer', compact('choferes', 'tipoLicencias'));
+        return view('livewire.viajes-admin.viajes.cocinero.cocinero', compact('cocineros'));
     }
 
-
-    public function buscarChofer()
+    public function buscarCocinero()
     {
         $this->validate(
             ['dni' => 'required|min:3']
         );
         //$this->resetUI();
-        $sql = "SELECT * FROM v_viajes_pesonas_choferes
+        $sql = "SELECT * FROM v_viajes_pesonas_cocineros
         WHERE dni = '" . $this->dni . "' LIMIT 1";
 
         //dd($this->dni);
@@ -60,10 +56,10 @@ class Chofer extends Component
             $this->encontradoComoPersona = true;
 
             //$this->encontrado = true;
-            if ($this->buscar[0]->idChofer) {
-                $this->idChofer = $this->buscar[0]->idChofer;
-                $this->encontradoComoChofer = true;
-                $this->emit('mensaje-info', 'La persona identificada con DNI: ' . $this->dni . ' ya se encuentra registrada como Chofer');
+            if ($this->buscar[0]->idCocinero) {
+                $this->idCocinero = $this->buscar[0]->idCocinero;
+                $this->encontradoComoCocinero = true;
+                $this->emit('mensaje-info', 'La persona identificada con DNI: ' . $this->dni . ' ya se encuentra registrada como Cocinero');
             }
             $this->reset(['dni']);
         } else {
@@ -75,12 +71,10 @@ class Chofer extends Component
         }
     }
 
-    public function guardarPersonaChofer()
+    public function guardarPersonaCocinero()
     { //Guarda la persona que ya existe y los atributos del Cliente
-        $chofer = Choferes::create(
+        $cocinero = Cocineros::create(
             [
-                'numero_licencia' => $this->numero_licencia,
-                'tipo_licencias_id' => $this->tipo_de_licencia,
                 'persona_id' => $this->idPersona
             ]
         );
@@ -106,11 +100,12 @@ class Chofer extends Component
                 'dirección' => $this->dirección
             ]
         );
-        $chofer = Choferes::create([
-            'numero_licencia' => $this->numero_licencia,
-            'tipo_licencias_id' => $this->tipo_de_licencia,
-            'persona_id' => $personas->id
-        ]);
+        
+        $cocinero = Cocineros::create(
+            [
+                'persona_id' => $personas->id
+            ]
+        );
 
         /*$vehiculo = VehiculoChoferes::create([
             'vehiculos_id' => $this->idVehiculo,
@@ -132,8 +127,8 @@ class Chofer extends Component
     {
         $this->reset([
             'dni_persona', 'nombre', 'apellidos', 'genero', 'telefono', 'telefono', 'dirección',
-            'asociacion', 'monto', 'cantidad', 'tipo_de_acemila', 'idPersona', 'idChofer'
+            'asociacion', 'monto', 'cantidad', 'tipo_de_acemila', 'idPersona', 'idCocinero'
         ]);
-        $this->reset(['buscar', 'encontradoComoPersona', 'encontradoComoChofer', 'no_existe']);
+        $this->reset(['buscar', 'encontradoComoPersona', 'encontradoComoCocinero', 'no_existe']);
     }
 }

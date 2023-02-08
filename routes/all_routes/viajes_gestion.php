@@ -22,3 +22,4 @@ Route::get('/viajes/empresas-transporte/{empresa}/vehiculo', [App\Http\Controlle
 
 
 Route::get('/viajes/chofer', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarListaChoferes'])->name('viajes.chofer')->middleware(['auth', 'verified']);
+Route::get('/viajes/cocinero', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarListaCocineros'])->name('viajes.cocinero')->middleware(['auth', 'verified']);

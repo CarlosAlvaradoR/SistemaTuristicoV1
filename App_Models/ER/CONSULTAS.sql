@@ -291,11 +291,13 @@ inner join choferes c on c.persona_id = p.id;
 
 
 -- CONOCER LAS PERSONAS QUE SON COCINEROS Y CUALES NO
--- CREATE OR REPLACE VIEW v_viajes_pesonas_choferes AS
+CREATE OR REPLACE VIEW v_viajes_pesonas_cocineros AS
 SELECT pe.id, concat(pe.nombre,' ' ,pe.apellidos) as datos, pe.dni,pe.telefono, co.id as idCocinero FROM personas pe
 LEFT JOIN cocineros co on pe.id = co.persona_id;
 
-
+-- CONOCER LAS PERSONAS QUE SON COCINEROS
+select concat(p.nombre, ' ', p.apellidos) as datos, p.dni, co.id as idCocinero from personas p
+inner join cocineros co on co.persona_id = p.id; 
 
 
 

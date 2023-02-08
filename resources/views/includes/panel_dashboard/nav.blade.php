@@ -67,7 +67,7 @@
                             class="label label-custom label-pill label-succes">new</span></a></li>
                 <li><a href="{{ route('viajes.empresas_transporte') }}"><span class="lbl">Empresas</span></a></li>
                 <li><a href="{{ route('viajes.chofer') }}"><span class="lbl">Chofer</span></a></li>
-                <li><a href="#"><span class="lbl">Cocinero</span></a></li>
+                <li><a href="{{ route('viajes.cocinero') }}"><span class="lbl">Cocinero</span></a></li>
                 <li><a href="#"><span class="lbl">Guía</span></a></li>
                 <li><a href="#"><span class="lbl">Arriero</span></a></li>
             </ul>
