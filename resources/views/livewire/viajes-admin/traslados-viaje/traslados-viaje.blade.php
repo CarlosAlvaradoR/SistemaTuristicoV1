@@ -3,7 +3,7 @@
         <div class="col-lg-12 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Lista de Traslados - {{$paquete->nombre}}</h5>
+                    <h5 class="card-title">Lista de Traslados - {{ $paquete->nombre }}</h5>
 
                     <div class="row">
                         <div class="col-md-9">
@@ -20,8 +20,8 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">VEHÍCULO</th>
                                 <th scope="col">EMPRESA</th>
+                                <th scope="col">VEHÍCULO</th>
                                 <th scope="col">Descripción</th>
                                 <th scope="col">Fecha</th>
                                 <th scope="col">Monto</th>
@@ -29,33 +29,38 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    TB - Monthly
-                                </td>
-                                <td>
-                                    TB - Monthly
-                                </td>
-                                <td>
-                                    TB - Monthly
-                                </td>
-                                <td>
-                                    TB - Monthly
-                                </td>
-                                <td>
-                                    <button type="button" title="Añadir a la lista de Participantes"
-                                        class="btn btn-sm btn-rounded btn-warning">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button type="button" title="Añadir a la lista de Participantes"
-                                        class="btn btn-sm btn-rounded btn-danger">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            @foreach ($traslados as $t)
+                                <tr>
+                                    <td>
+                                        {{ $t->nombre_empresa }}
+                                    </td>
+                                    <td>
+                                        {{ $t->numero_placa }}
+                                    </td>
+                                    <td>
+                                        {{ $t->descripcion }}
+                                    </td>
+                                    <td>
+                                        {{ $t->fecha }}
+                                    </td>
+                                    <td>
+                                        {{ $t->monto }}
+
+                                    </td>
+                                    <td>
+                                        <button type="button" wire:click="Edit({{ $t->idTraslado }})"
+                                            title="Añadir a la lista de Participantes"
+                                            class="btn btn-sm btn-rounded btn-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button type="button" title="Añadir a la lista de Participantes"
+                                            class="btn btn-sm btn-rounded btn-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+
                         </tbody>
                         <tfoot>
                             <tr>
@@ -176,28 +181,27 @@
                         <div class="col-md-6">
                             <form role="form">
                                 <div class="form-group">
-                                    <label for="hora_viaje">
+                                    <label for="monto">
                                         Monto <span class="text-danger">(*)</span>
                                     </label>
-                                    <input type="text" wire:model.defer="hora" class="form-control"
-                                        id="hora_viaje" />
-                                    @error('hora')
+                                    <input type="text" wire:model.defer="monto" class="form-control"
+                                        id="monto" />
+                                    @error('monto')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
 
-                                    <label for="cantidad_participantes">
+                                    <label for="vehiculo">
                                         Vehículo <span class="text-danger">(*)</span>
                                     </label>
-                                    <select class="form-control" id="exampleFormControlSelect1">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select wire:model.defer="vehiculo" class="form-control" id="vehiculo">
+                                        <option selected value="0">...Seleccione ...</option>
+                                        @foreach ($vehiculos as $v)
+                                            <option value="{{ $v->id }}">{{ $v->numero_placa }}</option>
+                                        @endforeach
                                     </select>
-                                    @error('cantidad_participantes')
+                                    @error('vehiculo')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -208,9 +212,17 @@
                         <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
                             Cerrar
                         </button>
-                        <button type="button" wire:click="saveViaje" class="btn btn-rounded btn-primary">
-                            Guardar
-                        </button>
+                        @if ($idTrasladoViaje)
+                            <button type="button" wire:click="Update" class="btn btn-rounded btn-primary">
+                                Actualizar
+                            </button>
+                        @else
+                            <button type="button" wire:click="guardatTrasladoDeLosViajes"
+                                class="btn btn-rounded btn-primary">
+                                Guardar
+                            </button>
+                        @endif
+
 
                     </div>
 
@@ -220,4 +232,25 @@
         </div>
     </div>
     <!-- END MODAL-->
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            //Lo que llega de CategoriesController
+            window.livewire.on('show-modal-edit', msg => {
+                $('#modal-traslado-viajes').modal('show')
+            });
+            window.livewire.on('traslados-updated', msg => {
+                $('#modal-traslado-viajes').modal('hide')
+                Swal.fire(
+                    'MUY BIEN',
+                    msg,
+                    'success'
+                )
+            });
+            window.livewire.on('category-updated', msg => {
+                $('#modal-empresa-transporte').modal('hide')
+            });
+        });
+    </script>
 </div>

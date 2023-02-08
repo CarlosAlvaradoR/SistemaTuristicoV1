@@ -92,7 +92,7 @@
                                                 <a class="dropdown-item" href="#"><i class="fa-solid fa-eye"></i>
                                                     Detalles del
                                                     Viaje</a>
-                                                <a class="dropdown-item" href="{{ route('paquete.viajes.traslados') }}"><i
+                                                <a class="dropdown-item" href="{{ route('paquete.viajes.traslados', [$v->slug, $v->id]) }}"><i
                                                         class="fas fa-map"></i> Traslados del
                                                     Viaje</a>
                                                 <a class="dropdown-item" href="{{ route('paquete.viajes.almuerzos', [$v->slug, $v->id]) }}"><i
