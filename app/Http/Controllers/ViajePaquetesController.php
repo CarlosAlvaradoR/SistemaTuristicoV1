@@ -161,4 +161,8 @@ class ViajePaquetesController extends Controller
     public function mostrarListaGuias(){
         return view('viajes_admin.guia.guia');
     }
+
+    public function mostrarArrieros(){
+        return view('viajes_admin.arriero.arriero');
+    }
 }
