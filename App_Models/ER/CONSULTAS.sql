@@ -234,9 +234,33 @@ INNER JOIN arrieros a on a.persona_id = p.id
 INNER JOIN acemilas_alquiladas aq on aq.arrieros_id = a.id;
 
 
--- BUSCAR ARRIERO
+-- PERSONAS QUE SON COCINEROS
+CREATE OR REPLACE VIEW v_viaje_personas_cocineros AS
+SELECT concat(p.nombre, ' ', p.apellidos) as datos, c.id as idCocinero FROM personas p
+INNER JOIN cocineros c on c.persona_id = p.id;
+
+SELECT * FROM v_viaje_personas_cocineros 
+WHERE idCocinero NOT IN (select vpc.cocinero_id from viaje_paquetes_cocineros vpc WHERE vpc.viaje_paquetes_id = 1);
+
+-- PERSONAS QUE SON ARRIEROS Y QUE PARTICIPAN DE UN VIAJE
+CREATE OR REPLACE VIEW v_viaje_personas_cocineros_participantes_viaje AS
+SELECT concat(p.nombre, ' ', p.apellidos) as datos, c.id as idCocinero, vpc.monto_pagar, vpc.id as idViajePaqueteCocinero,
+vpc.viaje_paquetes_id
+FROM personas p
+INNER JOIN cocineros c on c.persona_id = p.id
+INNER JOIN viaje_paquetes_cocineros vpc on vpc.cocinero_id = c.id;
+
+
+
+
+-- BUSCAR ARRIERO --> MÓDULO VIAJES - ARRIERO
 SELECT p.id, p.dni, concat(p.nombre,' ',p.apellidos) as datos, p.telefono, a.id as idArriero FROM personas p
 LEFT JOIN arrieros a on a.persona_id = p.id
+WHERE p.dni = '70988855' LIMIT 1;
+
+-- BUSCAR COCINERO --> MÓDULO VIAJES - COCINERO
+SELECT p.id, p.dni, concat(p.nombre,' ',p.apellidos) as datos, p.telefono, a.id as idCocinero FROM personas p
+LEFT JOIN cocineros a on a.persona_id = p.id
 WHERE p.dni = '70988855' LIMIT 1;
 
 

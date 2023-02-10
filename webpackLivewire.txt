@@ -104,6 +104,8 @@ VIAJES
 
        php artisan make:livewire ViajesAdmin/Arrieros/Arrieros
 
+       php artisan make:livewire ViajesAdmin/Cocineros/Cocineros
+
        php artisan make:livewire ViajesAdmin/TrasladosViaje/TrasladosViaje
     
     VIAJE PAQUETE - GENERAL

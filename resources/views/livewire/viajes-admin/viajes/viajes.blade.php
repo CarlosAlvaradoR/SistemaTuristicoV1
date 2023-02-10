@@ -109,7 +109,7 @@
                                                     Guías</a>
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="{{ route('paquete.viajes.arriero', [$paquete, $v->id]) }}">Arrieros</a>
-                                                <a class="dropdown-item" href="#">Cocineros</a>
+                                                <a class="dropdown-item" href="{{ route('paquete.viajes.cocineros', [$paquete, $v->id]) }}">Cocineros</a>
                                                 <a class="dropdown-item" href="#">Guías</a>
                                             </div>
                                         </div>
