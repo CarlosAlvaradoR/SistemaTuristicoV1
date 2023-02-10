@@ -242,13 +242,30 @@ INNER JOIN cocineros c on c.persona_id = p.id;
 SELECT * FROM v_viaje_personas_cocineros 
 WHERE idCocinero NOT IN (select vpc.cocinero_id from viaje_paquetes_cocineros vpc WHERE vpc.viaje_paquetes_id = 1);
 
--- PERSONAS QUE SON ARRIEROS Y QUE PARTICIPAN DE UN VIAJE
+-- PERSONAS QUE SON COCINEROS Y QUE PARTICIPAN DE UN VIAJE
 CREATE OR REPLACE VIEW v_viaje_personas_cocineros_participantes_viaje AS
 SELECT concat(p.nombre, ' ', p.apellidos) as datos, c.id as idCocinero, vpc.monto_pagar, vpc.id as idViajePaqueteCocinero,
 vpc.viaje_paquetes_id
 FROM personas p
 INNER JOIN cocineros c on c.persona_id = p.id
 INNER JOIN viaje_paquetes_cocineros vpc on vpc.cocinero_id = c.id;
+
+
+-- PERSONAS QUE SON GUÍAS
+CREATE OR REPLACE VIEW v_viaje_personas_guias AS
+SELECT concat(p.nombre, ' ', p.apellidos) as datos, g.id as idGuia FROM personas p
+INNER JOIN guias g on g.persona_id = p.id;
+
+SELECT * FROM v_viaje_personas_guias 
+WHERE idGuia NOT IN (select vpg.guias_id from viaje_paquetes_guias vpg WHERE vpg.viaje_paquetes_id = 1);
+
+-- PERSONAS QUE SON GUIAS Y QUE PARTICIPAN DE UN VIAJE
+CREATE OR REPLACE VIEW v_viaje_personas_guias_participantes_viaje AS
+SELECT concat(p.nombre, ' ', p.apellidos) as datos, g.id as idGuia, vpg.monto_pagar, vpg.id as idViajePaqueteCocinero,
+vpg.viaje_paquetes_id
+FROM personas p
+INNER JOIN guias g on g.persona_id = p.id
+INNER JOIN viaje_paquetes_guias vpg on vpg.guias_id = g.id;
 
 
 
@@ -262,6 +279,15 @@ WHERE p.dni = '70988855' LIMIT 1;
 SELECT p.id, p.dni, concat(p.nombre,' ',p.apellidos) as datos, p.telefono, a.id as idCocinero FROM personas p
 LEFT JOIN cocineros a on a.persona_id = p.id
 WHERE p.dni = '70988855' LIMIT 1;
+
+-- BUSCAR GUIA --> MÓDULO VIAJES - GUIA
+SELECT p.id, p.dni, concat(p.nombre,' ',p.apellidos) as datos, p.telefono, g.id as idGuia FROM personas p
+LEFT JOIN guias g on g.persona_id = p.id
+WHERE p.dni = '70988855' LIMIT 1;
+
+
+
+
 
 
 

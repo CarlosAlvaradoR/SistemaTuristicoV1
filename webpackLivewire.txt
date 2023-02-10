@@ -105,6 +105,8 @@ VIAJES
        php artisan make:livewire ViajesAdmin/Arrieros/Arrieros
 
        php artisan make:livewire ViajesAdmin/Cocineros/Cocineros
+       
+       php artisan make:livewire ViajesAdmin/Guias/Guias
 
        php artisan make:livewire ViajesAdmin/TrasladosViaje/TrasladosViaje
     

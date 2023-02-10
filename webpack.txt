@@ -287,10 +287,14 @@ MIGRACIONES Y MÓDELOS
         php artisan make:migration create_view_v_viaje_personas_arrieros_table --path=/database/migrations/viajes
         
         php artisan make:migration create_view_v_viaje_personas_cocineros_table --path=/database/migrations/viajes
+        
+        php artisan make:migration create_view_v_viaje_personas_guias_table --path=/database/migrations/viajes
 
         php artisan make:migration create_view_v_viaje_personas_arrieros_participantes_viaje_table --path=/database/migrations/viajes
         
         php artisan make:migration create_view_v_viaje_personas_cocineros_participantes_viaje_table --path=/database/migrations/viajes
+        
+        php artisan make:migration create_view_v_viaje_personas_guias_participantes_viaje_table --path=/database/migrations/viajes
         
         php artisan make:migration create_view_v_viajes_all_table --path=/database/migrations/viajes
 
