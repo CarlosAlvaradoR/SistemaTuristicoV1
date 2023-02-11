@@ -15,7 +15,7 @@ Auth::routes(['verify' => true]);
 Route::get('/', [App\Http\Controllers\PaquetesPublicos\PublicPaquetesController::class, 'inicio'])->name('inicio');
 
 Route::get('/nosotros', function () {
-    return view('paquetes_publico.inicio');
+    return view('paquetes_publico.nosotros');
 })->name('nosotros');
 
 Route::get('/destinos', [App\Http\Controllers\PaquetesPublicos\PublicPaquetesController::class, 'index'])->name('destinos');

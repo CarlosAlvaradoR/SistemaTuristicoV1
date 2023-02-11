@@ -40,6 +40,11 @@ PAQUETES
         TIPO ALMUERZO PAQUETES
             php artisan make:livewire PaquetesAdmin/TipoAlmuerzoPaquetes/MostrarTipoAlmuerzoPaquetes
 
+        CONDICIONES DE PUNTUALIDAD
+            php artisan make:livewire PaquetesAdmin/CondicionesPuntualidad/MostrarCondicionesPuntualidad
+        
+        CONDICIONES DE PUNTUALIDAD
+            php artisan make:livewire PaquetesAdmin/Riesgos/MostrarRiesgos
 
 
 

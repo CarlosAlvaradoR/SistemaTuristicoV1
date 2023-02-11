@@ -54,13 +54,14 @@
 
 
 
-   
+
 
     <script src="{{ asset('dashboard_assets/js/lib/tether/tether.min.js') }}"></script>
     <script src="{{ asset('dashboard_assets/js/lib/bootstrap/bootstrap.min.js') }}"></script>
     <script src="{{ asset('dashboard_assets/js/plugins.js') }}"></script>
     <script src="{{ asset('dashboard_assets/js/lib/jquery-flex-label/jquery.flex.label.js') }}"></script>
     <script src="{{ asset('dashboard_assets/js/app.js') }}"></script>
+    <script src="{{ asset('dashboard_assets/js/lib/datatables-net/datatables.min.js') }}"></script>
 
     <script type="application/javascript">
         (function($) {
@@ -68,8 +69,10 @@
                 $('.fl-flex-label').flexLabel();
             });
         })(jQuery);
+
+       
     </script>
-    
+
     @livewireScripts
 </body>
 

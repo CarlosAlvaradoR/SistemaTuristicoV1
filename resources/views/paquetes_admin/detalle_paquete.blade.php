@@ -94,17 +94,17 @@
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-3">
                     @livewire('paquetes-admin.lugares.show-lugares-visita-paquetes', [$paquete->id])
-                    
+
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-4">
                     @livewire('paquetes-admin.itinerarios.mostrar-itinerarios', [$paquete->id])
-                    
+
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-5">
                     @livewire('paquetes-admin.boletos.mostrar-pagos-servicios', [$paquete->id])
-                    
+
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-6">
@@ -181,13 +181,13 @@
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="tabs-1-tab-1">
                     @livewire('paquetes-admin.tipo-personal.mostrar-tipo-personal-paquete', [$paquete->id])
-                    
-                    
+
+
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-2">
                     @livewire('paquetes-admin.tipo-transporte-paquete.mostrar-tipo-transporte-paquete', [$paquete->id])
-                    
+
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-3">
@@ -198,8 +198,8 @@
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-4">
                     @livewire('paquetes-admin.equipo-paquete.mostrar-equipo-paquetes', [$paquete->id])
-                    
-                    
+
+
                 </div>
                 <!--.tab-pane-->
                 <div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-5">
@@ -217,6 +217,40 @@
         </section>
         <!--.tabs-section-->
 
+        <section class="tabs-section">
+            <div class="tabs-section-nav tabs-section-nav-icons">
+                <div class="tbl">
+                    <ul class="nav" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#tab-condiciones" role="tab" data-toggle="tab">
+                                <span class="nav-link-in">
+                                    <i class="font-icon font-icon-cogwheel"></i>
+                                    Condiciones de Puntualidad
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#tab-riesgos" role="tab" data-toggle="tab">
+                                <span class="nav-link-in">
+                                    <span class="glyphicon glyphicon-music"></span>
+                                    Riesgos
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div><!--.tabs-section-nav-->
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="tab-condiciones">
+                    @livewire('paquetes-admin.condiciones-puntualidad.mostrar-condiciones-puntualidad', [$paquete->id])
+
+                </div><!--.tab-pane-->
+                <div role="tabpanel" class="tab-pane fade" id="tab-riesgos">
+                    @livewire('paquetes-admin.riesgos.mostrar-riesgos', [$paquete->id])
+                </div><!--.tab-pane-->
+            </div><!--.tab-content-->
+        </section><!--.tabs-section-->
     </div>
     <!--.container-fluid-->
 
@@ -227,5 +261,5 @@
 
 
 @section('scripts')
-    
+
 @endsection

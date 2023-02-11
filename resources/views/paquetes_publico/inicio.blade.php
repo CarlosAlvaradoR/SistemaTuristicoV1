@@ -140,9 +140,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="video_wrap text-center">
-                        <h3>Enjoy Video</h3>
+                        <h3>Ver Video</h3>
                         <div class="video_icon">
-                            <a class="popup-video video_play_button" href="https://www.youtube.com/watch?v=f59dDEk57i0">
+                            <a class="popup-video video_play_button" href="https://www.youtube.com/watch?v=EnKQK-wOgMw">
                                 <i class="fa fa-play"></i>
                             </a>
                         </div>

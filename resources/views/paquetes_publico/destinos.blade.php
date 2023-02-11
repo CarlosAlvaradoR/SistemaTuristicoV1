@@ -7,8 +7,8 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="bradcam_text text-center">
-                        <h3>Destinations</h3>
-                        <p>Pixel perfect design with awesome contents</p>
+                        <h3>Destinos</h3>
+                        <p>Los Mejores Lugares para Disfrutar</p>
                     </div>
                 </div>
             </div>
@@ -151,7 +151,7 @@
     </div>
 
     <!-- newletter_area_start  -->
-    <div class="newletter_area overlay">
+    <!--<div class="newletter_area overlay">
         <div class="container">
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-10">
@@ -183,9 +183,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
     <!-- newletter_area_end  -->
-    <div class="recent_trip_area">
+    <!--<div class="recent_trip_area">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-6">
@@ -245,5 +245,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 @endsection

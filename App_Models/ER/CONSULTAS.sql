@@ -1,5 +1,20 @@
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 /* BUSCAR CLIENTE*/
 
+-- SELECCIONAR LAS CONDICIONES DE PUNTUALIDAD DE UN PAQUETE
+SELECT cp.descripcion, cp.id FROM paquetes_turisticos pt
+INNER JOIN condicion_puntualidades cp on cp.paquete_id = pt.id
+WHERE cp.paquete_id = 1;
+
+
+-- SELECCIONAMOS LOS RIESGOS DEL PAQUETE
+
+SELECT r.descripcion, r.id FROM paquetes_turisticos pt
+INNER JOIN riesgos r on r.paquete_id = pt.id
+WHERE r.paquete_id = 1;
+
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 /* BUSCAR CLIENTE*/
+-- ///////////RESERVAS /////////////////////////////////////////////**************************
 SELECT p.dni, concat(p.nombre,' ',p.apellidos) as datos, c.id as idCliente FROM personas p
 INNER JOIN clientes c on p.id = c.persona_id
 WHERE p.dni = "83327-9128";
