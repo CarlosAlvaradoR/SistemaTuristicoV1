@@ -12,6 +12,81 @@ INNER JOIN riesgos r on r.paquete_id = pt.id
 WHERE r.paquete_id = 1;
 
 
+-- LUGARES A VISITAR PARA LA PARTE PÚBLICA
+SELECT l.nombre, atu.nombre_atractivo FROM lugares l
+INNER JOIN atractivos_turisticos atu on atu.lugar_id = l.id
+INNER JOIN visita_atractivos_paquetes vap on vap.atractivo_id = atu.id
+WHERE vap.paquete_id = 3;
+
+-- PAGOS POR SERVICIO PARA LA PARTE PÚBLICA
+SELECT bpp.descripcion, bpp.precio FROM boletos_pagar_paquetes as bpp
+WHERE bpp.paquete_id = 3;
+
+-- ACTIVIDADES ITINERARIOS PARA LA PARTE PÚBLICA
+SELECT ai.nombre_actividad, ip.descripcion FROM actividades_itinerarios ai
+INNER JOIN itinerario_paquetes ip on ai.id=ip.actividad_id
+WHERE ai.paquete_id = 1;
+
+-- CATEGORÍA DE HOTELES PARA LA PARTE PÚBLICA
+SELECT ch.descripcion FROM categoria_hoteles ch
+WHERE ch.paquete_id=1;
+
+-- PERSONAL ACOMPAÑANTE PARA LA PARTE PÚBLICA
+SELECT tp.nombre_tipo, pt.cantidad FROM tipo_personales tp
+INNER JOIN personal_tipos pt on pt.tipo_id = tp.id
+WHERE pt.paquete_id = 1;
+
+-- TIPO DE TRANSPORTES PARA LA PARTE PÚBLICA
+SELECT tt.nombre_tipo, ttp.cantidad FROM tipo_transportes tt
+INNER JOIN tipotransporte_paquetes ttp on ttp.tipotransporte_id = tt.id
+WHERE ttp.paquete_id = 1;
+
+-- TIPOS DE ALIMENTACIÓN PARA LA PARTE PÚBLICA
+SELECT ta.nombre, tap.descripcion FROM tipo_alimentaciones ta
+INNER JOIN tipoalimentacion_paquetes tap on tap.tipoalimentacion_id = ta.id
+WHERE tap.paquete_id = 1;
+
+-- EQUIPOS PARA LA PARTE PÚBLICA
+SELECT e.nombre, ep.cantidad, ep.observacion FROM equipos e
+INNER JOIN equipo_paquetes ep on ep.equipo_id = e.id
+WHERE ep.paquete_id = 1;
+
+-- TIPOS DE ACÉMILAS PARA LA PARTE PÚBLICA
+SELECT ta.nombre, tap.cantidad FROM tipo_acemilas ta
+INNER JOIN tipoacemila_paquetes tap on tap.paquete_id = ta.id
+WHERE tap.paquete_id = 1;
+
+-- TIPO DE ALMUERZOS PARA LA PARTE PÚBLICA
+SELECT ta.nombre, tap.observacion FROM tipo_almuerzos ta
+INNER JOIN tipoalmuerzo_paquetes tap on tap.tipo_almuerzo_id = ta.id
+WHERE tap.paquete_id = 1;
+
+-- CONDICIONES DE PUNTUALIDAD PARA LA PARTE PÚBLICA
+SELECT cp.descripcion FROM condicion_puntualidades cp
+WHERE cp.paquete_id = 1;
+
+-- RIESGOS PARA LA PARTE PÚBLICA
+SELECT r.descripcion FROM riesgos r
+WHERE r.paquete_id = 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  /* BUSCAR CLIENTE*/
 -- ///////////RESERVAS /////////////////////////////////////////////**************************
