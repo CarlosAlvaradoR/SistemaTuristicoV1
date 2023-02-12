@@ -101,4 +101,8 @@ class PaquetesTuristicosController extends Controller
         
     }
 
+    public function lugares_atractivos(){
+        return view('paquetes_admin.lugares_atractivos');
+    }
+
 }

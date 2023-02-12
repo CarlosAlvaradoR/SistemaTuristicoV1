@@ -83,6 +83,15 @@ WHERE r.paquete_id = 1;
 
 
 
+SELECT * FROM lugares;
+
+
+
+
+
+
+
+
 
 
 

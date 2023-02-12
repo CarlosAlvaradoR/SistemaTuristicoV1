@@ -37,11 +37,17 @@
             </a>
         </li>
 
-        <li class="blue">
-            <a href="{{ route('paquetes.index') }}">
+        <li class="blue with-sub">
+            <span>
                 <i class="font-icon glyphicon glyphicon-send"></i>
                 <span class="lbl">Paquetes</span>
-            </a>
+            </span>
+            <ul>
+                <li><a href="{{ route('paquetes.index') }}"><span class="lbl">Ver Paquetes</span><span
+                            class="label label-custom label-pill label-success">new</span></a></li>
+                <li><a href="{{ route('paquetes.lugares_atractivos') }}"><span class="lbl">Lugares - Atractivos</span></a></li>
+                <li><a href="#"><span class="lbl">Permisos</span></a></li>
+            </ul>
         </li>
         
         <li class="gold with-sub">

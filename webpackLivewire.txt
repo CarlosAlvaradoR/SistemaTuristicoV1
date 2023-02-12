@@ -6,6 +6,10 @@ PAQUETES
         php artisan make:livewire PaquetesAdmin/CrearPaquetes
         php artisan make:livewire PaquetesAdmin/EditarPaquetes
 
+        //SubMenús del Paquete
+        php artisan make:livewire PaquetesAdmin/Paquetes/LugaresAtractivos
+
+
     
         GALERÍAS
             php artisan make:livewire PaquetesAdmin/Galeria/ShowGalerias
