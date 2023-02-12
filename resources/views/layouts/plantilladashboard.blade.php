@@ -73,6 +73,8 @@
        
     </script>
 
+    @yield('scripts')
+    
     @livewireScripts
 </body>
 

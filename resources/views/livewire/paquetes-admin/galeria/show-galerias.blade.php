@@ -10,7 +10,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Agregar Fotos al Paquete</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ $title }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -21,7 +21,7 @@
                             <div class="col-md-8">
                                 <form role="form">
                                     @csrf
-                                    
+
                                     @if (session()->has('SatisfaccionGaleria'))
                                         <div class="alert alert-aquamarine alert-fill alert-border-left alert-close alert-dismissible fade in"
                                             role="alert">
@@ -54,7 +54,13 @@
                                 </form>
                             </div>
                             <div class="col-md-4">
+                                @if ($edicion)
+                                    <label for="">Imgen Anterior</label>
+                                    <img src="{{ asset('/' . $foto_anterior) }}" width="170" height="170">
+                                @endif
+
                                 @if ($foto)
+                                    <label for="">Nueva Imagen</label>
                                     <img src="{{ $foto->temporaryUrl() }}" width="170" height="170">
                                 @endif
                             </div>
@@ -64,9 +70,15 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" wire:loading.attr="disabled"
                         data-dismiss="modal">Cerrar</button>
-                    <button type="button" wire:loading.attr="disabled" wire:click="saveGaleria"
-                        class="btn btn-primary">Guardar
-                        Cambios</button>
+                    @if ($edicion)
+                        <button type="button" wire:loading.attr="disabled" wire:click="Update"
+                            class="btn btn-primary">Actualizar</button>
+                    @else
+                        <button type="button" wire:loading.attr="disabled" wire:click="saveGaleria"
+                            class="btn btn-primary">Guardar
+                            Cambios</button>
+                    @endif
+
                 </div>
             </div>
         </div>
@@ -100,11 +112,12 @@
                                 {{ $f->descripcion }}
                             </td>
                             <td>
-                                <img src="{{ asset('/' . $f->directorio) }}" class="rounded-circle" width="100" height="100">
+                                <img src="{{ asset('/' . $f->directorio) }}" class="rounded-circle" width="100"
+                                    height="100">
                                 {{-- '/'.$f->directorio --}}
                             </td>
                             <td>
-                                <a href="{{-- route('editar.itinerario.paquete', $itinerario->idactividaditinerario) --}}">
+                                <a href="#!" wire:click="EditarGaleria({{ $f->id }})">
                                     <span class="btn btn-warning btn-sm">
                                         <span class="fa fa-pencil-square-o"></span>
                                     </span>
@@ -121,22 +134,52 @@
             </table>
         </div>
     </div>
+
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                title: "{{ session('success') }}",
+                icon: 'success'
+            })
+        </script>
+    @endif
+
+
 </div>
-<script>
-    window.addEventListener('swal-confirmImage', event => {
-        Swal.fire({
-            title: event.detail.title,
-            icon: event.detail.icon,
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, quiero eliminarlo!',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Livewire.emitTo('paquetes-admin.galeria.show-galerias', 'deleteGaleria', event.detail
-                    .id);
-            }
-        })
-    })
-</script>
+
+@section('scripts')
+    <script>
+        window.addEventListener('swal-confirmImage', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('paquetes-admin.galeria.show-galerias', 'deleteGaleria', event.detail
+                        .id);
+                }
+            })
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            //Lo que llega de CategoriesController
+            window.livewire.on('show-modal', msg => {
+                $('#modalGaleriaPaquete').modal('show')
+            });
+            window.livewire.on('close-modal', msg => {
+                $('#modalGaleriaPaquete').modal('hide')
+            });
+            window.livewire.on('category-updated', msg => {
+                $('#theModal').modal('hide')
+            });
+        });
+    </script>
+@endsection
