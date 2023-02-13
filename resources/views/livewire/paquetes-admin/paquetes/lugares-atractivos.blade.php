@@ -34,11 +34,12 @@
                                         <button wire:click="Edit({{ $l->id }})" class="btn btn-warning btn-sm">
                                             <span class="fa fa-pencil-square-o"></span>
                                         </button>
-                                        <button wire:click="Edit({{ $l->id }})" title="Ver Lugares" class="btn btn-primary btn-sm">
+                                        <button wire:click="Edit({{ $l->id }})" title="Ver Lugares"
+                                            class="btn btn-primary btn-sm">
                                             <span class="fas fa-eye"></span>
                                         </button>
-                                        <button class="btn btn-danger btn-sm"
-                                            wire:click="deleteConfirm({{ $l->id }})" title="Eliminar Mapa">
+                                        <button class="btn btn-danger btn-sm" onclick="Confirm('{{ $l->id }}')"
+                                            title="Eliminar Mapa">
                                             <span class="fa fa-trash"></span>
                                         </button>
                                     </td>
@@ -244,6 +245,44 @@
             window.livewire.on('category-updated', msg => {
                 $('#theModal').modal('hide')
             });
+        });
+    </script>
+
+    <script>
+        function Confirm(idLugar) {
+            Swal.fire({
+                title: 'Seguro que desear Eliminar el Registro?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Si, quiero Eliminarlo'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.livewire.emitTo('paquetes-admin.paquetes.lugares-atractivos', 'deleteLugar', idLugar);
+                    Swal.close();
+                }
+            })
+        }
+
+        window.addEventListener('swal-swal-confirmLugar', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('paquetes-admin.paquetes.lugares-atractivos', 'deleteLugar',
+                        event.detail
+                        .id);
+                }
+            })
         });
     </script>
 </div>

@@ -11,6 +11,9 @@ class LugaresAtractivos extends Component
     public $title = 'CREAR NUEVOS LUGARES';
     public $nombre_del_lugar;
     public $edicion = false, $idLugar;
+
+    protected $listeners = ['deleteLugar' => 'deleteLugar'];
+
     function resetUI()
     {
         $this->reset(['nombre_del_lugar', 'title','edicion','idLugar']);
@@ -66,23 +69,24 @@ class LugaresAtractivos extends Component
 
     public function deleteConfirm($id)
     {
-        $this->dispatchBrowserEvent('swal-confirmMapa', [
-            'title' => 'Estás seguro que deseas eliminar el Mapa?',
+        
+        $this->dispatchBrowserEvent('swal-confirmLugar', [
+            'title' => 'Estás seguro que deseas eliminar el Lugar?',
             'icon' => 'warning',
             'id' => $id
         ]);
     }
 
-    public function deleteMapa($idMapa)
+    public function deleteLugar($idLugar)
     {
-        
+      
 
-        /*$mapa_paquete = MapaPaquetes::findOrFail($idMapa);
+        $lugar = Lugares::findOrFail($idLugar);
 
-        $mapa_paquete->delete();
-        $eliminar = unlink($mapa_paquete->ruta . '');
+        $lugar->delete();
+        //$eliminar = unlink($mapa_paquete->ruta . '');
 
-        $this->resetUI();*/
+        $this->resetUI();
     }
 
     
