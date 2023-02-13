@@ -82,8 +82,10 @@ WHERE r.paquete_id = 1;
 
 
 
-
-SELECT * FROM lugares;
+SELECT * FROM lugares l
+right JOIN atractivos_turisticos at on at.lugar_id = l.id;
+SELECT atu.id, atu.nombre_atractivo, atu.descripcion FROM atractivos_turisticos atu
+WHERE atu.lugar_id = 2;
 
 
 

@@ -31,14 +31,14 @@
                                         {{ $l->nombre }}
                                     </td>
                                     <td>
-                                        <button wire:click="Edit({{ $l->id }})" class="btn btn-warning btn-sm">
+                                        <button id="edit" wire:click="Edit({{ $l->id }})" class="btn btn-warning btn-sm">
                                             <span class="fa fa-pencil-square-o"></span>
                                         </button>
-                                        <button wire:click="Edit({{ $l->id }})" title="Ver Lugares"
+                                        <button id="view" wire:click="mostrarAtractivosDelLugar({{ $l->id }})" title="Ver Atractivos"
                                             class="btn btn-primary btn-sm">
                                             <span class="fas fa-eye"></span>
                                         </button>
-                                        <button class="btn btn-danger btn-sm" onclick="Confirm('{{ $l->id }}')"
+                                        <button id="delete" class="btn btn-danger btn-sm" wire:click="deleteConfirm({{ $l->id }})"
                                             title="Eliminar Mapa">
                                             <span class="fa fa-trash"></span>
                                         </button>
@@ -55,24 +55,65 @@
         <div class="col-lg-6 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Lista de Atractivos - Lugar</h5>
-                    <div class="form-group has-search">
-                        <span class="fa fa-search form-control-feedback"></span>
-                        <input type="text" class="form-control" placeholder="Buscar Arriero">
+                    <h5 class="card-title">
+                        Lista de Atractivos - 
+                            @if ($detalle_del_lugar)
+                                {{$detalle_del_lugar}}
+                            @else
+                                SIN LUGAR SELECCIONADO
+                            @endif
+                         {{--$idLugarSeleccionado--}}
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group has-search">
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input type="text" class="form-control" placeholder="Buscar Lugar">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            @if ($idLugarSeleccionado)
+                                <a href="#modal-atractivo" role="button" class="btn btn-rounded"
+                                data-toggle="modal">Nuevo Atractivo</a>
+                            @endif
+                            
+                        </div>
                     </div>
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">Arriero</th>
-                                <th scope="col">Monto de Pago</th>
+                                <th scope="col">Atractivo</th>
+                                <th scope="col">Descripción</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-
+                            @foreach ($atractivos as $a)
+                            <tr>
+                                <td>
+                                    {{ $a->nombre_atractivo }}
+                                </td>
+                                <td>
+                                    {{ $a->descripcion }}
+                                </td>
+                                <td>
+                                    <button id="" wire:click="Edit({{ $a->id }})" class="btn btn-warning btn-sm">
+                                        <span class="fa fa-pencil-square-o"></span>
+                                    </button>
+                                    <button id="" wire:click="mostrarAtractivosDelLugar({{ $a->id }})" title="Ver Atractivos"
+                                        class="btn btn-primary btn-sm">
+                                        <span class="fas fa-eye"></span>
+                                    </button>
+                                    <button id="" class="btn btn-danger btn-sm" wire:click="deleteConfirm({{ $a->id }})"
+                                        title="Eliminar Mapa">
+                                        <span class="fa fa-trash"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                            @endforeach
 
                         </tbody>
-                        <tfoot>
+                        <!--<tfoot>
                             <tr>
 
                                 <th colspan="1">Total</th>
@@ -81,7 +122,7 @@
 
                             </tr>
 
-                        </tfoot>
+                        </tfoot>-->
                     </table>
                 </div>
             </div>
@@ -152,18 +193,14 @@
     <!-- END MODAL-->
 
 
-    <!-- MODAL MONTO-->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalMontoArriero"
-        data-whatever="@fat">
-        Open modal for @fat
-    </button>
+    
     <!-- Modal -->
-    <div class="modal fade" wire:ignore.self id="modalMontoArriero" data-backdrop="static" data-keyboard="false"
+    <div class="modal fade" wire:ignore.self id="modal-atractivo" data-backdrop="static" data-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Añadir Monto y Fecha del Arriero</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Añadir Atractivos - Lima</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -172,41 +209,20 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group has-search">
-                                    <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" class="form-control"
-                                        placeholder="Buscar Almuerzos de Celebración">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="monto">
-                                        Monto
+                                        Nombre de Atractivo <span class="text-danger">(*)</span>
                                     </label>
-                                    <input type="text" autocomplete="off" wire:model.defer="monto"
+                                    <input type="text" autocomplete="off" wire:model.defer="nombre_del_atractivo"
                                         class="form-control" id="monto" />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="cantidad">
-                                        Cantidad de Acémilas
-                                    </label>
-                                    <input type="number" wire:model.defer="cantidad" autocomplete="off"
-                                        class="form-control" id="cantidad" />
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="tipo_de_acemila">
-                                        Tipo de Acémilas
+                                    <label for="descripcion_del_atractivo">
+                                        Descripción del Atractivo <span class="text-danger">(*)</span>
                                     </label>
-                                    <select class="form-control" wire:model="tipo_de_acemila" id="tipo_de_acemila">
-                                        <option value="0" select>...Seleccione...</option>
-
-                                    </select>
+                                    <textarea class="form-control" wire:model.defer="descripcion_del_atractivo" id="descripcion_del_atractivo" rows="3"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -221,7 +237,7 @@
                             Actualizar
                         </button>
                     @else
-                        <button type="button" wire:click="guardarAcemilasAlquiladas"
+                        <button type="button" wire:click="guardarAtractivo"
                             class="btn btn-rounded btn-primary">
                             Guardar
                         </button>
@@ -232,6 +248,23 @@
         </div>
     </div>
     <!-- END MODAL-->
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                title: "{{ session('success') }}",
+                icon: 'success'
+            })
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                title: "{{ session('error') }}",
+                icon: 'error'
+            })
+        </script>
+    @endif
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -262,12 +295,12 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.livewire.emitTo('paquetes-admin.paquetes.lugares-atractivos', 'deleteLugar', idLugar);
-                    Swal.close();
+                    //Swal.close();
                 }
             })
         }
 
-        window.addEventListener('swal-swal-confirmLugar', event => {
+        window.addEventListener('swal-confirmLugar', event => {
             Swal.fire({
                 title: event.detail.title,
                 icon: event.detail.icon,

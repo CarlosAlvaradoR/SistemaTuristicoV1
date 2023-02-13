@@ -2,32 +2,39 @@
 
 namespace App\Http\Livewire\PaquetesAdmin\Paquetes;
 
+use App\Models\AtractivosTuristicos;
 use App\Models\Lugares;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class LugaresAtractivos extends Component
 {
+    /** ATRIBUTOS PARA LUGARES */
     public $title = 'CREAR NUEVOS LUGARES';
     public $nombre_del_lugar;
     public $edicion = false, $idLugar;
 
+    /** ATRIBUTOS PARA ATRACTIVOS */
+    public $title_atractivos = '';
+    public $nombre_del_atractivo, $descripcion_del_atractivo, $idLugarSeleccionado;
+    public $detalle_del_lugar, $atractivos = [];
+
     protected $listeners = ['deleteLugar' => 'deleteLugar'];
 
-    function resetUI()
-    {
-        $this->reset(['nombre_del_lugar', 'title','edicion','idLugar']);
-    }
+    
 
     public function render()
     {
-        $lugares = DB::table('lugares')
-            ->select('id', 'nombre')
-            ->get();
-        
-        return view('livewire.paquetes-admin.paquetes.lugares-atractivos',
+        $lugares = DB::table('lugares as l')
+            ->select('l.id', 'l.nombre')
+            ->paginate(10);
+
+
+        return view(
+            'livewire.paquetes-admin.paquetes.lugares-atractivos',
             compact(
                 'lugares'
+
             )
         );
     }
@@ -47,7 +54,8 @@ class LugaresAtractivos extends Component
         $this->resetUI();
     }
 
-    public function Edit($idLugar){
+    public function Edit($idLugar)
+    {
         $this->resetUI();
         $lugar = Lugares::findOrFail($idLugar);
         $this->idLugar = $lugar->id;
@@ -58,7 +66,8 @@ class LugaresAtractivos extends Component
         $this->emit('show-modal', 'Edicion de Mapas');
     }
 
-    public function Update(){
+    public function Update()
+    {
         $lugar = Lugares::findOrFail($this->idLugar);
         $lugar->nombre = $this->nombre_del_lugar;
         $lugar->save();
@@ -69,7 +78,7 @@ class LugaresAtractivos extends Component
 
     public function deleteConfirm($id)
     {
-        
+
         $this->dispatchBrowserEvent('swal-confirmLugar', [
             'title' => 'Estás seguro que deseas eliminar el Lugar?',
             'icon' => 'warning',
@@ -77,17 +86,59 @@ class LugaresAtractivos extends Component
         ]);
     }
 
-    public function deleteLugar($idLugar)
+    public function deleteLugar(Lugares $lugar)
     {
-      
 
-        $lugar = Lugares::findOrFail($idLugar);
+        $atractivos =  DB::table('atractivos_turisticos as atu')
+            ->where('atu.lugar_id', $lugar->id)
+            ->get();
+        $var = count($atractivos);
+        //dd($var);
+        if ($var > 0) {
 
-        $lugar->delete();
-        //$eliminar = unlink($mapa_paquete->ruta . '');
+            session()->flash('error', 'No se puede Eliminar el Lugar porque tiene Atractivos Registrados');
 
-        $this->resetUI();
+            $this->resetUI();
+        } else {
+            $lugar->delete();
+            //$eliminar = unlink($mapa_paquete->ruta . '');
+
+
+            session()->flash('success', 'Eliminado Correctamente');
+        }
     }
 
-    
+    function resetUI()
+    {
+        $this->reset([
+            'nombre_del_lugar', 'title', 'edicion', 'idLugar', 'nombre_del_atractivo',
+            'descripcion_del_atractivo', 'idLugarSeleccionado', 'detalle_del_lugar'
+        ]);
+    }
+
+    public function guardarAtractivo()
+    {
+        $atractivo = AtractivosTuristicos::create([
+            'nombre_atractivo' => $this->nombre_del_atractivo,
+            'descripcion' => $this->descripcion_del_atractivo,
+            'lugar_id' => $this->idLugarSeleccionado
+        ]);
+    }
+
+    public function mostrarAtractivosDelLugar($idLugar)
+    {
+        $this->render();
+        $this->idLugarSeleccionado = $idLugar;
+        $lugar = Lugares::findOrFail($this->idLugarSeleccionado, ['nombre']);
+        $this->detalle_del_lugar = $lugar->nombre;
+
+        $this->atractivos =  DB::table('atractivos_turisticos as atu')
+            ->where('atu.lugar_id', $this->idLugarSeleccionado)
+            ->select('id', 'nombre_atractivo', 'descripcion')
+            ->get();
+    }
+    public function EditAtractivo($idAtractivo)
+    {
+        
+    }
 }
