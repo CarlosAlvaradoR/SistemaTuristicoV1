@@ -7,10 +7,10 @@
             <div class="col-md-4">
             </div>
             <div class="col-md-4">
-                <a id="modal-880003" href="#modal-container-880003" role="button" class="btn" data-toggle="modal">Crear
+                <a id="modal-880003" href="#modal-categoria-hotel" role="button" class="btn" data-toggle="modal">Crear
                     Categoría de Hoteles</a>
-                <div wire:ignore.self data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-container-880003" role="dialog"
-                    aria-labelledby="myModalLabel" aria-hidden="true">
+                <div wire:ignore.self data-backdrop="static" data-keyboard="false" class="modal fade"
+                    id="modal-categoria-hotel" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -23,29 +23,33 @@
                             </div>
                             <div class="modal-body">
                                 <form wire:submit.prevent="save">
-                                    
-                                    @if (session()->has('message'))
-                                        <div class="alert alert-success">
-                                            {{ session('message') }}
-                                        </div>
-                                    @endif
 
                                     <div class="form-group">
-                                        @error('descripcion') <span class="text-danger">{{ $message }}</span> @enderror
-                                        <label for="exampleInputEmail1">Descripcion</label>
-                                        <input type="text" wire:model.defer="descripcion" class="form-control"
-                                            id="exampleInputEmail1" aria-describedby="emailHelp">
+                                        <label for="descripcion">Descripcion</label>
+                                        <textarea class="form-control" wire:model.defer="descripcion" id="descripcion" rows="3"></textarea>
+                                        @error('descripcion')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    <input type="text" wire:model.defer="idPaquete" value="{{ $idPaquete }}" hidden>
+                                    <input type="text" wire:model.defer="idPaquete" value="{{ $idPaquete }}"
+                                        hidden>
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" wire:click="save" class="btn btn-primary">
-                                    Guardar Cambios
-                                </button>
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                <button type="button" id="cl-cat" class="btn btn-danger" data-dismiss="modal">
                                     Cerrar
                                 </button>
+                                @if ($edicion)
+                                    <button type="button" id="up-cat" wire:click="Update" class="btn btn-primary">
+                                        Actualizar
+                                    </button>
+                                @else
+                                    <button type="button" id="save-cat" wire:click="save" class="btn btn-primary">
+                                        Guardar
+                                    </button>
+                                @endif
+
+
                             </div>
                         </div>
 
@@ -85,18 +89,13 @@
                                     {{ $categoria->descripcion }}
                                 </td>
                                 <td>
-                                    <a href="{{-- route('editar.itinerario.paquete', $itinerario->idactividaditinerario) --}}">
-                                        <span class="btn btn-warning btn-sm">
-                                            <span class="fa fa-pencil-square-o"></span>
-                                        </span>
-                                    </a>
-                                    <a action="{{-- route('eliminar.itinerario.paquete', $itinerario->idactividaditinerario) --}}" method="POST" class="formEliminarItinerario">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">
-                                            <span class="fa fa-trash"></span>
-                                        </button>
-                                    </a>
+                                    <button wire:click="Edit({{ $categoria->id }})" class="btn btn-warning btn-sm">
+                                        <span class="fa fa-pencil-square-o"></span>
+                                    </button>
+                                    <button title="Quitar Pago por servicio"
+                                        wire:click="deleteConfirm({{ $categoria->id }})" class="btn btn-danger btn-sm">
+                                        <span class="fa fa-trash"></span>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -106,4 +105,59 @@
             </div>
         </div>
     </div>
+
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                title: 'MUY BIEN',
+                text: "{{ session('success') }}",
+                icon: 'success'
+            })
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                title: "{{ session('error') }}",
+                icon: 'error'
+            })
+        </script>
+    @endif
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            //Lo que llega de CategoriesController
+            window.livewire.on('show-modal-categoria-hotel', msg => {
+                $('#modal-categoria-hotel').modal('show')
+            });
+            window.livewire.on('close-modal-categoria-hotel', msg => {
+                $('#modal-categoria-hotel').modal('hide')
+            });
+            window.livewire.on('category-updated', msg => {
+                $('#theModal').modal('hide')
+            });
+        });
+    </script>
+    <script>
+        window.addEventListener('swal-confirmTipoPersonal', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('show-categoria-hotel-paquetes',
+                        'deleteCategoriaHotel',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+    </script>
 </div>
