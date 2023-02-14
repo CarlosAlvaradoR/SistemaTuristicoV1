@@ -31,15 +31,17 @@
                                         {{ $l->nombre }}
                                     </td>
                                     <td>
-                                        <button id="edit" wire:click="Edit({{ $l->id }})" class="btn btn-warning btn-sm">
+                                        <button id="edit" wire:click="Edit({{ $l->id }})"
+                                            class="btn btn-warning btn-sm">
                                             <span class="fa fa-pencil-square-o"></span>
                                         </button>
-                                        <button id="view" wire:click="mostrarAtractivosDelLugar({{ $l->id }})" title="Ver Atractivos"
-                                            class="btn btn-primary btn-sm">
+                                        <button id="view"
+                                            wire:click="mostrarAtractivosDelLugar({{ $l->id }})"
+                                            title="Ver Atractivos" class="btn btn-primary btn-sm">
                                             <span class="fas fa-eye"></span>
                                         </button>
-                                        <button id="delete" class="btn btn-danger btn-sm" wire:click="deleteConfirm({{ $l->id }})"
-                                            title="Eliminar Mapa">
+                                        <button id="delete" class="btn btn-danger btn-sm"
+                                            wire:click="deleteConfirm({{ $l->id }})" title="Eliminar Mapa">
                                             <span class="fa fa-trash"></span>
                                         </button>
                                     </td>
@@ -56,13 +58,13 @@
             <div class="card">
                 <div class="card-block">
                     <h5 class="card-title">
-                        Lista de Atractivos - 
-                            @if ($detalle_del_lugar)
-                                {{$detalle_del_lugar}}
-                            @else
-                                SIN LUGAR SELECCIONADO
-                            @endif
-                         {{--$idLugarSeleccionado--}}
+                        Lista de Atractivos -
+                        @if ($detalle_del_lugar)
+                            {{ $detalle_del_lugar }}
+                        @else
+                            SIN LUGAR SELECCIONADO
+                        @endif
+                        {{-- $idLugarSeleccionado --}}
                     </h5>
                     <div class="row">
                         <div class="col-md-8">
@@ -74,9 +76,9 @@
                         <div class="col-md-4">
                             @if ($idLugarSeleccionado)
                                 <a href="#modal-atractivo" role="button" class="btn btn-rounded"
-                                data-toggle="modal">Nuevo Atractivo</a>
+                                    data-toggle="modal">Nuevo Atractivo</a>
                             @endif
-                            
+
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -89,27 +91,25 @@
                         </thead>
                         <tbody>
                             @foreach ($atractivos as $a)
-                            <tr>
-                                <td>
-                                    {{ $a->nombre_atractivo }}
-                                </td>
-                                <td>
-                                    {{ $a->descripcion }}
-                                </td>
-                                <td>
-                                    <button id="" wire:click="Edit({{ $a->id }})" class="btn btn-warning btn-sm">
-                                        <span class="fa fa-pencil-square-o"></span>
-                                    </button>
-                                    <button id="" wire:click="mostrarAtractivosDelLugar({{ $a->id }})" title="Ver Atractivos"
-                                        class="btn btn-primary btn-sm">
-                                        <span class="fas fa-eye"></span>
-                                    </button>
-                                    <button id="" class="btn btn-danger btn-sm" wire:click="deleteConfirm({{ $a->id }})"
-                                        title="Eliminar Mapa">
-                                        <span class="fa fa-trash"></span>
-                                    </button>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>
+                                        {{ $a->nombre_atractivo }}
+                                    </td>
+                                    <td>
+                                        {{ $a->descripcion }}
+                                    </td>
+                                    <td>
+                                        <button id="editAtractivo" wire:click="EditAtractivo({{ $a->id }})" 
+                                            class="btn btn-warning btn-sm" wire:loading.attr="disabled">
+                                            <span class="fa fa-pencil-square-o"></span>
+                                        </button>
+                                        <button id="deleteAtractivo" class="btn btn-danger btn-sm"
+                                            wire:click="deleteConfirmAtractivo({{ $a->id }})"
+                                            wire:loading.attr="disabled" title="Eliminar Atractivo Turístico">
+                                            <span class="fa fa-trash"></span>
+                                        </button>
+                                    </td>
+                                </tr>
                             @endforeach
 
                         </tbody>
@@ -193,14 +193,14 @@
     <!-- END MODAL-->
 
 
-    
+
     <!-- Modal -->
     <div class="modal fade" wire:ignore.self id="modal-atractivo" data-backdrop="static" data-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Añadir Atractivos - Lima</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">{{ $title_atractivos }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -222,7 +222,8 @@
                                     <label for="descripcion_del_atractivo">
                                         Descripción del Atractivo <span class="text-danger">(*)</span>
                                     </label>
-                                    <textarea class="form-control" wire:model.defer="descripcion_del_atractivo" id="descripcion_del_atractivo" rows="3"></textarea>
+                                    <textarea class="form-control" wire:model.defer="descripcion_del_atractivo" id="descripcion_del_atractivo"
+                                        rows="3"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -232,13 +233,12 @@
                     <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
                         Cerrar
                     </button>
-                    @if ($edicion)
-                        <button type="button" wire:click="Update" class="btn btn-rounded btn-primary">
+                    @if ($edicion_atractivo)
+                        <button type="button" wire:click="UpdateAtractivo" class="btn btn-rounded btn-primary">
                             Actualizar
                         </button>
                     @else
-                        <button type="button" wire:click="guardarAtractivo"
-                            class="btn btn-rounded btn-primary">
+                        <button type="button" wire:click="guardarAtractivo" class="btn btn-rounded btn-primary">
                             Guardar
                         </button>
                     @endif
@@ -275,6 +275,12 @@
             window.livewire.on('close-modal', msg => {
                 $('#modal-lugares').modal('hide')
             });
+            window.livewire.on('show-modal-atractivos', msg => {
+                $('#modal-atractivo').modal('show')
+            });
+            window.livewire.on('close-modal-atractivos', msg => {
+                $('#modal-atractivo').modal('hide')
+            });
             window.livewire.on('category-updated', msg => {
                 $('#theModal').modal('hide')
             });
@@ -282,24 +288,6 @@
     </script>
 
     <script>
-        function Confirm(idLugar) {
-            Swal.fire({
-                title: 'Seguro que desear Eliminar el Registro?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                cancelButtonText: 'Cancelar',
-                confirmButtonText: 'Si, quiero Eliminarlo'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.livewire.emitTo('paquetes-admin.paquetes.lugares-atractivos', 'deleteLugar', idLugar);
-                    //Swal.close();
-                }
-            })
-        }
-
         window.addEventListener('swal-confirmLugar', event => {
             Swal.fire({
                 title: event.detail.title,
@@ -312,6 +300,25 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     Livewire.emitTo('paquetes-admin.paquetes.lugares-atractivos', 'deleteLugar',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+    </script>
+    <script>
+        window.addEventListener('swal-confirmAtractivo', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('paquetes-admin.paquetes.lugares-atractivos', 'deleteAtractivo',
                         event.detail
                         .id);
                 }

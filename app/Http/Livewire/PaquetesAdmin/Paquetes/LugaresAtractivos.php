@@ -13,28 +13,41 @@ class LugaresAtractivos extends Component
     public $title = 'CREAR NUEVOS LUGARES';
     public $nombre_del_lugar;
     public $edicion = false, $idLugar;
+    public $consulta, $idLugarSeleccionado;
 
     /** ATRIBUTOS PARA ATRACTIVOS */
     public $title_atractivos = '';
-    public $nombre_del_atractivo, $descripcion_del_atractivo, $idLugarSeleccionado;
-    public $detalle_del_lugar, $atractivos = [];
+    public $nombre_del_atractivo, $descripcion_del_atractivo;
+    public $detalle_del_lugar; //$atractivos = [];
+    public $edicion_atractivo, $idAtractivo;
 
-    protected $listeners = ['deleteLugar' => 'deleteLugar'];
+    protected $listeners = ['deleteLugar' => 'deleteLugar', 'deleteAtractivo' => 'deleteAtractivo'];
 
-    
+
 
     public function render()
     {
         $lugares = DB::table('lugares as l')
             ->select('l.id', 'l.nombre')
-            ->paginate(10);
+            ->paginate(50);
 
-
+        if ($this->idLugarSeleccionado) {
+            /*$atractivos = DB::table('atractivos_turisticos as atu')
+            ->where('atu.lugar_id', $this->idLugar)
+            ->select('id', 'nombre_atractivo', 'descripcion')
+            ->get();*/
+            $this->consulta = "SELECT atu.id, atu.nombre_atractivo, atu.descripcion FROM atractivos_turisticos atu
+            WHERE atu.lugar_id = " . $this->idLugarSeleccionado . "";
+            $atractivos = DB::select($this->consulta);
+        } else {
+            $this->consulta = "";
+            $atractivos = [];
+        }
         return view(
             'livewire.paquetes-admin.paquetes.lugares-atractivos',
             compact(
-                'lugares'
-
+                'lugares',
+                'atractivos'
             )
         );
     }
@@ -127,18 +140,63 @@ class LugaresAtractivos extends Component
 
     public function mostrarAtractivosDelLugar($idLugar)
     {
-        $this->render();
+        $this->resetUI();
         $this->idLugarSeleccionado = $idLugar;
-        $lugar = Lugares::findOrFail($this->idLugarSeleccionado, ['nombre']);
+        $lugar = Lugares::findOrFail($idLugar, ['nombre']);
         $this->detalle_del_lugar = $lugar->nombre;
+        $this->title_atractivos = 'AÑADIR ATRACTIVOS EN - ' . $this->detalle_del_lugar;
 
-        $this->atractivos =  DB::table('atractivos_turisticos as atu')
+
+        /*$this->atractivos =  DB::table('atractivos_turisticos as atu')
             ->where('atu.lugar_id', $this->idLugarSeleccionado)
             ->select('id', 'nombre_atractivo', 'descripcion')
-            ->get();
+            ->get();*/
     }
     public function EditAtractivo($idAtractivo)
     {
-        
+        $atractivo = AtractivosTuristicos::findOrFail($idAtractivo);
+
+        $this->idAtractivo = $atractivo->id;
+        $this->nombre_del_atractivo = $atractivo->nombre_atractivo;
+        $this->descripcion_del_atractivo = $atractivo->descripcion;
+        $this->title = 'EDICIÓN DE ATRACTIVO';
+        $this->edicion_atractivo = true;
+        $this->emit('show-modal-atractivos', 'Edicion de Atractivos');
+    }
+
+    public function UpdateAtractivo()
+    {
+        $atractivo = AtractivosTuristicos::findOrFail($this->idAtractivo);
+        $atractivo->nombre_atractivo = $this->nombre_del_atractivo;
+        $atractivo->descripcion = $this->descripcion_del_atractivo;
+        $atractivo->save();
+
+        session()->flash('success', 'Atractivo Actualizado Correctamente');
+        //$this->resetUI();
+        $this->emit('close-modal-atractivos', 'Edicion de Ataractivos');
+    }
+
+    public function deleteConfirmAtractivo($id)
+    {
+        $this->dispatchBrowserEvent('swal-confirmAtractivo', [
+            'title' => 'Estás seguro que deseas eliminar el Atractivo ?',
+            'icon' => 'warning',
+            'id' => $id
+        ]);
+    }
+
+    public function deleteAtractivo(AtractivosTuristicos $atractivo)
+    {
+        $atractivo_paquete = DB::select("SELECT * FROM visita_atractivos_paquetes
+        WHERE atractivo_id = " . $atractivo->id . "");
+        $var = count($atractivo_paquete);
+        if ($var > 0) {
+            session()->flash('error', 'El Atractivo se encuentra registrado en uno o varios Paquetes');
+            
+            //$this->resetUI();
+        } else {
+            $atractivo->delete();
+            session()->flash('success', 'Atractivo Eliminado Correctamente');
+        }
     }
 }
