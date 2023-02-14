@@ -12,7 +12,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">CREAR TIPO DE PERSONAL</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ $title }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -47,9 +47,8 @@
                                         <label for="exampleInputPassword1">
                                             Cantidad
                                         </label>
-                                        <input type="number" wire:model.defer="cantidad" 
-                                           wire:loading.attr="disabled" class="form-control"
-                                            id="exampleInputPassword1" />
+                                        <input type="number" wire:model.defer="cantidad" wire:loading.attr="disabled"
+                                            class="form-control" id="exampleInputPassword1" />
                                         @error('cantidad')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -60,9 +59,19 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                    <button type="button" wire:loading.attr="disabled" wire:click="guardarPersonalTipoPaquete" class="btn btn-primary">Guardar
-                        Cambios</button>
+                    <button type="button" wire:click="cerrarModal" class="btn btn-danger">Cerrar</button>
+                    @if ($edicion)
+                        <button type="button" wire:loading.attr="disabled" wire:click="Update"
+                            class="btn btn-primary">
+                            Actualizar
+                        </button>
+                    @else
+                        <button type="button" wire:loading.attr="disabled" wire:click="guardarPersonalTipoPaquete"
+                            class="btn btn-primary">
+                            Guardar
+                        </button>
+                    @endif
+
                 </div>
             </div>
         </div>
@@ -107,14 +116,11 @@
                                 {{ $lv->cantidad }}
                             </td>
                             <td>
-                                <a href="#">
-                                    <!---->
-                                    <span class="btn btn-warning btn-sm">
-                                        <span class="fa fa-pencil-square-o"></span>
-                                    </span>
-                                </a>
-                                
-                                <button class="btn btn-danger btn-sm" title="Quitar Tipo de Personal" 
+                                <button class="btn btn-warning btn-sm" title="Quitar Tipo de Personal"
+                                    wire:loading.attr="disabled" wire:click="Edit({{ $lv->id }})">
+                                    <span class="fa fa-pencil-square-o"></span>
+                                </button>
+                                <button class="btn btn-danger btn-sm" title="Quitar Tipo de Personal"
                                     wire:loading.attr="disabled" wire:click="deleteConfirm({{ $lv->id }})">
                                     <span class="fa fa-minus"></span>
                                 </button>
@@ -128,6 +134,40 @@
     </div>
 </div>
 
+@if (session('success'))
+    <script>
+        Swal.fire({
+            title: 'MUY BIEN',
+            text: "{{ session('success') }}",
+            icon: 'success'
+        })
+    </script>
+@endif
+
+@if (session('error'))
+    <script>
+        Swal.fire({
+            title: "{{ session('error') }}",
+            icon: 'error'
+        })
+    </script>
+@endif
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        //Lo que llega de CategoriesController
+        window.livewire.on('show-modal-tipo-personal', msg => {
+            $('#modalPersonalTipo').modal('show')
+        });
+        window.livewire.on('close-modal-tipo-personal', msg => {
+            $('#modalPersonalTipo').modal('hide')
+        });
+        window.livewire.on('category-updated', msg => {
+            $('#theModal').modal('hide')
+        });
+    });
+</script>
 <script>
     window.addEventListener('swal-confirm', event => {
         Swal.fire({
