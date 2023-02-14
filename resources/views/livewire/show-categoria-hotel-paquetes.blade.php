@@ -9,7 +9,7 @@
             <div class="col-md-4">
                 <a id="modal-880003" href="#modal-container-880003" role="button" class="btn" data-toggle="modal">Crear
                     Categoría de Hoteles</a>
-                <div wire:ignore.self class="modal fade" id="modal-container-880003" role="dialog"
+                <div wire:ignore.self data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-container-880003" role="dialog"
                     aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">

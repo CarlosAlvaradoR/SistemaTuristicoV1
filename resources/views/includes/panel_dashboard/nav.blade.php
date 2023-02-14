@@ -18,7 +18,7 @@
             </ul>
         </li>
 
-        <li class="blue with-sub">
+        <!--<li class="blue with-sub">
             <span>
                 <i class="fa fa-user"></i>
                 <span class="lbl">Usuarios</span>
@@ -28,7 +28,7 @@
                             class="label label-custom label-pill label-succes">new</span></a></li>
                 <li><a href="#"><span class="lbl">Acémilas</span></a></li>
             </ul>
-        </li>
+        </li>-->
 
         <li class="green">
             <a href="equipos.php">
@@ -46,7 +46,11 @@
                 <li><a href="{{ route('paquetes.index') }}"><span class="lbl">Ver Paquetes</span><span
                             class="label label-custom label-pill label-success">new</span></a></li>
                 <li><a href="{{ route('paquetes.lugares_atractivos') }}"><span class="lbl">Lugares - Atractivos</span></a></li>
-                <li><a href="#"><span class="lbl">Permisos</span></a></li>
+                <li><a href="{{ route('paquetes.tipos_personal') }}"><span class="lbl">Tipos de Personal</span></a></li>
+                <li><a href="{{ route('paquetes.tipos_transporte') }}"><span class="lbl">Tipos de Transporte</span></a></li>
+                <li><a href="{{ route('paquetes.tipos_transporte') }}"><span class="lbl">Tipos de Alimentación</span></a></li>
+                <li><a href="{{ route('paquetes.tipos_transporte') }}"><span class="lbl">Tipos de Acémilas</span></a></li>
+                <li><a href="{{ route('paquetes.tipos_transporte') }}"><span class="lbl">Tipos de Almuerzos</span></a></li>
             </ul>
         </li>
         

@@ -9,7 +9,7 @@
                 <a id="galeriaPaquete" href="#modalCrearPagosPorServicio" role="button" class="btn"
                     data-toggle="modal">Añadir Pago por servicios</a>
 
-                <div wire:ignore.self class="modal fade" id="modalCrearPagosPorServicio" role="dialog"
+                <div wire:ignore.self data-backdrop="static" data-keyboard="false" class="modal fade" id="modalCrearPagosPorServicio" role="dialog"
                     aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">

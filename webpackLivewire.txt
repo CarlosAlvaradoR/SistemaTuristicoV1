@@ -8,6 +8,7 @@ PAQUETES
 
         //SubMenús del Paquete
         php artisan make:livewire PaquetesAdmin/Paquetes/LugaresAtractivos
+        php artisan make:livewire PaquetesAdmin/Paquetes/TipoPersonalAcompañante
 
 
     
