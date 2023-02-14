@@ -117,4 +117,12 @@ class PaquetesTuristicosController extends Controller
         return view('paquetes_admin.tipo_alimentacion');
     }
 
+    public function tipos_acemilas(){
+        return view('paquetes_admin.tipo_acemilas');
+    }
+
+    public function tipos_almuerzos(){
+        return view('paquetes_admin.tipo_almuerzos');
+    }
+
 }

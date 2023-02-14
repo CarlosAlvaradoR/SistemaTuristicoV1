@@ -49,8 +49,8 @@
                 <li><a href="{{ route('paquetes.tipos_personal') }}"><span class="lbl">Tipos de Personal</span></a></li>
                 <li><a href="{{ route('paquetes.tipos_transporte') }}"><span class="lbl">Tipos de Transporte</span></a></li>
                 <li><a href="{{ route('paquetes.tipos_alimentacion') }}"><span class="lbl">Tipos de Alimentación</span></a></li>
-                <li><a href="{{ route('paquetes.tipos_transporte') }}"><span class="lbl">Tipos de Acémilas</span></a></li>
-                <li><a href="{{ route('paquetes.tipos_transporte') }}"><span class="lbl">Tipos de Almuerzos</span></a></li>
+                <li><a href="{{ route('paquetes.tipos_acemilas') }}"><span class="lbl">Tipos de Acémilas</span></a></li>
+                <li><a href="{{ route('paquetes.tipos_almuerzos') }}"><span class="lbl">Tipos de Almuerzos</span></a></li>
             </ul>
         </li>
         

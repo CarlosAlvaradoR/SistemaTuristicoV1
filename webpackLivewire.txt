@@ -11,6 +11,8 @@ PAQUETES
         php artisan make:livewire PaquetesAdmin/Paquetes/TipoPersonalAcompañante
         php artisan make:livewire PaquetesAdmin/Paquetes/TipoTransporte
         php artisan make:livewire PaquetesAdmin/Paquetes/TipoAlimentacion
+        php artisan make:livewire PaquetesAdmin/Paquetes/TipoAcemilas
+        php artisan make:livewire PaquetesAdmin/Paquetes/TipoAlmuerzos
 
 
     

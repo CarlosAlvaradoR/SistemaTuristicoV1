@@ -94,7 +94,7 @@ WHERE tipo_id = 2;
 
 
 
-SELECT * FROM tipoalimentacion_paquetes;
+SELECT * FROM tipoalmuerzo_paquetes;
 
 
 
