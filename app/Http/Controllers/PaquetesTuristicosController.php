@@ -110,7 +110,11 @@ class PaquetesTuristicosController extends Controller
     }
 
     public function tipos_transporte(){
-        return view('paquetes_admin.tipos_personal');
+        return view('paquetes_admin.tipo_transporte');
+    }
+
+    public function tipos_alimentacion(){
+        return view('paquetes_admin.tipo_alimentacion');
     }
 
 }

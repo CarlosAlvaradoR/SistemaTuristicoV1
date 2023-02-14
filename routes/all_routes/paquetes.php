@@ -11,3 +11,4 @@ Route::get('/paquetes/detalle/{slug}', [App\Http\Controllers\PaquetesTuristicosC
 Route::get('/paquetes/lugares-atractivos', [App\Http\Controllers\PaquetesTuristicosController::class, 'lugares_atractivos'])->name('paquetes.lugares_atractivos')->middleware(['auth', 'verified']);
 Route::get('/paquetes/tipos-de-personal', [App\Http\Controllers\PaquetesTuristicosController::class, 'tipos_personal'])->name('paquetes.tipos_personal')->middleware(['auth', 'verified']);
 Route::get('/paquetes/tipos-de-transporte', [App\Http\Controllers\PaquetesTuristicosController::class, 'tipos_transporte'])->name('paquetes.tipos_transporte')->middleware(['auth', 'verified']);
+Route::get('/paquetes/tipos-de-alimentacion', [App\Http\Controllers\PaquetesTuristicosController::class, 'tipos_alimentacion'])->name('paquetes.tipos_alimentacion')->middleware(['auth', 'verified']);

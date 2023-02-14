@@ -3,44 +3,51 @@
 namespace App\Http\Livewire\PaquetesAdmin\Paquetes;
 
 use App\Models\TipoPersonales;
+use App\Models\TipoTransportes;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class TipoPersonalAcompañante extends Component
+class TipoTransporte extends Component
 {
-    public $title = 'CREACIÓN DE TIPOS DE PERSONAL ACOMPAÑANTE';
+    public $title = 'CREACIÓN DE TIPOS DE TRANSPORTE';
     public $nombre_de_tipo;
-    public $edicion = false, $idTipoPersonal;
+    public $edicion = false, $idTipoTransporte;
 
-    protected $listeners = ['deleteTipoPersonal' => 'deleteTipoPersonal'];
+    protected $listeners = ['deleteTipoTransporte' => 'deleteTipoTransporte'];
 
     function resetUI()
     {
-        $this->reset(['title', 'nombre_de_tipo', 'edicion', 'idTipoPersonal']);
-    }
-    public function render()
-    {
-        $tipos = TipoPersonales::all(['id', 'nombre_tipo']);
-        return view('livewire.paquetes-admin.paquetes.tipo-personal-acompañante', compact('tipos'));
+        $this->reset(['title', 'nombre_de_tipo', 'edicion', 'idTipoTransporte']);
     }
 
-    public function guardarNombreTipoPersonal()
+    public function render()
+    {
+        $tipos = TipoTransportes::all(['id', 'nombre_tipo']);
+        return view('livewire.paquetes-admin.paquetes.tipo-transporte', compact('tipos'));
+    }
+
+    public function guardarTipoTransporte()
     {
         $this->validate([
             'nombre_de_tipo' => 'required|min:3'
         ]);
-        $tipo = TipoPersonales::create([
+        $tipo = TipoTransportes::create([
             'nombre_tipo' => $this->nombre_de_tipo
         ]);
         $this->resetUI();
         
-        session()->flash('success', 'Registrado Correctamente');
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'MUY BIEN !',
+            'icon' => 'success',
+            'text' => 'Registrado Correctamente'
+        ]);
+        //session()->flash('success', 'Registrado Correctamente');
     }
 
-    public function Edit(TipoPersonales $tipo)
+    public function Edit(TipoTransportes $tipo)
     {
-        $this->title = 'EDITAR TIPO DE PERSONAL ACOMPAÑANTE';
-        $this->idTipoPersonal = $tipo->id;
+        $this->title = 'EDITAR TIPO DE TRANSPORTE';
+        $this->idTipoTransporte = $tipo->id;
         $this->nombre_de_tipo = $tipo->nombre_tipo;
         $this->edicion = true;
         $this->emit('show-modal-tipo-personal', 'Edicion de Atractivos');
@@ -51,7 +58,7 @@ class TipoPersonalAcompañante extends Component
         $this->validate([
             'nombre_de_tipo' => 'required|min:3'
         ]);
-        $tipo = TipoPersonales::findOrFail($this->idTipoPersonal);
+        $tipo = TipoTransportes::findOrFail($this->idTipoTransporte);
         $tipo->nombre_tipo = $this->nombre_de_tipo;
         $tipo->save();
 
@@ -71,15 +78,15 @@ class TipoPersonalAcompañante extends Component
         ]);
     }
 
-    public function deleteTipoPersonal(TipoPersonales $tipo)
+    public function deleteTipoTransporte(TipoTransportes $tipo)
     {
-        $tipos =  DB::table('personal_tipos')
-            ->where('tipo_id', $tipo->id)
+        $tipos =  DB::table('tipotransporte_paquetes')
+            ->where('tipotransporte_id', $tipo->id)
             ->get();
         $var = count($tipos);
         //dd($var);
         if ($var > 0) {
-            session()->flash('error', 'No se Puede Eliminar porque está registrado la Lista de Algún Paquete');
+            session()->flash('error', 'No se Puede Eliminar porque en un Paquete');
         } else {
             $tipo->delete();
             session()->flash('success', 'Eliminado Correctamente');
