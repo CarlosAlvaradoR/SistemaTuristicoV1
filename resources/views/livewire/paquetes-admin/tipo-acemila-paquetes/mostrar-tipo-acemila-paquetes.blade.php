@@ -10,7 +10,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Agregar Tipos de Acémila al Paquete</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ $title }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -25,7 +25,6 @@
                                     </div>
 
                                     @if (session()->has('SatisfaccionTipoAcemila'))
-                                        
                                         <div class="alert alert-aquamarine alert-fill alert-border-left alert-close alert-dismissible fade in"
                                             role="alert">
                                             <button type="button" class="close" data-dismiss="alert"
@@ -74,10 +73,18 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" wire:loading.attr="disabled" data-dismiss="modal">Cerrar</button>
-                    <button type="button" wire:loading.attr="disabled" wire:click="guardarTipoAcemilaPaquete"
-                        class="btn btn-primary">Guardar
-                        Cambios</button>
+                    <button type="button" class="btn btn-danger" wire:loading.attr="disabled"
+                        data-dismiss="modal">Cerrar</button>
+                    @if ($edicion)
+                        <button type="button" wire:loading.attr="disabled" wire:click="Update"
+                            class="btn btn-primary">Actualizar
+                            </button>
+                    @else
+                        <button type="button" wire:loading.attr="disabled" wire:click="guardarTipoAcemilaPaquete"
+                            class="btn btn-primary">Guardar
+                            </button>
+                    @endif
+
                 </div>
             </div>
         </div>
@@ -124,15 +131,13 @@
                                 {{ $lv->cantidad }}
                             </td>
                             <td>
-                                <a href="#">
-                                    <!---->
-                                    <span class="btn btn-warning btn-sm">
-                                        <span class="fa fa-pencil-square-o"></span>
-                                    </span>
-                                </a>
-                                
-                                <button class="btn btn-danger btn-sm" title="Quitar Tipo de Acémila del Paquete" 
-                                    wire:loading.attr="disabled" wire:click="quitarTipoAcemilaPaquete({{ $lv->id }})">
+                                <button wire:click="Edit({{ $lv->id }})" class="btn btn-warning btn-sm">
+                                    <span class="fa fa-pencil-square-o"></span>
+                                </button>
+
+                                <button class="btn btn-danger btn-sm" title="Quitar Tipo de Acémila del Paquete"
+                                    wire:loading.attr="disabled"
+                                    wire:click="deleteConfirm({{ $lv->id }})">
                                     <span class="fa fa-minus"></span>
                                 </button>
                             </td>
@@ -143,4 +148,66 @@
             </table>
         </div>
     </div>
+
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                title: 'MUY BIEN',
+                text: "{{ session('success') }}",
+                icon: 'success'
+            })
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                title: "{{ session('error') }}",
+                icon: 'error'
+            })
+        </script>
+    @endif
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            //Lo que llega de CategoriesController
+            window.livewire.on('show-modal-acemila-paquete', msg => {
+                $('#modalTipoAcemilaPaquete').modal('show')
+            });
+            window.livewire.on('close-modal-acemila-paquete', msg => {
+                $('#modalTipoAcemilaPaquete').modal('hide')
+            });
+            window.livewire.on('category-updated', msg => {
+                $('#theModal').modal('hide')
+            });
+        });
+    </script>
+    <script>
+        window.addEventListener('swal-confirmTipoAcemilaPaquete', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('paquetes-admin.tipo-acemila-paquetes.mostrar-tipo-acemila-paquetes',
+                        'quitarTipoAcemilaPaquete',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+        window.addEventListener('swal', event => {
+
+            Swal.fire(
+                event.detail.title,
+                event.detail.text,
+                event.detail.icon
+            );
+        });
+    </script>
 </div>

@@ -12,12 +12,18 @@ class MostrarTipoAcemilaPaquetes extends Component
 {
     public $idPaquete;
     public $tipo,$cantidad;
-    
+    public $title = 'ASINAR TIPOS DE ACÉMILAS AL PAQUETE', $idTipoAcemila, $edicion = false;
+
+    protected $listeners = ['quitarTipoAcemilaPaquete' => 'quitarTipoAcemilaPaquete'];
+
     protected $rules = [
         'tipo' => 'required',
         'cantidad' => 'required|numeric|min:1'
     ];
 
+    public function resetUI(){
+        $this->reset(['tipo','cantidad','title','idTipoAcemila','edicion']);
+    }
 
     public function mount($idPaquete){
         $this->idPaquete = $idPaquete;
@@ -43,13 +49,50 @@ class MostrarTipoAcemilaPaquetes extends Component
             'paquete_id' => $this->idPaquete
         ]);
 
-        $this->reset(['cantidad','tipo']);
-        session()->flash('SatisfaccionTipoAcemila', 'Tipo de Acémila añadido correctamente al paquete');
+        $this->resetUI();
+        session()->flash('success', 'Tipo de Acémila añadido correctamente al paquete');
+    }
+
+    public function Edit(TipoacemilaPaquetes $tipo)
+    {
+        $this->title = 'EDITAR TIPO DE ACÉMILA DEL PAQUETE';
+        $this->idTipoAcemila = $tipo->id;
+        $this->cantidad = $tipo->cantidad;
+        $this->tipo = $tipo->tipo_acemila_id;
+        $this->edicion = true;
+        $this->emit('show-modal-acemila-paquete', 'Edicion de Atractivos');
+    }
+
+    public function Update()
+    {
+        $this->validate([
+            'tipo' => 'required',
+            'cantidad' => 'required|numeric|min:1'
+        ]);
+        $tipo = TipoacemilaPaquetes::findOrFail($this->idTipoAcemila);
+        $tipo->cantidad = $this->cantidad;
+        $tipo->tipo_acemila_id = $this->tipo;
+        $tipo->save();
+
+        session()->flash('success', 'Actualizado Correctamente');
+
+        $this->emit('close-modal-acemila-paquete', 'Edicion de Atractivos');
+        $this->resetUI();
+    }
+
+    public function deleteConfirm($id)
+    {
+
+        $this->dispatchBrowserEvent('swal-confirmTipoAcemilaPaquete', [
+            'title' => 'Estás seguro que deseas eliminar el Tipo de Acémila del Paquete ?',
+            'icon' => 'warning',
+            'id' => $id
+        ]);
     }
 
     public function quitarTipoAcemilaPaquete($idTipoAcemilaPaquete){
         $tipo_acemila_paquete = TipoacemilaPaquetes::findOrFail($idTipoAcemilaPaquete);
         $tipo_acemila_paquete->delete();
-        session()->flash('message2', 'Pago por servicio eliminado correctamente');
+        session()->flash('success', 'Tipo de Acémila Eliminado Correctamente');
     }
 }

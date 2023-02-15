@@ -2,17 +2,17 @@
     {{-- In work, do what you enjoy. --}}
 
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTipoPersonalPaquete">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTipoTransportePaquete">
         Nuevo Vehiculo
     </button>
 
     <!-- Modal -->
-    <div wire:ignore.self data-backdrop="static" data-keyboard="false" class="modal fade" id="modalTipoPersonalPaquete"
+    <div wire:ignore.self data-backdrop="static" data-keyboard="false" class="modal fade" id="modalTipoTransportePaquete"
         tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tipo de Transporte</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{$title}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -30,7 +30,8 @@
                                         <label for="descripcion">
                                             Descripción
                                         </label>
-                                        <textarea class="form-control" wire:model.defer="descripcion" wire:loading.attr="disabled" id="descripcion" rows="3"></textarea>
+                                        <textarea class="form-control" wire:model.defer="descripcion" wire:loading.attr="disabled" id="descripcion"
+                                            rows="3"></textarea>
 
                                         @error('descripcion')
                                             <span class="text-danger">{{ $message }}</span>
@@ -44,8 +45,8 @@
                                         </label>
                                         <input type="number" wire:model.defer="cantidad" wire:loading.attr="disabled"
                                             class="form-control" id="cantidad" />
-                                        
-                                            @error('cantidad')
+
+                                        @error('cantidad')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -59,7 +60,7 @@
                                             wire:loading.attr="disabled">
                                             <option selected>---Seleccione---</option>
                                             @foreach ($tipos as $tipo)
-                                                <option value="{{$tipo->id}}">{{ $tipo->nombre_tipo }}</option>
+                                                <option value="{{ $tipo->id }}">{{ $tipo->nombre_tipo }}</option>
                                             @endforeach
                                         </select>
 
@@ -73,10 +74,19 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                    <button type="button" wire:loading.attr="disabled" wire:click="guardarTipoTransportePaquete"
-                        class="btn btn-primary">Guardar
-                        Cambios</button>
+                    <button type="button" id="close" wire:click="cerrarModal" class="btn btn-rounded btn-danger"
+                        wire:loading.attr="disabled">
+                        Cerrar
+                    </button>
+                    @if ($edicion)
+                        <button type="button" wire:click="Update" wire:loading.attr="disabled"
+                            class="btn btn-rounded btn-primary">Actualizar</button>
+                    @else
+                        <button type="button" wire:click="guardarTipoTransportePaquete" wire:loading.attr="disabled"
+                            class="btn btn-rounded btn-primary">Guardar
+                            </button>
+                    @endif
+
                 </div>
             </div>
         </div>
@@ -128,15 +138,13 @@
                                 {{ $lv->nombre_tipo }}
                             </td>
                             <td>
-                                <a href="#">
-                                    <!---->
-                                    <span class="btn btn-warning btn-sm">
-                                        <span class="fa fa-pencil-square-o"></span>
-                                    </span>
-                                </a>
-                                
-                                <button class="btn btn-danger btn-sm" title="Quitar Tipo de Personal" 
-                                    wire:loading.attr="disabled" wire:click="quitarTipoTransportePaquete({{ $lv->id }})">
+                                <button wire:click="Edit({{ $lv->id }})" class="btn btn-warning btn-sm">
+                                    <span class="fa fa-pencil-square-o"></span>
+                                </button>
+
+                                <button class="btn btn-danger btn-sm" title="Quitar Tipo de Personal"
+                                    wire:loading.attr="disabled"
+                                    wire:click="deleteConfirm({{ $lv->id }})">
                                     <span class="fa fa-minus"></span>
                                 </button>
                             </td>
@@ -147,4 +155,66 @@
             </table>
         </div>
     </div>
+
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                title: 'MUY BIEN',
+                text: "{{ session('success') }}",
+                icon: 'success'
+            })
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                title: "{{ session('error') }}",
+                icon: 'error'
+            })
+        </script>
+    @endif
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            //Lo que llega de CategoriesController
+            window.livewire.on('show-modal-tipo-transporte-paquete', msg => {
+                $('#modalTipoTransportePaquete').modal('show')
+            });
+            window.livewire.on('close-modal-tipo-transporte-paquete', msg => {
+                $('#modalTipoTransportePaquete').modal('hide')
+            });
+            window.livewire.on('category-updated', msg => {
+                $('#theModal').modal('hide')
+            });
+        });
+    </script>
+    <script>
+        window.addEventListener('swal-confirmTipoTransportePaquete', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('paquetes-admin.tipo-transporte-paquete.mostrar-tipo-transporte-paquete',
+                        'quitarTipoTransportePaquete',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+        window.addEventListener('swal', event => {
+
+            Swal.fire(
+                event.detail.title,
+                event.detail.text,
+                event.detail.icon
+            );
+        });
+    </script>
 </div>
