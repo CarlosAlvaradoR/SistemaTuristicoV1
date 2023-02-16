@@ -52,6 +52,10 @@ class LugaresAtractivos extends Component
         );
     }
 
+    public function refresh(){
+        $this->render();
+    }
+
     public function guardarLugar()
     {
         $this->validate([

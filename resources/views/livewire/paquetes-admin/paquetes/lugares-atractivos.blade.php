@@ -3,7 +3,7 @@
         <div class="col-lg-6 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Lista de Lugares</h5>
+                    <h5 class="card-title">Lista de Lugares - <button class="btn btn-sm btn-rounded btn-success" wire:click="refresh">Actualizar</button></h5>
 
                     <div class="row">
                         <div class="col-md-8">

@@ -141,7 +141,7 @@
         });
     </script>
     <script>
-        window.addEventListener('swal-confirmTipoPersonal', event => {
+        window.addEventListener('swal-confirmCategoriaHotel', event => {
             Swal.fire({
                 title: event.detail.title,
                 icon: event.detail.icon,

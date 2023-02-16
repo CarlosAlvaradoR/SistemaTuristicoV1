@@ -77,7 +77,7 @@ class ShowCategoriaHotelPaquetes extends Component
     public function deleteConfirm($id)
     {
 
-        $this->dispatchBrowserEvent('swal-confirmTipoPersonal', [
+        $this->dispatchBrowserEvent('swal-confirmCategoriaHotel', [
             'title' => 'Estás seguro que deseas eliminar la Categoría de Hotel ?',
             'icon' => 'warning',
             'id' => $id

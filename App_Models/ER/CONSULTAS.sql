@@ -94,7 +94,7 @@ WHERE tipo_id = 2;
 
 
 
-SELECT * FROM tipoalmuerzo_paquetes;
+SELECT * FROM actividades_itinerarios;
 
 
 

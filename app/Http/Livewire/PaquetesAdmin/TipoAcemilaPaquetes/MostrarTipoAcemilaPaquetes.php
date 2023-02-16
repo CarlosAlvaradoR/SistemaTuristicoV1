@@ -95,4 +95,10 @@ class MostrarTipoAcemilaPaquetes extends Component
         $tipo_acemila_paquete->delete();
         session()->flash('success', 'Tipo de Acémila Eliminado Correctamente');
     }
+
+    public function cerrarModal()
+    {
+        $this->emit('close-modal-acemila-paquete', 'Edicion de Atractivos');
+        $this->resetUI();
+    }
 }

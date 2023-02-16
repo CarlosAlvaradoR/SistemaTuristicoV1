@@ -73,16 +73,18 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" wire:loading.attr="disabled"
-                        data-dismiss="modal">Cerrar</button>
+                    <button type="button" id="close" wire:click="cerrarModal" class="btn btn-rounded btn-danger"
+                        wire:loading.attr="disabled">
+                        Cerrar
+                    </button>
                     @if ($edicion)
                         <button type="button" wire:loading.attr="disabled" wire:click="Update"
-                            class="btn btn-primary">Actualizar
-                            </button>
+                            class="btn btn-rounded btn-primary">Actualizar
+                        </button>
                     @else
                         <button type="button" wire:loading.attr="disabled" wire:click="guardarTipoAcemilaPaquete"
-                            class="btn btn-primary">Guardar
-                            </button>
+                            class="btn btn-rounded btn-primary">Guardar
+                        </button>
                     @endif
 
                 </div>
@@ -136,8 +138,7 @@
                                 </button>
 
                                 <button class="btn btn-danger btn-sm" title="Quitar Tipo de Acémila del Paquete"
-                                    wire:loading.attr="disabled"
-                                    wire:click="deleteConfirm({{ $lv->id }})">
+                                    wire:loading.attr="disabled" wire:click="deleteConfirm({{ $lv->id }})">
                                     <span class="fa fa-minus"></span>
                                 </button>
                             </td>

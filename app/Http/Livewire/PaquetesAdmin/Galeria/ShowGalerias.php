@@ -120,5 +120,10 @@ class ShowGalerias extends Component
         $this->resetUI();
     }
 
+    function close(){
+        $this->emit('close-modal', 'Edición de Galerías');
+        $this->resetUI();
+    }
+
     
 }

@@ -68,8 +68,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" wire:loading.attr="disabled"
-                        data-dismiss="modal">Cerrar</button>
+                    <button type="button" wire:click="close" class="btn btn-danger" wire:loading.attr="disabled"
+                        >Cerrar</button>
                     @if ($edicion)
                         <button type="button" wire:loading.attr="disabled" wire:click="Update"
                             class="btn btn-primary">Actualizar</button>
