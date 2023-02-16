@@ -107,8 +107,8 @@
             <div class="card">
                 <div class="card-block">
                     <h5 class="card-title">Sobre las Reservas</h5>
-                    <div class="container-fluid">
-                        <div class="col-md-4 col-sm-6">
+                    <div class="row">
+                        <div class="col-lg-4">
                             <fieldset class="form-group">
                                 <label class="form-label" for="fecha_reserva">Fecha de Reserva</label>
                                 <input type="date" wire:model.defer="fecha_reserva" class="form-control"
@@ -117,9 +117,8 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </fieldset>
-
                         </div>
-                        <div class="col-md-4 col-sm-6">
+                        <div class="col-lg-4">
                             <fieldset class="form-group">
                                 <label class="form-label" for="exampleInputDisabled">Monto S/. (Y también Para
                                     BD)</label>
@@ -127,7 +126,7 @@
                                     placeholder="First Name" disabled>
                             </fieldset>
                         </div>
-                        <div class="col-md-4 col-sm-6">
+                        <div class="col-lg-4">
                             <fieldset class="form-group">
                                 <label class="form-label" for="observacion">Observación</label>
                                 <textarea class="form-control" wire:model.defer="observacion" id="observacion" rows="3"></textarea>
@@ -136,10 +135,6 @@
                                 @enderror
                             </fieldset>
                         </div>
-
-
-
-
                     </div>
                 </div>
             </div>
@@ -149,20 +144,41 @@
             <div class="card">
                 <div class="card-block">
                     <h5 class="card-title">Pagos</h5>
-                    <div class="col-md-4 col-sm-6">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="exampleInputDisabled">Monto de Pago S/.</label>
+                                <input type="text" wire:model.defer="monto" class="form-control"
+                                    id="exampleInputDisabled" placeholder="Ingrese Monto del Pago">
+                                @error('monto')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-8">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="archivo_pago">Archivo de Pago</label>
+                                <input type="file" name="archivo_pago" class="form-control-file"
+                                    id="archivo_pago" />
+                            </fieldset>
+                        </div>
+                        <!--<div class="col-lg-4">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="exampleInputPassword1">Password</label>
+                                <input type="password" class="form-control maxlength-always-show"
+                                    id="exampleInputPassword1" placeholder="Password" maxlength="10">
+                                <small class="text-muted">Max length 10, always show</small>
+                            </fieldset>
+                        </div>-->
+                    </div>
+                    <!--<div class="col-md-4 col-sm-6">
                         <fieldset class="form-group">
-                            <label class="form-label" for="exampleInputDisabled">Pago S/.</label>
-                            <input type="text" wire:model.defer="monto" class="form-control"
-                                id="exampleInputDisabled" placeholder="Ingrese Monto del Pago">
-                            @error('monto')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+
                         </fieldset>
                     </div>
                     <div class="col-md-4 col-sm-6">
                         <fieldset class="form-group">
-                            <label class="form-label" for="archivo_pago">Archivo de Pago</label>
-                            <input type="file" name="archivo_pago" class="form-control-file" id="archivo_pago" />
+
                         </fieldset>
                     </div>
                     <div class="col-md-4 col-sm-6">
@@ -194,7 +210,7 @@
                                 <option>Semana Santa - 12/12/2022 </option>
                             </select>
                         </fieldset>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>
