@@ -35,7 +35,7 @@
                         </div>
                         <div class="col-md-2">
                             <br>
-                            <a id="modal-918849" href="#modal-container-918849" role="button" class="btn"
+                            <a id="modal-918849" href="#modal-viaje-paquete" role="button" class="btn"
                                 data-toggle="modal">Nuevo Viaje</a>
                         </div>
                     </div>
@@ -81,8 +81,8 @@
                                                     href="{{ route('paquete.viajes.participantes', [$paquete, $v->id]) }}"><i
                                                         class="fas fa-user-friends"></i> Part. del
                                                     Viaje</a>
-                                                <a class="dropdown-item" href="#"><i
-                                                        class="fa-solid fa-eye"></i> Detalles del
+                                                <a class="dropdown-item" href="#"><i class="fa-solid fa-eye"></i>
+                                                    Detalles del
                                                     Viaje</a>
                                                 <a class="dropdown-item"
                                                     href="{{ route('paquete.viajes.traslados', [$paquete, $v->id]) }}"><i
@@ -103,75 +103,32 @@
                                                 <a class="dropdown-item"
                                                     href="{{ route('paquete.viajes.itinerario', [$paquete, $v->id]) }}"><i
                                                         class="fas fa-clipboard-list"></i> Itinerarios del Viaje</a>
-                                                <a class="dropdown-item"
-                                                    href="#!"><i
+                                                <a class="dropdown-item" href="#!"><i
                                                         class="glyphicon fas fa-users"></i> Arrieros, Cocineros y
                                                     Guías</a>
                                                 <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="{{ route('paquete.viajes.arriero', [$paquete, $v->id]) }}">Arrieros</a>
-                                                <a class="dropdown-item" href="{{ route('paquete.viajes.cocineros', [$paquete, $v->id]) }}">Cocineros</a>
-                                                <a class="dropdown-item" href="{{ route('paquete.viajes.guias', [$paquete, $v->id]) }}">Guías</a>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('paquete.viajes.arriero', [$paquete, $v->id]) }}">Arrieros</a>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('paquete.viajes.cocineros', [$paquete, $v->id]) }}">Cocineros</a>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('paquete.viajes.guias', [$paquete, $v->id]) }}">Guías</a>
                                             </div>
                                         </div>
                                     </td>
-                                    <td style="white-space: nowrap; width: 1%;">
-                                        <div class="tabledit-toolbar btn-toolbar" style="text-align: left;">
-                                            <div class="btn-group btn-group-sm" style="float: none;">
-                                                <!--<a href="" title="Participantes del Viaje"
-                                                    class="tabledit-edit-button btn btn-sm btn-default"
-                                                    style="float: none;">
-                                                    <i class="fas fa-user-friends"></i>
-                                                </a>
-                                                <a href="#!" title="Ver detalles del Paquete"
-                                                    class="tabledit-edit-button btn btn-sm btn-default"
-                                                    style="float: none;">
-                                                    <i class="fa-solid fa-eye"></i>
-                                                </a>
-                                                <a href="" title="Traslados del Viaje"
-                                                    class="tabledit-edit-button btn btn-sm btn-default"
-                                                    style="float: none;">
-                                                    <i class="fas fa-map"></i>
-                                                </a>
-                                                <a href="" title="Almuerzos del Viaje"
-                                                    class="tabledit-edit-button btn btn-sm btn-default"
-                                                    style="float: none;">
-                                                    <i class="fas fa-utensils"></i>
-                                                </a>
-                                                <a href="" title="Boletas de Pago del Viaje"
-                                                    class="tabledit-edit-button btn btn-sm btn-default"
-                                                    style="float: none;">
-                                                    <i class="fas fa-money-check"></i>
-                                                </a>
-                                                <a href="" title="Actividades de Aclimatación"
-                                                    class="tabledit-edit-button btn btn-sm btn-default"
-                                                    style="float: none;">
-                                                    <i class="fas fa-snowboarding"></i>
-                                                </a>
-                                                <a href="" title="Hospedajes"
-                                                    class="tabledit-edit-button btn btn-sm btn-default"
-                                                    style="float: none;">
-                                                    <i class="fas fa-hotel"></i>
-                                                </a>
-                                                <a href="" title="Itinerarios del Viaje"
-                                                    class="tabledit-edit-button btn btn-sm btn-default"
-                                                    style="float: none;">
-                                                    <i class="fas fa-clipboard-list"></i>
-                                                </a>
-                                                <a href="" title="Arrieros, Cocineros y Guías"
-                                                    class="tabledit-edit-button btn btn-sm btn-default"
-                                                    style="float: none;">
-                                                    <i class="glyphicon fas fa-users"></i>
-                                                </a>-->
-                                                <button type="button"
-                                                    class="tabledit-edit-button btn btn-sm btn-default"
-                                                    style="float: none;"><span
-                                                        class="glyphicon glyphicon-pencil"></span></button>
-                                                <button type="button"
-                                                    class="tabledit-delete-button btn btn-sm btn-default"
-                                                    style="float: none;"><span
-                                                        class="glyphicon glyphicon-trash"></span></button>
-                                            </div>
-                                        </div>
+                                    <td>
+                                        <button type="button" wire:click="Edit({{ $v->id }})"
+                                            class="tabledit-edit-button btn btn-sm btn-warning" style="float: none;">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </button>
+                                        <a href="{{-- route('viajes.empresas_transporte.vehiculos', $e) --}}" title="Ver vehículos de la empresa"
+                                            class="tabledit-edit-button btn btn-sm btn-primary" style="float: none;">
+                                            <i class="glyphicon fas fa-shuttle-van"></i>
+                                        </a>
+                                        <button type="button" wire:click="deleteConfirm({{ $v->id }})" class="tabledit-delete-button btn btn-sm btn-danger"
+                                            style="float: none;">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -184,8 +141,8 @@
     </div>
 
     <!--MODAL --->
-    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false"
-        id="modal-container-918849" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal-viaje-paquete"
+        role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -250,12 +207,22 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                        <button type="button" id="cl-v-p" class="btn btn-rounded btn-danger"
+                            wire:loading.attr="disabled" data-dismiss="modal">
                             Cerrar
                         </button>
-                        <button type="button" wire:click="saveViaje" class="btn btn-rounded btn-primary">
-                            Guardar
-                        </button>
+                        @if ($edicion)
+                            <button type="button" id="upd-v-p" wire:click="Update" wire:loading.attr="disabled"
+                                class="btn btn-rounded btn-primary">
+                                Actualizar
+                            </button>
+                        @else
+                            <button type="button" id="sav-v-p" wire:click="saveViaje"
+                                wire:loading.attr="disabled" class="btn btn-rounded btn-primary">
+                                Guardar
+                            </button>
+                        @endif
+
 
                     </div>
 
@@ -265,4 +232,40 @@
         </div>
     </div>
     <!-- END MODAL-->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            //Lo que llega de CategoriesController
+            window.livewire.on('show-modal-viaje-paquete', msg => {
+                $('#modal-viaje-paquete').modal('show')
+            });
+            window.livewire.on('close-modal-pago-servicio', msg => {
+                $('#modal-viaje-paquete').modal('hide')
+            });
+            window.livewire.on('category-updated', msg => {
+                $('#theModal').modal('hide')
+            });
+        });
+
+        window.addEventListener('swal-confirm-Viaje', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('viajes-admin.viajes.viajes',
+                        'deleteViaje',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+    </script>
+
+    @include('common.alerts')
 </div>
