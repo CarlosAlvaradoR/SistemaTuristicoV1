@@ -31,7 +31,7 @@
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     @livewireStyles
 </head>
 

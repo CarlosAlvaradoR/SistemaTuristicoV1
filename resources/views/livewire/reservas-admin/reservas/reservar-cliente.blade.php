@@ -309,14 +309,12 @@
                         <div class="form-group">
                             @if ($encontradoComoPersona && !$encontradoComoCliente)
                                 <button type="button" wire:click="saveReservaP" wire:loading.attr="disabled"
-                                    class="btn btn-inline">Grabar
-                                    Reserva Persona Nueva</button>
+                                    class="btn btn-inline"> <i class="fas fa-calendar-check"></i> Grabar reserva</button>
                             @endif
 
                             @if ($encontradoComoPersona && $encontradoComoCliente)
                                 <button type="button" wire:click="saveReserva" wire:loading.attr="disabled"
-                                    class="btn btn-inline">Grabar
-                                    Reserva CLIENTE EXISTENTE</button>
+                                    class="btn btn-inline"><i class="fas fa-calendar-check"></i> Grabar reserva</button>
                             @endif
 
                             <!--<a href="#!" wireclick="detalle">DetalleArchivo</a>-->
@@ -328,4 +326,7 @@
 
 
     </div>
+
+   @include('common.alerts')
+
 </div>

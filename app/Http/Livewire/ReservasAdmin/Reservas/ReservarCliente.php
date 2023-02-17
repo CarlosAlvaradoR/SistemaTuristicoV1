@@ -29,6 +29,7 @@ class ReservarCliente extends Component
     public $precio = 0, $paquete_id = 0, $paquete;
     public $insertar_archivo = false;
 
+    public $nacionalidad, $numero_pasaporte, $archivo_pasaporte;
     public $encontradoComoCliente = false, $encontradoComoPersona = false, $no_existe = false;
     public $message = '';
 
@@ -96,16 +97,30 @@ class ReservarCliente extends Component
     }
 
     public function saveReservaP()
-    { //CUANDO ESTÁ COMO PERSONA
-        dd('GUARDANDO COMO PERSONA');
+    { //CUANDO ESTÁ COMO PERSONA ENCONTRADA PERO NO COMO CLIENTE
+        //dd('GUARDANDO COMO PERSONA');
         $this->validate(
             [
+                'nacionalidad' => 'required',
+                'numero_pasaporte' => 'nullable|min:3|max:15',
                 'fecha_reserva' => 'required',
                 'monto' => 'required',
                 'numero_autorizacion' => 'nullable|min:2|max:15',
                 'archivo_autorizacion' => 'nullable|mimes:jpeg,png,pdf|required_if:numero_autorizacion,min:2',
             ]
         );
+
+        $precio_minimo = $this->paquete->precio * 0.20;
+        //dd($precio_minimo);
+        if ($this->monto < $precio_minimo) {
+            $this->dispatchBrowserEvent('swal', [
+                'title' => 'ALERTA',
+                'icon' => 'warning',
+                'text' => 'El pago debe de ser de al menos el 20 %'
+            ]);
+
+            return;
+        }
 
         if (strlen(trim($this->numero_autorizacion)) >= 3) {
             if (!$this->archivo_autorizacion) {
@@ -118,11 +133,11 @@ class ReservarCliente extends Component
         $cliente = Clientes::create([
             'persona_id' => $this->idPersona,
             //'user_id', 
-            'nacionalidad_id' => 1
+            'nacionalidad_id' => $this->nacionalidad
         ]);
         $pasaportes = Pasaportes::create([
-            'numero_pasaporte' => 'AAAA',
-            'ruta_archivo_pasaporte' => 'ff0s',
+            'numero_pasaporte' => $this->numero_pasaporte,
+            'ruta_archivo_pasaporte' => $this->archivo_pasaporte,
             'cliente_id' => $cliente->id
         ]);
         $reserva = Reservas::create([
@@ -172,6 +187,18 @@ class ReservarCliente extends Component
                 'archivo_autorizacion' => 'nullable|mimes:jpeg,png,pdf|required_if:numero_autorizacion,min:2',
             ]
         );
+
+        $precio_minimo = $this->paquete->precio * 0.20;
+        //dd($precio_minimo);
+        if ($this->monto < $precio_minimo) {
+            $this->dispatchBrowserEvent('swal', [
+                'title' => 'ALERTA',
+                'icon' => 'warning',
+                'text' => 'El pago debe de ser de al menos el 20 %'
+            ]);
+
+            return;
+        }
 
         if (strlen(trim($this->numero_autorizacion)) >= 3) {
             if (!$this->archivo_autorizacion) {
