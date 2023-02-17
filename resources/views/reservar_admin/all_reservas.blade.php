@@ -87,6 +87,7 @@
                                 <th scope="col">Fecha de Reserva</th>
                                 <th scope="col">Monto</th>
                                 <th scope="col">Estado</th>
+                                <th scope="col">Estado de Cumplimiento</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
@@ -104,6 +105,13 @@
                                             <span class="label label-success">{{ $r->nombre_estado }}</span>
                                         @else
                                             <span class="label label-danger">{{ $r->nombre_estado }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($r->estado_reserva == 'PRÓXIMA A CUMPLIRSE')
+                                            <span class="label label-warning">{{ $r->estado_reserva }}</span>
+                                        @else
+                                            <span class="label label-primary">{{ $r->estado_reserva }}</span>
                                         @endif
                                     </td>
                                     <td style="white-space: nowrap; width: 1%;">

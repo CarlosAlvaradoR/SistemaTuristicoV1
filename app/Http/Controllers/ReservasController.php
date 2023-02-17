@@ -119,7 +119,8 @@ class ReservasController extends Controller
             //'SUM(pa.monto) as pago',
             DB::raw('SUM(pa.monto) as pago'),
             'er.nombre_estado',
-            'r.id'
+            'r.id',
+            DB::raw('IF((fecha_reserva-curdate()) <=10 ,"PRÓXIMA A CUMPLIRSE","EN DETERMINACIÓN") as estado_reserva')
         )
             ->join('clientes as c', 'personas.id', '=', 'c.persona_id')
             ->join('reservas  as r', 'r.cliente_id', '=', 'c.id')

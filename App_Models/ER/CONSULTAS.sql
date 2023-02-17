@@ -137,9 +137,10 @@ INNER JOIN reservas r on r.cliente_id=c.id
 INNER JOIN paquetes_turisticos pt on pt.id=r.paquete_id
 INNER JOIN estado_reservas er on er.id = r.estado_reservas_id;
 
-
+-- LISTA DE RESERCAS DE LOS CLIENTES
 SELECT p.dni, concat(p.nombre, ' ',p.apellidos) as datos, 
-pt.nombre, r.fecha_reserva, SUM(pa.monto) as pago,er.nombre_estado, b.numero_boleta,r.id 
+pt.nombre, r.fecha_reserva, SUM(pa.monto) as pago,er.nombre_estado, b.numero_boleta,r.id,
+IF((fecha_reserva-curdate()) <=10 ,"PRÓXIMA A CUMPLIRSE","EN DETERMINACIÓN") as estado_reserva
 FROM personas p
 INNER JOIN clientes c on p.id=c.persona_id
 INNER JOIN reservas r on r.cliente_id=c.id
@@ -151,8 +152,10 @@ GROUP BY pa.reserva_id
 
 ORDER BY r.updated_at;
 
--- CONSULTA PARA VERIFICAR EVENTOS QUE NO ESTAN EN LAS POSTERGACIÓN
 
+
+-- CONSULTA PARA VERIFICAR EVENTOS QUE NO ESTAN EN LAS POSTERGACIÓN
+SELECT * FROM reservas;
 
 SELECT * FROM evento_postergaciones ep
 WHERE ep.id NOT IN (SELECT pr.evento_postergaciones_id 
