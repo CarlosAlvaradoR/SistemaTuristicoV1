@@ -29,7 +29,7 @@
                                         <button type="button"
                                             wire:click="AsignarParticipanteViaje({{ $cr->idReserva }})"
                                             title="Añadir a la lista de Participantes"
-                                            class="btn btn-sm btn-rounded btn-success">
+                                            class="btn btn-sm btn-rounded btn-success" wire:loading.attr="disabled">
                                             <i class="fal fa-plus"></i>
                                         </button>
                                     </td>
@@ -64,7 +64,7 @@
                                     </td>
                                     <td>
                                         <button type="button" wire:click="quitarParticipante({{$p->id}})" title="Quitar de la Lista de Participantes"
-                                            class="btn btn-sm btn-rounded btn-danger">
+                                            class="btn btn-sm btn-rounded btn-danger" wire:loading.attr="disabled">
                                             <i class="fas fa-minus"></i>
                                         </button>
                                     </td>
@@ -77,4 +77,6 @@
             </div>
         </div>
     </div>
+
+    @include('common.alerts')
 </div>

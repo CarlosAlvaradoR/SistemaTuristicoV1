@@ -4,6 +4,7 @@ namespace App\Http\Livewire\ViajesAdmin\Participantes;
 
 use App\Models\PaquetesTuristicos;
 use App\Models\Viajes\Participantes as ViajesParticipantes;
+use App\Models\Viajes\ViajePaquetes;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -55,12 +56,30 @@ class Participantes extends Component
 
     public function AsignarParticipanteViaje($idReserva)
     {
-        $par = ViajesParticipantes::create(
+        $viaje = ViajePaquetes::findOrFail($this->idViaje);
+        $registrados = ViajesParticipantes::where('viaje_paquetes_id', $this->idViaje)->get();
+        if ($viaje->cantidad_participantes == count($registrados)) {
+            $this->dispatchBrowserEvent('swal', [
+                'title' => 'ALERTA',
+                'icon' => 'warning',
+                'text' => 'El Viaje ya se encuentra en su máxima Capacidad'
+            ]);
+
+            return;
+        }
+
+        $par = ViajesParticipantes::create( //Table Participantes
             [
                 'viaje_paquetes_id' => $this->idViaje,
                 'reserva_id' => $idReserva
             ]
         );
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'MUY BIEN',
+            'icon' => 'success',
+            'text' => 'Participante añadido corretamente al Viaje'
+        ]);
     }
 
     public function quitarParticipante(ViajesParticipantes $participantes){
