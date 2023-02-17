@@ -125,4 +125,21 @@ class PaquetesTuristicosController extends Controller
         return view('paquetes_admin.tipo_almuerzos');
     }
 
+
+
+
+
+
+
+
+
+    /** VER EQUIPOS TEMPORALMENTE */
+    public function VerEquipos(){
+        return view('equipos_admin.index_equipos');
+    }
+
+    public function VerMarcas(){
+        return view('equipos_admin.marcas_index');
+    }
+
 }
