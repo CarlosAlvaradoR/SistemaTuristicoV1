@@ -110,10 +110,11 @@ SELECT * FROM actividades_itinerarios;
 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  /* BUSCAR CLIENTE*/
 -- ///////////RESERVAS /////////////////////////////////////////////**************************
-SELECT p.dni, concat(p.nombre,' ',p.apellidos) as datos, c.id as idCliente FROM personas p
-INNER JOIN clientes c on p.id = c.persona_id
-WHERE p.dni = "83327-9128";
-
+CREATE OR REPLACE VIEW v_reserva_lista_clientes_registrados AS
+SELECT p.id, p.dni, concat(p.nombre,' ',p.apellidos) as datos,  p.telefono, c.id as idCliente FROM personas p
+LEFT JOIN clientes c on p.id = c.persona_id;
+-- WHERE p.dni = "83327-9128";
+SELECT * FROM v_reserva_lista_clientes_registrados;
 
 /* CONSULTAR LOS RIESGOS QUE AÚN NO ACEPTA EL CLIENTE*/
 SELECT * FROM riesgos r

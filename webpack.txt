@@ -178,7 +178,9 @@ MIGRACIONES Y MÓDELOS
         php artisan make:model Reservas/AutorizacionesMedicas -r
 
     
-    
+        /* VISTAS*/
+        php artisan make:migration create_view_v_reserva_lista_clientes_registrados_table --path=/database/migrations/reservas
+            
     
     
     

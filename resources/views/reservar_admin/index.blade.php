@@ -7,11 +7,11 @@
     <div class="container-fluid">
         <header class="section-header">
             <div class="tbl">
-                <h3>Reservar</h3>
+                <h3>Reservas</h3>
                 <ol class="breadcrumb breadcrumb-simple">
-                    <li><a href="#">Paquetes</a></li>
-                    <li><a href="#">{{$slug->nombre}}</a></li>
-                    <li class="active">Reservar</li>
+                    <li><a href="#">Reservas</a></li>
+                    <li><a href="#">Paquete</a></li>
+                    <li class="active">{{$slug->nombre}}</li>
                 </ol>
             </div>
         </header>
