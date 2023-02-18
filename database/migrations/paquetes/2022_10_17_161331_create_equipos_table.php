@@ -16,6 +16,10 @@ class CreateEquiposTable extends Migration
         Schema::create('equipos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->text('descripcion');
+            $table->integer('stock');
+            $table->decimal('precio_referencial', 10,2);
+            $table->enum('tipo', ['EQUIPO', 'IMPLEMENTO']);
             
             $table->unsignedBigInteger('marca_id');
             $table->foreign('marca_id')->references('id')->on('marcas');

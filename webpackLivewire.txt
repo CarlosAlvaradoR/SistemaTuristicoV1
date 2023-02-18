@@ -138,3 +138,43 @@ VIAJES
        php artisan make:livewire ViajesAdmin/Viajes/Guia/Guia
 
        php artisan make:livewire ViajesAdmin/Viajes/Arriero/Arriero
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+EQUIPOS ADMIN
+
+    EQUIPOS
+       php artisan make:livewire EquiposAdmin/Equipos/Equipos
+
+    MARCAS
+       php artisan make:livewire EquiposAdmin/Marcas/Marcas

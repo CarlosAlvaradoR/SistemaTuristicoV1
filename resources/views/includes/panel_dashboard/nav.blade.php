@@ -103,7 +103,7 @@
                 <span class="lbl">Equipos</span>
             </span>
             <ul>
-                <li><a href="{{ route('equipos.index') }}"><span class="lbl">Ver Todo (Lo Ideal)</span><span
+                <li><a href="{{ route('equipos.index') }}"><span class="lbl">Ver Equipos</span><span
                             class="label label-custom label-pill label-succes">new</span></a></li>
                 <li><a href="{{ route('marcas.index') }}"><span class="lbl">Marcas</span></a></li>
             </ul>
