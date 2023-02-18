@@ -52,8 +52,10 @@ class MostrarRiesgos extends Component
         $this->dispatchBrowserEvent('swal', [
             'title' => 'MUY BIEN !',
             'icon' => 'success',
-            'text' => 'Registrado Correctamente'
+            'text' => 'Riego Registrado Correctamente'
         ]);
+
+        $this->resetUI();
     }
 
     public function Edit(Riesgos $riesgo)
@@ -74,7 +76,11 @@ class MostrarRiesgos extends Component
         $tipo->descripcion = $this->descripcion;
         $tipo->save();
 
-        session()->flash('success', 'Actualizado Correctamente');
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'MUY BIEN !',
+            'icon' => 'success',
+            'text' => 'Riesgo Actuaizado Correctamente'
+        ]);
 
         $this->emit('close-modal-riesgo-paquete', 'Edicion de Atractivos');
         $this->resetUI();

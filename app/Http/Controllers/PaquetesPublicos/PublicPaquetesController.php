@@ -32,6 +32,11 @@ class PublicPaquetesController extends Controller
         $galerias = FotoGalerias::where('paquete_id', $paquete->id)
             ->get();
 
+        $mapa = DB::table('mapa_paquetes as mp')
+            ->where('mp.paquete_id', $paquete->id)
+            ->select('mp.ruta', 'mp.descripcion')
+            ->first();
+
         $lugares = DB::table('lugares as l')
             ->join('atractivos_turisticos as atu', 'atu.lugar_id', '=', 'l.id')
             ->join('visita_atractivos_paquetes as vap', 'vap.atractivo_id', '=', 'atu.id')
@@ -105,6 +110,7 @@ class PublicPaquetesController extends Controller
             compact(
                 'paquete',
                 'galerias',
+                'mapa',
                 'lugares',
                 'itinerarios',
                 'boletos_pagar_paquete',

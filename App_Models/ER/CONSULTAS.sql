@@ -11,6 +11,10 @@ SELECT r.descripcion, r.id FROM paquetes_turisticos pt
 INNER JOIN riesgos r on r.paquete_id = pt.id
 WHERE r.paquete_id = 1;
 
+-- MAPA PARA LA PARTE PÚBLICA
+SELECT mp.id, mp.ruta, mp.descripcion FROM mapa_paquetes mp
+WHERE mp.paquete_id = 1
+LIMIT 1;
 
 -- LUGARES A VISITAR PARA LA PARTE PÚBLICA
 SELECT l.nombre, atu.nombre_atractivo FROM lugares l

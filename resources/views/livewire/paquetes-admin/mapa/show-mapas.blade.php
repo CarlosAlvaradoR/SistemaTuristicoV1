@@ -42,13 +42,13 @@
                             <div class="form-group">
                                 
                                 @if ($edicion)
-                                    <label for="">Mapa Anterior</label>
+                                    <label for="">Mapa Registrado</label>
                                     <img src="{{ asset('/' . $mapa_anterior) }}" width="170" height="170">
                                 @endif
 
                                 @if ($ruta)
                                     <label for="">Nuevo Mapa</label>
-                                    <img src="{{ $ruta->temporaryUrl() }}" width="280" height="250">
+                                    <img src="{{ $ruta->temporaryUrl() }}" width="170" height="170">
                                 @endif
                             </div>
                         </div>

@@ -51,6 +51,13 @@ class MostrarCondicionesPuntualidad extends Component
             'descripcion' => $this->descripcion,
             'paquete_id' => $this->idPaquete
         ]);
+
+        $this->resetUI();
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'MUY BIEN',
+            'icon' => 'success',
+            'text' => 'Confición Registrada Correctamente' 
+        ]);
     }
 
     public function Edit(CondicionPuntualidades $tipo)
@@ -71,7 +78,11 @@ class MostrarCondicionesPuntualidad extends Component
         $tipo->descripcion = $this->descripcion;
         $tipo->save();
 
-        session()->flash('success', 'Actualizado Correctamente');
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'MUY BIEN',
+            'icon' => 'success',
+            'text' => 'Condición Actualizada Correctamente' 
+        ]);
 
         $this->emit('close-modal-tipo-personal', 'Edicion de Atractivos');
         $this->resetUI();

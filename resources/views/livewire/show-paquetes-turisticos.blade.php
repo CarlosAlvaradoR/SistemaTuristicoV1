@@ -44,15 +44,15 @@
                     <a href="{{ route('paquetes.edit', $paquete) }}" title="Editar">
                         <i class="fa fa-pencil-square-o"></i>
                     </a>
-                    <a href="#" title="Ver Información del Paquete">
+                    <!--<a href="#" title="Ver Información del Paquete">
                         <i class="fa fa-eye"></i>
-                    </a>
+                    </a>-->
                     <!--{$paquete->slug}-->
-                    <a href="{{ route('paquete.viajes', $paquete) }}" title="Viajes del Paquete">
-                        <i class="fas fa-shuttle-van"></i>
-                    </a>
                     <a href="{{ route('paquetes.reservar', $paquete) }}" title="Reservar">
                         <i class="fa fa-cart-plus"></i>
+                    </a>
+                    <a href="{{ route('paquete.viajes', $paquete) }}" title="Viajes del Paquete">
+                        <i class="fas fa-shuttle-van"></i>
                     </a>
                     <a href="#" title="Inactivar">
                         <i class="fa fa-minus"></i>
