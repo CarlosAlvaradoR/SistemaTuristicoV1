@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Equipos extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre', 'marca_id'];
+    protected $fillable = ['nombre', 'descripcion', 'stock', 'precio_referencial', 'tipo', 'marca_id'];
 }
