@@ -25,9 +25,8 @@
         <div class="tbl">
             <h3>Viajes</h3>
             <ol class="breadcrumb breadcrumb-simple">
-                <li><a href="#">Paquetes</a></li>
-                <li><a href="#">Semana Santa</a></li>
-                <li class="active">Traslados del Viaje</li>
+                <li><a href="#">Viajes</a></li>
+                <li class="active">Empresas de Transporte</li>
             </ol>
         </div>
         </header>

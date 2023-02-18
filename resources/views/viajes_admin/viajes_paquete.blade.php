@@ -25,7 +25,8 @@
         <div class="tbl">
             <h3>Viajes</h3>
             <ol class="breadcrumb breadcrumb-simple">
-                <li><a href="#">Paquetes</a></li>
+                <li><a href="#">Viajes</a></li>
+                <li><a href="#">Paquete</a></li>
                 <li><a href="#">{{ $paquete->nombre }}</a></li>
                 <li class="active">Lista de Viajes</li>
             </ol>
