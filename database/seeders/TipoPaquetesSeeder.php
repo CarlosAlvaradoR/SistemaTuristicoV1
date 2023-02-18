@@ -20,6 +20,18 @@ class TipoPaquetesSeeder extends Seeder
             'nombre' => 'Standar'
         ]);
         TipoPaquetes::create([
+            'nombre' => 'Programas de estancias'
+        ]);
+        TipoPaquetes::create([
+            'nombre' => 'circuitos ( terrestres y aeroterrestres)'
+        ]);
+        TipoPaquetes::create([
+            'nombre' => 'Larga distancia'
+        ]);
+        TipoPaquetes::create([
+            'nombre' => 'Viajes alternativos'
+        ]);
+        TipoPaquetes::create([
             'nombre' => 'Personalizado'
         ]);
 
