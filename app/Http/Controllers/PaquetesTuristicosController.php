@@ -126,7 +126,26 @@ class PaquetesTuristicosController extends Controller
     }
 
 
+    /** VER PEDIDOS TEMPORALMENTE */
+    public function VerProveedores(){
+        return view('pedidos_proveedores_admin.index_proveedores');
+    }
 
+    public function VerCuentasBancarias(){
+        return view('pedidos_proveedores_admin.cuentas_bancarias');
+    }
+
+    public function VerPedidosGenerales(){
+        return view('pedidos_proveedores_admin.pedidos_proveedor');
+    }
+
+    public function RealizarPedido(){
+        return view('pedidos_proveedores_admin.formulario_pedido_proveedor');
+    }
+
+    public function detallePedido(){
+        return view('pedidos_proveedores_admin.detalles_pedido');
+    }
 
 
 

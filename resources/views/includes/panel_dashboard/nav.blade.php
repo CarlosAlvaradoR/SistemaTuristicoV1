@@ -91,9 +91,9 @@
                 <span class="lbl">Pedidos</span>
             </span>
             <ul>
-                <li><a href="#"><span class="lbl">Proveedores</span><span
+                <li><a href="{{ route('pedidos.proveedores.index') }}"><span class="lbl">Proveedores</span><span
                             class="label label-custom label-pill label-danger">new</span></a></li>
-                <li><a href="#"><span class="lbl">Pedidos Proveedor</span></a></li>
+                <li><a href="{{ route('pedidos.proveedores.general') }}"><span class="lbl">Pedidos Proveedor</span></a></li>
             </ul>
         </li>
 
