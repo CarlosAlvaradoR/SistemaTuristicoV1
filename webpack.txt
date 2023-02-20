@@ -367,3 +367,39 @@ MIGRACIONES Y MÓDELOS
         *) Tabla Pago Proveedores
         php artisan make:migration create_pago_proveedores_table --path=/database/migrations/pedidos
         php artisan make:model Pedidos/PagoProveedores -r
+
+
+
+
+
+
+
+    
+    MÓDULO INVENTARIOS
+        *) Tabla Estados
+        php artisan make:migration create_estados_table --path=/database/migrations/inventario
+        php artisan make:model Inventario/Estados -r
+
+        *) Tabla Estado Equipos
+        php artisan make:migration create_estado_equipos_table --path=/database/migrations/inventario
+        php artisan make:model Inventario/EstadoEquipos -r
+
+        *) Tabla Baja Equipos
+        php artisan make:migration create_baja_equipos_table --path=/database/migrations/inventario
+        php artisan make:model Inventario/BajaEquipos -r
+
+        *) Tabla Entrega Equipos
+        php artisan make:migration create_entrega_equipos_table --path=/database/migrations/inventario
+        php artisan make:model Inventario/EntregaEquipos -r
+
+        *) Tabla Detalle Entregas
+        php artisan make:migration create_detalle_entregas_table --path=/database/migrations/inventario
+        php artisan make:model Inventario/DetalleEntregas -r
+
+        *) Tabla Ingreso Pedidos
+        php artisan make:migration create_ingreso_pedidos_table --path=/database/migrations/inventario
+        php artisan make:model Inventario/IngresoPedidos -r
+
+        *) Tabla Detalle Ingresos
+        php artisan make:migration create_detalle_ingresos_table --path=/database/migrations/inventario
+        php artisan make:model Inventario/DetalleIngresos -r
