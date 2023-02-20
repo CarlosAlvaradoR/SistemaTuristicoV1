@@ -503,8 +503,8 @@ INNER JOIN asociaciones aso on aso.id = a.asociaciones_id;
 
 
 
-
-
+/********************** PEDIDOS PROVEEDORES *********************/
+SELECT * FROM proveedores;
 
 
 
