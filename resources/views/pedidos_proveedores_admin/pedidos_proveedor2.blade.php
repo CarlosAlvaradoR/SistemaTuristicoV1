@@ -26,8 +26,7 @@
             <h3>Pedidos</h3>
             <ol class="breadcrumb breadcrumb-simple">
                 <li><a href="#">Pedidos</a></li>
-                <li><a href="#">Proveedores</a></li>
-                <li class="active">Cuentas Bancarias</li>
+                <li class="active">Pedidos realizados a los proveedores</li>
             </ol>
         </div>
     </header>
@@ -39,32 +38,101 @@
             <div class="card">
                 <div class="card-block">
                     <h5 class="card-title">Lista de Cuentas Bancarias de - {Proveedor}</h5>
+
                     <div class="row">
-                        <div class="col-lg-4">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="exampleInput">Fecha</label>
-                                <input type="date" class="form-control maxlength-simple" id="exampleInput"
-                                    placeholder="First Name" maxlength="15">
-                            </fieldset>
+                        <div class="col-md-6">
+                            <div class="form-group has-search">
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input type="text" class="form-control" placeholder="Buscar Proveedores">
+                            </div>
                         </div>
-                        <div class="col-lg-4">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="exampleInputEmail1">Monto S/.</label>
-                                <input type="text" class="form-control maxlength-custom-message" id="exampleInputEmail1"
-                                    placeholder="Enter email" maxlength="20">
-                            </fieldset>
+                        <div class="col-md-1">
+                            <div class="form-group">
+
+                                <label for="exampleFormControlSelect1">Mostrar</label>
+                                {{-- <select class="form-control" id="exampleFormControlSelect1">
+                                  <option>1</option>
+                                  <option>2</option>
+                                  <option>3</option>
+                                  <option>4</option>
+                                  <option>5</option>
+                                </select> --}}
+                            </div>
                         </div>
-                        <div class="col-lg-4">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="exampleInputPassword1">Observación</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            </fieldset>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                {{-- <label for="exampleFormControlSelect1">Example select</label> --}}
+                                <select class="form-control" id="exampleFormControlSelect1">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-lg-4">
-                            <a href="{{ route('detalle.pedidos') }}" class="btn btn-primary btn-rounded center">Guardar</a>
-                            <button class="btn btn-danger btn-rounded center">Cancelar</button>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Registros</label>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <a id="modal-532427" href="#modal-traslado-viajes" role="button" class="btn btn-rounded"
+                                data-toggle="modal">CREAR NUEVA CUENTA</a>
                         </div>
                     </div>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Proveedor</th>
+                                <th scope="col">RUC</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Monto de Pedido</th>
+                                <th scope="col">Monto de Deuda</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Web</th>
+                                <th scope="col">Cant. de Pedidos</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SAAS</td>
+                                <td>DD</td>
+                                <td>F</td>
+                                <td>SAAS</td>
+                                <td>DD</td>
+                                <td>F</td>
+                                <td>SAAS</td>
+                                <td>DD</td>
+                                <td>
+                                    <button id="edit" title="Editar Información de Proveedor" wire:click="Edit()"
+                                        class="btn btn-warning btn-sm">
+                                        <span class="fa fa-pencil-square-o"></span>
+                                    </button>
+                                    <button id="view" wire:click="mostrarAtractivosDelLugar()"
+                                        title="Eliminar Proveedor" class="btn btn-danger btn-sm">
+                                        <span class="fa fa-trash"></span>
+                                    </button>
+                                    <button id="delete" title="Añadir Cuentas Bancarias" data-target="#exampleModal"
+                                        data-toggle="modal" class="btn btn-success btn-sm" wire:click="deleteConfirm()">
+                                        <i class="fas fa-plus-circle"></i>
+                                    </button>
+                                    <button id="view" title="Añadir Pedidos de Proveedor" data-target="#exampleModal"
+                                        data-toggle="modal" wire:click="mostrarAtractivosDelLugar()" title="Ver Atractivos"
+                                        class="btn btn-danger btn-sm">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    {{-- <button id="delete" title="Dar de baja" class="btn btn-danger btn-sm"
+                                        wire:click="deleteConfirm()">
+                                        <i class="fas fa-ban"></i>
+                                    </button> --}}
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -104,8 +172,7 @@
                                 <fieldset class="form-group">
                                     <label class="form-label" for="exampleInputEmail1">Nº Cuenta</label>
                                     <input type="email" class="form-control maxlength-custom-message"
-                                        id="exampleInputEmail1" placeholder="Ingrese Nº de Cuenta Bancaria"
-                                        maxlength="20">
+                                        id="exampleInputEmail1" placeholder="Ingrese Nº de Cuenta Bancaria" maxlength="20">
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">

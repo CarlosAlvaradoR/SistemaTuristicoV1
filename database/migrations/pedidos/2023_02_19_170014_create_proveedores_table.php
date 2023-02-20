@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('ruc',11);
             $table->string('nombre_proveedor',45);
+            $table->string('slug');
             $table->string('direccion',65);
             $table->string('telefono',45);
             $table->string('email',45);

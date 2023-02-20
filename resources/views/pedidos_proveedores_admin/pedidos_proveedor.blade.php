@@ -4,11 +4,9 @@
 @section('contenido')
     <style>
         /* Bootstrap 4 text input with search icon */
-
         .has-search .form-control {
             padding-left: 2.375rem;
         }
-
         .has-search .form-control-feedback {
             position: absolute;
             z-index: 2;

@@ -508,9 +508,12 @@ SELECT * FROM proveedores;
 
 
 
+SELECT b.nombre_banco, b.direccion, cpb.numero_cuenta, cpb.estado, cpb.id FROM bancos b
+INNER JOIN cuenta_proveedor_bancos cpb on b.id = cpb.bancos_id
+WHERE cpb.proveedores_id = 1;
 
 
-
+SELECT * FROM estado_pedidos;
 
 
 

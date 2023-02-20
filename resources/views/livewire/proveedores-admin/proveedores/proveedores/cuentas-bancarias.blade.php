@@ -3,7 +3,8 @@
         <div class="col-lg-12 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title"><i class="fas fa-building"></i> Lista de Proveedores</h5>
+                    <h5 class="card-title"><i class="fas fa-university"></i> Lista de Cuentas Bancarias de -
+                        {{ $proveedor->nombre_proveedor }}</h5>
 
                     <div class="row">
                         <div class="col-md-6">
@@ -44,48 +45,45 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <a id="modal-532427" href="#modal-lista-proveedores" role="button" class="btn btn-rounded"
-                                data-toggle="modal">Nuevo Proveedor</a>
+                            <a id="modal-532427" href="#modal-traslado-viajes" role="button" class="btn btn-rounded"
+                                data-toggle="modal">CREAR NUEVA CUENTA</a>
                         </div>
                     </div>
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">Proveedor</th>
-                                <th scope="col">RUC</th>
-                                <th scope="col">Dirección</th>
-                                <th scope="col">Teléfono</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Web</th>
+                                <th scope="col">Banco</th>
+                                <th scope="col">Nº Cuenta</th>
+                                <th scope="col">Estado</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($proveedores as $p)
+                            @foreach ($cuentas as $c)
                                 <tr>
-                                    <td>{{ $p->nombre_proveedor }}</td>
-                                    <td>{{ $p->ruc }}</td>
-                                    <td>{{ $p->direccion }}</td>
-                                    <td>{{ $p->telefono }}</td>
-                                    <td>{{ $p->email }}</td>
-                                    <td>{{ $p->web }}</td>
+                                    <td>{{$c->nombre_banco}}</td>
+                                    <td>{{$c->numero_cuenta}}</td>
+                                    <td>{{$c->estado}}</td>
                                     <td>
                                         <button id="edit" title="Editar Información de Proveedor"
-                                            wire:click="Edit({{ $p->id }})" class="btn btn-warning btn-sm">
+                                            wire:click="Edit()" class="btn btn-warning btn-sm">
                                             <span class="fa fa-pencil-square-o"></span>
                                         </button>
                                         <button id="view" wire:click="mostrarAtractivosDelLugar()"
                                             title="Eliminar Proveedor" class="btn btn-danger btn-sm">
                                             <span class="fa fa-trash"></span>
                                         </button>
-                                        <a id="delete" href="{{ route('pedidos.proveedores.cuentasbancarias', $p) }}"
-                                            title="Añadir Cuentas Bancarias" class="btn btn-success btn-sm">
+                                        <button id="delete" title="Añadir Cuentas Bancarias"
+                                            data-target="#exampleModal" data-toggle="modal"
+                                            class="btn btn-success btn-sm" wire:click="deleteConfirm()">
                                             <i class="fas fa-plus-circle"></i>
-                                        </a>
-                                        <a id="view" href="{{ route('pedidos.proveedores.formulario.pedidos', $p) }}"
-                                            title="Añadir Pedidos a Proveedor" class="btn btn-primary btn-sm">
-                                            <i class="fas fa-folder-plus"></i>
-                                        </a>
+                                        </button>
+                                        <button id="view" title="Añadir Pedidos de Proveedor"
+                                            data-target="#exampleModal" data-toggle="modal"
+                                            wire:click="mostrarAtractivosDelLugar()" title="Ver Atractivos"
+                                            class="btn btn-danger btn-sm">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
                                         {{-- <button id="delete" title="Dar de baja" class="btn btn-danger btn-sm"
                                         wire:click="deleteConfirm()">
                                         <i class="fas fa-ban"></i>
@@ -105,7 +103,7 @@
 
 
     <!--MODAL --->
-    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal-lista-proveedores"
+    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal-traslado-viajes"
         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -122,50 +120,31 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
-                                    <label class="form-label" for="ruc">RUC</label>
-                                    <input type="text" wire:model.defer="ruc"
-                                        class="form-control maxlength-simple" id="ruc" placeholder="First Name"
-                                        maxlength="15">
+                                    <label class="form-label" for="banco">Banco</label>
+                                    <select class="form-control" wire:model.defer="banco" id="banco">
+                                        <option value="0">---Seleccione---</option>
+                                        @foreach ($bancos as $b)
+                                            <option value="{{ $b->id }}">{{ $b->nombre_banco }}</option>
+                                        @endforeach
+                                    </select>
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
-                                    <label class="form-label" for="nombre_proveedor">Nombre de Proveedor</label>
-                                    <input type="text" wire:model.defer="nombre_proveedor"
-                                        class="form-control maxlength-custom-message" id="nombre_proveedor"
-                                        placeholder="Enter email">
+                                    <label class="form-label" for="numero_cuenta">Nº Cuenta</label>
+                                    <input type="text" wire:model.defer="numero_cuenta"
+                                        class="form-control maxlength-custom-message" id="numero_cuenta"
+                                        placeholder="Ingrese Nº de Cuenta Bancaria" maxlength="20">
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
-                                    <label class="form-label" for="direccion">Dirección</label>
-                                    <input type="text" wire:model.defer="direccion"
-                                        class="form-control maxlength-always-show" id="direccion"
-                                        placeholder="Password">
-                                </fieldset>
-                            </div>
-                            <div class="col-lg-4">
-                                <fieldset class="form-group">
-                                    <label class="form-label" for="telefono">Teléfono</label>
-                                    <input type="text" wire:model.defer="telefono"
-                                        class="form-control maxlength-simple" id="telefono"
-                                        placeholder="First Name">
-                                </fieldset>
-                            </div>
-                            <div class="col-lg-4">
-                                <fieldset class="form-group">
-                                    <label class="form-label" for="email">Email</label>
-                                    <input type="text" wire:model.defer="email"
-                                        class="form-control maxlength-custom-message" id="email"
-                                        placeholder="Enter email">
-                                </fieldset>
-                            </div>
-                            <div class="col-lg-4">
-                                <fieldset class="form-group">
-                                    <label class="form-label" for="web">Web</label>
-                                    <input type="text" wire:model.defer="web"
-                                        class="form-control maxlength-always-show" id="web"
-                                        placeholder="Ingrese la Web del Proveedor">
+                                    <label class="form-label" for="estado">Estado</label>
+                                    <select class="form-control" wire:model.defer="estado" id="estado">
+                                        <option value="0">---Seleccione---</option>
+                                        <option value="1">ACTIVA</option>
+                                        <option value="2">NO ACTIVA</option>
+                                    </select>
                                 </fieldset>
                             </div>
                         </div>
@@ -176,18 +155,10 @@
                     <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
                         Cerrar
                     </button>
-                    @if ($edicion)
-                        <button type="button" wire:click="Update" title="Guardar Proveedor"
-                            class="btn btn-rounded btn-primary">
-                            Actualizar
-                        </button>
-                    @else
-                        <button type="button" wire:click="saveProveedor" title="Guardar Proveedor"
-                            class="btn btn-rounded btn-primary">
-                            Guardar
-                        </button>
-                    @endif
 
+                    <button type="button" wire:click="saveCuenta" class="btn btn-rounded btn-primary">
+                        Guardar
+                    </button>
 
 
 
@@ -277,10 +248,10 @@
         document.addEventListener('DOMContentLoaded', function() {
             //Lo que llega de CategoriesController
             window.livewire.on('show-modal', msg => {
-                $('#modal-lista-proveedores').modal('show')
+                $('#modalMontoArriero').modal('show')
             });
-            window.livewire.on('close-modal', msg => {
-                $('#modal-lista-proveedores').modal('hide')
+            window.livewire.on('fecha-itinerario-guarded', msg => {
+                $('#modalMontoArriero').modal('hide')
             });
             window.livewire.on('category-updated', msg => {
                 $('#theModal').modal('hide')

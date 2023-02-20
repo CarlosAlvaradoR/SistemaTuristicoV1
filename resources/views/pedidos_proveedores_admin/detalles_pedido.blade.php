@@ -26,8 +26,8 @@
             <h3>Pedidos</h3>
             <ol class="breadcrumb breadcrumb-simple">
                 <li><a href="#">Pedidos</a></li>
-                <li><a href="#">Proveedor</a></li>
-                <li class="active">Detalle de Pedido</li>
+                <li><a href="#">Proveedores</a></li>
+                <li class="active">Cuentas Bancarias</li>
             </ol>
         </div>
     </header>
@@ -35,10 +35,64 @@
 
 
     <div class="row">
+        <div class="col-lg-12 ks-panels-column-section">
+            <div class="card">
+                <div class="card-block">
+                    <h5 class="card-title"><i class="fas fa-paste"></i> Por favor llene el siguiente formulario para realizar los pedidos a: {SEMANA SANTA}</h5>
+                    <div class="row">
+                        <div class="alert alert-blue-dirty alert-fill alert-close alert-dismissible fade in" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>INFORMACIÓN SOBRE LOS ESTADOS DEL PEDIDO!</strong>
+                            <ul>
+                                <li>COMPLETADO: Es el estado que se usa cuando un pedido ya se entregó.</li>
+                                <li>NO COMPLETADO: Este estado indica que ya se realizó el pedido, pero que aún no se le
+                                    hace entrega de este.</li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-4">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="exampleInput">Fecha</label>
+                                <input type="date" class="form-control maxlength-simple" id="exampleInput"
+                                    placeholder="First Name" maxlength="15">
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-4">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="exampleInputEmail1">Monto S/.</label>
+                                <input type="text" class="form-control maxlength-custom-message" id="exampleInputEmail1"
+                                    placeholder="Enter email" maxlength="20">
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-4">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="exampleInputEmail1">Estado</label>
+                                <select class="form-control" id="exampleFormControlSelect1">
+                                    <option value="COMPLETADO">COMPLETADO</option>
+                                    <option value="NO COMPLETADO">NO COMPLETADO</option>
+                                </select>
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-4">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="exampleInputPassword1">Observación</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-4">
+                            <a href="{{ route('detalle.pedidos') }}" class="btn btn-primary btn-rounded center">Guardar</a>
+                            <button class="btn btn-danger btn-rounded center">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-lg-6 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Lista de Equipos</h5>
+                    <h5 class="card-title"><i class="fab fa-steam-symbol"></i> Lista de Equipos</h5>
 
                     <div class="row">
                         <div class="col-md-12">
@@ -87,7 +141,7 @@
         <div class="col-lg-6 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Equipos Añadidos</h5>
+                    <h5 class="card-title"><i class="fab fa-steam-symbol"></i> Equipos Añadidos al Pedido</h5>
 
                     <div class="row">
                         <div class="col-md-12">

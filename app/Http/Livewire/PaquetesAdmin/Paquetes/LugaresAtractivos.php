@@ -43,8 +43,7 @@ class LugaresAtractivos extends Component
             $this->consulta = "";
             $atractivos = [];
         }
-        return view(
-            'livewire.paquetes-admin.paquetes.lugares-atractivos',
+        return view('livewire.paquetes-admin.paquetes.lugares-atractivos',
             compact(
                 'lugares',
                 'atractivos'

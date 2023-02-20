@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PaquetesTuristicos;
+use App\Models\Pedidos\Proveedores;
 use App\Models\TipoPaquetes;
 use Illuminate\Http\Request;
 
@@ -131,8 +132,8 @@ class PaquetesTuristicosController extends Controller
         return view('pedidos_proveedores_admin.index_proveedores');
     }
 
-    public function VerCuentasBancarias(){
-        return view('pedidos_proveedores_admin.cuentas_bancarias');
+    public function VerCuentasBancarias(Proveedores $proveedor){
+        return view('pedidos_proveedores_admin.cuentas_bancarias', compact('proveedor'));
     }
 
     public function VerPedidosGenerales(){
@@ -140,11 +141,11 @@ class PaquetesTuristicosController extends Controller
     }
 
     public function RealizarPedido(){
-        return view('pedidos_proveedores_admin.formulario_pedido_proveedor');
+        return view('pedidos_proveedores_admin.detalles_pedido');
     }
 
     public function detallePedido(){
-        return view('pedidos_proveedores_admin.detalles_pedido');
+        //return view('pedidos_proveedores_admin.pedidos_proveedor');
     }
 
 

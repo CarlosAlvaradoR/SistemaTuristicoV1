@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class CuentaProveedorBancos extends Model
 {
     use HasFactory;
+    protected $fillable = ['numero_cuenta', 'estado', 'proveedores_id', 'bancos_id'];
 }

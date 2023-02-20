@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('estado_pedidos', function (Blueprint $table) {
             $table->id();
-            $table->integer('estado'); // 1 COMPLETADO, 2 NO COMPLETADO
+            $table->string('estado', 15); // 1 COMPLETADO, 2 NO COMPLETADO
             $table->timestamps();
         });
     }
