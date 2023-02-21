@@ -512,8 +512,15 @@ SELECT b.nombre_banco, b.direccion, cpb.numero_cuenta, cpb.estado, cpb.id FROM b
 INNER JOIN cuenta_proveedor_bancos cpb on b.id = cpb.bancos_id
 WHERE cpb.proveedores_id = 1;
 
+-- CONOCER LOS EQUIPOS QUE SE HICIERON PEDIDO
+SELECT e.nombre, m.nombre as marca, dp.cantidad,dp.precio_real, dp.id FROM equipos e
+INNER JOIN marcas m on m.id = e.marca_id
+INNER JOIN detalle_pedidos dp on dp.equipo_id = e.id
+WHERE dp.pedidos_id = 2;
 
-SELECT * FROM estado_pedidos;
+
+SELECT * FROM detalle_pedidos
+WHERE pedidos_id = 2;
 
 
 
