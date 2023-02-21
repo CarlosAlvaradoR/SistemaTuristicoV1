@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class EstadoPedidos extends Model
 {
     use HasFactory;
+    protected $fillable = ['estado'];
 }

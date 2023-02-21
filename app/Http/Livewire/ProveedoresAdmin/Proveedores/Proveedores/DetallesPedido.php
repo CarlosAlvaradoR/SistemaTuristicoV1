@@ -15,7 +15,7 @@ class DetallesPedido extends Component
     public $proveedor;
     public $fecha, $monto, $observación_pedido, $estado_pedido;
     public $idPedido;
-    public $title = '', $idEquipo = 0;
+    public $title = '', $idEquipo = 0, $mostrarEquipos = false;
     public $cantidad, $monto_del_equipo;
 
     public function mount($proveedor)
@@ -60,6 +60,12 @@ class DetallesPedido extends Component
 
     public function savePedido()
     {
+        $this->validate([
+            'fecha' => 'required',
+            'monto' => 'required',
+            'observación_pedido' => 'required',
+            'estado_pedido' => 'required|min:1|max:2',
+        ]);
         $pedido = Pedidos::create(
             [
                 'fecha' => $this->fecha,
@@ -71,6 +77,7 @@ class DetallesPedido extends Component
         );
 
         $this->idPedido = $pedido->id;
+        $this->mostrarEquipos = true;
     }
 
     public function añadirAlPedido(Equipos $equipo)

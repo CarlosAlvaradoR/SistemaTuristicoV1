@@ -6,6 +6,7 @@ use App\Models\PaquetesTuristicos;
 use App\Models\Pedidos\Proveedores;
 use App\Models\TipoPaquetes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PaquetesTuristicosController extends Controller
 {
@@ -30,7 +31,6 @@ class PaquetesTuristicosController extends Controller
     {
         $tipos = TipoPaquetes::all();
         return view('paquetes_admin.create', compact('tipos'));
-        
     }
 
     /**
@@ -98,53 +98,76 @@ class PaquetesTuristicosController extends Controller
         //
     }
 
-    public function detalle($paquetesTuristicos){
-        
+    public function detalle($paquetesTuristicos)
+    {
     }
 
-    public function lugares_atractivos(){
+    public function lugares_atractivos()
+    {
         return view('paquetes_admin.lugares_atractivos');
     }
 
-    public function tipos_personal(){
+    public function tipos_personal()
+    {
         return view('paquetes_admin.tipos_personal');
     }
 
-    public function tipos_transporte(){
+    public function tipos_transporte()
+    {
         return view('paquetes_admin.tipo_transporte');
     }
 
-    public function tipos_alimentacion(){
+    public function tipos_alimentacion()
+    {
         return view('paquetes_admin.tipo_alimentacion');
     }
 
-    public function tipos_acemilas(){
+    public function tipos_acemilas()
+    {
         return view('paquetes_admin.tipo_acemilas');
     }
 
-    public function tipos_almuerzos(){
+    public function tipos_almuerzos()
+    {
         return view('paquetes_admin.tipo_almuerzos');
     }
 
 
     /** VER PEDIDOS TEMPORALMENTE */
-    public function VerProveedores(){
+    public function VerProveedores()
+    {
         return view('pedidos_proveedores_admin.index_proveedores');
     }
 
-    public function VerCuentasBancarias(Proveedores $proveedor){
+    public function VerCuentasBancarias(Proveedores $proveedor)
+    {
         return view('pedidos_proveedores_admin.cuentas_bancarias', compact('proveedor'));
     }
 
-    public function VerPedidosGenerales(){
-        return view('pedidos_proveedores_admin.pedidos_proveedor');
+    public function VerPedidosGenerales()
+    {
+        $pedidos = DB::table('proveedores as p')
+            ->join('pedidos as pe', 'p.id', '=', 'pe.proveedores_id')
+            ->join('estado_pedidos as ep', 'ep.id', '=', 'pe.estado_pedidos_id')
+            ->leftJoin('comprobante_pagos as cp', 'cp.pedidos_id', '=', 'pe.id')
+            ->leftJoin('tipo_comprobantes as tc', 'tc.id', '=', 'cp.tipo_comprobante_id')
+            ->leftJoin('archivo_comprobantes as ac', 'ac.comprobante_id', '=', 'cp.id')
+            ->select(
+                'p.nombre_proveedor', 'p.ruc', 'pe.fecha', 'pe.monto',
+                'cp.numero_comprobante', 'ac.ruta_archivo', 'ep.estado',
+                'pe.id as idPedido'
+            )
+            ->get();
+        return view('pedidos_proveedores_admin.pedidos_proveedor', compact('pedidos'));
     }
 
-    public function RealizarPedido(Proveedores $proveedor){
+    public function RealizarPedido(Proveedores $proveedor)
+    {
         return view('pedidos_proveedores_admin.detalles_pedido', compact('proveedor'));
     }
 
-    public function detallePedido(){
+    public function detallePedido()
+    {
         //return view('pedidos_proveedores_admin.pedidos_proveedor');
     }
 
@@ -154,12 +177,13 @@ class PaquetesTuristicosController extends Controller
 
 
     /** VER EQUIPOS TEMPORALMENTE */
-    public function VerEquipos(){
+    public function VerEquipos()
+    {
         return view('equipos_admin.index_equipos');
     }
 
-    public function VerMarcas(){
+    public function VerMarcas()
+    {
         return view('equipos_admin.marcas_index');
     }
-
 }

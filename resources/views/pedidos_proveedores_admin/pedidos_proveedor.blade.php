@@ -7,6 +7,7 @@
         .has-search .form-control {
             padding-left: 2.375rem;
         }
+
         .has-search .form-control-feedback {
             position: absolute;
             z-index: 2;
@@ -35,7 +36,7 @@
         <div class="col-lg-12 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Lista de Cuentas Bancarias de - {Proveedor}</h5>
+                    <h5 class="card-title">Pedidos realizados a los Proveedores</h5>
 
                     <div class="row">
                         <div class="col-md-6">
@@ -44,35 +45,14 @@
                                 <input type="text" class="form-control" placeholder="Buscar Proveedores">
                             </div>
                         </div>
-                        <div class="col-md-1">
-                            <div class="form-group">
-
-                                <label for="exampleFormControlSelect1">Mostrar</label>
-                                {{-- <select class="form-control" id="exampleFormControlSelect1">
-                                  <option>1</option>
-                                  <option>2</option>
-                                  <option>3</option>
-                                  <option>4</option>
-                                  <option>5</option>
-                                </select> --}}
-                            </div>
-                        </div>
-                        <div class="col-md-1">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 {{-- <label for="exampleFormControlSelect1">Example select</label> --}}
                                 <select class="form-control" id="exampleFormControlSelect1">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
+                                    <option>Mostrar 10 registros</option>
+                                    <option>Mostrar 30 registris</option>
+                                    <option>Mostrar 50 registros</option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1">Registros</label>
-
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -87,47 +67,57 @@
                                 <th scope="col">RUC</th>
                                 <th scope="col">Fecha</th>
                                 <th scope="col">Monto de Pedido</th>
-                                <th scope="col">Monto de Deuda</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Web</th>
-                                <th scope="col">Cant. de Pedidos</th>
+                                <th scope="col">Nº Comprobante</th>
+                                <th scope="col">Archivo</th>
+                                <th scope="col">Estado</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>SAAS</td>
-                                <td>DD</td>
-                                <td>F</td>
-                                <td>SAAS</td>
-                                <td>DD</td>
-                                <td>F</td>
-                                <td>SAAS</td>
-                                <td>DD</td>
-                                <td>
-                                    <button id="edit" title="Editar Información de Proveedor" wire:click="Edit()"
-                                        class="btn btn-warning btn-sm">
-                                        <span class="fa fa-pencil-square-o"></span>
-                                    </button>
-                                    <button id="view" wire:click="mostrarAtractivosDelLugar()"
-                                        title="Eliminar Proveedor" class="btn btn-danger btn-sm">
-                                        <span class="fa fa-trash"></span>
-                                    </button>
-                                    <button id="delete" title="Añadir Cuentas Bancarias" data-target="#exampleModal"
-                                        data-toggle="modal" class="btn btn-success btn-sm" wire:click="deleteConfirm()">
-                                        <i class="fas fa-plus-circle"></i>
-                                    </button>
-                                    <button id="view" title="Añadir Pedidos de Proveedor" data-target="#exampleModal"
-                                        data-toggle="modal" wire:click="mostrarAtractivosDelLugar()" title="Ver Atractivos"
-                                        class="btn btn-danger btn-sm">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    {{-- <button id="delete" title="Dar de baja" class="btn btn-danger btn-sm"
+                            @foreach ($pedidos as $p)
+                                <tr>
+                                    <td>{{ $p->nombre_proveedor }}</td>
+                                    <td>{{ $p->ruc }}</td>
+                                    <td>{{ $p->fecha }}</td>
+                                    <td>{{ $p->monto }}</td>
+                                    <td>{{ $p->numero_comprobante }}</td>
+                                    <td>{{ $p->ruta_archivo }}</td>
+                                    <td>
+                                        @if ($p->estado == 'COMPLETADO')
+                                            <span class="label label-success">{{ $p->estado }}</span>
+                                        @else
+                                            <span class="label label-danger">{{ $p->estado }}</span>
+                                        @endif
+
+
+                                    </td>
+                                    <td>
+                                        <button id="edit" title="Editar Información de Proveedor" wire:click="Edit()"
+                                            class="btn btn-warning btn-sm">
+                                            <span class="fa fa-pencil-square-o"></span>
+                                        </button>
+                                        <button id="view" wire:click="mostrarAtractivosDelLugar()"
+                                            title="Eliminar Proveedor" class="btn btn-danger btn-sm">
+                                            <span class="fa fa-trash"></span>
+                                        </button>
+                                        <button id="delete" title="Añadir Cuentas Bancarias" data-target="#exampleModal"
+                                            data-toggle="modal" class="btn btn-success btn-sm" wire:click="deleteConfirm()">
+                                            <i class="fas fa-plus-circle"></i>
+                                        </button>
+                                        <button id="view" title="Añadir Pedidos de Proveedor"
+                                            data-target="#exampleModal" data-toggle="modal"
+                                            wire:click="mostrarAtractivosDelLugar()" title="Ver Atractivos"
+                                            class="btn btn-danger btn-sm">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        {{-- <button id="delete" title="Dar de baja" class="btn btn-danger btn-sm"
                                         wire:click="deleteConfirm()">
                                         <i class="fas fa-ban"></i>
                                     </button> --}}
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            @endforeach
+
 
                         </tbody>
                     </table>
@@ -170,7 +160,8 @@
                                 <fieldset class="form-group">
                                     <label class="form-label" for="exampleInputEmail1">Nº Cuenta</label>
                                     <input type="email" class="form-control maxlength-custom-message"
-                                        id="exampleInputEmail1" placeholder="Ingrese Nº de Cuenta Bancaria" maxlength="20">
+                                        id="exampleInputEmail1" placeholder="Ingrese Nº de Cuenta Bancaria"
+                                        maxlength="20">
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">

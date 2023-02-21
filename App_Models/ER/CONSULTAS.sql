@@ -525,10 +525,19 @@ WHERE pedidos_id = 2;
 
 
 
+-- LISTA DE PEDIDOS A PROVEEDORES
+SELECT p.nombre_proveedor, p.ruc, pe.fecha, pe.monto,
+cp.numero_comprobante, ac.ruta_archivo, ep.estado, pe.id as idPedido
+FROM proveedores p
+INNER JOIN pedidos pe on p.id = pe.proveedores_id
+INNER JOIN estado_pedidos ep on ep.id = pe.estado_pedidos_id
+LEFT JOIN comprobante_pagos cp on cp.pedidos_id = pe.id
+LEFT JOIN tipo_comprobantes tc on tc.id = cp.tipo_comprobante_id
+LEFT JOIN archivo_comprobantes ac on ac.comprobante_id = cp.id;
+-- INNER JOIN detalle_pedidos dp on dp.pedidos_id = pe.id;
 
 
-
-
+SELECT * FROM proveedores;
 
 
 

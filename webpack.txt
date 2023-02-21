@@ -339,6 +339,7 @@ MIGRACIONES Y MÓDELOS
         *) Tabla Estado Pedidos
         php artisan make:migration create_estado_pedidos_table --path=/database/migrations/pedidos
         php artisan make:model Pedidos/EstadoPedidos -r
+        php artisan make:seeder Pedidos/EstadoPedidosSeeder
 
         *) Tabla Pedidos
         php artisan make:migration create_pedidos_table --path=/database/migrations/pedidos

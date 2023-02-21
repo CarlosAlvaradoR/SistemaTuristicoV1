@@ -21,147 +21,179 @@
                         <div class="col-lg-3">
                             <fieldset class="form-group">
                                 <label class="form-label" for="fecha">Fecha</label>
-                                <input type="date" wire:model.defer="fecha" class="form-control maxlength-simple"
-                                    id="fecha" placeholder="First Name">
+                                <input type="date" wire:model.defer="fecha" wire:loading.attr="disabled"
+                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
+                                @error('fecha')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </fieldset>
                         </div>
                         <div class="col-lg-3">
                             <fieldset class="form-group">
                                 <label class="form-label" for="monto">Monto S/.</label>
-                                <input type="text" wire:model.defer="monto"
+                                <input type="text" wire:model.defer="monto" wire:loading.attr="disabled"
                                     class="form-control maxlength-custom-message" id="monto"
-                                    placeholder="Enter email">
+                                    placeholder="Ingrese Monto del Equipo">
+                                @error('monto')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </fieldset>
                         </div>
                         <div class="col-lg-3">
                             <fieldset class="form-group">
                                 <label class="form-label" for="estado_pedido">Estado</label>
-                                <select class="form-control" wire:model.defer="estado_pedido" id="estado_pedido">
+                                <select class="form-control" wire:model.defer="estado_pedido"
+                                    wire:loading.attr="disabled" id="estado_pedido">
+                                    <option value="" selected>...Seleccione...</option>
                                     @foreach ($estado_pedidos as $e)
                                         <option value="{{ $e->id }}">{{ $e->estado }}</option>
                                     @endforeach
                                 </select>
+                                @error('estado_pedido')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </fieldset>
                         </div>
                         <div class="col-lg-3">
                             <fieldset class="form-group">
                                 <label class="form-label" for="observación_pedido">Observación</label>
-                                <textarea class="form-control" wire:model.defer="observación_pedido" id="observación_pedido" rows="3"></textarea>
+                                <textarea class="form-control" wire:model.defer="observación_pedido" wire:loading.attr="disabled"
+                                    id="observación_pedido" rows="3"></textarea>
+                                @error('observación_pedido')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </fieldset>
                         </div>
-                        <div class="col-lg-3">
-                            <button class="btn btn-primary btn-rounded center" wire:click="savePedido">Guardar</button>
-                            <button class="btn btn-danger btn-rounded center">Cancelar</button>
+                        <div class="col-lg-6">
+
+                            @if ($mostrarEquipos)
+                                <button class="btn btn-primary btn-rounded center" wire:click="savePedido"
+                                    wire:loading.attr="disabled">Actualizar</button>
+                            @else
+                                <button class="btn btn-primary btn-rounded center" wire:click="savePedido"
+                                    wire:loading.attr="disabled">Guardar</button>
+                            @endif
+
+                            <a class="btn btn-success btn-rounded center"
+                                href="{{ route('pedidos.proveedores.index') }}"
+                                wire:loading.attr="disabled">Finalizar</a>
+                            <button class="btn btn-danger btn-rounded center"
+                                wire:loading.attr="disabled">Cancelar</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-6 ks-panels-column-section">
-            <div class="card">
-                <div class="card-block">
-                    <h5 class="card-title"><i class="fab fa-steam-symbol"></i> Lista de Equipos</h5>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group has-search">
-                                <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control" placeholder="Buscar Equipos">
+        @if ($mostrarEquipos)
+            <div class="col-lg-6 ks-panels-column-section">
+                <div class="card">
+                    <div class="card-block">
+                        <h5 class="card-title"><i class="fab fa-steam-symbol"></i> Lista de Equipos</h5>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group has-search">
+                                    <span class="fa fa-search form-control-feedback"></span>
+                                    <input type="text" class="form-control" placeholder="Buscar Equipos">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">EQUIPO - Marca</th>
-                                <th scope="col">Cantidad</th>
-                                <th scope="col">Precio</th>
-                                <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($equipos as $e)
+                        <table class="table table-hover">
+                            <thead>
                                 <tr>
-                                    <td>{{ $e->nombre }} - {{ $e->marca }}</td>
-                                    <td>{{ $e->stock }}</td>
-                                    <td>{{ $e->precio_referencial }}</td>
-                                    <td>
-                                        <button id="delete" wire:click="añadirAlPedido({{ $e->id }})"
-                                            title="Añadir Equipo al Pedido" data-target="#modal-agregar-equipo-pedido"
-                                            data-toggle="modal" class="btn btn-success btn-sm">
-                                            <i class="fas fa-plus-circle"></i>
-                                        </button>
-                                        {{-- <button id="view" title="Añadir Pedidos de Proveedor"
+                                    <th scope="col">EQUIPO - Marca</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($equipos as $e)
+                                    <tr>
+                                        <td>{{ $e->nombre }} - {{ $e->marca }}</td>
+                                        <td>{{ $e->stock }}</td>
+                                        <td>{{ $e->precio_referencial }}</td>
+                                        <td>
+                                            <button id="delete" wire:click="añadirAlPedido({{ $e->id }})"
+                                                title="Añadir Equipo al Pedido"
+                                                data-target="#modal-agregar-equipo-pedido" data-toggle="modal"
+                                                class="btn btn-success btn-sm">
+                                                <i class="fas fa-plus-circle"></i>
+                                            </button>
+                                            {{-- <button id="view" title="Añadir Pedidos de Proveedor"
                                             data-target="#exampleModal" data-toggle="modal"
                                             wire:click="mostrarAtractivosDelLugar()" title="Ver Atractivos"
                                             class="btn btn-danger btn-sm">
                                             <i class="fas fa-minus"></i>
                                         </button> --}}
-                                        {{-- <button id="delete" title="Dar de baja" class="btn btn-danger btn-sm"
+                                            {{-- <button id="delete" title="Dar de baja" class="btn btn-danger btn-sm"
                                         wire:click="deleteConfirm()">
                                         <i class="fas fa-ban"></i>
                                     </button> --}}
-                                    </td>
-                                </tr>
-                            @endforeach
+                                        </td>
+                                    </tr>
+                                @endforeach
 
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-6 ks-panels-column-section">
-            <div class="card">
-                <div class="card-block">
-                    <h5 class="card-title"><i class="fab fa-steam-symbol"></i> Equipos Añadidos al Pedido</h5>
+            <div class="col-lg-6 ks-panels-column-section">
+                <div class="card">
+                    <div class="card-block">
+                        <h5 class="card-title"><i class="fab fa-steam-symbol"></i> Equipos Añadidos al Pedido</h5>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group has-search">
-                                <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control" placeholder="Buscar Proveedores">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group has-search">
+                                    <span class="fa fa-search form-control-feedback"></span>
+                                    <input type="text" class="form-control" placeholder="Buscar Proveedores">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">EQUIPO</th>
-                                <th scope="col">Cantidad</th>
-                                <th scope="col">Precio</th>
-                                <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($equipos_pedidos as $ep)
+                        <table class="table table-hover">
+                            <thead>
                                 <tr>
-                                    <td>{{$ep->nombre}}-{{$ep->marca}}</td>
-                                    <td>{{$ep->cantidad}}</td>
-                                    <td>{{$ep->precio_real}}</td>
-                                    <td>
-                                        <button id="view" title="Editar Detalle del Pedido"
-                                            data-target="#exampleModal" data-toggle="modal"
-                                            wire:click="quitarDelPedido({{$ep->id}})" title="Ver Atractivos"
-                                            class="btn btn-warning btn-sm">
-                                            <span class="fa fa-pencil-square-o"></span>
-                                        </button>
-                                        <button id="view" title="Quitar Equipo del Pedido"
-                                            wire:click="quitarDelPedido({{$ep->id}})" title="Ver Atractivos"
-                                            class="btn btn-danger btn-sm">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                    </td>
+                                    <th scope="col">EQUIPO</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Acciones</th>
                                 </tr>
-                            @endforeach
+                            </thead>
+                            <tbody>
+                                @foreach ($equipos_pedidos as $ep)
+                                    <tr>
+                                        <td>{{ $ep->nombre }}-{{ $ep->marca }}</td>
+                                        <td>{{ $ep->cantidad }}</td>
+                                        <td>{{ $ep->precio_real }}</td>
+                                        <td>
+                                            <button id="view" title="Editar Detalle del Pedido"
+                                                data-target="#exampleModal" data-toggle="modal"
+                                                wire:click="quitarDelPedido({{ $ep->id }})"
+                                                title="Ver Atractivos" class="btn btn-warning btn-sm">
+                                                <span class="fa fa-pencil-square-o"></span>
+                                            </button>
+                                            <button id="view" title="Quitar Equipo del Pedido"
+                                                wire:click="quitarDelPedido({{ $ep->id }})"
+                                                title="Ver Atractivos" class="btn btn-danger btn-sm">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
 
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
+
 
     </div>
 
@@ -219,11 +251,12 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                    <button type="button" wire:loading.attr="disabled" class="btn btn-rounded btn-danger"
+                        data-dismiss="modal">
                         Cerrar
                     </button>
 
-                    <button type="button" class="btn btn-rounded btn-primary">
+                    <button type="button" wire:loading.attr="disabled" class="btn btn-rounded btn-primary">
                         Guardar
                     </button>
 
@@ -320,6 +353,12 @@
             window.livewire.on('category-updated', msg => {
                 $('#theModal').modal('hide')
             });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $("#estado_pedido option[value=-1]").attr("selected", true);
         });
     </script>
 </div>
