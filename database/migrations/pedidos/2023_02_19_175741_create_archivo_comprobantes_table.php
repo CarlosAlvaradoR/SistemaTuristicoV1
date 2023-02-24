@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('archivo_comprobantes', function (Blueprint $table) {
             $table->id();
-            $table->string('ruta_archivo');
+            $table->text('ruta_archivo');
             $table->boolean('validez');
 
             $table->unsignedBigInteger('comprobante_id');

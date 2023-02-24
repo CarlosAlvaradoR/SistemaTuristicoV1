@@ -539,7 +539,7 @@ LEFT JOIN archivo_comprobantes ac on ac.comprobante_id = cp.id;
 
 SELECT * FROM pedidos;
 
-
+SELECT * FROM deudas;
 
 
 

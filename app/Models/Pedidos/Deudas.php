@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Deudas extends Model
 {
     use HasFactory;
+    protected $fillable=['monto_deuda', 'estado', 'comprobante_id'];
 }
