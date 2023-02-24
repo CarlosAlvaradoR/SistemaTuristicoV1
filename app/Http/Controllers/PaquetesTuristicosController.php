@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PaquetesTuristicos;
+use App\Models\Pedidos\Pedidos;
 use App\Models\Pedidos\Proveedores;
 use App\Models\TipoPaquetes;
 use Illuminate\Http\Request;
@@ -155,10 +156,14 @@ class PaquetesTuristicosController extends Controller
             ->select(
                 'p.nombre_proveedor', 'p.ruc', 'pe.fecha', 'pe.monto',
                 'cp.numero_comprobante', 'ac.ruta_archivo', 'ep.estado',
-                'pe.id as idPedido'
+                'p.slug','pe.id as idPedido'
             )
             ->get();
         return view('pedidos_proveedores_admin.pedidos_proveedor', compact('pedidos'));
+    }
+
+    public function VerPedidosGeneralesDetalle(Proveedores $proveedor, Pedidos $pedido){
+        return view('pedidos_proveedores_admin.pedido_proveedor_detalle', compact('proveedor', 'pedido'));
     }
 
     public function RealizarPedido(Proveedores $proveedor)

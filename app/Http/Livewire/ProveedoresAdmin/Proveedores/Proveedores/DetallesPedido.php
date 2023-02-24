@@ -12,15 +12,26 @@ use Livewire\Component;
 
 class DetallesPedido extends Component
 {
-    public $proveedor;
+    public $proveedor, $pedido;
     public $fecha, $monto, $observación_pedido, $estado_pedido;
     public $idPedido;
     public $title = '', $idEquipo = 0, $mostrarEquipos = false;
     public $cantidad, $monto_del_equipo;
 
-    public function mount($proveedor)
+    public function mount($proveedor, $pedido = false)
     {
         $this->proveedor = $proveedor;
+        if ($pedido) {
+            $this->pedido = $pedido;
+            $this->fecha = $pedido->fecha;
+            $this->monto = $pedido->monto;
+            $this->observación_pedido = $pedido->observación_pedido;
+            $this->estado_pedido = $pedido->estado_pedidos_id;
+            $this->mostrarEquipos = true;
+            $this->idPedido = $pedido->id;
+        }
+        
+        
     }
 
     public function render()
@@ -58,6 +69,20 @@ class DetallesPedido extends Component
         );
     }
 
+    public function UpdatePedido(){
+        $pedido = Pedidos::findOrfail($this->idPedido);
+        $pedido->fecha = $this->fecha;
+        $pedido->monto = $this->monto;
+        $pedido->observación_pedido = $this->observación_pedido;
+        $pedido->estado_pedidos_id = $this->estado_pedido;
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'MUY BIEN !',
+            'icon' => 'success',
+            'text' => 'Información del Pedido Actuaizado Correctamente'
+        ]);
+    }
+
     public function savePedido()
     {
         $this->validate([
@@ -75,6 +100,12 @@ class DetallesPedido extends Component
                 'estado_pedidos_id' => $this->estado_pedido
             ]
         );
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'MUY BIEN !',
+            'icon' => 'success',
+            'text' => 'Pedido Registrado Correctamente'
+        ]);
 
         $this->idPedido = $pedido->id;
         $this->mostrarEquipos = true;

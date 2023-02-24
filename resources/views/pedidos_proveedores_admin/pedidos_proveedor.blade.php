@@ -50,7 +50,7 @@
                                 {{-- <label for="exampleFormControlSelect1">Example select</label> --}}
                                 <select class="form-control" id="exampleFormControlSelect1">
                                     <option>Mostrar 10 registros</option>
-                                    <option>Mostrar 30 registris</option>
+                                    <option>Mostrar 30 registros</option>
                                     <option>Mostrar 50 registros</option>
                                 </select>
                             </div>
@@ -100,6 +100,10 @@
                                             title="Eliminar Proveedor" class="btn btn-danger btn-sm">
                                             <span class="fa fa-trash"></span>
                                         </button>
+                                        <a href="{{ route('pedidos.proveedores.general.detalle', [$p->slug, $p->idPedido]) }}" id="delete" title="Ver detalle del Pedido"
+                                            class="btn btn-primary btn-sm">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
                                         <button id="delete" title="Añadir Cuentas Bancarias" data-target="#exampleModal"
                                             data-toggle="modal" class="btn btn-success btn-sm" wire:click="deleteConfirm()">
                                             <i class="fas fa-plus-circle"></i>

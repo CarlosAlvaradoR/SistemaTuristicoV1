@@ -64,10 +64,159 @@
                                 @enderror
                             </fieldset>
                         </div>
+
+                    </div>
+
+                    <h5 class="card-title"><i class="fas fa-file"></i> Comprobante</h5>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="fecha">Nº Comprobante</label>
+                                <input type="text" wire:model.defer="fecha" wire:loading.attr="disabled"
+                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
+                                @error('fecha')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-2">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="fecha">Fecha Emisión</label>
+                                <input type="datetime-local" wire:model.defer="fecha" wire:loading.attr="disabled"
+                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
+                                @error('fecha')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="estado_pedido">Tipo de Comprobante</label>
+                                <select class="form-control" wire:model.defer="estado_pedido"
+                                    wire:loading.attr="disabled" id="estado_pedido">
+                                    <option value="" selected>...Seleccione...</option>
+                                    @foreach ($estado_pedidos as $e)
+                                        <option value="{{ $e->id }}">{{ $e->estado }}</option>
+                                    @endforeach
+                                </select>
+                                @error('estado_pedido')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="fecha">Archivo de Comprobante</label>
+                                <input type="file" wire:model.defer="fecha" wire:loading.attr="disabled"
+                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
+                                @error('fecha')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-2">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="">Ver</label>
+                                <a href="" class="uploading-list-item-name">
+                                    <i class="font-icon font-icon-page"></i>
+                                    Comprobante
+                                </a>
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="fecha">Validez</label>
+                                <input type="datetime-local" wire:model.defer="fecha" wire:loading.attr="disabled"
+                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
+                                @error('fecha')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                    </div>
+
+
+                    <h5 class="card-title"><i class="fas fa-file"></i> Deudas</h5>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="fecha">Monto De Deuda</label>
+                                <input type="text" wire:model.defer="fecha" wire:loading.attr="disabled"
+                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
+                                @error('fecha')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="fecha">Estado de la Deuda</label>
+                                <input type="text" wire:model.defer="fecha" wire:loading.attr="disabled"
+                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
+                                @error('fecha')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <h5 class="card-title"><i class="fas fa-file"></i> Pagos</h5>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="fecha">Monto Por Equipos</label>
+                                <input type="text" wire:model.defer="fecha" wire:loading.attr="disabled"
+                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
+                                @error('fecha')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="fecha">Fecha de Pago</label>
+                                <input type="date" wire:model.defer="fecha" wire:loading.attr="disabled"
+                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
+                                @error('fecha')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="fecha">Nº de Depósito</label>
+                                <input type="text" wire:model.defer="fecha" wire:loading.attr="disabled"
+                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
+                                @error('fecha')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="fecha">Archivo de Depósito</label>
+                                <input type="file" wire:model.defer="fecha" wire:loading.attr="disabled"
+                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
+                                @error('fecha')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="fecha">Validez</label>
+                                <input type="text" wire:model.defer="fecha" wire:loading.attr="disabled"
+                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
+                                @error('fecha')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+
                         <div class="col-lg-6">
 
                             @if ($mostrarEquipos)
-                                <button class="btn btn-primary btn-rounded center" wire:click="savePedido"
+                                <button class="btn btn-primary btn-rounded center" wire:click="UpdatePedido"
                                     wire:loading.attr="disabled">Actualizar</button>
                             @else
                                 <button class="btn btn-primary btn-rounded center" wire:click="savePedido"
@@ -356,9 +505,5 @@
         });
     </script>
 
-    <script>
-        $(document).ready(function() {
-            $("#estado_pedido option[value=-1]").attr("selected", true);
-        });
-    </script>
+    @include('common.alerts')
 </div>
