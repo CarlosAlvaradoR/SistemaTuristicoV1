@@ -136,14 +136,19 @@
                                 @enderror
                             </fieldset>
                         </div>
+
                         <div class="col-lg-2">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="">Ver</label>
-                                <a href="" class="uploading-list-item-name">
-                                    <i class="font-icon font-icon-page"></i>
-                                    Comprobante
-                                </a>
-                            </fieldset>
+                            @if ($existe_comprobante)
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="">Ver</label>
+                                    <a href="{{ asset('/' . $archivo_comprobante) }}" target="_blank"
+                                        class="uploading-list-item-name">
+                                        <i class="font-icon font-icon-page"></i>
+                                        Comprobante
+                                    </a>
+                                </fieldset>
+                            @endif
+
                         </div>
                         <div class="col-lg-3">
                             <fieldset class="form-group">
@@ -151,18 +156,17 @@
                                 {{-- <input type="text" wire:model.defer="validez" wire:loading.attr="disabled"
                                     class="form-control maxlength-simple" id="validez" placeholder="First Name"> --}}
 
-                               
-                                    <label class="btn">
-                                        <input type="radio" wire:model.defer="validez" wire:loading.attr="disabled" 
-                                        value="1" name="options" id="option1" autocomplete="off"
-                                            > Válido
-                                    </label>
-                                    <label class="btn">
-                                        <input type="radio" wire:model.defer="validez" wire:loading.attr="disabled" 
+
+                                <label class="btn">
+                                    <input type="radio" wire:model.defer="validez" wire:loading.attr="disabled"
+                                        value="1" name="options" id="option1" autocomplete="off"> Válido
+                                </label>
+                                <label class="btn">
+                                    <input type="radio" wire:model.defer="validez" wire:loading.attr="disabled"
                                         value="0" name="options" id="option1" autocomplete="off">
-                                        No Válido
-                                    </label>
-                               
+                                    No Válido
+                                </label>
+
                                 @error('validez')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -195,7 +199,8 @@
                             <fieldset class="form-group">
                                 <label class="form-label" for="monto_de_deuda">Monto De Deuda</label>
                                 <input type="text" wire:model.defer="monto_de_deuda" wire:loading.attr="disabled"
-                                    class="form-control maxlength-simple" id="monto_de_deuda" placeholder="Ingrese Monto de la Deuda">
+                                    class="form-control maxlength-simple" id="monto_de_deuda"
+                                    placeholder="Ingrese Monto de la Deuda">
                                 @error('monto_de_deuda')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -205,7 +210,8 @@
                             <fieldset class="form-group">
                                 <label class="form-label" for="estado_de_deuda">Estado de la Deuda</label>
                                 <input type="text" wire:model.defer="estado_de_deuda" wire:loading.attr="disabled"
-                                    class="form-control maxlength-simple" id="estado_de_deuda" placeholder="Ingrese estado de la Deuda">
+                                    class="form-control maxlength-simple" id="estado_de_deuda"
+                                    placeholder="Ingrese estado de la Deuda">
                                 @error('estado_de_deuda')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -215,11 +221,11 @@
                         <br>
                         <div class="col-lg-6">
 
-                            @if ($mostrarEquipos)
-                                <button class="btn btn-primary btn-rounded center" wire:click="UpdatePedido"
+                            @if ($existe_deuda)
+                                <button class="btn btn-primary btn-rounded center" wire:click="UpdateDeuda"
                                     wire:loading.attr="disabled">Actualizar</button>
                             @else
-                                <button class="btn btn-primary btn-rounded center" wire:click="savePedido"
+                                <button class="btn btn-primary btn-rounded center" wire:click="saveDeuda"
                                     wire:loading.attr="disabled">Guardar</button>
                             @endif
 
@@ -233,75 +239,42 @@
                     </div>
 
                     <h5 class="card-title"><i class="fas fa-file"></i> Pagos</h5>
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="fecha">Monto Por Equipos</label>
-                                <input type="text" wire:model.defer="fecha" wire:loading.attr="disabled"
-                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
-                                @error('fecha')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-3">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="fecha">Fecha de Pago</label>
-                                <input type="date" wire:model.defer="fecha" wire:loading.attr="disabled"
-                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
-                                @error('fecha')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-3">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="fecha">Nº de Depósito</label>
-                                <input type="text" wire:model.defer="fecha" wire:loading.attr="disabled"
-                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
-                                @error('fecha')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-3">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="fecha">Archivo de Depósito</label>
-                                <input type="file" wire:model.defer="fecha" wire:loading.attr="disabled"
-                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
-                                @error('fecha')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-3">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="fecha">Validez</label>
-                                <input type="text" wire:model.defer="fecha" wire:loading.attr="disabled"
-                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
-                                @error('fecha')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
-                        </div>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#staticBackdrop">
+                        Añadir Pago
+                    </button>
 
-                        <div class="col-lg-6">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Monto por Equipos</th>
+                                <th scope="col">Monto por Deudas</th>
+                                <th scope="col">Fecha de Pago</th>
+                                <th scope="col">Nº de Depósito</th>
+                                <th scope="col">Archivo</th>
+                                <th scope="col">Validez</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($pagos_proveedores as $pp)
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Monto por Equipos</td>
+                                    <td>Fecha de Pago</td>
+                                    <td>Nº de Depósito</td>
+                                    <td>Nº de Depósito</td>
+                                    <td>Nº de Depósito</td>
+                                    <td>Nº de Depósito</td>
+                                    <td>@mdo</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
 
-                            @if ($mostrarEquipos)
-                                <button class="btn btn-primary btn-rounded center" wire:click="UpdatePedido"
-                                    wire:loading.attr="disabled">Actualizar</button>
-                            @else
-                                <button class="btn btn-primary btn-rounded center" wire:click="savePedido"
-                                    wire:loading.attr="disabled">Guardar</button>
-                            @endif
 
-                            <a class="btn btn-success btn-rounded center"
-                                href="{{ route('pedidos.proveedores.index') }}"
-                                wire:loading.attr="disabled">Finalizar</a>
-                            <button class="btn btn-danger btn-rounded center"
-                                wire:loading.attr="disabled">Cancelar</button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -417,6 +390,96 @@
 
 
     </div>
+
+
+    <!-- Modal Pagos-->
+    <div class="modal fade" wire:ignore.self id="staticBackdrop" data-backdrop="static" data-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="fecha">Monto Por Equipos</label>
+                                <input type="text" wire:model.defer="fecha" wire:loading.attr="disabled"
+                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
+                                @error('fecha')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="fecha">Fecha de Pago</label>
+                                <input type="date" wire:model.defer="fecha" wire:loading.attr="disabled"
+                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
+                                @error('fecha')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="fecha">Nº de Depósito</label>
+                                <input type="text" wire:model.defer="fecha" wire:loading.attr="disabled"
+                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
+                                @error('fecha')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="fecha">Archivo de Depósito</label>
+                                <input type="file" wire:model.defer="fecha" wire:loading.attr="disabled"
+                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
+                                @error('fecha')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="fecha">Validez</label>
+                                <input type="text" wire:model.defer="fecha" wire:loading.attr="disabled"
+                                    class="form-control maxlength-simple" id="fecha" placeholder="First Name">
+                                @error('fecha')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+
+                        <div class="col-lg-6">
+
+                            @if ($mostrarEquipos)
+                                <button class="btn btn-primary btn-rounded center" wire:click="UpdatePedido"
+                                    wire:loading.attr="disabled">Actualizar</button>
+                            @else
+                                <button class="btn btn-primary btn-rounded center" wire:click="savePedido"
+                                    wire:loading.attr="disabled">Guardar</button>
+                            @endif
+
+                            <button class="btn btn-danger btn-rounded center"
+                                wire:loading.attr="disabled">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-rounded btn-primary">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 
     <!--MODAL --->

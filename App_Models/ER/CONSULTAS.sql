@@ -536,13 +536,28 @@ LEFT JOIN tipo_comprobantes tc on tc.id = cp.tipo_comprobante_id
 LEFT JOIN archivo_comprobantes ac on ac.comprobante_id = cp.id;
 -- INNER JOIN detalle_pedidos dp on dp.pedidos_id = pe.id;
 
+-- SELECCIONAR EL PEDIDO Y ARCHIVO DE LOS COMPROBANTES
+SELECT cp.id, cp.numero_comprobante, cp.tipo_comprobante_id, cp.fecha_emision, ac.id as idArchivo,ac.ruta_archivo, ac.validez, 
+cp.pedidos_id
+FROM comprobante_pagos cp
+LEFT JOIN archivo_comprobantes ac on ac.comprobante_id = cp.id
+WHERE cp.pedidos_id = 13;
 
-SELECT * FROM pedidos;
+SELECT * FROM comprobante_pagos;
 
-SELECT * FROM deudas;
+SELECT id, monto_deuda, estado, comprobante_id FROM deudas 
+WHERE comprobante_id = 3;
 
 
-
+-- SELECCIONAR LOS PAGOS CORRESPONDIENTES A UN COMPROBANTE Y UNA RESERVA
+SELECT b.nombre_banco, cpb.numero_cuenta, pp.monto_equipos, pp.fecha_pago, 
+pp.numero_depósito, pp.ruta_archivo, pp.validez_pago, pp.monto_deuda,
+pp.id as idPagoProveedor
+FROM bancos b
+INNER JOIN cuenta_proveedor_bancos cpb on b.id = cpb.bancos_id
+INNER JOIN pago_proveedores pp on pp.cuenta_proveedor_bancos_id = cpb.id
+LEFT JOIN deudas d on d.id = pp.deuda_id
+WHERE pp.comprobante_id = 3;
 
 
 

@@ -80,8 +80,20 @@
                                     <td>{{ $p->ruc }}</td>
                                     <td>{{ $p->fecha }}</td>
                                     <td>{{ $p->monto }}</td>
-                                    <td>{{ $p->numero_comprobante }}</td>
-                                    <td>{{ $p->ruta_archivo }}</td>
+                                    <td>
+                                        {{$p->numero_comprobante}}
+                                    </td>
+                                    <td>
+                                        @if ($p->ruta_archivo)
+                                        <a href="{{ asset($p->ruta_archivo) }}" target="_blank"
+                                            class="uploading-list-item-name">
+                                            <i class="font-icon font-icon-page"></i>
+                                            Ver Archivo
+                                        </a>
+                                    @else
+                                        Sin archivo
+                                    @endif
+                                    </td>
                                     <td>
                                         @if ($p->estado == 'COMPLETADO')
                                             <span class="label label-success">{{ $p->estado }}</span>
