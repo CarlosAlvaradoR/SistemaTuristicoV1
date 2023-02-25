@@ -354,6 +354,7 @@
                                 <tr>
                                     <th scope="col">EQUIPO</th>
                                     <th scope="col">Cantidad</th>
+                                    <th scope="col">Entrante</th>
                                     <th scope="col">Precio</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
@@ -363,8 +364,21 @@
                                     <tr>
                                         <td>{{ $ep->nombre }}-{{ $ep->marca }}</td>
                                         <td>{{ $ep->cantidad }}</td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" wire:model.defer="cantidad_entrante" class="form-control"
+                                                    id="cantidad_entrante" placeholder="ej: 3">
+                                            </div>
+
+                                        </td>
                                         <td>{{ $ep->precio_real }}</td>
                                         <td>
+                                            <button id="delete" wire:click="entradaEquipoInventario({{ $ep->id }})"
+                                                title="Añadir Equipo al Pedido"
+                                                
+                                                class="btn btn-success btn-sm">
+                                                <i class="fas fa-plus-circle"></i>
+                                            </button>
                                             <button id="view" title="Editar Detalle del Pedido"
                                                 data-target="#exampleModal" data-toggle="modal"
                                                 wire:click="quitarDelPedido({{ $ep->id }})"

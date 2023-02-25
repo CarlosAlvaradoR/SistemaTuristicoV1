@@ -4,6 +4,7 @@ namespace App\Http\Livewire\ProveedoresAdmin\Proveedores\Proveedores;
 
 use App\Http\Livewire\ProveedoresAdmin\Proveedores\Proveedores;
 use App\Models\Equipos;
+use App\Models\Inventario\DetalleIngresos;
 use App\Models\Pedidos\ArchivoComprobantes;
 use App\Models\Pedidos\ComprobantePagos;
 use App\Models\Pedidos\DetallePedidos;
@@ -32,6 +33,8 @@ class DetallesPedido extends Component
     /** ATRIBUTOS DE DEUDAS */
     public $monto_de_deuda, $estado_de_deuda;
     public $existe_deuda = false, $idDeuda;
+    /** ATRIBUTOS DE DETALLE INGRESOS */
+    public $cantidad_entrante;
 
     public function mount($proveedor, $pedido = false)
     {
@@ -307,6 +310,18 @@ class DetallesPedido extends Component
                 'equipo_id' => $this->idEquipo
             ]
         );
+    }
+
+    public function entradaEquipoInventario(DetallePedidos $detalle){
+        $ingreso = DetalleIngresos::create(
+            [
+                'obervacion' => '', 
+                'cantidad' => $this->cantidad_entrante, 
+                'ingreso_pedidos_id' => 1, 
+                'detalle_pedidos_id' => $detalle->id
+            ]
+        );
+        $this->reset(['cantidad_entrante']);
     }
 
     public function quitarDelPedido($id)

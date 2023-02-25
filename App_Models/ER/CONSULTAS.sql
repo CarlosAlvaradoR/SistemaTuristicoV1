@@ -560,7 +560,7 @@ LEFT JOIN deudas d on d.id = pp.deuda_id
 WHERE pp.comprobante_id = 3;
 
 
-
+SELECT * FROM detalle_ingresos;
 
 
 

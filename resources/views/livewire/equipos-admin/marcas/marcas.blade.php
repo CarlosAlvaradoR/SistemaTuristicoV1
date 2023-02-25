@@ -54,7 +54,7 @@
                         <div class="col-md-2">
                             <br>
                             <button type="button" class="btn btn-rounded btn-primary" data-toggle="modal"
-                                data-target="#modal-equipo">
+                                data-target="#modal-marca">
                                 Nueva Marca
                             </button>
                         </div>
@@ -70,7 +70,7 @@
                             @foreach ($marcas as $m)
                                 <tr>
                                     <!--<th scope="row">1</th>-->
-                                    <td>{{$m->nombre}}</td>
+                                    <td>{{ $m->nombre }}</td>
                                     <td>
                                         <button id="edit" wire:click="Edit({{ $m->id }})"
                                             class="btn btn-warning btn-sm">
@@ -98,7 +98,7 @@
 
 
     <!-- Modal -->
-    <div wire:ignore.self data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-equipo"
+    <div wire:ignore.self data-backdrop="static" data-keyboard="false" class="modal fade" id="modal-marca"
         tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -125,10 +125,34 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger btn-rounded" data-dismiss="modal">Cerrar</button>
-                    <button type="button" wire:click="saveMarca" class="btn btn-primary btn-rounded">Guardar
-                        Cambios</button>
+                    @if ($edicion)
+                        <button type="button" wire:click="Update" class="btn btn-primary btn-rounded">Actualizar
+                        </button>
+                    @else
+                        <button type="button" wire:click="saveMarca" class="btn btn-primary btn-rounded">Guardar
+                        </button>
+                    @endif
+
                 </div>
             </div>
         </div>
     </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            //Lo que llega de CategoriesController
+            window.livewire.on('show-modal-marca', msg => {
+                $('#modal-marca').modal('show')
+            });
+            window.livewire.on('close-modal-marca', msg => {
+                $('#modal-marca').modal('hide')
+            });
+            window.livewire.on('category-updated', msg => {
+                $('#theModal').modal('hide')
+            });
+        });
+    </script>
+
+    @include('common.alerts')
 </div>
