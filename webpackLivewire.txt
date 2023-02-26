@@ -153,6 +153,8 @@ PEDIDOS ADMIN
 
        php artisan make:livewire ProveedoresAdmin/Proveedores/Proveedores/DetallesPedido
 
+       php artisan make:livewire ProveedoresAdmin/Proveedores/Proveedores/PedidosProveedorPagosDeudasEntradas
+
 
 
 

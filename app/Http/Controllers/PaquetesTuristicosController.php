@@ -166,6 +166,11 @@ class PaquetesTuristicosController extends Controller
         return view('pedidos_proveedores_admin.pedido_proveedor_detalle', compact('proveedor', 'pedido'));
     }
 
+    public function VerPedidosGeneralesDetalleComponentes(Pedidos $pedido){
+        return view('pedidos_proveedores_admin.pedidos_proveedor_pagos_deudas_entradas', 
+        compact('pedido'));
+    }
+
     public function RealizarPedido(Proveedores $proveedor)
     {
         return view('pedidos_proveedores_admin.detalles_pedido', compact('proveedor'));

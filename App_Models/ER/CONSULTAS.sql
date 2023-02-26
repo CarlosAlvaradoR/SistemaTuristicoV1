@@ -557,12 +557,18 @@ FROM bancos b
 INNER JOIN cuenta_proveedor_bancos cpb on b.id = cpb.bancos_id
 INNER JOIN pago_proveedores pp on pp.cuenta_proveedor_bancos_id = cpb.id
 LEFT JOIN deudas d on d.id = pp.deuda_id
-WHERE pp.comprobante_id = 3;
+WHERE pp.comprobante_id = 8;
 
 
-SELECT * FROM detalle_ingresos;
+SELECT * FROM pago_proveedores;
 
+-- SELECCIONAR LOS PROVEEDRES Y SUS CUENTAS BANCARIAS PARA EL COMBO DE PAGOS A PROVEEDORES
+SELECT cpb.id, cpb.numero_cuenta, b.nombre_banco FROM proveedores p
+INNER JOIN cuenta_proveedor_bancos cpb on cpb.proveedores_id = p.id
+INNER JOIN bancos b on b.id = cpb.bancos_id
+WHERE p.id = 2;
 
+SELECT * FROM comprobante_pagos;
 
 
 

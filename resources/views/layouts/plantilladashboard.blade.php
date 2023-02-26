@@ -22,6 +22,10 @@
  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
  <![endif]-->
+    <link rel="stylesheet" href="{{ asset('dashboard_assets/css/lib/lobipanel/lobipanel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard_assets/css/separate/vendor/lobipanel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard_assets/css/lib/jqueryui/jquery-ui.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard_assets/css/separate/pages/widgets.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dashboard_assets/css/separate/pages/user.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dashboard_assets/css/lib/font-awesome/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dashboard_assets/css/lib/bootstrap/bootstrap.min.css') }}">
@@ -62,7 +66,10 @@
     <script src="{{ asset('dashboard_assets/js/lib/jquery-flex-label/jquery.flex.label.js') }}"></script>
     <script src="{{ asset('dashboard_assets/js/app.js') }}"></script>
     <script src="{{ asset('dashboard_assets/js/lib/datatables-net/datatables.min.js') }}"></script>
+    <script src="{{ asset('dashboard_assets/js/lib/lobipanel/lobipanel.min.js') }}"></script>
 
+
+    
     <script type="application/javascript">
         (function($) {
             $(document).ready(function() {
@@ -74,7 +81,7 @@
     </script>
 
     @yield('scripts')
-    
+
     @livewireScripts
 </body>
 
