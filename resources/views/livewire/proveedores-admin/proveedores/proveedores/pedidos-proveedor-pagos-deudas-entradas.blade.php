@@ -6,7 +6,7 @@
                     <h5 class="card-title">Información de Pedido - {{ $proveedor->nombre_proveedor }}</h5>
 
 
-                   
+
 
                     <h5 class="card-title"><i class="fas fa-file"></i> Comprobante</h5>
                     <div class="row">
@@ -234,47 +234,72 @@
                     <h5 class="card-title">Información de Pedido - {{ $proveedor->nombre_proveedor }}</h5>
 
 
-                   
+
 
                     <h5 class="card-title"><i class="fas fa-file"></i> Ingreso de Pedido</h5>
                     <div class="row">
                         <div class="col-lg-12">
                             <fieldset class="form-group">
-                                <label class="form-label" for="numero_de_comprobante">Observación del Ingreso del Pedido</label>
-                                <textarea class="form-control" wire:model.defer="numero_de_comprobante"
-                                wire:loading.attr="disabled" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                @error('numero_de_comprobante')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-12">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="fecha_de_emision">Fecha Emisión</label>
-                                <input type="date" wire:model.defer="fecha_de_emision"
+                                <label class="form-label" for="fecha_de_ingreso">Fecha de Ingreso <span
+                                        class="text-danger">(*)</span></label>
+                                <input type="date" wire:model.defer="fecha_de_ingreso"
                                     wire:loading.attr="disabled" class="form-control maxlength-simple"
-                                    id="fecha_de_emision" placeholder="First Name">
-                                @error('fecha_de_emision')
+                                    id="fecha_de_ingreso" placeholder="First Name">
+                                @error('fecha_de_ingreso')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </fieldset>
                         </div>
 
                         <div class="col-lg-12">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="observacion_de_ingreso">Observación del Ingreso del
+                                    Pedido</label>
+                                <textarea class="form-control" wire:model.defer="observacion_de_ingreso" wire:loading.attr="disabled"
+                                    id="observacion_de_ingreso" rows="3"></textarea>
+                                @error('observacion_de_ingreso')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+
+
+                        <div class="col-lg-6">
                             <fieldset class="form-group">
                                 <label class="form-label" for="fecha_de_emision">Estado del Pedido</label>
-                                <button class="btn btn-danger btn-rounded center"
-                                wire:loading.attr="disabled">Cambiar a COMPLETADO</button>
+                                @if ($pedido->estado_pedidos_id == 1)
+                                    <span class="label label-success">COMPLETADO</span>
+                                @else
+                                    <span class="label label-danger">NO COMPLETADO</span>
+                                @endif
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-6">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="fecha_de_emision">Estado del Pedido</label>
+                                @if ($pedido->estado_pedidos_id == 1)
+                                    <button class="btn btn-danger btn-rounded center btn-sm" wire:loading.attr="disabled">
+                                        <span class="label label-danger">Cambiar a NO COMPLETADO</span>
+                                    </button>
+                                @else
+                                    <button class="btn btn-success btn-rounded center btn-sm"
+                                        wire:loading.attr="disabled">
+                                        <span class="label label-success">Cambiar a NO COMPLETADO</span>
+                                    </button>
+                                @endif
+
                             </fieldset>
                         </div>
 
 
                         <div class="col-lg-12">
-                            @if ($existe_comprobante)
-                                <button class="btn btn-primary btn-rounded center" wire:click="UpdateComprobante"
+                            @if ($idIngresoPedidos)
+                                <button class="btn btn-primary btn-rounded center" wire:click="guardarIngresoPedidos"
                                     wire:loading.attr="disabled">Actualizar</button>
                             @else
-                                <button class="btn btn-primary btn-rounded center" wire:click="saveComprobante"
+                                <button class="btn btn-primary btn-rounded center" 
+                                title="Generar el Ingreso de Pedidos"
+                                wire:click="guardarIngresoPedidos"
                                     wire:loading.attr="disabled">Guardar</button>
                             @endif
 
@@ -297,7 +322,7 @@
                         <div class="col-md-4">
                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#modal-pago-proveedores">
-                                Añadir Pago
+                                Añadir Pago - {{ $idPedido }}
                             </button>
                         </div>
                     </div>
@@ -309,28 +334,32 @@
                                     <th scope="col">Equipo / Implemento</th>
                                     <th scope="col">Cant. Solicitada</th>
                                     <th scope="col">Cant. Registrada</th>
-                                    <th scope="col">Observación</th>
+                                    {{-- <th scope="col">Observación</th> --}}
                                     <th scope="col">Cant. Ingresada</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($pagos_proveedores as $pp)
+                                @foreach ($equipos_pedidos as $ep)
                                     <tr>
-                                        <td>{{ $pp->nombre_banco }}-{{ $pp->numero_cuenta }}</td>
-                                        <td>{{ $pp->monto_equipos }}</td>
+                                        <td>{{ $ep->nombre }}-{{ $ep->marca }}</td>
+                                        <td>{{ $ep->cantidad }}</td>
                                         <td>
-                                            <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="ej:3">
+                                            <input type="number" wire:model.defer="cantidad_entrante"
+                                                class="form-control" id="cantidad_entrante" autocomplete="off"
+                                                placeholder="ej:3">
+                                            @error('cantidad_entrante')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </td>
-                                        <td>
+                                        {{-- <td>
                                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                        </td>
-                                        <td>{{ $pp->fecha_pago }}</td>
+                                        </td> --}}
+                                        <td> {{ $ep->cantidadIngresada }} / {{ $ep->cantidad }}</td>
                                         <td>
-                                            <button id="delete" wire:click="{{--entradaEquipoInventario({{ $ep->id }})--}}"
-                                                title="Añadir Equipo al Pedido"
-                                                
-                                                class="btn btn-success btn-sm">
+                                            <button id="delete"
+                                                wire:click="entradaEquipoInventario({{ $ep->id }})"
+                                                title="Añadir Equipo al Pedido" class="btn btn-success btn-sm">
                                                 <i class="fas fa-plus-circle"></i>
                                             </button>
                                         </td>

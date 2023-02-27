@@ -2,8 +2,12 @@
 
 namespace App\Http\Livewire\ProveedoresAdmin\Proveedores\Proveedores;
 
+use App\Models\Equipos;
+use App\Models\Inventario\DetalleIngresos;
+use App\Models\Inventario\IngresoPedidos;
 use App\Models\Pedidos\ArchivoComprobantes;
 use App\Models\Pedidos\ComprobantePagos;
+use App\Models\Pedidos\DetallePedidos;
 use App\Models\Pedidos\Deudas;
 use App\Models\Pedidos\EstadoPedidos;
 use App\Models\Pedidos\PagoProveedores;
@@ -23,7 +27,7 @@ class PedidosProveedorPagosDeudasEntradas extends Component
     public $proveedor, $pedido;
     public $fecha, $monto, $observación_pedido, $estado_pedido;
     public $idPedido;
-    public $title = '', $idEquipo = 0, $mostrarEquipos = false;
+    public $title = '', $idEquipo = 0;
     public $cantidad, $monto_del_equipo;
     /** ATRIBUTOS DE COMPROBANTES */
     public $numero_de_comprobante, $fecha_de_emision, $tipo_comprobante, $archivo_comprobante, $validez;
@@ -37,6 +41,10 @@ class PedidosProveedorPagosDeudasEntradas extends Component
         $comprobante_id, $cuenta_proveedor_bancos, $deuda_id;
     /** ATRIBUTOS DE DETALLE INGRESOS */
     public $cantidad_entrante;
+    /** ATRIBUTOS DE INGRESO DE PEDIDOS */
+    public $fecha_de_ingreso, $observacion_de_ingreso;
+    public $idIngresoPedidos, $mostrarEquipos = false;
+
 
     public function mount($pedido)
     {
@@ -93,8 +101,6 @@ class PedidosProveedorPagosDeudasEntradas extends Component
                 $this->estado_de_deuda = $deuda->estado;
                 $this->existe_deuda = true;
             }
-
-            
         }
 
         $estado_pedidos = EstadoPedidos::all(['id', 'estado']);
@@ -103,10 +109,12 @@ class PedidosProveedorPagosDeudasEntradas extends Component
             ->join('cuenta_proveedor_bancos as cpb', 'cpb.proveedores_id', '=', 'p.id')
             ->join('bancos as b', 'b.id', '=', 'cpb.bancos_id')
             ->select(
-                'cpb.id', 'cpb.numero_cuenta', 'b.nombre_banco'
+                'cpb.id',
+                'cpb.numero_cuenta',
+                'b.nombre_banco'
             )
             ->get();
-        
+
         $equipos = DB::table('equipos as e')
             ->join('marcas as m', 'm.id', '=', 'e.marca_id')
             //->where('e.nombre', 'like', '%'.$this->search.'%')
@@ -124,13 +132,16 @@ class PedidosProveedorPagosDeudasEntradas extends Component
         $equipos_pedidos = DB::table('equipos as e')
             ->join('marcas as m', 'm.id', '=', 'e.marca_id')
             ->join('detalle_pedidos as dp', 'dp.equipo_id', '=', 'e.id')
-            ->where('dp.pedidos_id', $this->idPedido)
+            ->leftJoin('detalle_ingresos as di', 'di.detalle_pedidos_id', '=', 'dp.id')
+            ->where('dp.pedidos_id', $this->pedido->id)
             ->select(
                 'e.nombre',
                 'm.nombre as marca',
                 'dp.cantidad',
+                'di.cantidad as cantidadIngresada',
                 'dp.precio_real',
-                'dp.id'
+                'dp.id',
+                'e.id as idEquipo'
             )
             ->get();
 
@@ -285,5 +296,75 @@ class PedidosProveedorPagosDeudasEntradas extends Component
             'icon' => 'success',
             'text' => 'El Pago que realizó al proveedor se registró correctamente'
         ]);
+    }
+
+    public function entradaEquipoInventario(DetallePedidos $detalle)
+    {
+        $this->validate(
+            [
+                'cantidad_entrante' => 'required|numeric|min:1'
+            ]
+        );
+        $ingreso = DetalleIngresos::create(
+            [
+                'obervacion' => '',
+                'cantidad' => $this->cantidad_entrante,
+                'ingreso_pedidos_id' => 1,
+                'detalle_pedidos_id' => $detalle->id
+            ]
+        );
+        $equipo = Equipos::findOrFail($detalle->equipo_id);
+        $equipo->stock = $equipo->stock + $this->cantidad_entrante;
+        $equipo->save();
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'MUY BIEN !',
+            'icon' => 'success',
+            'text' => 'El Pago que realizó al proveedor se registró correctamente'
+        ]);
+
+        $this->reset(['cantidad_entrante']);
+    }
+
+
+    public function guardarIngresoPedidos()
+    {
+        $this->validate(
+            [
+                'fecha_de_ingreso' => 'required|date'
+            ]
+        );
+
+        $obs = '';
+        if ($this->observacion_de_ingreso) {
+            $obs = $this->observacion_de_ingreso;
+        }
+
+        if ($this->idIngresoPedidos) { //Actualizar
+            $ingresoPedido = IngresoPedidos::findOrFail($this->idIngresoPedidos);
+            $ingresoPedido->fecha_ingreso = $this->fecha_de_ingreso;
+            $ingresoPedido->observacion = $obs;
+            $ingresoPedido->save();
+            $this->dispatchBrowserEvent('swal', [
+                'title' => 'MUY BIEN !',
+                'icon' => 'success',
+                'text' => 'Se Actualizó correctamente el Ingreso de Pedidos'
+            ]);
+        } else { //Crear
+            $ingresoPedido = IngresoPedidos::create(
+                [
+                    'fecha_ingreso' => $this->fecha_de_ingreso,
+                    'observacion' => $obs,
+                    'pedidos_id' => $this->pedido->id
+                ]
+            );
+            $this->idIngresoPedidos = $ingresoPedido->id;
+            $this->mostrarEquipos = true;
+            $this->dispatchBrowserEvent('swal', [
+                'title' => 'MUY BIEN !',
+                'icon' => 'success',
+                'text' => 'Se registró correctamente el Ingreso de Pedidos'
+            ]);
+        }
     }
 }

@@ -568,7 +568,23 @@ INNER JOIN cuenta_proveedor_bancos cpb on cpb.proveedores_id = p.id
 INNER JOIN bancos b on b.id = cpb.bancos_id
 WHERE p.id = 2;
 
-SELECT * FROM comprobante_pagos;
+
+-- CONOCER LOS EQUIPOS QUE SE HICIERON PEDIDO PARA LOS DETALLES DE LOS INGRESOS
+SELECT e.nombre, m.nombre as marca, dp.cantidad, di.cantidad as cantidadIngresada, dp.precio_real, dp.id, 
+e.id as idEquipo
+FROM equipos e
+INNER JOIN marcas m on m.id = e.marca_id
+INNER JOIN detalle_pedidos dp on dp.equipo_id = e.id
+LEFT JOIN detalle_ingresos di on di.detalle_pedidos_id = dp.id
+WHERE dp.pedidos_id = 2;
+
+
+
+SELECT * FROM ingreso_pedidos;
+
+
+
+
 
 
 

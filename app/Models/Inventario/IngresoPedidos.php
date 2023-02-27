@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class IngresoPedidos extends Model
 {
     use HasFactory;
+    protected $fillable = ['fecha_ingreso', 'observacion', 'pedidos_id'];
 }

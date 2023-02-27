@@ -263,17 +263,7 @@ class DetallesPedido extends Component
         );
     }
 
-    public function entradaEquipoInventario(DetallePedidos $detalle){
-        $ingreso = DetalleIngresos::create(
-            [
-                'obervacion' => '', 
-                'cantidad' => $this->cantidad_entrante, 
-                'ingreso_pedidos_id' => 1, 
-                'detalle_pedidos_id' => $detalle->id
-            ]
-        );
-        $this->reset(['cantidad_entrante']);
-    }
+    
 
     public function quitarDelPedido($id)
     {
