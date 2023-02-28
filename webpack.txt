@@ -389,6 +389,14 @@ MIGRACIONES Y MÓDELOS
         php artisan make:migration create_baja_equipos_table --path=/database/migrations/inventario
         php artisan make:model Inventario/BajaEquipos -r
 
+        *) Tabla Baja Mantenimientos
+        php artisan make:migration create_mantenimientos_table --path=/database/migrations/inventario
+        php artisan make:model Inventario/Mantenimientos -r
+
+        *) Tabla Devolucion Mantenimientos
+        php artisan make:migration create_devolucion_mantenimientos_table --path=/database/migrations/inventario
+        php artisan make:model Inventario/DevolucionMantenimientos -r
+
         *) Tabla Entrega Equipos
         php artisan make:migration create_entrega_equipos_table --path=/database/migrations/inventario
         php artisan make:model Inventario/EntregaEquipos -r

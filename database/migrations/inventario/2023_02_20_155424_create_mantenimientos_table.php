@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('baja_equipos', function (Blueprint $table) {
+        Schema::create('mantenimientos', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha_baja');
-            $table->text('motivo_baja');
+            $table->date('fecha_salida_mantenimiento');
             $table->integer('cantidad');
+            $table->text('observacion')->nullable();
 
-            
             $table->unsignedBigInteger('equipo_id');
             $table->foreign('equipo_id')->references('id')->on('equipos');
 
@@ -34,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('baja_equipos');
+        Schema::dropIfExists('mantenimientos');
     }
 };

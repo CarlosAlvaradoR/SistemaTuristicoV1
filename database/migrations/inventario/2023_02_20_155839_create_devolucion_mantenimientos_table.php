@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('baja_equipos', function (Blueprint $table) {
+        Schema::create('devolucion_mantenimientos', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha_baja');
-            $table->text('motivo_baja');
-            $table->integer('cantidad');
+            $table->date('fecha_entrada_equipo');
+            $table->integer('cantidad_equipos_arreglados_buen_estado');
+            $table->text('observacion')->nullable();
 
-            
-            $table->unsignedBigInteger('equipo_id');
-            $table->foreign('equipo_id')->references('id')->on('equipos');
+            $table->unsignedBigInteger('mantenimientos_id');
+            $table->foreign('mantenimientos_id')->references('id')->on('mantenimientos');
 
             $table->timestamps();
         });
@@ -34,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('baja_equipos');
+        Schema::dropIfExists('devolucion_mantenimientos');
     }
 };
