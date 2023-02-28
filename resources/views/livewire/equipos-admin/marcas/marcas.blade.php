@@ -59,6 +59,9 @@
                             </button>
                         </div>
                     </div>
+                    <div wire:loading class="alert alert-primary" role="alert">
+                        <a href="#!" class="alert-link">Cargando ...</a>
+                    </div>
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -115,7 +118,7 @@
                                 <label class="form-label" for="nombre_de_marca">Nombre de Marca</label>
                                 <input type="text" wire:model.defer="nombre_de_marca"
                                     class="form-control maxlength-simple" id="nombre_de_marca"
-                                    placeholder="Nombre de Matca">
+                                    placeholder="Nombre de Marca">
                                 @error('nombre_de_marca')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -151,6 +154,25 @@
             window.livewire.on('category-updated', msg => {
                 $('#theModal').modal('hide')
             });
+        });
+
+        window.addEventListener('swal-confirmMarca', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('equipos-admin.marcas.marcas',
+                        'deleteMarca',
+                        event.detail
+                        .id);
+                }
+            })
         });
     </script>
 

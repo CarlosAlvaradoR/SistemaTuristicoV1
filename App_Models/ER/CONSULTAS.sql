@@ -580,7 +580,7 @@ WHERE dp.pedidos_id = 2;
 
 
 
-SELECT * FROM ingreso_pedidos;
+SELECT * FROM equipos;
 
 
 

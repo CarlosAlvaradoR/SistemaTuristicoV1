@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\EquiposAdmin\Marcas;
 
 use App\Models\Marcas as ModelsMarcas;
+use Illuminate\Support\Facades\DB;
 use Livewire\WithPagination;
 use Livewire\Component;
 
@@ -14,7 +15,9 @@ class Marcas extends Component
 
     public $search='';
     public $nombre_de_marca;
-    public $title = 'CREAR MARCAS DE EQUIPOS', $idMarca, $edicion = false;
+    public $title = 'CREAR MARCAS PARA EQUIPOS/IMPLEMENTOS', $idMarca, $edicion = false;
+
+    protected $listeners = ['deleteMarca'];
 
     public function render()
     {
@@ -25,13 +28,13 @@ class Marcas extends Component
     public function saveMarca(){
         $this->validate(
             [
-                'nombre_de_marca' => 'required'
+                'nombre_de_marca' => 'required|min:2'
             ]
         );
         $marca=ModelsMarcas::create([
             'nombre' => $this->nombre_de_marca
         ]);
-
+        $this->reset(['nombre_de_marca']);
         $this->dispatchBrowserEvent('swal', [
             'title' => 'MUY BIEN !',
             'icon' => 'success',
@@ -50,7 +53,7 @@ class Marcas extends Component
     public function Update(){
         $this->validate(
             [
-                'nombre_de_marca' => 'required'
+                'nombre_de_marca' => 'required|min:2'
             ]
         );
         
@@ -61,9 +64,43 @@ class Marcas extends Component
         $this->dispatchBrowserEvent('swal', [
             'title' => 'MUY BIEN !',
             'icon' => 'success',
-            'text' => 'Marca Actuaizada Correctamente'
+            'text' => 'Marca Actualizada Correctamente'
         ]);
+        $this->reset(['nombre_de_marca']);
         $this->emit('close-modal-marca', 'Edicion de Atractivos');
+    }
+
+    public function deleteConfirm($id)
+    {
+
+        $this->dispatchBrowserEvent('swal-confirmMarca', [
+            'title' => 'Estás seguro que deseas Eliminar la Marca',
+            'icon' => 'warning',
+            'id' => $id
+        ]);
+    }
+
+    public function deleteMarca(ModelsMarcas $tipo)
+    {
+        $tipos =  DB::table('equipos')
+            ->where('marca_id', $tipo->id)
+            ->get();
+        $var = count($tipos);
+        //dd($var);
+        if ($var > 0) {
+            $this->dispatchBrowserEvent('swal', [
+                'title' => 'ERROR',
+                'icon' => 'error',
+                'text' => 'No se puede Eliminar la Marca porque ya se asignó a Equipos'
+            ]);
+        } else {
+            $tipo->delete();
+            $this->dispatchBrowserEvent('swal', [
+                'title' => 'MUY BIEN !',
+                'icon' => 'success',
+                'text' => 'Marca Eliminada Correctamente'
+            ]);
+        }
     }
 
     /*public function updatingSearch() //Search es el valor que va a capturar para resetear (OJO SEARCH o lo que sea debe estar en mayúscula)
