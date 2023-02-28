@@ -11,6 +11,7 @@ use App\Models\Pedidos\DetallePedidos;
 use App\Models\Pedidos\Deudas;
 use App\Models\Pedidos\EstadoPedidos;
 use App\Models\Pedidos\PagoProveedores;
+use App\Models\Pedidos\Pedidos;
 use App\Models\Pedidos\Proveedores;
 use App\Models\Pedidos\TipoComprobantes;
 use App\Models\Reservas\Pagos;
@@ -24,7 +25,7 @@ class PedidosProveedorPagosDeudasEntradas extends Component
     use WithFileUploads;
 
 
-    public $proveedor, $pedido;
+    public $proveedor, $pedido, $estado;
     public $fecha, $monto, $observación_pedido, $estado_pedido;
     public $idPedido;
     public $title = '', $idEquipo = 0;
@@ -56,6 +57,7 @@ class PedidosProveedorPagosDeudasEntradas extends Component
     {
         //$comprobante = '';
         if ($this->pedido) {
+            $this->estado_pedido = Pedidos::findOrFail($this->pedido->id, ['estado_pedidos_id']);
             //Consultamos si hay un comprobante de PAGOS
             $comprobante = DB::table('comprobante_pagos as cp')
                 ->join('archivo_comprobantes as ac', 'ac.comprobante_id', '=', 'cp.id')
@@ -71,6 +73,15 @@ class PedidosProveedorPagosDeudasEntradas extends Component
                 )
                 ->first();
 
+            $ingreso_pedidos = DB::table('ingreso_pedidos')
+                ->select(
+                    'id',
+                    'fecha_ingreso',
+                    'observacion'
+                )
+                ->where('pedidos_id', $this->pedido->id)
+                ->first();
+
             if ($comprobante) {
                 $this->idComprobante = $comprobante->id;
                 $this->numero_de_comprobante = $comprobante->numero_comprobante;
@@ -80,6 +91,14 @@ class PedidosProveedorPagosDeudasEntradas extends Component
                 $this->archivo_comprobante = $comprobante->ruta_archivo;
                 $this->validez = $comprobante->validez;
                 $this->existe_comprobante = true;
+            }
+
+            if ($ingreso_pedidos) {
+                /** Mostrar los Ingresos de Pedidos */
+                $this->idIngresoPedidos = $ingreso_pedidos->id;
+                $this->fecha_de_ingreso = $ingreso_pedidos->fecha_ingreso;
+                $this->observacion_de_ingreso = $ingreso_pedidos->observacion;
+                $this->mostrarEquipos = true;
             }
         }
 
@@ -102,6 +121,8 @@ class PedidosProveedorPagosDeudasEntradas extends Component
                 $this->existe_deuda = true;
             }
         }
+
+
 
         $estado_pedidos = EstadoPedidos::all(['id', 'estado']);
         $tipo_comprobantes = TipoComprobantes::all(['id', 'nombre_tipo']);
@@ -144,6 +165,7 @@ class PedidosProveedorPagosDeudasEntradas extends Component
                 'e.id as idEquipo'
             )
             ->get();
+        //dd($equipos_pedidos);
 
         $pagos_proveedores = DB::table('bancos as b')
             ->join('cuenta_proveedor_bancos as cpb', 'b.id', '=', 'cpb.bancos_id')
@@ -300,19 +322,36 @@ class PedidosProveedorPagosDeudasEntradas extends Component
 
     public function entradaEquipoInventario(DetallePedidos $detalle)
     {
+        //dd($detalle);
         $this->validate(
             [
                 'cantidad_entrante' => 'required|numeric|min:1'
             ]
         );
-        $ingreso = DetalleIngresos::create(
-            [
-                'obervacion' => '',
-                'cantidad' => $this->cantidad_entrante,
-                'ingreso_pedidos_id' => 1,
-                'detalle_pedidos_id' => $detalle->id
-            ]
-        );
+        
+        /** Verificamos si ya hay un detalle en la tabla Detalle de Ingresos */
+        $verifica = DetalleIngresos::where('detalle_pedidos_id', $detalle->id)->get();
+        
+        if (count($verifica)) {
+            # Si ya existe, le sumamos lo que ya había mas el nuevo entrante
+            $ingreso = DetalleIngresos::findOrFail($verifica[0]->id);
+            $ingreso->cantidad = $ingreso->cantidad + $this->cantidad_entrante;
+            $ingreso->save();
+            $msg = 'Se Ingresó Ingresó la cantidad de ' . $this->cantidad_entrante . ' al Stock generado Anteriormente';
+        } else {
+            # Llemos uno Nuevo
+            $ingreso = DetalleIngresos::create(
+                [
+                    'obervacion' => '',
+                    'cantidad' => $this->cantidad_entrante,
+                    'ingreso_pedidos_id' => 1,
+                    'detalle_pedidos_id' => $detalle->id
+                ]
+            );
+            $msg = 'Se ingresó la Cantidad Entrante de '.$this->cantidad_entrante.' al Stock';
+        }
+
+
         $equipo = Equipos::findOrFail($detalle->equipo_id);
         $equipo->stock = $equipo->stock + $this->cantidad_entrante;
         $equipo->save();
@@ -320,7 +359,7 @@ class PedidosProveedorPagosDeudasEntradas extends Component
         $this->dispatchBrowserEvent('swal', [
             'title' => 'MUY BIEN !',
             'icon' => 'success',
-            'text' => 'El Pago que realizó al proveedor se registró correctamente'
+            'text' => $msg
         ]);
 
         $this->reset(['cantidad_entrante']);
@@ -366,5 +405,23 @@ class PedidosProveedorPagosDeudasEntradas extends Component
                 'text' => 'Se registró correctamente el Ingreso de Pedidos'
             ]);
         }
+    }
+
+    public function UpdateStatusPedido()
+    {
+
+        $pedido = Pedidos::findOrFail($this->pedido->id);
+        if ($pedido->estado_pedidos_id == 1) {
+            $pedido->estado_pedidos_id = 2;
+        } else {
+            $pedido->estado_pedidos_id = 1;
+        }
+        $pedido->save();
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'MUY BIEN !',
+            'icon' => 'success',
+            'text' => 'Estado del Pedido Actulizado Correctamente'
+        ]);
     }
 }

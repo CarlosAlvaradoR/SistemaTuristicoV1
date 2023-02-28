@@ -277,12 +277,15 @@
                         <div class="col-lg-6">
                             <fieldset class="form-group">
                                 <label class="form-label" for="fecha_de_emision">Estado del Pedido</label>
-                                @if ($pedido->estado_pedidos_id == 1)
-                                    <button class="btn btn-danger btn-rounded center btn-sm" wire:loading.attr="disabled">
+                                @if ($estado_pedido->estado_pedidos_id == 1)
+                                    <button class="btn btn-danger btn-rounded center btn-sm"
+                                    wire:click="UpdateStatusPedido"
+                                        wire:loading.attr="disabled">
                                         <span class="label label-danger">Cambiar a NO COMPLETADO</span>
                                     </button>
                                 @else
                                     <button class="btn btn-success btn-rounded center btn-sm"
+                                    wire:click="UpdateStatusPedido"
                                         wire:loading.attr="disabled">
                                         <span class="label label-success">Cambiar a NO COMPLETADO</span>
                                     </button>
@@ -297,9 +300,8 @@
                                 <button class="btn btn-primary btn-rounded center" wire:click="guardarIngresoPedidos"
                                     wire:loading.attr="disabled">Actualizar</button>
                             @else
-                                <button class="btn btn-primary btn-rounded center" 
-                                title="Generar el Ingreso de Pedidos"
-                                wire:click="guardarIngresoPedidos"
+                                <button class="btn btn-primary btn-rounded center"
+                                    title="Generar el Ingreso de Pedidos" wire:click="guardarIngresoPedidos"
                                     wire:loading.attr="disabled">Guardar</button>
                             @endif
 
@@ -308,11 +310,11 @@
                         </div>
                     </div>
 
+                    @if ($mostrarEquipos)
+                        <h5 class="card-title"><i class="fas fa-file"></i> Información de los Equipos en Pedido</h5>
+                        <!-- Button trigger modal -->
 
-                    <h5 class="card-title"><i class="fas fa-file"></i> Información de los Pedidos</h5>
-                    <!-- Button trigger modal -->
-
-                    <div class="row">
+                        {{-- <div class="row">
                         <div class="col-md-8">
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
@@ -325,49 +327,57 @@
                                 Añadir Pago - {{ $idPedido }}
                             </button>
                         </div>
-                    </div>
+                    </div> --}}
 
-                    <div style="overflow-x:auto;">
-                        <table class="table table-hover" id="dtHorizontalExample">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Equipo / Implemento</th>
-                                    <th scope="col">Cant. Solicitada</th>
-                                    <th scope="col">Cant. Registrada</th>
-                                    {{-- <th scope="col">Observación</th> --}}
-                                    <th scope="col">Cant. Ingresada</th>
-                                    <th scope="col">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($equipos_pedidos as $ep)
+                        <div style="overflow-x:auto;">
+                            <table class="table table-hover" id="dtHorizontalExample">
+                                <thead>
                                     <tr>
-                                        <td>{{ $ep->nombre }}-{{ $ep->marca }}</td>
-                                        <td>{{ $ep->cantidad }}</td>
-                                        <td>
-                                            <input type="number" wire:model.defer="cantidad_entrante"
-                                                class="form-control" id="cantidad_entrante" autocomplete="off"
-                                                placeholder="ej:3">
-                                            @error('cantidad_entrante')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </td>
-                                        {{-- <td>
+                                        <th scope="col">Equipo / Implemento</th>
+                                        <th scope="col">Cant. Solicitada</th>
+                                        <th scope="col">Cant. Registrada</th>
+                                        {{-- <th scope="col">Observación</th> --}}
+                                        <th scope="col">Cant. Ingresada</th>
+                                        <th scope="col">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($equipos_pedidos as $ep)
+                                        <tr>
+                                            <td>
+                                                <small>{{ $ep->nombre }}-{{ $ep->marca }}</small>
+                                            </td>
+                                            <td>
+                                                <small>{{ $ep->cantidad }}</small>
+                                            </td>
+                                            <td>
+                                                <input type="number" wire:model.defer="cantidad_entrante"
+                                                    class="form-control" id="cantidad_entrante" autocomplete="off"
+                                                    placeholder="ej:3">
+                                                @error('cantidad_entrante')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </td>
+                                            {{-- <td>
                                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                         </td> --}}
-                                        <td> {{ $ep->cantidadIngresada }} / {{ $ep->cantidad }}</td>
-                                        <td>
-                                            <button id="delete"
-                                                wire:click="entradaEquipoInventario({{ $ep->id }})"
-                                                title="Añadir Equipo al Pedido" class="btn btn-success btn-sm">
-                                                <i class="fas fa-plus-circle"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                                            <td>
+                                                <small>{{ $ep->cantidadIngresada }} / {{ $ep->cantidad }}</small>
+                                            </td>
+                                            <td>
+                                                <button id="delete"
+                                                    wire:click="entradaEquipoInventario({{ $ep->id }})"
+                                                    title="Añadir Equipo al Pedido" class="btn btn-success btn-sm">
+                                                    <i class="fas fa-plus-circle"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
+
 
                 </div>
             </div>
