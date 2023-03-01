@@ -23,12 +23,12 @@ class DetallesPedido extends Component
 
     public $proveedor, $pedido;
     public $fecha, $monto, $observación_pedido, $estado_pedido;
-    public $idPedido;
+    public $idPedido = 0;
     public $title = '', $idEquipo = 0, $mostrarEquipos = false;
     public $cantidad, $monto_del_equipo;
     /** ATRIBUTOS DE COMPROBANTES */
     public $numero_de_comprobante, $fecha_de_emision, $tipo_comprobante, $archivo_comprobante, $validez;
-    public $mostrarComprobante = false, $existe_comprobante = false, $idComprobante, $idArchivoComprobante;
+    public $mostrarComprobante = false, $existe_comprobante = false, $idComprobante = 0, $idArchivoComprobante;
     public $comprobante;
     /** ATRIBUTOS DE DEUDAS */
     public $monto_de_deuda, $estado_de_deuda;
