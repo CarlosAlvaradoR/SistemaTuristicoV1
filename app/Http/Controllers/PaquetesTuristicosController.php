@@ -196,4 +196,8 @@ class PaquetesTuristicosController extends Controller
     {
         return view('equipos_admin.marcas_index');
     }
+
+    public function VerMantenimientoBajas(){
+        return view('equipos_admin.detalle_equipos');
+    }
 }

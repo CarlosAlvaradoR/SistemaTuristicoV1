@@ -68,7 +68,8 @@
 
                     <div class="destination_info">
                         <h3>Mapa</h3>
-                        <p>{{ $mapa->descripcion }}</p>
+                        @if ($mapa)
+                           <p>{{ $mapa->descripcion }}</p>
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-12">
@@ -77,6 +78,10 @@
                                 </div>
                             </div>
                         </div>
+                        @else
+                            <p>Sin Información</p>
+                        @endif
+                        
                     </div>
                     <br>
 

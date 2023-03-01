@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/equipos/ver-equipos', [App\Http\Controllers\PaquetesTuristicosController::class, 'VerEquipos'])->name('equipos.index')->middleware(['auth', 'verified']);
 Route::get('/equipos/marcas', [App\Http\Controllers\PaquetesTuristicosController::class, 'VerMarcas'])->name('marcas.index')->middleware(['auth', 'verified']);
+Route::get('/equipos/ver-equipos/{equipo}/mantenimiento-bajas', [App\Http\Controllers\PaquetesTuristicosController::class, 'VerMantenimientoBajas'])->name('equipos.index.bajas.mantenimientos')->middleware(['auth', 'verified']);
 
 /*Route::get('/paquetes/crear', [App\Http\Controllers\PaquetesTuristicosController::class, 'create'])->name('paquetes.create')->middleware(['auth', 'verified']);
 Route::get('/paquetes/editar/{slug}', [App\Http\Controllers\PaquetesTuristicosController::class, 'edit'])->name('paquetes.edit')->middleware(['auth', 'verified']);

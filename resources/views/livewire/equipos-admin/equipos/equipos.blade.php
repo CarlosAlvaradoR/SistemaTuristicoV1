@@ -104,10 +104,10 @@
                                             title="Ver Atractivos" class="btn btn-danger btn-sm">
                                             <i class="fas fa-minus"></i>
                                         </button>
-                                        <button id="delete" title="Dar de baja" class="btn btn-danger btn-sm"
-                                            wire:click="deleteConfirm({{ $e->id }})">
+                                        <a href="{{ route('equipos.index.bajas.mantenimientos', $e->id) }}" id="delete" title="Dar de baja" class="btn btn-danger btn-sm"
+                                            >
                                             <i class="fas fa-ban"></i>
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
