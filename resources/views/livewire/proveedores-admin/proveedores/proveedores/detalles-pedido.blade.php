@@ -80,10 +80,12 @@
                                 wire:loading.attr="disabled">Finalizar</a>
                             <button class="btn btn-danger btn-rounded center"
                                 wire:loading.attr="disabled">Cancelar</button>
-                            
-                            <a href="{{ route('pedidos.proveedores.general.detalle.componentes', $idPedido) }}">
-                                Llenar componentes ?
-                            </a>
+                            @if ($idPedido)
+                                <a href="{{ route('pedidos.proveedores.general.detalle.componentes', $idPedido) }}">
+                                    Llenar componentes ?
+                                </a>
+                            @endif
+
                         </div>
 
                     </div>
@@ -182,17 +184,16 @@
                                         <td>{{ $ep->cantidad }}</td>
                                         <td>
                                             <div class="form-group">
-                                                <input type="text" wire:model.defer="cantidad_entrante" class="form-control"
-                                                    id="cantidad_entrante" placeholder="ej: 3">
+                                                <input type="text" wire:model.defer="cantidad_entrante"
+                                                    class="form-control" id="cantidad_entrante" placeholder="ej: 3">
                                             </div>
 
                                         </td>
                                         <td>{{ $ep->precio_real }}</td>
                                         <td>
-                                            <button id="delete" wire:click="entradaEquipoInventario({{ $ep->id }})"
-                                                title="Añadir Equipo al Pedido"
-                                                
-                                                class="btn btn-success btn-sm">
+                                            <button id="delete"
+                                                wire:click="entradaEquipoInventario({{ $ep->id }})"
+                                                title="Añadir Equipo al Pedido" class="btn btn-success btn-sm">
                                                 <i class="fas fa-plus-circle"></i>
                                             </button>
                                             <button id="view" title="Editar Detalle del Pedido"
@@ -227,7 +228,7 @@
 
 
 
-  
+
 
 
     <!-- Modal -->
