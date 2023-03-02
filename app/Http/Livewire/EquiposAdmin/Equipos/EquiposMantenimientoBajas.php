@@ -13,6 +13,7 @@ class EquiposMantenimientoBajas extends Component
 {
     public $equipo;
     public $opcion = 0;
+    public $fecha_inicial, $fecha_final;
     public $fecha_salida_mantenimiento, $cantidad, $observacion;
     public $fecha_entrada_equipo, $cantidad_equipos_arreglados_buen_estado, $observacion_de_entrada;
     public $title = 'AÑADIR EQUIPO EN MANTENIMIENTO';
@@ -27,10 +28,17 @@ class EquiposMantenimientoBajas extends Component
 
     public function render()
     {
+        if (!$this->fecha_inicial) {
+            $this->fecha_inicial = date ('Y-m-d');
+        }
+        if (!$this->fecha_final) {
+            $this->fecha_final = date ('Y-m-d');
+        }
         $mantenimientos = DB::table('equipos as e')
             ->leftJoin('mantenimientos as m', 'm.equipo_id', '=', 'e.id')
             ->leftJoin('devolucion_mantenimientos as dm', 'dm.mantenimientos_id', '=', 'm.id')
             ->where('m.equipo_id', $this->equipo->id)
+            ->whereBetween('fecha_salida_mantenimiento', [$this->fecha_inicial, $this->fecha_final])
             ->select(
                 'm.id as idMantenimiento',
                 DB::raw('date_format(m.fecha_salida_mantenimiento, "%d-%m-%Y") as fecha_salida_mantenimiento'),
