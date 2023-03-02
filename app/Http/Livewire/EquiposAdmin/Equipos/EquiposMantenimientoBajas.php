@@ -8,9 +8,14 @@ use App\Models\Inventario\DevolucionMantenimientos;
 use App\Models\Inventario\Mantenimientos;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class EquiposMantenimientoBajas extends Component
 {
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+
+
     public $equipo;
     public $opcion = 0;
     public $fecha_inicial, $fecha_final;
@@ -49,13 +54,13 @@ class EquiposMantenimientoBajas extends Component
                 'dm.cantidad_equipos_arreglados_buen_estado',
                 'dm.observacion as obsDevolucion'
             )
-            ->get();
+            ->paginate(20, ['*'], 'mantenentPage');
         $bajas = DB::table('baja_equipos')
         ->where('equipo_id', $this->equipo->id)
         ->select('id', 
         DB::raw('date_format(fecha_baja, "%d-%m-%Y") as fecha_baja' 
             ), 'motivo_baja', 'cantidad', 'equipo_id')
-        ->get();
+        ->paginate(20, ['*'], 'bajesPage');
         return view('livewire.equipos-admin.equipos.equipos-mantenimiento-bajas', compact('mantenimientos','bajas'));
     }
 
@@ -143,6 +148,25 @@ class EquiposMantenimientoBajas extends Component
     }
 
     public function saveBaja(){
+        $this->validate(
+            [
+               'fecha_baja' => 'required', 
+               'motivo_baja' => 'required', 
+               'cantidad_de_baja' => 'required|numeric|min:1',  
+            ]
+        );
+        $equipo = Equipos::findOrFail($this->equipo->id);
+        if (($equipo->stock - $this->cantidad_de_baja) <= 0) {
+            $this->dispatchBrowserEvent('swal', [
+                'title' => 'ERROR !',
+                'icon' => 'error',
+                'text' => 'La cantidad Ingresada es Mayor al Stock con el que se cuenta. 
+                        Por favor revice bien la cantidad a descontar.'
+            ]);
+
+            return;
+        }
+
         $baja = BajaEquipos::create(
             [
                 'fecha_baja' => $this->fecha_baja, 
@@ -152,7 +176,7 @@ class EquiposMantenimientoBajas extends Component
             ]
         );
 
-        $equipo = Equipos::findOrFail($this->equipo->id);
+        
         $equipo->stock = $equipo->stock - $this->cantidad_de_baja;
         $equipo->save();
 

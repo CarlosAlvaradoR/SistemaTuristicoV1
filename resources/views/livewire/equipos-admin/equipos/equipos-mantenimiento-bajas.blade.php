@@ -1,4 +1,26 @@
 <div>
+    <style>
+        .loader {
+            border: 6px solid #f3f3f3;
+            /* Light grey */
+            border-top: 6px solid #3498db;
+            /* Blue */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
     <div class="row">
         <div class="col-xxl-12 col-md-12">
             <section class="widget top-tabs">
@@ -42,7 +64,7 @@
                                             Fecha Inicial
                                         </label>
                                         <input type="date" wire:model="fecha_inicial" class="form-control"
-                                            id="fecha_inicial"/>
+                                            id="fecha_inicial" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -76,9 +98,13 @@
                             </button>
                         </div>
                         <div class="row">
-                            <div wire:loading class="alert alert-primary" role="alert">
-                                <a href="#!" class="alert-link">Cargando ...</a>
+                            <div style="float: none">
+                                <div wire:loading class="loader"></div>
+                                <div wire:loading class="alert alert-primary" role="alert">
+                                    <a href="#!" class="alert-link">Cargando ...</a>
+                                </div>
                             </div>
+
                         </div>
                         <table class="table table-hover">
                             <thead>
@@ -136,16 +162,12 @@
 
                             </tbody>
                         </table>
-
+                        {{ $mantenimientos->links() }}
                     </div>
                     <div class="tab-pane" id="wt-1-tab-2" role="tabpanel" aria-expanded="false">
                         <div class="col-md-4">
                             <br>
-                            <div class="form-group has-search">
-                                <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control" wire:model="search"
-                                    placeholder="Buscar Equipo">
-                            </div>
+                            <small class="form-label semibold">F. Baja</small>
                         </div>
                         <div class="col-md-3">
                             <div class="row">
@@ -217,6 +239,7 @@
 
                             </tbody>
                         </table>
+                        {{ $bajas->links() }}
                     </div>
                     {{-- <div class="tab-pane" id="wt-1-tab-3" role="tabpanel" aria-expanded="false">
                     <center>Event</center>
@@ -350,8 +373,8 @@
                             <fieldset class="form-group">
                                 <label class="form-label" for="cantidad_de_baja">Cantidad dada de Baja</label>
                                 <input type="number" wire:model.defer="cantidad_de_baja"
-                                    class="form-control maxlength-custom-message" id="cantidad_de_baja"
-                                    placeholder="ej: 5" maxlength="20">
+                                    class="form-control" id="cantidad_de_baja"
+                                    placeholder="ej: 5">
                                 @error('cantidad_de_baja')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
