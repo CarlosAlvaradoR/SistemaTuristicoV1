@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Equipos;
 use App\Models\PaquetesTuristicos;
 use App\Models\Pedidos\Pedidos;
 use App\Models\Pedidos\Proveedores;
@@ -197,7 +198,7 @@ class PaquetesTuristicosController extends Controller
         return view('equipos_admin.marcas_index');
     }
 
-    public function VerMantenimientoBajas(){
-        return view('equipos_admin.detalle_equipos');
+    public function VerMantenimientoBajas(Equipos $equipo){
+        return view('equipos_admin.detalle_equipos', compact('equipo'));
     }
 }
