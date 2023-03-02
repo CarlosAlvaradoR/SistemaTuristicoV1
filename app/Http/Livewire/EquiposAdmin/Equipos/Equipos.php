@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\EquiposAdmin\Equipos;
 
+use App\Models\EquipoPaquetes;
 use App\Models\Equipos as ModelsEquipos;
 use App\Models\Marcas;
 use Illuminate\Support\Facades\DB;
@@ -12,12 +13,14 @@ class Equipos extends Component
     public $search = '';
     public $nombre_de_equipo, $descripcion, $cantidad, $precio_referencial, $tipo, $marca;
     public $title = 'CREAR EQUIPOS/IMPLEMENTOS', $idEquipo, $edicion = false;
+    public $title2 = '', $opcion = 0, $cantidad_entrante;
 
     function resetUI()
     {
         $this->reset([
             'nombre_de_equipo', 'descripcion', 'cantidad', 'precio_referencial', 'tipo', 'marca',
-            'title', 'idEquipo', 'edicion'
+            'title', 'idEquipo', 'edicion',
+            'title2', 'opcion', 'cantidad_entrante'
         ]);
     }
 
@@ -95,7 +98,61 @@ class Equipos extends Component
         ]);
         $this->resetUI();
         $this->emit('close-modal-equipo', 'Edicion de Atractivos');
-        
+    }
+
+    public function addRemoveStock(ModelsEquipos $equipo, $opcion)
+    {
+        if ($opcion == 1) {
+            //Añadir al Stock
+            $this->opcion = $opcion;
+            $this->idEquipo = $equipo->id;
+            $this->title2 = 'AÑADIR STOCK EN: ' . $equipo->nombre;
+            $this->emit('show-modal-equipo-stock', 'Edicion de Atractivos');
+        } else {
+            // Remover al Stock
+            $this->opcion = $opcion;
+            $this->idEquipo = $equipo->id;
+            $this->title2 = 'REMOVER/QUITAR STOCK EN: ' . $equipo->nombre;
+            $this->emit('show-modal-equipo-stock', 'Edicion de Atractivos');
+        }
+    }
+
+    public function addRemove()
+    {
+        $this->validate(
+            [
+                'cantidad_entrante' => 'required|numeric|min:1'
+            ]
+        );
+        $equipo = ModelsEquipos::findOrfail($this->idEquipo);
+        if ($this->opcion == 1) {
+            //Agregamos al STOCK
+            $equipo->stock = $equipo->stock + $this->cantidad_entrante;
+            $equipo->save();
+            $msg = 'Se acaba de Añadir la cantidad de '.$this->cantidad_entrante . ' a '. $equipo->nombre;
+        } else {
+            //Quitamos al STOCK
+            $equipo->stock = $equipo->stock - $this->cantidad_entrante;
+            $equipo->save();
+            $msg = 'Se acaba de Quitar la cantidad de '.$this->cantidad_entrante . ' a '. $equipo->nombre;
+        }
+
+
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'MUY BIEN !',
+            'icon' => 'success',
+            'text' => $msg
+        ]);
+
+        $this->resetUI();
+        $this->emit('close-modal-equipo-stock', 'Edicion de Atractivos');
+    }
+
+    public function closed(){
+        $this->resetUI();
+        $this->emit('close-modal-equipo', 'Edicion de Atractivos');
+        $this->emit('close-modal-equipo-stock', 'Edicion de Atractivos');
     }
 
     function validateEquipos()
