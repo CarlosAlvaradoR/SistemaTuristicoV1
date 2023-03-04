@@ -5,31 +5,31 @@
 
 
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <span class="badge badge-default font-weight-bold">CLIENTE:</span>
                 </div>
-                <div class="col-md-3">
-                    <span class="badge badge-default">Label</span>
+                <div class="col-md-4">
+                    <span class="badge badge-default">{{ $datos }}</span>
                 </div>
                 <div class="col-md-3">
                     <span class="badge badge-default font-weight-bold">DNI:</span>
                 </div>
                 <div class="col-md-3">
-                    <span class="badge badge-default">Label</span>
+                    <span class="badge badge-default">{{ $dni }}</span>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <span class="badge badge-default font-weight-bold">PAQUETE:</span>
                 </div>
-                <div class="col-md-3">
-                    <span class="badge badge-default">Label</span>
+                <div class="col-md-4">
+                    <span class="badge badge-default">{{ $nombre_paquete }}</span>
                 </div>
                 <div class="col-md-3">
                     <span class="badge badge-default font-weight-bold">FECHA RESERVADA:</span>
                 </div>
                 <div class="col-md-3">
-                    <span class="badge badge-default">Label</span>
+                    <span class="badge badge-default">{{ $fecha_reserva }}</span>
                 </div>
             </div>
             <div class="row">
@@ -52,92 +52,134 @@
             <div class="row">
                 <div class="col-lg-4">
                     <fieldset class="form-group">
-                        <label class="form-label" for="exampleInput">Evento</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
+                        <label class="form-label" for="evento">Evento de Postergación</label>
+                        <select class="form-control" wire:model.defer="evento" id="evento">
                             <option>...Seleccione...</option>
-                            <option>2</option>
+                            @foreach ($eventos as $e)
+                                <option value="{{ $e->id }}">{{ $e->nombre_evento }}</option>
+                            @endforeach
                         </select>
+                        @error('evento')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </fieldset>
                 </div>
                 <div class="col-lg-4">
                     <fieldset class="form-group">
-                        <label class="form-label" for="exampleInputEmail1">Fecha de Postergación</label>
-                        <input type="date" class="form-control maxlength-custom-message" id="exampleInputEmail1">
+                        <label class="form-label" for="fecha_postergacion">Fecha de Postergación <span
+                                class="text-danger font-weight-bold">(*)</span></label>
+                        <input type="date" wire:model.defer="fecha_postergacion"
+                            class="form-control maxlength-custom-message" id="fecha_postergacion">
+                        @error('fecha_postergacion')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </fieldset>
                 </div>
                 <div class="col-lg-4">
                     <fieldset class="form-group">
-                        <label class="form-label" for="exampleInputPassword1">Descripción / Motivo de
-                            Postergación</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <label class="form-label" for="descripcion_motivo">Descripción / Motivo de
+                            Postergación <span class="text-danger font-weight-bold">(*)</span></label>
+                        <textarea class="form-control" wire:model.defer="descripcion_motivo" id="descripcion_motivo" rows="3"></textarea>
+                        @error('descripcion_motivo')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </fieldset>
                 </div>
                 <div class="col-lg-12">
-                    <button class="btn btn-primary btn-rounded">Guardar</button>
+                    <button class="btn btn-primary btn-rounded" wire:click="saveEventoPostergacion">Guardar</button>
                     <button class="btn btn-danger btn-rounded">Cancelar</button>
                 </div>
             </div>
 
             <h5 class="with-border m-t-lg">SOLICITUD DE DEVOLUCIÓN</h5>
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="col-lg-6">
                         <fieldset class="form-group">
-                            <label class="form-label" for="exampleInput">Fecha de Presentación de Solicitud</label>
-                            <input type="date" class="form-control maxlength-custom-message" id="exampleInputEmail1">
+                            <label class="form-label" for="fecha_presentacion">Fecha de Presentación de
+                                Solicitud</label>
+                            <input type="date" wire:model.defer="fecha_presentacion"
+                                class="form-control maxlength-custom-message" id="fecha_presentacion">
+                            @error('fecha_presentacion')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </fieldset>
                     </div>
                     <div class="col-lg-6">
                         <fieldset class="form-group">
-                            <label class="form-label" for="exampleInputEmail1">Estado de Solicitud</label>
-                            <select class="form-control" id="exampleFormControlSelect1">
+                            <label class="form-label" for="estado_solicitud">Estado de Solicitud</label>
+                            <select class="form-control" wire:model.defer="estado_solicitud" id="estado_solicitud">
                                 <option>...Seleccione...</option>
                                 <option>POR PROCESAR</option>
                                 <option>PROCESADO</option>
                             </select>
+                            @error('observacion_de_la_solicitud')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </fieldset>
                     </div>
                     <div class="col-lg-8">
                         <fieldset class="form-group">
-                            <label class="form-label" for="exampleInputPassword1">Observación de Solicitud</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <label class="form-label" for="observacion_de_la_solicitud">Observación de Solicitud</label>
+                            <textarea class="form-control"wire:model.defer="observacion_de_la_solicitud" id="observacion_de_la_solicitud"
+                                rows="3"></textarea>
+                            @error('observacion_de_la_solicitud')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </fieldset>
                     </div>
                     <div class="col-lg-4">
                         <fieldset class="form-group">
-                            <label class="form-label font-weight-bold" for="exampleInputPassword1">Monto Solicitado S/.</label>
-                            <input type="text" class="form-control maxlength-custom-message font-weight-bold" value="2000" readonly
-                                id="exampleInputEmail1">
+                            <label class="form-label font-weight-bold" for="exampleInputPassword1">Monto Solicitado
+                                S/.</label>
+                            <input type="text" class="form-control maxlength-custom-message font-weight-bold"
+                                wire:model="monto_solicitado" readonly id="monto_solicitado">
                         </fieldset>
                     </div>
                     <div class="col-lg-12">
-                        <button class="btn btn-primary btn-rounded">Guardar</button>
+                        <button class="btn btn-primary btn-rounded" wire:click="guardarSolicitud">Guardar</button>
                         <button class="btn btn-danger btn-rounded">Cancelar</button>
                     </div>
 
 
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Monto de Pago</th>
+                                <th scope="col">Fecha de Pago</th>
                                 <th scope="col">Estado</th>
+                                <th scope="col">Archivo</th>
                                 <th scope="col">Acción</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-rounded btn-success">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            @foreach ($pagos as $p)
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>S/. {{ $p->monto }}</td>
+                                    <td>{{ $p->fecha_pago }}</td>
+                                    <td>{{ $p->estado_pago }}</td>
+                                    <td>
+                                        @if ($p->ruta_archivo_pago)
+                                            <a href="{{ asset('/' . $p->ruta_archivo_pago) }}">Ver</a>
+                                        @else
+                                            -
+                                        @endif
+
+                                    </td>
+                                    <td>
+                                        <button type="button"
+                                            wire:click="AñadirPagoSolicitadoAlProceso({{ $p->id }})"
+                                            class="btn btn-sm btn-rounded btn-success">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -327,4 +369,6 @@
             </div>
         </div>
     </div>
+
+    @include('common.alerts')
 </div>

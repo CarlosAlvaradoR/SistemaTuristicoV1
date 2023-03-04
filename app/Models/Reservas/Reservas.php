@@ -11,13 +11,13 @@ class Reservas extends Model
 {
     use HasFactory;
     use HasSlug;
-
+    public $string = 'RES-';
     protected $fillable = ['fecha_reserva', 'observacion', 'slug', 'cliente_id', 'paquete_id', 'estado_reservas_id'];
 
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom(['fecha_reserva','cliente_id'])
+            ->generateSlugsFrom([$this->string, 'id','fecha_reserva','cliente_id'])
             ->saveSlugsTo('slug');
     }
 

@@ -117,12 +117,12 @@
                                     <td style="white-space: nowrap; width: 1%;">
                                         <div class="tabledit-toolbar btn-toolbar" style="text-align: left;">
                                             <div class="btn-group btn-group-sm" style="float: none;">
-                                                <a href="{{ route('reservas.eventos.postergacion', $r) }}"
+                                                <a href="{{ route('reservas.eventos.postergacion', $r->slug) }}"
                                                     title="Llenar Evento de Postergación" type="button"
                                                     class="tabledit-edit-button btn btn-sm btn-primary"
                                                     style="float: none;"><span class="fas fa-calendar-week"></span>
                                                 </a>
-                                                <a href="{{ route('reservas.solicitudes.devoluciones', $r) }}"
+                                                <a href="{{ route('reservas.solicitudes.devoluciones', $r->slug) }}"
                                                     title="Llenar Solicitud de de Devolución" type="button"
                                                     class="tabledit-delete-button btn btn-sm btn-primary"
                                                     style="float: none;"><span class="fa-solid fa-file"></span>

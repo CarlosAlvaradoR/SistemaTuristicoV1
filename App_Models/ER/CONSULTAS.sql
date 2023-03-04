@@ -116,6 +116,21 @@ SELECT * FROM actividades_itinerarios;
 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  /* BUSCAR CLIENTE*/
 -- ///////////RESERVAS /////////////////////////////////////////////**************************
+
+-- CONSULTA DE LA INFORMACIÓN DE UN CLIENTE PARA LAS SOLICITUDES Y DEVOLUCIONES DE DINERO
+SELECT concat(p.nombre, " ",p.apellidos) as datos, p.dni, pt.nombre, r.fecha_reserva FROM personas p
+INNER JOIN clientes c ON c.persona_id = p.id
+INNER JOIN reservas r on r.cliente_id = c.id
+INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
+WHERE r.id = 2;
+
+-- SELECCIONAR LOS PAGOS QUE TIENE UNA RESERVA EN BASE AL ID DE LA RESERVA PARA LAS SOLICITUDES Y DEVOLUCIONES DE DINERO
+SELECT p.id, 	monto, fecha_pago, estado_pago, ruta_archivo_pago, tp.nombre_tipo_pago FROM pagos p
+INNER JOIN tipo_pagos tp on tp.id = p.tipo_pagos_id
+WHERE p.reserva_id = 1;
+
+
+
 CREATE OR REPLACE VIEW v_reserva_lista_clientes_registrados AS
 SELECT p.id, p.dni, concat(p.nombre,' ',p.apellidos) as datos,  p.telefono, c.id as idCliente FROM personas p
 LEFT JOIN clientes c on p.id = c.persona_id;
@@ -161,7 +176,7 @@ ORDER BY r.updated_at;
 
 
 -- CONSULTA PARA VERIFICAR EVENTOS QUE NO ESTAN EN LAS POSTERGACIÓN
-SELECT * FROM reservas;
+SELECT * FROM postergacion_reservas;
 
 SELECT * FROM evento_postergaciones ep
 WHERE ep.id NOT IN (SELECT pr.evento_postergaciones_id 

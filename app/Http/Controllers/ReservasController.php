@@ -9,6 +9,7 @@ use App\Models\Personas;
 use App\Models\Reservas\Reservas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Stmt\Return_;
 
 class ReservasController extends Controller
 {
@@ -120,6 +121,7 @@ class ReservasController extends Controller
             DB::raw('SUM(pa.monto) as pago'),
             'er.nombre_estado',
             'r.id',
+            'r.slug',
             DB::raw('IF((fecha_reserva-curdate()) <=10 ,"PRÓXIMA A CUMPLIRSE","EN DETERMINACIÓN") as estado_reserva')
         )
             ->join('clientes as c', 'personas.id', '=', 'c.persona_id')
@@ -136,8 +138,9 @@ class ReservasController extends Controller
         return view('reservar_admin.all_reservas', compact('reservas'));
     }
 
-    public function mostrarEventosPostergacionReservas(Reservas $reserva)
+    public function mostrarEventosPostergacionReservas($reserva)
     {
+        
         return view('reservar_admin.eventos_postergacion.index', compact('reserva'));
     }
 
