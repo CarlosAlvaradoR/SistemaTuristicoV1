@@ -91,6 +91,35 @@
                 </div>
             </div>
 
+            <h5 class="with-border m-t-lg">SOBRE LA SOLICITUD</h5>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="fecha_postergacion">Fecha de Presentación de Solicitud<span
+                                class="text-danger font-weight-bold">(*)</span></label>
+                        <input type="date" wire:model.defer="fecha_postergacion"
+                            class="form-control maxlength-custom-message" id="fecha_postergacion">
+                        @error('fecha_postergacion')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </fieldset>
+                </div>
+                <div class="col-lg-8">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="descripcion_motivo">Descripción de la Solicitud <span class="text-danger font-weight-bold">(*)</span></label>
+                        <textarea class="form-control" wire:model.defer="descripcion_motivo" id="descripcion_motivo" rows="3"></textarea>
+                        @error('descripcion_motivo')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </fieldset>
+                </div>
+                <div class="col-lg-12">
+                    <button class="btn btn-primary btn-rounded" wire:click="saveEventoPostergacion">Guardar</button>
+                    <button class="btn btn-danger btn-rounded">Cancelar</button>
+                </div>
+            </div>
+
             <h5 class="with-border m-t-lg">SOLICITUD DE DEVOLUCIÓN</h5>
             <div class="row">
                 <div class="col-md-7">
@@ -113,17 +142,17 @@
                                 <option>POR PROCESAR</option>
                                 <option>PROCESADO</option>
                             </select>
-                            @error('observacion_de_la_solicitud')
+                            @error('descripcion_de_solicitud')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </fieldset>
                     </div>
                     <div class="col-lg-8">
                         <fieldset class="form-group">
-                            <label class="form-label" for="observacion_de_la_solicitud">Observación de Solicitud</label>
-                            <textarea class="form-control"wire:model.defer="observacion_de_la_solicitud" id="observacion_de_la_solicitud"
+                            <label class="form-label" for="descripcion_de_solicitud">Observación de Solicitud</label>
+                            <textarea class="form-control"wire:model.defer="descripcion_de_solicitud" id="descripcion_de_solicitud"
                                 rows="3"></textarea>
-                            @error('observacion_de_la_solicitud')
+                            @error('descripcion_de_solicitud')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </fieldset>
@@ -288,9 +317,9 @@
                             id="estado_solicitud" placeholder="Ingrese el estado del solicitud">
                     </div>
                     <div class="form-group">
-                        <label for="observacion_de_la_solicitud">Observación</label>
-                        <textarea wire:model.defer="observacion_de_la_solicitud" placeholder="Ingrese Observación de la solicitud"
-                            class="form-control" id="observacion_de_la_solicitud" rows="3"></textarea>
+                        <label for="descripcion_de_solicitud">Observación</label>
+                        <textarea wire:model.defer="descripcion_de_solicitud" placeholder="Ingrese Observación de la solicitud"
+                            class="form-control" id="descripcion_de_solicitud" rows="3"></textarea>
                     </div>
                     @if ($solicitud_existe)
                         <button type="button" wire:click="ActuaizarSolicitud"

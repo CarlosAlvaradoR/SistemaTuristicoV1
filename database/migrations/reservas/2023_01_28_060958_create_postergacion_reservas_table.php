@@ -24,6 +24,9 @@ return new class extends Migration
             $table->unsignedBigInteger('evento_postergaciones_id')->nullable();
             $table->foreign('evento_postergaciones_id')->references('id')->on('evento_postergaciones');
 
+            $table->unsignedBigInteger('cancelacion_viajes_id')->nullable();
+            $table->foreign('cancelacion_viajes_id')->references('id')->on('cancelacion_viajes');
+            
             $table->timestamps();
         });
     }

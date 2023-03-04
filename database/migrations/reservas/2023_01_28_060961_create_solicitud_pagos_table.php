@@ -13,15 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('devolucion_dineros', function (Blueprint $table) {
+        Schema::create('solicitud_pagos', function (Blueprint $table) {
             $table->id();
-            $table->decimal('monto',10,2)->nullable();
+            $table->enum('estdo_solicitud', ['DEVUELTO', 'NO DEVUELTO']);
             $table->text('observacion')->nullable();
-            $table->dateTime('fecha_hora')->nullable();
 
-            $table->unsignedBigInteger('solicitud_pagos_id')->nullable();
-            $table->foreign('solicitud_pagos_id')->references('id')->on('solicitud_pagos');
+            $table->unsignedBigInteger('solicitud_devolucion_dinero_id');
+            $table->foreign('solicitud_devolucion_dinero_id')->references('id')->on('solicitud_devolucion_dineros');
 
+            $table->unsignedBigInteger('pagos_id');
+            $table->foreign('pagos_id')->references('id')->on('pagos');
 
             $table->timestamps();
         });
@@ -34,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('devolucion_dineros');
+        Schema::dropIfExists('solicitud_pagos');
     }
 };

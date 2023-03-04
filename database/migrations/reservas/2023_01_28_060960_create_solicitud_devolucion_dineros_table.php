@@ -16,17 +16,14 @@ return new class extends Migration
         Schema::create('solicitud_devolucion_dineros', function (Blueprint $table) {
             $table->id();
             $table->date('fecha_presentacion');
-            $table->string('estado');
-            $table->text('observacion')->nullable();
+            $table->enum('estado', ['POR PROCESAR', 'PROCESADO']);
+            $table->text('descripcion_solicitud')->nullable();
 
             $table->unsignedBigInteger('postergacion_reservas_id')->nullable();
             $table->foreign('postergacion_reservas_id')->references('id')->on('postergacion_reservas');
             
-            $table->unsignedBigInteger('pagos_id');
-            $table->foreign('pagos_id')->references('id')->on('pagos');
-
-            $table->unsignedBigInteger('cancelacion_viajes_id')->nullable();
-            $table->foreign('cancelacion_viajes_id')->references('id')->on('cancelacion_viajes');
+            
+            
 
             $table->timestamps();
         });

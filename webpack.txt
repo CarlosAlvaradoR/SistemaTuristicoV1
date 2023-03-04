@@ -161,6 +161,10 @@ MIGRACIONES Y MÓDELOS
         php artisan make:migration create_solicitud_devolucion_dineros_table --path=/database/migrations/reservas
         php artisan make:model Reservas/SolicitudDevolucionDineros -r
 
+        *) Tabla Solicitud Pagos
+        php artisan make:migration create_solicitud_pagos_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/SolicitudPagos -r
+
         *) Tabla Devolucion Dineros
         php artisan make:migration create_devolucion_dineros_table --path=/database/migrations/reservas
         php artisan make:model Reservas/DevolucionDineros -r

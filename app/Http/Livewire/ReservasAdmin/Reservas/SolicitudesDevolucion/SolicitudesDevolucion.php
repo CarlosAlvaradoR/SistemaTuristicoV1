@@ -21,7 +21,7 @@ class SolicitudesDevolucion extends Component
     /** ATRIBUTOS DE POSTERGACIÓN RESERVAS */
     public $fecha_postergacion, $descripcion_motivo, $evento, $pago, $monto_solicitado;
 
-    public $id_solicitud, $fecha_presentacion, $estado_solicitud, $observacion_de_la_solicitud = ''; //Para presentar Solicitud
+    public $id_solicitud, $fecha_presentacion, $estado_solicitud, $descripcion_de_solicitud = ''; //Para presentar Solicitud
     public $reserva;
     public $monto_devolucion, $observacion_devolucion, $fecha_hora;
     public $solicitud, $devolucion_dinero, $query, $id_reserva;
@@ -69,7 +69,7 @@ class SolicitudesDevolucion extends Component
             $this->id_solicitud = $this->solicitud[0]->id;
             $this->fecha_presentacion = $this->solicitud[0]->fecha_presentacion;
             $this->estado_solicitud = $this->solicitud[0]->estado;
-            $this->observacion_de_la_solicitud = $this->solicitud[0]->observacion;
+            $this->descripcion_de_solicitud = $this->solicitud[0]->observacion;
             $this->solicitud_existe = true;
 
             $query_devolucion = DB::select("SELECT id, monto, observacion, fecha_hora, solicitud_devolucion_dinero_id FROM 
@@ -126,14 +126,14 @@ class SolicitudesDevolucion extends Component
             [
                 'fecha_presentacion' => 'required|date',
                 'estado_solicitud' => 'required|numeric|min:1',
-                'observacion_de_la_solicitud' => 'nullable|string|min:5',
+                'descripcion_de_solicitud' => 'nullable|string|min:5',
             ]
         );
         //dd('Guardando Solicitud');
         $solicitud = SolicitudDevolucionDineros::create([
             'fecha_presentacion' => $this->fecha_presentacion,
             'estado' => $this->estado_solicitud,
-            'observacion' => $this->observacion_de_la_solicitud,
+            'observacion' => $this->descripcion_de_solicitud,
             'reserva_id' => $this->reserva->id
         ]);
         session()->flash('mensaje-confirmacion-solicitud', 'Se registró correctamente la Solicitud para la Devolución de Dinero');
