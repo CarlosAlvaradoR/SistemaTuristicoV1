@@ -16,11 +16,12 @@ return new class extends Migration
         Schema::create('postergacion_reservas', function (Blueprint $table) {
             $table->id();
             $table->date('fecha_postergacion');
+            $table->text('descripcion_motivo');
 
             $table->unsignedBigInteger('reserva_id')->nullable();
             $table->foreign('reserva_id')->references('id')->on('reservas');
 
-            $table->unsignedBigInteger('evento_postergaciones_id');
+            $table->unsignedBigInteger('evento_postergaciones_id')->nullable();
             $table->foreign('evento_postergaciones_id')->references('id')->on('evento_postergaciones');
 
             $table->timestamps();

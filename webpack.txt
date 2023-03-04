@@ -193,6 +193,10 @@ MIGRACIONES Y MÓDELOS
         php artisan make:migration create_viaje_paquetes_table --path=/database/migrations/viajes
         php artisan make:model Viajes/ViajePaquetes -r
 
+        *) Tabla Cancelacion Viajes
+        php artisan make:migration create_cancelacion_viajes_table --path=/database/migrations/viajes
+        php artisan make:model Viajes/CancelacionViajes -r
+
         *) Tabla Participantes
         php artisan make:migration create_participantes_table --path=/database/migrations/viajes
         php artisan make:model Viajes/Participantes -r

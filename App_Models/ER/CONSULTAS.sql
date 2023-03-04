@@ -113,7 +113,7 @@ SELECT * FROM actividades_itinerarios;
 
 
 
-SELECT curdate();
+
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  /* BUSCAR CLIENTE*/
 -- ///////////RESERVAS /////////////////////////////////////////////**************************
 CREATE OR REPLACE VIEW v_reserva_lista_clientes_registrados AS
@@ -189,6 +189,7 @@ GROUP BY pa.reserva_id
 ORDER BY r.updated_at;
 
 
+SELECT * FROM reservas;
 
 
 

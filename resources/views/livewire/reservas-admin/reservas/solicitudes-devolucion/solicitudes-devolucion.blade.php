@@ -1,4 +1,212 @@
 <div>
+    <section class="card">
+        <div class="card-block">
+            <h5 class="with-border">INFORMACIÓN DEL CLIENTE</h5>
+
+
+            <div class="row">
+                <div class="col-md-3">
+                    <span class="badge badge-default font-weight-bold">CLIENTE:</span>
+                </div>
+                <div class="col-md-3">
+                    <span class="badge badge-default">Label</span>
+                </div>
+                <div class="col-md-3">
+                    <span class="badge badge-default font-weight-bold">DNI:</span>
+                </div>
+                <div class="col-md-3">
+                    <span class="badge badge-default">Label</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <span class="badge badge-default font-weight-bold">PAQUETE:</span>
+                </div>
+                <div class="col-md-3">
+                    <span class="badge badge-default">Label</span>
+                </div>
+                <div class="col-md-3">
+                    <span class="badge badge-default font-weight-bold">FECHA RESERVADA:</span>
+                </div>
+                <div class="col-md-3">
+                    <span class="badge badge-default">Label</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <span class="badge badge-default font-weight-bold">MONTO CANCELADO:</span>
+                </div>
+                <div class="col-md-3">
+                    <span class="badge badge-default">Label</span>
+                </div>
+                <div class="col-md-3">
+                    <span class="badge badge-default font-weight-bold">MONTO PENDIENTE:</span>
+                </div>
+                <div class="col-md-3">
+                    <span class="badge badge-default">Label</span>
+                </div>
+            </div>
+
+            <h5 class="with-border m-t-lg">EVENTO DE POSTERGACIÓN</h5>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput">Evento</label>
+                        <select class="form-control" id="exampleFormControlSelect1">
+                            <option>...Seleccione...</option>
+                            <option>2</option>
+                        </select>
+                    </fieldset>
+                </div>
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInputEmail1">Fecha de Postergación</label>
+                        <input type="date" class="form-control maxlength-custom-message" id="exampleInputEmail1">
+                    </fieldset>
+                </div>
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInputPassword1">Descripción / Motivo de
+                            Postergación</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </fieldset>
+                </div>
+                <div class="col-lg-12">
+                    <button class="btn btn-primary btn-rounded">Guardar</button>
+                    <button class="btn btn-danger btn-rounded">Cancelar</button>
+                </div>
+            </div>
+
+            <h5 class="with-border m-t-lg">SOLICITUD DE DEVOLUCIÓN</h5>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="col-lg-6">
+                        <fieldset class="form-group">
+                            <label class="form-label" for="exampleInput">Fecha de Presentación de Solicitud</label>
+                            <input type="date" class="form-control maxlength-custom-message" id="exampleInputEmail1">
+                        </fieldset>
+                    </div>
+                    <div class="col-lg-6">
+                        <fieldset class="form-group">
+                            <label class="form-label" for="exampleInputEmail1">Estado de Solicitud</label>
+                            <select class="form-control" id="exampleFormControlSelect1">
+                                <option>...Seleccione...</option>
+                                <option>POR PROCESAR</option>
+                                <option>PROCESADO</option>
+                            </select>
+                        </fieldset>
+                    </div>
+                    <div class="col-lg-8">
+                        <fieldset class="form-group">
+                            <label class="form-label" for="exampleInputPassword1">Observación de Solicitud</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </fieldset>
+                    </div>
+                    <div class="col-lg-4">
+                        <fieldset class="form-group">
+                            <label class="form-label font-weight-bold" for="exampleInputPassword1">Monto Solicitado S/.</label>
+                            <input type="text" class="form-control maxlength-custom-message font-weight-bold" value="2000" readonly
+                                id="exampleInputEmail1">
+                        </fieldset>
+                    </div>
+                    <div class="col-lg-12">
+                        <button class="btn btn-primary btn-rounded">Guardar</button>
+                        <button class="btn btn-danger btn-rounded">Cancelar</button>
+                    </div>
+
+
+                </div>
+                <div class="col-md-4">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Monto de Pago</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-rounded btn-success">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h5 class="with-border m-t-lg">DEVOLUCIÓN</h5>
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <span class="badge badge-default font-weight-bold">MONTO SOLICITADO</span>
+                </div>
+                <div class="col-lg-9">
+                    <span class="badge badge-default font-weight-bold">S/. 1200</span>
+                </div>
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInput">Monto Devuelto</label>
+                        <input type="text" class="form-control maxlength-custom-message" id="exampleInputEmail1">
+                    </fieldset>
+                </div>
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInputEmail1">Fecha y Hora de Devolución</label>
+                        <input type="datetime-local" class="form-control maxlength-custom-message"
+                            id="exampleInputEmail1">
+                    </fieldset>
+                </div>
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInputPassword1">Observación de Devolución</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </fieldset>
+                </div>
+                <div class="col-lg-12">
+                    <button class="btn btn-primary btn-rounded">Guardar</button>
+                    <button class="btn btn-danger btn-rounded">Cancelar</button>
+                </div>
+
+                <div class="col-lg-12"><br>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Fecha Pres. Solicitud</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Observación</th>
+                                <th scope="col">Monto Devuelto</th>
+                                <th scope="col">Fecha - Hora Devolución</th>
+                                <th scope="col">Observación de Devolución</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Monto Devuelto</td>
+                                <td>Observación</td>
+                                <td>@mdo</td>
+                                <th scope="row">1</th>
+                                <td>Monto Devuelto</td>
+                                <td>Observación</td>
+                                <td>@mdo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
     <div class="row">
         <div class="col-lg-6 ks-panels-column-section">
             <div class="card">
@@ -46,7 +254,8 @@
                         <button type="button" wire:click="ActuaizarSolicitud"
                             class="btn btn-success">Actualizar</button>
                     @else
-                        <button type="button" wire:loading.attr="disabled" wire:click="guardarSolicitud" class="btn btn-primary">Guardar</button>
+                        <button type="button" wire:loading.attr="disabled" wire:click="guardarSolicitud"
+                            class="btn btn-primary">Guardar</button>
                     @endif
 
                 </div>
@@ -76,7 +285,8 @@
                     @endif
 
 
-                    <div wire:loading wire:target="guardarDevolucionDinero" class="alert alert-primary" role="alert">
+                    <div wire:loading wire:target="guardarDevolucionDinero" class="alert alert-primary"
+                        role="alert">
                         <a href="#!" class="alert-link">Cargando ...</a>
                     </div>
 
@@ -92,7 +302,8 @@
                     </div>
                     <div class="form-group">
                         <label for="fecha_hora">Fecha - Hora</label>
-                        <input type="datetime-local" wire:model.defer="fecha_hora" class="form-control" id="fecha_hora">
+                        <input type="datetime-local" wire:model.defer="fecha_hora" class="form-control"
+                            id="fecha_hora">
                     </div>
                     @if ($solicitud_existe)
                         @if (!$solicitud_dinero_existe)

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->date('fecha_reserva');
             $table->text('observacion')->nullable();
+            $table->text('slug');
 
             $table->unsignedBigInteger('cliente_id')->nullable();
             $table->foreign('cliente_id')->references('id')->on('clientes');

@@ -19,10 +19,15 @@ return new class extends Migration
             $table->string('estado');
             $table->text('observacion')->nullable();
 
-            $table->unsignedBigInteger('reserva_id')->nullable();
-            $table->foreign('reserva_id')->references('id')->on('reservas');
-
+            $table->unsignedBigInteger('postergacion_reservas_id')->nullable();
+            $table->foreign('postergacion_reservas_id')->references('id')->on('postergacion_reservas');
             
+            $table->unsignedBigInteger('pagos_id');
+            $table->foreign('pagos_id')->references('id')->on('pagos');
+
+            $table->unsignedBigInteger('cancelacion_viajes_id')->nullable();
+            $table->foreign('cancelacion_viajes_id')->references('id')->on('cancelacion_viajes');
+
             $table->timestamps();
         });
     }
