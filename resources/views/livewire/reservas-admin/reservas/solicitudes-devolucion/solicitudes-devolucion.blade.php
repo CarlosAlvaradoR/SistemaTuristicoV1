@@ -47,7 +47,8 @@
                 </div>
             </div>
 
-            <h5 class="with-border m-t-lg">EVENTO DE POSTERGACIÓN - {{ $idPostergacionReserva }}</h5>
+            <h5 class="with-border m-t-lg">EVENTO DE POSTERGACIÓN <button
+                    class="btn btn-primary btn-rounded">Print</button></h5>
 
             <div class="row">
                 <div class="col-lg-4">
@@ -108,8 +109,9 @@
                     <fieldset class="form-group">
                         <label class="form-label" for="fecha_presentacion">Fecha de Presentación de Solicitud<span
                                 class="text-danger font-weight-bold">(*)</span></label>
-                        <input type="date" wire:model.defer="fecha_presentacion" wire:loading.attr="disabled" wire:target="guardarSolicitud"
-                            class="form-control maxlength-custom-message" id="fecha_presentacion">
+                        <input type="date" wire:model.defer="fecha_presentacion" wire:loading.attr="disabled"
+                            wire:target="guardarSolicitud" class="form-control maxlength-custom-message"
+                            id="fecha_presentacion">
                         @error('fecha_presentacion')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -119,7 +121,8 @@
                     <fieldset class="form-group">
                         <label class="form-label" for="descripcion_de_solicitud">Descripción de la Solicitud <span
                                 class="text-danger font-weight-bold">(*)</span></label>
-                        <textarea class="form-control" wire:model.defer="descripcion_de_solicitud" wire:loading.attr="disabled" wire:target="guardarSolicitud" id="descripcion_de_solicitud" rows="3"></textarea>
+                        <textarea class="form-control" wire:model.defer="descripcion_de_solicitud" wire:loading.attr="disabled"
+                            wire:target="guardarSolicitud" id="descripcion_de_solicitud" rows="3"></textarea>
                         @error('descripcion_de_solicitud')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -140,57 +143,51 @@
 
             <h5 class="with-border m-t-lg">SOLICITUD DE DEVOLUCIÓN</h5>
             <div class="row">
-                <div class="col-md-7">
-                    {{--<div class="col-lg-6">
-                        <fieldset class="form-group">
-                            <label class="form-label" for="fecha_presentacion">Fecha de Presentación de
-                                Solicitud</label>
-                            <input type="date" wire:model.defer="fecha_presentacion"
-                                class="form-control maxlength-custom-message" id="fecha_presentacion">
-                            @error('fecha_presentacion')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </fieldset>
-                    </div>
-                    <div class="col-lg-6">
-                        <fieldset class="form-group">
-                            <label class="form-label" for="estado_solicitud">Estado de Solicitud</label>
-                            <select class="form-control" wire:model.defer="estado_solicitud" id="estado_solicitud">
-                                <option>...Seleccione...</option>
-                                <option>POR PROCESAR</option>
-                                <option>PROCESADO</option>
-                            </select>
-                            @error('descripcion_de_solicitud')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </fieldset>
-                    </div>--}}
-                    <div class="col-lg-8">
-                        <fieldset class="form-group">
-                            <label class="form-label" for="descripcion_de_solicitud">Observación de Solicitud</label>
-                            <textarea class="form-control"wire:model.defer="descripcion_de_solicitud" id="descripcion_de_solicitud"
-                                rows="3"></textarea>
-                            @error('descripcion_de_solicitud')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </fieldset>
-                    </div>
-                    <div class="col-lg-4">
-                        <fieldset class="form-group">
-                            <label class="form-label font-weight-bold" for="exampleInputPassword1">Monto Solicitado
-                                S/.</label>
-                            <input type="text" class="form-control maxlength-custom-message font-weight-bold"
-                                wire:model="monto_solicitado" readonly id="monto_solicitado">
-                        </fieldset>
-                    </div>
-                    <div class="col-lg-12">
-                        <button class="btn btn-primary btn-rounded" wire:click="guardarSolicitud">Guardar</button>
-                        <button class="btn btn-danger btn-rounded">Cancelar</button>
-                    </div>
-
-
+                <div class="col-lg-8">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="observacion_de_pago">Observación de Solicitud</label>
+                        <textarea class="form-control"wire:model.defer="observacion_de_pago" wire:loading.attr="disabled"
+                            wire:target="saveSolicitudPagos" id="observacion_de_pago" rows="3"></textarea>
+                        @error('observacion_de_pago')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </fieldset>
                 </div>
-                <div class="col-md-5">
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label font-weight-bold" for="exampleInputPassword1">Monto Solicitado
+                            S/.</label>
+                        <input type="text" class="form-control maxlength-custom-message font-weight-bold"
+                            wire:model="monto_solicitado" readonly id="monto_solicitado">
+                    </fieldset>
+                </div>
+                <div class="col-lg-12">
+                    <button class="btn btn-primary btn-rounded" wire:click="saveSolicitudPagos" wire:loading.attr="disabled">Guardar</button>
+                    <button class="btn btn-danger btn-rounded">Cancelar</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First</th>
+                                <th scope="col">Last</th>
+                                <th scope="col">Handle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
                     <table class="table">
                         <thead>
                             <tr>

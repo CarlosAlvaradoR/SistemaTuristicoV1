@@ -25,6 +25,8 @@ class SolicitudesDevolucion extends Component
     public $fecha_postergacion, $descripcion_motivo, $evento, $pago, $monto_solicitado;
     /** ATRIBUTO DE SOLICITUD DEVOLUCIÓN DINEROS */
     public $idSolicitudDevolucionDineros, $fecha_presentacion, $estado_solicitud, $descripcion_de_solicitud = ''; //Para presentar Solicitud
+    /** ATRIBUTOS DE SOLICITUD PAGOS */
+    public $observacion_de_pago;
 
     public $monto_devolucion, $observacion_devolucion, $fecha_hora;
     public $solicitud, $devolucion_dinero, $query, $id_reserva;
@@ -209,11 +211,17 @@ class SolicitudesDevolucion extends Component
         $solicitud_pagos = SolicitudPagos::create(
             [
                 'estdo_solicitud' => 'NO DEVUELTO',
-                'observacion' => '',
-                'solicitud_devolucion_dinero_id' => '',
-                'pagos_id' => ''
+                'observacion' => $this->observacion_de_pago,
+                'solicitud_devolucion_dinero_id' => $this->idSolicitudDevolucionDineros,
+                'pagos_id' => $this->pago->id
             ]
         );
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'MUY BIEN !',
+            'icon' => 'success',
+            'text' => 'Solicitud de Devolución de Pago registrada Corrrectamente'
+        ]);
     }
 
     public function guardarDevolucionDinero()

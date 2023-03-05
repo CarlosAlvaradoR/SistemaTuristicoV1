@@ -124,7 +124,7 @@ INNER JOIN reservas r on r.cliente_id = c.id
 INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
 WHERE r.id = 2;
 
-SELECT * FROM personas;
+SELECT * FROM solicitud_pagos;
 
 
 -- SELECCIONAR LOS PAGOS QUE TIENE UNA RESERVA EN BASE AL ID DE LA RESERVA PARA LAS SOLICITUDES Y DEVOLUCIONES DE DINERO
