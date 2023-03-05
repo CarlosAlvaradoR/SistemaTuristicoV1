@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('solicitud_devolucion_dineros', function (Blueprint $table) {
             $table->id();
             $table->date('fecha_presentacion');
-            $table->enum('estado', ['POR PROCESAR', 'PROCESADO']);
+            $table->enum('estado', ['POR PROCESAR', 'PROCESADO'])->default('POR PROCESAR');
             $table->text('descripcion_solicitud')->nullable();
 
-            $table->unsignedBigInteger('postergacion_reservas_id')->nullable();
+            $table->unsignedBigInteger('postergacion_reservas_id');
             $table->foreign('postergacion_reservas_id')->references('id')->on('postergacion_reservas');
             
             

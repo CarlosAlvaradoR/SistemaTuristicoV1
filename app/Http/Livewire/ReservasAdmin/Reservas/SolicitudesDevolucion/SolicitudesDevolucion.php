@@ -11,18 +11,21 @@ use App\Models\Reservas\PostergacionReservas;
 use App\Models\Reservas\Reservas;
 use Livewire\Component;
 use App\Models\Reservas\SolicitudDevolucionDineros;
+use App\Models\Reservas\SolicitudPagos;
 use Illuminate\Support\Facades\DB;
 
 class SolicitudesDevolucion extends Component
 {
+    public $reserva;
     public $cliente, $persona;
     /** ATRUBUTOS GENERALES */
     public $datos, $dni, $nombre_paquete, $fecha_reserva;
     /** ATRIBUTOS DE POSTERGACIÓN RESERVAS */
+    public $idPostergacionReserva;
     public $fecha_postergacion, $descripcion_motivo, $evento, $pago, $monto_solicitado;
+    /** ATRIBUTO DE SOLICITUD DEVOLUCIÓN DINEROS */
+    public $idSolicitudDevolucionDineros, $fecha_presentacion, $estado_solicitud, $descripcion_de_solicitud = ''; //Para presentar Solicitud
 
-    public $id_solicitud, $fecha_presentacion, $estado_solicitud, $descripcion_de_solicitud = ''; //Para presentar Solicitud
-    public $reserva;
     public $monto_devolucion, $observacion_devolucion, $fecha_hora;
     public $solicitud, $devolucion_dinero, $query, $id_reserva;
     public $solicitud_existe = false, $solicitud_dinero_existe = false;
@@ -56,17 +59,38 @@ class SolicitudesDevolucion extends Component
 
     public function render()
     {
+        $postergacion_reserva = PostergacionReservas::where('reserva_id', $this->reserva->id)
+            ->limit(1)
+            ->get();
+        if (count($postergacion_reserva) > 0) {
+            $this->idPostergacionReserva = $postergacion_reserva[0]->id;
+            $this->fecha_postergacion = $postergacion_reserva[0]->fecha_postergacion;
+            $this->descripcion_motivo = $postergacion_reserva[0]->descripcion_motivo;
+            $this->evento = $postergacion_reserva[0]->evento_postergaciones_id;
+        }
+        if ($this->idPostergacionReserva) {
+            # code...
+            $solicitudDevolucionDineros = SolicitudDevolucionDineros::where('postergacion_reservas_id', $this->idPostergacionReserva)
+                ->limit(1)
+                ->get();
+            if (count($solicitudDevolucionDineros) > 0) {
+                $this->idSolicitudDevolucionDineros = $solicitudDevolucionDineros[0]->id;
+                $this->fecha_presentacion = $solicitudDevolucionDineros[0]->fecha_presentacion;
+                $this->descripcion_de_solicitud = $solicitudDevolucionDineros[0]->descripcion_solicitud;
+            }
+        }
+
         $eventos = EventoPostergaciones::all(['id', 'nombre_evento']);
         $pagos = DB::table('pagos as p')
             ->join('tipo_pagos as tp', 'tp.id', '=', 'p.tipo_pagos_id')
             ->where('p.reserva_id', $this->reserva->id)
             ->select('p.id', 'monto', 'fecha_pago', 'estado_pago', 'ruta_archivo_pago', 'tp.nombre_tipo_pago')
             ->get();
-        
-        
+
+
         /*$this->solicitud = DB::select($this->query);
         if ($this->solicitud) {
-            $this->id_solicitud = $this->solicitud[0]->id;
+            $this->idSolicitudDevolucionDineros = $this->solicitud[0]->id;
             $this->fecha_presentacion = $this->solicitud[0]->fecha_presentacion;
             $this->estado_solicitud = $this->solicitud[0]->estado;
             $this->descripcion_de_solicitud = $this->solicitud[0]->observacion;
@@ -74,7 +98,7 @@ class SolicitudesDevolucion extends Component
 
             $query_devolucion = DB::select("SELECT id, monto, observacion, fecha_hora, solicitud_devolucion_dinero_id FROM 
             devolucion_dineros
-            WHERE solicitud_devolucion_dinero_id = $this->id_solicitud 
+            WHERE solicitud_devolucion_dinero_id = $this->idSolicitudDevolucionDineros 
             LIMIT 1");
 
             if ($query_devolucion) {
@@ -84,10 +108,13 @@ class SolicitudesDevolucion extends Component
                 $this->solicitud_dinero_existe = true;
             }
         }*/
-        return view('livewire.reservas-admin.reservas.solicitudes-devolucion.solicitudes-devolucion', 
-        compact(
-            'eventos', 'pagos'
-    ));
+        return view(
+            'livewire.reservas-admin.reservas.solicitudes-devolucion.solicitudes-devolucion',
+            compact(
+                'eventos',
+                'pagos'
+            )
+        );
     }
     public function saveEventoPostergacion()
     {
@@ -98,45 +125,95 @@ class SolicitudesDevolucion extends Component
                 'evento' => 'nullable|numeric|min:1',
             ]
         );
-        $evento = '';
+        $evento = null;
         if ($this->evento) {
             $evento = $this->evento;
         }
-        $postergacion = PostergacionReservas::create(
-            [
-                'fecha_postergacion' => $this->fecha_postergacion,
-                'descripcion_motivo' => $this->descripcion_motivo,
-                'reserva_id' => $this->reserva->id,
-                'evento_postergaciones_id' => $evento
-            ]
-        );
+        if ($this->idPostergacionReserva) {
+            # Actualizo
+            $postergacion = PostergacionReservas::findOrFail($this->idPostergacionReserva);
+            $postergacion->fecha_postergacion = $this->fecha_postergacion;
+            $postergacion->descripcion_motivo = $this->descripcion_motivo;
+            $postergacion->evento_postergaciones_id = $this->evento;
+            $postergacion->save();
+            $msg = 'Se Actualizó correctamente el Evento de Postergación Correspondiente a la Reserva';
+        } else {
+            # Creando
+            $postergacion = PostergacionReservas::create(
+                [
+                    'fecha_postergacion' => $this->fecha_postergacion,
+                    'descripcion_motivo' => $this->descripcion_motivo,
+                    'reserva_id' => $this->reserva->id,
+                    'evento_postergaciones_id' => $evento
+                ]
+            );
+            $msg = 'Se añadió correctamente el Evento de Postergación Correspondiente a la Reserva';
+        }
+
+
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'MUY BIEN !',
+            'icon' => 'success',
+            'text' => $msg
+        ]);
     }
 
-    public function AñadirPagoSolicitadoAlProceso(Pagos $pago){
+    public function AñadirPagoSolicitadoAlProceso(Pagos $pago)
+    {
         $this->pago = $pago;
         $this->monto_solicitado = $pago->monto;
-
     }
 
 
     public function guardarSolicitud()
     {
-        dd('SAVING');
         $this->validate(
             [
                 'fecha_presentacion' => 'required|date',
-                'estado_solicitud' => 'required|numeric|min:1',
+                //'estado_solicitud' => 'required|numeric|min:1',
                 'descripcion_de_solicitud' => 'nullable|string|min:5',
             ]
         );
         //dd('Guardando Solicitud');
-        $solicitud = SolicitudDevolucionDineros::create([
-            'fecha_presentacion' => $this->fecha_presentacion,
-            'estado' => $this->estado_solicitud,
-            'observacion' => $this->descripcion_de_solicitud,
-            'reserva_id' => $this->reserva->id
+        if ($this->idSolicitudDevolucionDineros) {
+            # Actualizar
+            $solicitud = SolicitudDevolucionDineros::findOrFail($this->idSolicitudDevolucionDineros);
+            $solicitud->fecha_presentacion = $this->fecha_presentacion;
+            $solicitud->descripcion_solicitud = $this->descripcion_de_solicitud;
+            $solicitud->save();
+            $msg = 'Se Actualizó Correctamente la Información de la Solicitud';
+        } else {
+            # CRear
+            $solicitud = SolicitudDevolucionDineros::create([
+                'fecha_presentacion' => $this->fecha_presentacion,
+                'estado' => 'POR PROCESAR',
+                'descripcion_solicitud' => $this->descripcion_de_solicitud,
+                'postergacion_reservas_id' => $this->idPostergacionReserva
+            ]);
+            $msg = 'Solicitud Creada Correctamente';
+        }
+
+
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'MUY BIEN !',
+            'icon' => 'success',
+            'text' => $msg
         ]);
-        session()->flash('mensaje-confirmacion-solicitud', 'Se registró correctamente la Solicitud para la Devolución de Dinero');
+    }
+
+
+    public function saveSolicitudPagos()
+    {
+        $solicitud_pagos = SolicitudPagos::create(
+            [
+                'estdo_solicitud' => 'NO DEVUELTO',
+                'observacion' => '',
+                'solicitud_devolucion_dinero_id' => '',
+                'pagos_id' => ''
+            ]
+        );
     }
 
     public function guardarDevolucionDinero()
@@ -145,7 +222,7 @@ class SolicitudesDevolucion extends Component
             'monto' => $this->monto_devolucion,
             'observacion' => $this->observacion_devolucion,
             'fecha_hora' => $this->fecha_hora,
-            'solicitud_devolucion_dinero_id' => $this->id_solicitud
+            'solicitud_devolucion_dinero_id' => $this->idSolicitudDevolucionDineros
         ]);
 
         session()->flash('mensaje-confirmacion-devolucion', 'Se registró correctamente la Devolución de Dinero');
