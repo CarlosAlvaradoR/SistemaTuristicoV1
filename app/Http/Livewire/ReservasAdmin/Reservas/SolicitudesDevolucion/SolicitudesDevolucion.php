@@ -26,7 +26,7 @@ class SolicitudesDevolucion extends Component
     /** ATRIBUTO DE SOLICITUD DEVOLUCIÓN DINEROS */
     public $idSolicitudDevolucionDineros, $fecha_presentacion, $estado_solicitud, $descripcion_de_solicitud = ''; //Para presentar Solicitud
     /** ATRIBUTOS DE SOLICITUD PAGOS */
-    public $observacion_de_pago;
+    public $observacion_de_pago, $idSolicitudPagos;
 
     public $monto_devolucion, $observacion_devolucion, $fecha_hora;
     public $solicitud, $devolucion_dinero, $query, $id_reserva;
@@ -89,7 +89,11 @@ class SolicitudesDevolucion extends Component
             ->select('p.id', 'monto', 'fecha_pago', 'estado_pago', 'ruta_archivo_pago', 'tp.nombre_tipo_pago')
             ->get();
 
-
+        $solicitud_pagos = DB::table('solicitud_pagos as sp')
+            ->join('pagos as p', 'sp.pagos_id', '=', 'p.id')
+            ->where('p.reserva_id', $this->reserva->id)
+            ->select('sp.id', 'sp.estdo_solicitud', 'sp.observacion', 'p.monto')
+            ->get();
         /*$this->solicitud = DB::select($this->query);
         if ($this->solicitud) {
             $this->idSolicitudDevolucionDineros = $this->solicitud[0]->id;
@@ -114,7 +118,8 @@ class SolicitudesDevolucion extends Component
             'livewire.reservas-admin.reservas.solicitudes-devolucion.solicitudes-devolucion',
             compact(
                 'eventos',
-                'pagos'
+                'pagos',
+                'solicitud_pagos'
             )
         );
     }
@@ -208,20 +213,41 @@ class SolicitudesDevolucion extends Component
 
     public function saveSolicitudPagos()
     {
-        $solicitud_pagos = SolicitudPagos::create(
-            [
-                'estdo_solicitud' => 'NO DEVUELTO',
-                'observacion' => $this->observacion_de_pago,
-                'solicitud_devolucion_dinero_id' => $this->idSolicitudDevolucionDineros,
-                'pagos_id' => $this->pago->id
-            ]
-        );
+        if ($this->idSolicitudPagos) {
+            # Actualizar
+            $solicitud_pagos = SolicitudPagos::findOrFail($this->idSolicitudPagos);
+            $solicitud_pagos->observacion = $this->observacion_de_pago;
+            $solicitud_pagos->save();
+            $this->reset(['idSolicitudPagos', 'monto_solicitado']);
+            $msg = 'Se Actualizó Satisfactoriamente la Solicitud del Pago';
+        } else {
+            # Crear
+            $solicitud_pagos = SolicitudPagos::create(
+                [
+                    'estdo_solicitud' => 'NO DEVUELTO',
+                    'observacion' => $this->observacion_de_pago,
+                    'solicitud_devolucion_dinero_id' => $this->idSolicitudDevolucionDineros,
+                    'pagos_id' => $this->pago->id
+                ]
+            );
+            $msg = 'Solicitud de Devolución de Pago registrada Corrrectamente';
+        }
+
+
 
         $this->dispatchBrowserEvent('swal', [
             'title' => 'MUY BIEN !',
             'icon' => 'success',
-            'text' => 'Solicitud de Devolución de Pago registrada Corrrectamente'
+            'text' => $msg
         ]);
+    }
+
+    public function selectSolicitudPagos(SolicitudPagos $solicitud)
+    {
+        $this->idSolicitudPagos = $solicitud->id;
+        $this->observacion_de_pago = $solicitud->observacion;
+        $pago = Pagos::findOrFail($solicitud->pagos_id, ['monto']);
+        $this->monto_solicitado = $pago->monto;
     }
 
     public function guardarDevolucionDinero()

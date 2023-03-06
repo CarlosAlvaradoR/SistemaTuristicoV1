@@ -143,7 +143,7 @@
 
             <h5 class="with-border m-t-lg">SOLICITUD DE DEVOLUCIÓN</h5>
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-6">
                     <fieldset class="form-group">
                         <label class="form-label" for="observacion_de_pago">Observación de Solicitud</label>
                         <textarea class="form-control"wire:model.defer="observacion_de_pago" wire:loading.attr="disabled"
@@ -153,7 +153,7 @@
                         @enderror
                     </fieldset>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <fieldset class="form-group">
                         <label class="form-label font-weight-bold" for="exampleInputPassword1">Monto Solicitado
                             S/.</label>
@@ -161,8 +161,16 @@
                             wire:model="monto_solicitado" readonly id="monto_solicitado">
                     </fieldset>
                 </div>
-                <div class="col-lg-12">
-                    <button class="btn btn-primary btn-rounded" wire:click="saveSolicitudPagos" wire:loading.attr="disabled">Guardar</button>
+                <div class="col-lg-3">
+                    <br>
+                    @if ($idSolicitudPagos)
+                        <button class="btn btn-primary btn-rounded" wire:click="saveSolicitudPagos"
+                            wire:loading.attr="disabled">Actualizar</button>
+                    @else
+                        <button class="btn btn-primary btn-rounded" wire:click="saveSolicitudPagos"
+                            wire:loading.attr="disabled">Guardar</button>
+                    @endif
+
                     <button class="btn btn-danger btn-rounded">Cancelar</button>
                 </div>
             </div>
@@ -171,19 +179,26 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
+                                <th scope="col">Estado de Solicitud</th>
+                                <th scope="col">Observación</th>
+                                <th scope="col">Monto</th>
+                                <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
+                            @foreach ($solicitud_pagos as $sp)
+                                <tr>
+                                    <td>{{ $sp->estdo_solicitud }}</td>
+                                    <td>{{ $sp->observacion }}</td>
+                                    <td>{{ $sp->monto }}</td>
+                                    <td>
+                                        <button id="view" wire:click="selectSolicitudPagos({{ $sp->id }})"
+                                            title="Eliminar Equipo" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-mouse-pointer"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -293,126 +308,6 @@
             </div>
         </div>
     </section>
-    <div class="row">
-        <div class="col-lg-6 ks-panels-column-section">
-            <div class="card">
-                <div class="card-block">
-                    <h5 class="card-title">
-                        Solicitud
-                        @if ($solicitud_existe)
-                            <button type="button" title="Quitar Solicitud"
-                                class="btn btn-rounded btn-inline btn-sm btn-danger">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-                        @endif
-
-                    </h5>
-                    @if (session()->has('mensaje-confirmacion-solicitud'))
-                        <div class="alert alert-success alert-fill alert-close alert-dismissible fade in"
-                            role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            {{ session('mensaje-confirmacion-solicitud') }}
-                        </div>
-                    @endif
-
-                    <div wire:loading wire:target="guardarSolicitud" class="alert alert-primary" role="alert">
-                        <a href="#!" class="alert-link">Cargando ...</a>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="fecha_presentacion">Fecha de Presentación</label>
-                        <input type="date" wire:model.defer="fecha_presentacion" class="form-control"
-                            id="fecha_presentacion">
-                    </div>
-                    <div class="form-group">
-                        <label for="estado_solicitud">Estado</label>
-                        <input type="text" wire:model.defer="estado_solicitud" class="form-control"
-                            id="estado_solicitud" placeholder="Ingrese el estado del solicitud">
-                    </div>
-                    <div class="form-group">
-                        <label for="descripcion_de_solicitud">Observación</label>
-                        <textarea wire:model.defer="descripcion_de_solicitud" placeholder="Ingrese Observación de la solicitud"
-                            class="form-control" id="descripcion_de_solicitud" rows="3"></textarea>
-                    </div>
-                    @if ($solicitud_existe)
-                        <button type="button" wire:click="ActuaizarSolicitud"
-                            class="btn btn-success">Actualizar</button>
-                    @else
-                        <button type="button" wire:loading.attr="disabled" wire:click="guardarSolicitud"
-                            class="btn btn-primary">Guardar</button>
-                    @endif
-
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 ks-panels-column-section">
-            <div class="card">
-                <div class="card-block">
-                    <h5 class="card-title">
-                        Devolución
-                        @if ($solicitud_dinero_existe)
-                            <button type="button" title="Quitar Devolución"
-                                class="btn btn-rounded btn-inline btn-sm btn-danger">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-                        @endif
-
-                    </h5>
-                    @if (session()->has('mensaje-confirmacion-devolucion'))
-                        <div class="alert alert-success alert-fill alert-close alert-dismissible fade in"
-                            role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            {{ session('mensaje-confirmacion-devolucion') }}
-                        </div>
-                    @endif
-
-
-                    <div wire:loading wire:target="guardarDevolucionDinero" class="alert alert-primary"
-                        role="alert">
-                        <a href="#!" class="alert-link">Cargando ...</a>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="monto_devolucion">Monto</label>
-                        <input type="text" wire:model.defer="monto_devolucion" class="form-control"
-                            id="monto_devolucion" placeholder="Ingrese Monto de Devolucion">
-                    </div>
-                    <div class="form-group">
-                        <label for="observacion_devolucion">Observación</label>
-                        <textarea class="form-control" wire:model.defer="observacion_devolucion" id="observacion_devolucion" rows="3"
-                            placeholder="Ingrese Observación de Devolución"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="fecha_hora">Fecha - Hora</label>
-                        <input type="datetime-local" wire:model.defer="fecha_hora" class="form-control"
-                            id="fecha_hora">
-                    </div>
-                    @if ($solicitud_existe)
-                        @if (!$solicitud_dinero_existe)
-                            <button type="button" wire:click="guardarDevolucionDinero" wire:loading.attr="disabled"
-                                class="btn btn-primary">Guardar</button>
-                        @else
-                            <button type="button" wire:click="guardarDevolucionDinero" wire:loading.attr="disabled"
-                                class="btn btn-success">Actualizar</button>
-                        @endif
-                    @endif
-
-                    {{-- @if ($solicitud_existe)
-                        <button type="button" wire:click="guardarDevolucionDinero"
-                            class="btn btn-success">Actualizar</button>
-                    @else
-                        <button type="button" wire:click="guardarDevolucionDinero"
-                            class="btn btn-primary">Guardar</button>
-                    @endif --}}
-
-                </div>
-            </div>
-        </div>
-    </div>
 
     @include('common.alerts')
 </div>
