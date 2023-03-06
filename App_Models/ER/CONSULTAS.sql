@@ -124,12 +124,18 @@ INNER JOIN reservas r on r.cliente_id = c.id
 INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
 WHERE r.id = 2;
 
-SELECT * FROM solicitud_pagos;
+
 -- SELECCIONAR LAS SOLICITUDES PAGOS DE UNA RESERVA
 SELECT sp.id, sp.estdo_solicitud, sp.observacion, p.monto FROM solicitud_pagos sp
 INNER JOIN pagos p on sp.pagos_id = p.id
 WHERE p.reserva_id = 2;
-
+-- SELECCIONAR LA SOLICITUD PAGO - DEVOLUCIONES PARA PODER DEVOLVER DINERO
+SELECT sp.id, sp.estdo_solicitud, sp.observacion, p.monto, 
+dd.monto as montoDevolucion, dd.observacion as observacionDevolucion, dd.fecha_hora 
+FROM solicitud_pagos sp
+INNER JOIN pagos p on sp.pagos_id = p.id
+LEFT JOIN devolucion_dineros dd on dd.solicitud_pagos_id = sp.id
+WHERE p.reserva_id = 2;
 
 -- SELECCIONAR LOS PAGOS QUE TIENE UNA RESERVA EN BASE AL ID DE LA RESERVA PARA LAS SOLICITUDES Y DEVOLUCIONES DE DINERO
 SELECT p.id, 	monto, fecha_pago, estado_pago, ruta_archivo_pago, tp.nombre_tipo_pago FROM pagos p
@@ -143,7 +149,7 @@ SELECT p.id, p.dni, concat(p.nombre,' ',p.apellidos) as datos,  p.telefono, c.id
 LEFT JOIN clientes c on p.id = c.persona_id;
 -- WHERE p.dni = "83327-9128";
 SELECT * FROM v_reserva_lista_clientes_registrados;
-
+		
 /* CONSULTAR LOS RIESGOS QUE AÚN NO ACEPTA EL CLIENTE*/
 SELECT * FROM riesgos r
 WHERE NOT EXISTS

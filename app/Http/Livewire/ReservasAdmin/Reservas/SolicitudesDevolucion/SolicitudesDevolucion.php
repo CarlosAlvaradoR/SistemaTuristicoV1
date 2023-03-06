@@ -94,6 +94,21 @@ class SolicitudesDevolucion extends Component
             ->where('p.reserva_id', $this->reserva->id)
             ->select('sp.id', 'sp.estdo_solicitud', 'sp.observacion', 'p.monto')
             ->get();
+
+        $solicitud_pagos_devoluciones = DB::table('solicitud_pagos as sp')
+            ->join('pagos as p', 'sp.pagos_id', '=', 'p.id')
+            ->leftJoin('devolucion_dineros as dd', 'dd.solicitud_pagos_id', '=', 'sp.id')
+            ->where('p.reserva_id', $this->reserva->id)
+            ->select(
+                'sp.id',
+                'sp.estdo_solicitud',
+                'sp.observacion',
+                'p.monto',
+                'dd.monto as montoDevolucion',
+                'dd.observacion as observacionDevolucion',
+                'dd.fecha_hora'
+            )
+            ->get();
         /*$this->solicitud = DB::select($this->query);
         if ($this->solicitud) {
             $this->idSolicitudDevolucionDineros = $this->solicitud[0]->id;
@@ -119,7 +134,8 @@ class SolicitudesDevolucion extends Component
             compact(
                 'eventos',
                 'pagos',
-                'solicitud_pagos'
+                'solicitud_pagos',
+                'solicitud_pagos_devoluciones'
             )
         );
     }

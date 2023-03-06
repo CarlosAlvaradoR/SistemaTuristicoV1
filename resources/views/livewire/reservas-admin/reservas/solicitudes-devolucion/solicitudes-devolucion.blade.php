@@ -1,7 +1,7 @@
 <div>
     <section class="card">
         <div class="card-block">
-            <h5 class="with-border">INFORMACIÓN DEL CLIENTE</h5>
+            <h5 class="with-border font-weight-bold"><i class="fas fa-list"></i> INFORMACIÓN DEL CLIENTE</h5>
 
 
             <div class="row">
@@ -47,8 +47,8 @@
                 </div>
             </div>
 
-            <h5 class="with-border m-t-lg">EVENTO DE POSTERGACIÓN <button
-                    class="btn btn-primary btn-rounded">Print</button></h5>
+            <h5 class="with-border m-t-lg font-weight-bold"><i class="fas fa-calendar-times"></i> EVENTO DE POSTERGACIÓN <button
+                    class="btn btn-primary btn-rounded btn-sm"><i class="fas fa-print"></i></button></h5>
 
             <div class="row">
                 <div class="col-lg-4">
@@ -193,7 +193,8 @@
                                     <td>{{ $sp->monto }}</td>
                                     <td>
                                         <button id="view" wire:click="selectSolicitudPagos({{ $sp->id }})"
-                                            title="Eliminar Equipo" class="btn btn-primary btn-sm">
+                                            wire:loading.attr="disabled" title="Seleccionar"
+                                            class="btn btn-primary btn-sm">
                                             <i class="fas fa-mouse-pointer"></i>
                                         </button>
                                     </td>
@@ -244,7 +245,7 @@
                 </div>
             </div>
 
-            <h5 class="with-border m-t-lg">DEVOLUCIÓN</h5>
+            <h5 class="with-border m-t-lg font-weight-bold">DEVOLUCIÓN</h5>
 
             <div class="row">
                 <div class="col-lg-3">
@@ -284,24 +285,42 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Fecha Pres. Solicitud</th>
                                 <th scope="col">Estado</th>
-                                <th scope="col">Observación</th>
+                                <th scope="col">Observación de Solicitud</th>
+                                <th scope="col">Monto Solicitado</th>
                                 <th scope="col">Monto Devuelto</th>
-                                <th scope="col">Fecha - Hora Devolución</th>
                                 <th scope="col">Observación de Devolución</th>
+                                <th scope="col">Fecha/Hora de Devolución</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Monto Devuelto</td>
-                                <td>Observación</td>
-                                <td>@mdo</td>
-                                <th scope="row">1</th>
-                                <td>Monto Devuelto</td>
-                                <td>Observación</td>
-                                <td>@mdo</td>
-                            </tr>
+                            @foreach ($solicitud_pagos_devoluciones as $spd)
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td><small>{{ $fecha_presentacion }}</small></td>
+                                    <td>
+
+                                        @if ($spd->estdo_solicitud == 'NO DEVUELTO')
+                                            <span class="label label-danger">{{ $spd->estdo_solicitud }}</span>
+                                        @else
+                                            <span class="label label-success">{{ $spd->estdo_solicitud }}</span>
+                                        @endif
+                                    </td>
+                                    <td>{{ $spd->observacion }}</td>
+                                    <th>{{ $spd->monto }}</th>
+                                    <th>{{ $spd->montoDevolucion }}</th>
+                                    <th>{{ $spd->observacionDevolucion }}</th>
+                                    <th>{{ $spd->fecha_hora }}</th>
+                                    <td>
+                                        <button id="view" wire:click="selectSolicitudPagos({{ $spd->id }})"
+                                            wire:loading.attr="disabled" title="Seleccionar"
+                                            class="btn btn-primary btn-sm">
+                                            <i class="fas fa-mouse-pointer"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+
                         </tbody>
                     </table>
                 </div>
