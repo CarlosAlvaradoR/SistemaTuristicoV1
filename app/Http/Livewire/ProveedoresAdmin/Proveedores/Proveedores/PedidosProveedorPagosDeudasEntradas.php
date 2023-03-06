@@ -185,8 +185,7 @@ class PedidosProveedorPagosDeudasEntradas extends Component
             )
             ->get();
 
-        return view(
-            'livewire.proveedores-admin.proveedores.proveedores.pedidos-proveedor-pagos-deudas-entradas',
+        return view('livewire.proveedores-admin.proveedores.proveedores.pedidos-proveedor-pagos-deudas-entradas',
             compact(
                 'estado_pedidos',
                 'equipos',

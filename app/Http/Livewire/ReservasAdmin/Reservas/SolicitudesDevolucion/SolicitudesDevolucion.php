@@ -26,9 +26,9 @@ class SolicitudesDevolucion extends Component
     /** ATRIBUTO DE SOLICITUD DEVOLUCIÓN DINEROS */
     public $idSolicitudDevolucionDineros, $fecha_presentacion, $estado_solicitud, $descripcion_de_solicitud = ''; //Para presentar Solicitud
     /** ATRIBUTOS DE SOLICITUD PAGOS */
-    public $observacion_de_pago, $idSolicitudPagos;
-
-    public $monto_devolucion, $observacion_devolucion, $fecha_hora;
+    public $observacion_de_pago, $idSolicitudPagos, $estado_de_solicitud='';
+    /** ATRIBUTOS DE DEVOLUCIÓN DE DINEROS */
+    public $monto_devolucion, $observacion_devolucion, $fecha_hora, $idDevolucionDineros;
     public $solicitud, $devolucion_dinero, $query, $id_reserva;
     public $solicitud_existe = false, $solicitud_dinero_existe = false;
 
@@ -109,26 +109,7 @@ class SolicitudesDevolucion extends Component
                 'dd.fecha_hora'
             )
             ->get();
-        /*$this->solicitud = DB::select($this->query);
-        if ($this->solicitud) {
-            $this->idSolicitudDevolucionDineros = $this->solicitud[0]->id;
-            $this->fecha_presentacion = $this->solicitud[0]->fecha_presentacion;
-            $this->estado_solicitud = $this->solicitud[0]->estado;
-            $this->descripcion_de_solicitud = $this->solicitud[0]->observacion;
-            $this->solicitud_existe = true;
 
-            $query_devolucion = DB::select("SELECT id, monto, observacion, fecha_hora, solicitud_devolucion_dinero_id FROM 
-            devolucion_dineros
-            WHERE solicitud_devolucion_dinero_id = $this->idSolicitudDevolucionDineros 
-            LIMIT 1");
-
-            if ($query_devolucion) {
-                $this->monto_devolucion = $query_devolucion[0]->monto; 
-                $this->observacion_devolucion = $query_devolucion[0]->observacion; 
-                $this->fecha_hora = $query_devolucion[0]->fecha_hora;
-                $this->solicitud_dinero_existe = true;
-            }
-        }*/
         return view(
             'livewire.reservas-admin.reservas.solicitudes-devolucion.solicitudes-devolucion',
             compact(
@@ -258,38 +239,85 @@ class SolicitudesDevolucion extends Component
         ]);
     }
 
-    public function selectSolicitudPagos(SolicitudPagos $solicitud)
+    public function selectSolicitudPagos(SolicitudPagos $solicitud, int $opcion)
     {
-        $this->idSolicitudPagos = $solicitud->id;
-        $this->observacion_de_pago = $solicitud->observacion;
-        $pago = Pagos::findOrFail($solicitud->pagos_id, ['monto']);
-        $this->monto_solicitado = $pago->monto;
+        //dd($solicitud);
+        switch ($opcion) {
+            case 1:
+                # Seleccionar Solicitud Pagos
+                $this->idSolicitudPagos = $solicitud->id;
+                $this->observacion_de_pago = $solicitud->observacion;
+                $pago = Pagos::findOrFail($solicitud->pagos_id, ['monto']);
+                $this->monto_solicitado = $pago->monto;
+                break;
+            case 2:
+                # Seleccionar Solicitud Pagos Devolución
+                $devolucion_dineros = DevolucionDineros::where('solicitud_pagos_id', $solicitud->id)
+                    ->limit(1)
+                    ->get();
+                //dd($devolucion_dineros);
+                if (count($devolucion_dineros) > 0) {
+                    # code...
+                    $this->idDevolucionDineros = $devolucion_dineros[0]->id;
+                    $this->observacion_devolucion = $devolucion_dineros[0]->observacion;
+                    $this->monto_devolucion = $devolucion_dineros[0]->monto;
+                    $this->fecha_hora = $devolucion_dineros[0]->fecha_hora;
+                }
+                $this->idSolicitudPagos = $solicitud->id;
+                $this->observacion_de_pago = $solicitud->observacion;
+                $pago = Pagos::findOrFail($solicitud->pagos_id, ['monto']);
+                $this->monto_solicitado = $pago->monto;
+                $this->estado_de_solicitud = $solicitud->estdo_solicitud;
+                break;
+
+            default:
+                # Seleccionnar Solicitud Pagos Devolución...
+                break;
+        }
     }
 
-    public function guardarDevolucionDinero()
+    public function saveDevolucionDinero()
     {
-        $devolucion_dinero = DevolucionDineros::create([
-            'monto' => $this->monto_devolucion,
-            'observacion' => $this->observacion_devolucion,
-            'fecha_hora' => $this->fecha_hora,
-            'solicitud_devolucion_dinero_id' => $this->idSolicitudDevolucionDineros
+        $this->validate(
+            [
+                'monto_devolucion' => 'nullable|min:1',
+                'fecha_hora' => 'nullable|date',
+                'observacion_devolucion' => 'nullable|string|min:5',
+            ]
+        );
+        if ($this->idDevolucionDineros) {
+            # Actuaizo
+            $solicitud_pagos = SolicitudPagos::findOrFail($this->idSolicitudPagos);
+            $solicitud_pagos->estdo_solicitud = $this->estado_de_solicitud;
+            $solicitud_pagos->save();
+
+            $devolucion_dinero = DevolucionDineros::findOrFail($this->idDevolucionDineros);
+            $devolucion_dinero->monto = $this->monto_devolucion;
+            $devolucion_dinero->observacion = $this->observacion_devolucion;
+            $devolucion_dinero->fecha_hora = $this->fecha_hora;
+            $devolucion_dinero->save();
+            
+            $msg = 'Información de Devolución Actualizada Correctamente';
+        } else {
+            # Creamos
+            $solicitud_pagos = SolicitudPagos::findOrFail($this->idSolicitudPagos);
+            $solicitud_pagos->estdo_solicitud = $this->estado_de_solicitud;
+            $solicitud_pagos->save();
+
+            $devolucion_dinero = DevolucionDineros::create([
+                'monto' => $this->monto_devolucion,
+                'observacion' => $this->observacion_devolucion,
+                'fecha_hora' => $this->fecha_hora,
+                'solicitud_pagos_id' => $this->idSolicitudPagos
+            ]);
+            $msg = 'Información de Devolución Registrada Correctamente';
+        }
+
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'MUY BIEN !',
+            'icon' => 'success',
+            'text' => $msg
         ]);
-
-        session()->flash('mensaje-confirmacion-devolucion', 'Se registró correctamente la Devolución de Dinero');
-    }
-
-    public function UpdateSolicitud()
-    {
-    }
-
-    public function UpdateDevolucion()
-    {
-    }
-    public function EliminarSolicitud()
-    {
-    }
-
-    public function EliminarDevolucion()
-    {
     }
 }

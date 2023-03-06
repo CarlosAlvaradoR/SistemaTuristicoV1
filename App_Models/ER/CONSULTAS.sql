@@ -137,6 +137,9 @@ INNER JOIN pagos p on sp.pagos_id = p.id
 LEFT JOIN devolucion_dineros dd on dd.solicitud_pagos_id = sp.id
 WHERE p.reserva_id = 2;
 
+DESC solicitud_pagos;
+SELECT * FROM devolucion_dineros;
+
 -- SELECCIONAR LOS PAGOS QUE TIENE UNA RESERVA EN BASE AL ID DE LA RESERVA PARA LAS SOLICITUDES Y DEVOLUCIONES DE DINERO
 SELECT p.id, 	monto, fecha_pago, estado_pago, ruta_archivo_pago, tp.nombre_tipo_pago FROM pagos p
 INNER JOIN tipo_pagos tp on tp.id = p.tipo_pagos_id

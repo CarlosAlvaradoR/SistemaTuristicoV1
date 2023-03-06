@@ -47,8 +47,9 @@
                 </div>
             </div>
 
-            <h5 class="with-border m-t-lg font-weight-bold"><i class="fas fa-calendar-times"></i> EVENTO DE POSTERGACIÓN <button
-                    class="btn btn-primary btn-rounded btn-sm"><i class="fas fa-print"></i></button></h5>
+            <h5 class="with-border m-t-lg font-weight-bold"><i class="fas fa-calendar-times"></i> EVENTO DE POSTERGACIÓN
+                <button class="btn btn-primary btn-rounded btn-sm"><i class="fas fa-print"></i></button>
+            </h5>
 
             <div class="row">
                 <div class="col-lg-4">
@@ -192,7 +193,8 @@
                                     <td>{{ $sp->observacion }}</td>
                                     <td>{{ $sp->monto }}</td>
                                     <td>
-                                        <button id="view" wire:click="selectSolicitudPagos({{ $sp->id }})"
+                                        <button id="view"
+                                            wire:click="selectSolicitudPagos({{ $sp->id }}, 1)"
                                             wire:loading.attr="disabled" title="Seleccionar"
                                             class="btn btn-primary btn-sm">
                                             <i class="fas fa-mouse-pointer"></i>
@@ -248,33 +250,66 @@
             <h5 class="with-border m-t-lg font-weight-bold">DEVOLUCIÓN</h5>
 
             <div class="row">
-                <div class="col-lg-3">
-                    <span class="badge badge-default font-weight-bold">MONTO SOLICITADO</span>
-                </div>
-                <div class="col-lg-9">
-                    <span class="badge badge-default font-weight-bold">S/. 1200</span>
-                </div>
                 <div class="col-lg-4">
                     <fieldset class="form-group">
-                        <label class="form-label" for="exampleInput">Monto Devuelto</label>
-                        <input type="text" class="form-control maxlength-custom-message" id="exampleInputEmail1">
+                        <label class="form-label" for="exampleInput">Estado de Solicitud</label>
+                        
+                            <label class="btn @if ($estado_de_solicitud == 'NO DEVUELTO') active @endif">
+                                <input type="radio" wire:model="estado_de_solicitud" value="NO DEVUELTO"
+                                    name="options" autocomplete="off"> No devuelto
+                            </label>
+                            <label class="btn @if ($estado_de_solicitud == 'DEVUELTO') active @endif">
+                                <input type="radio" wire:model="estado_de_solicitud" value="DEVUELTO"
+                                    name="options" autocomplete="off"> Devuelto
+                            </label>
                     </fieldset>
                 </div>
                 <div class="col-lg-4">
                     <fieldset class="form-group">
-                        <label class="form-label" for="exampleInputEmail1">Fecha y Hora de Devolución</label>
-                        <input type="datetime-local" class="form-control maxlength-custom-message"
-                            id="exampleInputEmail1">
+                        <label class="form-label font-weight-bold" for="exampleInputPassword1">Monto Solicitado
+                            S/.</label>
+                        <input type="text" class="form-control maxlength-custom-message font-weight-bold"
+                            wire:model="monto_solicitado" readonly id="monto_solicitado">
                     </fieldset>
                 </div>
                 <div class="col-lg-4">
                     <fieldset class="form-group">
-                        <label class="form-label" for="exampleInputPassword1">Observación de Devolución</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <label class="form-label" for="monto_devolucion">Monto Devuelto</label>
+                        <input type="text" wire:model.defer="monto_devolucion"
+                            class="form-control maxlength-custom-message" id="monto_devolucion">
+                        @error('monto_devolucion')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </fieldset>
                 </div>
-                <div class="col-lg-12">
-                    <button class="btn btn-primary btn-rounded">Guardar</button>
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="fecha_hora">Fecha y Hora de Devolución</label>
+                        <input type="datetime-local" wire:model.defer="fecha_hora"
+                            class="form-control maxlength-custom-message" id="fecha_hora">
+                        @error('fecha_hora')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </fieldset>
+                </div>
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="observacion_devolucion">Observación de Devolución</label>
+                        <textarea class="form-control" wire:model.defer="observacion_devolucion" id="observacion_devolucion" rows="3"></textarea>
+                        @error('observacion_devolucion')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </fieldset>
+                </div>
+                <div class="col-lg-4">
+                    @if ($idDevolucionDineros)
+                        <button class="btn btn-primary btn-rounded" wire:click="saveDevolucionDinero"
+                            wire:loading.attr="disabled">Actualizar</button>
+                    @else
+                        <button class="btn btn-primary btn-rounded" wire:click="saveDevolucionDinero"
+                            wire:loading.attr="disabled">Guardar</button>
+                    @endif
+
                     <button class="btn btn-danger btn-rounded">Cancelar</button>
                 </div>
 
@@ -312,7 +347,8 @@
                                     <th>{{ $spd->observacionDevolucion }}</th>
                                     <th>{{ $spd->fecha_hora }}</th>
                                     <td>
-                                        <button id="view" wire:click="selectSolicitudPagos({{ $spd->id }})"
+                                        <button id="view"
+                                            wire:click="selectSolicitudPagos({{ $spd->id }}, 2)"
                                             wire:loading.attr="disabled" title="Seleccionar"
                                             class="btn btn-primary btn-sm">
                                             <i class="fas fa-mouse-pointer"></i>
