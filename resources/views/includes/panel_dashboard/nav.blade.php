@@ -64,6 +64,8 @@
                             class="label label-custom label-pill label-success">new</span></a></li>
                 <li><a href="{{ route('solicitudes.all') }}"><span class="lbl">Solicitudes</span></a></li>
                 <li><a href="#"><span class="lbl">Devoluciones (Nuevo)</span></a></li>
+                <li><a href="{{ route('eventos.postergacion.index') }}"><span class="lbl">Eventos de Postergación</span><span
+                    class="label label-custom label-pill label-success">new</span></a></li>
             </ul>
         </li>
 

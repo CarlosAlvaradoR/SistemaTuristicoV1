@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Database\Seeders\Pedidos\EstadoPedidosSeeder;
 use Database\Seeders\Reservas\EstadoReservasSeeder;
+use Database\Seeders\Reservas\EventoPostergacionesSeeder;
 use Database\Seeders\Reservas\TipoPagosSeeder;
 use Illuminate\Database\Seeder;
 
@@ -26,6 +27,7 @@ class DatabaseSeeder extends Seeder
         // TODO LO QUE ES DE RESERVAS
         $this->call(EstadoReservasSeeder::class);
         $this->call(TipoPagosSeeder::class);
+        $this->call(EventoPostergacionesSeeder::class);
 
 
         /** MÓDULO PEDIDOS */

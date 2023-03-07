@@ -131,6 +131,7 @@ MIGRACIONES Y MÓDELOS
         *) Tabla Evento Postergaciones
         php artisan make:migration create_evento_postergaciones_table --path=/database/migrations/reservas
         php artisan make:model Reservas/EventoPostergaciones -r
+        php artisan make:seeder Reservas/EventoPostergacionesSeeder
 
         *) Tabla Postergacion Eventos
         php artisan make:migration create_postergacion_reservas_table --path=/database/migrations/reservas

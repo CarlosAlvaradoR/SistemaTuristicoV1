@@ -18,35 +18,27 @@ class EventosPostergacion extends Component
     public $reserva;
     public $id_reserva;
     public $nombre_del_evento;
+    public $title = 'CREAR EVENTO DE POSTERGACIÓN';
 
-    public function mount(Reservas $reserva)
+    /*public function mount(Reservas $reserva)
     {
         $this->reserva = $reserva;
         $this->id_reserva = $this->reserva->id;
-    }
+    }*/
 
     public function render()
     {
-        $eventos = DB::table("evento_postergaciones")->select('*')
+        /*$eventos = DB::table("evento_postergaciones")->select('*')
             ->whereNOTIn('id', function ($query) {
                 $query->select('evento_postergaciones_id')->from('postergacion_reservas')
                     ->where('reserva_id', '=', $this->reserva->id);
             })
             ->where('evento_postergaciones.nombre_evento','like','%'.$this->search.'%')
-            ->paginate(10);
-
-        $eventos_aceptados = EventoPostergaciones::select(
-            //'evento_postergaciones.id',
-            'evento_postergaciones.nombre_evento',
-            'pr.id as idPostergacion'
-        )
-            ->join('postergacion_reservas as pr', 'evento_postergaciones.id', '=', 'pr.evento_postergaciones_id')
-            ->where('pr.reserva_id', '=', $this->reserva->id)
-            ->get();
+            ->paginate(10);*/
+        $eventos = EventoPostergaciones::all();
         
-        return view(
-            'livewire.reservas-admin.reservas.eventos-postergacion.eventos-postergacion',
-            compact('eventos', 'eventos_aceptados')
+        return view('livewire.reservas-admin.reservas.eventos-postergacion.eventos-postergacion',
+            compact('eventos')
         );
     }
 
@@ -66,15 +58,21 @@ class EventosPostergacion extends Component
         ]);
 
         $evento = EventoPostergaciones::create([
-            'nombre_evento' => $this->nombre_del_evento
+            'nombre_evento' => strtoupper($this->nombre_del_evento)
+        ]);
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'MUY BIEN !',
+            'icon' => 'success',
+            'text' => 'Evento de Postergación Creado Correctamente'
         ]);
 
         $this->reset(['nombre_del_evento']);
     }
 
-    public function quitarEventoReserva(PostergacionReservas $postergacion)
+    public function quitarEventoReserva(EventoPostergaciones $evento)
     {
-        $postergacion->delete();
+        $evento->delete();
     }
 
     public function EliminarEvento()

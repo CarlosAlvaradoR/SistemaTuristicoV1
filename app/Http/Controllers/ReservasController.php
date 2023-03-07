@@ -175,5 +175,8 @@ class ReservasController extends Controller
         return view('reservar_admin.solicitudes.all_solicitudes', compact('solicitudes'));
     }
 
-    
+    public function mostrarEventosPostergacion(){
+        $reserva = [];
+        return view('reservar_admin.eventos_postergacion.index', compact('reserva'));
+    }
 }

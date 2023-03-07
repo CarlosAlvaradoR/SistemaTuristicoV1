@@ -15,3 +15,5 @@ Route::get('/reservas/eventos-postergacion/{reserva}', [App\Http\Controllers\Res
 Route::get('/reservas/solicitudes-devolucion/{reserva}', [App\Http\Controllers\ReservasController::class, 'mostrarSolicitudes'])->name('reservas.solicitudes.devoluciones')->middleware(['auth', 'verified']);
 
 Route::get('/solicitudes', [App\Http\Controllers\ReservasController::class, 'mostarTodasLasSolicitudes'])->name('solicitudes.all')->middleware(['auth', 'verified']);
+
+Route::get('/eventos-de-postergacion', [App\Http\Controllers\ReservasController::class, 'mostrarEventosPostergacion'])->name('eventos.postergacion.index')->middleware(['auth', 'verified']);

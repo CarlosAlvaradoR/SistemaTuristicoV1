@@ -39,11 +39,10 @@
     <div class="container-fluid">
         <header class="section-header">
             <div class="tbl">
-                <h3>Reservar</h3>
+                <h3>Reserva</h3>
                 <ol class="breadcrumb breadcrumb-simple">
-                    <li><a href="#">Paquetes</a></li>
-                    <li><a href="#">Eventos</a></li>
-                    <li class="active">Reservar</li>
+                    <li><a href="#">Reserva</a></li>
+                    <li class="active">Eventos de Postergación</li>
                 </ol>
             </div>
         </header>
