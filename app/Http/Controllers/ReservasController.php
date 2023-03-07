@@ -174,4 +174,6 @@ class ReservasController extends Controller
             ->paginate(100);
         return view('reservar_admin.solicitudes.all_solicitudes', compact('solicitudes'));
     }
+
+    
 }

@@ -129,7 +129,7 @@
 
 
 
-        <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+        {{--<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
             <span class="label-input100">Nombre</span>
             @error('name')
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -147,7 +147,7 @@
 
             <!--<input class="input100" type="text" name="username" placeholder="Enter username">-->
             <span class="focus-input100"></span>
-        </div>
+        </div>--}}
 
         <div class="wrap-input100 validate-input m-b-18" data-validate="Email is required">
             <span class="label-input100">Email</span>

@@ -127,7 +127,7 @@
                                                     class="tabledit-delete-button btn btn-sm btn-primary"
                                                     style="float: none;"><span class="fa-solid fa-file"></span>
                                                 </a>
-                                                <a href="{{ route('reservas.pagos_restantes', $r->id) }}"
+                                                <a href="{{ route('reservas.pagos_restantes', $r->slug) }}"
                                                     title="Añadir Pago restante" type="button"
                                                     class="tabledit-delete-button btn btn-sm btn-primary"
                                                     style="float: none;"><span class="fas fa-money-check-alt"></span>

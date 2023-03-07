@@ -65,7 +65,7 @@ class RegisterController extends Controller
             'genero' => ['required'],
             'telefono' => ['required', 'max:20'],
             'direccion' => ['required', 'string', 'max:255'],
-            'name' => ['required', 'string', 'max:255'],
+            //'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -79,7 +79,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        //dd($data);
+        ///dd($data);
         
         $persona = Personas::create([
             'dni'=>$data['dni'],
@@ -91,11 +91,9 @@ class RegisterController extends Controller
         ]);
         
         $persona_id = $persona->id;
-        /*$persona = DB::select('SELECT id FROM personas ORDER BY id DESC LIMIT 1');
-        $persona_id=$persona[0]->id;*/
 
         $user=User::create([
-            'name' => $data['name'],
+            'name' => $data['name_personal'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'persona_id' => $persona_id

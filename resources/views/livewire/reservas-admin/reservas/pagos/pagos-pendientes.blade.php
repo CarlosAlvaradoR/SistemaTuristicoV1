@@ -92,6 +92,9 @@
                                         <th>
                                             COMPROBANTE
                                         </th>
+                                        <th>
+                                            Acciones
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -107,16 +110,41 @@
                                                 {{ $p->numero_de_operacion }}
                                             </td>
                                             <td>
-                                                {{ $p->estado_pago }}
+                                                @switch($p->estado_pago)
+                                                    @case('EN PROCESO')
+                                                        <span class="label label-default">{{ $p->estado_pago }}</span>
+                                                    @break
+
+                                                    @case('ACEPTADO')
+                                                        <span class="label label-success">{{ $p->estado_pago }}</span>
+                                                    @break
+
+                                                    @case('NO ACEPTADO')
+                                                        <span class="label label-danger">{{ $p->estado_pago }}</span>
+                                                    @break
+
+                                                    @default
+                                                @endswitch
+
                                             </td>
                                             <td>
-                                                {{ $p->ruta_archivo_pago }}
+                                                @if ($p->ruta_archivo_pago)
+                                                    <a href="{{ asset('/' . $p->ruta_archivo_pago) }}" target="_blank">
+                                                        <i class="font-icon font-icon-page"></i> Ver
+                                                    </a>
+                                                @else
+                                                    -
+                                                @endif
+
                                             </td>
                                             <td>
                                                 {{ $p->nombre_tipo_pago }}
                                             </td>
                                             <td>
                                                 {{ $p->numero_boleta }}
+                                            </td>
+                                            <td>
+                                                <a href="#">Dar Seguimiento</a>
                                             </td>
                                         </tr>
                                     @endforeach

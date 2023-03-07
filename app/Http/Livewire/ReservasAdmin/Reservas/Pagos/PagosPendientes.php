@@ -16,7 +16,7 @@ class PagosPendientes extends Component
 
 
 
-    public $reserva, $idReserva;
+    public $reserva, $idReserva, $reserva_object;
     public $datos = "", $paquete = "", $costo_paquete = 0, $monto_pagado = 0;
     public $informacion, $monto_restante = 0, $idBoleta;
     public $monto_pago, $fecha_de_pago, $numero_operacion, $estado_de_pago, $ruta_archivo_pago, $tipo_de_pago; //Para insertar pagos
@@ -33,6 +33,7 @@ class PagosPendientes extends Component
     public function mount($reserva_id)
     {
         $this->idReserva = $reserva_id;
+        $this->reserva_object = Reservas::findOrFail($reserva_id);
         $cliente = DB::select("SELECT p.dni, concat(p.nombre,' ', p.apellidos)  as datos, 
         r.id as idRes ,r.paquete_id 
         FROM personas p
@@ -88,7 +89,7 @@ class PagosPendientes extends Component
             'boleta_id' => $this->idBoleta
         ]);
 
-        return redirect()->route('reservas.pagos_restantes', [$this->idReserva]);
+        return redirect()->route('reservas.pagos_restantes', [$this->reserva_object]);
     }
 
     public function editarPagoPorReserva()
