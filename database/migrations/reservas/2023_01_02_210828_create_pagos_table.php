@@ -24,8 +24,8 @@ return new class extends Migration
             $table->unsignedBigInteger('reserva_id')->nullable();
             $table->foreign('reserva_id')->references('id')->on('reservas');
 
-            $table->unsignedBigInteger('tipo_pagos_id');
-            $table->foreign('tipo_pagos_id')->references('id')->on('tipo_pagos');
+            $table->unsignedBigInteger('cuenta_pagos_id');
+            $table->foreign('cuenta_pagos_id')->references('id')->on('cuenta_pagos');
 
             $table->unsignedBigInteger('boleta_id')->nullable();
             $table->foreign('boleta_id')->references('id')->on('boletas');

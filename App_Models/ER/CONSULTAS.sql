@@ -254,7 +254,7 @@ INNER JOIN pagos p on r.id=p.reserva_id
 INNER JOIN tipo_pagos tp on tp.id = p.tipo_pagos_id
 INNER JOIN boletas b on b.id = p.boleta_id
 WHERE r.id = 2;
-DESC pagos;
+SELECT * FROM personas;
 
 -- CONSULTA PARA CONOCER LOS CLIENTES QUE SOLICITARON DEVOLUCIÓN
 SELECT concat(p.nombre,' ', p.apellidos) as datos, sdv.estado, sdv.fecha_presentacion,

@@ -142,6 +142,11 @@ MIGRACIONES Y MÓDELOS
         php artisan make:model Reservas/TipoPagos -r
         php artisan make:seeder Reservas/TipoPagosSeeder
 
+        *) Tabla Cuenta Pagos
+        php artisan make:migration create_cuenta_pagos_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/CuentaPagos -r
+        php artisan make:seeder Reservas/CuentaPagosSeeder
+
         *) Tabla Boletas
         php artisan make:migration create_boletas_table --path=/database/migrations/reservas
         php artisan make:model Reservas/Boletas -r

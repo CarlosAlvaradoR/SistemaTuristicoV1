@@ -140,3 +140,4 @@ class PagosPendientes extends Component
     {
     }
 }
+
