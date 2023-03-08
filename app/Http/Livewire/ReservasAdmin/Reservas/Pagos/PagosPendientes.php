@@ -19,7 +19,7 @@ class PagosPendientes extends Component
     public $reserva, $idReserva, $reserva_object;
     public $datos = "", $paquete = "", $costo_paquete = 0, $monto_pagado = 0;
     public $informacion, $monto_restante = 0, $idBoleta;
-    public $monto_pago, $fecha_de_pago, $numero_operacion, $estado_de_pago, $ruta_archivo_pago, $tipo_de_pago; //Para insertar pagos
+    public $idPago, $monto_pago, $fecha_de_pago, $numero_operacion, $estado_de_pago, $ruta_archivo_pago, $tipo_de_pago; //Para insertar pagos
 
 
     protected $rules = [
@@ -29,6 +29,13 @@ class PagosPendientes extends Component
         'tipo_de_pago' => 'required',
     ];
 
+    function resetUI()
+    {
+        $this->reset([
+            'idPago', 'monto_pago', 'fecha_de_pago', 'numero_operacion', 'estado_de_pago', 'ruta_archivo_pago',
+            'tipo_de_pago'
+        ]);
+    }
 
     public function mount($reserva_id)
     {
@@ -55,9 +62,9 @@ class PagosPendientes extends Component
     public function render()
     {
         $this->monto_pagado = DB::select("SELECT SUM(p.monto) as MontoPagado FROM pagos p
-        WHERE p.reserva_id = " . $this->idReserva ."");
+        WHERE p.reserva_id = " . $this->idReserva . "");
 
-        $pagos = DB::select("SELECT p.fecha_pago, p.monto, p.numero_de_operacion, p.estado_pago,
+        $pagos = DB::select("SELECT p.id as idPago, p.fecha_pago, p.monto, p.numero_de_operacion, p.estado_pago,
         p.ruta_archivo_pago,tp.nombre_tipo_pago, b.numero_boleta, b.id as idBoleta 
         FROM reservas r
         INNER JOIN pagos p on r.id=p.reserva_id
@@ -68,31 +75,64 @@ class PagosPendientes extends Component
         $this->monto_restante = $this->costo_paquete - $this->monto_pagado[0]->MontoPagado;
         $this->idBoleta = $pagos[0]->idBoleta;
         $tipoPagos = TipoPagos::all();
-        
+
         return view('livewire.reservas-admin.reservas.pagos.pagos-pendientes', compact('pagos', 'tipoPagos'));
     }
 
-    public function GuardarPagoPorReserva()
+    public function savePago()
     {
         $ruta = '';
         $this->validate();
-        if ($this->ruta_archivo_pago) {
+        /*if ($this->ruta_archivo_pago) {
             $ruta = 'storage/' . $this->ruta_archivo_pago->store('archivo_pagos', 'public');
+        }*/
+        if ($this->idPago) {
+            # Actualizar
+            $pago = Pagos::findOrFail($this->idPago);
+            $pago->monto = $this->monto_pago;
+            $pago->fecha_pago = $this->fecha_de_pago;
+            $pago->estado_pago = $this->estado_de_pago;
+            //$pago->ruta_archivo_pago = $this->ruta_archivo_pago;
+            $pago->tipo_pagos_id = $this->tipo_de_pago;
+            $pago->save();
+        } else {
+            # Crear
+            $pagos = Pagos::create([
+                'monto' => $this->monto_pago,
+                'fecha_pago' => $this->fecha_de_pago,
+                'numero_de_operacion' => $this->numero_operacion, //numero_de_operacion
+                'estado_pago' => $this->estado_de_pago,
+                'ruta_archivo_pago' => $ruta, //$this->ruta_archivo_pago, 
+                'reserva_id' => $this->idReserva,
+                'tipo_pagos_id' => $this->tipo_de_pago,
+                'boleta_id' => $this->idBoleta
+            ]);
         }
-        $pagos = Pagos::create([
-            'monto' => $this->monto_pago,
-            'fecha_pago' => $this->fecha_de_pago,
-            'estado_pago' => $this->estado_de_pago,
-            'ruta_archivo_pago' => $ruta, //$this->ruta_archivo_pago, 
-            'reserva_id' => $this->idReserva,
-            'tipo_pagos_id' => $this->tipo_de_pago,
-            'boleta_id' => $this->idBoleta
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'MUY BIEN !',
+            'icon' => 'success',
+            'text' => 'Equipo Creado Correctamente'
         ]);
 
-        return redirect()->route('reservas.pagos_restantes', [$this->reserva_object]);
+        $this->resetUI();
+        //return redirect()->route('reservas.pagos_restantes', [$this->reserva_object]);
     }
 
-    public function editarPagoPorReserva()
+    public function seguimientoPago(Pagos $pago)
+    {
+        //dd($pago);
+        $this->idPago = $pago->id;
+        $this->monto_pago = $pago->monto;
+        $this->fecha_de_pago = $pago->fecha_pago;
+        $this->estado_de_pago = $pago->estado_pago;
+        $this->ruta_archivo_pago = $pago->ruta_archivo_pago;
+        $this->tipo_de_pago = $pago->tipo_pagos_id;
+
+        $this->emit('show-modal', 'Edicion de Pago');
+    }
+
+    public function Update()
     {
     }
 

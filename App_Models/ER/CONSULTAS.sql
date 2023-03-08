@@ -16,6 +16,11 @@ SELECT mp.id, mp.ruta, mp.descripcion FROM mapa_paquetes mp
 WHERE mp.paquete_id = 1
 LIMIT 1;
 
+
+/*
+Te hemos enviado un nuevo código de verificación. Por favor, revisa la bandeja de recibidos o SPAM (no deseados) de tu correo electrónico
+*/
+
 -- LUGARES A VISITAR PARA LA PARTE PÚBLICA
 SELECT l.nombre, atu.nombre_atractivo FROM lugares l
 INNER JOIN atractivos_turisticos atu on atu.lugar_id = l.id
@@ -242,14 +247,14 @@ GROUP BY pa.reserva_id;
 
 
 -- CONOCER LOS PAGOS REALIZADOS POR CADA RESERVA
-SELECT p.fecha_pago, p.monto, p.numero_de_operacion, p.estado_pago,
+SELECT p.id as idPago, p.fecha_pago, p.monto, p.numero_de_operacion, p.estado_pago,
 p.ruta_archivo_pago,tp.nombre_tipo_pago, b.numero_boleta 
 FROM reservas r
 INNER JOIN pagos p on r.id=p.reserva_id
 INNER JOIN tipo_pagos tp on tp.id = p.tipo_pagos_id
 INNER JOIN boletas b on b.id = p.boleta_id
 WHERE r.id = 2;
-
+DESC pagos;
 
 -- CONSULTA PARA CONOCER LOS CLIENTES QUE SOLICITARON DEVOLUCIÓN
 SELECT concat(p.nombre,' ', p.apellidos) as datos, sdv.estado, sdv.fecha_presentacion,

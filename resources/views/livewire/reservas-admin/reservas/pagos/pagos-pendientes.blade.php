@@ -144,7 +144,12 @@
                                                 {{ $p->numero_boleta }}
                                             </td>
                                             <td>
-                                                <a href="#">Dar Seguimiento</a>
+                                                <button type="button" title="Dar Seguimiento al Pago"
+                                                    wire:click="seguimientoPago({{ $p->idPago }})"
+                                                    class="btn btn-warning btn-sm">
+                                                    <!--<i class="fa-sharp fa-solid fa-xmark"></i>-->
+                                                    <i class="fa-solid fa-check"></i>
+                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -264,10 +269,18 @@
                         data-dismiss="modal">
                         Cerrar
                     </button>
-                    <button type="button" wire:loading.attr="disabled" wire:click="GuardarPagoPorReserva"
-                        class="btn btn-rounded btn-primary">
-                        Guardar
-                    </button>
+                    @if ($idPago)
+                        <button type="button" wire:loading.attr="disabled" wire:click="savePago"
+                            class="btn btn-rounded btn-primary">
+                            Actualizar
+                        </button>
+                    @else
+                        <button type="button" wire:loading.attr="disabled" wire:click="savePago"
+                            class="btn btn-rounded btn-primary">
+                            Guardar
+                        </button>
+                    @endif
+
 
                 </div>
             </div>
@@ -276,4 +289,26 @@
 
     </div>
     <!--END MODAL-->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            window.livewire.on('show-modal', msg => {
+                $('#modal_pagos').modal('show')
+            });
+            window.livewire.on('close-modal-equipo', msg => {
+                $('#modal-equipo').modal('hide')
+            });
+            window.livewire.on('show-modal-equipo-stock', msg => {
+                $('#modal-stock').modal('show')
+            });
+            window.livewire.on('close-modal-equipo-stock', msg => {
+                $('#modal-stock').modal('hide')
+            });
+            window.livewire.on('category-updated', msg => {
+                $('#theModal').modal('hide')
+            });
+        });
+    </script>
+
+    @include('common.alerts')
 </div>
