@@ -123,7 +123,7 @@ class ReservarClienteNuevo extends Component
             'fecha_pago' => now(),
             'ruta_archivo_pago' => '',
             'reserva_id' => $reservas->id,
-            'tipo_pagos_id' => 1,
+            'cuenta_pagos_id' => 1,
             'boleta_id' => $boletas->id
         ]);
 

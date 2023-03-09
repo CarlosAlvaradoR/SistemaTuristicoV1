@@ -92,7 +92,7 @@ class FormularioReservas extends Component
             'estado_pago' => 'EN PROCESO', //EN VERIFICACIÓN DE ACEPTACIÓN
             'ruta_archivo_pago' => 'storage/'.$this->archivo_pago->store('archivo_pagos','public'),
             'reserva_id' => $reserva->id,
-            'tipo_pagos_id' => 1, //TIPO DE PAGO PARA INSERTAR
+            'cuenta_pagos_id' => 1, //TIPO DE PAGO PARA INSERTAR
             'boleta_id' => $boletas->id
         ]);
         

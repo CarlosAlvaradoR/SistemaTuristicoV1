@@ -159,9 +159,12 @@ class ReservarCliente extends Component
         $pagos = Pagos::create([
             'monto' => $this->monto,
             'fecha_pago' => now(),
+            'numero_de_operacion' => '',
+            'estado_pago' => '',
+            'observacion_del_pago' => '',
             'ruta_archivo_pago' => '',
             'reserva_id' => $reserva->id,
-            'tipo_pagos_id' => 1,
+            'cuenta_pagos_id' => 1,
             'boleta_id' => $boletas->id
         ]);
 
@@ -230,7 +233,7 @@ class ReservarCliente extends Component
             'fecha_pago' => now(),
             'ruta_archivo_pago' => '',
             'reserva_id' => $reserva->id,
-            'tipo_pagos_id' => 1,
+            'cuenta_pagos_id' => 1,
             'boleta_id' => $boletas->id
         ]);
 

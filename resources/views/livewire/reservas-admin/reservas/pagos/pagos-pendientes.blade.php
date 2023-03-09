@@ -84,6 +84,9 @@
                                             Estado de Pago
                                         </th>
                                         <th>
+                                            Observación del Pago
+                                        </th>
+                                        <th>
                                             Archivo
                                         </th>
                                         <th>
@@ -101,7 +104,7 @@
                                     @foreach ($pagos as $p)
                                         <tr>
                                             <td>
-                                                {{ $p->fecha_pago }}
+                                                <small>{{ $p->fecha_pago }}</small>
                                             </td>
                                             <td>
                                                 {{ $p->monto }}
@@ -125,7 +128,10 @@
 
                                                     @default
                                                 @endswitch
-
+                                                
+                                            </td>
+                                            <td>
+                                                {{ $p->observacion_del_pago }}
                                             </td>
                                             <td>
                                                 @if ($p->ruta_archivo_pago)
@@ -138,7 +144,7 @@
 
                                             </td>
                                             <td>
-                                                {{ $p->nombre_tipo_pago }}
+                                                {{ $p->nombre_tipo_pago }} - {{$p->numero_cuenta}}
                                             </td>
                                             <td>
                                                 {{ $p->numero_boleta }}
@@ -233,11 +239,23 @@
                             <div class="col-md-6">
                                 <form role="form">
                                     <div class="form-group">
+                                        <label for="observacion_del_pago">
+                                            Observación del Pago
+                                        </label>
+                                        <textarea class="form-control" wire:model.defer="observacion_del_pago" id="observacion_del_pago" rows="3"></textarea>
+                                        @error('observacion_del_pago')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    @if ($idPago)
+                                        <a href="{{ asset('/'.$url_image) }}">Ver Archivo</a>
+                                    @endif
+                                    <div class="form-group">
                                         <label for="ruta_archivo_pago">
                                             Comprobante de Pago
                                         </label>
                                         <input type="file" wire:model.defer="ruta_archivo_pago"
-                                            class="form-control" id="ruta_archivo_pago" />
+                                            class="form-control" id="{{$identificador}}" />
                                         @error('ruta_archivo_pago')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -249,9 +267,10 @@
                                         </label>
                                         <select class="form-control" wire:model.defer="tipo_de_pago"
                                             id="tipo_de_pago">
-                                            <option selected>...Seleccione...</option>
+                                            <option value="" selected>...Seleccione...</option>
                                             @foreach ($tipoPagos as $tp)
-                                                <option value="{{ $tp->id }}">{{ $tp->nombre_tipo_pago }}
+                                                <option value="{{ $tp->idCuentaPago }}">
+                                                    {{ $tp->nombre_tipo_pago }} - {{ $tp->numero_cuenta }}
                                                 </option>
                                             @endforeach
                                         </select>

@@ -247,14 +247,18 @@ GROUP BY pa.reserva_id;
 
 
 -- CONOCER LOS PAGOS REALIZADOS POR CADA RESERVA
-SELECT p.id as idPago, p.fecha_pago, p.monto, p.numero_de_operacion, p.estado_pago,
-p.ruta_archivo_pago,tp.nombre_tipo_pago, b.numero_boleta 
+SELECT p.id as idPago, r.id,p.fecha_pago, p.monto, p.numero_de_operacion, p.estado_pago, p.observacion_del_pago,
+p.ruta_archivo_pago,tp.nombre_tipo_pago, cp.numero_cuenta, b.numero_boleta 
 FROM reservas r
 INNER JOIN pagos p on r.id=p.reserva_id
-INNER JOIN tipo_pagos tp on tp.id = p.tipo_pagos_id
+INNER JOIN cuenta_pagos cp on cp.id = p.cuenta_pagos_id
+INNER JOIN tipo_pagos tp on tp.id = cp.tipo_pagos_id
 INNER JOIN boletas b on b.id = p.boleta_id
-WHERE r.id = 2;
-SELECT * FROM personas;
+WHERE r.id = 1;
+SELECT * FROM pagos;
+-- SELECCIONAR LOS TIPOS DE PAGO CON SUS RESPECTIVAS CUENTAS BANCARIAS PARA LAS RESERVAS
+SELECT tp.nombre_tipo_pago, cp.id as idCuentaPago, cp.numero_cuenta FROM tipo_pagos tp
+INNER join cuenta_pagos cp on tp.id = cp.tipo_pagos_id;
 
 -- CONSULTA PARA CONOCER LOS CLIENTES QUE SOLICITARON DEVOLUCIÓN
 SELECT concat(p.nombre,' ', p.apellidos) as datos, sdv.estado, sdv.fecha_presentacion,
