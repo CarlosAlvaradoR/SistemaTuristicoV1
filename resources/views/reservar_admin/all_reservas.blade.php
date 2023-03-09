@@ -87,6 +87,7 @@
                                 <th scope="col">Fecha de Reserva</th>
                                 <th scope="col">Monto</th>
                                 <th scope="col">Estado</th>
+                                <th scope="col">Estado de Pagos</th>
                                 <th scope="col">Estado de Cumplimiento</th>
                                 <th scope="col">Acciones</th>
                             </tr>
@@ -105,6 +106,17 @@
                                             <span class="label label-success">{{ $r->nombre_estado }}</span>
                                         @else
                                             <span class="label label-danger">{{ $r->nombre_estado }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($r->aceptado)
+                                            <span class="label label-success">{{ $r->aceptado }}</span>
+                                        @endif
+                                        @if ($r->no_aceptado)
+                                            <span class="label label-danger">{{ $r->no_aceptado }}</span>
+                                        @endif
+                                        @if ($r->en_proceso)
+                                            <span class="label label-secondary">{{ $r->en_proceso }}</span>
                                         @endif
                                     </td>
                                     <td>
@@ -127,9 +139,10 @@
                                                     class="tabledit-delete-button btn btn-sm btn-primary"
                                                     style="float: none;"><span class="fa-solid fa-file"></span>
                                                 </a>
+                                                
                                                 <a href="{{ route('reservas.pagos_restantes', $r->slug) }}"
                                                     title="Añadir Pago restante" type="button"
-                                                    class="tabledit-delete-button btn btn-sm btn-primary"
+                                                    class="tabledit-delete-button btn btn-sm btn-warning"
                                                     style="float: none;"><span class="fas fa-money-check-alt"></span>
                                                 </a>
                                                 <a type="button" title="Editar Solicitud"
@@ -148,32 +161,32 @@
             </div>
         </div>
         <!--<div class="col-lg-6 ks-panels-column-section">
-                    <div class="card">
-                        <div class="card-block">
-                            <h5 class="card-title">Validation</h5>
-                            <div>
-                                <fieldset class="form-group has-success">
-                                    <div class="fl-flex-label">
-                                        <input type="text" class="form-control form-control-success" id="inputSuccess1"
-                                            placeholder="Input with success">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <h5 class="card-title">Validation</h5>
+                                        <div>
+                                            <fieldset class="form-group has-success">
+                                                <div class="fl-flex-label">
+                                                    <input type="text" class="form-control form-control-success" id="inputSuccess1"
+                                                        placeholder="Input with success">
+                                                </div>
+                                            </fieldset>
+                                            <fieldset class="form-group has-warning">
+                                                <div class="fl-flex-label">
+                                                    <input type="text" class="form-control form-control-warning"
+                                                        placeholder="Input with warning">
+                                                </div>
+                                            </fieldset>
+                                            <fieldset class="form-group has-danger">
+                                                <div class="fl-flex-label">
+                                                    <input type="text" class="form-control form-control-danger"
+                                                        placeholder="Input with danger">
+                                                </div>
+                                            </fieldset>
+                                        </div>
                                     </div>
-                                </fieldset>
-                                <fieldset class="form-group has-warning">
-                                    <div class="fl-flex-label">
-                                        <input type="text" class="form-control form-control-warning"
-                                            placeholder="Input with warning">
-                                    </div>
-                                </fieldset>
-                                <fieldset class="form-group has-danger">
-                                    <div class="fl-flex-label">
-                                        <input type="text" class="form-control form-control-danger"
-                                            placeholder="Input with danger">
-                                    </div>
-                                </fieldset>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
+                                </div>
+                            </div>-->
     </div>
 
     <!--.container-fluid-->
