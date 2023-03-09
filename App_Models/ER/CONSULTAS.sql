@@ -146,8 +146,9 @@ DESC pagos;
 SELECT * FROM personas;
 
 -- SELECCIONAR LOS PAGOS QUE TIENE UNA RESERVA EN BASE AL ID DE LA RESERVA PARA LAS SOLICITUDES Y DEVOLUCIONES DE DINERO
-SELECT p.id, 	monto, fecha_pago, estado_pago, ruta_archivo_pago, tp.nombre_tipo_pago FROM pagos p
-INNER JOIN tipo_pagos tp on tp.id = p.tipo_pagos_id
+SELECT p.id, 	monto, fecha_pago, estado_pago, ruta_archivo_pago, tp.nombre_tipo_pago, cp.numero_cuenta FROM pagos p
+INNER JOIN cuenta_pagos cp on cp.id = p.cuenta_pagos_id
+INNER JOIN tipo_pagos tp on tp.id = cp.tipo_pagos_id
 WHERE p.reserva_id = 1;
 
 
@@ -199,7 +200,7 @@ GROUP BY pa.reserva_id AND pa.estado_pago
 
 ORDER BY r.updated_at;
 
-
+SELECT * FROM personas;
 
 -- CONSULTA PARA VERIFICAR EVENTOS QUE NO ESTAN EN LAS POSTERGACIÓN
 SELECT * FROM postergacion_reservas;
@@ -261,6 +262,8 @@ INNER JOIN tipo_pagos tp on tp.id = cp.tipo_pagos_id
 INNER JOIN boletas b on b.id = p.boleta_id
 WHERE r.id = 1;
 SELECT * FROM pagos;
+
+
 -- SELECCIONAR LOS TIPOS DE PAGO CON SUS RESPECTIVAS CUENTAS BANCARIAS PARA LAS RESERVAS
 SELECT tp.nombre_tipo_pago, cp.id as idCuentaPago, cp.numero_cuenta FROM tipo_pagos tp
 INNER join cuenta_pagos cp on tp.id = cp.tipo_pagos_id;

@@ -48,7 +48,7 @@
             </div>
 
             <h5 class="with-border m-t-lg font-weight-bold"><i class="fas fa-calendar-times"></i> EVENTO DE POSTERGACIÓN
-                <button class="btn btn-primary btn-rounded btn-sm"><i class="fas fa-print"></i></button>
+                <button class="btn btn-primary btn-rounded btn-sm" title="Imprimir"><i class="fas fa-print"></i></button>
             </h5>
 
             <div class="row">
@@ -103,7 +103,7 @@
                 </div>
             </div>
 
-            <h5 class="with-border m-t-lg">SOBRE LA SOLICITUD</h5>
+            <h5 class="with-border m-t-lg font-weight-bold"><i class="fas fa-folder"></i> SOBRE LA SOLICITUD</h5>
 
             <div class="row">
                 <div class="col-lg-4">
@@ -142,7 +142,7 @@
                 </div>
             </div>
 
-            <h5 class="with-border m-t-lg">SOLICITUD DE DEVOLUCIÓN</h5>
+            <h5 class="with-border m-t-lg font-weight-bold"><i class="fas fa-file"></i> SOLICITUD DE DEVOLUCIÓN</h5>
             <div class="row">
                 <div class="col-lg-6">
                     <fieldset class="form-group">
@@ -247,7 +247,7 @@
                 </div>
             </div>
 
-            <h5 class="with-border m-t-lg font-weight-bold">DEVOLUCIÓN</h5>
+            <h5 class="with-border m-t-lg font-weight-bold"><i class="far fa-money-bill-alt"></i> DEVOLUCIÓN</h5>
 
             <div class="row">
                 <div class="col-lg-4">

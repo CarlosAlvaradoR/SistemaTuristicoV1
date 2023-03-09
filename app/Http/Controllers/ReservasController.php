@@ -141,12 +141,7 @@ class ReservasController extends Controller
         return view('reservar_admin.all_reservas', compact('reservas'));
     }
 
-    public function mostrarEventosPostergacionReservas($reserva)
-    {
-        
-        return view('reservar_admin.eventos_postergacion.index', compact('reserva'));
-    }
-
+   
     public function mostrarSolicitudes(Reservas $reserva)
     {
         return view('reservar_admin.solicitudes.index', compact('reserva'));

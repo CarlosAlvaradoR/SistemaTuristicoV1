@@ -84,11 +84,13 @@ class SolicitudesDevolucion extends Component
 
         $eventos = EventoPostergaciones::all(['id', 'nombre_evento']);
         $pagos = DB::table('pagos as p')
-            ->join('tipo_pagos as tp', 'tp.id', '=', 'p.tipo_pagos_id')
+            ->join('cuenta_pagos as cp', 'cp.id', '=', 'p.cuenta_pagos_id')
+            ->join('tipo_pagos as tp', 'tp.id', '=', 'cp.tipo_pagos_id')
             ->where('p.reserva_id', $this->reserva->id)
-            ->select('p.id', 'monto', 'fecha_pago', 'estado_pago', 'ruta_archivo_pago', 'tp.nombre_tipo_pago')
+            ->select('p.id', 'monto', 'fecha_pago', 'estado_pago', 'ruta_archivo_pago', 
+            'tp.nombre_tipo_pago', 'cp.numero_cuenta')
             ->get();
-
+        
         $solicitud_pagos = DB::table('solicitud_pagos as sp')
             ->join('pagos as p', 'sp.pagos_id', '=', 'p.id')
             ->where('p.reserva_id', $this->reserva->id)
