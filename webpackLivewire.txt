@@ -86,10 +86,15 @@ RESERVAS
        php artisan make:livewire ReservasAdmin/Reservas/Pagos/PagosPendientes 
 
 
-RESERVAS PÚBLICAS
+    RESERVAS PÚBLICAS
 
-    RESERVAR CLIENTE
-       php artisan make:livewire ReservasPublicas/Reservas/FormularioReservas
+        RESERVAR CLIENTE
+        php artisan make:livewire ReservasPublicas/Reservas/FormularioReservas
+
+    RESERVAS OPCIONES MENÚ
+
+        RESERVA - TIPOS DE PAGOS Y CUENTA
+        php artisan make:livewire ReservasAdmin/TipoPagosCuentas/TipoPagosCuentas
 
        
 

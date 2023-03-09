@@ -177,4 +177,8 @@ class ReservasController extends Controller
         $reserva = [];
         return view('reservar_admin.eventos_postergacion.index', compact('reserva'));
     }
+
+    public function mostrarTipoPagosCuentas(){
+        return view('reservar_admin.tipoPagosCuentas.index');
+    }
 }
