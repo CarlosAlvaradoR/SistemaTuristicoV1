@@ -94,11 +94,11 @@
                                 <tr>
                                     <td>{{ $c->numero_cuenta }}</td>
                                     <td>
-                                        <button id="editAtractivo" wire:click="EditCuenta({{ $c->id }})"
+                                        <button wire:click="EditCuenta({{ $c->id }})"
                                             class="btn btn-warning btn-sm" wire:loading.attr="disabled">
                                             <span class="fa fa-pencil-square-o"></span>
                                         </button>
-                                        <button id="deleteAtractivo" class="btn btn-danger btn-sm"
+                                        <button class="btn btn-danger btn-sm"
                                             wire:click="deleteConfirmCuenta({{ $c->id }})"
                                             wire:loading.attr="disabled" title="Eliminar Atractivo Turístico">
                                             <span class="fa fa-trash"></span>
@@ -183,13 +183,13 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    <button type="button" wire:loading.attr="disabled" class="btn btn-danger btn-rounded" data-dismiss="modal">Cerrar</button>
                     @if ($idCuentaPagos)
-                        <button type="button" wire:click="guardarCuentaBancaria"
-                            class="btn btn-primary">Actualizar</button>
+                        <button type="button" wire:click="guardarCuentaBancaria" wire:loading.attr="disabled"
+                            class="btn btn-primary btn-rounded">Actualizar</button>
                     @else
-                        <button type="button" wire:click="guardarCuentaBancaria"
-                            class="btn btn-primary">Guardar</button>
+                        <button type="button" wire:click="guardarCuentaBancaria" wire:loading.attr="disabled"
+                            class="btn btn-primary btn-rounded">Guardar</button>
                     @endif
 
                 </div>
@@ -248,7 +248,7 @@
             window.livewire.on('show-modal-cuenta', msg => {
                 $('#modal-cuentas-bancarias').modal('show')
             });
-            window.livewire.on('close-modal-atractivos', msg => {
+            window.livewire.on('close-modal-cuenta', msg => {
                 $('#modal-cuentas-bancarias').modal('hide')
             });
             window.livewire.on('category-updated', msg => {

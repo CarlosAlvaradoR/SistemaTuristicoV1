@@ -18,6 +18,11 @@ class TipoPagosCuentas extends Component
 
     protected $listeners = ['deleteTipoPago', 'deleteCuenta'];
 
+    function resetUI()
+    {
+        $this->reset(['idTipoPago', 'nombre_tipo_pago','title','idCuentaPagos','numero_cuenta','title2',
+        'search']);
+    }
 
     public function render()
     {
@@ -36,9 +41,7 @@ class TipoPagosCuentas extends Component
         return view('livewire.reservas-admin.tipo-pagos-cuentas.tipo-pagos-cuentas', compact('tipo_pagos', 'cuentas'));
     }
 
-    function resetUI()
-    {
-    }
+   
     public function saveTipoPago()
     {
         $this->validate([
@@ -51,6 +54,7 @@ class TipoPagosCuentas extends Component
             $tipo_pago->nombre_tipo_pago = $this->nombre_tipo_pago;
             $tipo_pago->save();
             $msg = 'Tipo de Pago Actualizada Correctamente';
+            $this->emit('close-modal', 'Edicion de Mapas');
         } else {
             # Crear
             $tipo_pago = TipoPagos::create(
@@ -61,6 +65,7 @@ class TipoPagosCuentas extends Component
             $msg = 'Tipo de Cuenta Creada Correctamente';
         }
 
+        $this->resetUI();
         $this->dispatchBrowserEvent('swal', [
             'title' => 'MUY BIEN !',
             'icon' => 'success',
@@ -78,6 +83,9 @@ class TipoPagosCuentas extends Component
     public function guardarCuentaBancaria()
     {
         //Verificar si ya se hicieron depósitos y ya no se edita
+        $this->validate([
+            'numero_cuenta' => 'required|min:3'
+        ]);
         if ($this->idCuentaPagos) {
             $cuenta_pagos = CuentaPagos::findOrFail($this->idCuentaPagos);
             $cuenta_pagos->numero_cuenta = $this->numero_cuenta;
@@ -88,6 +96,9 @@ class TipoPagosCuentas extends Component
                 'tipo_pagos_id' => $this->idTipoPago
             ]);
         }
+
+        $this->resetUI();
+        $this->emit('close-modal-cuenta', 'Edicion de Mapas');
     }
 
 
