@@ -2,9 +2,12 @@
 
 @section('content')
     <!-- header-end -->
-    <div class="overlay">
-        <img src="{{ asset('/' . $paquete->imagen_principal) }}" alt="Image" width="1348" height="800">
+    <div style="overflow-x:auto;">
+        <div class="overlay">
+            <img src="{{ asset('/' . $paquete->imagen_principal) }}" alt="Image" width="1348" height="800">
+        </div>
     </div>
+
 
     <div class="destination_details_info">
         <div class="container">
@@ -44,8 +47,8 @@
                                                         height="450" />
                                                     <div class="carousel-caption">
                                                         <!--<h4>
-                                                                                                            First Thumbnail label
-                                                                                                        </h4>-->
+                                                                                                                First Thumbnail label
+                                                                                                            </h4>-->
                                                         <p>
                                                             {{ $g->descripcion }}
                                                         </p>
@@ -69,19 +72,19 @@
                     <div class="destination_info">
                         <h3>Mapa</h3>
                         @if ($mapa)
-                           <p>{{ $mapa->descripcion }}</p>
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <img alt="Previsualización de Mapa" src="{{ asset('/' . $mapa->ruta) }}" width="700"
-                                        height="450" />
+                            <p>{{ $mapa->descripcion }}</p>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <img alt="Previsualización de Mapa" src="{{ asset('/' . $mapa->ruta) }}"
+                                            width="700" height="450" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         @else
                             <p>Sin Información</p>
                         @endif
-                        
+
                     </div>
                     <br>
 
@@ -379,20 +382,20 @@
                         <form action="#">
                             <div class="row">
                                 <!--<div class="col-lg-6 col-md-6">
-                                                                                                <div class="single_input">
-                                                                                                    <input type="text" placeholder="Your Name">
+                                                                                                    <div class="single_input">
+                                                                                                        <input type="text" placeholder="Your Name">
+                                                                                                    </div>
                                                                                                 </div>
-                                                                                            </div>
-                                                                                            <div class="col-lg-6 col-md-6">
-                                                                                                <div class="single_input">
-                                                                                                    <input type="text" placeholder="Phone no.">
+                                                                                                <div class="col-lg-6 col-md-6">
+                                                                                                    <div class="single_input">
+                                                                                                        <input type="text" placeholder="Phone no.">
+                                                                                                    </div>
                                                                                                 </div>
-                                                                                            </div>
-                                                                                            <div class="col-lg-12">
-                                                                                                <div class="single_input">
-                                                                                                    <textarea name="" id="" cols="30" rows="10"placeholder="Message"></textarea>
-                                                                                                </div>
-                                                                                            </div>-->
+                                                                                                <div class="col-lg-12">
+                                                                                                    <div class="single_input">
+                                                                                                        <textarea name="" id="" cols="30" rows="10"placeholder="Message"></textarea>
+                                                                                                    </div>
+                                                                                                </div>-->
                                 <div class="col-lg-12">
                                     <a href="{{ route('reservar.formulario.publico', $paquete) }}" class="boxed-btn4">
                                         Reservar
@@ -408,28 +411,29 @@
 
     <!-- newletter_area_start  -->
     <!--<div class="newletter_area overlay">
-                                                                    <div class="container">
-                                                                        <div class="row justify-content-center align-items-center">
-                                                                            <div class="col-lg-10">
-                                                                                <div class="row align-items-center">
-                                                                                    <div class="col-lg-5">
-                                                                                        <div class="newsletter_text">
-                                                                                            <h4>Subscribe Our Newsletter</h4>
-                                                                                            <p>Subscribe newsletter to get offers and about
-                                                                                                new places to discover.</p>
+                                                                        <div class="container">
+                                                                            <div class="row justify-content-center align-items-center">
+                                                                                <div class="col-lg-10">
+                                                                                    <div class="row align-items-center">
+                                                                                        <div class="col-lg-5">
+                                                                                            <div class="newsletter_text">
+                                                                                                <h4>Subscribe Our Newsletter</h4>
+                                                                                                <p>Subscribe newsletter to get offers and about
+                                                                                                    new places to discover.</p>
+                                                                                            </div>
                                                                                         </div>
-                                                                                    </div>
-                                                                                    <div class="col-lg-7">
-                                                                                        <div class="mail_form">
-                                                                                            <div class="row no-gutters">
-                                                                                                <div class="col-lg-9 col-md-8">
-                                                                                                    <div class="newsletter_field">
-                                                                                                        <input type="email" placeholder="Your mail">
+                                                                                        <div class="col-lg-7">
+                                                                                            <div class="mail_form">
+                                                                                                <div class="row no-gutters">
+                                                                                                    <div class="col-lg-9 col-md-8">
+                                                                                                        <div class="newsletter_field">
+                                                                                                            <input type="email" placeholder="Your mail">
+                                                                                                        </div>
                                                                                                     </div>
-                                                                                                </div>
-                                                                                                <div class="col-lg-3 col-md-4">
-                                                                                                    <div class="newsletter_btn">
-                                                                                                        <button class="boxed-btn4 " type="submit">Subscribe</button>
+                                                                                                    <div class="col-lg-3 col-md-4">
+                                                                                                        <div class="newsletter_btn">
+                                                                                                            <button class="boxed-btn4 " type="submit">Subscribe</button>
+                                                                                                        </div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -438,7 +442,6 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>-->
+                                                                    </div>-->
     <!-- newletter_area_end  -->
 @endsection
