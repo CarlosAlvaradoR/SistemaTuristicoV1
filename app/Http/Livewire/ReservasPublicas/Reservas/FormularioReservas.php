@@ -31,11 +31,11 @@ class FormularioReservas extends Component
 
     protected $rules = [
         'fecha_reserva' => 'required|date',
-        'observacion' => 'nullable|min:5',
+        //'observacion' => 'nullable|min:5',
         'monto' => 'required',
-        'numero_operacion' => 'nullable|min:3|max:25',
+        'numero_operacion' => 'required|min:3|max:25',
         'archivo_pago' => 'required',
-        //'tipo_pago' => 'required',
+        'tipo_pago' => 'required|numeric|min:2',
         'fecha_de_pago' => 'required|date',
     ];
 
@@ -45,14 +45,19 @@ class FormularioReservas extends Component
         //Verificar si ya llenó una solicitud --> Si ya llenó verificar si ya llenó una devolución
         $this->paquetesTuristicos = $paquetesTuristicos;
         $this->cliente = Clientes::where('user_id', '=', Auth::user()->id)
-        ->limit(1)
-        ->get();
+            ->limit(1)
+            ->get();
     }
 
     public function render()
     {
-        //$tipo_pagos = DB::select('SELECT * FROM tipo_pagos');
-        return view('livewire.reservas-publicas.reservas.formulario-reservas');
+        $tipo_pagos = DB::table('tipo_pagos as tp')
+            ->join('cuenta_pagos as cp', 'cp.tipo_pagos_id', '=', 'tp.id')
+            ->select('tp.nombre_tipo_pago', 'cp.id', 'cp.numero_cuenta')
+            ->where('tp.id', '!=', 1)
+            ->get();
+        //dd($tipo_pagos);
+        return view('livewire.reservas-publicas.reservas.formulario-reservas', compact('tipo_pagos'));
     }
 
     public function reservar()
@@ -77,7 +82,7 @@ class FormularioReservas extends Component
             'estado_reservas_id' => $estado //
         ]);
 
-        
+
         $boletas = Boletas::create([
             'numero_boleta' => '',
             'monto' => $this->paquetesTuristicos->precio
@@ -89,13 +94,14 @@ class FormularioReservas extends Component
         $pagos = Pagos::create([
             'monto' => $this->monto,
             'fecha_pago' => $this->fecha_de_pago,
+            'numero_de_operacion' => $this->numero_operacion,
             'estado_pago' => 'EN PROCESO', //EN VERIFICACIÓN DE ACEPTACIÓN
-            'ruta_archivo_pago' => 'storage/'.$this->archivo_pago->store('archivo_pagos','public'),
+            'ruta_archivo_pago' => 'storage/' . $this->archivo_pago->store('archivo_pagos', 'public'),
             'reserva_id' => $reserva->id,
-            'cuenta_pagos_id' => 1, //TIPO DE PAGO PARA INSERTAR
+            'cuenta_pagos_id' => $this->tipo_pago, //TIPO DE PAGO PARA INSERTAR
             'boleta_id' => $boletas->id
         ]);
-        
+
         redirect()->route('cliente.paquetes');
     }
 }

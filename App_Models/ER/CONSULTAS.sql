@@ -104,10 +104,12 @@ WHERE tipo_id = 2;
 
 
 
+-- PARA EL SELECT EN EL MODO PÚBLICO
+SELECT tp.nombre_tipo_pago, cp.id, cp.numero_cuenta FROM tipo_pagos tp
+INNER JOIN cuenta_pagos cp on cp.tipo_pagos_id = tp.id
+WHERE tp.id != 1;
 
-SELECT * FROM actividades_itinerarios;
-
-
+SELECT * FROM pagos;
 
 
 
