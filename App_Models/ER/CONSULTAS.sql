@@ -281,7 +281,7 @@ INNER JOIN devolucion_dineros dd on dd.solicitud_devolucion_dinero_id = sdv.id;
 
 
 
-SELECT * FROM tipo_pagos;
+SELECT * FROM cuenta_pagos;
 
 
 
