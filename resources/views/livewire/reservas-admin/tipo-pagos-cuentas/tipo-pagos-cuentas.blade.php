@@ -92,8 +92,18 @@
                         <tbody>
                             @foreach ($cuentas as $c)
                                 <tr>
-                                    <td>{{ $c->id }}</td>
                                     <td>{{ $c->numero_cuenta }}</td>
+                                    <td>
+                                        <button id="editAtractivo" wire:click="EditCuenta({{ $c->id }})"
+                                            class="btn btn-warning btn-sm" wire:loading.attr="disabled">
+                                            <span class="fa fa-pencil-square-o"></span>
+                                        </button>
+                                        <button id="deleteAtractivo" class="btn btn-danger btn-sm"
+                                            wire:click="deleteConfirmCuenta({{ $c->id }})"
+                                            wire:loading.attr="disabled" title="Eliminar Atractivo Turístico">
+                                            <span class="fa fa-trash"></span>
+                                        </button>
+                                    </td>
                                 </tr>
                             @endforeach
 
@@ -174,8 +184,14 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                    <button type="button" wire:click="guardarCuentaBancaria"
-                        class="btn btn-primary">Guardar</button>
+                    @if ($idCuentaPagos)
+                        <button type="button" wire:click="guardarCuentaBancaria"
+                            class="btn btn-primary">Actualizar</button>
+                    @else
+                        <button type="button" wire:click="guardarCuentaBancaria"
+                            class="btn btn-primary">Guardar</button>
+                    @endif
+
                 </div>
             </div>
         </div>
@@ -193,7 +209,26 @@
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Livewire.emitTo('reservas-admin.tipo-pagos-cuentas.tipo-pagos-cuentas', 'deleteTipoPago',
+                    Livewire.emitTo('reservas-admin.tipo-pagos-cuentas.tipo-pagos-cuentas',
+                        'deleteTipoPago',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+        window.addEventListener('swal-confirmCuentas', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('reservas-admin.tipo-pagos-cuentas.tipo-pagos-cuentas',
+                        'deleteCuenta',
                         event.detail
                         .id);
                 }
@@ -210,11 +245,11 @@
             window.livewire.on('close-modal', msg => {
                 $('#modal_tipo_pago').modal('hide')
             });
-            window.livewire.on('show-modal-atractivos', msg => {
-                $('#modal-atractivo').modal('show')
+            window.livewire.on('show-modal-cuenta', msg => {
+                $('#modal-cuentas-bancarias').modal('show')
             });
             window.livewire.on('close-modal-atractivos', msg => {
-                $('#modal-atractivo').modal('hide')
+                $('#modal-cuentas-bancarias').modal('hide')
             });
             window.livewire.on('category-updated', msg => {
                 $('#theModal').modal('hide')

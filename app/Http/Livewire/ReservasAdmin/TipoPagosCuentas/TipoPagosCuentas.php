@@ -10,12 +10,13 @@ use Livewire\Component;
 class TipoPagosCuentas extends Component
 {
     /**ATRIBUTOS DE TIPOS DE PAGO */
+    public $search;
     public $idTipoPago, $nombre_tipo_pago;
     public $title = 'CREAR TIPOS DE CUENTAS BANCARIAS';
     /**ATRIBUTOS DE CUENTAS BANCARIAS */
-    public $numero_cuenta, $title2 = '';
+    public $idCuentaPagos, $numero_cuenta, $title2 = '';
 
-    protected $listeners = ['deleteTipoPago', 'deleteAtractivo' => 'deleteAtractivo'];
+    protected $listeners = ['deleteTipoPago', 'deleteCuenta'];
 
 
     public function render()
@@ -35,8 +36,8 @@ class TipoPagosCuentas extends Component
         return view('livewire.reservas-admin.tipo-pagos-cuentas.tipo-pagos-cuentas', compact('tipo_pagos', 'cuentas'));
     }
 
-    function resetUI(){
-
+    function resetUI()
+    {
     }
     public function saveTipoPago()
     {
@@ -77,11 +78,18 @@ class TipoPagosCuentas extends Component
     public function guardarCuentaBancaria()
     {
         //Verificar si ya se hicieron depósitos y ya no se edita
-        $cuenta_pagos = CuentaPagos::create([
-            'numero_cuenta' => $this->numero_cuenta,
-            'tipo_pagos_id' => $this->idTipoPago
-        ]);
+        if ($this->idCuentaPagos) {
+            $cuenta_pagos = CuentaPagos::findOrFail($this->idCuentaPagos);
+            $cuenta_pagos->numero_cuenta = $this->numero_cuenta;
+            $cuenta_pagos->save();
+        } else {
+            $cuenta_pagos = CuentaPagos::create([
+                'numero_cuenta' => $this->numero_cuenta,
+                'tipo_pagos_id' => $this->idTipoPago
+            ]);
+        }
     }
+
 
     public function Edit(TipoPagos $tipo_pago)
     {
@@ -93,6 +101,24 @@ class TipoPagosCuentas extends Component
         $this->emit('show-modal', 'Edicion de Mapas');
     }
 
+    public function EditCuenta(CuentaPagos $cuenta_pagos)
+    {
+        //dd($cuenta_pagos);
+        $this->idCuentaPagos = $cuenta_pagos->id;
+        $this->numero_cuenta = $cuenta_pagos->numero_cuenta;
+        $this->title2 = 'EDITAR CUENTA BANCARIA';
+
+        $this->emit('show-modal-cuenta', 'Edicion de Mapas');
+    }
+
+    public function deleteConfirmCuenta($id)
+    {
+        $this->dispatchBrowserEvent('swal-confirmCuentas', [
+            'title' => 'Deseas Eliminar la Cuenta?',
+            'icon' => 'warning',
+            'id' => $id
+        ]);
+    }
     public function deleteConfirm($id)
     {
         $this->dispatchBrowserEvent('swal-confirmTipoCuentas', [
@@ -102,22 +128,45 @@ class TipoPagosCuentas extends Component
         ]);
     }
 
-    public function deleteTipoPago(TipoPagos $tipo_pago){
+    public function deleteTipoPago(TipoPagos $tipo_pago)
+    {
         //dd($tipo_pago);
         $pago = CuentaPagos::where('tipo_pagos_id', $tipo_pago->id)->get();
         if (count($pago) > 0) {
             # code...
-            $title='ERROR!';
-            $icon='error';
+            $title = 'ERROR!';
+            $icon = 'error';
             $msg = 'No se puede Eliminar el Tipo De pago porque está vinculada a una cuenta.';
         } else {
             # code...
-            $title='MUY BIEN !';
+            $title = 'MUY BIEN !';
             $tipo_pago->delete();
-            $icon ='success';
+            $icon = 'success';
             $msg = 'Tipo de Pago Eliminada Correctamente';
         }
-        
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => $title,
+            'icon' => $icon,
+            'text' => $msg
+        ]);
+    }
+
+    public function deleteCuenta(CuentaPagos $cuenta_pagos)
+    {
+        $pago = Pagos::where('cuenta_pagos_id', $cuenta_pagos->id)->get();
+        if (count($pago) > 0) {
+            $title = 'ERROR!';
+            $icon = 'error';
+            $msg = 'No se puede Eliminar la Cuenta porque ya se realizó pagos en esta';
+        } else {
+            # code...
+            $cuenta_pagos->delete();
+            $title = 'MUY BIEN !';
+            $icon = 'success';
+            $msg = 'Cuenta Eliminada Correctamente';
+        }
+
         $this->dispatchBrowserEvent('swal', [
             'title' => $title,
             'icon' => $icon,
