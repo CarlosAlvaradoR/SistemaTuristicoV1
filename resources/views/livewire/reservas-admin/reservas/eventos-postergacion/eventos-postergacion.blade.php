@@ -16,7 +16,7 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <a id="modal-810730" href="#modal-container-810730" role="button" class="btn"
+                            <a id="modal-810730" href="#modal_evento_postergacion" role="button" class="btn"
                                 data-toggle="modal">Añadir Evento</a>
                         </div>
                     </div>
@@ -45,6 +45,16 @@
                                             <!--<i class="fa-sharp fa-solid fa-xmark"></i>-->
                                             <i class="fa-solid fa-check"></i>
                                         </button>
+                                        <button type="button" wire:click="Edit({{ $e->id }})"
+                                            class="btn btn-inline btn-warning btn-sm">
+                                            <!--<i class="fa-sharp fa-solid fa-xmark"></i>-->
+                                            <i class="fa-solid fa-check"></i>
+                                        </button>
+                                        <button type="button" wire:click="deleteConfirm({{ $e->id }})"
+                                            class="btn btn-inline btn-danger btn-sm">
+                                            <!--<i class="fa-sharp fa-solid fa-xmark"></i>-->
+                                            <i class="fa-solid fa-check"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -58,13 +68,13 @@
     </div>
 
     <!-- MODAL -->
-    <div wire:ignore.self class="modal fade" data-backdrop="static" data-keyboard="false" id="modal-container-810730"
+    <div wire:ignore.self class="modal fade" data-backdrop="static" data-keyboard="false" id="modal_evento_postergacion"
         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">
-                        {{$title}}
+                        {{ $title }}
                     </h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">×</span>
@@ -72,7 +82,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="nombre_del_evento">Nombre del Evento <span class="text-danger font-weight-bold">(*)</span></label>
+                        <label for="nombre_del_evento">Nombre del Evento <span
+                                class="text-danger font-weight-bold">(*)</span></label>
                         <input type="text" autofocus wire:model.defer="nombre_del_evento" class="form-control"
                             id="nombre_del_evento">
 
@@ -85,9 +96,16 @@
                     <button type="button" class="btn btn-danger" data-dismiss="modal">
                         Cerrar
                     </button>
-                    <button type="button" wire:click="crearEvento" class="btn btn-primary">
-                        Guardar Cambios
-                    </button>
+                    @if ($idEvento)
+                        <button type="button" wire:click="crearEvento" wire:loading.attr="disabled" class="btn btn-primary">
+                            Actualizar
+                        </button>
+                    @else
+                        <button type="button" wire:click="crearEvento" wire:loading.attr="disabled" class="btn btn-primary">
+                            Guardar
+                        </button>
+                    @endif
+
 
                 </div>
             </div>
@@ -96,6 +114,44 @@
 
     </div>
     <!-- END MODAL-->
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            //Lo que llega de CategoriesController
+            window.livewire.on('show-modal', msg => {
+                $('#modal_evento_postergacion').modal('show')
+            });
+            window.livewire.on('close-modal', msg => {
+                $('#modal_evento_postergacion').modal('hide')
+            });
+            window.livewire.on('category-updated', msg => {
+                $('#theModal').modal('hide')
+            });
+        });
+    </script>
+
+<script>
+    window.addEventListener('swal-confirmEvento', event => {
+        Swal.fire({
+            title: event.detail.title,
+            icon: event.detail.icon,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, quiero eliminarlo!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Livewire.emitTo('reservas-admin.reservas.eventos-postergacion.eventos-postergacion',
+                'quitarEventoReserva',
+                    event.detail
+                    .id);
+            }
+        })
+    });
+</script>
 
     @include('common.alerts')
 </div>

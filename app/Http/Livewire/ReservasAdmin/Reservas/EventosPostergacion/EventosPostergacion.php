@@ -17,69 +17,92 @@ class EventosPostergacion extends Component
     public $search;
     public $reserva;
     public $id_reserva;
-    public $nombre_del_evento;
+    public $idEvento, $nombre_del_evento;
     public $title = 'CREAR EVENTO DE POSTERGACIÓN';
 
-    /*public function mount(Reservas $reserva)
-    {
-        $this->reserva = $reserva;
-        $this->id_reserva = $this->reserva->id;
-    }*/
+    //
+    protected $listeners = ['quitarEventoReserva'];
 
     public function render()
     {
-        /*$eventos = DB::table("evento_postergaciones")->select('*')
-            ->whereNOTIn('id', function ($query) {
-                $query->select('evento_postergaciones_id')->from('postergacion_reservas')
-                    ->where('reserva_id', '=', $this->reserva->id);
-            })
-            ->where('evento_postergaciones.nombre_evento','like','%'.$this->search.'%')
-            ->paginate(10);*/
         $eventos = EventoPostergaciones::all();
-        
-        return view('livewire.reservas-admin.reservas.eventos-postergacion.eventos-postergacion',
+
+        return view(
+            'livewire.reservas-admin.reservas.eventos-postergacion.eventos-postergacion',
             compact('eventos')
         );
     }
 
-    public function agregarEventoReserva(EventoPostergaciones $evento)
-    {
-        $postergacion = PostergacionReservas::create([
-            'fecha_postergacion' => now(),
-            'reserva_id' => $this->id_reserva,
-            'evento_postergaciones_id' => $evento->id
-        ]);
-    }
+
 
     public function crearEvento()
     {
         $validatedData = $this->validate([
             'nombre_del_evento' => 'required|min:3'
         ]);
+        if ($this->idEvento) {
+            $evento = EventoPostergaciones::findOrFail($this->idEvento);
+            $evento->nombre_evento = strtoupper($this->nombre_del_evento);
+            $evento->save();
+            $msg = 'Evento de Postergación Actualizada Correctamente';
+            $this->emit('close-modal', 'Edicion de Mapas');
+        } else {
+            $evento = EventoPostergaciones::create([
+                'nombre_evento' => strtoupper($this->nombre_del_evento)
+            ]);
+            $msg = 'Evento de Postergación Creado Correctamente';
+        }
 
-        $evento = EventoPostergaciones::create([
-            'nombre_evento' => strtoupper($this->nombre_del_evento)
-        ]);
+
 
         $this->dispatchBrowserEvent('swal', [
             'title' => 'MUY BIEN !',
             'icon' => 'success',
-            'text' => 'Evento de Postergación Creado Correctamente'
+            'text' => $msg
         ]);
 
         $this->reset(['nombre_del_evento']);
     }
 
+    public function Edit(EventoPostergaciones $evento)
+    {
+        //dd($evento);
+        $this->idEvento = $evento->id;
+        $this->nombre_del_evento = $evento->nombre_evento;
+        $this->title = 'EDITAR EVENTO DE POSTERGACIÓN';
+
+        $this->emit('show-modal', 'Edicion de Mapas');
+    }
+
+    public function deleteConfirm($id)
+    {
+
+        $this->dispatchBrowserEvent('swal-confirmEvento', [
+            'title' => 'Estás seguro que deseas eliminar el Evento?', //SA0000050343
+            'icon' => 'warning',
+            'id' => $id
+        ]);
+    }
+
     public function quitarEventoReserva(EventoPostergaciones $evento)
     {
-        $evento->delete();
+        $postergacion = PostergacionReservas::where('evento_postergaciones_id', $evento->id)->get();
+        if (count($postergacion) > 0) {
+
+            $msg ='No se puede Eliminar el Evento porque ya fue registrada en una solicitud';
+        } else {
+            $evento->delete();
+            $msg = 'Eliminado Correctamente';
+        }
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'MUY BIEN !',
+            'icon' => 'success',
+            'text' => $msg
+        ]);
     }
 
     public function EliminarEvento()
-    {
-    }
-
-    public function EditarEvento()
     {
     }
 }

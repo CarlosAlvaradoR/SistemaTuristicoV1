@@ -17,3 +17,6 @@ Route::get('/solicitudes', [App\Http\Controllers\ReservasController::class, 'mos
 
 Route::get('/eventos-de-postergacion', [App\Http\Controllers\ReservasController::class, 'mostrarEventosPostergacion'])->name('eventos.postergacion.index')->middleware(['auth', 'verified']);
 Route::get('/tipo-de-pagos-cuentas', [App\Http\Controllers\ReservasController::class, 'mostrarTipoPagosCuentas'])->name('tipo.pagos.cuentas')->middleware(['auth', 'verified']);
+
+Route::get('/consultar-reserva', [App\Http\Controllers\ReservasController::class, 'consultaReservas'])->name('consultar.reservas')->middleware(['auth', 'verified']);
+

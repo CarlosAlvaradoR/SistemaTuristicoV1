@@ -72,8 +72,9 @@
                 <li><a href="#"><span class="lbl">Devoluciones (Nuevo)</span></a></li>
                 <li><a href="{{ route('eventos.postergacion.index') }}"><span class="lbl">Eventos de
                             Postergación</span><span class="label label-custom label-pill label-success">new</span></a>
-                </li>
+                </li> 
                 <li><a href="{{ route('tipo.pagos.cuentas') }}"><span class="lbl">Tipo de Pago - Cuentas</span></a></li>
+                <li><a href="{{ route('consultar.reservas') }}"><span class="lbl">Consultar Reservas</span></a></li>
             </ul>
         </li>
 

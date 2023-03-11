@@ -154,7 +154,7 @@ class ReservasController extends Controller
 
     public function mostarTodasLasSolicitudes()
     {
-        $solicitudes = DB::table('personas as p')
+        /*$solicitudes = DB::table('personas as p')
             ->join('clientes as c', 'c.persona_id', '=', 'p.id')
             ->join('reservas as r', 'r.cliente_id', '=', 'c.id')
             ->join('paquetes_turisticos as pt', 'pt.id', '=', 'r.paquete_id')
@@ -169,7 +169,8 @@ class ReservasController extends Controller
                 'dd.monto',
                 'r.id'
             )
-            ->paginate(100);
+            ->paginate(100);*/
+        $solicitudes = [];
         return view('reservar_admin.solicitudes.all_solicitudes', compact('solicitudes'));
     }
 
@@ -180,5 +181,10 @@ class ReservasController extends Controller
 
     public function mostrarTipoPagosCuentas(){
         return view('reservar_admin.tipoPagosCuentas.index');
+    }
+
+    public function consultaReservas(){
+        $solicitudes = [];
+        return view('reservar_admin.consulta_reservas.consulta_reservas', compact('solicitudes'));
     }
 }

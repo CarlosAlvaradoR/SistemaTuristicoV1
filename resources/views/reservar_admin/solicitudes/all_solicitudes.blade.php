@@ -2,25 +2,25 @@
 
 
 @section('contenido')
-<style>
-    /* Bootstrap 4 text input with search icon */
+    <style>
+        /* Bootstrap 4 text input with search icon */
 
-    .has-search .form-control {
-        padding-left: 2.375rem;
-    }
+        .has-search .form-control {
+            padding-left: 2.375rem;
+        }
 
-    .has-search .form-control-feedback {
-        position: absolute;
-        z-index: 2;
-        display: block;
-        width: 2.375rem;
-        height: 2.375rem;
-        line-height: 2.375rem;
-        text-align: center;
-        pointer-events: none;
-        color: #aaa;
-    }
-</style>
+        .has-search .form-control-feedback {
+            position: absolute;
+            z-index: 2;
+            display: block;
+            width: 2.375rem;
+            height: 2.375rem;
+            line-height: 2.375rem;
+            text-align: center;
+            pointer-events: none;
+            color: #aaa;
+        }
+    </style>
     <div class="container-fluid">
         <header class="section-header">
             <div class="tbl">
@@ -32,39 +32,39 @@
             </div>
         </header>
         <!--<div class="row">
-                <div class="col-lg-12">
-                    <div class="">
-                        <div class="card-block">
-                            <div class="row justify-content-center">
-                                <fieldset class="col-md-12">
-                                    <legend>Opciones</legend>
-                                    <div class="row justify-content-center">
-                                        <div class="form-group col-sm-12 col-lg-6">
-                                            <label class="pt-2" for="price">Pago por Refrendo:</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <div class="input-group-text"><i class="fa fa-usd"></i></div>
+                    <div class="col-lg-12">
+                        <div class="">
+                            <div class="card-block">
+                                <div class="row justify-content-center">
+                                    <fieldset class="col-md-12">
+                                        <legend>Opciones</legend>
+                                        <div class="row justify-content-center">
+                                            <div class="form-group col-sm-12 col-lg-6">
+                                                <label class="pt-2" for="price">Pago por Refrendo:</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text"><i class="fa fa-usd"></i></div>
+                                                    </div>
+                                                    <input type="number" name="price" id="price" class="form-control">
                                                 </div>
-                                                <input type="number" name="price" id="price" class="form-control">
+                                            </div>
+                                            <div class="form-group col-sm-9 col-lg-6">
+                                                <label class="pt-2" for="cost">Pago por Desempeño:</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text"><i class="fa fa-usd"></i></div>
+                                                    </div>
+                                                    <input type="number" name="cost" id="cost" class="form-control">
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="form-group col-sm-9 col-lg-6">
-                                            <label class="pt-2" for="cost">Pago por Desempeño:</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <div class="input-group-text"><i class="fa fa-usd"></i></div>
-                                                </div>
-                                                <input type="number" name="cost" id="cost" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </div>
+                                    </fieldset>
+                                </div>
 
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>-->
+                </div>-->
 
 
 
@@ -72,8 +72,20 @@
             <div class="col-lg-12 ks-panels-column-section">
                 <div class="card">
                     <div class="card-block">
-                        <h5 class="card-title">Lista de Todas las Reservas</h5>
+                        <h5 class="card-title">Lista de Solicitudes Generales</h5>
                         <div class="row">
+                            <div class="alert alert-info alert-border-left alert-close alert-dismissible fade in"
+                                role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>INFORMACIÓN!</strong> Para tener en Cuenta sobre el Estado de las Solicitudes
+                                <ul>
+                                    <li>POR PROCESAR: Son solicitudes de Devolución que aún no han sido procesadas y faltan la verificación de éstas.</li>
+                                    <li>PROCESADO: Son solicitudes que ya han sido solucionados, pero tener en cuenta que ello no implica que se haya devuelto o no el dinero, todo amerita a la situación correspondiente a una evaluación y otros factores que se manejan.</li>
+                                </ul>
+                            </div>
+
                             <div class="col-md-5">
                                 <br>
                                 <div class="form-group has-search">
@@ -147,7 +159,7 @@
 
                             </tbody>
                         </table>
-                        {{ $solicitudes->links() }}
+                        {{-- $solicitudes->links() --}}
                     </div>
                 </div>
             </div>
