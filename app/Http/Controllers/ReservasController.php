@@ -185,6 +185,11 @@ class ReservasController extends Controller
         return view('reservar_admin.solicitudes.all_solicitudes', compact('solicitudes'));
     }
 
+    public function mostrarDevoluciones(){
+        $solicitudes = [];
+        return view('reservar_admin.devoluciones.all_devoluciones', compact('solicitudes'));
+    }
+
     public function mostrarEventosPostergacion()
     {
         
