@@ -32,39 +32,39 @@
             </div>
         </header>
         <!--<div class="row">
-                    <div class="col-lg-12">
-                        <div class="">
-                            <div class="card-block">
-                                <div class="row justify-content-center">
-                                    <fieldset class="col-md-12">
-                                        <legend>Opciones</legend>
+                            <div class="col-lg-12">
+                                <div class="">
+                                    <div class="card-block">
                                         <div class="row justify-content-center">
-                                            <div class="form-group col-sm-12 col-lg-6">
-                                                <label class="pt-2" for="price">Pago por Refrendo:</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text"><i class="fa fa-usd"></i></div>
+                                            <fieldset class="col-md-12">
+                                                <legend>Opciones</legend>
+                                                <div class="row justify-content-center">
+                                                    <div class="form-group col-sm-12 col-lg-6">
+                                                        <label class="pt-2" for="price">Pago por Refrendo:</label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <div class="input-group-text"><i class="fa fa-usd"></i></div>
+                                                            </div>
+                                                            <input type="number" name="price" id="price" class="form-control">
+                                                        </div>
                                                     </div>
-                                                    <input type="number" name="price" id="price" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-sm-9 col-lg-6">
-                                                <label class="pt-2" for="cost">Pago por Desempeño:</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text"><i class="fa fa-usd"></i></div>
+                                                    <div class="form-group col-sm-9 col-lg-6">
+                                                        <label class="pt-2" for="cost">Pago por Desempeño:</label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <div class="input-group-text"><i class="fa fa-usd"></i></div>
+                                                            </div>
+                                                            <input type="number" name="cost" id="cost" class="form-control">
+                                                        </div>
                                                     </div>
-                                                    <input type="number" name="cost" id="cost" class="form-control">
                                                 </div>
-                                            </div>
+                                            </fieldset>
                                         </div>
-                                    </fieldset>
-                                </div>
 
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>-->
+                        </div>-->
 
 
 
@@ -81,8 +81,11 @@
                                 </button>
                                 <strong>INFORMACIÓN!</strong> Para tener en Cuenta sobre el Estado de las Solicitudes
                                 <ul>
-                                    <li>POR PROCESAR: Son solicitudes de Devolución que aún no han sido procesadas y faltan la verificación de éstas.</li>
-                                    <li>PROCESADO: Son solicitudes que ya han sido solucionados, pero tener en cuenta que ello no implica que se haya devuelto o no el dinero, todo amerita a la situación correspondiente a una evaluación y otros factores que se manejan.</li>
+                                    <li>POR PROCESAR: Son solicitudes de Devolución que aún no han sido procesadas y faltan
+                                        la verificación de éstas.</li>
+                                    <li>PROCESADO: Son solicitudes que ya han sido solucionados, pero tener en cuenta que
+                                        ello no implica que se haya devuelto o no el dinero, todo amerita a la situación
+                                        correspondiente a una evaluación y otros factores que se manejan.</li>
                                 </ul>
                             </div>
 
@@ -130,26 +133,31 @@
                                 <tr>
                                     <!--<th scope="col">#</th>-->
                                     <th scope="col">Cliente</th>
+                                    <th scope="col">DNI</th>
+                                    <th scope="col">Evento de Postergación</th>
+                                    <th scope="col">Fecha de Presentación Solicitud</th>
                                     <th scope="col">Estado</th>
-                                    <th scope="col">Fecha de Presentación</th>
-                                    <th scope="col">Paquete</th>
-                                    <th scope="col">Monto</th>
-                                    <th scope="col">Observación</th>
+                                    <th scope="col">Monto Solicitado</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($solicitudes as $s)
                                     <tr>
-                                        <td>{{ $s->datos }}</td>
-                                        <td>{{ $s->estado }}</td>
+                                        <td>{{ strtoupper($s->datos) }}</td>
+                                        <td>{{ $s->dni }}</td>
+                                        <td>{{ $s->nombre_evento }}</td>
                                         <td>{{ $s->fecha_presentacion }}</td>
-                                        <td>{{ $s->nombre }}</td>
-                                        <td>{{ $s->monto }}</td>
-                                        <td>{{ $s->observacion }}</td>
                                         <td>
-                                            <a href="{{ route('reservas.solicitudes.devoluciones', $s->id) }}"
-                                                title="Ver Solicitud" type="button"
+                                            @if ($s->estado = 'POR PROCESAR')
+                                                <span class="label label-danger">{{ $s->estado }}</span>
+                                            @else
+                                                <span class="label label-success">{{ $s->estado }}</span>
+                                            @endif
+                                        </td>
+                                        <td>{{ $s->montoTotal }}</td>
+                                        <td>
+                                            <a href="{{ route('reservas.solicitudes.devoluciones', $s->slug) }}" title="Ver Solicitud" type="button"
                                                 class="tabledit-edit-button btn btn-sm btn-primary" style="float: none;"><i
                                                     class="fas fa-eye"></i>
                                             </a>

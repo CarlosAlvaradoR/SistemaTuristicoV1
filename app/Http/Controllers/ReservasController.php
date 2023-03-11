@@ -141,7 +141,7 @@ class ReservasController extends Controller
         return view('reservar_admin.all_reservas', compact('reservas'));
     }
 
-   
+
     public function mostrarSolicitudes(Reservas $reserva)
     {
         return view('reservar_admin.solicitudes.index', compact('reserva'));
@@ -154,36 +154,51 @@ class ReservasController extends Controller
 
     public function mostarTodasLasSolicitudes()
     {
-        /*$solicitudes = DB::table('personas as p')
+        $solicitudes = DB::table('personas as p')
             ->join('clientes as c', 'c.persona_id', '=', 'p.id')
             ->join('reservas as r', 'r.cliente_id', '=', 'c.id')
-            ->join('paquetes_turisticos as pt', 'pt.id', '=', 'r.paquete_id')
-            ->join('solicitud_devolucion_dineros as sdv', 'sdv.reserva_id', '=', 'r.id')
-            ->leftJoin('devolucion_dineros as dd', 'dd.solicitud_devolucion_dinero_id', '=', 'sdv.id')
+            //->join('paquetes_turisticos as pt', 'pt.id', '=', 'r.paquete_id')
+            ->join('postergacion_reservas as pr', 'pr.reserva_id', '=', 'r.id')
+            ->join('evento_postergaciones as ep', 'ep.id', '=', 'pr.evento_postergaciones_id')
+            ->join('solicitud_devolucion_dineros as sdd', 'sdd.postergacion_reservas_id', '=', 'pr.id')
+            ->leftJoin('solicitud_pagos as sp', 'sp.solicitud_devolucion_dinero_id', '=', 'sdd.id')
+            ->leftJoin('pagos as pa', 'pa.id', '=', 'sp.pagos_id')
+            ->groupBy('sdd.id')
             ->select(
                 DB::raw('CONCAT(p.nombre," ", p.apellidos) AS datos'),
-                'sdv.estado',
+                'p.dni',
+                'r.slug',
+                'ep.nombre_evento',
+                'sdd.fecha_presentacion',
+                'sdd.estado',
+                DB::raw('SUM(pa.monto) as montoTotal')
+                /*'sdv.estado',
                 'sdv.fecha_presentacion',
                 'pt.nombre',
                 'dd.observacion',
                 'dd.monto',
-                'r.id'
+                'r.id'*/
             )
-            ->paginate(100);*/
-        $solicitudes = [];
+            ->paginate(50);
+        //$solicitudes =  [];
+        //return $solicitudes;
         return view('reservar_admin.solicitudes.all_solicitudes', compact('solicitudes'));
     }
 
-    public function mostrarEventosPostergacion(){
+    public function mostrarEventosPostergacion()
+    {
+        
         $reserva = [];
         return view('reservar_admin.eventos_postergacion.index', compact('reserva'));
     }
 
-    public function mostrarTipoPagosCuentas(){
+    public function mostrarTipoPagosCuentas()
+    {
         return view('reservar_admin.tipoPagosCuentas.index');
     }
 
-    public function consultaReservas(){
+    public function consultaReservas()
+    {
         $solicitudes = [];
         return view('reservar_admin.consulta_reservas.consulta_reservas', compact('solicitudes'));
     }

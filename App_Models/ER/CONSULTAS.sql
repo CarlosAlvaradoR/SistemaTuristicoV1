@@ -113,8 +113,22 @@ DESC solicitud_devolucion_dineros;
 
 
 
+-- SABER LA LISTA DE SOLICITUDES GENERALES
+SELECT concat(p.nombre,' ',p.apellidos) as datos, p.dni, r.slug, ep.nombre_evento, 
+sdd.fecha_presentacion, sdd.estado, SUM(pa.monto) as montoTotal 
+FROM personas p
+INNER JOIN clientes c on p.id = c.persona_id
+INNER JOIN reservas r on r.cliente_id = c.id
+INNER JOIN postergacion_reservas pr on pr.reserva_id =r.id
+INNER JOIN evento_postergaciones ep on ep.id = pr.evento_postergaciones_id
+INNER JOIN solicitud_devolucion_dineros sdd	on sdd.postergacion_reservas_id = pr.id
+LEFT JOIN solicitud_pagos sp on sp.solicitud_devolucion_dinero_id = sdd.id
+LEFT JOIN pagos pa on pa.id = sp.pagos_id
+GROUP BY sdd.id;
 
+DESC solicitud_devolucion_dineros;
 
+SELECT * FROM personas;
 
 
 
