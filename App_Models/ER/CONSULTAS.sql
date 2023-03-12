@@ -315,7 +315,7 @@ LEFT JOIN devolucion_dineros dd on dd.solicitud_pagos_id = sp.id
 GROUP BY sp.solicitud_devolucion_dinero_id, dd.solicitud_pagos_id;
 
 SELECT SUM(dev.monto) FROM devolucion_dineros dev;
-SELECT * FROM devolucion_dineros;
+SELECT * FROM clientes;
 
 
 

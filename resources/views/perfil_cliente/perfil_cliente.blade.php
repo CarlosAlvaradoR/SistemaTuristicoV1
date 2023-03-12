@@ -2,81 +2,142 @@
 
 
 @section('content')
-   
-    @php
-        $nombre = 'Carlos';
-        $apellidos = 'Alvarado';
-    @endphp
- 
     <section class="sample-text-area">
         <div class="container box_1170">
             <div class="row">
                 <div class="col-md-6">
-                    <h3 class="text-heading">Bienvenido a su perfil - 
-                    @php
-                        echo $nombre;
-                    @endphp
+                    <h3 class="text-heading">Bienvenido(a) a su perfil - {{Auth::user()->name}}
                     </h3>
-                    
+
                 </div>
                 <div class="col-md-6">
                     <a href="">Ver mis paquetes</a>
                 </div>
             </div>
 
-            <hr>
-            <form>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputEmail4">Email</label>
-                        <input type="email" value="{{ Auth::user()->email }}" readonly class="form-control"
-                            id="inputEmail4">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputPassword4">Nombre</label>
-                        <input type="text" value="{{ Auth::user()->name }}" readonly class="form-control"
-                            id="inputPassword4">
-                    </div>
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="contact-title">Mis Datos Personales</h2>
                 </div>
-                <div class="form-group">
-                    <label for="inputAddress">Dirección</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                </div>
-                <div class="form-group">
-                    <label for="inputAddress2">DNI</label>
-                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputCity">City</label>
-                        <input type="text" class="form-control" id="inputCity">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputState">State</label>
-                        <select id="inputState" class="form-control">
-                            <option selected>Choose...</option>
-                            <option>...</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="inputZip">Zip</label>
-                        <input type="text" class="form-control" id="inputZip">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                        <label class="form-check-label" for="gridCheck">
-                            Check me out
-                        </label>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Sign in</button>
-            </form>
-            <p class="sample-text">
-                {{ Auth::user()->name }}
+                <div class="col-lg-12">
+                    <form class="form-contact contact_form" action="google  " method="post" id="contactForm"
+                        novalidate="novalidate">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">NOMBRES</label>
+                                    <input class="form-control valid" name="name" id="name" type="text"
+                                    autocomplete="off"    
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'"
+                                        placeholder="Enter your name">
+                                </div>
+                            </div>
 
-            </p>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">APELLIDOS</label>
+                                    <input class="form-control valid" name="name" id="name" type="text"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'"
+                                        placeholder="Enter your name">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">DNI</label>
+                                    <input class="form-control valid" name="name" id="name" type="text"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'"
+                                        placeholder="Enter your name">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">GÉNERO</label>
+                                    <input class="form-control valid" name="name" id="name" type="text"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'"
+                                        placeholder="Enter your name">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">DIRECCIÓN</label>
+                                    <input class="form-control valid" name="name" id="name" type="text"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'"
+                                        placeholder="Enter your name">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">TELÉFONO</label>
+                                    <input class="form-control valid" name="name" id="name" type="text"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'"
+                                        placeholder="Enter your name">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1" title="Actualizar el Correo Implica que tiene que Ingresar al Sistema con el nuevo correo, se le recomienda no actualizar este">DIRECCIÓN DE CORREO ELECTRÓNICO</label>
+                                    <input class="form-control valid" name="name" id="name" type="text"
+                                    value="{{ Auth::user()->email }}""
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'"
+                                        placeholder="Enter your name">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group mt-3">
+                            <button type="submit" class="button button-contactForm boxed-btn">Actualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="contact-title">Actualizar Contraseña</h2>
+                </div>
+                <div class="col-lg-12">
+                    <form class="form-contact contact_form" action="google  " method="post" id="contactForm"
+                        novalidate="novalidate">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Contraseña Actual</label>
+                                    <input class="form-control valid" name="name" id="name" type="password"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'"
+                                        placeholder="Ingrese su Contraseña Actual">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Contraseña Nueva</label>
+                                    <input class="form-control valid" name="password" id="name" type="password"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'"
+                                        placeholder="Ingrese la contraseña nueva">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Repetir Contraseña</label>
+                                    <input class="form-control valid" name="name" id="name" type="password"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'"
+                                        placeholder="Repita nuevamente la contraseña Ingresada con anterioridad">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group mt-3">
+                            <button type="submit" class="button button-contactForm boxed-btn">Actualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </section>
 @endsection

@@ -23,20 +23,27 @@
 
 
                                         @if (Auth::check())
-                                            <li><a href="#" class="bold">{{Auth::user()->name}}<i class="ti-angle-down"></i></a>
-                                                <ul class="submenu">
-                                                    <li><a href="{{ route('cliente.perfil') }}">Mi Perfil</a></li>
-                                                    <li><a href="{{ route('cliente.paquetes') }}">Mis Paquetes</a></li>
-                                                    <li><a href="{{ route('logout') }}"
-                                                            onclick="event.preventDefault();
+                                            @if (Auth::user()->hasRole('cliente'))
+                                                <li><a href="#" class="bold">{{ Auth::user()->name }}<i
+                                                            class="ti-angle-down"></i></a>
+                                                    <ul class="submenu">
+                                                        <li><a href="{{ route('cliente.perfil') }}">Mi Perfil</a></li>
+                                                        <li><a href="{{ route('cliente.paquetes') }}">Mis Paquetes</a>
+                                                        </li>
+                                                        <li><a href="{{ route('logout') }}"
+                                                                onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">Salir</a>
-                                                    </li>
-                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                                        class="d-none">
-                                                        @csrf
-                                                    </form>
-                                                </ul>
-                                            </li>
+                                                        </li>
+                                                        <form id="logout-form" action="{{ route('logout') }}"
+                                                            method="POST" class="d-none">
+                                                            @csrf
+                                                        </form>
+                                                    </ul>
+                                                </li>
+                                            @else
+                                                <li><a class="" href="{{ route('home') }}"><i class="fa fa-arrow-right"></i>
+                                                    Ir a Administración</a></li>
+                                            @endif
                                         @else
                                             <li><a href="#">Cuenta <i class="ti-angle-down"></i></a>
                                                 <ul class="submenu">
