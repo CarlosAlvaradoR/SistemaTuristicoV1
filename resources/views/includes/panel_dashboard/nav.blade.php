@@ -37,6 +37,13 @@
             </a>
         </li>
 
+        <li class="green">
+            <a href="{{ route('personas') }}">
+                <i class="font-icon glyphicon glyphicon-send"></i>
+                <span class="lbl">Personas</span>
+            </a>
+        </li>
+
         <li class="blue with-sub">
             <span>
                 <i class="font-icon glyphicon glyphicon-send"></i>

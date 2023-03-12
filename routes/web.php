@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ShowPaquetes;
+use App\Models\Personas;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,7 +30,10 @@ Route::get('/contacto', function () {
     return view('paquetes_publico.contacto');
 })->name('contacto');
 
-
+Route::get('/personas', function () {
+    $personas = Personas::all();
+    return view('personas', compact('personas'));
+})->name('personas');
 
 /*Route::get('/crear/role', function () {
     
