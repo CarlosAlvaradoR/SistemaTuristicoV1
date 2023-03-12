@@ -225,6 +225,7 @@ class ReservasController extends Controller
     public function consultaReservas()
     {
         $solicitudes = [];
+        
         return view('reservar_admin.consulta_reservas.consulta_reservas', compact('solicitudes'));
     }
 }

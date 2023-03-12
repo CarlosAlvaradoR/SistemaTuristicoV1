@@ -96,6 +96,8 @@ RESERVAS
         RESERVA - TIPOS DE PAGOS Y CUENTA
         php artisan make:livewire ReservasAdmin/TipoPagosCuentas/TipoPagosCuentas
 
+        php artisan make:livewire ReservasAdmin/ConsultarReservas/ConsultarReservas
+
        
 
 
