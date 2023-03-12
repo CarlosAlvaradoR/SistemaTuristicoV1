@@ -185,14 +185,34 @@ class ReservasController extends Controller
         return view('reservar_admin.solicitudes.all_solicitudes', compact('solicitudes'));
     }
 
-    public function mostrarDevoluciones(){
-        $solicitudes = [];
-        return view('reservar_admin.devoluciones.all_devoluciones', compact('solicitudes'));
+    public function mostrarDevoluciones()
+    {
+        DB::statement("SET sql_mode = '' ");
+        $devoluciones = DB::table('personas as p')
+            ->join('clientes as c', 'c.persona_id', '=', 'p.id')
+            ->join('reservas as r', 'r.cliente_id', '=', 'c.id')
+            //->join('paquetes_turisticos as pt', 'pt.id', '=', 'r.paquete_id')
+            ->join('postergacion_reservas as pr', 'pr.reserva_id', '=', 'r.id')
+            //->join('evento_postergaciones as ep', 'ep.id', '=', 'pr.evento_postergaciones_id')
+            ->join('solicitud_devolucion_dineros as sdd', 'sdd.postergacion_reservas_id', '=', 'pr.id')
+            ->join('solicitud_pagos as sp', 'sp.solicitud_devolucion_dinero_id', '=', 'sdd.id')
+            ->join('pagos as pa', 'pa.id', '=', 'sp.pagos_id')
+            ->leftJoin('devolucion_dineros as dd', 'dd.solicitud_pagos_id', '=', 'sp.id')
+            ->groupBy('sp.solicitud_devolucion_dinero_id')
+            ->select(
+                DB::raw('CONCAT(p.nombre," ", p.apellidos) AS datos'),
+                'p.dni',
+                'sdd.fecha_presentacion',
+                DB::raw('SUM(pa.monto) as montoSolicitado'),
+                DB::raw('(SELECT SUM(monto) FROM devolucion_dineros WHERE solicitud_pagos_id = sp.id) as montoDevuelto')
+            )
+            ->get();
+        return view('reservar_admin.devoluciones.all_devoluciones', compact('devoluciones'));
     }
 
     public function mostrarEventosPostergacion()
     {
-        
+
         $reserva = [];
         return view('reservar_admin.eventos_postergacion.index', compact('reserva'));
     }

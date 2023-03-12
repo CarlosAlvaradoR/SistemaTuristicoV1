@@ -113,22 +113,7 @@ DESC solicitud_devolucion_dineros;
 
 
 
--- SABER LA LISTA DE SOLICITUDES GENERALES
-SELECT concat(p.nombre,' ',p.apellidos) as datos, p.dni, r.slug, ep.nombre_evento, 
-sdd.fecha_presentacion, sdd.estado, SUM(pa.monto) as montoTotal 
-FROM personas p
-INNER JOIN clientes c on p.id = c.persona_id
-INNER JOIN reservas r on r.cliente_id = c.id
-INNER JOIN postergacion_reservas pr on pr.reserva_id =r.id
-INNER JOIN evento_postergaciones ep on ep.id = pr.evento_postergaciones_id
-INNER JOIN solicitud_devolucion_dineros sdd	on sdd.postergacion_reservas_id = pr.id
-LEFT JOIN solicitud_pagos sp on sp.solicitud_devolucion_dinero_id = sdd.id
-LEFT JOIN pagos pa on pa.id = sp.pagos_id
-GROUP BY sdd.id;
 
-DESC solicitud_devolucion_dineros;
-
-SELECT * FROM personas;
 
 
 
@@ -297,10 +282,40 @@ INNER JOIN devolucion_dineros dd on dd.solicitud_devolucion_dinero_id = sdv.id;
 
 
 
-SELECT * FROM cuenta_pagos;
+-- SABER LA LISTA DE SOLICITUDES GENERALES
+SELECT concat(p.nombre,' ',p.apellidos) as datos, p.dni, r.slug, ep.nombre_evento, 
+sdd.fecha_presentacion, sdd.estado, SUM(pa.monto) as montoTotal 
+FROM personas p
+INNER JOIN clientes c on p.id = c.persona_id
+INNER JOIN reservas r on r.cliente_id = c.id
+INNER JOIN postergacion_reservas pr on pr.reserva_id =r.id
+INNER JOIN evento_postergaciones ep on ep.id = pr.evento_postergaciones_id
+INNER JOIN solicitud_devolucion_dineros sdd	on sdd.postergacion_reservas_id = pr.id
+LEFT JOIN solicitud_pagos sp on sp.solicitud_devolucion_dinero_id = sdd.id
+LEFT JOIN pagos pa on pa.id = sp.pagos_id
+GROUP BY sdd.id;
+
+DESC solicitud_devolucion_dineros;
+
+SELECT * FROM personas;
 
 
+-- SABER LA LISTA DE DEVOLUCIONES
+SELECT concat(p.nombre, ' ' ,p.apellidos) as datos, p.dni, sdd.fecha_presentacion, 
+SUM(pa.monto) as montoSolicitado, (SELECT SUM(monto) FROM devolucion_dineros WHERE solicitud_pagos_id = sp.id) as montoDevuelto
+-- dd.monto as montoDevuelto 
+FROM personas p
+INNER JOIN clientes c on p.id = c.persona_id
+INNER JOIN reservas r on r.cliente_id = c.id
+INNER JOIN postergacion_reservas pr on pr.reserva_id = r.id
+INNER JOIN solicitud_devolucion_dineros sdd on sdd.postergacion_reservas_id = pr.id
+INNER JOIN solicitud_pagos sp on sp.solicitud_devolucion_dinero_id = sdd.id
+INNER JOIN pagos pa on pa.id = sp.pagos_id
+LEFT JOIN devolucion_dineros dd on dd.solicitud_pagos_id = sp.id
+GROUP BY sp.solicitud_devolucion_dinero_id, dd.solicitud_pagos_id;
 
+SELECT SUM(dev.monto) FROM devolucion_dineros dev;
+SELECT * FROM devolucion_dineros;
 
 
 

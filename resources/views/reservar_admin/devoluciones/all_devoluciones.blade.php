@@ -141,15 +141,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($solicitudes as $s)
+                                @foreach ($devoluciones as $d)
                                     <tr>
-                                        <td>{{ strtoupper($s->datos) }}</td>
-                                        <td>{{ $s->dni }}</td>
-                                        <td>{{ $s->nombre_evento }}</td>
-                                        <td>{{ $s->fecha_presentacion }}</td>
-                                        <td>{{ $s->montoTotal }}</td>
+                                        <td>{{ strtoupper($d->datos) }}</td>
+                                        <td>{{ $d->dni }}</td>
+                                        <td>{{ $d->fecha_presentacion }}</td>
+                                        <td>{{ $d->montoSolicitado }}</td>
+                                        <td>{{ $d->montoDevuelto }}</td>
                                         <td>
-                                            <a href="{{ route('reservas.solicitudes.devoluciones', $s->slug) }}" title="Ver Solicitud" type="button"
+                                            <a href="{{-- route('reservas.solicitudes.devoluciones', $d->slug) --}}" title="Ver Solicitud" type="button"
                                                 class="tabledit-edit-button btn btn-sm btn-primary" style="float: none;"><i
                                                     class="fas fa-eye"></i>
                                             </a>
