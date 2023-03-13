@@ -21,3 +21,9 @@ Route::get('/tipo-de-pagos-cuentas', [App\Http\Controllers\ReservasController::c
 
 Route::get('/consultar-reserva', [App\Http\Controllers\ReservasController::class, 'consultaReservas'])->name('consultar.reservas')->middleware(['auth', 'verified']);
 
+
+
+
+
+/** REPORTES */
+Route::get('/solicitudes/reporte-solicitudes', [App\Http\Controllers\ReservasController::class, 'reportSolicitudes'])->name('consultar.reporte.solicitudes')->middleware(['auth', 'verified']);

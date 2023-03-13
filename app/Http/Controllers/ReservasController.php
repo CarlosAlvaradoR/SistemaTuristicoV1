@@ -9,6 +9,7 @@ use App\Models\Personas;
 use App\Models\Reservas\Reservas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 use PhpParser\Node\Stmt\Return_;
 
 class ReservasController extends Controller
@@ -185,6 +186,15 @@ class ReservasController extends Controller
         return view('reservar_admin.solicitudes.all_solicitudes', compact('solicitudes'));
     }
 
+    public function reportSolicitudes()
+    {
+        $solicitudes = [];
+        $pdf = Pdf::loadView('reservar_admin.solicitudes.report');
+        //return $pdf->download('invoice.pdf');
+        return $pdf->stream('invoice.pdf');
+        //return view('reservar_admin.solicitudes.report', compact('solicitudes'));
+    }
+
     public function mostrarDevoluciones()
     {
         DB::statement("SET sql_mode = '' ");
@@ -225,7 +235,7 @@ class ReservasController extends Controller
     public function consultaReservas()
     {
         $solicitudes = [];
-        
+
         return view('reservar_admin.consulta_reservas.consulta_reservas', compact('solicitudes'));
     }
 }
