@@ -195,6 +195,14 @@ class ReservasController extends Controller
         //return view('reservar_admin.solicitudes.report', compact('solicitudes'));
     }
 
+    public function reportComprobante(){
+        $solicitudes = [];
+        $pdf = Pdf::loadView('reservar_admin.solicitudes.comprobante');
+        //return $pdf->download('invoice.pdf');
+        return $pdf->stream('comprobante.pdf');
+        //return view('reservar_admin.solicitudes.report', compact('solicitudes'));
+    }
+
     public function mostrarDevoluciones()
     {
         DB::statement("SET sql_mode = '' ");
