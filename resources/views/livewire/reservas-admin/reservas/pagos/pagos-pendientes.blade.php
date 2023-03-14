@@ -57,13 +57,13 @@
             <div class="card">
                 <div class="card-block">
                     <h5 class="card-title">Lista de Pagos Correspondientes a la reserva</h5>
-                    @if ($monto_restante != 0)
+                    {{--@if ($monto_restante != 0) --}}
                         <div class="row">
 
                             <a id="modal-565707" href="#modal_pagos" role="button" class="btn"
                                 data-toggle="modal">Añadir Pago Restante</a>
                         </div>
-                    @endif
+                   {{-- @endif--}}
 
                     <br>
                     <div class="row">

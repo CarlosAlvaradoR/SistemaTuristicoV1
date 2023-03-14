@@ -179,6 +179,10 @@ return [
         //// SPATIE
         Spatie\Permission\PermissionServiceProvider::class,
 
+        // DOMPDF
+        Barryvdh\DomPDF\ServiceProvider::class,
+
+
     ],
 
     /*
@@ -234,6 +238,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+
+        //DOMPDF ALIAS
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+        
     ],
 
 ];

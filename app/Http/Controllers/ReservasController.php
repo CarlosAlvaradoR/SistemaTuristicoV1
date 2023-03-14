@@ -112,6 +112,7 @@ class ReservasController extends Controller
 
     public function mostrarReservas()
     {
+        DB::statement("SET sql_mode = '' ");
         $reservas = Personas::select(
             'personas.dni',
             DB::raw('CONCAT(personas.nombre," " ,personas.apellidos) AS datos'),
@@ -124,6 +125,11 @@ class ReservasController extends Controller
             DB::raw('(SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "NO ACEPTADO" AND ps.reserva_id = r.id) as no_aceptado'),
             DB::raw('(SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "EN PROCESO" AND ps.reserva_id = r.id) as en_proceso'),
             'er.nombre_estado',
+            DB::raw('(CASE
+            WHEN (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "ACEPTADO" AND ps.reserva_id = r.id) = pt.precio THEN "PAGO COMPLETADO"
+            WHEN (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "EN PROCESO" AND ps.reserva_id = r.id) <= pt.precio THEN "EN PROCESO"
+            ELSE "PENDIENTE DE PAGO"
+        END) as estado_oficial'),
             'r.id',
             'r.slug',
             DB::raw('IF((fecha_reserva-curdate()) <=10 ,"PRÓXIMA A CUMPLIRSE","EN DETERMINACIÓN") as estado_reserva')
@@ -138,7 +144,33 @@ class ReservasController extends Controller
             ->orderBy('r.updated_at', 'DESC')
             ->get();
         //return $reservas;
-
+        $consulta = DB::select('SELECT p.dni, concat(p.nombre, " ",p.apellidos) as datos, 
+        pt.nombre, r.fecha_reserva, 
+        SUM(pa.monto) as pago, 
+        (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "ACEPTADO" AND ps.reserva_id = r.id) as aceptado,
+        (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "NO ACEPTADO" AND ps.reserva_id = r.id) as no_aceptado,
+        (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "EN PROCESO" AND ps.reserva_id = r.id) as en_proceso,
+        er.nombre_estado, 
+        
+        (CASE
+            WHEN (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "ACEPTADO" AND ps.reserva_id = r.id) = pt.precio THEN "PAGO COMPLETADO"
+            WHEN (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "EN PROCESO" AND ps.reserva_id = r.id) <= pt.precio THEN "EN PROCESO"
+            ELSE "PENDIENTE DE PAGO"
+        END) as estado_oficial,
+        b.numero_boleta,r.id,
+        IF((fecha_reserva-curdate()) <=10 ,"PRÓXIMA A CUMPLIRSE","EN DETERMINACIÓN") as estado_reserva
+        FROM personas p
+        INNER JOIN clientes c on p.id=c.persona_id
+        INNER JOIN reservas r on r.cliente_id=c.id
+        -- INNER JOIN paquetes_turisticos paq on paq.id = r.paquete_id
+        INNER JOIN paquetes_turisticos pt on pt.id=r.paquete_id
+        INNER JOIN estado_reservas er on er.id = r.estado_reservas_id
+        INNER JOIN pagos pa on pa.reserva_id = r.id
+        INNER JOIN boletas b on b.id = pa.boleta_id
+        GROUP BY pa.reserva_id , pa.estado_pago
+        
+        ORDER BY r.updated_at');
+        //return $consulta;
         return view('reservar_admin.all_reservas', compact('reservas'));
     }
 
@@ -195,7 +227,8 @@ class ReservasController extends Controller
         //return view('reservar_admin.solicitudes.report', compact('solicitudes'));
     }
 
-    public function reportComprobante(){
+    public function reportComprobante()
+    {
         $solicitudes = [];
         $pdf = Pdf::loadView('reservar_admin.solicitudes.comprobante');
         //return $pdf->download('invoice.pdf');
