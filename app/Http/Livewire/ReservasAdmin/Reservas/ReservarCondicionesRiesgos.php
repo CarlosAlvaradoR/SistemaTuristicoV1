@@ -4,6 +4,7 @@ namespace App\Http\Livewire\ReservasAdmin\Reservas;
 
 use App\Models\Paquetes\CondicionPuntualidades;
 use App\Models\Paquetes\Riesgos;
+use App\Models\PaquetesTuristicos;
 use App\Models\Reservas\CondicionesAceptadas;
 use App\Models\Reservas\Reservas;
 use App\Models\Reservas\RiesgosAceptados;
@@ -67,6 +68,8 @@ class ReservarCondicionesRiesgos extends Component
     }
 
     public function finalizarReserva(){ //Si los ítems están llenados vuelve a nuevas reservas, sino se queda acá en el formulario
-        redirect()->route('paquetes.reservar.crear_cliente');
+        //dd($this->reserva);
+        $paquete = PaquetesTuristicos::findOrFail($this->reserva->paquete_id);
+        redirect()->route('paquetes.reservar', [$paquete]);
     }
 }

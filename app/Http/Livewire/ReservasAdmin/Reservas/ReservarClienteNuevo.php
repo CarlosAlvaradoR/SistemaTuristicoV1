@@ -67,6 +67,13 @@ class ReservarClienteNuevo extends Component
     {
         $this->validate();
 
+        list($mensaje, $title, $icon, $message) = Reservas::validarFechaMayorReserva($this->fecha_reserva);
+
+        if ($mensaje == 'No permitido') {
+            $this->alert($title, $icon, $message);
+            return '';
+        }
+        
         //Sacamos el 20% del total del precio del paquete
         $precio_minimo = $this->precio_del_paquete * 0.20;
         if ($this->pago_por_reserva < $precio_minimo) {
@@ -137,6 +144,24 @@ class ReservarClienteNuevo extends Component
         }
 
         redirect()->route('paquetes.reservar.condiciones.puntualidad', [$reservas]); //Id de la reserva, o posible slug
+    }
+
+    function validarFecha()
+    {
+        list($mensaje, $title, $icon, $message) = Reservas::validarFechaMayorReserva($this->fecha_reserva);
+
+        if ($mensaje == 'No permitido') {
+            $this->alert($title, $icon, $message);
+            return '';
+        }
+    }
+    function alert($title, $icon, $text)
+    {
+        $this->dispatchBrowserEvent('swal', [
+            'title' => $title,
+            'icon' => $icon,
+            'text' => $text
+        ]);
     }
 
     public function detalle()

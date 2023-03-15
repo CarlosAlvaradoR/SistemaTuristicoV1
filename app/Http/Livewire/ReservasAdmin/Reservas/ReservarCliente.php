@@ -10,6 +10,7 @@ use App\Models\Reservas\Nacionalidades;
 use App\Models\Reservas\Pagos;
 use App\Models\Reservas\Pasaportes;
 use App\Models\Reservas\Reservas;
+use DateTime;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -99,6 +100,7 @@ class ReservarCliente extends Component
     public function saveReservaP()
     { //CUANDO ESTÁ COMO PERSONA ENCONTRADA PERO NO COMO CLIENTE
         //dd('GUARDANDO COMO PERSONA');
+
         $this->validate(
             [
                 'nacionalidad' => 'required',
@@ -110,6 +112,14 @@ class ReservarCliente extends Component
             ]
         );
 
+        list($mensaje, $title, $icon, $message) = Reservas::validarFechaMayorReserva($this->fecha_reserva);
+
+        if ($mensaje == 'No permitido') {
+            $this->alert($title, $icon, $message);
+            return '';
+        }
+        
+        
         $precio_minimo = $this->paquete->precio * 0.20;
         //dd($precio_minimo);
         if ($this->monto < $precio_minimo) {
@@ -181,6 +191,7 @@ class ReservarCliente extends Component
 
     public function saveReserva() //CUANDO ESTÁ COMO CLIENTE
     {
+
         //dd($this->archivos_pago);
         $this->validate(
             [
@@ -190,6 +201,36 @@ class ReservarCliente extends Component
                 'archivo_autorizacion' => 'nullable|mimes:jpeg,png,pdf|required_if:numero_autorizacion,min:2',
             ]
         );
+        /*$hoy = new DateTime(now());
+        $fecha = new DateTime($this->fecha_reserva);
+        $resultado = date_diff($hoy, $fecha)->format('%R%a');
+
+        switch ($resultado) {
+            case '-0':
+                dd('HOY');
+                break;
+            case '+0':
+                dd('MAÑANA');
+                break;
+            case $resultado > 0:
+                dd('PERMITIDO');
+                break;
+            case $resultado < 0:
+                dd('NO PERMITIDO');
+                break;
+
+            default:
+                # code...
+                break;
+        }*/
+
+        list($mensaje, $title, $icon, $message) = Reservas::validarFechaMayorReserva($this->fecha_reserva);
+
+        if ($mensaje == 'No permitido') {
+            $this->alert($title, $icon, $message);
+            return '';
+        }
+
 
         $precio_minimo = $this->paquete->precio * 0.20;
         //dd($precio_minimo);
@@ -252,5 +293,23 @@ class ReservarCliente extends Component
     {
         $this->resetValidation($name);
         $this->resetErrorBag($name);
+    }
+
+    public function validarFecha()
+    {
+        list($mensaje, $title, $icon, $message) = Reservas::validarFechaMayorReserva($this->fecha_reserva);
+
+        if ($mensaje == 'No permitido') {
+            $this->alert($title, $icon, $message);
+            return '';
+        }
+    }
+    public function alert($title, $icon, $text)
+    {
+        $this->dispatchBrowserEvent('swal', [
+            'title' => $title,
+            'icon' => $icon,
+            'text' => $text
+        ]);
     }
 }

@@ -161,7 +161,7 @@
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
                                     <label class="form-label" for="fecha_reserva">Fecha de Reserva</label>
-                                    <input type="date" wire:model.defer="fecha_reserva" class="form-control"
+                                    <input type="date" wire:model="fecha_reserva" class="form-control"
                                         id="fecha_reserva">
                                     @error('fecha_reserva')
                                         <span class="text-danger">{{ $message }}</span>
