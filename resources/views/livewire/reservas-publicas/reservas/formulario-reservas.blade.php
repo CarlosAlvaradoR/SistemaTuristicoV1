@@ -82,7 +82,7 @@
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="tipo_pago">Fecha de Pago</label>
-                        <input class="form-control" wire:model.defer="fecha_de_pago" name="fecha_de_pago"
+                        <input class="form-control" wire:model="fecha_de_pago" name="fecha_de_pago"
                             id="fecha_de_pago" type="date">
                         @error('fecha_de_pago')
                             <h6 class="text-danger">{{ $message }}</h6>
@@ -123,7 +123,7 @@
         </div>
     </div>
 
-
+    @include('common.alerts')
    
 </div>
 

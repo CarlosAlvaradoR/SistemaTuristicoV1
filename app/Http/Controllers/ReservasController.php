@@ -174,6 +174,10 @@ class ReservasController extends Controller
         return view('reservar_admin.all_reservas', compact('reservas'));
     }
 
+    public function comprobante(){
+        return view('reservar_admin.reportes.comprobante');
+    }
+
 
     public function mostrarSolicitudes(Reservas $reserva)
     {
@@ -230,10 +234,10 @@ class ReservasController extends Controller
     public function reportComprobante()
     {
         $solicitudes = [];
-        $pdf = Pdf::loadView('reservar_admin.solicitudes.comprobante');
+        $pdf = Pdf::loadView('reservar_admin.solicitudes.comprobante2');
         //return $pdf->download('invoice.pdf');
         return $pdf->stream('comprobante.pdf');
-        //return view('reservar_admin.solicitudes.report', compact('solicitudes'));
+        //return view('reservar_admin.solicitudes.comprobante2', compact('solicitudes'));
     }
 
     public function mostrarDevoluciones()

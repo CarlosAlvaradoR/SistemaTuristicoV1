@@ -18,6 +18,8 @@
                 </div>
             </div>
             <br>
+            <a href="{{ route('reservas.comprobante') }}" target="_blank" rel="noopener noreferrer">Ver Comprobante</a>
+            <br>
             @error('dni')
                 <div class="alert alert-danger alert-icon alert-close alert-dismissible fade in" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -309,12 +311,14 @@
                         <div class="form-group">
                             @if ($encontradoComoPersona && !$encontradoComoCliente)
                                 <button type="button" wire:click="saveReservaP" wire:loading.attr="disabled"
-                                    class="btn btn-inline"> <i class="fas fa-calendar-check"></i> Grabar reserva</button>
+                                    class="btn btn-inline"> <i class="fas fa-calendar-check"></i> Grabar
+                                    reserva</button>
                             @endif
 
                             @if ($encontradoComoPersona && $encontradoComoCliente)
                                 <button type="button" wire:click="saveReserva" wire:loading.attr="disabled"
-                                    class="btn btn-inline"><i class="fas fa-calendar-check"></i> Grabar reserva</button>
+                                    class="btn btn-inline"><i class="fas fa-calendar-check"></i> Grabar
+                                    reserva</button>
                             @endif
 
                             <!--<a href="#!" wireclick="detalle">DetalleArchivo</a>-->
@@ -327,6 +331,6 @@
 
     </div>
 
-   @include('common.alerts')
+    @include('common.alerts')
 
 </div>

@@ -23,7 +23,7 @@ $fecha = date("Y-m-d");
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="stylesheet" href="./bs3.min.css">
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -45,11 +45,11 @@ $fecha = date("Y-m-d");
     </div>
     <hr>
     <div class="row">
-        <div class="col-xs-7">
+        <div class="col-xs-10">
             <h1 class="h6"><?php echo $remitente ?></h1>
             <h1 class="h6"><?php echo $web ?></h1>
         </div>
-        <div class="col-xs-5 text-center">
+        <div class="col-xs-2 text-center">
             <strong>Fecha</strong>
             <br>
             <?php echo $fecha ?>

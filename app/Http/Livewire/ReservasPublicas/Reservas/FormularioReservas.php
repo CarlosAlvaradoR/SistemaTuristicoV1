@@ -63,6 +63,12 @@ class FormularioReservas extends Component
     public function reservar()
     {
         $this->validate();
+        list($mensaje, $title, $icon, $message) = Reservas::validarFechaMayorReserva($this->fecha_reserva);
+
+        if ($mensaje == 'No permitido') {
+            $this->alert($title, $icon, $message);
+            return '';
+        }
 
         $precio_minimo = $this->paquetesTuristicos->precio * 0.20;
         if ($this->monto < $precio_minimo) {
@@ -104,4 +110,14 @@ class FormularioReservas extends Component
 
         redirect()->route('cliente.paquetes');
     }
+
+    public function alert($title, $icon, $text)
+    {
+        $this->dispatchBrowserEvent('swal', [
+            'title' => $title,
+            'icon' => $icon,
+            'text' => $text
+        ]);
+    }
+    
 }
