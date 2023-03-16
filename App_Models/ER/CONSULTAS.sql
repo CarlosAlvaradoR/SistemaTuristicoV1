@@ -182,21 +182,27 @@ INNER JOIN paquetes_turisticos pt on pt.id=r.paquete_id
 INNER JOIN estado_reservas er on er.id = r.estado_reservas_id;
 
 -- LISTA DE RESERCAS DE LOS CLIENTES
-SELECT p.dni, concat(p.nombre, ' ',p.apellidos) as datos, 
+CREATE OR REPLACE VIEW v_reserva_reservas_general as
+SELECT p.dni, concat(p.nombre, " ",p.apellidos) as datos,
+r.id as idReserva, 
 pt.nombre, r.fecha_reserva, 
 SUM(pa.monto) as pago, 
 (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "ACEPTADO" AND ps.reserva_id = r.id) as aceptado,
 (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "NO ACEPTADO" AND ps.reserva_id = r.id) as no_aceptado,
 (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "EN PROCESO" AND ps.reserva_id = r.id) as en_proceso,
 er.nombre_estado, 
-
 (CASE
     WHEN (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "ACEPTADO" AND ps.reserva_id = r.id) = pt.precio THEN "PAGO COMPLETADO"
     WHEN (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "EN PROCESO" AND ps.reserva_id = r.id) <= pt.precio THEN "EN PROCESO"
     ELSE "PENDIENTE DE PAGO"
 END) as estado_oficial,
 b.numero_boleta,r.id,
-IF((fecha_reserva-curdate()) <=10 ,"PRÓXIMA A CUMPLIRSE","EN DETERMINACIÓN") as estado_reserva
+(fecha_reserva-curdate()) as dias_faltantes,
+case 
+  when (SELECT fecha_reserva-curdate())>=0 AND (SELECT fecha_reserva-curdate()) <=10  then "PRÓXIMA A CUMPLIRSE"  
+  when  (SELECT fecha_reserva-curdate())>10 then "EN PROGRAMACIÓN"  
+  when (SELECT fecha_reserva-curdate())<0 then "PASADOS DE FECHA"
+end as estado_reserva
 FROM personas p
 INNER JOIN clientes c on p.id=c.persona_id
 INNER JOIN reservas r on r.cliente_id=c.id
@@ -206,10 +212,16 @@ INNER JOIN estado_reservas er on er.id = r.estado_reservas_id
 INNER JOIN pagos pa on pa.reserva_id = r.id
 INNER JOIN boletas b on b.id = pa.boleta_id
 GROUP BY pa.reserva_id , pa.estado_pago
-
 ORDER BY r.updated_at;
 
-SELECT * FROM personas;
+
+SELECT * FROM v_reserva_reservas_general;
+-- WHERE idReserva NOT IN (SELECT parti.reserva_id FROM participantes parti) OR 
+-- idReserva NOT IN (SELECT posr.reserva_id FROM postergacion_reservas posr);
+
+
+
+
 
 -- CONSULTA PARA VERIFICAR EVENTOS QUE NO ESTAN EN LAS POSTERGACIÓN
 SELECT * FROM postergacion_reservas;
@@ -324,6 +336,22 @@ GROUP BY sp.solicitud_devolucion_dinero_id, dd.solicitud_pagos_id;
 
 SELECT SUM(dev.monto) FROM devolucion_dineros dev;
 SELECT * FROM clientes;
+
+
+
+/*
+REPORTES
+*/
+-- Visualizar e imprimir el reporte de los pagos realizados por las reservas
+-- de los clientes, diario o de un periodo de fechas indicado
+SELECT p.nombre, p.apellidos, p.dni, pa.fecha_pago,pa.estado_pago,pa.monto FROM personas p
+INNER JOIN clientes c on p.id = c.persona_id
+INNER JOIN reservas r on r.cliente_id = c.id
+INNER JOIN pagos pa on pa.reserva_id = r.id
+WHERE pa.fecha_pago BETWEEN '2023-03-10' AND '2023-04-31'
+ORDER BY pa.fecha_pago;
+
+SELECT * FROM pagos;
 
 
 

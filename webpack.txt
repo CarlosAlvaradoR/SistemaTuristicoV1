@@ -190,6 +190,8 @@ MIGRACIONES Y MÓDELOS
     
         /* VISTAS*/
         php artisan make:migration create_view_v_reserva_lista_clientes_registrados_table --path=/database/migrations/reservas
+        
+        php artisan make:migration create_view_v_reserva_reservas_general_table --path=/database/migrations/reservas
             
     
     

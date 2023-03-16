@@ -83,8 +83,8 @@ class RegisterController extends Controller
         
         $persona = Personas::create([
             'dni'=>$data['dni'],
-            'nombre'=>$data['name_personal'],
-            'apellidos'=>$data['apellido_personal'],
+            'nombre'=>strtoupper($data['name_personal']),
+            'apellidos'=>strtoupper($data['apellido_personal']),
             'genero'=>$data['genero'],
             'telefono'=>$data['telefono'],
             'dirección'=>$data['direccion'],
@@ -93,7 +93,7 @@ class RegisterController extends Controller
         $persona_id = $persona->id;
 
         $user=User::create([
-            'name' => $data['name_personal'],
+            'name' => strtoupper($data['name_personal']),
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'persona_id' => $persona_id
