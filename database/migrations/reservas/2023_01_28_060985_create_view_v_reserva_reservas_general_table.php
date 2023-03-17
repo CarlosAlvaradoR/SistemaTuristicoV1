@@ -30,16 +30,16 @@ return new class extends Migration
             ELSE "PENDIENTE DE PAGO"
         END) as estado_oficial,
         b.numero_boleta,r.id,
-        (fecha_reserva-curdate()) as dias_faltantes,
+        (SELECT DATEDIFF(fecha_reserva, curdate())) as dias_faltantes,
         case 
           when (SELECT fecha_reserva-curdate())>=0 AND (SELECT fecha_reserva-curdate()) <=10  then "PRÓXIMA A CUMPLIRSE"  
           when  (SELECT fecha_reserva-curdate())>10 then "EN PROGRAMACIÓN"  
           when (SELECT fecha_reserva-curdate())<0 then "PASADOS DE FECHA"
-        end as estado_reserva
+        end as estado_reserva,
+        r.slug
         FROM personas p
         INNER JOIN clientes c on p.id=c.persona_id
         INNER JOIN reservas r on r.cliente_id=c.id
-        -- INNER JOIN paquetes_turisticos paq on paq.id = r.paquete_id
         INNER JOIN paquetes_turisticos pt on pt.id=r.paquete_id
         INNER JOIN estado_reservas er on er.id = r.estado_reservas_id
         INNER JOIN pagos pa on pa.reserva_id = r.id
@@ -56,6 +56,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('view_v_reserva_reservas_general');
+        Schema::dropIfExists('DROP VIEW IF EXISTS v_reserva_reservas_general;');
     }
 };

@@ -113,7 +113,7 @@ class ReservasController extends Controller
     public function mostrarReservas()
     {
         DB::statement("SET sql_mode = '' ");
-        $reservas = Personas::select(
+        /*$reservas = Personas::select(
             'personas.dni',
             DB::raw('CONCAT(personas.nombre," " ,personas.apellidos) AS datos'),
             'pt.nombre',
@@ -142,39 +142,15 @@ class ReservasController extends Controller
             //->join('boletas as b', 'pa.reserva_id', '=', 'r.id')
             ->groupBy('pa.reserva_id')
             ->orderBy('r.updated_at', 'DESC')
-            ->get();
+            ->get();*/
+        $reservas = DB::select('SELECT * FROM v_reserva_reservas_general');
         //return $reservas;
-        $consulta = DB::select('SELECT p.dni, concat(p.nombre, " ",p.apellidos) as datos, 
-        pt.nombre, r.fecha_reserva, 
-        SUM(pa.monto) as pago, 
-        (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "ACEPTADO" AND ps.reserva_id = r.id) as aceptado,
-        (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "NO ACEPTADO" AND ps.reserva_id = r.id) as no_aceptado,
-        (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "EN PROCESO" AND ps.reserva_id = r.id) as en_proceso,
-        er.nombre_estado, 
-        
-        (CASE
-            WHEN (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "ACEPTADO" AND ps.reserva_id = r.id) = pt.precio THEN "PAGO COMPLETADO"
-            WHEN (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "EN PROCESO" AND ps.reserva_id = r.id) <= pt.precio THEN "EN PROCESO"
-            ELSE "PENDIENTE DE PAGO"
-        END) as estado_oficial,
-        b.numero_boleta,r.id,
-        IF((fecha_reserva-curdate()) <=10 ,"PRÓXIMA A CUMPLIRSE","EN DETERMINACIÓN") as estado_reserva
-        FROM personas p
-        INNER JOIN clientes c on p.id=c.persona_id
-        INNER JOIN reservas r on r.cliente_id=c.id
-        -- INNER JOIN paquetes_turisticos paq on paq.id = r.paquete_id
-        INNER JOIN paquetes_turisticos pt on pt.id=r.paquete_id
-        INNER JOIN estado_reservas er on er.id = r.estado_reservas_id
-        INNER JOIN pagos pa on pa.reserva_id = r.id
-        INNER JOIN boletas b on b.id = pa.boleta_id
-        GROUP BY pa.reserva_id , pa.estado_pago
-        
-        ORDER BY r.updated_at');
         //return $consulta;
         return view('reservar_admin.all_reservas', compact('reservas'));
     }
 
-    public function comprobante(){
+    public function comprobante()
+    {
         return view('reservar_admin.reportes.comprobante');
     }
 
@@ -282,5 +258,66 @@ class ReservasController extends Controller
         $solicitudes = [];
 
         return view('reservar_admin.consulta_reservas.consulta_reservas', compact('solicitudes'));
+    }
+
+    public function reportesGenerales()
+    {
+        $reservas = [];
+        return view('reservar_admin.reportes_generales', compact('reservas')); //
+    }
+
+    public function reportReserva(Request $request)
+    {
+        DB::statement("SET sql_mode = '' ");
+
+        $fecha_inicial = null;
+        $fecha_final = null;
+        $tipo = '';
+        $consulta = [];
+        if ($request->fecha_inicial) {
+            $fecha_inicial = $request->fecha_inicial;
+        }
+        if ($request->fecha_final) {
+            $fecha_final = $request->fecha_final;
+        }
+        if ($request->estado_reserva) {
+            $tipo = $request->estado_reserva;
+        }
+        //$query = 'SELECT * FROM v_reserva_reservas_general';
+        //$consulta = DB::select($query);
+        //return $consulta;
+        //NO HAY FECHAS NI TIPO
+        if (!$fecha_inicial && !$fecha_final && !$tipo) {
+            $query = 'SELECT * FROM v_reserva_reservas_general vrg
+            WHERE (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR
+            vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr))';
+            $consulta = DB::select($query);
+            //return $consulta;
+        }
+        //HAY FECHAS Y TIPO
+        if ($fecha_inicial && $fecha_final && $tipo) {
+            $query = 'SELECT * FROM v_reserva_reservas_general vrg
+            WHERE vrg.fecha_reserva between "' . $fecha_inicial . '" and "' . $fecha_final . '" AND estado_reserva = "' . $tipo . '" AND (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR
+            vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr))';
+            $consulta = DB::select($query);
+            //return '2';
+        }
+        //HAY FECHAS Y NO TIPO
+        if ($fecha_inicial && $fecha_final && !$tipo) {
+            $query = 'SELECT * FROM v_reserva_reservas_general vrg
+            WHERE vrg.fecha_reserva between "'.$fecha_inicial.'" and "'.$fecha_final.'"';
+            $consulta = DB::select($query);
+            //return $query;
+        }
+        //HAY TIPO Y NO FECHAS
+        if (!$fecha_inicial && !$fecha_final && $tipo) {
+            $query = 'SELECT * FROM v_reserva_lista_reservas_general vrg
+            WHERE estado_oficial = "EN PROCESO"';
+            $consulta = DB::select($query);
+            //return '4';
+        }
+
+        $pdf = Pdf::loadView('reservar_admin.reportes.reservas', compact('consulta','fecha_inicial','fecha_final'));
+        return $pdf->stream('Reporte de Reservas por Rango de Fechas.pdf');
     }
 }

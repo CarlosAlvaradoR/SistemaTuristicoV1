@@ -97,7 +97,9 @@
                             @foreach ($reservas as $r)
                                 <tr>
                                     <!--<th scope="row">1</th>-->
-                                    <td>{{ $r->dni }}</td>
+                                    <td>
+                                        {{ $r->dni }}
+                                    </td>
                                     <td>{{ $r->datos }}</td>
                                     <td>{{ $r->nombre }}</td>
                                     <td>{{ $r->fecha_reserva }}</td>
@@ -113,7 +115,7 @@
                                         @switch($r->estado_oficial)
                                             @case('PAGO COMPLETADO')
                                                 <span class="label label-success">{{ $r->estado_oficial }}</span>
-                                            @break
+                                            @break  
 
                                             @case('EN PROCESO')
                                                 <span class="label label-secondary">{{ $r->estado_oficial }}</span>

@@ -82,6 +82,7 @@
                 </li> 
                 <li><a href="{{ route('tipo.pagos.cuentas') }}"><span class="lbl">Tipo de Pago - Cuentas</span></a></li>
                 <li><a href="{{ route('consultar.reservas') }}"><span class="lbl">Consultar Reservas</span></a></li>
+                <li><a href="{{ route('reservas.reportes.generales') }}"><span class="lbl">Reportes</span></a></li>
             </ul>
         </li>
 

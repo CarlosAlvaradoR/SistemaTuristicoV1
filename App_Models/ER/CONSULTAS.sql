@@ -181,6 +181,7 @@ INNER JOIN reservas r on r.cliente_id=c.id
 INNER JOIN paquetes_turisticos pt on pt.id=r.paquete_id
 INNER JOIN estado_reservas er on er.id = r.estado_reservas_id;
 
+
 -- LISTA DE RESERCAS DE LOS CLIENTES
 CREATE OR REPLACE VIEW v_reserva_reservas_general as
 SELECT p.dni, concat(p.nombre, " ",p.apellidos) as datos,
@@ -197,16 +198,16 @@ er.nombre_estado,
     ELSE "PENDIENTE DE PAGO"
 END) as estado_oficial,
 b.numero_boleta,r.id,
-(fecha_reserva-curdate()) as dias_faltantes,
+(SELECT (DATEDIFF(fecha_reserva, curdate()))) as dias_faltantes,
 case 
   when (SELECT fecha_reserva-curdate())>=0 AND (SELECT fecha_reserva-curdate()) <=10  then "PRÓXIMA A CUMPLIRSE"  
   when  (SELECT fecha_reserva-curdate())>10 then "EN PROGRAMACIÓN"  
   when (SELECT fecha_reserva-curdate())<0 then "PASADOS DE FECHA"
-end as estado_reserva
+end as estado_reserva,
+r.slug
 FROM personas p
 INNER JOIN clientes c on p.id=c.persona_id
 INNER JOIN reservas r on r.cliente_id=c.id
--- INNER JOIN paquetes_turisticos paq on paq.id = r.paquete_id
 INNER JOIN paquetes_turisticos pt on pt.id=r.paquete_id
 INNER JOIN estado_reservas er on er.id = r.estado_reservas_id
 INNER JOIN pagos pa on pa.reserva_id = r.id
@@ -216,6 +217,7 @@ ORDER BY r.updated_at;
 
 
 SELECT * FROM v_reserva_reservas_general;
+SELECT * FROM v_reserva_lista_reservas_general vrg WHERE vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr);
 -- WHERE idReserva NOT IN (SELECT parti.reserva_id FROM participantes parti) OR 
 -- idReserva NOT IN (SELECT posr.reserva_id FROM postergacion_reservas posr);
 
@@ -342,6 +344,26 @@ SELECT * FROM clientes;
 /*
 REPORTES
 */
+SELECT * FROM v_reserva_reservas_general vrg
+WHERE (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR
+vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr));
+
+SELECT * FROM v_reserva_reservas_general vrg
+WHERE vrg.fecha_reserva between "2023-03-14" and "2023-03-17" AND estado_reserva = "EN PROCESO" AND (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR
+vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr));
+
+SELECT * FROM v_reserva_reservas_general vrg
+WHERE vrg.fecha_reserva between "2023-03-14" and "2023-03-17";
+
+SELECT * FROM v_reserva_lista_reservas_general vrg
+WHERE estado_oficial = "EN PROCESO";
+
+SELECT DATEDIFF('2023-03-16', curdate());
+SELECT * FROM v_reserva_lista_reservas_general vrg
+WHERE (vrg.fecha_reserva between "2023-03-14" and "2023-03-17")
+AND (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR
+vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr));
+
 -- Visualizar e imprimir el reporte de los pagos realizados por las reservas
 -- de los clientes, diario o de un periodo de fechas indicado
 SELECT p.nombre, p.apellidos, p.dni, pa.fecha_pago,pa.estado_pago,pa.monto FROM personas p

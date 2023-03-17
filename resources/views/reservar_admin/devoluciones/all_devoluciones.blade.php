@@ -118,8 +118,8 @@
                             </div>
                             <div class="col-md-1">
                                 <br>
-                                <a id="modal-918849" title="Ver Reporte de Viajes Actuales" href="#modal-container-918849"
-                                    role="button" class="btn" data-toggle="modal"><i
+                                <a title="Ver Reporte de Devoluciones por rango"
+                                    class="btn btn-primary"><i
                                         class="fas fa-file-invoice"></i></a>
                             </div>
                             <div class="col-md-2">
