@@ -31,5 +31,6 @@ Route::get('/reservas/comprobante', [App\Http\Controllers\ReservasController::cl
 
 /** REPORTES */
 Route::post('/reservas/reportes-generales/{fechaInicial?}/{FechaFinal?}/{Tipo?}', [App\Http\Controllers\ReservasController::class, 'reportReserva'])->name('reservas.reporte.info.reservas')->middleware(['auth', 'verified']);
+Route::post('/reservas/reportes-generales/pago', [App\Http\Controllers\ReservasController::class, 'reportPagosReserva'])->name('reservas.reporte.pagos.reservas')->middleware(['auth', 'verified']);
 //Route::get('/reservas/comprobante', [App\Http\Controllers\ReservasController::class, 'reportComprobante'])->name('consultar.reporte.comprobante')->middleware(['auth', 'verified']);
 Route::get('/solicitudes/reporte-solicitudes', [App\Http\Controllers\ReservasController::class, 'reportSolicitudes'])->name('consultar.reporte.solicitudes')->middleware(['auth', 'verified']);

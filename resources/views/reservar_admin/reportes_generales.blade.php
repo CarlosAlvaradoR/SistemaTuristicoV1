@@ -39,7 +39,8 @@
                 <div class="card-block">
                     <h5 class="card-title">Reporte de Reservas</h5>
                     <div class="row">
-                        <form action="{{ route('reservas.reporte.info.reservas') }}" method="POST" target="_blank">
+                        <form name="info_reservas" id="info_reservas" action="{{ route('reservas.reporte.info.reservas') }}" 
+                        role="form" method="POST" target="_blank">
                             @csrf
                             @method('POST')
                             <div class="col-md-6">
@@ -67,9 +68,49 @@
                                     <option value="PASADOS DE FECHA">PASADOS DE FECHA</option>
                                     <option value="TODOS">TODOS</option>
                                 </select>
-                            </div>
+                            </div><!-- onclick="document.getElementById('info_reservas').submit();" -->
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" name="action" id="btn-procesar-reserva" 
+                                value="btn-procesar-reserva"
+                                
+                                class="btn btn-primary">
+                                    Procesar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 ks-panels-column-section">
+            <div class="card">
+                <div class="card-block">
+                    <h5 class="card-title">Reporte de Pagos por Reserva</h5>
+                    <div class="row">
+                        <form name="pagos" role="form" id="pagos" action="{{ route('reservas.reporte.pagos.reservas') }}" method="POST" target="_blank">
+                            @csrf
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="fecha_inicial_pago">
+                                        Fecha Inicial
+                                    </label>
+                                    <input type="date" class="form-control" name="fecha_inicial_pago" id="fecha_inicial_pago" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="fecha_final_pago">
+                                        Fecha Final
+                                    </label>
+                                    <input type="date" class="form-control" name="fecha_final_pago" id="fecha_final_pago" />
+                                </div>
+                            </div> <!-- onclick="document.getElementById('pagos').submit();"-->
+                            <div class="col-md-12">
+                                <button type="submit" name="action" id="btn-procesar-pago" 
+                                value="btn-procesar-pago"
+                                
+                                class="btn btn-primary">
                                     Procesar
                                 </button>
                             </div>

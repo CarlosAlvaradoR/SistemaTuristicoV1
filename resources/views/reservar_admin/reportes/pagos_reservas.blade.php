@@ -10,25 +10,18 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
-    <title>Reporte de Reservas</title>
+    <title>Reporte de Pagos Realizados por Reserva</title>
 </head>
 
 <body>
     <div class="row">
-        <h4>Reporte de Reservas</h4>
+        <h4>Reporte de Pagos Realizados por Reserva</h4>
     </div>
 
     <div class="row">
-        <a href="#" class="badge badge-primary">PRÓXIMA A CUMPLIRSE: [1-10] días</a>
+        <small>Fecha Inicial:</small> <small>{{ date('d/m/Y', strtotime($fecha_inicial_pago)) }}</small>
         <br>
-        <a href="#" class="badge badge-success">EN PROGRAMACIÓN: [Mayor a 10 días]</a>
-        <br>
-        <a href="#" class="badge badge-danger">PASADOS DE FECHA: [No realizados]</a>
-    </div>
-    <div class="row">
-        <small>Fecha Inicial:</small> <small>{{ date('d/m/Y', strtotime($fecha_inicial)) }}</small>
-        <br>
-        <small>Fecha Final:</small> <small>{{ date('d/m/Y', strtotime($fecha_final)) }}</small>
+        <small>Fecha Final:</small> <small>{{ date('d/m/Y', strtotime($fecha_final_pago)) }}</small>
     </div>
 
     <div class="row">
@@ -37,10 +30,10 @@
                 <tr>
                     <th scope="col"><small>#</small></th>
                     <th scope="col"><small>CLIENTE</small></th>
-                    <th scope="col"><small>PAQUETE</small></th>
-                    <th scope="col"><small>FECHA RESERVADA</small></th>
-                    <th scope="col"><small>ESTADO DE RESERVA</small></th>
-                    <th scope="col"><small>DÍAS A CUMPLIRSE</small></th>
+                    <th scope="col"><small>DNI</small></th>
+                    <th scope="col"><small>FECHA EN LA QUE REALIZÓ PAGO</small></th>
+                    <th scope="col"><small>ESTADO DE PAGO</small></th>
+                    <th scope="col"><small>MONTO DEL PAGO</small></th>
                 </tr>
             </thead>
             @php
@@ -54,11 +47,12 @@
                             <small>{{ $c->datos }}</small>
                         </td>
                         <td>
-                            <small>{{ $c->nombre }}</small>
+                            <small>{{ $c->dni }}</small>
                         </td>
-                        <td><small>{{ $c->fecha_reserva }}</small></td>
+                        <td><small>{{ date('d/m/Y', strtotime($c->fecha_pago)) }}</small></td>
                         <td><small>
-                                @switch($c->estado_reserva)
+                            <a href="#" class="badge badge-primary">{{ $c->estado_pago }}</a>
+                                {{--@switch($c->estado_pago)
                                     @case('PRÓXIMA A CUMPLIRSE')
                                         <a href="#" class="badge badge-primary">{{ $c->estado_reserva }}</a>
                                     @break
@@ -72,9 +66,9 @@
                                     @break
 
                                     @default
-                                @endswitch
+                                @endswitch--}}
                             </small></td>
-                        <td><small>{{ $c->dias_faltantes }}</small></td>
+                        <td><small>{{ $c->monto }}</small></td>
                     </tr>
                 @endforeach
 

@@ -10,7 +10,9 @@ use App\Models\Reservas\Reservas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Input;
 use PhpParser\Node\Stmt\Return_;
+use Symfony\Component\Console\Input\Input as InputInput;
 
 class ReservasController extends Controller
 {
@@ -268,8 +270,65 @@ class ReservasController extends Controller
 
     public function reportReserva(Request $request)
     {
+        /*
+        https://laracasts.com/discuss/channels/laravel/how-do-i-handle-multiple-submit-buttons-in-a-single-form-with-laravel
+        */
+        //dd($request->input('action'));
         DB::statement("SET sql_mode = '' ");
+        switch ($request->input('action')) {
+            case 'btn-procesar-reserva':
+                list($consulta, $fecha_inicial, $fecha_final) = $this->mostrarReporteReservas($request);
+                $pdf = Pdf::loadView('reservar_admin.reportes.reservas', compact('consulta', 'fecha_inicial', 'fecha_final'));
+                return $pdf->stream('Reporte de Reservas por Rango de Fechas.pdf');
+                break;
 
+            case 'btn-procesar-pago':
+                list($consulta, $fecha_inicial_pago, $fecha_final_pago) = $this->mostrarReportPagos($request);
+                $pdf = Pdf::loadView('reservar_admin.reportes.pagos_reservas', compact('consulta', 'fecha_inicial_pago', 'fecha_final_pago'));
+                return $pdf->stream('Reporte de Pagos realizados por Reservas.pdf');
+                break;
+
+            case 'advanced_edit':
+                // Redirect to advanced edit
+                break;
+            default:
+                return 'NO LLEG';
+                break;
+        }
+    }
+
+    private function mostrarReportPagos($request)
+    {
+        $fecha_inicial_pago = null;
+        $fecha_final_pago = null;
+        if ($request->fecha_inicial_pago) {
+            $fecha_inicial_pago = $request->fecha_inicial_pago;
+        }
+        if ($request->fecha_final_pago) {
+            $fecha_final_pago = $request->fecha_final_pago;
+        }
+        //HAY FECHAS SELECCIONADAS (Filtrara con Fechas -> Tienen que haber las dos fechas)
+        if ($fecha_inicial_pago && $fecha_final_pago) {
+            $query = 'SELECT CONCAT(p.nombre, " ",p.apellidos) as datos, p.dni, pa.fecha_pago,pa.estado_pago,pa.monto FROM personas p
+                    INNER JOIN clientes c on p.id = c.persona_id
+                    INNER JOIN reservas r on r.cliente_id = c.id
+                    INNER JOIN pagos pa on pa.reserva_id = r.id
+                    WHERE pa.fecha_pago BETWEEN "2023-03-10" AND "2023-04-31"
+                    ORDER BY pa.fecha_pago';
+            $consulta = DB::select($query);
+        } else { //NO HAY FECHAS SELECCIONADAS (Filtro General)
+            $query = 'SELECT CONCAT(p.nombre, " ",p.apellidos)as datos, p.dni, pa.fecha_pago,pa.estado_pago,pa.monto FROM personas p
+                    INNER JOIN clientes c on p.id = c.persona_id
+                    INNER JOIN reservas r on r.cliente_id = c.id
+                    INNER JOIN pagos pa on pa.reserva_id = r.id
+                    ORDER BY pa.fecha_pago';
+            $consulta = DB::select($query);
+        }
+        return [$consulta, $fecha_inicial_pago, $fecha_final_pago];
+    }
+
+    private function mostrarReporteReservas($request)
+    {
         $fecha_inicial = null;
         $fecha_final = null;
         $tipo = '';
@@ -289,35 +348,33 @@ class ReservasController extends Controller
         //NO HAY FECHAS NI TIPO
         if (!$fecha_inicial && !$fecha_final && !$tipo) {
             $query = 'SELECT * FROM v_reserva_reservas_general vrg
-            WHERE (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR
-            vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr))';
+                WHERE (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR
+                vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr))';
             $consulta = DB::select($query);
             //return $consulta;
         }
         //HAY FECHAS Y TIPO
         if ($fecha_inicial && $fecha_final && $tipo) {
             $query = 'SELECT * FROM v_reserva_reservas_general vrg
-            WHERE vrg.fecha_reserva between "' . $fecha_inicial . '" and "' . $fecha_final . '" AND estado_reserva = "' . $tipo . '" AND (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR
-            vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr))';
+                WHERE vrg.fecha_reserva between "' . $fecha_inicial . '" and "' . $fecha_final . '" AND estado_reserva = "' . $tipo . '" AND (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR
+                vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr))';
             $consulta = DB::select($query);
             //return '2';
         }
         //HAY FECHAS Y NO TIPO
         if ($fecha_inicial && $fecha_final && !$tipo) {
             $query = 'SELECT * FROM v_reserva_reservas_general vrg
-            WHERE vrg.fecha_reserva between "'.$fecha_inicial.'" and "'.$fecha_final.'"';
+                     WHERE vrg.fecha_reserva between "' . $fecha_inicial . '" and "' . $fecha_final . '"';
             $consulta = DB::select($query);
             //return $query;
         }
         //HAY TIPO Y NO FECHAS
         if (!$fecha_inicial && !$fecha_final && $tipo) {
             $query = 'SELECT * FROM v_reserva_lista_reservas_general vrg
-            WHERE estado_oficial = "EN PROCESO"';
+                    WHERE estado_oficial = "EN PROCESO"';
             $consulta = DB::select($query);
             //return '4';
         }
-
-        $pdf = Pdf::loadView('reservar_admin.reportes.reservas', compact('consulta','fecha_inicial','fecha_final'));
-        return $pdf->stream('Reporte de Reservas por Rango de Fechas.pdf');
+        return [$consulta, $fecha_inicial, $fecha_final];
     }
 }

@@ -366,11 +366,17 @@ vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr));
 
 -- Visualizar e imprimir el reporte de los pagos realizados por las reservas
 -- de los clientes, diario o de un periodo de fechas indicado
-SELECT p.nombre, p.apellidos, p.dni, pa.fecha_pago,pa.estado_pago,pa.monto FROM personas p
+SELECT CONCAT(p.nombre, " ",p.apellidos)as datos, p.dni, pa.fecha_pago,pa.estado_pago,pa.monto FROM personas p
 INNER JOIN clientes c on p.id = c.persona_id
 INNER JOIN reservas r on r.cliente_id = c.id
 INNER JOIN pagos pa on pa.reserva_id = r.id
-WHERE pa.fecha_pago BETWEEN '2023-03-10' AND '2023-04-31'
+ORDER BY pa.fecha_pago;
+
+SELECT CONCAT(p.nombre, " ",p.apellidos) as datos, p.dni, pa.fecha_pago,pa.estado_pago,pa.monto FROM personas p
+INNER JOIN clientes c on p.id = c.persona_id
+INNER JOIN reservas r on r.cliente_id = c.id
+INNER JOIN pagos pa on pa.reserva_id = r.id
+WHERE pa.fecha_pago BETWEEN "2023-03-10" AND "2023-04-31"
 ORDER BY pa.fecha_pago;
 
 SELECT * FROM pagos;
