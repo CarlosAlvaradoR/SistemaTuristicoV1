@@ -55,19 +55,7 @@ class UsuariosSeeder extends Seeder
         ]);
         $user2->assignRole('admin');
 
-        //NACIONALIDADES
-        $nacionalidades = Nacionalidades::create([
-            'nombre_nacionalidad' => 'Perú'
-        ]);
-
-        $nacionalidades = Nacionalidades::create([
-            'nombre_nacionalidad' => 'Argentina'
-        ]);
-
-        $nacionalidades = Nacionalidades::create([
-            'nombre_nacionalidad' => 'Brasil'
-        ]);
-
+       
 
 
         //CLIENTES
@@ -77,7 +65,7 @@ class UsuariosSeeder extends Seeder
                 'dni'=> $faker->unique()->postcode, 
                 'nombre' => $faker->name, 
                 'apellidos' => $faker->lastname, 
-                'genero' => rand(0, 1), 
+                'genero' => rand(0, 200), 
                 'telefono' => $faker->phoneNumber, 
                 'dirección' => $faker->address
             ]);

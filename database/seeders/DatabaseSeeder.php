@@ -6,6 +6,8 @@ use Database\Seeders\Pedidos\EstadoPedidosSeeder;
 use Database\Seeders\Reservas\CuentaPagosSeeder;
 use Database\Seeders\Reservas\EstadoReservasSeeder;
 use Database\Seeders\Reservas\EventoPostergacionesSeeder;
+use Database\Seeders\Reservas\nacionalidadesesSeeder;
+use Database\Seeders\Reservas\NacionalidadesSeeder;
 use Database\Seeders\Reservas\TipoPagosSeeder;
 use Illuminate\Database\Seeder;
 
@@ -19,6 +21,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        $this->call(NacionalidadesSeeder::class);
         $this->call(RolsSeeder::class);
         $this->call(UsuariosSeeder::class);
         $this->call(TipoPaquetesSeeder::class);

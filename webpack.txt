@@ -110,6 +110,7 @@ MIGRACIONES Y MÓDELOS
         *) Tabla Nacionalidades
         php artisan make:migration create_nacionalidades_table --path=/database/migrations/reservas
         php artisan make:model Reservas/Nacionalidades -r
+        php artisan make:seeder Reservas/NacionalidadesSeeder
 
         *) Tabla Clientes
         php artisan make:migration create_clientes_table --path=/database/migrations/reservas
