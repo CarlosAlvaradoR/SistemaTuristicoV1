@@ -323,7 +323,7 @@ SELECT * FROM personas;
 
 
 -- SABER LA LISTA DE DEVOLUCIONES
-SELECT concat(p.nombre, ' ' ,p.apellidos) as datos, p.dni, sdd.fecha_presentacion, 
+SELECT concat(p.nombre, ' ' ,p.apellidos) as datos, p.dni, r.slug, sdd.fecha_presentacion, 
 SUM(pa.monto) as montoSolicitado, (SELECT SUM(monto) FROM devolucion_dineros WHERE solicitud_pagos_id = sp.id) as montoDevuelto
 -- dd.monto as montoDevuelto 
 FROM personas p

@@ -27,7 +27,7 @@
         @endif
         
         <br>
-        <small>Fecha Final:</small> 
+        <small>Fecha Final:</small>
         @if ($fecha_final_devoluciones)
             <small>{{ date('d/m/Y', strtotime($fecha_final_devoluciones)) }}</small>
         @else

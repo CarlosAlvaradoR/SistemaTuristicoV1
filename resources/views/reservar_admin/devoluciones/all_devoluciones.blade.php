@@ -149,7 +149,7 @@
                                         <td>{{ $d->montoSolicitado }}</td>
                                         <td>{{ $d->montoDevuelto }}</td>
                                         <td>
-                                            <a href="{{-- route('reservas.solicitudes.devoluciones', $d->slug) --}}" title="Ver Solicitud" type="button"
+                                            <a href="{{ route('reservas.solicitudes.devoluciones', $d->slug) }}" title="Ver Solicitud" type="button"
                                                 class="tabledit-edit-button btn btn-sm btn-primary" style="float: none;"><i
                                                     class="fas fa-eye"></i>
                                             </a>

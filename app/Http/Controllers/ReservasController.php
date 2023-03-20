@@ -235,6 +235,7 @@ class ReservasController extends Controller
             ->select(
                 DB::raw('CONCAT(p.nombre," ", p.apellidos) AS datos'),
                 'p.dni',
+                'r.slug',
                 'sdd.fecha_presentacion',
                 DB::raw('SUM(pa.monto) as montoSolicitado'),
                 DB::raw('(SELECT SUM(monto) FROM devolucion_dineros WHERE solicitud_pagos_id = sp.id) as montoDevuelto')
