@@ -379,10 +379,37 @@ INNER JOIN pagos pa on pa.reserva_id = r.id
 WHERE pa.fecha_pago BETWEEN "2023-03-10" AND "2023-04-31"
 ORDER BY pa.fecha_pago;
 
-SELECT * FROM pagos;
+/*Visualizar e imprimir el reporte de los montos que fueron devueltos en
+un periodo de fechas.	  
+*/
+SELECT CONCAT(p.nombre," ", p.apellidos)as datos, p.dni, pt.nombre, r.fecha_reserva, 
+ep.nombre_evento, pa.monto as solicitado, dd.fecha_hora, dd.monto as devuelto
+FROM personas p
+INNER JOIN clientes c on p.id = c.persona_id
+INNER JOIN reservas r on r.cliente_id = c.id
+INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
+INNER JOIN postergacion_reservas pr on pr.reserva_id = r.id
+LEFT JOIN evento_postergaciones ep on ep.id = pr.evento_postergaciones_id
+INNER JOIN solicitud_devolucion_dineros sdd on sdd.postergacion_reservas_id = pr.id
+INNER JOIN solicitud_pagos sp on sp.solicitud_devolucion_dinero_id = sdd.id
+INNER JOIN pagos pa on sp.pagos_id = pa.id
+INNER JOIN devolucion_dineros dd on dd.solicitud_pagos_id = sp.id;
 
+SELECT CONCAT(p.nombre," ", p.apellidos)as datos, p.dni, pt.nombre, r.fecha_reserva, 
+ep.nombre_evento, pa.monto as solicitado, dd.fecha_hora, dd.monto as devuelto
+FROM personas p
+INNER JOIN clientes c on p.id = c.persona_id
+INNER JOIN reservas r on r.cliente_id = c.id
+INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
+INNER JOIN postergacion_reservas pr on pr.reserva_id = r.id
+LEFT JOIN evento_postergaciones ep on ep.id = pr.evento_postergaciones_id
+INNER JOIN solicitud_devolucion_dineros sdd on sdd.postergacion_reservas_id = pr.id
+INNER JOIN solicitud_pagos sp on sp.solicitud_devolucion_dinero_id = sdd.id
+INNER JOIN pagos pa on sp.pagos_id = pa.id
+INNER JOIN devolucion_dineros dd on dd.solicitud_pagos_id = sp.id
+WHERE dd.fecha_hora between "2023-03-11" and "2023-03-20";
 
-
+SELECT * FROM solicitud_devolucion_dineros;
 
 
 

@@ -274,6 +274,7 @@ class ReservasController extends Controller
         https://laracasts.com/discuss/channels/laravel/how-do-i-handle-multiple-submit-buttons-in-a-single-form-with-laravel
         */
         //dd($request->input('action'));
+        //dd($request);
         DB::statement("SET sql_mode = '' ");
         switch ($request->input('action')) {
             case 'btn-procesar-reserva':
@@ -288,8 +289,10 @@ class ReservasController extends Controller
                 return $pdf->stream('Reporte de Pagos realizados por Reservas.pdf');
                 break;
 
-            case 'advanced_edit':
-                // Redirect to advanced edit
+            case 'btn-procesar-devoluciones':
+                list($consulta, $fecha_inicial_devoluciones, $fecha_final_devoluciones) = $this->mostrarReportDevoluciones($request);
+                $pdf = Pdf::loadView('reservar_admin.reportes.devoluciones', compact('consulta', 'fecha_inicial_devoluciones', 'fecha_final_devoluciones'));
+                return $pdf->stream('Reporte de Devoluciones realizadas por Reservas.pdf');
                 break;
             default:
                 return 'NO LLEG';
@@ -297,6 +300,49 @@ class ReservasController extends Controller
         }
     }
 
+    private function mostrarReportDevoluciones($request)
+    {
+        $fecha_inicial_devoluciones = '';
+        $fecha_final_devoluciones = '';
+        if ($request->fecha_inicial_devoluciones) {
+            $fecha_inicial_devoluciones = $request->fecha_inicial_devoluciones;
+        }
+        if ($request->fecha_final_devoluciones) {
+            $fecha_final_devoluciones = $request->fecha_final_devoluciones;
+        }
+
+        if ($fecha_inicial_devoluciones && $fecha_final_devoluciones) {
+            $query = 'SELECT CONCAT(p.nombre," ", p.apellidos)as datos, p.dni, pt.nombre, r.fecha_reserva, 
+            ep.nombre_evento, pa.monto as solicitado, dd.fecha_hora, dd.monto as devuelto
+            FROM personas p
+            INNER JOIN clientes c on p.id = c.persona_id
+            INNER JOIN reservas r on r.cliente_id = c.id
+            INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
+            INNER JOIN postergacion_reservas pr on pr.reserva_id = r.id
+            LEFT JOIN evento_postergaciones ep on ep.id = pr.evento_postergaciones_id
+            INNER JOIN solicitud_devolucion_dineros sdd on sdd.postergacion_reservas_id = pr.id
+            INNER JOIN solicitud_pagos sp on sp.solicitud_devolucion_dinero_id = sdd.id
+            INNER JOIN pagos pa on sp.pagos_id = pa.id
+            INNER JOIN devolucion_dineros dd on dd.solicitud_pagos_id = sp.id
+            WHERE dd.fecha_hora between "'.$fecha_inicial_devoluciones.'" and "'.$fecha_final_devoluciones.'"';
+            $consulta = DB::select($query);
+        } else {
+            $query = 'SELECT CONCAT(p.nombre," ", p.apellidos)as datos, p.dni, pt.nombre, r.fecha_reserva, 
+            ep.nombre_evento, pa.monto as solicitado, dd.fecha_hora, dd.monto as devuelto
+            FROM personas p
+            INNER JOIN clientes c on p.id = c.persona_id
+            INNER JOIN reservas r on r.cliente_id = c.id
+            INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
+            INNER JOIN postergacion_reservas pr on pr.reserva_id = r.id
+            LEFT JOIN evento_postergaciones ep on ep.id = pr.evento_postergaciones_id
+            INNER JOIN solicitud_devolucion_dineros sdd on sdd.postergacion_reservas_id = pr.id
+            INNER JOIN solicitud_pagos sp on sp.solicitud_devolucion_dinero_id = sdd.id
+            INNER JOIN pagos pa on sp.pagos_id = pa.id
+            INNER JOIN devolucion_dineros dd on dd.solicitud_pagos_id = sp.id';
+            $consulta = DB::select($query);
+        }
+        return [$consulta, $fecha_inicial_devoluciones, $fecha_final_devoluciones];
+    }
     private function mostrarReportPagos($request)
     {
         $fecha_inicial_pago = null;
