@@ -17,7 +17,7 @@
         </header>
 
         
-
+        {{$hol = strtoupper(uniqid());}}
         
         @livewire('reservas-admin.reservas.reservar-cliente', [$slug])
 

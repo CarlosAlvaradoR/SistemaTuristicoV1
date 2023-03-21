@@ -106,6 +106,10 @@ MIGRACIONES Y MÓDELOS
         php artisan make:migration create_riesgos_table --path=/database/migrations/paquetes
         php artisan make:model Paquetes/Riesgos -r
 
+        *) Tabla Autorizaciones Medicas
+        php artisan make:migration create_autorizaciones_medicas_table --path=/database/migrations/paquetes
+        php artisan make:model Paquetes/AutorizacionesMedicas -r
+
     MÓDULO RESERVAS
         *) Tabla Nacionalidades
         php artisan make:migration create_nacionalidades_table --path=/database/migrations/reservas
@@ -184,9 +188,9 @@ MIGRACIONES Y MÓDELOS
         php artisan make:migration create_item_fichas_medicas_table --path=/database/migrations/reservas
         php artisan make:model Reservas/ItemFichasMedicas -r
 
-        *) Tabla Autorizaciones Medicas
-        php artisan make:migration create_autorizaciones_medicas_table --path=/database/migrations/reservas
-        php artisan make:model Reservas/AutorizacionesMedicas -r
+        *) Tabla Autorizaciones Presentadas
+        php artisan make:migration create_autorizaciones_presentadas_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/AutorizacionesPresentadas -r
 
     
         /* VISTAS*/

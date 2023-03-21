@@ -16,7 +16,7 @@ SELECT mp.id, mp.ruta, mp.descripcion FROM mapa_paquetes mp
 WHERE mp.paquete_id = 1
 LIMIT 1;
 
-
+CREATE DATABASE sistematuristicov1;
 /*
 Te hemos enviado un nuevo código de verificación. Por favor, revisa la bandeja de recibidos o SPAM (no deseados) de tu correo electrónico
 */

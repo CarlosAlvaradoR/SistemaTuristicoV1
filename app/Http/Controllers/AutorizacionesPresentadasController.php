@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Paquetes\AutorizacionesMedicas;
+use App\Models\Reservas\AutorizacionesPresentadas;
 use Illuminate\Http\Request;
 
-class AutorizacionesMedicasController extends Controller
+class AutorizacionesPresentadasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class AutorizacionesMedicasController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Paquetes\AutorizacionesMedicas  $autorizacionesMedicas
+     * @param  \App\Models\Reservas\AutorizacionesPresentadas  $autorizacionesPresentadas
      * @return \Illuminate\Http\Response
      */
-    public function show(AutorizacionesMedicas $autorizacionesMedicas)
+    public function show(AutorizacionesPresentadas $autorizacionesPresentadas)
     {
         //
     }
@@ -52,10 +52,10 @@ class AutorizacionesMedicasController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Paquetes\AutorizacionesMedicas  $autorizacionesMedicas
+     * @param  \App\Models\Reservas\AutorizacionesPresentadas  $autorizacionesPresentadas
      * @return \Illuminate\Http\Response
      */
-    public function edit(AutorizacionesMedicas $autorizacionesMedicas)
+    public function edit(AutorizacionesPresentadas $autorizacionesPresentadas)
     {
         //
     }
@@ -64,10 +64,10 @@ class AutorizacionesMedicasController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Paquetes\AutorizacionesMedicas  $autorizacionesMedicas
+     * @param  \App\Models\Reservas\AutorizacionesPresentadas  $autorizacionesPresentadas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AutorizacionesMedicas $autorizacionesMedicas)
+    public function update(Request $request, AutorizacionesPresentadas $autorizacionesPresentadas)
     {
         //
     }
@@ -75,10 +75,10 @@ class AutorizacionesMedicasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Paquetes\AutorizacionesMedicas  $autorizacionesMedicas
+     * @param  \App\Models\Reservas\AutorizacionesPresentadas  $autorizacionesPresentadas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AutorizacionesMedicas $autorizacionesMedicas)
+    public function destroy(AutorizacionesPresentadas $autorizacionesPresentadas)
     {
         //
     }
