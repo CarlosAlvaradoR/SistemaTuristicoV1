@@ -77,13 +77,12 @@
                     </button>
                 </div>
             @enderror
-            
-            <input id="genero" type="text" class="input100 @error('genero') is-invalid @enderror" name="genero"
-                value="{{ old('genero') }}" required autocomplete="genero" autofocus
-                placeholder="Ingrese su nombre de usuario">
-
-
-            <!--<input class="input100" type="text" name="username" placeholder="Enter username">-->
+            <select id="genero" class="form-control" class="@error('genero') is-invalid @enderror" name="genero"
+                value="{{ old('genero') }}" required autocomplete="genero" autofocus>
+                <option selected>...Seleccione...</option>
+                <option value="1">Masculino</option>
+                <option value="2">Femenino</option>
+            </select>
             <span class="focus-input100"></span>
         </div>
 
@@ -98,11 +97,9 @@
                 </div>
             @enderror
 
-            <input id="telefono" type="text" class="input100 @error('telefono') is-invalid @enderror"
-                name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus
+            <input id="telefono" type="text" class="input100 @error('telefono') is-invalid @enderror" name="telefono"
+                value="{{ old('telefono') }}" required autocomplete="telefono" autofocus
                 placeholder="Ingrese su nombre de usuario">
-
-
             <!--<input class="input100" type="text" name="username" placeholder="Enter username">-->
             <span class="focus-input100"></span>
         </div>
@@ -127,9 +124,32 @@
             <span class="focus-input100"></span>
         </div>
 
+        <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+            <span class="label-input100">Nacionalidad</span>
+            @php
+                use App\Models\Reservas\Nacionalidades;
+                $nacionalidad = Nacionalidades::all();
+            @endphp
+            @error('nacionalidad')
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ $message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @enderror
+            <select id="nacionalidad" class="form-control" class="@error('nacionalidad') is-invalid @enderror" name="nacionalidad"
+                value="{{ old('nacionalidad') }}" required autocomplete="nacionalidad" autofocus>
+                <option selected>...Seleccione...</option>
+                @foreach ($nacionalidad as $n)
+                    <option value="{{$n->id}}">{{$n->nombre_nacionalidad}}</option>
+                @endforeach
+            </select>
+            <span class="focus-input100"></span>
+        </div>
 
 
-        {{--<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+        {{-- <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
             <span class="label-input100">Nombre</span>
             @error('name')
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -147,7 +167,7 @@
 
             <!--<input class="input100" type="text" name="username" placeholder="Enter username">-->
             <span class="focus-input100"></span>
-        </div>--}}
+        </div> --}}
 
         <div class="wrap-input100 validate-input m-b-18" data-validate="Email is required">
             <span class="label-input100">Email</span>
