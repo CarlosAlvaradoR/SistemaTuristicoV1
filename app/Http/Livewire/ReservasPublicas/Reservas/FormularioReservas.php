@@ -83,6 +83,7 @@ class FormularioReservas extends Component
         $reserva = Reservas::create([
             'fecha_reserva' => $this->fecha_reserva,
             'observacion' => $this->observacion,
+            'codigo_reserva' => strtoupper(uniqid()),
             'cliente_id' => $this->cliente[0]->id,
             'paquete_id' => $this->paquetesTuristicos->id,
             'estado_reservas_id' => $estado //

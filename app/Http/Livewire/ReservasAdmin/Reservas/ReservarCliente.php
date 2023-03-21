@@ -153,6 +153,7 @@ class ReservarCliente extends Component
         $reserva = Reservas::create([
             'fecha_reserva' => $this->fecha_reserva,
             'observacion' => $this->observacion,
+            'codigo_reserva' => strtoupper(uniqid()),
             'cliente_id' => $cliente->id,
             'paquete_id' => $this->paquete_id,
             'estado_reservas_id' => 1
@@ -256,6 +257,7 @@ class ReservarCliente extends Component
         $reserva = Reservas::create([
             'fecha_reserva' => $this->fecha_reserva,
             'observacion' => $this->observacion,
+            'codigo_reserva' => strtoupper(uniqid()),
             'cliente_id' => $this->idCliente,
             'paquete_id' => $this->paquete_id,
             'estado_reservas_id' => 1
