@@ -113,7 +113,11 @@ DESC solicitud_devolucion_dineros;
 
 
 
-SELECT * FROM autorizaciones_medicas;
+SELECT * FROM autorizaciones_medicas
+WHERE paquete_id = 1
+limit 1;
+
+SELECT * FROM autorizaciones_presentadas;
 
 
 

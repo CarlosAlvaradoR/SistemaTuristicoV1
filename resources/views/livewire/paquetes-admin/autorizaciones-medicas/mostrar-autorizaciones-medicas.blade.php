@@ -1,11 +1,14 @@
 <div>
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCondicionesPuntualidad">
-        Nueva Autorizacion / Expediente Médico
-    </button>
+    @if (count($autorizaciones) < 1)
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAutorizacionesMedicas">
+            Nueva Autorizacion / Expediente Médico
+        </button>
+    @endif
+
 
     <!-- Modal -->
-    <div wire:ignore.self data-backdrop="static" data-keyboard="false" class="modal fade" id="modalCondicionesPuntualidad"
+    <div wire:ignore.self data-backdrop="static" data-keyboard="false" class="modal fade" id="modalAutorizacionesMedicas"
         tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -89,26 +92,25 @@
                     @php
                         $cont = 1;
                     @endphp
-                    {{-- @foreach ($condiciones as $c)
+                    @foreach ($autorizaciones as $a)
                         <tr>
                             <td>
                                 {{ $cont++ }}
                             </td>
                             <td>
-                                {{ $c->descripcion }}
+                                {{ $a->detalle_de_archivos }}
                             </td>
                             <td>
-                                <button wire:click="Edit({{ $c->id }})" class="btn btn-warning btn-sm">
+                                <button wire:click="Edit({{ $a->id }})" class="btn btn-warning btn-sm">
                                     <span class="fa fa-pencil-square-o"></span>
                                 </button>
-                                <button class="btn btn-danger btn-sm" wire:click="deleteConfirm({{ $c->id }})"
+                                <button class="btn btn-danger btn-sm" wire:click="deleteConfirm({{ $a->id }})"
                                     title="Eliminar Tipo de Personal">
                                     <span class="fa fa-trash"></span>
                                 </button>
                             </td>
                         </tr>
-                    @endforeach --}}
-
+                    @endforeach
                 </tbody>
             </table>
             {{-- $condiciones->links() --}}
@@ -119,11 +121,11 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             //Lo que llega de CategoriesController
-            window.livewire.on('show-modal-condicion-puntualidad', msg => {
-                $('#modalCondicionesPuntualidad').modal('show')
+            window.livewire.on('show-modal-autorizaciones-medicas', msg => {
+                $('#modalAutorizacionesMedicas').modal('show')
             });
-            window.livewire.on('close-modal-tipo-personal', msg => {
-                $('#modalCondicionesPuntualidad').modal('hide')
+            window.livewire.on('close-modal-autorizaciones-medicas', msg => {
+                $('#modalAutorizacionesMedicas').modal('hide')
             });
             window.livewire.on('category-updated', msg => {
                 $('#theModal').modal('hide')
@@ -131,7 +133,7 @@
         });
     </script>
     <script>
-        window.addEventListener('swal-confirmCondicion', event => {
+        window.addEventListener('swal-confirmAutorizacion', event => {
             Swal.fire({
                 title: event.detail.title,
                 icon: event.detail.icon,
@@ -143,8 +145,8 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     Livewire.emitTo(
-                        'paquetes-admin.condiciones-puntualidad.mostrar-condiciones-puntualidad',
-                        'deleteCondicionPuntualidad',
+                        'paquetes-admin.autorizaciones-medicas.mostrar-autorizaciones-medicas',
+                        'deleteAutorizacionesMedicas',
                         event.detail
                         .id);
                 }
