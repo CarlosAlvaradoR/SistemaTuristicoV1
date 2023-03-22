@@ -78,6 +78,10 @@ WHERE cp.paquete_id = 1;
 SELECT r.descripcion FROM riesgos r
 WHERE r.paquete_id = 1;
 
+-- AUTORIZACIONES MÉDICAS PARA LA PARTE PÚBLICA
+SELECT * FROM autorizaciones_medicas
+WHERE paquete_id = 1
+limit 1;
 
 
 
