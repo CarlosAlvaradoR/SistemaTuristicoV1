@@ -7,6 +7,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Reservas extends Model
 {
@@ -44,5 +45,10 @@ class Reservas extends Model
             $message = 'No se puede reservar para una fecha menor a hoy. Sólo para la fecha actual o mayor.';
         }
         return [$mensaje, $title, $icon, $message];
+    }
+
+    public static function validarSiYaReservoParaUnaFecha($idCliente,$fecha){
+        $consulta = DB::select("SELECT * FROM reservas WHERE cliente_id = ".$idCliente." AND fecha_reserva = '".$fecha."'");
+        return count($consulta);
     }
 }

@@ -287,6 +287,11 @@ GROUP BY pa.reserva_id;
 -- LIMIT 1;
 
 
+-- CONSULTA PARA CONOCER SI UN CLIENTE YA SESERVÓ PARA UNA DETERMINADA FECHA
+SELECT * FROM reservas WHERE cliente_id = 2 AND fecha_reserva = '2023-03-21';
+
+
+
 -- CONOCER LOS PAGOS REALIZADOS POR CADA RESERVA
 SELECT p.id as idPago, r.id,p.fecha_pago, p.monto, p.numero_de_operacion, p.estado_pago, p.observacion_del_pago,
 p.ruta_archivo_pago,tp.nombre_tipo_pago, cp.numero_cuenta, b.numero_boleta 
@@ -420,10 +425,10 @@ INNER JOIN pagos pa on sp.pagos_id = pa.id
 INNER JOIN devolucion_dineros dd on dd.solicitud_pagos_id = sp.id
 WHERE dd.fecha_hora between "2023-03-11" and "2023-03-20";
 
-SELECT * FROM solicitud_devolucion_dineros;
 
 
 
+SELECT * FROM personas;
 
 
 
