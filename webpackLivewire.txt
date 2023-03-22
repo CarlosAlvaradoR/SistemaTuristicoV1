@@ -49,6 +49,9 @@ PAQUETES
         TIPO ALMUERZO PAQUETES
             php artisan make:livewire PaquetesAdmin/TipoAlmuerzoPaquetes/MostrarTipoAlmuerzoPaquetes
 
+        AUTORIZACIONES MÉDICAS
+            php artisan make:livewire PaquetesAdmin/AutorizacionesMedicas/MostrarAutorizacionesMedicas
+
         CONDICIONES DE PUNTUALIDAD
             php artisan make:livewire PaquetesAdmin/CondicionesPuntualidad/MostrarCondicionesPuntualidad
         

@@ -113,6 +113,10 @@ DESC solicitud_devolucion_dineros;
 
 
 
+SELECT * FROM autorizaciones_medicas;
+
+
+
 
 
 
