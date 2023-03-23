@@ -57,7 +57,6 @@ class ReservarClienteNuevo extends Component
             limit 1";
             //dd($query);
             $consulta = DB::select($query);
-            
         } else {
             $this->precio_del_paquete = 0;
             $consulta = [];
@@ -99,11 +98,10 @@ class ReservarClienteNuevo extends Component
         //Sacamos el 20% del total del precio del paquete
         $precio_minimo = $this->precio_del_paquete * 0.20;
         if ($this->monto < $precio_minimo) {
-            session()->flash('mensaje-falla-pago', 'El pago debe de ser de al menos el 20 %');
-
+            $this->alert('ALERTA', 'warning', 'El pago debe de ser de al menos el 20 %');
             return;
         }
-
+        
         if ($this->contador > 0) {
             if (!$this->numero_autorizacion) {
                 $this->alert('INFORMACIÓN', 'info', 'La reserva necesita de un Nº de Autorización Médica y un archivo.');
@@ -119,8 +117,8 @@ class ReservarClienteNuevo extends Component
 
         $personas = Personas::create([
             'dni' => $this->dni,
-            'nombre' => $this->nombres,
-            'apellidos' => $this->apellidos,
+            'nombre' => strtoupper($this->nombres),
+            'apellidos' => strtoupper($this->apellidos),
             'genero' => $this->genero,
             'telefono' => $this->telefono,
             'dirección' => $this->direccion
@@ -147,7 +145,7 @@ class ReservarClienteNuevo extends Component
             'observacion' => $this->observacion,
             'codigo_reserva' => strtoupper(uniqid()),
             'cliente_id' => $clientes->id,
-            'paquete_id' => $this->paquete,
+            'paquete_id' => $this->paquetes_turisticos->id,
             'estado_reservas_id' => 1
         ]);
 

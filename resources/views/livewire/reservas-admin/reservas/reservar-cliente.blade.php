@@ -29,7 +29,6 @@
                     {{ $message }}
                 </div>
             @enderror
-
         </div>
 
     </div>
@@ -165,8 +164,9 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
-                                    <label class="form-label" for="fecha_reserva">Fecha de Reserva <span
-                                            class="text-danger font-weight-bold">(*)</span></label>
+                                    <label class="form-label" for="fecha_reserva"
+                                        title="Fecha para la cuál va a comprar/reservar el paquete turístico">Fecha de
+                                        Reserva <span class="text-danger font-weight-bold">(*)</span></label>
                                     <input type="date" wire:model="fecha_reserva" class="form-control"
                                         id="fecha_reserva">
                                     @error('fecha_reserva')
@@ -263,8 +263,7 @@
                                     <label for="tipo_de_pago">
                                         Tipo de Pago <span class="text-danger">(*)</span>
                                     </label>
-                                    <select class="form-control" wire:model.defer="tipo_de_pago"
-                                        id="tipo_de_pago">
+                                    <select class="form-control" wire:model.defer="tipo_de_pago" id="tipo_de_pago">
                                         <option value="" selected>...Seleccione...</option>
                                         @foreach ($tipoPagos as $tp)
                                             <option value="{{ $tp->idCuentaPago }}">

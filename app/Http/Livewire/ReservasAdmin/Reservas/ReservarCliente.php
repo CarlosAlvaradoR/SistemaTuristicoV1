@@ -182,7 +182,7 @@ class ReservarCliente extends Component
         if ($this->numero_pasaporte && $this->archivo_pasaporte) {
             $pasaportes = Pasaportes::create([
                 'numero_pasaporte' => $this->numero_pasaporte,
-                'ruta_archivo_pasaporte' => $this->archivo_pasaporte,
+                'ruta_archivo_pasaporte' => 'storage/' . $this->archivo_pasaporte->store('pasaportes', 'public'),
                 'cliente_id' => $cliente->id
             ]);
         }

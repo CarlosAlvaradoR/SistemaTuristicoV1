@@ -184,6 +184,34 @@ WHERE NOT EXISTS
 (SELECT NULL FROM condiciones_aceptadas ca WHERE ca.condicion_puntualidades_id = cp.id AND ca.reserva_id = 2)
 AND cp.paquete_id = 1;
 
+
+-- VERIFICAR SI LA RESERVA QUE TIENE EL ID DEL PAQUETE NECESITA ARCHIVOS
+SELECT * FROM autorizaciones_medicas am WHERE am.paquete_id = 1; 
+-- VERIFICAR QUE HAYAN ARCHIVOS MÉDICOS SUBIDOS POR EL CLIENTE QUE HIZO LA RESERVA
+SELECT * FROM autorizaciones_presentadas ap WHERE ap.reserva_id = 1;
+
+/* CONSULTAR LOS CRITERIOS MÉDICOS ACEPTADOS Y POR ACEPTRAR DE UN CLIENTE QUE REALIZÓ UNA RESERVA*/
+-- cm.descripcion_criterio_medico, if(ifm.autorizaciones_presentadas_id > 0, ifm.autorizaciones_presentadas_id,0) as a
+SELECT cm.descripcion_criterio_medico, cm.id,
+-- (SELECT COUNT(*) FROM item_fichas_medicas ifm WHERE ifm.criterios_medicos_id = cm.id AND ifm.autorizaciones_presentadas_id=2), 
+(CASE
+    WHEN (SELECT COUNT(ifm.criterios_medicos_id) FROM item_fichas_medicas ifm WHERE ifm.criterios_medicos_id = cm.id AND ifm.autorizaciones_presentadas_id=1) > 0 THEN "1"
+    ELSE "0"
+END) as existe
+ FROM criterios_medicos cm;
+ 
+-- CONSULTA PARA ELIMINAR LOS CRITERIOS ACEPTADOS 
+SELECT * FROM item_fichas_medicas ifm WHERE ifm.criterios_medicos_id = 2;
+
+SELECT cm.descripcion_criterio_medico FROM criterios_medicos cm
+WHERE cm.id IN (SELECT ifm.criterios_medicos_id FROM item_fichas_medicas ifm WHERE ifm.criterios_medicos_id = cm.id)
+ OR cm.id NOT IN (SELECT ifm.criterios_medicos_id FROM item_fichas_medicas ifm WHERE ifm.criterios_medicos_id = cm.id);
+
+SELECT * FROM item_fichas_medicas ifm WHERE ifm.criterios_medicos_id = 2;
+-- https://www.google.com/search?q=criterios+medicos+de+riesgo+viaje&oq=criterios+medicos++de+riesgo+viaje&aqs=chrome..69i57.14530j0j1&sourceid=chrome&ie=UTF-8
+-- https://www.central-vuelos-ambulancia.es/blog/enfermedades-que-impiden-viajar-en-avion_8474.html
+
+
 SELECT * FROM estado_reservas; /* COMPLETADO, PENDIENTE DE PAGO */
 
 
