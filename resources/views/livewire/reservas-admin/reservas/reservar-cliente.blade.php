@@ -18,7 +18,21 @@
                 </div>
             </div>
             <br>
-            <a href="{{ route('reservas.comprobante') }}" target="_blank" rel="noopener noreferrer">Ver Comprobante</a>
+            @if (Session::has('notification'))
+                <div class="alert alert-info alert-fill alert-close alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <strong>MENSAJE DE INFORMACIÓN</strong><br>
+                    Por Favor Imprima el Siguiente Comprobante con código de Reserva:
+                    {{ $valor = session('notification') }}
+                    <div class="alert-btns">
+                        <a href="{{ route('reservas.comprobante', $valor) }}" target="_blank"
+                            class="btn btn-rounded">Imprimir</a>
+                    </div>
+                </div>
+            @endif
+
             <br>
             @error('dni')
                 <div class="alert alert-danger alert-icon alert-close alert-dismissible fade in" role="alert">

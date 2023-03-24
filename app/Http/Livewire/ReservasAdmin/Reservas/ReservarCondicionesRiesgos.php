@@ -114,7 +114,8 @@ class ReservarCondicionesRiesgos extends Component
     public function finalizarReserva()
     { //Si los ítems están llenados vuelve a nuevas reservas, sino se queda acá en el formulario
         //dd($this->reserva);
+        $notification = $this->reserva->slug;
         $paquete = PaquetesTuristicos::findOrFail($this->reserva->paquete_id);
-        redirect()->route('paquetes.reservar', [$paquete]);
+        redirect()->route('paquetes.reservar', [$paquete])->with(compact('notification'));
     }
 }

@@ -209,7 +209,7 @@ WHERE cm.id IN (SELECT ifm.criterios_medicos_id FROM item_fichas_medicas ifm WHE
 */
 
 SELECT * FROM item_fichas_medicas ifm WHERE ifm.criterios_medicos_id = 2;
-SELECT * FROM item_fichas_medicas;
+SELECT COUNT(*) FROM item_fichas_medicas;
 SELECT * FROM autorizaciones_presentadas;
 -- https://www.google.com/search?q=criterios+medicos+de+riesgo+viaje&oq=criterios+medicos++de+riesgo+viaje&aqs=chrome..69i57.14530j0j1&sourceid=chrome&ie=UTF-8
 -- https://www.central-vuelos-ambulancia.es/blog/enfermedades-que-impiden-viajar-en-avion_8474.html
@@ -391,6 +391,15 @@ SELECT * FROM nacionalidades;
 /*
 REPORTES
 */
+-- COMPROBANTE DE LAS RESERVAS
+SELECT CONCAT(p.nombre, ' ',p.apellidos) as datos, p.telefono, pt.nombre, r.fecha_reserva, r.id FROM personas p
+INNER JOIN clientes c on p.id = c.persona_id
+INNER JOIN reservas r on r.cliente_id = c.id
+INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
+WHERE r.id = 19;
+
+SELECT COUNT(*) FROM reservas;
+-- REPORTE DE LAS RESERVAS
 SELECT * FROM v_reserva_reservas_general vrg
 WHERE (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR
 vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr));

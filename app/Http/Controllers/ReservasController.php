@@ -151,9 +151,17 @@ class ReservasController extends Controller
         return view('reservar_admin.all_reservas', compact('reservas'));
     }
 
-    public function comprobante()
+    public function comprobante(Reservas $reserva)
     {
-        return view('reservar_admin.reportes.comprobante');
+        //SACAR INFORMACIÓN DE PERSONAS, Y EL PAQUETE
+        $informacion = DB::select("SELECT CONCAT(p.nombre, ' ',p.apellidos) as datos, 
+        p.telefono,
+        pt.nombre, r.fecha_reserva, r.id FROM personas p
+        INNER JOIN clientes c on p.id = c.persona_id
+        INNER JOIN reservas r on r.cliente_id = c.id
+        INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
+        WHERE r.id = ".$reserva->id."");
+        return view('reservar_admin.reportes.comprobante', compact('informacion'));
     }
 
 

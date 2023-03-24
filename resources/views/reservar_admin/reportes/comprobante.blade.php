@@ -5,7 +5,7 @@
     <meta charset="utf-8">
 
 
-    <title>Invoice - Bootdey.com</title>
+    <title>{{$informacion[0]->datos}} - {{$informacion[0]->nombre}} - {{$informacion[0]->fecha_reserva}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
@@ -128,18 +128,19 @@
                     <div class="receipt-header">
                         <div class="col-xs-6 col-sm-6 col-md-6">
                             <div class="receipt-left">
-                                <img class="img-responsive" alt="iamgurdeeposahan" src="https://bootdey.com/img/Content/avatar/avatar6.png"
+                                <img class="img-responsive" alt="iamgurdeeposahan"
+                                    src="https://bootdey.com/img/Content/avatar/avatar6.png"
                                     style="width: 71px; border-radius: 43px;">
                             </div>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6 text-right">
                             <div class="receipt-right">
-                                <h5>Company Name.</h5>
-                                <p>+1 3649-6589 <i class="fa fa-phone"></i></p>
-                                <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__"
+                                <h5>TRAVELO</h5>
+                                <p>+51 935459929 <i class="fa fa-phone"></i></p>
+                                {{-- <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__"
                                         data-cfemail="43202c2e33222d3a03242e222a2f6d202c2e">[email&#160;protected]</a>
-                                    <i class="fa fa-envelope-o"></i></p>
-                                <p>USA <i class="fa fa-location-arrow"></i></p>
+                                    <i class="fa fa-envelope-o"></i></p> --}}
+                                <p>PERÚ-ÁNCASH-HUARAZ <i class="fa fa-location-arrow"></i></p>
                             </div>
                         </div>
                     </div>
@@ -148,17 +149,18 @@
                     <div class="receipt-header receipt-header-mid">
                         <div class="col-xs-8 col-sm-8 col-md-8 text-left">
                             <div class="receipt-right">
-                                <h5>Customer Name </h5>
-                                <p><b>Mobile :</b> +1 12345-4569</p>
+                                <h5>{{ strtoupper($informacion[0]->datos)}}</h5>
+                                <p><b>Móvil :</b> {{ $informacion[0]->telefono}} </p>
                                 <p><b>Email :</b> <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
                                         data-cfemail="4625333532292b233406212b272f2a6825292b">[email&#160;protected]</a>
                                 </p>
-                                <p><b>Address :</b> New York, USA</p>
+                                <p><b>Dirección :</b> New York, USA</p>
                             </div>
                         </div>
                         <div class="col-xs-4 col-sm-4 col-md-4">
                             <div class="receipt-left">
-                                <h3>INVOICE # 102</h3>
+                                <h5>COMPROBANTE:</h5>
+                                <h6>BOL-1234567890123344566778</h6>
                             </div>
                         </div>
                     </div>
@@ -167,22 +169,34 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Description</th>
-                                <th>Amount</th>
+                                <th>Paquete</th>
+                                <th>Fecha</th>
+                                <th>Viaje</th>
+                                <th>Fecha de Pago</th>
+                                <th>Monto</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="col-md-9">Payment for August 2016</td>
+                                <td class="col-md-3">Payment for August 2016</td>
+                                <td class="col-md-2">Payment for August 2016</td>
+                                <td class="col-md-4">Payment for August 2016</td>
+                                <td class="col-md-3"><i class="fa fa-inr"></i> 15,000/-</td>
                                 <td class="col-md-3"><i class="fa fa-inr"></i> 15,000/-</td>
                             </tr>
                             <tr>
-                                <td class="col-md-9">Payment for June 2016</td>
-                                <td class="col-md-3"><i class="fa fa-inr"></i> 6,00/-</td>
+                                <td class="col-md-3">Payment for August 2016</td>
+                                <td class="col-md-2">Payment for August 2016</td>
+                                <td class="col-md-4">Payment for August 2016</td>
+                                <td class="col-md-3"><i class="fa fa-inr"></i> 15,000/-</td>
+                                <td class="col-md-3"><i class="fa fa-inr"></i> 15,000/-</td>
                             </tr>
                             <tr>
-                                <td class="col-md-9">Payment for May 2016</td>
-                                <td class="col-md-3"><i class="fa fa-inr"></i> 35,00/-</td>
+                                <td class="col-md-3">Payment for August 2016</td>
+                                <td class="col-md-2">Payment for August 2016</td>
+                                <td class="col-md-4">Payment for August 2016</td>
+                                <td class="col-md-3"><i class="fa fa-inr"></i> 15,000/-</td>
+                                <td class="col-md-3"><i class="fa fa-inr"></i> 15,000/-</td>
                             </tr>
                             <tr>
                                 <td class="text-right">
@@ -223,14 +237,23 @@
                                 </td>
                             </tr>
                         </tbody>
+                        <tfoot>
+                            <tr>
+
+                                <th colspan="4">Total</th>
+
+                                <td colspan="1">$20,00</td>
+
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
                 <div class="row">
                     <div class="receipt-header receipt-header-mid receipt-footer">
                         <div class="col-xs-8 col-sm-8 col-md-8 text-left">
                             <div class="receipt-right">
-                                <p><b>Date :</b> 15 Aug 2016</p>
-                                <h5 style="color: rgb(140, 140, 140);">Thanks for shopping.!</h5>
+                                <p><b>Fecha :</b> 15/07/2023</p>
+                                <h5 style="color: rgb(140, 140, 140);">Gracias por su preferencia. !</h5>
                             </div>
                         </div>
                         <div class="col-xs-4 col-sm-4 col-md-4">

@@ -24,7 +24,7 @@ Route::get('/consultar-reserva', [App\Http\Controllers\ReservasController::class
 
 Route::get('/reservas/reportes-generales', [App\Http\Controllers\ReservasController::class, 'reportesGenerales'])->name('reservas.reportes.generales')->middleware(['auth', 'verified']);
 
-Route::get('/reservas/comprobante', [App\Http\Controllers\ReservasController::class, 'comprobante'])->name('reservas.comprobante')->middleware(['auth', 'verified']);
+Route::get('/reservas/comprobante/{reserva}', [App\Http\Controllers\ReservasController::class, 'comprobante'])->name('reservas.comprobante')->middleware(['auth', 'verified']);
 
 
 
