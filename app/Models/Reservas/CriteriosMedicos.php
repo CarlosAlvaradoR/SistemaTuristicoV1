@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class CriteriosMedicos extends Model
 {
     use HasFactory;
+    protected $fillable = ['descripcion_criterio_medico'];
 }

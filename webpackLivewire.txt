@@ -84,7 +84,9 @@ RESERVAS
 
        php artisan make:livewire ReservasAdmin/Reservas/EventosPostergacion/EventosPostergacion 
 
-       php artisan make:livewire ReservasAdmin/Reservas/SolicitudesDevolucion/SolicitudesDevolucion 
+       php artisan make:livewire ReservasAdmin/Reservas/SolicitudesDevolucion/SolicitudesDevolucion
+
+       php artisan make:livewire ReservasAdmin/Reservas/CriteriosMedicos/CriteriosMedicos 
 
        php artisan make:livewire ReservasAdmin/Reservas/Pagos/PagosPendientes 
 

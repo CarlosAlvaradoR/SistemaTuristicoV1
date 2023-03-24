@@ -77,6 +77,7 @@
                             class="label label-custom label-pill label-success">new</span></a></li>
                 <li><a href="{{ route('solicitudes.all') }}"><span class="lbl">Solicitudes</span></a></li>
                 <li><a href="{{ route('devoluciones.all') }}"><span class="lbl">Devoluciones (Nuevo)</span></a></li>
+                <li><a href="{{ route('criterios_medicos.all') }}"><span class="lbl">Criterios Médicos</span></a></li>
                 <li><a href="{{ route('eventos.postergacion.index') }}"><span class="lbl">Eventos de
                             Postergación</span><span class="label label-custom label-pill label-success">new</span></a>
                 </li> 

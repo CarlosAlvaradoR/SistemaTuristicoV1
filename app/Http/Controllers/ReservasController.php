@@ -244,6 +244,11 @@ class ReservasController extends Controller
         return view('reservar_admin.devoluciones.all_devoluciones', compact('devoluciones'));
     }
 
+    public function mostrarCriteriosMedicos(){
+        
+        return view('reservar_admin.criterios_medicos.index');
+    }
+
     public function mostrarEventosPostergacion()
     {
 
