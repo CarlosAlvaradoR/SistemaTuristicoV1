@@ -37,33 +37,43 @@
             <div class="card">
                 <div class="card-block">
                     <h5 class="card-title">Riesgos</h5>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Riesgo</th>
-                                <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $cont = 1;
-                            @endphp
-                            @foreach ($riesgos as $riesgos)
+                    @if (count($riesgos) > 0)
+                        <table class="table table-hover">
+                            <thead>
                                 <tr>
-                                    <th scope="row">{{ $cont++ }}</th>
-                                    <td>{{ $riesgos->descripcion }}</td>
-                                    <td>
-                                        <button type="button" wire:click="aceptarRiesgo({{ $riesgos->id }})"
-                                            class="btn btn-inline btn-success btn-sm">
-                                            <i class="fa-solid fa-check"></i>
-                                        </button>
-                                    </td>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Riesgo</th>
+                                    <th scope="col">Acciones</th>
                                 </tr>
-                            @endforeach
+                            </thead>
+                            <tbody>
+                                @php
+                                    $cont = 1;
+                                @endphp
+                                @foreach ($riesgos as $riesgos)
+                                    <tr>
+                                        <th scope="row">{{ $cont++ }}</th>
+                                        <td>{{ $riesgos->descripcion }}</td>
+                                        <td>
+                                            <button type="button" wire:click="aceptarRiesgo({{ $riesgos->id }})"
+                                                class="btn btn-inline btn-success btn-sm">
+                                                <i class="fa-solid fa-check"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    @else
+                        <div class="alert alert-info alert-fill alert-close alert-dismissible fade in" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            La Reserva para el paquete no requiere que se acepten riesgos.
+                        </div>
+                    @endif
+
                 </div>
             </div>
         </div>
@@ -71,34 +81,44 @@
             <div class="card">
                 <div class="card-block">
                     <h5 class="card-title">Condiciones de Puntualidad</h5>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Condición</th>
-                                <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $contador = 1;
-                            @endphp
-                            @foreach ($condiciones_puntualidad as $c)
+                    @if (count($condiciones_puntualidad) > 0)
+                        <table class="table table-hover">
+                            <thead>
                                 <tr>
-                                    <th scope="row">{{ $contador++ }}</th>
-                                    <td>{{ $c->descripcion }}</td>
-                                    <td>
-                                        <button type="button" wire:click="aceptarCondiciones({{ $c->id }})"
-                                            class="btn btn-inline btn-success btn-sm">
-                                            <!--<i class="fa-sharp fa-solid fa-xmark"></i>-->
-                                            <i class="fa-solid fa-check"></i>
-                                        </button>
-                                    </td>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Condición</th>
+                                    <th scope="col">Acciones</th>
                                 </tr>
-                            @endforeach
+                            </thead>
+                            <tbody>
+                                @php
+                                    $contador = 1;
+                                @endphp
+                                @foreach ($condiciones_puntualidad as $c)
+                                    <tr>
+                                        <th scope="row">{{ $contador++ }}</th>
+                                        <td>{{ $c->descripcion }}</td>
+                                        <td>
+                                            <button type="button" wire:click="aceptarCondiciones({{ $c->id }})"
+                                                class="btn btn-inline btn-success btn-sm">
+                                                <!--<i class="fa-sharp fa-solid fa-xmark"></i>-->
+                                                <i class="fa-solid fa-check"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    @else
+                        <div class="alert alert-info alert-fill alert-close alert-dismissible fade in" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            La Reserva para el paquete no requiere que se acepten Condiciones de Puntualidad.
+                        </div>
+                    @endif
+
                 </div>
             </div>
         </div>
@@ -106,6 +126,15 @@
             <div class="card">
                 <div class="card-block">
                     <h5 class="card-title">Archivo de Justificación Médica</h5>
+                    @if (count($consulta_archivo) > 0)
+                        @if (count($autorizaciones_presentadas) > 0)
+                            <a href="{{ asset('/' . $autorizaciones_presentadas[0]->ruta_archivo) }}" target="_blank">
+                                Ver Documento</a>
+                        @else
+                            <h6>No hay documento</h6>
+                            <h6>Subir Documento</h6>
+                        @endif
+                    @endif
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -127,9 +156,7 @@
                                             @if ($c->existe == 1) wire:click="aceptarCriteriosMedicos({{ $c->id }}, 2)"
                                                 checked 
                                             @else
-                                                wire:click="aceptarCriteriosMedicos({{ $c->id }}, 1)" 
-                                            @endif
-                                            >
+                                                wire:click="aceptarCriteriosMedicos({{ $c->id }}, 1)" @endif>
                                     </td>
                                 </tr>
                             @endforeach

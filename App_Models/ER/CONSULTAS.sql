@@ -203,11 +203,13 @@ END) as existe
 -- CONSULTA PARA ELIMINAR LOS CRITERIOS ACEPTADOS 
 SELECT * FROM item_fichas_medicas ifm WHERE ifm.criterios_medicos_id = 2;
 
-SELECT cm.descripcion_criterio_medico FROM criterios_medicos cm
+/*SELECT cm.descripcion_criterio_medico FROM criterios_medicos cm
 WHERE cm.id IN (SELECT ifm.criterios_medicos_id FROM item_fichas_medicas ifm WHERE ifm.criterios_medicos_id = cm.id)
  OR cm.id NOT IN (SELECT ifm.criterios_medicos_id FROM item_fichas_medicas ifm WHERE ifm.criterios_medicos_id = cm.id);
+*/
 
 SELECT * FROM item_fichas_medicas ifm WHERE ifm.criterios_medicos_id = 2;
+SELECT * FROM autorizaciones_presentadas;
 -- https://www.google.com/search?q=criterios+medicos+de+riesgo+viaje&oq=criterios+medicos++de+riesgo+viaje&aqs=chrome..69i57.14530j0j1&sourceid=chrome&ie=UTF-8
 -- https://www.central-vuelos-ambulancia.es/blog/enfermedades-que-impiden-viajar-en-avion_8474.html
 

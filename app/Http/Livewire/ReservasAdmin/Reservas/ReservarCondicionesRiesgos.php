@@ -66,8 +66,7 @@ class ReservarCondicionesRiesgos extends Component
          FROM criterios_medicos cm');
         }
 
-        return view(
-            'livewire.reservas-admin.reservas.reservar-condiciones-riesgos',
+        return view('livewire.reservas-admin.reservas.reservar-condiciones-riesgos',
             compact(
                 'riesgos',
                 'condiciones_puntualidad',
