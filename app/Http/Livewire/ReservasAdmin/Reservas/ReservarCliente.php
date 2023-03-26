@@ -120,7 +120,7 @@ class ReservarCliente extends Component
                 'nacionalidad' => 'required',
                 'numero_pasaporte' => 'nullable|min:3|max:15',
                 'fecha_reserva' => 'required',
-                'monto' => 'required',
+                'monto' => 'required|regex:/^\d+(\.\d{1,2})?$/',
                 'numero_autorizacion' => 'nullable|min:2|max:15',
                 'archivo_autorizacion' => 'nullable|mimes:jpeg,png,pdf|required_if:numero_autorizacion,min:2',
             ]
@@ -247,7 +247,7 @@ class ReservarCliente extends Component
         $this->validate(
             [
                 'fecha_reserva' => 'required',
-                'monto' => 'required',
+                'monto' => 'required|regex:/^\d+(\.\d{1,2})?$/',
                 'numero_autorizacion' => 'nullable|min:2|max:15',
                 'archivo_autorizacion' => 'nullable|mimes:jpeg,png,pdf|required_if:numero_autorizacion,min:2',
             ]

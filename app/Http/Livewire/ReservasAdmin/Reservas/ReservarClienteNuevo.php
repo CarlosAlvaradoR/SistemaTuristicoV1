@@ -39,7 +39,7 @@ class ReservarClienteNuevo extends Component
         //'archivo_pasaporte' => 'nullable|',
         'paquete' => 'required|min:1',
         'fecha_reserva' => 'required',
-        'monto' => 'required',
+        'monto' => 'required|regex:/^\d+(\.\d{1,2})?$/',
         'numero_autorizacion' => 'nullable|min:2|max:15',
         'archivo_autorizacion' => 'nullable|mimes:jpeg,png,pdf',
     ];
