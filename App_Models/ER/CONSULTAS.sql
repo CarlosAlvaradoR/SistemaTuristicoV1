@@ -398,6 +398,15 @@ INNER JOIN reservas r on r.cliente_id = c.id
 INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
 WHERE r.id = 19;
 
+-- PAGOS ACEPTADOS
+SELECT p.monto, p.fecha_pago, b.numero_boleta, r.id FROM reservas r
+INNER JOIN pagos p on p.reserva_id = r.id
+INNER JOIN cuenta_pagos cp on cp.id = p.cuenta_pagos_id
+INNER JOIN tipo_pagos tp on tp.id = cp.tipo_pagos_id
+INNER JOIN boletas b on b.id = p.boleta_id
+WHERE r.id = 10 AND p.estado_pago = 'ACEPTADO';
+
+SELECT * FROM pagos;
 SELECT COUNT(*) FROM reservas;
 -- REPORTE DE LAS RESERVAS
 SELECT * FROM v_reserva_reservas_general vrg

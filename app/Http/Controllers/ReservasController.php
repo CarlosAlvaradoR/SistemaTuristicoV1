@@ -160,8 +160,15 @@ class ReservasController extends Controller
         INNER JOIN clientes c on p.id = c.persona_id
         INNER JOIN reservas r on r.cliente_id = c.id
         INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
-        WHERE r.id = ".$reserva->id."");
-        return view('reservar_admin.reportes.comprobante', compact('informacion'));
+        WHERE r.id = " . $reserva->id . "");
+
+        $pagos_aceptados = DB::select("SELECT p.monto, p.fecha_pago, b.numero_boleta, r.id FROM reservas r
+        INNER JOIN pagos p on p.reserva_id = r.id
+        INNER JOIN cuenta_pagos cp on cp.id = p.cuenta_pagos_id
+        INNER JOIN tipo_pagos tp on tp.id = cp.tipo_pagos_id
+        INNER JOIN boletas b on b.id = p.boleta_id
+        WHERE r.id = ".$reserva->id." AND p.estado_pago = 'ACEPTADO'");
+        return view('reservar_admin.reportes.comprobante', compact('informacion', 'pagos_aceptados'));
     }
 
 
@@ -252,8 +259,9 @@ class ReservasController extends Controller
         return view('reservar_admin.devoluciones.all_devoluciones', compact('devoluciones'));
     }
 
-    public function mostrarCriteriosMedicos(){
-        
+    public function mostrarCriteriosMedicos()
+    {
+
         return view('reservar_admin.criterios_medicos.index');
     }
 
@@ -338,7 +346,7 @@ class ReservasController extends Controller
             INNER JOIN solicitud_pagos sp on sp.solicitud_devolucion_dinero_id = sdd.id
             INNER JOIN pagos pa on sp.pagos_id = pa.id
             INNER JOIN devolucion_dineros dd on dd.solicitud_pagos_id = sp.id
-            WHERE dd.fecha_hora between "'.$fecha_inicial_devoluciones.'" and "'.$fecha_final_devoluciones.'"';
+            WHERE dd.fecha_hora between "' . $fecha_inicial_devoluciones . '" and "' . $fecha_final_devoluciones . '"';
             $consulta = DB::select($query);
         } else {
             $query = 'SELECT CONCAT(p.nombre," ", p.apellidos)as datos, p.dni, pt.nombre, r.fecha_reserva, 

@@ -5,7 +5,8 @@
     <meta charset="utf-8">
 
 
-    <title>{{$informacion[0]->datos}} - {{$informacion[0]->nombre}} - {{$informacion[0]->fecha_reserva}}</title>
+    <title>{{ strtoupper($informacion[0]->datos) }} - {{ $informacion[0]->nombre }} -
+        {{ date('d/m/Y', strtotime($informacion[0]->fecha_reserva)) }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
@@ -149,18 +150,18 @@
                     <div class="receipt-header receipt-header-mid">
                         <div class="col-xs-8 col-sm-8 col-md-8 text-left">
                             <div class="receipt-right">
-                                <h5>{{ strtoupper($informacion[0]->datos)}}</h5>
-                                <p><b>Móvil :</b> {{ $informacion[0]->telefono}} </p>
-                                <p><b>Email :</b> <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
-                                        data-cfemail="4625333532292b233406212b272f2a6825292b">[email&#160;protected]</a>
-                                </p>
-                                <p><b>Dirección :</b> New York, USA</p>
+                                <h5>{{ strtoupper($informacion[0]->datos) }}</h5>
+                                <p><b>Móvil :</b> {{ $informacion[0]->telefono }} </p>
+                                <p><b>Paquete :</b> {{ $informacion[0]->nombre }}</p>
+                                <p><b>Fecha Reservada:</b>
+                                    {{ date('d/m/Y', strtotime($informacion[0]->fecha_reserva)) }}</p>
+
                             </div>
                         </div>
                         <div class="col-xs-4 col-sm-4 col-md-4">
                             <div class="receipt-left">
-                                <h5>COMPROBANTE:</h5>
-                                <h6>BOL-1234567890123344566778</h6>
+                                <h5><b>COMPROBANTE:</b></h5>
+                                <h6>{{ $pagos_aceptados[0]->numero_boleta }}</h6>
                             </div>
                         </div>
                     </div>
@@ -169,80 +170,47 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
+                                <th>Cantidad</th>
                                 <th>Paquete</th>
-                                <th>Fecha</th>
+                                <!--Descripción-->
                                 <th>Viaje</th>
-                                <th>Fecha de Pago</th>
                                 <th>Monto</th>
+                                <th>Fecha de Pago</th>
+                                <th>Total</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $monto = 0;
+                                $cont = 1;
+                                //$cantidad_pagos = count($pagos_aceptados);
+                            @endphp
+
                             <tr>
-                                <td class="col-md-3">Payment for August 2016</td>
-                                <td class="col-md-2">Payment for August 2016</td>
-                                <td class="col-md-4">Payment for August 2016</td>
-                                <td class="col-md-3"><i class="fa fa-inr"></i> 15,000/-</td>
-                                <td class="col-md-3"><i class="fa fa-inr"></i> 15,000/-</td>
+                                <td class="col-md-3" rowspan="{{count($pagos_aceptados) + 1}}">1</td>
+                                <td class="col-md-2" rowspan="{{count($pagos_aceptados) + 1}}">
+                                    {{ $informacion[0]->nombre }}</td>
+                                <td class="col-md-4" rowspan="{{count($pagos_aceptados) + 1}}">-</td>
                             </tr>
-                            <tr>
-                                <td class="col-md-3">Payment for August 2016</td>
-                                <td class="col-md-2">Payment for August 2016</td>
-                                <td class="col-md-4">Payment for August 2016</td>
-                                <td class="col-md-3"><i class="fa fa-inr"></i> 15,000/-</td>
-                                <td class="col-md-3"><i class="fa fa-inr"></i> 15,000/-</td>
-                            </tr>
-                            <tr>
-                                <td class="col-md-3">Payment for August 2016</td>
-                                <td class="col-md-2">Payment for August 2016</td>
-                                <td class="col-md-4">Payment for August 2016</td>
-                                <td class="col-md-3"><i class="fa fa-inr"></i> 15,000/-</td>
-                                <td class="col-md-3"><i class="fa fa-inr"></i> 15,000/-</td>
-                            </tr>
-                            <tr>
-                                <td class="text-right">
-                                    <p>
-                                        <strong>Total Amount: </strong>
-                                    </p>
-                                    <p>
-                                        <strong>Late Fees: </strong>
-                                    </p>
-                                    <p>
-                                        <strong>Payable Amount: </strong>
-                                    </p>
-                                    <p>
-                                        <strong>Balance Due: </strong>
-                                    </p>
-                                </td>
-                                <td>
-                                    <p>
-                                        <strong><i class="fa fa-inr"></i> 65,500/-</strong>
-                                    </p>
-                                    <p>
-                                        <strong><i class="fa fa-inr"></i> 500/-</strong>
-                                    </p>
-                                    <p>
-                                        <strong><i class="fa fa-inr"></i> 1300/-</strong>
-                                    </p>
-                                    <p>
-                                        <strong><i class="fa fa-inr"></i> 9500/-</strong>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-right">
-                                    <h2><strong>Total: </strong></h2>
-                                </td>
-                                <td class="text-left text-danger">
-                                    <h2><strong><i class="fa fa-inr"></i> 31.566/-</strong></h2>
-                                </td>
-                            </tr>
+                            @foreach ($pagos_aceptados as $p)
+                                <tr>
+                                    <td class="col-md-3"><i class="fa fa-inr"></i> {{ $p->monto }}</td>
+                                    <td class="col-md-3"><i class="fa fa-inr"></i>
+                                        {{ date('d/m/Y', strtotime($p->fecha_pago)) }}</td>
+                                    <td class="col-md-3"><i class="fa fa-inr"></i> {{ $p->monto }}</td>
+
+                                    @php
+                                        $monto += $p->monto;
+                                    @endphp
+                                </tr>
+                            @endforeach
                         </tbody>
                         <tfoot>
                             <tr>
 
-                                <th colspan="4">Total</th>
+                                <th colspan="5">Total</th>
 
-                                <td colspan="1">$20,00</td>
+                                <td colspan="1"><b>{{ number_format($monto, 2) }}</b></td>
 
                             </tr>
                         </tfoot>
@@ -252,13 +220,17 @@
                     <div class="receipt-header receipt-header-mid receipt-footer">
                         <div class="col-xs-8 col-sm-8 col-md-8 text-left">
                             <div class="receipt-right">
-                                <p><b>Fecha :</b> 15/07/2023</p>
+                                @php
+                                    $tiempo_en_segundos = time();
+                                    $fecha_actual = date('d-m-Y h:i:s', $tiempo_en_segundos);
+                                @endphp
+                                <p><b>Fecha :</b> {{ $fecha_actual }}</p>
                                 <h5 style="color: rgb(140, 140, 140);">Gracias por su preferencia. !</h5>
                             </div>
                         </div>
                         <div class="col-xs-4 col-sm-4 col-md-4">
                             <div class="receipt-left">
-                                <h1>Stamp</h1>
+                                <h1>TRAVELO</h1>
                             </div>
                         </div>
                     </div>
