@@ -60,7 +60,7 @@ class ReservarCondicionesRiesgos extends Component
             $this->idAutorizacionesPresentadas = $autorizaciones_presentadas[0]->id;
             $criterios_medicos = DB::select('SELECT cm.descripcion_criterio_medico, cm.id,
         (CASE
-            WHEN (SELECT COUNT(ifm.criterios_medicos_id) FROM item_fichas_medicas ifm WHERE ifm.criterios_medicos_id = cm.id AND ifm.autorizaciones_presentadas_id=1) > 0 THEN "1"
+            WHEN (SELECT COUNT(ifm.criterios_medicos_id) FROM item_fichas_medicas ifm WHERE ifm.criterios_medicos_id = cm.id AND ifm.autorizaciones_presentadas_id='.$this->idAutorizacionesPresentadas.') > 0 THEN "1"
             ELSE "0"
         END) as existe
          FROM criterios_medicos cm');

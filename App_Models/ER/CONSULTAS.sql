@@ -260,7 +260,8 @@ ORDER BY r.updated_at;
 
 
 SELECT * FROM v_reserva_reservas_general;
-SELECT * FROM v_reserva_lista_reservas_general vrg WHERE vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr);
+SELECT * FROM v_reserva_lista_reservas_general vrg 
+WHERE vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr);
 -- WHERE idReserva NOT IN (SELECT parti.reserva_id FROM participantes parti) OR 
 -- idReserva NOT IN (SELECT posr.reserva_id FROM postergacion_reservas posr);
 
