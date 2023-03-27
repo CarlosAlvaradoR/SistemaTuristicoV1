@@ -48,7 +48,7 @@
             </div>
 
             <h5 class="with-border m-t-lg font-weight-bold"><i class="fas fa-calendar-times"></i> EVENTO DE POSTERGACIÓN
-                <button class="btn btn-primary btn-rounded btn-sm" title="Imprimir"><i class="fas fa-print"></i></button>
+                <a href="{{ route('reporte.de.solicitud', $reserva->slug) }}" target="_blank" class="btn btn-primary btn-rounded btn-sm" title="Imprimir"><i class="fas fa-print"></i></a>
             </h5>
 
             <div class="row">

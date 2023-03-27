@@ -167,7 +167,7 @@ class ReservasController extends Controller
         INNER JOIN cuenta_pagos cp on cp.id = p.cuenta_pagos_id
         INNER JOIN tipo_pagos tp on tp.id = cp.tipo_pagos_id
         INNER JOIN boletas b on b.id = p.boleta_id
-        WHERE r.id = ".$reserva->id." AND p.estado_pago = 'ACEPTADO'");
+        WHERE r.id = " . $reserva->id . " AND p.estado_pago = 'ACEPTADO'");
         return view('reservar_admin.reportes.comprobante', compact('informacion', 'pagos_aceptados'));
     }
 
@@ -222,6 +222,28 @@ class ReservasController extends Controller
         //return $pdf->download('invoice.pdf');
         return $pdf->stream('invoice.pdf');
         //return view('reservar_admin.solicitudes.report', compact('solicitudes'));
+    }
+
+    public function reportSolicitudesRealizadas(Reservas $reserva)
+    {
+        $solicitud_pagos_devoluciones = DB::table('solicitud_pagos as sp')
+            ->join('pagos as p', 'sp.pagos_id', '=', 'p.id')
+            ->leftJoin('devolucion_dineros as dd', 'dd.solicitud_pagos_id', '=', 'sp.id')
+            ->where('p.reserva_id', $reserva->id)
+            ->select(
+                'sp.id',
+                'sp.estdo_solicitud',
+                'sp.observacion',
+                'p.monto',
+                'dd.monto as montoDevolucion',
+                'dd.observacion as observacionDevolucion',
+                'dd.fecha_hora'
+            )
+            ->get();
+        $pdf = Pdf::loadView('reservar_admin.reportes.solicitud_de_presentacion', compact('solicitud_pagos_devoluciones'));
+        //return $pdf->download('invoice.pdf');
+        $pdf->set_paper('a4', 'landscape');
+        return $pdf->stream('invoice.pdf');
     }
 
     public function reportComprobante()
