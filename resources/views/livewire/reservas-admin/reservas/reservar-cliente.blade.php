@@ -56,7 +56,7 @@
         <div class="row">
 
             <div class="alert alert-primary" role="alert">
-                {{ $message }} <a href="{{ route('paquetes.reservar.crear_cliente') }}" class="alert-link">Deseas
+                {{ $message }} <a href="{{ route('paquetes.reservar.crear_cliente', $paquete->slug) }}" class="alert-link">Deseas
                     crear uno aquí ?</a>.
             </div>
         </div>
@@ -154,9 +154,9 @@
                             </div>
                             <div class="col-lg-12">
                                 <fieldset class="form-group">
-                                    <label for="direccion">Archivo de Pasaporte <span class="text-danger">(Obligatorio
+                                    <label for="archivo_pasaporte">Archivo de Pasaporte <span class="text-danger">(Obligatorio
                                             si hay un Nº de Pasaporte)</span></label>
-                                    <input type="file" class="form-control" id="direccion"
+                                    <input type="file" class="form-control" id="archivo_pasaporte"
                                         wire:model.defer="archivo_pasaporte">
                                     @error('archivo_pasaporte')
                                         <span class="text-danger">{{ $message }}</span>

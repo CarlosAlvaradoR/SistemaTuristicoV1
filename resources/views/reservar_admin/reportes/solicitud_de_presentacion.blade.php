@@ -47,9 +47,9 @@
                     <td>
 
                         @if ($spd->estdo_solicitud == 'NO DEVUELTO')
-                            <span class="label label-danger">{{ $spd->estdo_solicitud }}</span>
+                            <span class="badge badge-pill badge-danger">{{ $spd->estdo_solicitud }}</span>
                         @else
-                            <span class="label label-success">{{ $spd->estdo_solicitud }}</span>
+                            <span class="badge badge-pill badge-success">{{ $spd->estdo_solicitud }}</span>
                         @endif
                     </td>
                     <td>{{ $spd->observacion }}</td>

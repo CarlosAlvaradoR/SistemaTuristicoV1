@@ -19,9 +19,9 @@ class ReservarClienteNuevo extends Component
 {
     use WithFileUploads;
 
-
+    public $nombrePaquete, $precio_del_paquete;
     public $dni = '', $nombres = '', $apellidos, $genero = '', $telefono, $direccion, $nacionalidad, $numero_pasaporte, $archivo_pasaporte;
-    public $paquete = '', $precio_del_paquete = 0, $fecha_reserva, $observacion, $pago_por_reserva, $archivo_pago, $tipo_de_pago;
+    public $paquete = '', $fecha_reserva, $observacion, $pago_por_reserva, $archivo_pago, $tipo_de_pago;
     public $paquetes_turisticos, $monto = 0, $numero_de_operacion, $estado_de_pago, $observacion_del_pago;
     public $numero_autorizacion, $archivo_autorizacion;
 
@@ -44,6 +44,11 @@ class ReservarClienteNuevo extends Component
         'archivo_autorizacion' => 'nullable|mimes:jpeg,png,pdf',
     ];
 
+    public function mount($paquete){
+        $this->paquete = $paquete->id;
+        $this->nombrePaquete = $paquete->nombre;
+        $this->precio_del_paquete = $paquete->precio;
+    }
 
     public function render()
     {

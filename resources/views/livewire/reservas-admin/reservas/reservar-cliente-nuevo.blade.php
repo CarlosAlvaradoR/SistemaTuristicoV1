@@ -1,6 +1,9 @@
 <div>
     <div class="row">
-        <div class="col-lg-12 ks-panels-column-section">
+        @include('reservar_admin.comunes.formulario_reserva')
+
+        
+       {{-- <div class="col-lg-12 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
                     <h5 class="card-title">Datos del Cliente</h5>
@@ -149,7 +152,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                             </fieldset>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -377,7 +380,15 @@
 
                 </div>
             </div>
-        </div>
+        </div>--}}
+
+
+
+
+
+
+
+
 
         {{--<div class="col-lg-12 ks-panels-column-section">
             <div class="card">
@@ -449,7 +460,10 @@
             </div>
         </div>--}}
 
-        <div class="col-lg-12 ks-panels-column-section">
+
+
+
+        {{--<div class="col-lg-12 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
                     <h5 class="card-title">Acciones</h5>
@@ -463,7 +477,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--}}
+
+
 
         <!--<div class="col-lg-12 ks-panels-column-section">
             <div class="card">

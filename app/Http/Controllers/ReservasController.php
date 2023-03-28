@@ -98,10 +98,10 @@ class ReservasController extends Controller
         return view('reservar_admin.index', compact('slug'));
     }
 
-    public function reservarCrearCliente()
+    public function reservarCrearCliente(PaquetesTuristicos $paquete)
     {
 
-        return view('reservar_admin.create');
+        return view('reservar_admin.create', compact('paquete'));
     }
 
     public function reservaCondicionesPuntualidad(Reservas $reserva)
