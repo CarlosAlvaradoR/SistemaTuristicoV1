@@ -24,6 +24,7 @@ class PaymentController extends Controller
                     config('services.paypal.client_secret'),    // ClientSecret
                 )
         );
+        $apiContext->setConfig($payPalConfig['settings']);
 
         // After Step 2
         $payer = new \PayPal\Api\Payer();
