@@ -323,6 +323,29 @@ GROUP BY pa.reserva_id;
 SELECT * FROM reservas WHERE cliente_id = 2 AND fecha_reserva = '2023-03-21';
 
 
+/* 
+CONSULTA PARA FILTRAR INFORMACIÓN EN LA EDICIÓN DE RESERVAS
+*/
+-- SACAR LOS CLIENTES Y SU FECHA DE RESERVA
+SELECT p.id as idPersona, p.dni, p.nombre, p.apellidos, p.genero, p.telefono, p.dirección, n.id as idNacionalidad,
+pa.numero_pasaporte, pa.ruta_archivo_pasaporte, pa.id as idPasaporte,
+r.fecha_reserva, r.observacion, r.id as idReserva
+FROM personas p
+INNER JOIN clientes c on c. persona_id=p.id
+INNER JOIN nacionalidades n on n.id = c.nacionalidad_id
+LEFT JOIN pasaportes pa on pa.cliente_id = c.id
+INNER JOIN reservas r on r.cliente_id = c.id
+WHERE r.id = 1;
+
+SELECT id as idPago, monto, fecha_pago, numero_de_operacion, estado_pago, observacion_del_pago, 
+ruta_archivo_pago, reserva_id, cuenta_pagos_id, boleta_id 
+FROM pagos pa WHERE reserva_id = 10;
+
+
+
+SELECT id as idAutorizacionMedica, numero_autorizacion, ruta_archivo, reserva_id, autorizaciones_medicas_id FROM autorizaciones_presentadas
+WHERE reserva_id = 6
+LIMIT 1;
 
 -- CONOCER LOS PAGOS REALIZADOS POR CADA RESERVA
 SELECT p.id as idPago, r.id,p.fecha_pago, p.monto, p.numero_de_operacion, p.estado_pago, p.observacion_del_pago,

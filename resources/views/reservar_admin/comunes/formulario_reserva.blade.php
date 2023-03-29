@@ -118,7 +118,7 @@
     </div>
 </div>
 
-<div class="col-lg-12 ks-panels-column-section">
+{{-- <div class="col-lg-12 ks-panels-column-section">
     <div class="card">
         <div class="card-block">
             <h5 class="card-title">Datos del Paquete</h5>
@@ -154,7 +154,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <div class="col-lg-12 ks-panels-column-section">
     <div class="card">
@@ -171,15 +171,7 @@
                         @enderror
                     </fieldset>
                 </div>
-                <div class="col-lg-4">
-                    <fieldset class="form-group">
-                        <label class="form-label" for="exampleInputDisabled">Monto S/. (Y también Para
-                            BD)</label>
-                        <input type="text" wire:model="precio" class="form-control" id="exampleInputDisabled"
-                            placeholder="First Name" disabled>
-                    </fieldset>
-                </div>
-                <div class="col-lg-4">
+                <div class="col-lg-8">
                     <fieldset class="form-group">
                         <label class="form-label" for="observacion">Observación <span
                                 class="text-danger font-weight-bold">(Opcional)</span></label></label>
@@ -203,7 +195,7 @@
                     <span class="badge badge-default font-weight-bold">PAQUETE</span>
                 </div>
                 <div class="col-md-9">
-                    <span class="badge badge-default">{{$nombrePaquete}}</span>
+                    <span class="badge badge-default">{{ $nombrePaquete }}</span>
                 </div>
             </div>
             <div class="row">
@@ -211,7 +203,7 @@
                     <span class="badge badge-default font-weight-bold">COSTO DEL PAQUETE</span>
                 </div>
                 <div class="col-md-9">
-                    <span class="label label-pill label-success">{{$precio_del_paquete}}</span>
+                    <span class="label label-pill label-success">{{ $precio_del_paquete }}</span>
                 </div>
             </div>
         </div>
@@ -298,6 +290,39 @@
                 </div>
             </div>
 
+            @if ($reserva)
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Monto</th>
+                            <th scope="col">Nº de Operación</th>
+                            <th scope="col">Estado del Pago</th>
+                            <th scope="col">Observación del Pago</th>
+                            <th scope="col">Archivo del Pago</th>
+                            <th scope="col">Tipo de Pago</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($pagos as $p)
+                            <tr>
+                                <td>{{ $p->monto }}</td>
+                                {{-- <td>{{$p->fecha_pago}}</td> --}}
+                                <td>{{ $p->numero_de_operacion }}</td>
+                                <td>{{ $p->estado_pago }}</td>
+                                <td>{{ $p->observacion_del_pago }}</td>
+                                <td>{{ $p->ruta_archivo_pago }}</td>
+                                <td>{{ $p->cuenta_pagos_id }}</td>
+                                <td>
+                                    <a href="#">sELECCIONAR</a>
+                                </td>
+                            </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
+            @endif
+
         </div>
     </div>
 </div>
@@ -323,7 +348,7 @@
                     Las Reservas para este paquete necesitan un archivo de Justificación Médica
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label for="numero_autorizacion">Nº de Autorización <span
                                 class="text-danger font-weight-bold">(*)</span>
                         </label>
@@ -346,6 +371,15 @@
                             <span class="text-danger"> {{ session('message-archivo') }}</span>
                         @endif
                     </div>
+                    @if ($ver_autorizacion)
+                        <div class="col-md-3">
+                            <label for="numero_autorizacion">Ver Archivo de Autorización
+                            </label>
+                            <a href="{{ asset('/' . $ver_autorizacion) }}" class="font-icon font-icon-page"
+                                target="_blank"> Ver</a>
+                        </div>
+                    @endif
+
                 </div>
             @endif
 

@@ -175,6 +175,11 @@
                                                     class="tabledit-delete-button btn btn-sm btn-danger"
                                                     style="float: none;"><span class="fas fa-money-check-alt"></span>
                                                 </a>
+                                                <a href="{{ route('reservas.editar', $r->slug) }}"
+                                                    title="Editar Información de la Reserva" type="button"
+                                                    class="tabledit-delete-button btn btn-sm btn-danger"
+                                                    style="float: none;"><span class="fas fa-money-check-alt"></span>
+                                                </a>
                                             </div>
                                         </div>
                                     </td>

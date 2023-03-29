@@ -19,11 +19,12 @@ class ReservarClienteNuevo extends Component
 {
     use WithFileUploads;
 
+    public $reserva;
     public $nombrePaquete, $precio_del_paquete;
     public $dni = '', $nombres = '', $apellidos, $genero = '', $telefono, $direccion, $nacionalidad, $numero_pasaporte, $archivo_pasaporte;
     public $paquete = '', $fecha_reserva, $observacion, $pago_por_reserva, $archivo_pago, $tipo_de_pago;
     public $paquetes_turisticos, $monto = 0, $numero_de_operacion, $estado_de_pago, $observacion_del_pago;
-    public $numero_autorizacion, $archivo_autorizacion;
+    public $numero_autorizacion, $archivo_autorizacion, $ver_autorizacion;
 
     public $contador = 0;
 
@@ -44,29 +45,80 @@ class ReservarClienteNuevo extends Component
         'archivo_autorizacion' => 'nullable|mimes:jpeg,png,pdf',
     ];
 
-    public function mount($paquete){
-        $this->paquete = $paquete->id;
-        $this->nombrePaquete = $paquete->nombre;
-        $this->precio_del_paquete = $paquete->precio;
+    public function mount($paquete, $reserva)
+    {
+        if ($reserva) {
+            $this->reserva = $reserva;
+            $paquete = PaquetesTuristicos::findOrFail($this->reserva->paquete_id);
+        }
+
+        if ($paquete) {
+            $this->paquete = $paquete->id;
+            $this->nombrePaquete = $paquete->nombre;
+            $this->precio_del_paquete = $paquete->precio;
+        }
     }
 
     public function render()
     {
+        $consulta = [];
+        $pagos = [];
+        $autorizaciones_presentadas = [];
         $nacionalidades = Nacionalidades::all();
         $paquetes = PaquetesTuristicos::all();
         if ($this->paquete > 0 && $this->paquete != null) {
             $this->paquetes_turisticos = PaquetesTuristicos::findOrFail($this->paquete);
             $this->precio_del_paquete = $this->paquetes_turisticos->precio;
             $query = "SELECT * FROM autorizaciones_medicas
-            WHERE paquete_id = " . $this->paquetes_turisticos->id . "
-            limit 1";
+        WHERE paquete_id = " . $this->paquetes_turisticos->id . "
+        limit 1";
             //dd($query);
             $consulta = DB::select($query);
         } else {
             $this->precio_del_paquete = 0;
             $consulta = [];
         }
+
         $this->contador = count($consulta);
+
+        if ($this->reserva) {
+            # Sacamos la Información de toda la Reserva
+            
+            $cliente = DB::select('SELECT p.id as idPersona, p.dni, p.nombre, p.apellidos, p.genero, p.telefono, p.dirección, n.id as idNacionalidad,
+            pa.numero_pasaporte, pa.ruta_archivo_pasaporte, pa.id as idPasaporte,
+            r.fecha_reserva, r.observacion, r.id as idReserva
+            FROM personas p
+            INNER JOIN clientes c on c. persona_id=p.id
+            INNER JOIN nacionalidades n on n.id = c.nacionalidad_id
+            LEFT JOIN pasaportes pa on pa.cliente_id = c.id
+            INNER JOIN reservas r on r.cliente_id = c.id
+            WHERE r.id = ' . $this->reserva->id . '');
+            $this->dni = $cliente[0]->dni;
+            $this->nombres = $cliente[0]->nombre;
+            $this->apellidos = $cliente[0]->apellidos;
+            $this->genero = $cliente[0]->genero;
+            $this->telefono = $cliente[0]->telefono;
+            $this->direccion = $cliente[0]->dirección;
+            $this->nacionalidad = $cliente[0]->idNacionalidad;
+            $this->numero_pasaporte = $cliente[0]->numero_pasaporte;
+            $this->archivo_pasaporte = $cliente[0]->ruta_archivo_pasaporte;
+            $this->fecha_reserva = $cliente[0]->fecha_reserva;
+            $this->observacion = $cliente[0]->observacion;
+
+            $pagos = DB::select('SELECT id as idPago, monto, fecha_pago, numero_de_operacion, estado_pago, observacion_del_pago, 
+            ruta_archivo_pago, reserva_id, cuenta_pagos_id, boleta_id 
+            FROM pagos pa WHERE reserva_id = '.$this->reserva->id.'');
+
+            if ($this->contador > 0) {
+                $autorizaciones_presentadas = DB::select('SELECT id as idAutorizacionMedica, numero_autorizacion, ruta_archivo, reserva_id, autorizaciones_medicas_id FROM autorizaciones_presentadas
+                WHERE reserva_id = '.$this->reserva->id.'
+                LIMIT 1');
+                $this->numero_autorizacion = $autorizaciones_presentadas[0]->numero_autorizacion;
+                $this->ver_autorizacion = $autorizaciones_presentadas[0]->ruta_archivo;
+            }
+        }
+
+        
 
         $tipoPagos = DB::table('tipo_pagos as tp')
             ->join('cuenta_pagos as cp', 'tp.id', '=', 'cp.tipo_pagos_id')
@@ -76,7 +128,8 @@ class ReservarClienteNuevo extends Component
         return view('livewire.reservas-admin.reservas.reservar-cliente-nuevo', compact(
             'nacionalidades',
             'paquetes',
-            'tipoPagos'
+            'tipoPagos',
+            'pagos'
         ));
     }
 
@@ -106,7 +159,7 @@ class ReservarClienteNuevo extends Component
             $this->alert('ALERTA', 'warning', 'El pago debe de ser de al menos el 20 %');
             return;
         }
-        
+
         if ($this->contador > 0) {
             if (!$this->numero_autorizacion) {
                 $this->alert('INFORMACIÓN', 'info', 'La reserva necesita de un Nº de Autorización Médica y un archivo.');

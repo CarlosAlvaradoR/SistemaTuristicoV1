@@ -100,8 +100,8 @@ class ReservasController extends Controller
 
     public function reservarCrearCliente(PaquetesTuristicos $paquete)
     {
-
-        return view('reservar_admin.create', compact('paquete'));
+        $opcion = 'CREAR';
+        return view('reservar_admin.create', compact('paquete','opcion'));
     }
 
     public function reservaCondicionesPuntualidad(Reservas $reserva)
@@ -149,6 +149,13 @@ class ReservasController extends Controller
         //return $reservas;
         //return $consulta;
         return view('reservar_admin.all_reservas', compact('reservas'));
+    }
+
+    public function editarReserva(Reservas $reserva){
+        //dd($reserva);
+        $paquete = PaquetesTuristicos::findOrFail($reserva->paquete_id);
+        $opcion = 'EDITAR';
+        return view('reservar_admin.create', compact('paquete','reserva','opcion'));
     }
 
     public function comprobante(Reservas $reserva)
