@@ -214,9 +214,9 @@ class ReservarCliente extends Component
         }
         $archivo_pago = '';
         if ($this->archivo_pago) {
-            $archivo_pago = $this->archivo_pago;
+            $archivo_pago = 'storage/' . $this->archivo_pago->store('archivo_pagos', 'public');
         }
-
+        //'storage/' . $this->archivo_pago->store('archivo_pagos', 'public'),
         $pagos = Pagos::create([
             'monto' => $this->monto,
             'fecha_pago' => now(),
@@ -325,7 +325,7 @@ class ReservarCliente extends Component
         }
         $archivo_pago = '';
         if ($this->archivo_pago) {
-            $archivo_pago = $this->archivo_pago;
+            $archivo_pago = 'storage/' . $this->archivo_pago->store('archivo_pagos', 'public');
         }
         $pagos = Pagos::create([
             'monto' => $this->monto,

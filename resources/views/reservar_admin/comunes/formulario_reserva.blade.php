@@ -168,7 +168,8 @@
                     <fieldset class="form-group">
                         <label class="form-label" for="fecha_reserva">Fecha de Reserva <span
                                 class="text-danger font-weight-bold">(*)</span></label>
-                        <input type="date" wire:model.defer="fecha_reserva" class="form-control" id="fecha_reserva">
+                        <input type="date" wire:model.defer="fecha_reserva" class="form-control"
+                            id="fecha_reserva">
                         @error('fecha_reserva')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -297,7 +298,20 @@
                         @enderror
                     </fieldset>
                 </div>
+                {{-- @if ($ver_pasaporte) --}}
+                <div class="col-lg-2">
+                    <fieldset class="form-group">
+                        <label for="numero_pasaporte">Ver Archivo de Pago</span></label>
+                        <a href="{{-- asset('/' . $ver_Archivo de Pago) --}}" class="font-icon font-icon-page" target="_blank"> Ver Archivo
+                            de Pago</a>
+                    </fieldset>
+                </div>
+                {{-- @endif --}}
             </div>
+            @if ($reserva)
+                <button class="btn btn-primary" wire:click="UpdateInfoCliente">Actualizar</button>
+                <button class="btn btn-danger">Cancelar</button>
+            @endif
 
             @if ($reserva)
                 <table class="table table-hover">
@@ -323,7 +337,11 @@
                                 <td>{{ $p->ruta_archivo_pago }}</td>
                                 <td>{{ $p->cuenta_pagos_id }}</td>
                                 <td>
-                                    <a href="#">sELECCIONAR</a>
+                                    <button id="view" wire:click="seleccionarPago({{$p->idPago}})"
+                                        wire:loading.attr="disabled" title="Seleccionar"
+                                        class="btn btn-primary btn-sm">
+                                        <i class="fas fa-mouse-pointer"></i>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach

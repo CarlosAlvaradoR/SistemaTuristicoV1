@@ -23,7 +23,7 @@ class ReservarClienteNuevo extends Component
     public $nombrePaquete, $precio_del_paquete;
     public $idPersona, $idCliente, $idPasaportes, $dni = '', $nombres = '', $apellidos, $genero = '', $telefono, $direccion, $nacionalidad, $numero_pasaporte, $archivo_pasaporte, $ver_pasaporte;
     public $paquete = '', $idReserva, $fecha_reserva, $observacion, $pago_por_reserva, $archivo_pago, $tipo_de_pago;
-    public $paquetes_turisticos, $monto = 0, $numero_de_operacion, $estado_de_pago, $observacion_del_pago;
+    public $paquetes_turisticos, $idPago, $monto = 0, $numero_de_operacion, $estado_de_pago, $observacion_del_pago;
     public $numero_autorizacion, $archivo_autorizacion, $ver_autorizacion;
 
     public $contador = 0;
@@ -230,7 +230,7 @@ class ReservarClienteNuevo extends Component
         }
         $archivo_pago = '';
         if ($this->archivo_pago) {
-            $archivo_pago = $this->archivo_pago;
+            $archivo_pago = 'storage/' . $this->archivo_pago->store('archivo_pagos', 'public');
         }
 
         $pagos = Pagos::create([
@@ -309,7 +309,24 @@ class ReservarClienteNuevo extends Component
         $reserva->fecha_reserva = $this->fecha_reserva;
         $reserva->observacion = $this->observacion;
         $reserva->save();
-        $this->alert('MUY BIEN', 'success','Se Actualizó Satisfactoriamente la Información de la Reserva');
+        $this->alert('MUY BIEN', 'success', 'Se Actualizó Satisfactoriamente la Información de la Reserva');
+    }
+
+    public function seleccionarPago(Pagos $pago)
+    {
+        $this->idPago = $pago->id;
+        $this->monto = $pago->monto;
+        //$pago->fecha_pago = now();
+        $this->numero_de_operacion = $pago->numero_de_operacion;
+        $this->estado_de_pago = $pago->estado_pago;
+        $this->observacion_del_pago = $pago->observacion_del_pago;
+        //PENDIENTE $pago->ruta_archivo_pago = $archivo_pago; /////////RUTA DE ARCHIVO DE PAGO
+        $this->tipo_de_pago = $pago->cuenta_pagos_id;
+    }
+
+    public function UpdateInfoPagos(){
+        $pago = Pagos::findOrFail($this->idPago);
+
     }
 
     function validarFecha()
