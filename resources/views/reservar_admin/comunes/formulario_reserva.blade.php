@@ -298,18 +298,19 @@
                         @enderror
                     </fieldset>
                 </div>
-                {{-- @if ($ver_pasaporte) --}}
-                <div class="col-lg-2">
-                    <fieldset class="form-group">
-                        <label for="numero_pasaporte">Ver Archivo de Pago</span></label>
-                        <a href="{{-- asset('/' . $ver_Archivo de Pago) --}}" class="font-icon font-icon-page" target="_blank"> Ver Archivo
-                            de Pago</a>
-                    </fieldset>
-                </div>
-                {{-- @endif --}}
+                @if ($ver_comprobante)
+                    <div class="col-lg-2">
+                        <fieldset class="form-group">
+                            <label for="numero_pasaporte">Ver Archivo de Pago</span></label>
+                            <a href="{{ asset('/' . $ver_comprobante) }}" class="font-icon font-icon-page"
+                                target="_blank"> Ver Archivo
+                                de Pago</a>
+                        </fieldset>
+                    </div>
+                @endif
             </div>
             @if ($reserva)
-                <button class="btn btn-primary" wire:click="UpdateInfoCliente">Actualizar</button>
+                <button class="btn btn-primary" wire:click="UpdateInfoPagos">Actualizar</button>
                 <button class="btn btn-danger">Cancelar</button>
             @endif
 
@@ -337,7 +338,7 @@
                                 <td>{{ $p->ruta_archivo_pago }}</td>
                                 <td>{{ $p->cuenta_pagos_id }}</td>
                                 <td>
-                                    <button id="view" wire:click="seleccionarPago({{$p->idPago}})"
+                                    <button id="view" wire:click="seleccionarPago({{ $p->idPago }})"
                                         wire:loading.attr="disabled" title="Seleccionar"
                                         class="btn btn-primary btn-sm">
                                         <i class="fas fa-mouse-pointer"></i>
@@ -379,7 +380,7 @@
                         <label for="numero_autorizacion">Nº de Autorización <span
                                 class="text-danger font-weight-bold">(*)</span>
                         </label>
-                        <input type="text" wire:model="numero_autorizacion" class="form-control"
+                        <input type="text" wire:model.defer="numero_autorizacion" class="form-control"
                             id="numero_autorizacion">
                         @error('numero_autorizacion')
                             <span class="text-danger">{{ $message }}</span>
@@ -389,7 +390,7 @@
                         <label for="archivo_autorizacion">Archivo Médico <span
                                 class="text-danger font-weight-bold">(Obligatorio si hay un Nº de
                                 Autorización)</span></label>
-                        <input type="file" wire:model="archivo_autorizacion" class="form-control"
+                        <input type="file" wire:model.defer="archivo_autorizacion" class="form-control"
                             id="archivo_autorizacion">
                         @error('archivo_autorizacion')
                             <span class="text-danger">{{ $message }}</span>
@@ -408,6 +409,10 @@
                     @endif
 
                 </div>
+                @if ($reserva)
+                    <button class="btn btn-primary" wire:click="UpdateInfoArchivoMedico">Actualizar</button>
+                    <button class="btn btn-danger">Cancelar</button>
+                @endif
             @endif
 
 
@@ -415,18 +420,20 @@
     </div>
 </div>
 
-<div class="col-lg-12 ks-panels-column-section">
-    <div class="card">
-        <div class="card-block">
-            <h5 class="card-title">Acciones</h5>
-            <div>
-                <div class="form-group">
-                    <button type="button" wire:click="guardarReservaCliente" wire:loading.attr="disabled"
-                        class="btn btn-inline">Grabar
-                        Reserva</button>
-                    <a href="#!" wire:click="detalle">DetalleArchivo</a>
+@if (!$reserva)
+    <div class="col-lg-12 ks-panels-column-section">
+        <div class="card">
+            <div class="card-block">
+                <h5 class="card-title">Acciones</h5>
+                <div>
+                    <div class="form-group">
+                        <button type="button" wire:click="guardarReservaCliente" wire:loading.attr="disabled"
+                            class="btn btn-inline">Grabar
+                            Reserva</button>
+                        <a href="#!" wire:click="detalle">DetalleArchivo</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+@endif

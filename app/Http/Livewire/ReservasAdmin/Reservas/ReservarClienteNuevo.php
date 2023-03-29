@@ -22,9 +22,9 @@ class ReservarClienteNuevo extends Component
     public $reserva;
     public $nombrePaquete, $precio_del_paquete;
     public $idPersona, $idCliente, $idPasaportes, $dni = '', $nombres = '', $apellidos, $genero = '', $telefono, $direccion, $nacionalidad, $numero_pasaporte, $archivo_pasaporte, $ver_pasaporte;
-    public $paquete = '', $idReserva, $fecha_reserva, $observacion, $pago_por_reserva, $archivo_pago, $tipo_de_pago;
+    public $paquete = '', $idReserva, $fecha_reserva, $observacion, $pago_por_reserva, $archivo_pago, $tipo_de_pago, $ver_comprobante;
     public $paquetes_turisticos, $idPago, $monto = 0, $numero_de_operacion, $estado_de_pago, $observacion_del_pago;
-    public $numero_autorizacion, $archivo_autorizacion, $ver_autorizacion;
+    public $idAutorizacionMedica, $numero_autorizacion, $archivo_autorizacion, $ver_autorizacion;
 
     public $contador = 0;
 
@@ -117,6 +117,7 @@ class ReservarClienteNuevo extends Component
                 $autorizaciones_presentadas = DB::select('SELECT id as idAutorizacionMedica, numero_autorizacion, ruta_archivo, reserva_id, autorizaciones_medicas_id FROM autorizaciones_presentadas
                 WHERE reserva_id = ' . $this->reserva->id . '
                 LIMIT 1');
+                $this->idAutorizacionMedica = $autorizaciones_presentadas[0]->idAutorizacionMedica;
                 $this->numero_autorizacion = $autorizaciones_presentadas[0]->numero_autorizacion;
                 $this->ver_autorizacion = $autorizaciones_presentadas[0]->ruta_archivo;
             }
@@ -320,13 +321,47 @@ class ReservarClienteNuevo extends Component
         $this->numero_de_operacion = $pago->numero_de_operacion;
         $this->estado_de_pago = $pago->estado_pago;
         $this->observacion_del_pago = $pago->observacion_del_pago;
-        //PENDIENTE $pago->ruta_archivo_pago = $archivo_pago; /////////RUTA DE ARCHIVO DE PAGO
+        $this->ver_comprobante = $pago->ruta_archivo_pago;
         $this->tipo_de_pago = $pago->cuenta_pagos_id;
     }
 
-    public function UpdateInfoPagos(){
-        $pago = Pagos::findOrFail($this->idPago);
+    public function UpdateInfoPagos()
+    {
+        $archivo_pago = $this->ver_comprobante;
+        if ($this->archivo_pago) {
+            $eliminar = unlink($this->ver_comprobante);
+            $archivo_pago = 'storage/' . $this->archivo_pago->store('archivo_pagos', 'public');
+        }
 
+        $pago = Pagos::findOrFail($this->idPago);
+        $pago->monto = $this->monto;
+        $pago->numero_de_operacion = $this->numero_de_operacion;
+        $pago->estado_pago = $this->estado_de_pago;
+        $pago->observacion_del_pago = $this->observacion_del_pago;
+        $pago->ruta_archivo_pago = $archivo_pago; ////POR CORREGIR
+        $pago->cuenta_pagos_id = $this->tipo_de_pago;
+        $pago->save();
+
+        $this->reset([
+            'idPago', 'ver_comprobante', 'monto', 'numero_de_operacion', 'estado_de_pago', 'observacion_del_pago',
+            'archivo_pago', 'tipo_de_pago'
+        ]);
+        $this->alert('MUY BIEN', 'success', 'Actualizó Satisfactoriamente la Información del Pago por Reserva');
+    }
+
+    public function UpdateInfoArchivoMedico()
+    {
+        //dd('ACTUALIZANDO');
+        $archivo = $this->ver_autorizacion;
+        if ($this->archivo_autorizacion) {
+            $eliminar = unlink($this->ver_autorizacion);
+            $archivo = 'storage/' . $this->archivo_autorizacion->store('autorizaciones', 'public');
+        }
+        $autorizaciones_presentadas = AutorizacionesPresentadas::findOrFail($this->idAutorizacionMedica);
+        $autorizaciones_presentadas->numero_autorizacion = $this->numero_autorizacion;
+        $autorizaciones_presentadas->ruta_archivo = $archivo;
+        $autorizaciones_presentadas->save();
+        $this->alert('MUY BIEN','success','Se Actualizó Correctamente el Archivo de Autorizacion correspondiente a la Reserva');
     }
 
     function validarFecha()
