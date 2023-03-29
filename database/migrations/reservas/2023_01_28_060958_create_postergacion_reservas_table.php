@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->date('fecha_postergacion');
             $table->text('descripcion_motivo');
+            $table->text('documento_sustentatorio');
 
             $table->unsignedBigInteger('reserva_id')->nullable();
             $table->foreign('reserva_id')->references('id')->on('reservas');

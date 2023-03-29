@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('solicitud_devolucion_dineros', function (Blueprint $table) {
             $table->id();
+            $table->string('pedido', 45);
             $table->date('fecha_presentacion');
             $table->enum('estado', ['POR PROCESAR', 'PROCESADO'])->default('POR PROCESAR');
             $table->text('descripcion_solicitud')->nullable();

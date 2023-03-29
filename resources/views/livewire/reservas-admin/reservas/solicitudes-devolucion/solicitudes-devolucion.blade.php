@@ -48,13 +48,15 @@
             </div>
 
             <h5 class="with-border m-t-lg font-weight-bold"><i class="fas fa-calendar-times"></i> EVENTO DE POSTERGACIÓN
-                <a href="{{ route('reporte.de.solicitud', $reserva->slug) }}" target="_blank" class="btn btn-primary btn-rounded btn-sm" title="Imprimir"><i class="fas fa-print"></i></a>
+                <a href="{{ route('reporte.de.solicitud', $reserva->slug) }}" target="_blank"
+                    class="btn btn-primary btn-rounded btn-sm" title="Imprimir"><i class="fas fa-print"></i></a>
             </h5>
 
             <div class="row">
                 <div class="col-lg-4">
                     <fieldset class="form-group">
-                        <label class="form-label" for="evento">Evento de Postergación</label>
+                        <label class="form-label" for="evento">Evento de Postergación <span
+                                class="text-danger font-weight-bold"> (Opcional)</span></label>
                         <select class="form-control" wire:model.defer="evento" wire:loading.attr="disabled"
                             wire:target="saveEventoPostergacion" id="evento">
                             <option value="" selected>...Seleccione...</option>
@@ -90,6 +92,26 @@
                         @enderror
                     </fieldset>
                 </div>
+                <div class="col-lg-6">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="documento_sustentatorio">Documento Sustentario de
+                            Cancelación<span class="text-danger font-weight-bold"> (Opcional)</span></label>
+                        <input type="file" wire:model.defer="documento_sustentatorio" wire:loading.attr="disabled"
+                            wire:target="saveEventoPostergacion" class="form-control maxlength-custom-message"
+                            id="documento_sustentatorio">
+                        @error('documento_sustentatorio')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </fieldset>
+                </div>
+                @if ($ver_documento)
+                    <div class="col-md-3">
+                        <label for="numero_autorizacion">Ver Documento Sustentatorio de Cancelación
+                        </label>
+                        <a href="{{ asset('/' . $ver_documento) }}" class="font-icon font-icon-page" target="_blank">
+                            Ver</a>
+                    </div>
+                @endif
                 <div class="col-lg-12">
 
                     @if ($idPostergacionReserva)
@@ -106,6 +128,37 @@
             <h5 class="with-border m-t-lg font-weight-bold"><i class="fas fa-folder"></i> SOBRE LA SOLICITUD</h5>
 
             <div class="row">
+                @if ($idSolicitudDevolucionDineros)
+                    <div class="col-lg-4">
+                        <fieldset class="form-group">
+                            <label class="form-label" for="estado_solicitud">Estado de Solicitud</label>
+                            <select class="form-control" wire:model.defer="estado_solicitud"
+                                wire:loading.attr="disabled" wire:target="guardarSolicitud" id="estado_solicitud">
+                                <option value="">...Seleccione...</option>
+                                <option value="POR PROCESAR" @if ($estado_solicitud == 'POR PROCESAR') selected @endif>POR
+                                    PROCESAR</option>
+                                <option value="PROCESADO" @if ($estado_solicitud == 'PROCESADO') selected @endif>PROCESADO
+                                </option>
+                            </select>
+                            @error('estado_solicitud')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </fieldset>
+                    </div>
+                @endif
+
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="pedido">Solicito <span
+                                class="text-danger font-weight-bold">(*)</span></label>
+                        <input type="text" wire:model.defer="pedido" wire:loading.attr="disabled"
+                            wire:target="guardarSolicitud" class="form-control"
+                            placeholder="ej: Devolución de Dinero" id="pedido">
+                        @error('pedido')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </fieldset>
+                </div>
                 <div class="col-lg-4">
                     <fieldset class="form-group">
                         <label class="form-label" for="fecha_presentacion">Fecha de Presentación de Solicitud<span
@@ -118,7 +171,7 @@
                         @enderror
                     </fieldset>
                 </div>
-                <div class="col-lg-8">
+                <div class="col-lg-4">
                     <fieldset class="form-group">
                         <label class="form-label" for="descripcion_de_solicitud">Descripción de la Solicitud <span
                                 class="text-danger font-weight-bold">(*)</span></label>
@@ -177,35 +230,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Estado de Solicitud</th>
-                                <th scope="col">Observación</th>
-                                <th scope="col">Monto</th>
-                                <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($solicitud_pagos as $sp)
-                                <tr>
-                                    <td>{{ $sp->estdo_solicitud }}</td>
-                                    <td>{{ $sp->observacion }}</td>
-                                    <td>{{ $sp->monto }}</td>
-                                    <td>
-                                        <button id="view"
-                                            wire:click="selectSolicitudPagos({{ $sp->id }}, 1)"
-                                            wire:loading.attr="disabled" title="Seleccionar"
-                                            class="btn btn-primary btn-sm">
-                                            <i class="fas fa-mouse-pointer"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-6">
+                    <h6 class="font-weight-bold">Lista de Pagos Realizados</h6>
                     <table class="table">
                         <thead>
                             <tr>
@@ -245,6 +270,37 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="col-md-6">
+                    <h6 class="font-weight-bold">Lista de Pagos Solicitados</h6>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Estado de Solicitud</th>
+                                <th scope="col">Observación</th>
+                                <th scope="col">Monto</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($solicitud_pagos as $sp)
+                                <tr>
+                                    <td>{{ $sp->estdo_solicitud }}</td>
+                                    <td>{{ $sp->observacion }}</td>
+                                    <td>{{ $sp->monto }}</td>
+                                    <td>
+                                        <button id="view"
+                                            wire:click="selectSolicitudPagos({{ $sp->id }}, 1)"
+                                            wire:loading.attr="disabled" title="Seleccionar"
+                                            class="btn btn-primary btn-sm">
+                                            <i class="fas fa-mouse-pointer"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
 
             <h5 class="with-border m-t-lg font-weight-bold"><i class="far fa-money-bill-alt"></i> DEVOLUCIÓN</h5>
@@ -253,15 +309,15 @@
                 <div class="col-lg-4">
                     <fieldset class="form-group">
                         <label class="form-label" for="exampleInput">Estado de Solicitud</label>
-                        
-                            <label class="btn @if ($estado_de_solicitud == 'NO DEVUELTO') active @endif">
-                                <input type="radio" wire:model="estado_de_solicitud" value="NO DEVUELTO"
-                                    name="options" autocomplete="off"> No devuelto
-                            </label>
-                            <label class="btn @if ($estado_de_solicitud == 'DEVUELTO') active @endif">
-                                <input type="radio" wire:model="estado_de_solicitud" value="DEVUELTO"
-                                    name="options" autocomplete="off"> Devuelto
-                            </label>
+
+                        <label class="btn @if ($estado_de_solicitud == 'NO DEVUELTO') active @endif">
+                            <input type="radio" wire:model="estado_de_solicitud" value="NO DEVUELTO"
+                                name="options" autocomplete="off"> No devuelto
+                        </label>
+                        <label class="btn @if ($estado_de_solicitud == 'DEVUELTO') active @endif">
+                            <input type="radio" wire:model="estado_de_solicitud" value="DEVUELTO" name="options"
+                                autocomplete="off"> Devuelto
+                        </label>
                     </fieldset>
                 </div>
                 <div class="col-lg-4">

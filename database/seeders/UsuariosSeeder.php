@@ -65,7 +65,7 @@ class UsuariosSeeder extends Seeder
                 'dni'=> $faker->unique()->postcode, 
                 'nombre' => $faker->name, 
                 'apellidos' => $faker->lastname, 
-                'genero' => rand(0, 200), 
+                'genero' => rand(1,2), 
                 'telefono' => $faker->phoneNumber, 
                 'dirección' => $faker->address
             ]);
@@ -82,7 +82,7 @@ class UsuariosSeeder extends Seeder
             $cliente = Clientes::create([
                 'persona_id' => $persona->id, 
                 'user_id' => $user->id,
-                'nacionalidad_id' => rand(1,3)
+                'nacionalidad_id' => rand(1,200)
             ]);
         }
     }

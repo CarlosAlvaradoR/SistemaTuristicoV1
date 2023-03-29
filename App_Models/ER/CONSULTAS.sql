@@ -347,6 +347,7 @@ SELECT id as idAutorizacionMedica, numero_autorizacion, ruta_archivo, reserva_id
 WHERE reserva_id = 6
 LIMIT 1;
 
+SELECT * FROM postergacion_reservas;
 -- CONOCER LOS PAGOS REALIZADOS POR CADA RESERVA
 SELECT p.id as idPago, r.id,p.fecha_pago, p.monto, p.numero_de_operacion, p.estado_pago, p.observacion_del_pago,
 p.ruta_archivo_pago,tp.nombre_tipo_pago, cp.numero_cuenta, b.numero_boleta 
