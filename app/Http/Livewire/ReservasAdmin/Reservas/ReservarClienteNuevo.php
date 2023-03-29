@@ -21,8 +21,8 @@ class ReservarClienteNuevo extends Component
 
     public $reserva;
     public $nombrePaquete, $precio_del_paquete;
-    public $dni = '', $nombres = '', $apellidos, $genero = '', $telefono, $direccion, $nacionalidad, $numero_pasaporte, $archivo_pasaporte;
-    public $paquete = '', $fecha_reserva, $observacion, $pago_por_reserva, $archivo_pago, $tipo_de_pago;
+    public $idPersona, $idCliente, $idPasaportes, $dni = '', $nombres = '', $apellidos, $genero = '', $telefono, $direccion, $nacionalidad, $numero_pasaporte, $archivo_pasaporte, $ver_pasaporte;
+    public $paquete = '', $idReserva, $fecha_reserva, $observacion, $pago_por_reserva, $archivo_pago, $tipo_de_pago;
     public $paquetes_turisticos, $monto = 0, $numero_de_operacion, $estado_de_pago, $observacion_del_pago;
     public $numero_autorizacion, $archivo_autorizacion, $ver_autorizacion;
 
@@ -83,8 +83,8 @@ class ReservarClienteNuevo extends Component
 
         if ($this->reserva) {
             # Sacamos la Información de toda la Reserva
-            
-            $cliente = DB::select('SELECT p.id as idPersona, p.dni, p.nombre, p.apellidos, p.genero, p.telefono, p.dirección, n.id as idNacionalidad,
+
+            $cliente = DB::select('SELECT p.id as idPersona, p.dni, p.nombre, p.apellidos, p.genero, p.telefono, p.dirección, n.id as idNacionalidad, c.id as idCliente,
             pa.numero_pasaporte, pa.ruta_archivo_pasaporte, pa.id as idPasaporte,
             r.fecha_reserva, r.observacion, r.id as idReserva
             FROM personas p
@@ -93,6 +93,10 @@ class ReservarClienteNuevo extends Component
             LEFT JOIN pasaportes pa on pa.cliente_id = c.id
             INNER JOIN reservas r on r.cliente_id = c.id
             WHERE r.id = ' . $this->reserva->id . '');
+            $this->idPersona = $cliente[0]->idPersona;
+            $this->idCliente = $cliente[0]->idCliente;
+            $this->idPasaportes = $cliente[0]->idPasaporte;
+            $this->idReserva = $cliente[0]->idReserva;
             $this->dni = $cliente[0]->dni;
             $this->nombres = $cliente[0]->nombre;
             $this->apellidos = $cliente[0]->apellidos;
@@ -101,24 +105,24 @@ class ReservarClienteNuevo extends Component
             $this->direccion = $cliente[0]->dirección;
             $this->nacionalidad = $cliente[0]->idNacionalidad;
             $this->numero_pasaporte = $cliente[0]->numero_pasaporte;
-            $this->archivo_pasaporte = $cliente[0]->ruta_archivo_pasaporte;
+            $this->ver_pasaporte = $cliente[0]->ruta_archivo_pasaporte;
             $this->fecha_reserva = $cliente[0]->fecha_reserva;
             $this->observacion = $cliente[0]->observacion;
 
             $pagos = DB::select('SELECT id as idPago, monto, fecha_pago, numero_de_operacion, estado_pago, observacion_del_pago, 
             ruta_archivo_pago, reserva_id, cuenta_pagos_id, boleta_id 
-            FROM pagos pa WHERE reserva_id = '.$this->reserva->id.'');
+            FROM pagos pa WHERE reserva_id = ' . $this->reserva->id . '');
 
             if ($this->contador > 0) {
                 $autorizaciones_presentadas = DB::select('SELECT id as idAutorizacionMedica, numero_autorizacion, ruta_archivo, reserva_id, autorizaciones_medicas_id FROM autorizaciones_presentadas
-                WHERE reserva_id = '.$this->reserva->id.'
+                WHERE reserva_id = ' . $this->reserva->id . '
                 LIMIT 1');
                 $this->numero_autorizacion = $autorizaciones_presentadas[0]->numero_autorizacion;
                 $this->ver_autorizacion = $autorizaciones_presentadas[0]->ruta_archivo;
             }
         }
 
-        
+
 
         $tipoPagos = DB::table('tipo_pagos as tp')
             ->join('cuenta_pagos as cp', 'tp.id', '=', 'cp.tipo_pagos_id')
@@ -141,7 +145,7 @@ class ReservarClienteNuevo extends Component
         $this->validate();
         if ($this->numero_pasaporte) {
             if (!$this->archivo_pasaporte) {
-                $this->alert('ALERTA!', 'info', 'Es necesario que suba un archivo de Pasaporte');
+                $this->alert('ALERTA!', 'info', 'Es necesario que suba un archivo de Pasaporte siempre que digite un Nº de Pasaporte');
                 return;
             }
         }
@@ -251,6 +255,61 @@ class ReservarClienteNuevo extends Component
         }
 
         redirect()->route('paquetes.reservar.condiciones.puntualidad', [$reservas]); //Id de la reserva, o posible slug
+    }
+
+    public function UpdateInfoCliente()
+    {
+        //$this->validate();
+        $personas = Personas::findOrFail($this->idPersona);
+        $personas->dni = $this->dni;
+        $personas->nombre = strtoupper($this->nombres);
+        $personas->apellidos = strtoupper($this->apellidos);
+        $personas->genero = $this->genero;
+        $personas->telefono = $this->telefono;
+        $personas->dirección = $this->direccion;
+        $personas->save();
+
+        $clientes = Clientes::findOrFail($this->idCliente);
+        $clientes->nacionalidad_id = $this->nacionalidad;
+        $clientes->save();
+
+        if ($this->numero_pasaporte) {
+            if (!$this->archivo_pasaporte) {
+                $this->alert('ALERTA!', 'info', 'Es necesario que suba un archivo de Pasaporte siempre que digite un Nº de Pasaporte');
+                return;
+            } else {
+                if ($this->idPasaportes) {
+                    //dd('LLEGÓ CON ID PASAPORTES');
+                    $archivo_pasaporte = $this->ver_pasaporte;
+                    if ($this->archivo_pasaporte) {
+                        $eliminar = unlink($this->ver_pasaporte);
+                        $archivo_pasaporte = 'storage/' . $this->archivo_pasaporte->store('pasaportes', 'public');
+                    }
+                    $pasaportes = Pasaportes::findOrFail($this->idPasaportes);
+                    $pasaportes->numero_pasaporte = $this->numero_pasaporte;
+                    $pasaportes->ruta_archivo_pasaporte = $archivo_pasaporte;
+                    $pasaportes->save();
+                } else {
+                    //dd('LLEGÓ');
+                    $pasaportes = Pasaportes::create([
+                        'numero_pasaporte' => $this->numero_pasaporte,
+                        'ruta_archivo_pasaporte' => 'storage/' . $this->archivo_pasaporte->store('pasaportes', 'public'),
+                        'cliente_id' => $clientes->id
+                    ]);
+                }
+            }
+        }
+
+        $this->alert('MUY BIEN', 'success', 'Se Actualizó Satisfactoriamente la Información del Cliente');
+    }
+
+    public function UpdateInfoReserva()
+    {
+        $reserva = Reservas::findOrFail($this->idReserva);
+        $reserva->fecha_reserva = $this->fecha_reserva;
+        $reserva->observacion = $this->observacion;
+        $reserva->save();
+        $this->alert('MUY BIEN', 'success','Se Actualizó Satisfactoriamente la Información de la Reserva');
     }
 
     function validarFecha()

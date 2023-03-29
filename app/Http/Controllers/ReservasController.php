@@ -178,6 +178,9 @@ class ReservasController extends Controller
         return view('reservar_admin.reportes.comprobante', compact('informacion', 'pagos_aceptados'));
     }
 
+    public function archivo(){
+        return 'AAAA';
+    }
 
     public function mostrarSolicitudes(Reservas $reserva)
     {

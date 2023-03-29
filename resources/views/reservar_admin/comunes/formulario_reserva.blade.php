@@ -101,18 +101,21 @@
                         @enderror
                     </fieldset>
                 </div>
-                <div class="col-lg-2">
-                    <fieldset class="form-group">
-                        <label for="numero_pasaporte">Ver Pasaporte</span></label>
-                        <input type="text" class="form-control" id="numero_pasaporte" placeholder="Nº de Pasaporte"
-                            wire:model.defer="numero_pasaporte">
-                        @error('numero_pasaporte')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </fieldset>
-                </div>
+                @if ($ver_pasaporte)
+                    <div class="col-lg-2">
+                        <fieldset class="form-group">
+                            <label for="numero_pasaporte">Ver Pasaporte</span></label>
+                            <a href="{{ asset('/' . $ver_pasaporte) }}" class="font-icon font-icon-page"
+                                target="_blank"> Ver Pasaporte</a>
+                        </fieldset>
+                    </div>
+                @endif
             </div>
 
+            @if ($reserva)
+                <button class="btn btn-primary" wire:click="UpdateInfoCliente">Actualizar</button>
+                <button class="btn btn-danger">Cancelar</button>
+            @endif
 
         </div>
     </div>
@@ -165,7 +168,7 @@
                     <fieldset class="form-group">
                         <label class="form-label" for="fecha_reserva">Fecha de Reserva <span
                                 class="text-danger font-weight-bold">(*)</span></label>
-                        <input type="date" wire:model="fecha_reserva" class="form-control" id="fecha_reserva">
+                        <input type="date" wire:model.defer="fecha_reserva" class="form-control" id="fecha_reserva">
                         @error('fecha_reserva')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -182,6 +185,12 @@
                     </fieldset>
                 </div>
             </div>
+
+            @if ($reserva)
+                <button class="btn btn-primary" wire:click="UpdateInfoReserva">Actualizar</button>
+                <button class="btn btn-danger">Cancelar</button>
+            @endif
+
         </div>
     </div>
 </div>

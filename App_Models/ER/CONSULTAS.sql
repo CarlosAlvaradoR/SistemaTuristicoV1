@@ -327,7 +327,7 @@ SELECT * FROM reservas WHERE cliente_id = 2 AND fecha_reserva = '2023-03-21';
 CONSULTA PARA FILTRAR INFORMACIÓN EN LA EDICIÓN DE RESERVAS
 */
 -- SACAR LOS CLIENTES Y SU FECHA DE RESERVA
-SELECT p.id as idPersona, p.dni, p.nombre, p.apellidos, p.genero, p.telefono, p.dirección, n.id as idNacionalidad,
+SELECT p.id as idPersona, p.dni, p.nombre, p.apellidos, p.genero, p.telefono, p.dirección, n.id as idNacionalidad, c.id as idCliente,
 pa.numero_pasaporte, pa.ruta_archivo_pasaporte, pa.id as idPasaporte,
 r.fecha_reserva, r.observacion, r.id as idReserva
 FROM personas p
