@@ -9,6 +9,7 @@ use App\Models\Reservas\Pagos;
 use App\Models\Reservas\Reservas;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class PaquetesReservadosCliente extends Component
@@ -85,7 +86,13 @@ class PaquetesReservadosCliente extends Component
         //$this->validate();
         $ruta = '';
         if ($this->ruta_archivo_pago) {
-            $ruta = 'storage/' . $this->ruta_archivo_pago->store('archivo_pagos', 'public');
+            $filename = uniqid();
+            
+            //$image = $this->ruta_archivo_pago->getRealPath();
+            $ext = $this->ruta_archivo_pago->getClientOriginalExtension();
+            
+            $ruta = $this->ruta_archivo_pago->storeAs('archivo', $filename.'.'.$ext, 'private');
+            //$ruta = Storage::disk('private')->putFileAs('photos', $image, $filename);;
         }
 
         $pago = Pagos::create([

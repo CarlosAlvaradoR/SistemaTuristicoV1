@@ -7,6 +7,7 @@ Route::get('/paquetes/reserva/condiciones-riesgos-justificacionMedica/{reserva}'
 Route::get('/paquetes/reserva/{slug}', [App\Http\Controllers\ReservasController::class, 'reservar'])->name('paquetes.reservar')->middleware(['auth', 'verified']);
 Route::post('/paquetes/reserva/save', [App\Http\Controllers\ReservasController::class, 'guardarReserva'])->name('paquetes.reservar.save')->middleware(['auth', 'verified']);
 
+Route::get('/mostrar/imagen/{image}', [App\Http\Controllers\ReservasController::class, 'mostrarImagen'])->name('reservas.imagen')->middleware(['auth', 'verified']);
 
 
 Route::get('/reservas', [App\Http\Controllers\ReservasController::class, 'mostrarReservas'])->name('reservas.index')->middleware(['auth', 'verified']);

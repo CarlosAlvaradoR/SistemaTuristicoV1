@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Stmt\Return_;
 use Symfony\Component\Console\Input\Input as InputInput;
 
@@ -180,6 +181,23 @@ class ReservasController extends Controller
         return view('reservar_admin.reportes.comprobante', compact('informacion', 'pagos_aceptados'));
     }
 
+    public function mostrarImagen($filename){
+        //return $filename;
+        if (Storage::disk('private')->exists('archivo/642756f1928c7.pdf')) {
+            // Devolver el archivo como una respuesta HTTP
+            //return 'EXISTE';
+            return response()->file(Storage::disk('private')->path('archivo/' . $filename));
+        } else {
+            // Devolver una respuesta de error si el archivo no existe
+            return response()->json(['error' => 'El archivo no existe'], 404);
+        }
+
+        /*if (Storage::exists($filename)) {
+            return response()->file(storage_path('private/archivo/' . $filename));
+        } else {
+            abort(404);
+        }*/
+    }
     public function archivo(){
         return 'AAAA';
     }
