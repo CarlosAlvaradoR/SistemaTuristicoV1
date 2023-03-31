@@ -96,6 +96,8 @@ RESERVAS
         RESERVAR CLIENTE
         php artisan make:livewire ReservasPublicas/Reservas/FormularioReservas
 
+        php artisan make:livewire ReservasPublicas/Reservas/PaquetesReservadosCliente
+
     RESERVAS OPCIONES MENÚ
 
         RESERVA - TIPOS DE PAGOS Y CUENTA

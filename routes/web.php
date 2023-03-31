@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     //
     Route::get('/perfil/cliente', [App\Http\Controllers\PaquetesPublicos\ClientePublicoController::class, 'index'])->name('cliente.perfil');
     Route::get('/paquetes/reservados', [App\Http\Controllers\PaquetesPublicos\ClientePublicoController::class, 'paquetesDelCliente'])->name('cliente.paquetes');
+    Route::get('/paquetes/reservados/reserva/formulario-de-cancelacion', [App\Http\Controllers\PaquetesPublicos\ClientePublicoController::class, 'mostrarFormularioDeCancelación'])->name('cliente.cancelacion.reserva');
 });
 
 /*** PAGOS */

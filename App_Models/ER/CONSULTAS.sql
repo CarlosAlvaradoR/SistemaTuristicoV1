@@ -285,7 +285,8 @@ WHERE pr.reserva_id = 22;
 
 -- CONSULTAR LOS PAQUETES QUE COMPRÓ UN CLIENTE
 SELECT p.dni, concat(p.nombre, ' ',p.apellidos) as datos, 
-pt.nombre, r.fecha_reserva, SUM(pa.monto) as pago,er.nombre_estado, b.numero_boleta,r.id 
+pt.nombre, r.fecha_reserva, SUM(pa.monto) as pago,er.nombre_estado, b.numero_boleta,r.id,
+r.slug
 FROM personas p
 INNER JOIN clientes c on p.id=c.persona_id
 INNER JOIN reservas r on r.cliente_id=c.id
@@ -293,12 +294,12 @@ INNER JOIN paquetes_turisticos pt on pt.id=r.paquete_id
 INNER JOIN estado_reservas er on er.id = r.estado_reservas_id
 INNER JOIN pagos pa on pa.reserva_id = r.id
 INNER JOIN boletas b on b.id = pa.boleta_id
-WHERE c.id = 2
+WHERE c.id = 52
 GROUP BY pa.reserva_id
 ORDER BY r.updated_at;
 
 
-SELECT * FROM reservas;
+SELECT * FROM boletas;
 
 
 
@@ -347,7 +348,7 @@ SELECT id as idAutorizacionMedica, numero_autorizacion, ruta_archivo, reserva_id
 WHERE reserva_id = 6
 LIMIT 1;
 
-SELECT * FROM postergacion_reservas;
+SELECT * FROM solicitud_devolucion_dineros;
 -- CONOCER LOS PAGOS REALIZADOS POR CADA RESERVA
 SELECT p.id as idPago, r.id,p.fecha_pago, p.monto, p.numero_de_operacion, p.estado_pago, p.observacion_del_pago,
 p.ruta_archivo_pago,tp.nombre_tipo_pago, cp.numero_cuenta, b.numero_boleta 
@@ -362,7 +363,8 @@ SELECT * FROM pagos;
 
 -- SELECCIONAR LOS TIPOS DE PAGO CON SUS RESPECTIVAS CUENTAS BANCARIAS PARA LAS RESERVAS
 SELECT tp.nombre_tipo_pago, cp.id as idCuentaPago, cp.numero_cuenta FROM tipo_pagos tp
-INNER join cuenta_pagos cp on tp.id = cp.tipo_pagos_id;
+INNER join cuenta_pagos cp on tp.id = cp.tipo_pagos_id
+WHERE cp.id != 1;
 
 -- CONSULTA PARA CONOCER LOS CLIENTES QUE SOLICITARON DEVOLUCIÓN
 SELECT concat(p.nombre,' ', p.apellidos) as datos, sdv.estado, sdv.fecha_presentacion,

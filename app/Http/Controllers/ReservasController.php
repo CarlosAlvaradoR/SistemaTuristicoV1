@@ -10,6 +10,7 @@ use App\Models\Reservas\Reservas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use PhpParser\Node\Stmt\Return_;
 use Symfony\Component\Console\Input\Input as InputInput;
@@ -184,6 +185,9 @@ class ReservasController extends Controller
 
     public function mostrarSolicitudes(Reservas $reserva)
     {
+        /*if (Auth::user()->hasRole('cliente')) {
+            //return abort(404,'AAA');
+        }*/
         return view('reservar_admin.solicitudes.index', compact('reserva'));
     }
 
