@@ -161,7 +161,13 @@
                         <div class="col-xs-4 col-sm-4 col-md-4">
                             <div class="receipt-left">
                                 <h5><b>COMPROBANTE:</b></h5>
-                                <h6>{{ $pagos_aceptados[0]->numero_boleta }}</h6>
+                                @if (count($pagos_aceptados))
+                                    <h6>{{ $pagos_aceptados[0]->numero_boleta }}</h6>
+                                @else
+                                    <h6 style="color: red">Estamos Procesando la Información. Vuelva a consultar más tarde. Gracias por su
+                                        comprensión. Si el problema persiste, comuníquese con nosotros para ayudarlo.</h6>
+                                @endif
+
                             </div>
                         </div>
                     </div>
@@ -187,10 +193,10 @@
                             @endphp
 
                             <tr>
-                                <td class="col-md-3" rowspan="{{count($pagos_aceptados) + 1}}">1</td>
-                                <td class="col-md-2" rowspan="{{count($pagos_aceptados) + 1}}">
+                                <td class="col-md-3" rowspan="{{ count($pagos_aceptados) + 1 }}">1</td>
+                                <td class="col-md-2" rowspan="{{ count($pagos_aceptados) + 1 }}">
                                     {{ $informacion[0]->nombre }}</td>
-                                <td class="col-md-4" rowspan="{{count($pagos_aceptados) + 1}}">-</td>
+                                <td class="col-md-4" rowspan="{{ count($pagos_aceptados) + 1 }}">-</td>
                             </tr>
                             @foreach ($pagos_aceptados as $p)
                                 <tr>

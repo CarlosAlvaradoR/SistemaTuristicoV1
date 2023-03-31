@@ -176,6 +176,7 @@ class ReservasController extends Controller
         INNER JOIN tipo_pagos tp on tp.id = cp.tipo_pagos_id
         INNER JOIN boletas b on b.id = p.boleta_id
         WHERE r.id = " . $reserva->id . " AND p.estado_pago = 'ACEPTADO'");
+        //return $pagos_aceptados;
         return view('reservar_admin.reportes.comprobante', compact('informacion', 'pagos_aceptados'));
     }
 

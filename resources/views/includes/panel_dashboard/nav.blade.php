@@ -18,18 +18,7 @@
             </ul>
         </li>
 
-        <!--<li class="blue with-sub">
-            <span>
-                <i class="fa fa-user"></i>
-                <span class="lbl">Usuarios</span>
-            </span>
-            <ul>
-                <li><a href="acemilaAsociaciones.php"><span class="lbl">Organizaciones</span><span
-                            class="label label-custom label-pill label-succes">new</span></a></li>
-                <li><a href="#"><span class="lbl">Acémilas</span></a></li>
-            </ul>
-        </li>-->
-
+       
         <li class="green">
             <a href="equipos.php">
                 <i class="font-icon glyphicon glyphicon-send"></i>
