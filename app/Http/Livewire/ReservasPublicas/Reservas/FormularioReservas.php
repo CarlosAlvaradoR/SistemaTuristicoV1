@@ -98,12 +98,22 @@ class FormularioReservas extends Component
         $boletas->numero_boleta = 'BOL-' . $boletas->id;
         $boletas->save();
 
+        if ($this->archivo_pago) {
+            $filename = uniqid() . '_' . time() . rand(1, 1000);
+
+            //$image = $this->archivo_pago->getRealPath();
+            $ext = $this->archivo_pago->getClientOriginalExtension();
+
+            $ruta = $this->archivo_pago->storeAs('archivo', $filename . '.' . $ext, 'private');
+            //$ruta = Storage::disk('private')->putFileAs('photos', $image, $filename);;
+        }
+
         $pagos = Pagos::create([
             'monto' => $this->monto,
             'fecha_pago' => $this->fecha_de_pago,
             'numero_de_operacion' => $this->numero_operacion,
             'estado_pago' => 'EN PROCESO', //EN VERIFICACIÓN DE ACEPTACIÓN
-            'ruta_archivo_pago' => 'storage/' . $this->archivo_pago->store('archivo_pagos', 'public'),
+            'ruta_archivo_pago' => $ruta,
             'reserva_id' => $reserva->id,
             'cuenta_pagos_id' => $this->tipo_pago, //TIPO DE PAGO PARA INSERTAR
             'boleta_id' => $boletas->id

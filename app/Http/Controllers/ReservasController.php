@@ -6,6 +6,7 @@ use App\Models\Paquetes\CondicionPuntualidades;
 use App\Models\Paquetes\Riesgos;
 use App\Models\PaquetesTuristicos;
 use App\Models\Personas;
+use App\Models\Reservas\Pagos;
 use App\Models\Reservas\Reservas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -181,15 +182,17 @@ class ReservasController extends Controller
         return view('reservar_admin.reportes.comprobante', compact('informacion', 'pagos_aceptados'));
     }
 
-    public function mostrarImagen($filename){
-        //return $filename;
-        if (Storage::disk('private')->exists('archivo/642756f1928c7.pdf')) {
+    public function mostrarComprobante($pago){
+        $pago = Pagos::findOrFail($pago);
+        //return $pago->ruta_archivo_pago;
+        if (Storage::disk('private')->exists($pago->ruta_archivo_pago)) {
             // Devolver el archivo como una respuesta HTTP
             //return 'EXISTE';
-            return response()->file(Storage::disk('private')->path('archivo/' . $filename));
+            return response()->file(Storage::disk('private')->path($pago->ruta_archivo_pago));
         } else {
             // Devolver una respuesta de error si el archivo no existe
-            return response()->json(['error' => 'El archivo no existe'], 404);
+            //return response()->json(['error' => 'El archivo no existe'], 404);
+            return abort(404);
         }
 
         /*if (Storage::exists($filename)) {
@@ -197,6 +200,11 @@ class ReservasController extends Controller
         } else {
             abort(404);
         }*/
+    }
+
+    public function deleteImage(){
+        $eliminar = Storage::disk('private')->delete('archivo/642756776b3f5');
+        return $eliminar;
     }
     public function archivo(){
         return 'AAAA';

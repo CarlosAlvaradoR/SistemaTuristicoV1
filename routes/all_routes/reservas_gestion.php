@@ -7,13 +7,15 @@ Route::get('/paquetes/reserva/condiciones-riesgos-justificacionMedica/{reserva}'
 Route::get('/paquetes/reserva/{slug}', [App\Http\Controllers\ReservasController::class, 'reservar'])->name('paquetes.reservar')->middleware(['auth', 'verified']);
 Route::post('/paquetes/reserva/save', [App\Http\Controllers\ReservasController::class, 'guardarReserva'])->name('paquetes.reservar.save')->middleware(['auth', 'verified']);
 
-Route::get('/mostrar/imagen/{image}', [App\Http\Controllers\ReservasController::class, 'mostrarImagen'])->name('reservas.imagen')->middleware(['auth', 'verified']);
+Route::get('/mostrar-comprobante-de-pago/{pago}', [App\Http\Controllers\ReservasController::class, 'mostrarComprobante'])->name('mostrar.comprobante.reserva')->middleware(['auth', 'verified']);
+Route::get('/delete/imagen', [App\Http\Controllers\ReservasController::class, 'deleteImage'])->name('reservas.delete')->middleware(['auth', 'verified']);
 
 
 Route::get('/reservas', [App\Http\Controllers\ReservasController::class, 'mostrarReservas'])->name('reservas.index')->middleware(['auth', 'verified']);
 Route::get('/reserva/{reserva}/editar', [App\Http\Controllers\ReservasController::class, 'editarReserva'])->name('reservas.editar')->middleware(['auth', 'verified']);
 Route::get('/reservas/pagos/{reserva}', [App\Http\Controllers\ReservasController::class, 'pagosRestantes'])->name('reservas.pagos_restantes')->middleware(['auth', 'verified']);
 Route::get('/reservas/solicitudes-devolucion/{reserva}', [App\Http\Controllers\ReservasController::class, 'mostrarSolicitudes'])->name('reservas.solicitudes.devoluciones')->middleware(['auth', 'verified']);
+
 
 Route::get('/solicitudes', [App\Http\Controllers\ReservasController::class, 'mostarTodasLasSolicitudes'])->name('solicitudes.all')->middleware(['auth', 'verified']);
 Route::get('/devoluciones', [App\Http\Controllers\ReservasController::class, 'mostrarDevoluciones'])->name('devoluciones.all')->middleware(['auth', 'verified']);

@@ -7,6 +7,7 @@ use App\Models\Reservas\Pagos;
 use App\Models\Reservas\Reservas;
 use App\Models\Reservas\TipoPagos;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -20,7 +21,7 @@ class PagosPendientes extends Component
     public $datos = "", $paquete = "", $costo_paquete = 0, $monto_pagado = 0;
     public $informacion, $monto_restante = 0, $idBoleta;
     public $identificador;
-    public $idPago, $monto_pago, $fecha_de_pago, $observacion_del_pago,$numero_operacion, $estado_de_pago, $ruta_archivo_pago, $tipo_de_pago; //Para insertar pagos
+    public $idPago, $monto_pago, $fecha_de_pago, $observacion_del_pago, $numero_operacion, $estado_de_pago, $ruta_archivo_pago, $tipo_de_pago; //Para insertar pagos
     public $url_image;
 
 
@@ -34,14 +35,14 @@ class PagosPendientes extends Component
     function resetUI()
     {
         $this->reset([
-            'idPago', 'monto_pago', 'fecha_de_pago', 'observacion_del_pago','numero_operacion', 'estado_de_pago', 'ruta_archivo_pago',
+            'idPago', 'monto_pago', 'fecha_de_pago', 'observacion_del_pago', 'numero_operacion', 'estado_de_pago', 'ruta_archivo_pago',
             'tipo_de_pago', 'url_image'
         ]);
     }
 
     public function mount($reserva_id)
     {
-        $this->identificador=rand();
+        $this->identificador = rand();
 
         $this->idReserva = $reserva_id;
         $this->reserva_object = Reservas::findOrFail($reserva_id);
@@ -92,22 +93,47 @@ class PagosPendientes extends Component
     {
         $ruta = '';
         $this->validate();
-        if ($this->ruta_archivo_pago) {
+        /*if ($this->ruta_archivo_pago) {
             $ruta = 'storage/' . $this->ruta_archivo_pago->store('archivo_pagos', 'public');
-        }
+        }*/
 
-        
+
         if ($this->idPago) {
             # Actualizar
+
             $pago = Pagos::findOrFail($this->idPago);
+            if ($this->ruta_archivo_pago) {
+                $eliminar = Storage::disk('private')->delete($pago->ruta_archivo_pago);
+                $filename = uniqid() . '_' . time() . rand(1, 1000);
+
+                //$image = $this->ruta_archivo_pago->getRealPath();
+                $ext = $this->ruta_archivo_pago->getClientOriginalExtension();
+
+                $ruta = $this->ruta_archivo_pago->storeAs('archivo', $filename . '.' . $ext, 'private');
+                //$ruta = Storage::disk('private')->putFileAs('photos', $image, $filename);;
+            } else {
+                $ruta = $pago->ruta_archivo_pago;
+            }
             $pago->monto = $this->monto_pago;
             $pago->fecha_pago = $this->fecha_de_pago;
+            $pago->numero_de_operacion = $this->numero_operacion;
             $pago->estado_pago = $this->estado_de_pago;
             $pago->observacion_del_pago = $this->observacion_del_pago;
+            $pago->ruta_archivo_pago = $ruta;
             $pago->cuenta_pagos_id = $this->tipo_de_pago;
             $pago->save();
         } else {
             # Crear
+            if ($this->ruta_archivo_pago) {
+                $filename = uniqid() . '_' . time() . rand(1, 1000);
+
+                //$image = $this->ruta_archivo_pago->getRealPath();
+                $ext = $this->ruta_archivo_pago->getClientOriginalExtension();
+
+                $ruta = $this->ruta_archivo_pago->storeAs('archivo', $filename . '.' . $ext, 'private');
+                //$ruta = Storage::disk('private')->putFileAs('photos', $image, $filename);;
+            }
+
             $pagos = Pagos::create([
                 'monto' => $this->monto_pago,
                 'fecha_pago' => $this->fecha_de_pago,
@@ -121,7 +147,7 @@ class PagosPendientes extends Component
             ]);
         }
 
-        $this->identificador=rand();
+        $this->identificador = rand();
 
         $this->dispatchBrowserEvent('swal', [
             'title' => 'MUY BIEN !',

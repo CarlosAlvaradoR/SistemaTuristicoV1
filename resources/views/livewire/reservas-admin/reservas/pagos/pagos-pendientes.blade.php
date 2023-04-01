@@ -135,7 +135,7 @@
                                             </td>
                                             <td>
                                                 @if ($p->ruta_archivo_pago)
-                                                    <a href="{{ asset('/' . $p->ruta_archivo_pago) }}" target="_blank">
+                                                    <a href="{{ route('mostrar.comprobante.reserva', $p->idPago) }}" target="_blank">
                                                         <i class="font-icon font-icon-page"></i> Ver
                                                     </a>
                                                 @else

@@ -86,7 +86,7 @@ class PaquetesReservadosCliente extends Component
         //$this->validate();
         $ruta = '';
         if ($this->ruta_archivo_pago) {
-            $filename = uniqid();
+            $filename = uniqid().'_'.time().rand(1,1000);
             
             //$image = $this->ruta_archivo_pago->getRealPath();
             $ext = $this->ruta_archivo_pago->getClientOriginalExtension();
