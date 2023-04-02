@@ -87,7 +87,7 @@
                                 <th scope="col">Fecha de Reserva</th>
                                 <th scope="col">Monto</th>
                                 {{-- <th scope="col">Estado</th> --}}
-                                <th scope="col">Estado Oficial</th>
+                                <th scope="col">Estado</th>
                                 <th scope="col">Estado de Pagos</th>
                                 <th scope="col">Estado de Cumplimiento</th>
                                 <th scope="col">Acciones</th>
@@ -96,21 +96,15 @@
                         <tbody>
                             @foreach ($reservas as $r)
                                 <tr>
-                                    <!--<th scope="row">1</th>-->
                                     <td>
-                                        {{ $r->dni }}
+                                        <small>{{ $r->dni }}</small>
                                     </td>
-                                    <td>{{ $r->datos }}</td>
-                                    <td>{{ $r->nombre }}</td>
-                                    <td>{{ $r->fecha_reserva }}</td>
-                                    <td>{{ $r->pago }}</td>
-                                    {{-- <td>
-                                        @if ($r->nombre_estado == 'COMPLETADO')
-                                            <span class="label label-success">{{ $r->nombre_estado }}</span>
-                                        @else
-                                            <span class="label label-danger">{{ $r->nombre_estado }}</span>
-                                        @endif
-                                    </td> --}}
+                                    <td><small>{{ $r->datos }}</small></td>
+                                    <td><small>{{$r->nombre}}</small></td>
+                                    <td>
+                                        <small>{{ date('d/m/Y', strtotime($r->fecha_reserva)) }}</small>
+                                    </td>
+                                    <td><small>{{ $r->pago }}</small></td>
                                     <td>
                                         @switch($r->estado_oficial)
                                             @case('PAGO COMPLETADO')
@@ -146,11 +140,22 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($r->estado_reserva == 'PRÓXIMA A CUMPLIRSE')
-                                            <span class="label label-warning">{{ $r->estado_reserva }}</span>
-                                        @else
-                                            <span class="label label-primary">{{ $r->estado_reserva }}</span>
-                                        @endif
+                                        @switch($r->estado_reserva)
+                                            @case('PRÓXIMA A CUMPLIRSE')
+                                                <span class="label label-success">{{ $r->estado_reserva }}</span>
+                                            @break
+
+                                            @case('PASADOS DE FECHA')
+                                                <span class="label label-danger">{{ $r->estado_reserva }}</span>
+                                            @break
+
+                                            @case('EN PROGRAMACIÓN')
+                                                <span class="label label-primary">{{ $r->estado_reserva }}</span>
+                                            @break
+
+                                            @default
+                                        @endswitch
+
                                     </td>
                                     <td style="white-space: nowrap; width: 1%;">
                                         <div class="tabledit-toolbar btn-toolbar" style="text-align: left;">
@@ -158,27 +163,28 @@
                                                 <a href="{{ route('reservas.solicitudes.devoluciones', $r->slug) }}"
                                                     title="Llenar Solicitud de de Devolución" type="button"
                                                     class="tabledit-delete-button btn btn-sm btn-primary"
-                                                    style="float: none;"><span class="fa-solid fa-file"></span>
+                                                    style="float: none;"><i class="fas fa-file-alt"></i>
                                                 </a>
                                                 <a href="{{ route('reservas.pagos_restantes', $r->slug) }}"
-                                                    title="Añadir Pago restante" type="button"
-                                                    class="tabledit-delete-button btn btn-sm btn-warning"
-                                                    style="float: none;"><span class="fas fa-money-check-alt"></span>
+                                                    title="Ver Información de Pagos" type="button"
+                                                    class="tabledit-delete-button btn btn-sm btn-primary"
+                                                    style="float: none;"><i class="far fa-eye"></i>
                                                 </a>
                                                 <a href="{{ route('reservas.comprobante', $r->slug) }}" target="_blank"
                                                     title="Ver Comprobante" type="button"
-                                                    class="tabledit-delete-button btn btn-sm btn-warning"
-                                                    style="float: none;"><span class="fas fa-money-check-alt"></span>
+                                                    class="tabledit-delete-button btn btn-sm btn-primary"
+                                                    style="float: none;"><i class="fas fa-file-invoice"></i>
                                                 </a>
-                                                <a href="{{ route('paquetes.reservar.condiciones.puntualidad', $r->slug) }}" target="_blank"
-                                                    title="Ver Condiciones de Puntualidad" type="button"
-                                                    class="tabledit-delete-button btn btn-sm btn-danger"
-                                                    style="float: none;"><span class="fas fa-money-check-alt"></span>
+                                                <a href="{{ route('paquetes.reservar.condiciones.puntualidad', $r->slug) }}"
+                                                    target="_blank"
+                                                    title="Ver Condiciones de Puntualidad, Riesgos y Justificaciones Médicas"
+                                                    type="button" class="tabledit-delete-button btn btn-sm btn-success"
+                                                    style="float: none;"><i class="fas fa-list"></i>
                                                 </a>
                                                 <a href="{{ route('reservas.editar', $r->slug) }}"
                                                     title="Editar Información de la Reserva" type="button"
-                                                    class="tabledit-delete-button btn btn-sm btn-danger"
-                                                    style="float: none;"><span class="fas fa-money-check-alt"></span>
+                                                    class="tabledit-delete-button btn btn-sm btn-warning"
+                                                    style="float: none;"><i class="fas fa-edit"></i>
                                                 </a>
                                             </div>
                                         </div>
@@ -192,32 +198,32 @@
             </div>
         </div>
         <!--<div class="col-lg-6 ks-panels-column-section">
-                                                            <div class="card">
-                                                                <div class="card-block">
-                                                                    <h5 class="card-title">Validation</h5>
-                                                                    <div>
-                                                                        <fieldset class="form-group has-success">
-                                                                            <div class="fl-flex-label">
-                                                                                <input type="text" class="form-control form-control-success" id="inputSuccess1"
-                                                                                    placeholder="Input with success">
+                                                                    <div class="card">
+                                                                        <div class="card-block">
+                                                                            <h5 class="card-title">Validation</h5>
+                                                                            <div>
+                                                                                <fieldset class="form-group has-success">
+                                                                                    <div class="fl-flex-label">
+                                                                                        <input type="text" class="form-control form-control-success" id="inputSuccess1"
+                                                                                            placeholder="Input with success">
+                                                                                    </div>
+                                                                                </fieldset>
+                                                                                <fieldset class="form-group has-warning">
+                                                                                    <div class="fl-flex-label">
+                                                                                        <input type="text" class="form-control form-control-warning"
+                                                                                            placeholder="Input with warning">
+                                                                                    </div>
+                                                                                </fieldset>
+                                                                                <fieldset class="form-group has-danger">
+                                                                                    <div class="fl-flex-label">
+                                                                                        <input type="text" class="form-control form-control-danger"
+                                                                                            placeholder="Input with danger">
+                                                                                    </div>
+                                                                                </fieldset>
                                                                             </div>
-                                                                        </fieldset>
-                                                                        <fieldset class="form-group has-warning">
-                                                                            <div class="fl-flex-label">
-                                                                                <input type="text" class="form-control form-control-warning"
-                                                                                    placeholder="Input with warning">
-                                                                            </div>
-                                                                        </fieldset>
-                                                                        <fieldset class="form-group has-danger">
-                                                                            <div class="fl-flex-label">
-                                                                                <input type="text" class="form-control form-control-danger"
-                                                                                    placeholder="Input with danger">
-                                                                            </div>
-                                                                        </fieldset>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>-->
+                                                                </div>-->
     </div>
 
     <!--.container-fluid-->
