@@ -175,4 +175,8 @@ class ViajePaquetesController extends Controller
     public function mostrarTiposDeVehiculos(){
         return view('viajes_admin.opciones.tipo_de_vehiculos');
     }
+
+    public function mostrarTiposDeLicencias(){
+        return view('viajes_admin.opciones.tipo_de_licencias');
+    }
 }

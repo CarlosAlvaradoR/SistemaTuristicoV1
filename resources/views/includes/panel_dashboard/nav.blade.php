@@ -98,8 +98,8 @@
                         <span class="lbl">Opciones</span>
                     </span>
                     <ul style="">
-                        <li><a href="#"><span class="lbl">Tipos de Vehículo</span></a></li>
-                        <li><a href="#"><span class="lbl">Level 2</span></a></li>
+                        <li><a href="{{ route('viajes.tipos.de.vehiculos') }}"><span class="lbl">Tipos de Vehículo</span></a></li>
+                        <li><a href="{{ route('viajes.tipos.de.licencias') }}"><span class="lbl">Tipos de Licencias</span></a></li>
                         <li class="with-sub">
                             <span>
                                 <span class="lbl">Level 3</span>

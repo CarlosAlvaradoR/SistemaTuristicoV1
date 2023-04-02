@@ -11,12 +11,13 @@ class TipoDeVehiculo extends Component
 
     public function render()
     {
-       
+
         $tipoVehiculos = TipoVehiculos::all();
         return view('livewire.viajes-admin.viajes.opciones.tipo-de-vehiculo', compact('tipoVehiculos'));
     }
 
-    public function saveTipoDeVehiculo(){
+    public function saveTipoDeVehiculo()
+    {
         $this->validate([
             'nombre_tipo' => 'required|string|min:3'
         ]);
@@ -25,21 +26,20 @@ class TipoDeVehiculo extends Component
             $tipo->nombre_tipo = $this->nombre_tipo;
             $tipo->save();
         } else {
-           $tipo = TipoVehiculos::create(
-            [
-                'nombre_tipo' => $this->nombre_tipo
-            ]
-        );
+            $tipo = TipoVehiculos::create(
+                [
+                    'nombre_tipo' => $this->nombre_tipo
+                ]
+            );
         }
-        
-        
     }
 
-    public function Edit(TipoVehiculos $tipo){
+    public function Edit(TipoVehiculos $tipo)
+    {
         //dd($tipo);
         $this->idTipoVehiculo = $tipo->id;
         $this->nombre_tipo = $tipo->nombre_tipo;
 
-        $this->emit('show-modal','abrir editar');
+        $this->emit('show-modal', 'abrir editar');
     }
 }
