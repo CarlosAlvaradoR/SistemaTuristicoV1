@@ -149,7 +149,7 @@
                                         <td>{{ $s->nombre_evento }}</td>
                                         <td>{{ $s->fecha_presentacion }}</td>
                                         <td>
-                                            @if ($s->estado = 'POR PROCESAR')
+                                            @if ($s->estado == 'POR PROCESAR')
                                                 <span class="label label-danger">{{ $s->estado }}</span>
                                             @else
                                                 <span class="label label-success">{{ $s->estado }}</span>

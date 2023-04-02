@@ -88,7 +88,9 @@ RESERVAS
 
        php artisan make:livewire ReservasAdmin/Reservas/CriteriosMedicos/CriteriosMedicos 
 
-       php artisan make:livewire ReservasAdmin/Reservas/Pagos/PagosPendientes 
+       php artisan make:livewire ReservasAdmin/Reservas/Pagos/PagosPendientes
+
+       php artisan make:livewire ReservasAdmin/Reservas/Reservas 
 
 
     RESERVAS PÚBLICAS

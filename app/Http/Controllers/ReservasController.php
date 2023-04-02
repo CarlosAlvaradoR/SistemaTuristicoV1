@@ -148,10 +148,10 @@ class ReservasController extends Controller
             ->groupBy('pa.reserva_id')
             ->orderBy('r.updated_at', 'DESC')
             ->get();*/
-        $reservas = DB::select('SELECT * FROM v_reserva_reservas_general');
+        
         //return $reservas;
         //return $consulta;
-        return view('reservar_admin.all_reservas', compact('reservas'));
+        return view('reservar_admin.all_reservas');
     }
 
     public function editarReserva(Reservas $reserva){
@@ -250,7 +250,7 @@ class ReservasController extends Controller
                 'dd.monto',
                 'r.id'*/
             )
-            ->paginate(50);
+            ->get();
         //$solicitudes =  [];
         //return $solicitudes;
         return view('reservar_admin.solicitudes.all_solicitudes', compact('solicitudes'));

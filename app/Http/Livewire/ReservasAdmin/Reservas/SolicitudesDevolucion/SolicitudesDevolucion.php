@@ -126,8 +126,7 @@ class SolicitudesDevolucion extends Component
             )
             ->get();
 
-        return view(
-            'livewire.reservas-admin.reservas.solicitudes-devolucion.solicitudes-devolucion',
+        return view('livewire.reservas-admin.reservas.solicitudes-devolucion.solicitudes-devolucion',
             compact(
                 'eventos',
                 'pagos',
