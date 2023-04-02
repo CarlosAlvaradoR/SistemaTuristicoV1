@@ -267,6 +267,20 @@ class ReservasController extends Controller
 
     public function reportSolicitudesRealizadas(Reservas $reserva)
     {
+        //return $reserva;
+        $informacion = DB::select("SELECT CONCAT(p.nombre, ' ',p.apellidos) as datos, p.telefono, pt.nombre, r.fecha_reserva, r.id,
+        ep.nombre_evento, pr.fecha_postergacion, pr.descripcion_motivo, pr.documento_sustentatorio,
+        sdd.pedido, sdd.fecha_presentacion, sdd.estado, sdd.descripcion_solicitud
+        FROM personas p
+        INNER JOIN clientes c on p.id = c.persona_id
+        INNER JOIN reservas r on r.cliente_id = c.id
+        INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
+        LEFT JOIN postergacion_reservas pr on pr.reserva_id = r.id
+        LEFT JOIN evento_postergaciones ep on ep.id = pr.evento_postergaciones_id
+        LEFT JOIN solicitud_devolucion_dineros sdd on sdd.postergacion_reservas_id = pr.id
+        WHERE r.id = ".$reserva->id."
+        LIMIT 1");
+
         $solicitud_pagos_devoluciones = DB::table('solicitud_pagos as sp')
             ->join('pagos as p', 'sp.pagos_id', '=', 'p.id')
             ->leftJoin('devolucion_dineros as dd', 'dd.solicitud_pagos_id', '=', 'sp.id')
@@ -281,7 +295,7 @@ class ReservasController extends Controller
                 'dd.fecha_hora'
             )
             ->get();
-        $pdf = Pdf::loadView('reservar_admin.reportes.solicitud_de_presentacion', compact('solicitud_pagos_devoluciones'));
+        $pdf = Pdf::loadView('reservar_admin.reportes.solicitud_de_presentacion', compact('solicitud_pagos_devoluciones', 'informacion'));
         //return $pdf->download('invoice.pdf');
         $pdf->set_paper('a4', 'landscape');
         return $pdf->stream('invoice.pdf');

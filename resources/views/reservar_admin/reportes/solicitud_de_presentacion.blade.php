@@ -15,53 +15,107 @@
 </head>
 
 <body>
+    @php
+        $var = count($informacion);
+    @endphp
     <h4 class="text-center">SOLICITUD DE DEVOLUCIÓN</h4>
-    <h5 class="float-right">Solicito: Devolución de Dinero</h5>
-    <br>
-    <br>
-    <h5>Fecha de Presentación de Solicitud: <small>12/12/2023<small></h5>
-    <h5>Evento de Postergación: <small>CANCEL</small></h5>
-    <h5>Estado de Solicitud: <small>NO PROCESADO</small></h5>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque doloribus aspernatur quibusdam. Impedit hic saepe
-        sint nam quam aliquid consectetur magnam aspernatur iste beatae porro, praesentium accusantium recusandae
-        pariatur et?</p>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Fecha Pres. Solicitud</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Observación de Solicitud</th>
-                <th scope="col">Monto Solicitado</th>
-                <th scope="col">Monto Devuelto</th>
-                <th scope="col">Observación de Devolución</th>
-                <th scope="col">Fecha/Hora de Devolución</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($solicitud_pagos_devoluciones as $spd)
+    @if (count($informacion))
+        <h6 class="float-right">Solicito:
+            <small>
+                @if ($informacion[0]->pedido)
+                    {{ $informacion[0]->pedido }}
+                @else
+                    NULL
+                @endif
+                - <b>Fech. Pres. Sol. :</b>
+                @if ($informacion[0]->fecha_presentacion)
+                    {{ date('d/m/Y', strtotime($informacion[0]->fecha_presentacion)) }}
+                @else
+                    NULL
+                @endif
+            </small>
+        </h6>
+        <br>
+        <br>
+        <h6>NOMBRES Y APELIDOS: <small>{{ $informacion[0]->datos }}</small> | PAQUETE RESERVADO:
+            <small>{{ $informacion[0]->nombre }}</small> |
+            FECHA RESERVADA: <small>{{ date('d/m/Y', strtotime($informacion[0]->fecha_reserva)) }}</small>
+        </h6>
+        <h6>FECHA DE POSTERGACIÓN: 
+            <small>
+                @if ($informacion[0]->fecha_postergacion)
+                     {{ date('d/m/Y', strtotime($informacion[0]->fecha_postergacion)) }}
+                @else
+                    NULL
+                @endif
+               
+            </small>
+        </h6>
+        <h6>Evento de Postergación: <small>
+            @if ($informacion[0]->nombre_evento)
+                {{ $informacion[0]->nombre_evento }}</small>
+            @else
+                No Detalla
+            @endif
+            
+        </h6>
+        <h6>Descripción/Motivo de Postergación: <small>{{ $informacion[0]->descripcion_motivo }}</small></h6>
+        <h6>Estado de Solicitud: <small>{{ $informacion[0]->estado }}</small></h6>
+        <h6> Documento Sustentatorio:
+            <small>
+                @if ($informacion[0]->documento_sustentatorio)
+                    SI PRESENTÓ
+                @else
+                    -
+                @endif
+            </small>
+
+        </h6>
+        <p>{{ $informacion[0]->descripcion_solicitud }}</p>
+
+
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <th scope="row">1</th>
-                    <td><small>12/12/2023</small></td>
-                    <td>
-
-                        @if ($spd->estdo_solicitud == 'NO DEVUELTO')
-                            <span class="badge badge-pill badge-danger">{{ $spd->estdo_solicitud }}</span>
-                        @else
-                            <span class="badge badge-pill badge-success">{{ $spd->estdo_solicitud }}</span>
-                        @endif
-                    </td>
-                    <td>{{ $spd->observacion }}</td>
-                    <td>{{ $spd->monto }}</td>
-                    <th>{{ $spd->montoDevolucion }}</th>
-                    <th>{{ $spd->observacionDevolucion }}</th>
-                    <th>{{ $spd->fecha_hora }}</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Fecha Pres. Solicitud</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Observación de Solicitud</th>
+                    <th scope="col">Monto Solicitado</th>
+                    <th scope="col">Monto Devuelto</th>
+                    <th scope="col">Observación de Devolución</th>
+                    <th scope="col">Fecha/Hora de Devolución</th>
                 </tr>
-            @endforeach
+            </thead>
+            <tbody>
+                @foreach ($solicitud_pagos_devoluciones as $spd)
+                    <tr>
+                        <th scope="row">1</th>
+                        <td><small>12/12/2023</small></td>
+                        <td>
 
-        </tbody>
-    </table>
+                            @if ($spd->estdo_solicitud == 'NO DEVUELTO')
+                                <span class="badge badge-pill badge-danger">{{ $spd->estdo_solicitud }}</span>
+                            @else
+                                <span class="badge badge-pill badge-success">{{ $spd->estdo_solicitud }}</span>
+                            @endif
+                        </td>
+                        <td>{{ $spd->observacion }}</td>
+                        <td>{{ $spd->monto }}</td>
+                        <th>{{ $spd->montoDevolucion }}</th>
+                        <th>{{ $spd->observacionDevolucion }}</th>
+                        <th>{{ $spd->fecha_hora }}</th>
+                    </tr>
+                @endforeach
+
+            </tbody>
+        </table>
+    @else
+        <h1 class="text-danger">Necesita Llenar la Información Necesaria para poder mostrar la Información de la
+            Solicitud.</h1>
+    @endif
+
 
 
     <!-- Optional JavaScript -->

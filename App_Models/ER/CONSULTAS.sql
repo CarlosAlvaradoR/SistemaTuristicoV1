@@ -418,6 +418,20 @@ SELECT * FROM nacionalidades;
 /*
 REPORTES
 */
+-- INFORMACIÓN DEL CLIENTE EN SUS RESERVAS PARA IMPRIMIR SOLICITUDES
+SELECT CONCAT(p.nombre, ' ',p.apellidos) as datos, p.telefono, pt.nombre, r.fecha_reserva, r.id,
+ep.nombre_evento, pr.fecha_postergacion, pr.descripcion_motivo, pr.documento_sustentatorio,
+sdd.pedido, sdd.fecha_presentacion, sdd.estado, sdd.descripcion_solicitud
+FROM personas p
+INNER JOIN clientes c on p.id = c.persona_id
+INNER JOIN reservas r on r.cliente_id = c.id
+INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
+LEFT JOIN postergacion_reservas pr on pr.reserva_id = r.id
+LEFT JOIN evento_postergaciones ep on ep.id = pr.evento_postergaciones_id
+LEFT JOIN solicitud_devolucion_dineros sdd on sdd.postergacion_reservas_id = pr.id
+WHERE r.id = 4
+LIMIT 1;
+
 -- COMPROBANTE DE LAS RESERVAS
 SELECT CONCAT(p.nombre, ' ',p.apellidos) as datos, p.telefono, pt.nombre, r.fecha_reserva, r.id FROM personas p
 INNER JOIN clientes c on p.id = c.persona_id

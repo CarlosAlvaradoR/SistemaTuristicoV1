@@ -131,7 +131,7 @@
                                                                 wire:click="select({{ $tp->id }})"
                                                                 wire:loading.attr="disabled" title="Seleccionar"
                                                                 class="btn btn-primary btn-sm">
-                                                                <i class="fas fa-mouse-pointer"></i>
+                                                                <i class="fa fa-mouse-pointer"></i>
                                                             </button>
                                                         </td>
                                                     </tr>
