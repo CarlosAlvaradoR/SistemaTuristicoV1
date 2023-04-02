@@ -155,6 +155,8 @@ VIAJES
 
        php artisan make:livewire ViajesAdmin/Viajes/Arriero/Arriero
 
+       php artisan make:livewire ViajesAdmin/Viajes/Opciones/TipoDeVehiculo
+
 
 
 

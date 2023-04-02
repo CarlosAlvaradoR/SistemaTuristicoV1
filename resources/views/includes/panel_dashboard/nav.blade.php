@@ -18,7 +18,7 @@
             </ul>
         </li>
 
-       
+
         <li class="green">
             <a href="equipos.php">
                 <i class="font-icon glyphicon glyphicon-send"></i>
@@ -66,11 +66,13 @@
                             class="label label-custom label-pill label-success">new</span></a></li>
                 <li><a href="{{ route('solicitudes.all') }}"><span class="lbl">Solicitudes</span></a></li>
                 <li><a href="{{ route('devoluciones.all') }}"><span class="lbl">Devoluciones (Nuevo)</span></a></li>
-                <li><a href="{{ route('criterios_medicos.all') }}"><span class="lbl">Criterios Médicos</span></a></li>
+                <li><a href="{{ route('criterios_medicos.all') }}"><span class="lbl">Criterios Médicos</span></a>
+                </li>
                 <li><a href="{{ route('eventos.postergacion.index') }}"><span class="lbl">Eventos de
                             Postergación</span><span class="label label-custom label-pill label-success">new</span></a>
-                </li> 
-                <li><a href="{{ route('tipo.pagos.cuentas') }}"><span class="lbl">Tipo de Pago - Cuentas</span></a></li>
+                </li>
+                <li><a href="{{ route('tipo.pagos.cuentas') }}"><span class="lbl">Tipo de Pago - Cuentas</span></a>
+                </li>
                 <li><a href="{{ route('consultar.reservas') }}"><span class="lbl">Consultar Reservas</span></a></li>
                 <li><a href="{{ route('reservas.reportes.generales') }}"><span class="lbl">Reportes</span></a></li>
             </ul>
@@ -91,6 +93,24 @@
                 <li><a href="{{ route('viajes.arriero') }}"><span class="lbl">Arriero</span></a></li>
                 <li><a href="#!"><span class="lbl">Asociaciones</span></a></li>
                 <li><a href="#!"><span class="lbl">Hoteles</span></a></li>
+                <li class="with-sub">
+                    <span>
+                        <span class="lbl">Opciones</span>
+                    </span>
+                    <ul style="">
+                        <li><a href="#"><span class="lbl">Tipos de Vehículo</span></a></li>
+                        <li><a href="#"><span class="lbl">Level 2</span></a></li>
+                        <li class="with-sub">
+                            <span>
+                                <span class="lbl">Level 3</span>
+                            </span>
+                            <ul style="">
+                                <li><a href="#"><span class="lbl">Level 3</span></a></li>
+                                <li><a href="#"><span class="lbl">Level 3</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </li>
 

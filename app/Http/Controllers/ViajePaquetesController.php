@@ -171,4 +171,8 @@ class ViajePaquetesController extends Controller
     public function mostrarArrieros(){
         return view('viajes_admin.arriero.arriero');
     }
+
+    public function mostrarTiposDeVehiculos(){
+        return view('viajes_admin.opciones.tipo_de_vehiculos');
+    }
 }

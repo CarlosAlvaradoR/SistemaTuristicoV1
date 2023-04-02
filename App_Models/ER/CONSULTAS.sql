@@ -597,7 +597,7 @@ INNER JOIN reservas r on r.cliente_id = c.id
 INNER JOIN participantes par on par.reserva_id = r.id
 INNER JOIN asistentes a on a.participantes_id = par.id;
 
-
+SELECT * FROM tipo_vehiculos;
 
 select * from v_viaje_clientes_participantes_reservas
 WHERE id NOT IN (SELECT a.participantes_id FROM asistentes as a 

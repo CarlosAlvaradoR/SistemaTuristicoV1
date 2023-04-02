@@ -27,3 +27,7 @@ Route::get('/viajes/chofer', [App\Http\Controllers\ViajePaquetesController::clas
 Route::get('/viajes/cocinero', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarListaCocineros'])->name('viajes.cocinero')->middleware(['auth', 'verified']);
 Route::get('/viajes/guia', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarListaGuias'])->name('viajes.guia')->middleware(['auth', 'verified']);
 Route::get('/viajes/arriero', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarArrieros'])->name('viajes.arriero')->middleware(['auth', 'verified']);
+
+
+
+Route::get('/viajes/tipos-de-vehiculos', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarTiposDeVehiculos'])->name('viajes.tipos.de.vehiculos')->middleware(['auth', 'verified']);
