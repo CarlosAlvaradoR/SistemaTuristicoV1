@@ -183,4 +183,8 @@ class ViajePaquetesController extends Controller
     public function mostrarAsociaciones(){
         return view('viajes_admin.opciones.asociaciones');
     }
+
+    public function mostrarHoteles(){
+        return view('viajes_admin.opciones.hoteles');
+    }
 }

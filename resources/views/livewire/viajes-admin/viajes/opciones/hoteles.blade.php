@@ -3,7 +3,7 @@
         <div class="col-lg-12 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Asociaciones</h5>
+                    <h5 class="card-title">Hoteles</h5>
 
                     <div class="row">
                         <div class="col-md-9">
@@ -13,33 +13,37 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <a id="modal-532427" href="#modal_asociaciones" role="button" class="btn btn-rounded"
-                                data-toggle="modal">Crear Asociación</a>
+                            <a id="modal-532427" href="#modal_hoteles" role="button" class="btn btn-rounded"
+                                data-toggle="modal">Crear Hotel</a>
                         </div>
                     </div>
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">ASOCIACIÓN</th>
-                                <th scope="col">ESTADO</th>
-                                <th scope="col">ACCIONES</th>
+                                <th scope="col">Hotel</th>
+                                <th scope="col">Dirección</th>
+                                <th scope="col">Teléfono</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($asociaciones as $a)
+                            @foreach ($hoteles as $h)
                                 <tr>
                                     <td>
-                                        {{ $a->nombre }}
+                                        {{ $h->nombre }}
                                     </td>
                                     <td>
-                                        @if ($a->estado == 1)
-                                            <span class="label label-success">VIGENTE</span>
-                                        @else
-                                            <span class="label label-danger">NO VIGENTE</span>
-                                        @endif
+                                        {{ $h->direccion }}
                                     </td>
                                     <td>
-                                        <button type="button" wire:click="Edit({{ $a->id }})"
+                                        {{ $h->telefono }}
+                                    </td>
+                                    <td>
+                                        {{ $h->email }}
+                                    </td>
+                                    <td>
+                                        <button type="button" wire:click="Edit({{ $h->id }})"
                                             title="Añadir a la lista de Participantes"
                                             class="btn btn-sm btn-rounded btn-warning">
                                             <i class="fas fa-edit"></i>
@@ -72,7 +76,7 @@
 
 
     <!--MODAL --->
-    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal_asociaciones"
+    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal_hoteles"
         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -90,25 +94,39 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nombre">
-                                    Asociacion <span class="text-danger">(*)</span>
+                                    Hotel <span class="text-danger">(*)</span>
                                 </label>
                                 <input type="text" wire:model.defer="nombre" class="form-control" id="nombre" />
                                 @error('nombre')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+                            <div class="form-group">
+                                <label for="telefono">
+                                    Teléfono <span class="text-danger">(*)</span>
+                                </label>
+                                <input type="text" wire:model.defer="telefono" class="form-control" id="telefono" />
+                                @error('telefono')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="estado">
-                                    Estado <span class="text-danger">(*)</span>
+                                <label for="direccion">
+                                    Dirección <span class="text-danger">(*)</span>
                                 </label>
-                                <select class="form-control" wire:model.defer="estado" id="estado">
-                                    <option value="">Seleccione</option>
-                                    <option value="1">VIGENTE</option>
-                                    <option value="2">NO VIGENTE</option>
-                                </select>
-                                @error('estado')
+                                <input type="text" wire:model.defer="direccion" class="form-control" id="direccion" />
+                                @error('direccion')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="email">
+                                    Email <span class="text-danger">(*)</span>
+                                </label>
+                                <input type="text" wire:model.defer="email" class="form-control" id="email" />
+                                @error('email')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -118,12 +136,12 @@
                         <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
                             Cerrar
                         </button>
-                        @if ($idAsociaciones)
-                            <button type="button" wire:click="saveAsociacion" class="btn btn-rounded btn-primary">
+                        @if ($idHoteles)
+                            <button type="button" wire:click="saveHotel" class="btn btn-rounded btn-primary">
                                 Actualizar
                             </button>
                         @else
-                            <button type="button" wire:click="saveAsociacion" class="btn btn-rounded btn-primary">
+                            <button type="button" wire:click="saveHotel" class="btn btn-rounded btn-primary">
                                 Guardar
                             </button>
                         @endif
@@ -142,10 +160,10 @@
         document.addEventListener('DOMContentLoaded', function() {
             //Lo que llega de CategoriesController
             window.livewire.on('show-modal', msg => {
-                $('#modal_asociaciones').modal('show')
+                $('#modal_hoteles').modal('show')
             });
             window.livewire.on('traslados-updated', msg => {
-                $('#modal_asociaciones').modal('hide')
+                $('#modal_hoteles').modal('hide')
                 Swal.fire(
                     'MUY BIEN',
                     msg,

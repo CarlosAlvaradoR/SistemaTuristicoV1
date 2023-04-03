@@ -161,6 +161,8 @@ VIAJES
 
        php artisan make:livewire ViajesAdmin/Viajes/Opciones/Asociaciones
 
+       php artisan make:livewire ViajesAdmin/Viajes/Opciones/Hoteles
+
 
 
 

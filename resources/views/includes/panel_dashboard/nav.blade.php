@@ -92,7 +92,7 @@
                 <li><a href="{{ route('viajes.guia') }}"><span class="lbl">Guía</span></a></li>
                 <li><a href="{{ route('viajes.arriero') }}"><span class="lbl">Arriero</span></a></li>
                 <li><a href="#!"><span class="lbl">Asociaciones</span></a></li>
-                <li><a href="#!"><span class="lbl">Hoteles</span></a></li>
+                <li><a href="{{ route('viajes.mostrar.hoteles') }}"><span class="lbl">Hoteles</span></a></li>
                 <li class="with-sub">
                     <span>
                         <span class="lbl">Opciones</span>
