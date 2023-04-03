@@ -159,6 +159,8 @@ VIAJES
 
        php artisan make:livewire ViajesAdmin/Viajes/Opciones/TipoDeLicencias
 
+       php artisan make:livewire ViajesAdmin/Viajes/Opciones/Asociaciones
+
 
 
 
