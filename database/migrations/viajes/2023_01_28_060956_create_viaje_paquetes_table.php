@@ -20,6 +20,8 @@ return new class extends Migration
             $table->time('hora');
             $table->integer('cantidad_participantes');
             $table->integer('estado'); //ABIERTO Y CERRADO
+            $table->string('cod_string', 45);
+            $table->text('slug');
 
             $table->unsignedBigInteger('paquete_id');
             $table->foreign('paquete_id')->references('id')->on('paquetes_turisticos');

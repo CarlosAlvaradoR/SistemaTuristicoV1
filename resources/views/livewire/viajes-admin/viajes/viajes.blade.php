@@ -3,7 +3,7 @@
         <div class="col-lg-12 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Lista de Todas los Viajes</h5>
+                    <h5 class="card-title">Lista de Todos los Viajes</h5>
 
                     <div class="row">
                         <div class="col-md-6">
@@ -68,7 +68,21 @@
                                         {{ $v->hora }}
                                     </td>
                                     <td>
-                                        {{ $v->estado }}
+                                        @switch($v->estado)
+                                            @case(1)
+                                                <span class="label label-warning">PROGRAMANDO</span>
+                                            @break
+
+                                            @case(2)
+                                                <span class="label label-primary">REALIZÁNDOCE</span>
+                                            @break
+
+                                            @case(3)
+                                                <span class="label label-success">FINALIZADO</span>
+                                            @break
+
+                                            @default
+                                        @endswitch
                                     </td>
                                     <td>
 
@@ -78,7 +92,7 @@
                                                 aria-expanded="false">Opciones</button>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.participantes', [$paquete, $v->id]) }}"><i
+                                                    href="{{ route('paquete.viajes.participantes', [$paquete, $v->slug]) }}"><i
                                                         class="fas fa-user-friends"></i> Part. del
                                                     Viaje</a>
                                                 <a class="dropdown-item" href="#"><i class="fa-solid fa-eye"></i>
@@ -117,7 +131,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <button type="button" wire:click="Edit({{ $v->id }})"
+                                        <button type="button" wire:click="Edit('{{ $v->slug }}')"
                                             class="tabledit-edit-button btn btn-sm btn-warning" style="float: none;">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </button>
@@ -125,8 +139,8 @@
                                             class="tabledit-edit-button btn btn-sm btn-primary" style="float: none;">
                                             <i class="glyphicon fas fa-shuttle-van"></i>
                                         </a>
-                                        <button type="button" wire:click="deleteConfirm({{ $v->id }})" class="tabledit-delete-button btn btn-sm btn-danger"
-                                            style="float: none;">
+                                        <button type="button" wire:click="deleteConfirm({{ $v->id }})"
+                                            class="tabledit-delete-button btn btn-sm btn-danger" style="float: none;">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </button>
                                     </td>
@@ -193,13 +207,26 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-
                                     <label for="cantidad_participantes">
                                         Cantidad de Participantes <span class="text-danger">(*)</span>
                                     </label>
                                     <input type="number" wire:model.defer="cantidad_participantes"
                                         class="form-control" id="cantidad_participantes" />
                                     @error('cantidad_participantes')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="estado">
+                                        Estado del Viaje <span class="text-danger">(*)</span>
+                                    </label>
+                                    <select class="form-control" wire:model.defer="estado" id="estado">
+                                        <option value="">...Seleccione...</option>
+                                        <option value="1">PROGRAMANDO</option>
+                                        <option value="2">REALIZÁNDOCE</option>
+                                        <option value="3">FINALIZADO</option>
+                                    </select>
+                                    @error('estado')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -211,9 +238,9 @@
                             wire:loading.attr="disabled" data-dismiss="modal">
                             Cerrar
                         </button>
-                        @if ($edicion)
-                            <button type="button" id="upd-v-p" wire:click="Update" wire:loading.attr="disabled"
-                                class="btn btn-rounded btn-primary">
+                        @if ($idViajePaquete)
+                            <button type="button" id="upd-v-p" wire:click="saveViaje"
+                                wire:loading.attr="disabled" class="btn btn-rounded btn-primary">
                                 Actualizar
                             </button>
                         @else
