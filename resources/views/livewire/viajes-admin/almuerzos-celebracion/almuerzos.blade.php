@@ -32,16 +32,16 @@
                             @foreach ($almuerzos as $al)
                                 <tr>
                                     <td>
-                                        {{$al->descripcion}}
+                                        {{ $al->descripcion }}
                                     </td>
                                     <td>
-                                        {{$al->cantidad}}
+                                        {{ $al->cantidad }}
                                     </td>
                                     <td>
-                                        {{$al->monto}}
+                                        {{ $al->monto }}
                                     </td>
                                     <td>
-                                        {{$al->nombre}}
+                                        {{ $al->nombre }}
                                     </td>
                                     <td>
                                         <button type="button" title="Añadir a la lista de Participantes"
@@ -59,14 +59,14 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                        
-                              <th colspan="2">Total</th>
-                        
-                              <th colspan="4">{{$total[0]->Monto}}</th>
-                        
+
+                                <th colspan="2">Total</th>
+
+                                <th colspan="4">{{ $total[0]->Monto }}</th>
+
                             </tr>
-                        
-                          </tfoot>
+
+                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -91,64 +91,64 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <form role="form">
-                                <div class="form-group">
-                                    <label for="descripcion">
-                                        Descripción <span class="text-danger">(*)</span>
-                                    </label>
-                                    <textarea class="form-control" wire:model.defer="descripcion" id="descripcion" rows="4"></textarea>
-                                    @error('descripcion')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
+                            <div class="form-group">
+                                <label for="descripcion">
+                                    Descripción <span class="text-danger">(*)</span>
+                                </label>
+                                <textarea class="form-control" wire:model.defer="descripcion" id="descripcion" rows="4"></textarea>
+                                @error('descripcion')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
 
-                                    <label for="cantidad">
-                                        Cantidad <span class="text-danger">(*)</span>
-                                    </label>
-                                    <input type="number" wire:model.defer="cantidad" class="form-control"
-                                        id="cantidad" />
-                                    @error('cantidad')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </form>
+                                <label for="cantidad">
+                                    Cantidad <span class="text-danger">(*)</span>
+                                </label>
+                                <input type="number" wire:model.defer="cantidad" class="form-control" id="cantidad" />
+                                @error('cantidad')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <form role="form">
-                                <div class="form-group">
-                                    <label for="monto">
-                                        Monto <span class="text-danger">(*)</span>
-                                    </label>
-                                    <input type="text" wire:model.defer="monto" class="form-control"
-                                        id="monto" />
-                                    @error('monto')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
+                            <div class="form-group">
+                                <label for="monto">
+                                    Monto <span class="text-danger">(*)</span>
+                                </label>
+                                <input type="text" wire:model.defer="monto" class="form-control" id="monto" />
+                                @error('monto')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
 
-                                    <label for="asociacion">
-                                        Asociación <span class="text-danger">(*)</span>
-                                    </label>
-                                    <select class="form-control" id="asociacion" wire:model.defer="asociacion">
-                                        <option value="0" selected>...Seleccione...</option>
-                                        @foreach ($asociaciones as $a)
-                                            <option value="{{ $a->id }}">{{ $a->nombre }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('asociacion')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </form>
+                                <label for="asociacion">
+                                    Asociación <span class="text-danger">(*)</span>
+                                    <a href="{{ route('viajes.tipos.de.vehiculos') }}" target="_blank"
+                                        title="Ver Asociaciones Registradas" wire:click="render"><i
+                                            class="fas fa-exclamation"></i></a>
+                                    <button type="button" class="btn btn-sm btn-rounded" title="Refrescar"
+                                        wire:click="render"><i class="fas fa-sync-alt"></i></button>
+                                </label>
+                                <select class="form-control" id="asociacion" wire:model.defer="asociacion">
+                                    <option value="0" selected>...Seleccione...</option>
+                                    @foreach ($asociaciones as $a)
+                                        <option value="{{ $a->id }}">{{ $a->nombre }}</option>
+                                    @endforeach
+                                </select>
+                                @error('asociacion')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
                             Cerrar
                         </button>
-                        <button type="button" wire:click="guardarAlmuerzoCelebración" class="btn btn-rounded btn-primary">
+                        <button type="button" wire:click="guardarAlmuerzoCelebración"
+                            class="btn btn-rounded btn-primary">
                             Guardar
                         </button>
 

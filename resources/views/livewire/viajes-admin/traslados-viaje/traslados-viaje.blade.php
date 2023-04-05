@@ -76,65 +76,6 @@
                 </div>
             </div>
         </div>
-        <!--<div class="col-lg-6 ks-panels-column-section">
-            <div class="card">
-                <div class="card-block">
-                    <h5 class="card-title">Lista de Participantes</h5>
-                    <div class="form-group has-search">
-                        <span class="fa fa-search form-control-feedback"></span>
-                        <input type="text" class="form-control" placeholder="Buscar Cliente">
-                    </div>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">CLIENTE</th>
-                                <th scope="col">Acción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    <button type="button" title="Quitar de la Lista de Participantes"
-                                        class="btn btn-sm btn-rounded btn-danger">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 ks-panels-column-section">
-            <div class="card">
-                <div class="card-block">
-                    <h5 class="card-title">Validation</h5>
-                    <div>
-                        <fieldset class="form-group has-success">
-                            <div class="fl-flex-label">
-                                <input type="text" class="form-control form-control-success" id="inputSuccess1"
-                                    placeholder="Input with success">
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group has-warning">
-                            <div class="fl-flex-label">
-                                <input type="text" class="form-control form-control-warning"
-                                    placeholder="Input with warning">
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group has-danger">
-                            <div class="fl-flex-label">
-                                <input type="text" class="form-control form-control-danger"
-                                    placeholder="Input with danger">
-                            </div>
-                        </fieldset>
-                    </div>
-                </div>
-            </div>
-        </div>-->
     </div>
 
 
@@ -155,57 +96,57 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <form role="form">
-                                <div class="form-group">
-                                    <label for="descripcion">
-                                        Descripción <span class="text-danger">(*)</span>
-                                    </label>
-                                    <textarea class="form-control" wire:model.defer="descripcion" id="descripcion" rows="4"></textarea>
-                                    @error('descripcion')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
+                            <div class="form-group">
+                                <label for="descripcion">
+                                    Descripción <span class="text-danger">(*)</span>
+                                </label>
+                                <textarea class="form-control" wire:model.defer="descripcion" id="descripcion" rows="4"></textarea>
+                                @error('descripcion')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
 
-                                    <label for="fecha_viaje">
-                                        Fecha <span class="text-danger">(*)</span>
-                                    </label>
-                                    <input type="date" wire:model.defer="fecha" class="form-control"
-                                        id="fecha_viaje" />
-                                    @error('fecha')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </form>
+                                <label for="fecha_viaje">
+                                    Fecha <span class="text-danger">(*)</span>
+                                </label>
+                                <input type="date" wire:model.defer="fecha" class="form-control" id="fecha_viaje" />
+                                @error('fecha')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <form role="form">
-                                <div class="form-group">
-                                    <label for="monto">
-                                        Monto <span class="text-danger">(*)</span>
-                                    </label>
-                                    <input type="text" wire:model.defer="monto" class="form-control"
-                                        id="monto" />
-                                    @error('monto')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
+                            <div class="form-group">
+                                <label for="monto">
+                                    Monto <span class="text-danger">(*)</span>
+                                </label>
+                                <input type="text" wire:model.defer="monto" class="form-control" id="monto" />
+                                @error('monto')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
 
-                                    <label for="vehiculo">
-                                        Vehículo <span class="text-danger">(*)</span>
-                                    </label>
-                                    <select wire:model.defer="vehiculo" class="form-control" id="vehiculo">
-                                        <option selected value="0">...Seleccione ...</option>
-                                        @foreach ($vehiculos as $v)
-                                            <option value="{{ $v->id }}">{{ $v->numero_placa }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('vehiculo')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </form>
+                                <label for="vehiculo">
+                                    Vehículo <span class="text-danger">(*) </span>
+                                    <a href="{{ route('viajes.empresas_transporte') }}" target="_blank"
+                                        title="Crear Vehículo" class="font-weight-bold"><i
+                                            class="fas fa-exclamation"></i></a>
+                                    <button class="btn btn-sm btn-rounded" title="Refrescar" wire:click="render"><i
+                                            class="fas fa-sync-alt"></i></button>
+                                </label>
+                                <select wire:model.defer="vehiculo" class="form-control" id="vehiculo">
+                                    <option selected value="0">...Seleccione ...</option>
+                                    @foreach ($vehiculos as $v)
+                                        <option value="{{ $v->id }}">{{ $v->numero_placa }}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('vehiculo')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">

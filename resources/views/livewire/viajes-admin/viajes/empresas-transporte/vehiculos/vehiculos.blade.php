@@ -152,6 +152,10 @@
 
                             <label for="tipo_de_vehiculo">
                                 Tipo de Vehículo <span class="text-danger">(*)</span>
+                                <a href="{{ route('viajes.tipos.de.vehiculos') }}" target="_blank" title="Ver Tipos de Vehículo" wire:click="render"><i
+                                        class="fas fa-exclamation"></i></a>
+                                <button class="btn btn-sm btn-rounded" title="Refrescar" wire:click="render"><i
+                                        class="fas fa-sync-alt"></i></button>
                             </label>
                             <select class="form-control" wire:model.defer="tipo_de_vehiculo" id="tipo_de_vehiculo">
                                 <option selected value="0">... Seleccione Tipo de Vehículo ...</option>
