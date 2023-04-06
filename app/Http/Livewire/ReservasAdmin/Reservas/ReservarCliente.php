@@ -212,18 +212,23 @@ class ReservarCliente extends Component
         if ($this->observacion_del_pago) {
             $observacion_del_pago = $this->observacion_del_pago;
         }
-        $archivo_pago = '';
+        $ruta ='';
         if ($this->archivo_pago) {
-            $archivo_pago = 'storage/' . $this->archivo_pago->store('archivo_pagos', 'public');
+            $filename = uniqid() . '_' . time() . rand(1, 1000);
+
+            //$image = $this->archivo_pago->getRealPath();
+            $ext = $this->archivo_pago->getClientOriginalExtension();
+
+            $ruta = $this->archivo_pago->storeAs('archivo', $filename . '.' . $ext, 'private');
+            //$ruta = Storage::disk('private')->putFileAs('photos', $image, $filename);;
         }
-        //'storage/' . $this->archivo_pago->store('archivo_pagos', 'public'),
         $pagos = Pagos::create([
             'monto' => $this->monto,
             'fecha_pago' => now(),
             'numero_de_operacion' => $numero_de_operacion,
             'estado_pago' => $this->estado_de_pago,
             'observacion_del_pago' => $observacion_del_pago,
-            'ruta_archivo_pago' => $archivo_pago,
+            'ruta_archivo_pago' => $ruta,
             'reserva_id' => $reserva->id,
             'cuenta_pagos_id' => $this->tipo_de_pago,
             'boleta_id' => $boletas->id
@@ -323,9 +328,15 @@ class ReservarCliente extends Component
         if ($this->observacion_del_pago) {
             $observacion_del_pago = $this->observacion_del_pago;
         }
-        $archivo_pago = '';
+
+        $ruta ='';
         if ($this->archivo_pago) {
-            $archivo_pago = 'storage/' . $this->archivo_pago->store('archivo_pagos', 'public');
+            $filename = uniqid() . '_' . time() . rand(1, 1000);
+
+            //$image = $this->archivo_pago->getRealPath();
+            $ext = $this->archivo_pago->getClientOriginalExtension();
+
+            $ruta = $this->archivo_pago->storeAs('archivo', $filename . '.' . $ext, 'private');
         }
         $pagos = Pagos::create([
             'monto' => $this->monto,
@@ -333,7 +344,7 @@ class ReservarCliente extends Component
             'numero_de_operacion' => $numero_de_operacion,
             'estado_pago' => $this->estado_de_pago,
             'observacion_del_pago' => $observacion_del_pago,
-            'ruta_archivo_pago' => $archivo_pago,
+            'ruta_archivo_pago' => $ruta,
             'reserva_id' => $reserva->id,
             'cuenta_pagos_id' => $this->tipo_de_pago,
             'boleta_id' => $boletas->id

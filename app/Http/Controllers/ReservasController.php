@@ -182,8 +182,7 @@ class ReservasController extends Controller
         return view('reservar_admin.reportes.comprobante', compact('informacion', 'pagos_aceptados'));
     }
 
-    public function mostrarComprobante($pago){
-        $pago = Pagos::findOrFail($pago);
+    public function mostrarComprobante(Pagos $pago){ //id del Pago
         //return $pago->ruta_archivo_pago;
         if (Storage::disk('private')->exists($pago->ruta_archivo_pago)) {
             // Devolver el archivo como una respuesta HTTP

@@ -12,6 +12,7 @@ use App\Models\Reservas\Pagos;
 use App\Models\Reservas\Pasaportes;
 use App\Models\Reservas\Reservas;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -19,7 +20,7 @@ class ReservarClienteNuevo extends Component
 {
     use WithFileUploads;
 
-    public $reserva;
+    public $reserva, $pago;
     public $nombrePaquete, $precio_del_paquete;
     public $idPersona, $idCliente, $idPasaportes, $dni = '', $nombres = '', $apellidos, $genero = '', $telefono, $direccion, $nacionalidad, $numero_pasaporte, $archivo_pasaporte, $ver_pasaporte;
     public $paquete = '', $idReserva, $fecha_reserva, $observacion, $pago_por_reserva, $archivo_pago, $tipo_de_pago, $ver_comprobante;
@@ -229,9 +230,14 @@ class ReservarClienteNuevo extends Component
         if ($this->observacion_del_pago) {
             $observacion_del_pago = $this->observacion_del_pago;
         }
-        $archivo_pago = '';
+        $ruta ='';
         if ($this->archivo_pago) {
-            $archivo_pago = 'storage/' . $this->archivo_pago->store('archivo_pagos', 'public');
+            $filename = uniqid() . '_' . time() . rand(1, 1000);
+
+            //$image = $this->archivo_pago->getRealPath();
+            $ext = $this->archivo_pago->getClientOriginalExtension();
+
+            $ruta = $this->archivo_pago->storeAs('archivo', $filename . '.' . $ext, 'private');
         }
 
         $pagos = Pagos::create([
@@ -240,7 +246,7 @@ class ReservarClienteNuevo extends Component
             'numero_de_operacion' => $numero_de_operacion,
             'estado_pago' => $this->estado_de_pago,
             'observacion_del_pago' => $observacion_del_pago,
-            'ruta_archivo_pago' => $archivo_pago, /////////RUTA DE ARCHIVO DE PAGO
+            'ruta_archivo_pago' => $ruta, 
             'reserva_id' => $reservas->id,
             'cuenta_pagos_id' => $this->tipo_de_pago,
             'boleta_id' => $boletas->id
@@ -316,6 +322,7 @@ class ReservarClienteNuevo extends Component
     public function seleccionarPago(Pagos $pago)
     {
         $this->idPago = $pago->id;
+        $this->pago = $pago;
         $this->monto = $pago->monto;
         //$pago->fecha_pago = now();
         $this->numero_de_operacion = $pago->numero_de_operacion;
@@ -327,23 +334,30 @@ class ReservarClienteNuevo extends Component
 
     public function UpdateInfoPagos()
     {
-        $archivo_pago = $this->ver_comprobante;
+        $ruta = $this->ver_comprobante;
         if ($this->archivo_pago) {
-            $eliminar = unlink($this->ver_comprobante);
-            $archivo_pago = 'storage/' . $this->archivo_pago->store('archivo_pagos', 'public');
+            $eliminar = $eliminar = Storage::disk('private')->delete($this->ver_comprobante);
+            $filename = uniqid() . '_' . time() . rand(1, 1000);
+
+            //$image = $this->archivo_pago->getRealPath();
+            $ext = $this->archivo_pago->getClientOriginalExtension();
+
+            $ruta = $this->archivo_pago->storeAs('archivo', $filename . '.' . $ext, 'private');
+            //$ruta = Storage::disk('private')->putFileAs('photos', $image, $filename);;
         }
+
 
         $pago = Pagos::findOrFail($this->idPago);
         $pago->monto = $this->monto;
         $pago->numero_de_operacion = $this->numero_de_operacion;
         $pago->estado_pago = $this->estado_de_pago;
         $pago->observacion_del_pago = $this->observacion_del_pago;
-        $pago->ruta_archivo_pago = $archivo_pago; ////POR CORREGIR
+        $pago->ruta_archivo_pago = $ruta;
         $pago->cuenta_pagos_id = $this->tipo_de_pago;
         $pago->save();
 
         $this->reset([
-            'idPago', 'ver_comprobante', 'monto', 'numero_de_operacion', 'estado_de_pago', 'observacion_del_pago',
+            'idPago', 'pago','ver_comprobante', 'monto', 'numero_de_operacion', 'estado_de_pago', 'observacion_del_pago',
             'archivo_pago', 'tipo_de_pago'
         ]);
         $this->alert('MUY BIEN', 'success', 'Actualizó Satisfactoriamente la Información del Pago por Reserva');
@@ -364,15 +378,7 @@ class ReservarClienteNuevo extends Component
         $this->alert('MUY BIEN','success','Se Actualizó Correctamente el Archivo de Autorizacion correspondiente a la Reserva');
     }
 
-    function validarFecha()
-    {
-        list($mensaje, $title, $icon, $message) = Reservas::validarFechaMayorReserva($this->fecha_reserva);
 
-        if ($mensaje == 'No permitido') {
-            $this->alert($title, $icon, $message);
-            return '';
-        }
-    }
     function alert($title, $icon, $text)
     {
         $this->dispatchBrowserEvent('swal', [

@@ -224,95 +224,101 @@
     <div class="card">
         <div class="card-block">
             <h5 class="card-title font-weight-bold">PAGO POR RESERVA/COMPRA</h5>
-            <div class="row">
-                <div class="col-lg-4">
-                    <fieldset class="form-group">
-                        <label class="form-label" for="exampleInputDisabled">Monto de Pago S/. <span
-                                class="text-danger font-weight-bold">(*)</span></label>
-                        <input type="text" wire:model.defer="monto" class="form-control"
-                            id="exampleInputDisabled" placeholder="Ingrese Monto del Pago">
-                        @error('monto')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </fieldset>
-                </div>
-                <div class="col-lg-4">
-                    <fieldset class="form-group">
-                        <label class="form-label" for="numero_de_operacion">Nº de Operación<span
-                                class="text-danger font-weight-bold">(Opcional)</span></label>
-                        <input type="text" wire:model.defer="numero_de_operacion" class="form-control"
-                            id="numero_de_operacion" placeholder="Ingrese Monto del Pago">
-                        @error('numero_de_operacion')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </fieldset>
-                </div>
-                <div class="col-lg-4">
-                    <fieldset class="form-group">
-                        <label class="form-label" for="estado_de_pago">Estado del Pago<span
-                                class="text-danger font-weight-bold">(*)</span></label>
-                        <select class="form-control" wire:model.defer="estado_de_pago" id="estado_de_pago">
-                            <option selected>... Seleccione ...</option>
-                            <option value="ACEPTADO" class="label-success">ACEPTADO</option>
-                            <option value="EN PROCESO" class="label-default">EN PROCESO</option>
-                            <option value="NO ACEPTADO" class="label-danger">NO ACEPTADO</option>
-                        </select>
-                        @error('estado_de_pago')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </fieldset>
-                </div>
-                <div class="col-lg-3">
-                    <fieldset class="form-group">
-                        <label class="form-label" for="observacion_del_pago">Observación del Pago<span
-                                class="text-danger font-weight-bold">(*)</span></label>
-                        <textarea class="form-control" wire:model.defer="observacion_del_pago" id="observacion_del_pago" rows="3"></textarea>
-                        @error('observacion_del_pago')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </fieldset>
-                </div>
-                <div class="col-lg-5">
-                    <fieldset class="form-group">
-                        <label class="form-label" for="archivo_pago">Archivo de Pago <span
-                                class="text-danger font-weight-bold">(Opcional)</span></label>
-                        <input type="file" name="archivo_pago" class="form-control-file"
-                            wire:model.defer="archivo_pago" id="archivo_pago" />
-                    </fieldset>
-                </div>
-                <div class="col-lg-4">
-                    <fieldset class="form-group">
-                        <label for="tipo_de_pago">
-                            Tipo de Pago <span class="text-danger">(*)</span>
-                        </label>
-                        <select class="form-control" wire:model.defer="tipo_de_pago" id="tipo_de_pago">
-                            <option value="" selected>...Seleccione...</option>
-                            @foreach ($tipoPagos as $tp)
-                                <option value="{{ $tp->idCuentaPago }}">
-                                    {{ $tp->nombre_tipo_pago }} - {{ $tp->numero_cuenta }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('tipo_de_pago')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </fieldset>
-                </div>
-                @if ($ver_comprobante)
-                    <div class="col-lg-2">
+            @if ($idPago)
+                <div class="row">
+                    <div class="col-lg-4">
                         <fieldset class="form-group">
-                            <label for="numero_pasaporte">Ver Archivo de Pago</span></label>
-                            <a href="{{ asset('/' . $ver_comprobante) }}" class="font-icon font-icon-page"
-                                target="_blank"> Ver Archivo
-                                de Pago</a>
+                            <label class="form-label" for="exampleInputDisabled">Monto de Pago S/. <span
+                                    class="text-danger font-weight-bold">(*)</span></label>
+                            <input type="text" wire:model.defer="monto" class="form-control"
+                                id="exampleInputDisabled" placeholder="Ingrese Monto del Pago">
+                            @error('monto')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </fieldset>
                     </div>
+                    <div class="col-lg-4">
+                        <fieldset class="form-group">
+                            <label class="form-label" for="numero_de_operacion">Nº de Operación<span
+                                    class="text-danger font-weight-bold">(Opcional)</span></label>
+                            <input type="text" wire:model.defer="numero_de_operacion" class="form-control"
+                                id="numero_de_operacion" placeholder="Ingrese Monto del Pago">
+                            @error('numero_de_operacion')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </fieldset>
+                    </div>
+                    <div class="col-lg-4">
+                        <fieldset class="form-group">
+                            <label class="form-label" for="estado_de_pago">Estado del Pago<span
+                                    class="text-danger font-weight-bold">(*)</span></label>
+                            <select class="form-control" wire:model.defer="estado_de_pago" id="estado_de_pago">
+                                <option selected>... Seleccione ...</option>
+                                <option value="ACEPTADO" class="label-success">ACEPTADO</option>
+                                <option value="EN PROCESO" class="label-default">EN PROCESO</option>
+                                <option value="NO ACEPTADO" class="label-danger">NO ACEPTADO</option>
+                            </select>
+                            @error('estado_de_pago')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </fieldset>
+                    </div>
+                    <div class="col-lg-3">
+                        <fieldset class="form-group">
+                            <label class="form-label" for="observacion_del_pago">Observación del Pago<span
+                                    class="text-danger font-weight-bold">(*)</span></label>
+                            <textarea class="form-control" wire:model.defer="observacion_del_pago" id="observacion_del_pago" rows="3"></textarea>
+                            @error('observacion_del_pago')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </fieldset>
+                    </div>
+                    <div class="col-lg-5">
+                        <fieldset class="form-group">
+                            <label class="form-label" for="archivo_pago">Archivo de Pago <span
+                                    class="text-danger font-weight-bold">(Opcional)</span></label>
+                            <input type="file" name="archivo_pago" class="form-control-file"
+                                wire:model.defer="archivo_pago" id="archivo_pago" />
+                        </fieldset>
+                    </div>
+                    <div class="col-lg-4">
+                        <fieldset class="form-group">
+                            <label for="tipo_de_pago">
+                                Tipo de Pago <span class="text-danger">(*)</span>
+                            </label>
+                            <select class="form-control" wire:model.defer="tipo_de_pago" id="tipo_de_pago">
+                                <option value="" selected>...Seleccione...</option>
+                                @foreach ($tipoPagos as $tp)
+                                    <option value="{{ $tp->idCuentaPago }}">
+                                        {{ $tp->nombre_tipo_pago }} - {{ $tp->numero_cuenta }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('tipo_de_pago')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </fieldset>
+                    </div>
+                    @if ($ver_comprobante)
+                        <div class="col-lg-2">
+                            <fieldset class="form-group">
+                                <label for="numero_pasaporte">Ver Archivo de Pago</span></label>
+                                <a href="{{ route('mostrar.comprobante.reserva', $pago) }}"
+                                    class="font-icon font-icon-page" target="_blank"> Ver Archivo
+                                    de Pago</a>
+                            </fieldset>
+                        </div>
+                    @endif
+                </div>
+
+                @if ($reserva)
+                    <button class="btn btn-primary" wire:click="UpdateInfoPagos">Actualizar</button>
+                    <button class="btn btn-danger">Cancelar</button>
                 @endif
-            </div>
-            @if ($reserva)
-                <button class="btn btn-primary" wire:click="UpdateInfoPagos">Actualizar</button>
-                <button class="btn btn-danger">Cancelar</button>
+                <br>
             @endif
+
+
 
             @if ($reserva)
                 <table class="table table-hover">
@@ -335,7 +341,12 @@
                                 <td>{{ $p->numero_de_operacion }}</td>
                                 <td>{{ $p->estado_pago }}</td>
                                 <td>{{ $p->observacion_del_pago }}</td>
-                                <td>{{ $p->ruta_archivo_pago }}</td>
+                                <td>
+                                    <a href="{{ route('mostrar.comprobante.reserva', $p->idPago) }}"
+                                        class="font-icon font-icon-page" target="_blank"> Ver Archivo
+                                        de Pago</a>
+                                    {{-- $p->ruta_archivo_pago --}}
+                                </td>
                                 <td>{{ $p->cuenta_pagos_id }}</td>
                                 <td>
                                     <button id="view" wire:click="seleccionarPago({{ $p->idPago }})"
