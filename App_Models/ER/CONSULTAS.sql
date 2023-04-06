@@ -229,7 +229,8 @@ INNER JOIN estado_reservas er on er.id = r.estado_reservas_id;
 CREATE OR REPLACE VIEW v_reserva_reservas_general as
 SELECT p.dni, concat(p.nombre, " ",p.apellidos) as datos,
 r.id as idReserva, 
-pt.nombre, r.fecha_reserva, 
+pt.id as idPaquete, pt.nombre,
+r.fecha_reserva, 
 SUM(pa.monto) as pago, 
 (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "ACEPTADO" AND ps.reserva_id = r.id) as aceptado,
 (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "NO ACEPTADO" AND ps.reserva_id = r.id) as no_aceptado,
@@ -260,6 +261,13 @@ ORDER BY r.updated_at;
 
 
 SELECT * FROM v_reserva_reservas_general;
+SELECT * FROM v_reserva_reservas_general vrg
+WHERE vrg.estado_oficial = 'PAGO COMPLETADO'
+AND vrg.idPaquete = 1
+AND (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par))
+AND (vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr));
+
+SELECT * FROM participantes;
 SELECT * FROM v_reserva_lista_reservas_general vrg 
 WHERE vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr);
 -- WHERE idReserva NOT IN (SELECT parti.reserva_id FROM participantes parti) OR 
@@ -458,8 +466,12 @@ SELECT * FROM v_reserva_reservas_general vrg
 WHERE vrg.fecha_reserva between "2023-03-14" and "2023-03-17" AND estado_reserva = "EN PROCESO" AND (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR
 vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr));
 
-SELECT * FROM v_reserva_reservas_general vrg
-WHERE vrg.fecha_reserva between "2023-03-14" and "2023-03-17";
+SELECT 
+    *
+FROM
+    v_reserva_reservas_general vrg
+WHERE
+    vrg.fecha_reserva BETWEEN '2023-03-14' AND '2023-03-17';
 
 SELECT * FROM v_reserva_lista_reservas_general vrg
 WHERE estado_oficial = "EN PROCESO";
@@ -550,8 +562,9 @@ SELECT concat(p.nombre, '', p.apellidos) as datos, parti.id FROM personas p
 INNER JOIN clientes c on p.id = c.persona_id
 INNER join reservas r on c.id = r.cliente_id
 INNER JOIN estado_reservas er on r.estado_reservas_id = er.id
-INNER JOIN participantes parti on parti.reserva_id = r.id;
-
+INNER JOIN participantes parti on parti.reserva_id = r.id
+																													s;
+SELECT * FROM participantes WHERE reserva_id = 1;
 
 
 
