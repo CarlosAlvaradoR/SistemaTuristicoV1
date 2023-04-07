@@ -119,6 +119,8 @@
                 <button type="button" wire:click="reservar" class="button button-contactForm btn_1 boxed-btn">
                     Reservar
                 </button>
+
+                <a href="{{ route('payment.pay', $paquetesTuristicos->id) }}">Reseravar Paypal</a>
             </div>
         </div>
     </div>
