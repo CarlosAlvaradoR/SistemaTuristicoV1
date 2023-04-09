@@ -167,15 +167,25 @@ class SolicitudesDevolucion extends Component
             $msg = 'Se Actualizó correctamente el Evento de Postergación Correspondiente a la Reserva';
         } else {
             # Creando
-            $documento = '';
+            /*$documento = '';
             if ($this->documento_sustentatorio) {
                 $documento = 'storage/' . $this->documento_sustentatorio->store('documentos_sustentatorios_postergacion', 'public');
+            }*/
+            $ruta = '';
+            if ($this->documento_sustentatorio) {
+                $filename = uniqid() . '_' . time() . rand(1, 1000);
+
+                //$image = $this->ruta_archivo_pago->getRealPath();
+                $ext = $this->documento_sustentatorio->getClientOriginalExtension();
+
+                $ruta = $this->documento_sustentatorio->storeAs('Reservas/DocumentosSustentatorios', $filename . '.' . $ext, 'private');
+                //$ruta = Storage::disk('private')->putFileAs('photos', $image, $filename);;
             }
             $postergacion = PostergacionReservas::create(
                 [
                     'fecha_postergacion' => $this->fecha_postergacion,
                     'descripcion_motivo' => $this->descripcion_motivo,
-                    'documento_sustentatorio' => $documento,
+                    'documento_sustentatorio' => $ruta,
                     'reserva_id' => $this->reserva->id,
                     'evento_postergaciones_id' => $evento
                 ]
@@ -276,7 +286,7 @@ class SolicitudesDevolucion extends Component
     {
         //dd($solicitud);
         switch ($opcion) {
-            case 1:
+            case 1: 
                 # Seleccionar Solicitud Pagos
                 $this->idSolicitudPagos = $solicitud->id;
                 $this->observacion_de_pago = $solicitud->observacion;

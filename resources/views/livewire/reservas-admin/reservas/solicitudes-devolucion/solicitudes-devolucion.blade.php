@@ -125,289 +125,153 @@
                 </div>
             </div>
 
-            <h5 class="with-border m-t-lg font-weight-bold"><i class="fas fa-folder"></i> SOBRE LA SOLICITUD</h5>
-
-            <div class="row">
-                @if ($idSolicitudDevolucionDineros)
-                    <div class="col-lg-4">
-                        <fieldset class="form-group">
-                            <label class="form-label" for="estado_solicitud">Estado de Solicitud</label>
-                            <select class="form-control" wire:model.defer="estado_solicitud"
-                                wire:loading.attr="disabled" wire:target="guardarSolicitud" id="estado_solicitud">
-                                <option value="">...Seleccione...</option>
-                                <option value="POR PROCESAR" @if ($estado_solicitud == 'POR PROCESAR') selected @endif>POR
-                                    PROCESAR</option>
-                                <option value="PROCESADO" @if ($estado_solicitud == 'PROCESADO') selected @endif>PROCESADO
-                                </option>
-                            </select>
-                            @error('estado_solicitud')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </fieldset>
-                    </div>
-                @endif
-
-                <div class="col-lg-4">
-                    <fieldset class="form-group">
-                        <label class="form-label" for="pedido">Solicito <span
-                                class="text-danger font-weight-bold">(*)</span></label>
-                        <input type="text" wire:model.defer="pedido" wire:loading.attr="disabled"
-                            wire:target="guardarSolicitud" class="form-control"
-                            placeholder="ej: Devolución de Dinero" id="pedido">
-                        @error('pedido')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </fieldset>
-                </div>
-                <div class="col-lg-4">
-                    <fieldset class="form-group">
-                        <label class="form-label" for="fecha_presentacion">Fecha de Presentación de Solicitud<span
-                                class="text-danger font-weight-bold">(*)</span></label>
-                        <input type="date" wire:model.defer="fecha_presentacion" wire:loading.attr="disabled"
-                            wire:target="guardarSolicitud" class="form-control maxlength-custom-message"
-                            id="fecha_presentacion">
-                        @error('fecha_presentacion')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </fieldset>
-                </div>
-                <div class="col-lg-4">
-                    <fieldset class="form-group">
-                        <label class="form-label" for="descripcion_de_solicitud">Descripción de la Solicitud <span
-                                class="text-danger font-weight-bold">(*)</span></label>
-                        <textarea class="form-control" wire:model.defer="descripcion_de_solicitud" wire:loading.attr="disabled"
-                            wire:target="guardarSolicitud" id="descripcion_de_solicitud" rows="3"></textarea>
-                        @error('descripcion_de_solicitud')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </fieldset>
-                </div>
-                <div class="col-lg-12">
-                    @if ($idSolicitudDevolucionDineros)
-                        <button class="btn btn-primary btn-rounded" wire:click="guardarSolicitud"
-                            wire:loading.attr="disabled">Actualizar</button>
-                    @else
-                        <button class="btn btn-primary btn-rounded" wire:click="guardarSolicitud"
-                            wire:loading.attr="disabled">Guardar</button>
-                    @endif
-
-                    <button class="btn btn-danger btn-rounded">Cancelar</button>
-                </div>
-            </div>
-
-            <h5 class="with-border m-t-lg font-weight-bold"><i class="fas fa-file"></i> SOLICITUD DE DEVOLUCIÓN</h5>
-            <div class="row">
-                <div class="col-lg-6">
-                    <fieldset class="form-group">
-                        <label class="form-label" for="observacion_de_pago">Observación de Solicitud</label>
-                        <textarea class="form-control"wire:model.defer="observacion_de_pago" wire:loading.attr="disabled"
-                            wire:target="saveSolicitudPagos" id="observacion_de_pago" rows="3"></textarea>
-                        @error('observacion_de_pago')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </fieldset>
-                </div>
-                <div class="col-lg-3">
-                    <fieldset class="form-group">
-                        <label class="form-label font-weight-bold" for="exampleInputPassword1">Monto Solicitado
-                            S/.</label>
-                        <input type="text" class="form-control maxlength-custom-message font-weight-bold"
-                            wire:model="monto_solicitado" readonly id="monto_solicitado">
-                    </fieldset>
-                </div>
-                <div class="col-lg-3">
-                    <br>
-                    @if ($idSolicitudPagos)
-                        <button class="btn btn-primary btn-rounded" wire:click="saveSolicitudPagos"
-                            wire:loading.attr="disabled">Actualizar</button>
-                    @else
-                        <button class="btn btn-primary btn-rounded" wire:click="saveSolicitudPagos"
-                            wire:loading.attr="disabled">Guardar</button>
-                    @endif
-
-                    <button class="btn btn-danger btn-rounded">Cancelar</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <h6 class="font-weight-bold">Lista de Pagos Realizados</h6>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Monto de Pago</th>
-                                <th scope="col">Fecha de Pago</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col">Archivo</th>
-                                <th scope="col">Acción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($pagos as $p)
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>S/. {{ $p->monto }}</td>
-                                    <td>{{ $p->fecha_pago }}</td>
-                                    <td>{{ $p->estado_pago }}</td>
-                                    <td>
-                                        @if ($p->ruta_archivo_pago)
-                                            <a href="{{ asset('/' . $p->ruta_archivo_pago) }}">Ver</a>
-                                        @else
-                                            -
-                                        @endif
-
-                                    </td>
-                                    <td>
-                                        <button type="button"
-                                            wire:click="AñadirPagoSolicitadoAlProceso({{ $p->id }})"
-                                            class="btn btn-sm btn-rounded btn-success">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endforeach
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-6">
-                    <h6 class="font-weight-bold">Lista de Pagos Solicitados</h6>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Estado de Solicitud</th>
-                                <th scope="col">Observación</th>
-                                <th scope="col">Monto</th>
-                                <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($solicitud_pagos as $sp)
-                                <tr>
-                                    <td>{{ $sp->estdo_solicitud }}</td>
-                                    <td>{{ $sp->observacion }}</td>
-                                    <td>{{ $sp->monto }}</td>
-                                    <td>
-                                        <button id="view"
-                                            wire:click="selectSolicitudPagos({{ $sp->id }}, 1)"
-                                            wire:loading.attr="disabled" title="Seleccionar"
-                                            class="btn btn-primary btn-sm">
-                                            <i class="fas fa-mouse-pointer"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-            @if (!Auth::user()->hasRole('cliente'))
-                <h5 class="with-border m-t-lg font-weight-bold"><i class="far fa-money-bill-alt"></i> DEVOLUCIÓN</h5>
+            @if ($idPostergacionReserva)
+                <h5 class="with-border m-t-lg font-weight-bold"><i class="fas fa-folder"></i> SOBRE LA SOLICITUD</h5>
 
                 <div class="row">
-                    <div class="col-lg-4">
-                        <fieldset class="form-group">
-                            <label class="form-label" for="exampleInput">Estado de Solicitud</label>
+                    @if ($idSolicitudDevolucionDineros)
+                        <div class="col-lg-4">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="estado_solicitud">Estado de Solicitud</label>
+                                <select class="form-control" wire:model.defer="estado_solicitud"
+                                    wire:loading.attr="disabled" wire:target="guardarSolicitud"
+                                    id="estado_solicitud">
+                                    <option value="">...Seleccione...</option>
+                                    <option value="POR PROCESAR" @if ($estado_solicitud == 'POR PROCESAR') selected @endif>POR
+                                        PROCESAR</option>
+                                    <option value="PROCESADO" @if ($estado_solicitud == 'PROCESADO') selected @endif>
+                                        PROCESADO
+                                    </option>
+                                </select>
+                                @error('estado_solicitud')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                    @endif
 
-                            <label class="btn @if ($estado_de_solicitud == 'NO DEVUELTO') active @endif">
-                                <input type="radio" wire:model="estado_de_solicitud" value="NO DEVUELTO"
-                                    name="options" autocomplete="off"> No devuelto
-                            </label>
-                            <label class="btn @if ($estado_de_solicitud == 'DEVUELTO') active @endif">
-                                <input type="radio" wire:model="estado_de_solicitud" value="DEVUELTO"
-                                    name="options" autocomplete="off"> Devuelto
-                            </label>
-                        </fieldset>
-                    </div>
                     <div class="col-lg-4">
                         <fieldset class="form-group">
-                            <label class="form-label font-weight-bold" for="exampleInputPassword1">Monto Solicitado
-                                S/.</label>
-                            <input type="text" class="form-control maxlength-custom-message font-weight-bold"
-                                wire:model="monto_solicitado" readonly id="monto_solicitado">
-                        </fieldset>
-                    </div>
-                    <div class="col-lg-4">
-                        <fieldset class="form-group">
-                            <label class="form-label" for="monto_devolucion">Monto Devuelto</label>
-                            <input type="text" wire:model.defer="monto_devolucion"
-                                class="form-control maxlength-custom-message" id="monto_devolucion">
-                            @error('monto_devolucion')
+                            <label class="form-label" for="pedido">Solicito <span
+                                    class="text-danger font-weight-bold">(*)</span></label>
+                            <input type="text" wire:model.defer="pedido" wire:loading.attr="disabled"
+                                wire:target="guardarSolicitud" class="form-control"
+                                placeholder="ej: Devolución de Dinero" id="pedido">
+                            @error('pedido')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </fieldset>
                     </div>
                     <div class="col-lg-4">
                         <fieldset class="form-group">
-                            <label class="form-label" for="fecha_hora">Fecha y Hora de Devolución</label>
-                            <input type="datetime-local" wire:model.defer="fecha_hora"
-                                class="form-control maxlength-custom-message" id="fecha_hora">
-                            @error('fecha_hora')
+                            <label class="form-label" for="fecha_presentacion">Fecha de Presentación de Solicitud<span
+                                    class="text-danger font-weight-bold">(*)</span></label>
+                            <input type="date" wire:model.defer="fecha_presentacion" wire:loading.attr="disabled"
+                                wire:target="guardarSolicitud" class="form-control maxlength-custom-message"
+                                id="fecha_presentacion">
+                            @error('fecha_presentacion')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </fieldset>
                     </div>
                     <div class="col-lg-4">
                         <fieldset class="form-group">
-                            <label class="form-label" for="observacion_devolucion">Observación de Devolución</label>
-                            <textarea class="form-control" wire:model.defer="observacion_devolucion" id="observacion_devolucion" rows="3"></textarea>
-                            @error('observacion_devolucion')
+                            <label class="form-label" for="descripcion_de_solicitud">Descripción de la Solicitud <span
+                                    class="text-danger font-weight-bold">(*)</span></label>
+                            <textarea class="form-control" wire:model.defer="descripcion_de_solicitud" wire:loading.attr="disabled"
+                                wire:target="guardarSolicitud" id="descripcion_de_solicitud" rows="3"></textarea>
+                            @error('descripcion_de_solicitud')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </fieldset>
                     </div>
-                    <div class="col-lg-4">
-                        @if ($idDevolucionDineros)
-                            <button class="btn btn-primary btn-rounded" wire:click="saveDevolucionDinero"
+                    <div class="col-lg-12">
+                        @if ($idSolicitudDevolucionDineros)
+                            <button class="btn btn-primary btn-rounded" wire:click="guardarSolicitud"
                                 wire:loading.attr="disabled">Actualizar</button>
                         @else
-                            <button class="btn btn-primary btn-rounded" wire:click="saveDevolucionDinero"
+                            <button class="btn btn-primary btn-rounded" wire:click="guardarSolicitud"
                                 wire:loading.attr="disabled">Guardar</button>
                         @endif
 
                         <button class="btn btn-danger btn-rounded">Cancelar</button>
                     </div>
+                </div>
+            @endif
 
-                    <div class="col-lg-12"><br>
-                        <table class="table table-hover">
+            @if ($idSolicitudDevolucionDineros)
+                <h5 class="with-border m-t-lg font-weight-bold"><i class="fas fa-file"></i> SOLICITUD DE DEVOLUCIÓN
+                </h5>
+                @if ($pago)
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="observacion_de_pago">Observación de Solicitud</label>
+                                <textarea class="form-control"wire:model.defer="observacion_de_pago" wire:loading.attr="disabled"
+                                    wire:target="saveSolicitudPagos" id="observacion_de_pago" rows="3"></textarea>
+                                @error('observacion_de_pago')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label class="form-label font-weight-bold" for="exampleInputPassword1">Monto
+                                    Solicitado
+                                    S/.</label>
+                                <input type="text" class="form-control maxlength-custom-message font-weight-bold"
+                                    wire:model="monto_solicitado" readonly id="monto_solicitado">
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-3">
+                            <br>
+                            @if ($idSolicitudPagos)
+                                <button class="btn btn-primary btn-rounded" wire:click="saveSolicitudPagos"
+                                    wire:loading.attr="disabled">Actualizar</button>
+                            @else
+                                <button class="btn btn-primary btn-rounded" wire:click="saveSolicitudPagos"
+                                    wire:loading.attr="disabled">Guardar</button>
+                            @endif
+
+                            <button class="btn btn-danger btn-rounded">Cancelar</button>
+                        </div>
+                    </div>
+                @endif
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="font-weight-bold">Lista de Pagos Realizados</h6>
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Fecha Pres. Solicitud</th>
+                                    <th scope="col">Monto de Pago</th>
+                                    <th scope="col">Fecha de Pago</th>
                                     <th scope="col">Estado</th>
-                                    <th scope="col">Observación de Solicitud</th>
-                                    <th scope="col">Monto Solicitado</th>
-                                    <th scope="col">Monto Devuelto</th>
-                                    <th scope="col">Observación de Devolución</th>
-                                    <th scope="col">Fecha/Hora de Devolución</th>
-                                    <th scope="col">Acciones</th>
+                                    <th scope="col">Archivo</th>
+                                    <th scope="col">Acción</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($solicitud_pagos_devoluciones as $spd)
+                                @foreach ($pagos as $p)
                                     <tr>
                                         <th scope="row">1</th>
-                                        <td><small>{{ $fecha_presentacion }}</small></td>
+                                        <td>S/. {{ $p->monto }}</td>
+                                        <td>{{ $p->fecha_pago }}</td>
+                                        <td>{{ $p->estado_pago }}</td>
                                         <td>
-
-                                            @if ($spd->estdo_solicitud == 'NO DEVUELTO')
-                                                <span class="label label-danger">{{ $spd->estdo_solicitud }}</span>
+                                            @if ($p->ruta_archivo_pago)
+                                                <a href="{{ asset('/' . $p->ruta_archivo_pago) }}">Ver</a>
                                             @else
-                                                <span class="label label-success">{{ $spd->estdo_solicitud }}</span>
+                                                -
                                             @endif
+
                                         </td>
-                                        <td>{{ $spd->observacion }}</td>
-                                        <th>{{ $spd->monto }}</th>
-                                        <th>{{ $spd->montoDevolucion }}</th>
-                                        <th>{{ $spd->observacionDevolucion }}</th>
-                                        <th>{{ $spd->fecha_hora }}</th>
                                         <td>
-                                            <button id="view"
-                                                wire:click="selectSolicitudPagos({{ $spd->id }}, 2)"
-                                                wire:loading.attr="disabled" title="Seleccionar"
-                                                class="btn btn-primary btn-sm">
-                                                <i class="fas fa-mouse-pointer"></i>
+                                            <button type="button"
+                                                wire:click="AñadirPagoSolicitadoAlProceso({{ $p->id }})"
+                                                class="btn btn-sm btn-rounded btn-success">
+                                                <i class="fas fa-plus"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -416,8 +280,174 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="col-md-6">
+                        <h6 class="font-weight-bold">Lista de Pagos Solicitados</h6>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Estado de Solicitud</th>
+                                    <th scope="col">Observación</th>
+                                    <th scope="col">Monto</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($solicitud_pagos as $sp)
+                                    <tr>
+                                        <td>{{ $sp->estdo_solicitud }}</td>
+                                        <td>{{ $sp->observacion }}</td>
+                                        <td>{{ $sp->monto }}</td>
+                                        <td>
+                                            <button id="view"
+                                                wire:click="selectSolicitudPagos({{ $sp->id }}, 1)"
+                                                wire:loading.attr="disabled" title="Seleccionar"
+                                                class="btn btn-primary btn-sm">
+                                                <i class="fas fa-mouse-pointer"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
+
+
+
+
+
+
+
+                @if (!Auth::user()->hasRole('cliente'))
+                    <h5 class="with-border m-t-lg font-weight-bold"><i class="far fa-money-bill-alt"></i> DEVOLUCIÓN
+                    </h5>
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="exampleInput">Estado de Solicitud</label>
+
+                                <label class="btn @if ($estado_de_solicitud == 'NO DEVUELTO') active @endif">
+                                    <input type="radio" wire:model="estado_de_solicitud" value="NO DEVUELTO"
+                                        name="options" autocomplete="off"> No devuelto
+                                </label>
+                                <label class="btn @if ($estado_de_solicitud == 'DEVUELTO') active @endif">
+                                    <input type="radio" wire:model="estado_de_solicitud" value="DEVUELTO"
+                                        name="options" autocomplete="off"> Devuelto
+                                </label>
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-4">
+                            <fieldset class="form-group">
+                                <label class="form-label font-weight-bold" for="exampleInputPassword1">Monto
+                                    Solicitado
+                                    S/.</label>
+                                <input type="text" class="form-control maxlength-custom-message font-weight-bold"
+                                    wire:model="monto_solicitado" readonly id="monto_solicitado">
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-4">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="monto_devolucion">Monto Devuelto</label>
+                                <input type="text" wire:model.defer="monto_devolucion"
+                                    class="form-control maxlength-custom-message" id="monto_devolucion">
+                                @error('monto_devolucion')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-4">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="fecha_hora">Fecha y Hora de Devolución</label>
+                                <input type="datetime-local" wire:model.defer="fecha_hora"
+                                    class="form-control maxlength-custom-message" id="fecha_hora">
+                                @error('fecha_hora')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-4">
+                            <fieldset class="form-group">
+                                <label class="form-label" for="observacion_devolucion">Observación de
+                                    Devolución</label>
+                                <textarea class="form-control" wire:model.defer="observacion_devolucion" id="observacion_devolucion" rows="3"></textarea>
+                                @error('observacion_devolucion')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-4">
+                            @if ($idDevolucionDineros)
+                                <button class="btn btn-primary btn-rounded" wire:click="saveDevolucionDinero"
+                                    wire:loading.attr="disabled">Actualizar</button>
+                            @else
+                                <button class="btn btn-primary btn-rounded" wire:click="saveDevolucionDinero"
+                                    wire:loading.attr="disabled">Guardar</button>
+                            @endif
+
+                            <button class="btn btn-danger btn-rounded">Cancelar</button>
+                        </div>
+
+                        <div class="col-lg-12"><br>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Fecha Pres. Solicitud</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Observación de Solicitud</th>
+                                        <th scope="col">Monto Solicitado</th>
+                                        <th scope="col">Monto Devuelto</th>
+                                        <th scope="col">Observación de Devolución</th>
+                                        <th scope="col">Fecha/Hora de Devolución</th>
+                                        <th scope="col">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($solicitud_pagos_devoluciones as $spd)
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td><small>{{ $fecha_presentacion }}</small></td>
+                                            <td>
+
+                                                @if ($spd->estdo_solicitud == 'NO DEVUELTO')
+                                                    <span
+                                                        class="label label-danger">{{ $spd->estdo_solicitud }}</span>
+                                                @else
+                                                    <span
+                                                        class="label label-success">{{ $spd->estdo_solicitud }}</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $spd->observacion }}</td>
+                                            <th>{{ $spd->monto }}</th>
+                                            <th>{{ $spd->montoDevolucion }}</th>
+                                            <th>{{ $spd->observacionDevolucion }}</th>
+                                            <th>{{ $spd->fecha_hora }}</th>
+                                            <td>
+                                                <button id="view"
+                                                    wire:click="selectSolicitudPagos({{ $spd->id }}, 2)"
+                                                    wire:loading.attr="disabled" title="Seleccionar"
+                                                    class="btn btn-primary btn-sm">
+                                                    <i class="fas fa-mouse-pointer"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+
+                @endif
+
             @endif
+
+
+
 
         </div>
     </section>
