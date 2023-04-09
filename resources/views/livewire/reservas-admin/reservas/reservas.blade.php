@@ -5,34 +5,38 @@
                 <div class="card-block">
                     <h5 class="card-title font-weight-bold"><i class="fas fa-list"></i> Lista de Todas las Reservas</h5>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
                                 <input type="text" class="form-control" wire:model="search" placeholder="Search">
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <select class="form-control" id="exampleFormControlSelect1">
+                            <select class="form-control" id="limp" wire:model="estado_pagos" id="estado_pagos">
                                 <option>...Estado de Pago...</option>
-                                <option>Mostrar 20</option>
-                                <option>Mostrar 50</option>
-                                <option>Mostrar 100</option>
+                                <option value="PAGO COMPLETADO">PAGO COMPLETADO</option>
+                                <option value="EN PROCESO">EN PROCESO</option>
+                                <option value="PENDIENTE DE PAGO">PENDIENTE DE PAGO</option>
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <select class="form-control" id="exampleFormControlSelect1">
+                            <select class="form-control" id="limp" wire:model="estado_cumplimiento" id="estado_cumplimiento">
                                 <option>...Estado de Cumplimiento...</option>
-                                <option>PRÓXIMA A CUMPLIRSE</option>
-                                <option>EN PROGRAMACIÓN</option>
-                                <option>PASADOS DE FECHA</option>
+                                <option value="PRÓXIMA A CUMPLIRSE">PRÓXIMA A CUMPLIRSE</option>
+                                <option value="EN PROGRAMACIÓN">EN PROGRAMACIÓN</option>
+                                <option value="PASADOS DE FECHA">PASADOS DE FECHA</option>
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <select class="form-control" wire:model="cant" id="cant">
-                                <option value="20">Mostrar 20 Registros</option>
-                                <option value="50">Mostrar 50 Registros</option>
-                                <option value="100">Mostrar 100 Registros</option>
+                            <select class="form-control" id="limp" wire:model="cant" id="cant">
+                                <option value="20">Mostrar 20</option>
+                                <option value="50">Mostrar 50</option>
+                                <option value="100">Mostrar 100</option>
                             </select>
+                        </div>
+                        <div class="col-md-1">
+                            <button title="Limpiar" id="limpiar" class="btn btn-sm btn-rounded"><i
+                                    class="fas fa-trash-restore-alt"></i></button>
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -158,4 +162,17 @@
         </div>
 
     </div>
+
+    <script>
+        $(document).ready(function() {
+            //alert('AAA');
+            $("#limpiar").click(function() {
+                //$('#limp').val('-1');
+                $("#limp option[value='PAGO COMPLETADO']").attr("selected",true);
+                $("#limp option[value='PAGO COMPLETADO']").attr("selected",true);
+                $("#limp option[value='PAGO COMPLETADO']").attr("selected",true);
+                $("#limp option[value='PAGO COMPLETADO']").attr("selected",true);
+            });
+        })
+    </script>
 </div>

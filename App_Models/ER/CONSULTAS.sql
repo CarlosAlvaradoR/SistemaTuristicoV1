@@ -259,8 +259,16 @@ INNER JOIN boletas b on b.id = pa.boleta_id
 GROUP BY pa.reserva_id , pa.estado_pago
 ORDER BY r.updated_at;
 
+-- SELECCIÓN GENERAL
+SELECT * FROM v_reserva_reservas_general vrg;
+WHERE (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par))
+AND (vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr));
+-- SELECCIONAR CUANDO HAY UN ESTADO DE PAGO Y ESTADO DE CUMPLIMIENTO
+SELECT * FROM v_reserva_reservas_general vrg
+WHERE (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par))
+AND (vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr))
+AND vrg.estado_reserva = 'PASADOS DE FECHA' AND vrg.estado_oficial = 'PAGO COMPLETADO';
 
-SELECT * FROM v_reserva_reservas_general;
 SELECT * FROM v_reserva_reservas_general vrg
 WHERE vrg.estado_oficial = 'PAGO COMPLETADO'
 AND vrg.idPaquete = 1
