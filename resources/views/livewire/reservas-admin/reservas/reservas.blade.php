@@ -5,7 +5,7 @@
                 <div class="card-block">
                     <h5 class="card-title font-weight-bold"><i class="fas fa-list"></i> Lista de Todas las Reservas</h5>
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-4">
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
                                 <input type="text" class="form-control" wire:model="search" placeholder="Search">
@@ -13,15 +13,15 @@
                         </div>
                         <div class="col-md-2">
                             <select class="form-control" id="limp" wire:model="estado_pagos" id="estado_pagos">
-                                <option>...Estado de Pago...</option>
+                                <option value="">...Est de Pago...</option>
                                 <option value="PAGO COMPLETADO">PAGO COMPLETADO</option>
                                 <option value="EN PROCESO">EN PROCESO</option>
                                 <option value="PENDIENTE DE PAGO">PENDIENTE DE PAGO</option>
                             </select>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <select class="form-control" id="limp" wire:model="estado_cumplimiento" id="estado_cumplimiento">
-                                <option>...Estado de Cumplimiento...</option>
+                                <option value="">...Est. de Cumplimiento ...</option>
                                 <option value="PRÓXIMA A CUMPLIRSE">PRÓXIMA A CUMPLIRSE</option>
                                 <option value="EN PROGRAMACIÓN">EN PROGRAMACIÓN</option>
                                 <option value="PASADOS DE FECHA">PASADOS DE FECHA</option>
@@ -35,7 +35,7 @@
                             </select>
                         </div>
                         <div class="col-md-1">
-                            <button title="Limpiar" id="limpiar" class="btn btn-sm btn-rounded"><i
+                            <button title="Limpiar"wire:click="resetUI" class="btn btn-sm btn-rounded"><i
                                     class="fas fa-trash-restore-alt"></i></button>
                         </div>
                     </div>
@@ -168,10 +168,10 @@
             //alert('AAA');
             $("#limpiar").click(function() {
                 //$('#limp').val('-1');
-                $("#limp option[value='PAGO COMPLETADO']").attr("selected",true);
-                $("#limp option[value='PAGO COMPLETADO']").attr("selected",true);
-                $("#limp option[value='PAGO COMPLETADO']").attr("selected",true);
-                $("#limp option[value='PAGO COMPLETADO']").attr("selected",true);
+                $("#limp option[value='']").attr("selected",true);
+                // $("#limp option[value='PAGO COMPLETADO']").attr("selected",true);
+                // $("#limp option[value='PAGO COMPLETADO']").attr("selected",true);
+                // $("#limp option[value='PAGO COMPLETADO']").attr("selected",true);
             });
         })
     </script>
