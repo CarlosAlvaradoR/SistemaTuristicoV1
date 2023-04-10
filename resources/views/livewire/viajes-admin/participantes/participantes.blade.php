@@ -27,7 +27,7 @@
                                     </td>
                                     <td>
                                         <button type="button"
-                                            wire:click="AsignarParticipanteViaje({{ $cr->idReserva }})"
+                                            wire:click="AsignarParticipanteViaje('{{ $cr->slug }}')"
                                             title="Añadir a la lista de Participantes"
                                             class="btn btn-sm btn-rounded btn-success" wire:loading.attr="disabled">
                                             <i class="fal fa-plus"></i>

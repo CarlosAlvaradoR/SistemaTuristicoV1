@@ -3,7 +3,7 @@
         <div class="col-lg-12 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Lista de Todos los Viajes</h5>
+                    <h5 class="card-title font-weight-bold"><i class="fas fa-list"></i> Lista de Todos los Viajes</h5>
 
                     <div class="row">
                         <div class="col-md-6">

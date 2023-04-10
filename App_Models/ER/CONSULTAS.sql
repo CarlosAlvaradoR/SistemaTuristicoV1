@@ -260,7 +260,7 @@ GROUP BY pa.reserva_id , pa.estado_pago
 ORDER BY r.updated_at;
 
 -- SELECCIÓN GENERAL
-SELECT * FROM v_reserva_reservas_general vrg;
+SELECT * FROM v_reserva_reservas_general vrg
 WHERE (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par))
 AND (vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr));
 -- SELECCIONAR CUANDO HAY UN ESTADO DE PAGO Y ESTADO DE CUMPLIMIENTO
