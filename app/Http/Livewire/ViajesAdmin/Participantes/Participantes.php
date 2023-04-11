@@ -68,6 +68,18 @@ class Participantes extends Component
     public function AsignarParticipanteViaje(ReservasReservas $reservas)
     {
         //dd($reservas);
+        /** VERIFICAMOS SI EL PAGO ESTÁ COMPLETADA */
+        DB::statement("SET sql_mode = '' ");
+        $verifica_completado = DB::select("SELECT * FROM v_reserva_reservas_general vrg
+        WHERE vrg.idReserva = ".$reservas->id."
+        LIMIT 1");
+
+        if (($verifica_completado[0]->estado_oficial) != 'PAGO COMPLETADO') {
+            $this->alert('ALERTA', 'warning', 'Los Pagos del Cliente están incompletos o Faltan Verificación.
+             Por favor vaya a: '. Request::root().'/reservas/pagos/'.$reservas->slug);
+            return;
+        }
+
         //VERIFICAMOS QUE EL QUE ESTÁ REALIZANDO LA RESERVA NO SE ENCUENTRE YA REGISTRADO
         $verifica = ViajesParticipantes::where('reserva_id', $reservas->id)->get();
         if (count($verifica) > 0) {

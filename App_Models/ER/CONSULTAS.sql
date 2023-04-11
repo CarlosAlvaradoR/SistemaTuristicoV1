@@ -259,6 +259,7 @@ INNER JOIN boletas b on b.id = pa.boleta_id
 GROUP BY pa.reserva_id , pa.estado_pago
 ORDER BY r.updated_at;
 
+
 -- SELECCIÓN GENERAL
 SELECT * FROM v_reserva_reservas_general vrg
 WHERE (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par))
@@ -276,6 +277,7 @@ AND (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par))
 AND (vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr));
 
 SELECT * FROM participantes;
+SELECT * FROM v_reserva_lista_reservas_general;
 SELECT * FROM v_reserva_lista_reservas_general vrg 
 WHERE vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr);
 -- WHERE idReserva NOT IN (SELECT parti.reserva_id FROM participantes parti) OR 
@@ -544,6 +546,16 @@ SELECT * FROM personas;
 
 
 
+
+
+
+
+
+
+
+
+
+
 --  ////////////////////////// VIAJES /////////////////////////////
 SELECT p.dni, concat(p.nombre, ' ',p.apellidos) as datos,
 r.id as idReserva, r.fecha_reserva 
@@ -583,6 +595,13 @@ WHERE ac.viaje_paquetes_id = 1;
 
 SELECT sum(ac.monto) as Monto from almuerzo_celebraciones ac
 WHERE ac.viaje_paquetes_id = 1;
+
+
+
+-- VERIFICAR SI EL PAGO QUE HIZO UN CLIENTE ESTÁ COMPLLETADO
+SELECT * FROM v_reserva_reservas_general vrg
+WHERE vrg.idReserva = 1
+LIMIT 1;
 
 
 -- PAGOS DE BOLETOS DE VIAJES
