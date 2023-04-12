@@ -19,13 +19,15 @@ use Livewire\Component;
 
 class Participantes extends Component
 {
-    public $paquete, $idViaje;
+    public $paquete, $viaje,$idViaje;
     public $autorizaciones_medicas, $riesgos, $condiciones_puntualidad;
 
     public function mount(PaquetesTuristicos $paquete, $viaje)
     {
         $this->paquete = $paquete;
+        $this->viaje = $viaje;
         $this->idViaje = $viaje->id;
+        //dd($viaje);
     }
     public function render()
     {
@@ -58,7 +60,6 @@ class Participantes extends Component
                 'parti.id'
             )
             ->get();
-
         return view('livewire.viajes-admin.participantes.participantes', compact(
             'clientes_reservados',
             'participantes'

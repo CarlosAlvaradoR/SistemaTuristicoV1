@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PaquetesTuristicos;
 use App\Models\Viajes\EmpresaTransportes;
+use App\Models\Viajes\Participantes;
 use App\Models\Viajes\ViajePaquetes;
 use Illuminate\Http\Request;
 
@@ -89,6 +90,12 @@ class ViajePaquetesController extends Controller
     public function viajeParticipantes(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
     {
         return view('viajes_admin.viajes_participantes', compact('paquete', 'viaje'));
+    }
+
+    public function EntregaDeEquipos(PaquetesTuristicos $paquete, ViajePaquetes $viaje, Participantes $participante){
+        //$participante = Participantes::findOrFail($participante);
+        //return $participante;
+        return view('viajes_admin.viajes_participantes_entrega_equipos', compact('paquete', 'viaje', 'participante'));
     }
 
     public function trasladoViajes(PaquetesTuristicos $paquete, $idViaje)

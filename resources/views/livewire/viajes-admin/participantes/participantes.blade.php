@@ -63,6 +63,10 @@
                                         {{$p->datos}}
                                     </td>
                                     <td>
+                                        <a href="{{ route('paquete.viajes.participantes.entregaEquipos', [$paquete->slug, $viaje->slug, $p->id]) }}" title="Entregar Equipo al Participante"
+                                            class="btn btn-sm btn-rounded btn-primary" wire:loading.attr="disabled">
+                                            <i class="fas fa-minus"></i>
+                                        </a>
                                         <button type="button" wire:click="quitarParticipante({{$p->id}})" title="Quitar de la Lista de Participantes"
                                             class="btn btn-sm btn-rounded btn-danger" wire:loading.attr="disabled">
                                             <i class="fas fa-minus"></i>

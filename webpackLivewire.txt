@@ -120,6 +120,8 @@ VIAJES
        
        php artisan make:livewire ViajesAdmin/Participantes/Participantes
 
+       php artisan make:livewire ViajesAdmin/Participantes/ParticipantesEntregaEquipos
+
        php artisan make:livewire ViajesAdmin/AlmuerzosCelebracion/Almuerzos
 
        php artisan make:livewire ViajesAdmin/PagoBoletasViaje/PagoBoletasViaje

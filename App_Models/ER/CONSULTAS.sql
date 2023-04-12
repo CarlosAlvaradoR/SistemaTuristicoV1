@@ -604,10 +604,11 @@ WHERE vrg.idReserva = 1
 LIMIT 1;
 
 
+
 -- PAGOS DE BOLETOS DE VIAJES
 SELECT id, descripcion, fecha, monto, viaje_paquetes_id FROM pago_boletos_viajes pbv
 WHERE pbv.viaje_paquetes_id = 1;
-
+	
 
 
 
@@ -814,12 +815,19 @@ inner join arrieros a on a.persona_id = p.id
 INNER JOIN asociaciones aso on aso.id = a.asociaciones_id;
 
 
+-- SELECCIONAR LA TABLA ENTREGA EQUIPOS
+SELECT * FROM entrega_equipos ee
+WHERE ee.participantes_id = 1
+LIMIT 1;
+DESC entrega_equipos;
+-- SELECCIONAR LOS EQUIPOS QUE ESTÁ ASIGNADO AL PARTICIPANTE DEL VIAJE
+SELECT e.nombre, m.nombre as marca, de.cantidad, de.observacion, de.id FROM entrega_equipos ee
+INNER JOIN detalle_entregas de on de.entrega_equipos_id = ee.id
+INNER JOIN equipos e on e.id = de.equipo_id
+INNER JOIN marcas m on m.id = e.marca_id;
 
 
-
-
-
-
+SELECT * FROM equipos;
 
 
 
