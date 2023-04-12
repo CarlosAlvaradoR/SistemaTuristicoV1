@@ -34,7 +34,7 @@
             </div>
         </header>
 
-        @livewire('viajes-admin.participantes.participantes-entrega-equipos', [$paquete, $viaje, $participante])
+        @livewire('viajes-admin.participantes.participantes-equipos', [$paquete, $viaje, $participante])
         
 
     </div>
