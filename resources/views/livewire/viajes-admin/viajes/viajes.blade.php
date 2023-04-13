@@ -42,7 +42,7 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <!--<th scope="col">#</th>-->
+                                <th scope="col">Cod.</th>
                                 <th scope="col">VIAJE</th>
                                 <th scope="col">Fecha</th>
                                 <th scope="col">CANT. PART.</th>
@@ -55,6 +55,9 @@
                         <tbody>
                             @foreach ($viajes as $v)
                                 <tr>
+                                    <td>
+                                        {{ $v->cod_string }}
+                                    </td>
                                     <td>
                                         {{ $v->descripcion }}
                                     </td>
@@ -99,34 +102,34 @@
                                                     Detalles del
                                                     Viaje</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.traslados', [$paquete, $v->id]) }}"><i
+                                                    href="{{ route('paquete.viajes.traslados', [$paquete, $v->slug]) }}"><i
                                                         class="fas fa-map"></i> Traslados del
                                                     Viaje</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.almuerzos', [$paquete, $v->id]) }}"><i
+                                                    href="{{ route('paquete.viajes.almuerzos', [$paquete, $v->slug]) }}"><i
                                                         class="fas fa-utensils"></i> Almuerzos del Viaje</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.boletas_pago', [$paquete, $v->id]) }}"><i
+                                                    href="{{ route('paquete.viajes.boletas_pago', [$paquete, $v->slug]) }}"><i
                                                         class="fas fa-money-check"></i> Boletas de Pago del Viaje</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.actividades_aclimatacion', [$paquete, $v->id]) }}"><i
+                                                    href="{{ route('paquete.viajes.actividades_aclimatacion', [$paquete, $v->slug]) }}"><i
                                                         class="fas fa-snowboarding"></i> Actividades de Aclimatación</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.hospedaje', [$paquete, $v->id]) }}"><i
+                                                    href="{{ route('paquete.viajes.hospedaje', [$paquete, $v->slug]) }}"><i
                                                         class="fas fa-hotel"></i> Hospedajes</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.itinerario', [$paquete, $v->id]) }}"><i
+                                                    href="{{ route('paquete.viajes.itinerario', [$paquete, $v->slug]) }}"><i
                                                         class="fas fa-clipboard-list"></i> Itinerarios del Viaje</a>
                                                 <a class="dropdown-item" href="#!"><i
                                                         class="glyphicon fas fa-users"></i> Arrieros, Cocineros y
                                                     Guías</a>
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.arriero', [$paquete, $v->id]) }}">Arrieros</a>
+                                                    href="{{ route('paquete.viajes.arriero', [$paquete, $v->slug]) }}">Arrieros</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.cocineros', [$paquete, $v->id]) }}">Cocineros</a>
+                                                    href="{{ route('paquete.viajes.cocineros', [$paquete, $v->slug]) }}">Cocineros</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.guias', [$paquete, $v->id]) }}">Guías</a>
+                                                    href="{{ route('paquete.viajes.guias', [$paquete, $v->slug]) }}">Guías</a>
                                             </div>
                                         </div>
                                     </td>
@@ -139,7 +142,7 @@
                                             class="tabledit-edit-button btn btn-sm btn-primary" style="float: none;">
                                             <i class="glyphicon fas fa-shuttle-van"></i>
                                         </a>
-                                        <button type="button" wire:click="deleteConfirm({{ $v->id }})"
+                                        <button type="button" wire:click="deleteConfirm({{ $v->slug }})"
                                             class="tabledit-delete-button btn btn-sm btn-danger" style="float: none;">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </button>

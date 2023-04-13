@@ -56,65 +56,6 @@
                 </div>
             </div>
         </div>
-        <!--<div class="col-lg-6 ks-panels-column-section">
-                <div class="card">
-                    <div class="card-block">
-                        <h5 class="card-title">Lista de Participantes</h5>
-                        <div class="form-group has-search">
-                            <span class="fa fa-search form-control-feedback"></span>
-                            <input type="text" class="form-control" placeholder="Buscar Cliente">
-                        </div>
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">CLIENTE</th>
-                                    <th scope="col">Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        1
-                                    </td>
-                                    <td>
-                                        <button type="button" title="Quitar de la Lista de Participantes"
-                                            class="btn btn-sm btn-rounded btn-danger">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 ks-panels-column-section">
-                <div class="card">
-                    <div class="card-block">
-                        <h5 class="card-title">Validation</h5>
-                        <div>
-                            <fieldset class="form-group has-success">
-                                <div class="fl-flex-label">
-                                    <input type="text" class="form-control form-control-success" id="inputSuccess1"
-                                        placeholder="Input with success">
-                                </div>
-                            </fieldset>
-                            <fieldset class="form-group has-warning">
-                                <div class="fl-flex-label">
-                                    <input type="text" class="form-control form-control-warning"
-                                        placeholder="Input with warning">
-                                </div>
-                            </fieldset>
-                            <fieldset class="form-group has-danger">
-                                <div class="fl-flex-label">
-                                    <input type="text" class="form-control form-control-danger"
-                                        placeholder="Input with danger">
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
     </div>
 
 
@@ -154,7 +95,7 @@
                             Cerrar
                         </button>
                         @if ($idSeleccionado)
-                            <button type="button" wire:click="Update"
+                            <button type="button" wire:click="crearEmpresasTransporte"
                                 class="btn btn-rounded btn-primary">
                                 Actualizar
                             </button>

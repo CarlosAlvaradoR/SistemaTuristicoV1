@@ -25,6 +25,7 @@ class Viajes extends Component
     {
         $viajes = ViajePaquetes::where('paquete_id', '=', $this->paquete->id)
             ->get();
+        //dd($viajes);
         return view('livewire.viajes-admin.viajes.viajes', compact('viajes'));
     }
 
@@ -57,7 +58,7 @@ class Viajes extends Component
                 'hora' => $this->hora,
                 'cantidad_participantes' => $this->cantidad_participantes,
                 'estado' => $this->estado,
-                'cod_string' => Str::random(10),
+                'cod_string' => strval(random_int(100000, 999999)),
                 'paquete_id' => $this->paquete->id
             ]);
             $title='MUY BIEN !';

@@ -7,7 +7,7 @@ use App\Models\Inventario\DetalleEntregas;
 use App\Models\Inventario\EntregaEquipos;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-
+use Illuminate\Support\Str;
 class ParticipantesEquipos extends Component
 {
     public $title = '';
@@ -77,6 +77,7 @@ class ParticipantesEquipos extends Component
     {
         $this->idEquipo = $equipo->id;
         $this->title = 'AÑADIR PRÉSTAMO DE: '. strtoupper($equipo->nombre);
+        //$this->title = strval(random_int(100000, 999999));
         $this->emit('show-modal', 'abrir editar');
     }
 

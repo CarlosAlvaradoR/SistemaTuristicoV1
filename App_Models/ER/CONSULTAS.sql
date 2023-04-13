@@ -830,8 +830,8 @@ INNER JOIN marcas m on m.id = e.marca_id
 WHERE de.entrega_equipos_id = 1;
 
 
-
-SELECT * FROM detalle_entregas;
+DESC vehiculos;
+SELECT * FROM choferes;
 
 
 

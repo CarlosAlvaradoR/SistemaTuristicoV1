@@ -154,7 +154,7 @@
                             Cerrar
                         </button>
                         @if ($idTrasladoViaje)
-                            <button type="button" wire:click="Update" class="btn btn-rounded btn-primary">
+                            <button type="button" wire:click="guardatTrasladoDeLosViajes" class="btn btn-rounded btn-primary">
                                 Actualizar
                             </button>
                         @else

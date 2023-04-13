@@ -131,7 +131,7 @@ class DetallesPedido extends Component
     {
         $this->validate([
             'fecha' => 'required',
-            'monto' => 'required',
+            'monto' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'observación_pedido' => 'required',
             'estado_pedido' => 'required|min:1|max:2',
         ]);

@@ -14,6 +14,7 @@ use Livewire\Component;
 
 class Vehiculos extends Component
 {
+    public $title = 'CREAR NUEVOS VEHÍCULOS';
     public $empresa;
     public $numero_placa, $descripcion, $empresa_transportes_id, $tipo_de_vehiculo, $idSeleccionado; //PARA GUARDAR VEHÍCULO
     public $numero_licencia, $tipo_de_licencia;
@@ -47,19 +48,40 @@ class Vehiculos extends Component
             )
             ->where('v.empresa_transportes_id', $this->empresa->id)
             ->get();
-        return view('livewire.viajes-admin.viajes.empresas-transporte.vehiculos.vehiculos',
+        return view(
+            'livewire.viajes-admin.viajes.empresas-transporte.vehiculos.vehiculos',
             compact('tipoVehiculos', 'vehiculos', 'tipoLicencias')
         );
     }
 
     public function guardarVehículo()
     {
-        $vehiculos = ViajesVehiculos::create([
-            'numero_placa' => $this->numero_placa,
-            'descripcion' => $this->descripcion,
-            'empresa_transportes_id' => $this->empresa->id,
-            'tipo_vehiculos_id' => $this->tipo_de_vehiculo
-        ]);
+        $this->validate(
+            [
+                'numero_placa' => 'required|min:3|max:10',
+                'descripcion' => 'required|string|min:5',
+                'tipo_de_vehiculo' => 'required|numeric|min:1',
+            ]
+        );
+
+        if ($this->idSeleccionado) {
+            $vehiculo = ViajesVehiculos::findOrFail($this->idSeleccionado);
+            $vehiculo->numero_placa = $this->numero_placa;
+            $vehiculo->descripcion = $this->descripcion;
+            $vehiculo->tipo_vehiculos_id = $this->tipo_de_vehiculo;
+
+            $vehiculo->save();
+            $this->emit('close-modal', 'show modal!');
+        } else {
+            $vehiculos = ViajesVehiculos::create([
+                'numero_placa' => $this->numero_placa,
+                'descripcion' => $this->descripcion,
+                'empresa_transportes_id' => $this->empresa->id,
+                'tipo_vehiculos_id' => $this->tipo_de_vehiculo
+            ]);
+        }
+
+        $this->resetUI();
     }
 
     public function Edit(ViajesVehiculos $viajes)
@@ -72,21 +94,13 @@ class Vehiculos extends Component
         $this->emit('show-modal', 'show modal!');
     }
 
-    public function Actualizar()
+
+
+    public function modalNuevoChofer($idVehiculo)
     {
-        $vehiculo = ViajesVehiculos::findOrFail($this->idSeleccionado);
-        $vehiculo->numero_placa = $this->numero_placa;
-        $vehiculo->descripcion = $this->descripcion;
-        $vehiculo->tipo_vehiculos_id = $this->tipo_de_vehiculo;
-
-        $vehiculo->save();
-        $this->emit('close-modal', 'show modal!');
-    }
-
-
-    public function modalNuevoChofer($idViaje)
-    {
-        $this->idVehiculo = $idViaje;
+        $this->idVehiculo = $idVehiculo;
+        
+        $this->title ='AÑADIR CHÓFER AL VEHÍCULO';
         $this->emit('show-modal', 'show modal!');
     }
 
@@ -139,6 +153,8 @@ class Vehiculos extends Component
                 'choferes_id' => $chofer->id
             ]
         );
+
+        $this->resetUI();
     }
 
     public function agregarChoferAlVehiculo()
@@ -149,6 +165,8 @@ class Vehiculos extends Component
                 'choferes_id' => $this->idChofer
             ]
         );
+        $this->resetUI();
+
     }
 
     public function NuevoChofer()
@@ -173,7 +191,7 @@ class Vehiculos extends Component
             'vehiculos_id' => $this->idVehiculo,
             'choferes_id' => $chofer->id
         ]);
-
+        $this->resetUI();
         //$this->resetUI();
     }
 
@@ -185,12 +203,13 @@ class Vehiculos extends Component
     }
 
 
-    function resetUI()
+    public function resetUI()
     {
-        $this->reset([
+        /*$this->reset([
             'dni_persona', 'nombre', 'apellidos', 'genero', 'telefono', 'telefono', 'dirección',
-            'asociacion', 'monto', 'cantidad', 'tipo_de_acemila', 'idPersona', 'idChofer'
-        ]);
+            'asociacion', 'cantidad', 'tipo_de_acemila', 'idPersona', 'idChofer'
+        ]);*/
+        $this->reset(['idVehiculo']);
         $this->reset(['buscar', 'encontradoComoPersona', 'encontradoComoChofer', 'no_existe']);
     }
 }

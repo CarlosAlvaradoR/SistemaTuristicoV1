@@ -32,7 +32,7 @@ class FormularioReservas extends Component
     protected $rules = [
         'fecha_reserva' => 'required|date',
         //'observacion' => 'nullable|min:5',
-        'monto' => 'required',
+        'monto' => 'required|regex:/^\d+(\.\d{1,2})?$/',
         'numero_operacion' => 'required|min:3|max:25',
         'archivo_pago' => 'required',
         'tipo_pago' => 'required|numeric|min:2',
