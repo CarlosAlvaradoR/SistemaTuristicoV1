@@ -831,7 +831,7 @@ WHERE de.entrega_equipos_id = 1;
 
 
 DESC vehiculos;
-SELECT * FROM choferes;
+DESC choferes;
 
 
 

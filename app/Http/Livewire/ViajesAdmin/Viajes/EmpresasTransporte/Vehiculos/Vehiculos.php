@@ -64,7 +64,7 @@ class Vehiculos extends Component
             ]
         );
 
-        if ($this->idSeleccionado) {
+        if ($this->idSeleccionado) { //id Del Vehículo
             $vehiculo = ViajesVehiculos::findOrFail($this->idSeleccionado);
             $vehiculo->numero_placa = $this->numero_placa;
             $vehiculo->descripcion = $this->descripcion;
@@ -81,7 +81,7 @@ class Vehiculos extends Component
             ]);
         }
 
-        $this->resetUI();
+        $this->resetUI(1);
     }
 
     public function Edit(ViajesVehiculos $viajes)
@@ -99,8 +99,8 @@ class Vehiculos extends Component
     public function modalNuevoChofer($idVehiculo)
     {
         $this->idVehiculo = $idVehiculo;
-        
-        $this->title ='AÑADIR CHÓFER AL VEHÍCULO';
+
+        $this->title = 'AÑADIR CHÓFER AL VEHÍCULO';
         $this->emit('show-modal', 'show modal!');
     }
 
@@ -139,6 +139,13 @@ class Vehiculos extends Component
 
     public function guardarPersonaCliente()
     { //Guarda la persona que ya existe y los atributos del Cliente
+        $this->validate(
+            [
+                'numero_licencia' => 'required|string|min:3',
+                'tipo_de_licencia' => 'required|numeric|min:1',
+            ]
+        );
+
         $chofer = Choferes::create(
             [
                 'numero_licencia' => $this->numero_licencia,
@@ -153,8 +160,8 @@ class Vehiculos extends Component
                 'choferes_id' => $chofer->id
             ]
         );
-
-        $this->resetUI();
+        
+        $this->resetUI(2);
     }
 
     public function agregarChoferAlVehiculo()
@@ -165,15 +172,31 @@ class Vehiculos extends Component
                 'choferes_id' => $this->idChofer
             ]
         );
-        $this->resetUI();
-
+        $this->resetUI(2);
     }
 
     public function NuevoChofer()
     {
+        $this->validate(
+            [
+                'dni' => 'required|min:3|unique:personas',
+                'nombre' => 'required',
+                'apellidos' => 'required',
+                'genero' => 'required|numeric|min:1|max:2',
+                'telefono' => 'required',
+                'dirección' => 'required',
+            ]
+        );
+        $this->validate(
+            [
+                'numero_licencia' => 'required|string|min:3',
+                'tipo_de_licencia' => 'required|numeric|min:1',
+            ]
+        );
+
         $personas = Personas::create(
             [
-                'dni' => $this->dni_persona,
+                'dni' => $this->dni,
                 'nombre' => $this->nombre,
                 'apellidos' => $this->apellidos,
                 'genero' => $this->genero,
@@ -191,8 +214,7 @@ class Vehiculos extends Component
             'vehiculos_id' => $this->idVehiculo,
             'choferes_id' => $chofer->id
         ]);
-        $this->resetUI();
-        //$this->resetUI();
+        $this->resetUI(1);
     }
 
 
@@ -203,13 +225,13 @@ class Vehiculos extends Component
     }
 
 
-    public function resetUI()
+    public function resetUI($opcion)
     {
-        /*$this->reset([
-            'dni_persona', 'nombre', 'apellidos', 'genero', 'telefono', 'telefono', 'dirección',
-            'asociacion', 'cantidad', 'tipo_de_acemila', 'idPersona', 'idChofer'
-        ]);*/
-        $this->reset(['idVehiculo']);
-        $this->reset(['buscar', 'encontradoComoPersona', 'encontradoComoChofer', 'no_existe']);
+        # 1 es resetear todo lo que se busca y se guarda, Lo otro para conservar opciones
+        if ($opcion == 1) {
+            $this->reset(['buscar', 'encontradoComoPersona', 'encontradoComoChofer', 'no_existe', 'idVehiculo']);
+        } else {
+            $this->reset(['idVehiculo']);
+        }
     }
 }

@@ -168,6 +168,9 @@
                                     </label>
                                     <input type="text" wire:model.defer="numero_licencia" class="form-control"
                                         id="numero_licencia" />
+                                    @error('numero_licencia')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -182,6 +185,9 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    @error('tipo_de_licencia')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -209,9 +215,11 @@
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
                                     <label class="form-label semibold" for="dni_persona">DNI</label>
-                                    <input type="text" class="form-control" wire:model.defer="dni_persona"
-                                        id="dni_persona" placeholder="Ingrese Nº de DNI">
-                                    <!--<small class="text-muted text-danger">We'll never share your email with anyone else.</small>-->
+                                    <input type="text" class="form-control" wire:model.defer="dni"
+                                        id="dni" placeholder="Ingrese Nº de DNI">
+                                    @error('dni')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -219,6 +227,9 @@
                                     <label class="form-label semibold" for="nombre">Nombres</label>
                                     <input type="text" class="form-control" wire:model.defer="nombre"
                                         id="nombre" placeholder="Ingrese Nombres" value="ej: Mike Alejandro">
+                                    @error('nombre')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -226,6 +237,9 @@
                                     <label class="form-label semibold" for="apellidos">Apellidos</label>
                                     <input type="text" class="form-control" wire:model.defer="apellidos"
                                         id="apellidos" placeholder="Ingrese los Apellidos">
+                                    @error('apellidos')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -233,6 +247,9 @@
                                     <label class="form-label semibold" for="genero">Género</label>
                                     <input type="text" class="form-control" wire:model.defer="genero"
                                         id="genero" placeholder="Ingrese el Género">
+                                    @error('genero')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -240,6 +257,9 @@
                                     <label class="form-label semibold" for="telefono">Teléfono</label>
                                     <input type="tel" class="form-control" wire:model.defer="telefono"
                                         id="telefono" placeholder="Ingrese el Teléfono">
+                                    @error('telefono')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -247,6 +267,9 @@
                                     <label class="form-label semibold" for="dirección">Dirección</label>
                                     <input type="text" class="form-control" wire:model.defer="dirección"
                                         id="dirección" placeholder="Ingrese la Dirección">
+                                    @error('dirección')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-6">
@@ -256,6 +279,9 @@
                                     </label>
                                     <input type="text" wire:model.defer="numero_licencia" class="form-control"
                                         id="numero_licencia" />
+                                    @error('numero_licencia')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-6">
@@ -266,10 +292,13 @@
                                     <select class="form-control" wire:model="tipo_de_licencia" id="tipo_de_licencia">
                                         <option value="" select>...Seleccione...</option>
                                         @foreach ($tipoLicencias as $tl)
-                                            <option value="{{ $tl->id }}" select>{{ $tl->nombre_tipo }}
+                                            <option value="{{ $tl->id }}">{{ $tl->nombre_tipo }}
                                             </option>
                                         @endforeach
                                     </select>
+                                    @error('tipo_de_licencia')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                         </div>
@@ -277,7 +306,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                    <button type="button" wire:click.prevent="resetUI(1)" class="btn btn-rounded btn-danger"
+                        data-dismiss="modal">
                         Cerrar
                     </button>
                     @if ($encontradoComoPersona && !$encontradoComoChofer)

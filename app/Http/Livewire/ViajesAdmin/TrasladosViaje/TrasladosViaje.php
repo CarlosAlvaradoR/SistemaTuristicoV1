@@ -5,12 +5,13 @@ namespace App\Http\Livewire\ViajesAdmin\TrasladosViaje;
 use App\Models\PaquetesTuristicos;
 use App\Models\Viajes\TrasladoViajes;
 use App\Models\Viajes\Vehiculos;
+use App\Models\Viajes\ViajePaquetes;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class TrasladosViaje extends Component
 {
-    public $paquete, $idViaje;
+    public $paquete,$viaje, $idViaje;
     public $descripcion, $fecha, $monto, $vehiculo, $idTrasladoViaje; // PARA EL INSERT DE LOS TRASLADOS DEL VIAJE
     public $total = 0;
     //public $descripcion, $fecha, $monto, $viaje_paquetes_id, $vehiculos_id;
@@ -20,10 +21,11 @@ class TrasladosViaje extends Component
         $this->reset(['descripcion', 'fecha', 'monto', 'vehiculo', 'idTrasladoViaje']);
     }
 
-    public function mount(PaquetesTuristicos $paquete, $idViaje)
+    public function mount(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
     {
         $this->paquete = $paquete;
-        $this->idViaje = $idViaje;
+        $this->viaje = $viaje;
+        $this->idViaje = $viaje->id;
     }
 
     public function render()
