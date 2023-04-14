@@ -55,6 +55,25 @@ class UsuariosSeeder extends Seeder
         ]);
         $user2->assignRole('admin');
 
+        
+        $persona3 = Personas::create([
+            'dni'=>'192828188', 
+            'nombre' => 'Miguel', 
+            'apellidos' => 'Silva Zapata', 
+            'genero' => 1, 
+            'telefono' => '98827277', 
+            'dirección' => 'Av. Las Canteras'
+        ]);
+
+        $user3 = User::create([
+            'name' => 'Miguel', 
+            'email' => 'jmiguelsilzajym@gmail.com', 
+            'email_verified_at' =>'2022-12-12', 
+            'password' => bcrypt('123456789'), 
+            'persona_id' => $persona3->id
+        ]);
+        $user3->assignRole('admin');
+
        
 
 

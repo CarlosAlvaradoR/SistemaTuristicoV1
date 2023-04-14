@@ -120,9 +120,7 @@
                                                 <a class="dropdown-item"
                                                     href="{{ route('paquete.viajes.itinerario', [$paquete, $v->slug]) }}"><i
                                                         class="fas fa-clipboard-list"></i> Itinerarios del Viaje</a>
-                                                <a class="dropdown-item" href="#!"><i
-                                                        class="glyphicon fas fa-users"></i> Arrieros, Cocineros y
-                                                    Guías</a>
+                                                
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item"
                                                     href="{{ route('paquete.viajes.arriero', [$paquete, $v->slug]) }}">Arrieros</a>

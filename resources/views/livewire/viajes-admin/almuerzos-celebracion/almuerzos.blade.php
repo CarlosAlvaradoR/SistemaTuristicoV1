@@ -14,8 +14,8 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <a id="modal-532427" href="#modal-traslado-viajes" role="button" class="btn btn-rounded"
-                                data-toggle="modal">Añadir Almuerzo de Celebración</a>
+                            <a id="modal-532427" href="#modal_almuerzos_celebracion" role="button"
+                                class="btn btn-rounded" data-toggle="modal">Añadir Almuerzo de Celebración</a>
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -45,7 +45,8 @@
                                     </td>
                                     <td>
                                         <button type="button" title="Añadir a la lista de Participantes"
-                                            class="btn btn-sm btn-rounded btn-warning">
+                                            class="btn btn-sm btn-rounded btn-warning"
+                                            wire:click="Edit({{ $al->id }})">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button type="button" title="Añadir a la lista de Participantes"
@@ -75,8 +76,8 @@
 
 
     <!--MODAL --->
-    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal-traslado-viajes"
-        role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false"
+        id="modal_almuerzos_celebracion" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -144,13 +145,21 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                        <button type="button" class="btn btn-rounded btn-danger" wire:click.prevent="resetUI()" data-dismiss="modal">
                             Cerrar
                         </button>
-                        <button type="button" wire:click="guardarAlmuerzoCelebración"
-                            class="btn btn-rounded btn-primary">
-                            Guardar
-                        </button>
+                        @if ($idAlmuerzoCelebracion)
+                            <button type="button" wire:click="guardarAlmuerzoCelebración"
+                                class="btn btn-rounded btn-primary">
+                                Actualizar
+                            </button>
+                        @else
+                            <button type="button" wire:click="guardarAlmuerzoCelebración"
+                                class="btn btn-rounded btn-primary">
+                                Guardar
+                            </button>
+                        @endif
+
 
                     </div>
 
@@ -160,4 +169,20 @@
         </div>
     </div>
     <!-- END MODAL-->
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            //Lo que llega de CategoriesController
+            window.livewire.on('show-modal', msg => {
+                $('#modal_almuerzos_celebracion').modal('show')
+            });
+
+            window.livewire.on('close-modal', msg => {
+                $('#modal_almuerzos_celebracion').modal('hide')
+            });
+        });
+    </script>
+
 </div>
