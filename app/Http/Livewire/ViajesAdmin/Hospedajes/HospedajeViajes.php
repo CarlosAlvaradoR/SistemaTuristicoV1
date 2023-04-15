@@ -2,22 +2,24 @@
 
 namespace App\Http\Livewire\ViajesAdmin\Hospedajes;
 
+use App\Http\Livewire\ViajesAdmin\Viajes\Viajes;
 use App\Models\PaquetesTuristicos;
 use App\Models\Viajes\Hospedajes;
 use App\Models\Viajes\Hoteles;
+use App\Models\Viajes\ViajePaquetes;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class HospedajeViajes extends Component
 {
     public $paquete, $idViaje;
-    public $fecha_inicial, $fecha_final, $monto, $hotel;
+    public $idHospedaje, $fecha_inicial, $fecha_final, $monto, $hotel;
     public $total = 0;
 
-    public function mount(PaquetesTuristicos $paquete, $idViaje)
+    public function mount(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
     {
         $this->paquete = $paquete;
-        $this->idViaje = $idViaje;
+        $this->idViaje = $viaje->id;
     }
 
 
@@ -42,7 +44,8 @@ class HospedajeViajes extends Component
             ->where('hos.viaje_paquetes_id', $this->idViaje)
             ->get();
 
-        return view('livewire.viajes-admin.hospedajes.hospedaje-viajes',
+        return view(
+            'livewire.viajes-admin.hospedajes.hospedaje-viajes',
             compact(
                 'hoteles',
                 'hospedajes_ocupados'
@@ -52,12 +55,40 @@ class HospedajeViajes extends Component
 
     public function asignarHospedajes()
     {
-        $hospedaje = Hospedajes::create([
-            'fecha_inicial' => $this->fecha_inicial,
-            'fecha_final' => $this->fecha_final,
-            'monto' => $this->monto,
-            'viaje_paquetes_id' => $this->idViaje,
-            'hoteles_id' => $this->hotel
-        ]);
+        $this->validate(
+            [
+                'fecha_inicial' => 'required|date',
+                'fecha_final' => 'required|date',
+                'monto' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+                'hotel' => 'required|numeric|min:1',
+            ]
+        );
+        if ($this->idHospedaje) {
+            $hospedaje = Hospedajes::findOrFail($this->idHospedaje);
+            $hospedaje->fecha_inicial = $this->fecha_inicial;
+            $hospedaje->fecha_final = $this->fecha_final;
+            $hospedaje->monto = $this->monto;
+            $hospedaje->hoteles_id = $this->hotel;
+            $hospedaje->save();
+        } else {
+            $hospedaje = Hospedajes::create([
+                'fecha_inicial' => $this->fecha_inicial,
+                'fecha_final' => $this->fecha_final,
+                'monto' => $this->monto,
+                'viaje_paquetes_id' => $this->idViaje,
+                'hoteles_id' => $this->hotel
+            ]);
+        }
+    }
+
+    public function Edit(Hospedajes $hospedaje)
+    {
+        $this->idHospedaje = $hospedaje->id;
+        $this->fecha_inicial = $hospedaje->fecha_inicial;
+        $this->fecha_final = $hospedaje->fecha_final;
+        $this->monto = $hospedaje->monto;
+        $this->hotel = $hospedaje->hoteles_id;
+
+        $this->emit('show-modal');
     }
 }

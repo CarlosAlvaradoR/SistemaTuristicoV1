@@ -88,7 +88,6 @@
                                         @endswitch
                                     </td>
                                     <td>
-
                                         <div class="dropdown dropdown-status"><button
                                                 class="btn btn-success dropdown-toggle" type="button"
                                                 data-toggle="dropdown" aria-haspopup="true"

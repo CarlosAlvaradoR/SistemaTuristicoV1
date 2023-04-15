@@ -14,8 +14,8 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <a id="modal-532427" href="#modal-traslado-viajes" role="button" class="btn btn-rounded"
-                                data-toggle="modal">Añadir Actividades de Aclimatación</a>
+                            <a id="modal-532427" href="#modal_actividades_aclimatacion" role="button"
+                                class="btn btn-rounded" data-toggle="modal">Añadir Actividades de Aclimatación</a>
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -31,21 +31,22 @@
                             @foreach ($actividades as $a)
                                 <tr>
                                     <td>
-                                        {{$a->descripcion}}
+                                        {{ $a->descripcion }}
                                     </td>
                                     <td>
-                                        {{$a->fecha}}
+                                        {{ $a->fecha }}
                                     </td>
                                     <td>
-                                        {{$a->monto}}
+                                        {{ $a->monto }}
                                     </td>
                                     <td>
                                         <button type="button" title="Añadir a la lista de Participantes"
+                                            wire:click="Edit({{ $a->id }})"
                                             class="btn btn-sm btn-rounded btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <a type="button"
-                                            href="{{ route('paquete.viajes.actividades_aclimatacion.participantes', [$paquete, $idViaje ,$a->id]) }}"
+                                            href="{{ route('paquete.viajes.actividades_aclimatacion.participantes', [$paquete, $idViaje, $a->id]) }}"
                                             title="Añadir Participantes" class="btn btn-sm btn-rounded btn-success">
                                             <i class="fas fa-users"></i>
                                         </a>
@@ -133,8 +134,8 @@
     </div>
 
     <!--MODAL --->
-    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal-traslado-viajes"
-        role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false"
+        id="modal_actividades_aclimatacion" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -149,52 +150,56 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <form role="form">
-                                <div class="form-group">
-                                    <label for="descripcion">
-                                        Descripción <span class="text-danger">(*)</span>
-                                    </label>
-                                    <textarea class="form-control" wire:model.defer="descripcion" id="descripcion" rows="4"></textarea>
-                                    @error('descripcion')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
+                            <div class="form-group">
+                                <label for="descripcion">
+                                    Descripción <span class="text-danger">(*)</span>
+                                </label>
+                                <textarea class="form-control" wire:model.defer="descripcion" id="descripcion" rows="4"></textarea>
+                                @error('descripcion')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
 
-                                    <label for="fecha">
-                                        Fecha <span class="text-danger">(*)</span>
-                                    </label>
-                                    <input type="date" wire:model.defer="fecha" class="form-control"
-                                        id="fecha" />
-                                    @error('fecha')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </form>
+                                <label for="fecha">
+                                    Fecha <span class="text-danger">(*)</span>
+                                </label>
+                                <input type="date" wire:model.defer="fecha" class="form-control"
+                                    id="fecha" />
+                                @error('fecha')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <form role="form">
-                                <div class="form-group">
-                                    <label for="monto">
-                                        Monto <span class="text-danger">(*)</span>
-                                    </label>
-                                    <input type="text" wire:model.defer="monto" class="form-control"
-                                        id="monto" />
-                                    @error('monto')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </form>
+                            <div class="form-group">
+                                <label for="monto">
+                                    Monto <span class="text-danger">(*)</span>
+                                </label>
+                                <input type="text" wire:model.defer="monto" class="form-control"
+                                    id="monto" />
+                                @error('monto')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
                             Cerrar
                         </button>
-                        <button type="button" wire:click="guardarActividadesAclimatacion"
-                            class="btn btn-rounded btn-primary">
-                            Guardar
-                        </button>
+                        @if ($idActividadAcimatacion)
+                            <button type="button" wire:click="guardarActividadesAclimatacion"
+                                class="btn btn-rounded btn-primary">
+                                Actualizar
+                            </button>
+                        @else
+                            <button type="button" wire:click="guardarActividadesAclimatacion"
+                                class="btn btn-rounded btn-primary">
+                                Guardar
+                            </button>
+                        @endif
+
 
                     </div>
 
@@ -204,4 +209,19 @@
         </div>
     </div>
     <!-- END MODAL-->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            //Lo que llega de CategoriesController
+            window.livewire.on('show-modal', msg => {
+                $('#modal_actividades_aclimatacion').modal('show')
+            });
+
+            window.livewire.on('close-modal', msg => {
+                $('#modal_actividades_aclimatacion').modal('hide')
+            });
+        });
+    </script>
+
+
 </div>

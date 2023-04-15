@@ -3,7 +3,7 @@
         <div class="col-lg-12 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Lista de Itinerarios - {Semana Santa}</h5>
+                    <h5 class="card-title">Lista de Itinerarios - {{ $paquete->nombre }}</h5>
                     <div class="form-group has-search">
                         <span class="fa fa-search form-control-feedback"></span>
                         <input type="text" class="form-control" placeholder="Buscar Itinerario">
@@ -35,10 +35,8 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($i->fecha_cumplimiento)
-                                            <button type="button"
-                                                wire:click=""
-                                                title="Editar"
+                                        @if ($i->fecha_cumplimiento != 'No cumplido')
+                                            <button type="button" wire:click="" title="Editar"
                                                 class="btn btn-sm btn-rounded btn-warning">
                                                 <i class="fal fa-plus"></i>
                                             </button>
@@ -65,8 +63,8 @@
     <!--MODAL-->
 
     <!-- Modal -->
-    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal-itinerario-fecha-cumplimiento" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false"
+        id="modal-itinerario-fecha-cumplimiento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -87,6 +85,9 @@
                                         </label>
                                         <input type="date" class="form-control" wire:model.defer="fecha_cumplimiento"
                                             id="fecha_cumplimiento" />
+                                        @error('fecha_cumplimiento')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </form>
                             </div>

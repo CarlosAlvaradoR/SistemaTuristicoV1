@@ -44,6 +44,7 @@
                                     </td>
                                     <td>
                                         <button type="button" title="Añadir a la lista de Participantes"
+                                            wire:click="Edit({{ $ho->id }})"
                                             class="btn btn-sm btn-rounded btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </button>
@@ -147,9 +148,18 @@
                         <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
                             Cerrar
                         </button>
-                        <button type="button" wire:click="asignarHospedajes" class="btn btn-rounded btn-primary">
-                            Guardar
-                        </button>
+                        @if ($idHospedaje)
+                            <button type="button" wire:click="asignarHospedajes"
+                                class="btn btn-rounded btn-primary">
+                                Actualizar
+                            </button>
+                        @else
+                            <button type="button" wire:click="asignarHospedajes"
+                                class="btn btn-rounded btn-primary">
+                                Guardar
+                            </button>
+                        @endif
+
 
                     </div>
 
