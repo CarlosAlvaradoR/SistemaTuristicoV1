@@ -41,8 +41,7 @@ class Almuerzos extends Component
             ->where('ac.viaje_paquetes_id', $this->idViaje)
             ->get();
 
-        return view(
-            'livewire.viajes-admin.almuerzos-celebracion.almuerzos',
+        return view('livewire.viajes-admin.almuerzos-celebracion.almuerzos',
             compact(
                 'asociaciones',
                 'almuerzos'

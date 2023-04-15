@@ -3,7 +3,14 @@
         <div class="col-lg-6 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Lista de Cocineros</h5>
+                    <h5 class="card-title">
+                        <a class="btn btn-primary btn-sm btn-rounded" href="{{ route('paquete.viajes', $paquete) }}"
+                            title="Volver">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+
+                        Lista de Cocineros
+                    </h5>
 
                     <div class="row">
                         <div class="col-md-8">
@@ -31,8 +38,7 @@
                                         {{ $a->datos }}
                                     </td>
                                     <td>
-                                        <button type="button"
-                                            wire:click="AñadirCocinero({{ $a->idCocinero }})"
+                                        <button type="button" wire:click="AñadirCocinero({{ $a->idCocinero }})"
                                             title="Añadir a la lista de Participantes"
                                             class="btn btn-sm btn-rounded btn-success">
                                             <i class="fas fa-plus"></i>
@@ -170,7 +176,7 @@
                                     <span class="badge badge-default">{{ $telefono_arriero }}</span>
                                 </div>
                                 <br>
-                                {{--<div class="col-md-4">
+                                {{-- <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="asociacion">
                                             Asociación
@@ -182,7 +188,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>--}}
+                                </div> --}}
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="monto">
@@ -192,7 +198,7 @@
                                             id="monto" />
                                     </div>
                                 </div>
-                                {{--<div class="col-md-4">
+                                {{-- <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="cantidad">
                                             Cantidad
@@ -214,7 +220,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>--}}
+                                </div> --}}
                             </div>
                         @endif
 
@@ -241,7 +247,7 @@
                                             id="monto" />
                                     </div>
                                 </div>
-                               {{-- <div class="col-md-4">
+                                {{-- <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="cantidad">
                                             Cantidad
@@ -263,7 +269,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>--}}
+                                </div> --}}
                             </div>
                         @endif
 
@@ -312,7 +318,7 @@
                                             id="dirección" placeholder="Ingrese la Dirección">
                                     </fieldset>
                                 </div>
-                                {{--<div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <fieldset class="form-group">
                                         <label class="form-label semibold" for="asociacion">Asociación</label>
                                         <select class="form-control" wire:model="asociacion" id="asociacion">
@@ -322,7 +328,7 @@
                                             @endforeach
                                         </select>
                                     </fieldset>
-                                </div>--}}
+                                </div> --}}
                                 <div class="col-lg-12">
                                     <fieldset class="form-group">
                                         <label class="form-label semibold" for="monto">Monto de Pago S/.</label>
@@ -330,7 +336,7 @@
                                             id="monto" placeholder="ej: 45.70">
                                     </fieldset>
                                 </div>
-                                {{--<div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <fieldset class="form-group">
                                         <label class="form-label semibold" for="cantidad">Cantidad de Acémilas</label>
                                         <input type="number" class="form-control" wire:model.defer="cantidad"
@@ -349,7 +355,7 @@
                                             @endforeach
                                         </select>
                                     </fieldset>
-                                </div>--}}
+                                </div> --}}
                             </div>
                         @endif
 
@@ -361,8 +367,7 @@
                         Cerrar
                     </button>
                     @if ($encontradoComoCocinero)
-                        <button type="button" wire:click="guardarCocineroViaje"
-                            class="btn btn-rounded btn-primary">
+                        <button type="button" wire:click="guardarCocineroViaje" class="btn btn-rounded btn-primary">
                             <i class="fas fa-save"></i> Guardar
                         </button>
                     @endif
@@ -427,8 +432,7 @@
                     <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
                         Cerrar
                     </button>
-                    <button type="button" wire:click="AñadirAlCocinero"
-                        class="btn btn-rounded btn-primary">
+                    <button type="button" wire:click="AñadirAlCocinero" class="btn btn-rounded btn-primary">
                         Guardar
                     </button>
                 </div>

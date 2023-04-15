@@ -44,8 +44,7 @@ class HospedajeViajes extends Component
             ->where('hos.viaje_paquetes_id', $this->idViaje)
             ->get();
 
-        return view(
-            'livewire.viajes-admin.hospedajes.hospedaje-viajes',
+        return view('livewire.viajes-admin.hospedajes.hospedaje-viajes',
             compact(
                 'hoteles',
                 'hospedajes_ocupados'

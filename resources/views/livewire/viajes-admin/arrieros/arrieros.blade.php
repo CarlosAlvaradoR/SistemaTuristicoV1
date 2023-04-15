@@ -3,7 +3,13 @@
         <div class="col-lg-6 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Lista de Arrieros</h5>
+                    <h5 class="card-title">
+                        <a class="btn btn-primary btn-sm btn-rounded" href="{{ route('paquete.viajes', $paquete) }}"
+                            title="Volver">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                        Lista de Arrieros
+                    </h5>
 
                     <div class="row">
                         <div class="col-md-8">
@@ -298,18 +304,18 @@
                                 <div class="col-lg-6">
                                     <fieldset class="form-group">
                                         <label class="form-label semibold" for="asociacion">Asociación
-                                            
-                                                <a href="{{ route('viajes.mostrar.asociaciones') }}" target="_blank"
-                                                    title="Ver Asociaciones" wire:click="render"><i
-                                                        class="fas fa-exclamation"></i></a>
-                                                <button class="btn btn-sm btn-rounded" title="Refrescar"
-                                                    wire:click="render"><i class="fas fa-sync-alt"></i></button>
+
+                                            <a href="{{ route('viajes.mostrar.asociaciones') }}" target="_blank"
+                                                title="Ver Asociaciones" wire:click="render"><i
+                                                    class="fas fa-exclamation"></i></a>
+                                            <button class="btn btn-sm btn-rounded" title="Refrescar"
+                                                wire:click="render"><i class="fas fa-sync-alt"></i></button>
                                         </label>
                                         <select class="form-control" wire:model="asociacion" id="asociacion">
                                             <option value="0" select>...Seleccione la Asociación...</option>
                                             @foreach ($asociaciones as $a)
                                                 <option value="{{ $a->id }}">{{ $a->nombre }}</option>
-                                            @endforeach 
+                                            @endforeach
                                         </select>
                                     </fieldset>
                                 </div>

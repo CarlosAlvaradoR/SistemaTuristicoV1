@@ -3,7 +3,13 @@
         <div class="col-lg-12 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Lista de Itinerarios - {{ $paquete->nombre }}</h5>
+                    <h5 class="card-title">
+                        <a class="btn btn-primary btn-sm btn-rounded" href="{{ route('paquete.viajes', $paquete) }}"
+                            title="Volver">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                        Lista de Itinerarios - {{ $paquete->nombre }}
+                    </h5>
                     <div class="form-group has-search">
                         <span class="fa fa-search form-control-feedback"></span>
                         <input type="text" class="form-control" placeholder="Buscar Itinerario">

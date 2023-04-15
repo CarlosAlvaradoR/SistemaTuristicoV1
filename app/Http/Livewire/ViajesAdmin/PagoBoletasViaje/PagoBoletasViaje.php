@@ -15,7 +15,8 @@ class PagoBoletasViaje extends Component
     public $total = 0;
 
 
-    public function resetUI(){
+    public function resetUI()
+    {
         $this->reset(['idPagoBoletosViajes', 'descripcion', 'fecha', 'monto']);
     }
 
@@ -39,9 +40,10 @@ class PagoBoletasViaje extends Component
             ->where('pbv.viaje_paquetes_id', $this->idViaje)
             ->get();
 
-        return view(
-            'livewire.viajes-admin.pago-boletas-viaje.pago-boletas-viaje',
-            compact('pagos')
+        return view('livewire.viajes-admin.pago-boletas-viaje.pago-boletas-viaje',
+            compact(
+                'pagos'
+            )
         );
     }
 

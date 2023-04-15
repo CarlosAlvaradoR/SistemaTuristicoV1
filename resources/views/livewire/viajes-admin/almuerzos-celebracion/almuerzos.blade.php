@@ -4,13 +4,21 @@
         <div class="col-lg-12 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Lista de Almuerzos de Celebración</h5>
+                    <h5 class="card-title">
+                        <a class="btn btn-primary btn-sm btn-rounded" href="{{ route('paquete.viajes', $paquete) }}"
+                            title="Volver">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+
+                        Lista de Almuerzos de Celebración
+                    </h5>
 
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control" placeholder="Buscar Almuerzos de Celebración">
+                                <input type="text" class="form-control"
+                                    placeholder="Buscar Almuerzos de Celebración">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -145,7 +153,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-rounded btn-danger" wire:click.prevent="resetUI()" data-dismiss="modal">
+                        <button type="button" class="btn btn-rounded btn-danger" wire:click.prevent="resetUI()"
+                            data-dismiss="modal">
                             Cerrar
                         </button>
                         @if ($idAlmuerzoCelebracion)

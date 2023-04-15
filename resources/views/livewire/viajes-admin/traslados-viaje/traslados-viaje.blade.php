@@ -3,7 +3,13 @@
         <div class="col-lg-12 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Lista de Traslados - {{ $paquete->nombre }}</h5>
+                    <h5 class="card-title">
+                        <a  class="btn btn-primary btn-sm btn-rounded" href="{{ route('paquete.viajes', $paquete) }}" title="Volver">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                        
+                        Lista de Traslados - {{ $paquete->nombre }}
+                    </h5>
 
                     <div class="row">
                         <div class="col-md-9">

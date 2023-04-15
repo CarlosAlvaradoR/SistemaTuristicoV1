@@ -3,7 +3,14 @@
         <div class="col-lg-12 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Lista de Boletas de Pago</h5>
+                    <h5 class="card-title">
+                        <a class="btn btn-primary btn-sm btn-rounded" href="{{ route('paquete.viajes', $paquete) }}"
+                            title="Volver">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+
+                        Lista de Boletas de Pago
+                    </h5>
 
                     <div class="row">
                         <div class="col-md-9">
@@ -40,7 +47,8 @@
                                     </td>
                                     <td>
                                         <button type="button" title="Añadir a la lista de Participantes"
-                                            class="btn btn-sm btn-rounded btn-warning" wire:click="Edit({{$p->id}})">
+                                            class="btn btn-sm btn-rounded btn-warning"
+                                            wire:click="Edit({{ $p->id }})">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button type="button" title="Añadir a la lista de Participantes"
@@ -124,7 +132,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-rounded btn-danger" wire:click.prevent="resetUI()" data-dismiss="modal">
+                        <button type="button" class="btn btn-rounded btn-danger" wire:click.prevent="resetUI()"
+                            data-dismiss="modal">
                             Cerrar
                         </button>
                         @if ($idPagoBoletosViajes)
