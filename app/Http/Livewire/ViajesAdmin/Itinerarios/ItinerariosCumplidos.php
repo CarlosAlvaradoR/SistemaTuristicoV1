@@ -13,8 +13,13 @@ class ItinerariosCumplidos extends Component
 {
     public $paquete, $viaje, $idViaje;
     public $itinerario;
-    public $fecha_cumplimiento, $fecha_final, $monto, $hotel;
+    public $idItinerarioCumplido, $fecha_cumplimiento, $fecha_final;
     public $total = 0;
+
+    public function resetUI()
+    {
+        $this->reset(['itinerario', 'idItinerarioCumplido', 'fecha_cumplimiento', 'fecha_final']);
+    }
 
     public function mount(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
     {
@@ -41,13 +46,14 @@ class ItinerariosCumplidos extends Component
             ->get();
         $itinerarios = DB::select("SELECT ai.nombre_actividad,ip.id,ip.descripcion, ip.actividad_id,
         (CASE
-            WHEN (SELECT COUNT(*) FROM itinerarios_cumplidos ic WHERE ic.viaje_paquetes_id = ".$this->idViaje." AND ic.itinerario_paquetes_id = ip.id) > 0 
-            THEN (SELECT ic.fecha_cumplimiento FROM itinerarios_cumplidos ic WHERE ic.viaje_paquetes_id = ".$this->idViaje." AND ic.itinerario_paquetes_id = ip.id LIMIT 1)
+            WHEN (SELECT COUNT(*) FROM itinerarios_cumplidos ic WHERE ic.viaje_paquetes_id = " . $this->idViaje . " AND ic.itinerario_paquetes_id = ip.id) > 0 
+            THEN (SELECT ic.fecha_cumplimiento FROM itinerarios_cumplidos ic WHERE ic.viaje_paquetes_id = " . $this->idViaje . " AND ic.itinerario_paquetes_id = ip.id LIMIT 1)
             ELSE 'No cumplido'
         END) as fecha_cumplimiento  
         FROM actividades_itinerarios ai
         INNER JOIN itinerario_paquetes ip on ai.id = ip.actividad_id
-        WHERE ai.paquete_id = ".$this->paquete->id."");
+        WHERE ai.paquete_id = " . $this->paquete->id . "");
+        //dd($itinerarios);
         return view('livewire.viajes-admin.itinerarios.itinerarios-cumplidos', compact('itinerarios'));
     }
 
@@ -66,18 +72,41 @@ class ItinerariosCumplidos extends Component
                 'fecha_cumplimiento' => 'required|date'
             ]
         );
+        if ($this->idItinerarioCumplido) {
+            $itinerario = ViajesItinerariosCumplidos::findOrFail($this->idItinerarioCumplido);
+            $itinerario->fecha_cumplimiento = $this->fecha_cumplimiento;
+            $itinerario->save();
+            $this->emit('close-modal');
+        } else {
+            $itinerario = ViajesItinerariosCumplidos::create([
+                'estado' => 1,
+                'fecha_cumplimiento' => $this->fecha_cumplimiento,
+                'itinerario_paquetes_id' => $this->itinerario->id,
+                'viaje_paquetes_id' => $this->idViaje
+            ]);
+            $this->emit('fecha-itinerario-guarded', 'Fecha Guardada');
+        }
 
-        $itinerario = ViajesItinerariosCumplidos::create([
-            'estado' => 1,
-            'fecha_cumplimiento' => $this->fecha_cumplimiento,
-            'itinerario_paquetes_id' => $this->itinerario->id,
-            'viaje_paquetes_id' => $this->idViaje
-        ]);
+        $this->resetUI();
 
-        $this->emit('fecha-itinerario-guarded', 'Fecha Guardada');
+        
     }
-//No cump->Eimina y Edición edita
-    public function Edit(){
 
+    //No cump->Elimina y Edición edita
+    public function Edit($idItinerario)
+    {
+        $itinerario_cumplido = ViajesItinerariosCumplidos::where('itinerario_paquetes_id', $idItinerario)
+            ->limit(1)
+            ->get();
+        $this->idItinerarioCumplido = $itinerario_cumplido[0]->id;
+        $this->fecha_cumplimiento = $itinerario_cumplido[0]->fecha_cumplimiento;
+        $this->emit('show-modal');
+    }
+
+    public function delete(){
+        $itinerario_cumplido = ViajesItinerariosCumplidos::findOrFail($this->idItinerarioCumplido);
+        $itinerario_cumplido->delete();
+        $this->resetUI();
+        $this->emit('close-modal');
     }
 }

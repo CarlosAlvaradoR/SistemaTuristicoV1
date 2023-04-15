@@ -28,15 +28,17 @@
                                     </td>
                                     <td>
 
-                                        @if ($i->fecha_cumplimiento)
-                                            {{ $i->fecha_cumplimiento }}
+                                        @if ($i->fecha_cumplimiento != 'No cumplido')
+                                            <span
+                                                class="label label-primary">{{ date('d-m-Y', strtotime($i->fecha_cumplimiento)) }}
+                                            </span>
                                         @else
-                                            <span class="label label-danger">No cumplido</span>
+                                            <span class="label label-danger">{{ $i->fecha_cumplimiento }}</span>
                                         @endif
                                     </td>
                                     <td>
                                         @if ($i->fecha_cumplimiento != 'No cumplido')
-                                            <button type="button" wire:click="" title="Editar"
+                                            <button type="button" wire:click="Edit({{ $i->id }})" title="Editar"
                                                 class="btn btn-sm btn-rounded btn-warning">
                                                 <i class="fal fa-plus"></i>
                                             </button>
@@ -77,30 +79,49 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
-                                <form role="form">
+                                <div class="form-group">
+
+                                    <label for="fecha_cumplimiento">
+                                        Seleccione Fecha de Cumplimiento
+                                    </label>
+                                    <input type="date" class="form-control" wire:model.defer="fecha_cumplimiento"
+                                        id="fecha_cumplimiento" />
+                                    @error('fecha_cumplimiento')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                            </div>
+                            @if ($idItinerarioCumplido)
+                                <div class="col-md-12">
                                     <div class="form-group">
 
-                                        <label for="fecha_cumplimiento">
-                                            Seleccione Fecha de Cumplimiento
-                                        </label>
-                                        <input type="date" class="form-control" wire:model.defer="fecha_cumplimiento"
-                                            id="fecha_cumplimiento" />
-                                        @error('fecha_cumplimiento')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+                                        <button class="btn btn-danger btn-rounded" wire:click="delete">Eliminar
+                                            Cumplimiento ?</button>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            @endif
+
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                    <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger"
+                        data-dismiss="modal">
                         Cerrar
                     </button>
-                    <button type="button" wire:click="guardarFechaCumplimiento" class="btn btn-rounded btn-primary">
-                        Guardar
-                    </button>
+                    @if ($idItinerarioCumplido)
+                        <button type="button" wire:click="guardarFechaCumplimiento"
+                            class="btn btn-rounded btn-primary">
+                            Actualizar
+                        </button>
+                    @else
+                        <button type="button" wire:click="guardarFechaCumplimiento"
+                            class="btn btn-rounded btn-primary">
+                            Guardar
+                        </button>
+                    @endif
+
                 </div>
             </div>
         </div>
@@ -113,7 +134,7 @@
             window.livewire.on('show-modal', msg => {
                 $('#modal-itinerario-fecha-cumplimiento').modal('show')
             });
-            window.livewire.on('fecha-itinerario-guarded', msg => {
+            window.livewire.on('close-modal', msg => {
                 $('#modal-itinerario-fecha-cumplimiento').modal('hide')
             });
             window.livewire.on('category-updated', msg => {
