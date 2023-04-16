@@ -57,7 +57,7 @@
                                             <i class="fas fa-users"></i>
                                         </a>
                                         <button type="button" title="Añadir a la lista de Participantes"
-                                            class="btn btn-sm btn-rounded btn-danger">
+                                            class="btn btn-sm btn-rounded btn-danger" wire:click="deleteConfirm({{$a->id}})">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
@@ -156,7 +156,29 @@
     </div>
     <!-- END MODAL-->
 
+    @livewire('administrate-commons.alerts')
+
     <script>
+         window.addEventListener('swal-confirm-actividades-aclimatacion', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('viajes-admin.actividades-aclimatacion.actividades-aclimatacion',
+                        'deleteActividadAclimatacion',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+
+
         document.addEventListener('DOMContentLoaded', function() {
             //Lo que llega de CategoriesController
             window.livewire.on('show-modal', msg => {

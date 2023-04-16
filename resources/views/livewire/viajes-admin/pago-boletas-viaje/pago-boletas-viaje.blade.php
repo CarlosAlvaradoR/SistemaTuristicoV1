@@ -51,7 +51,7 @@
                                             wire:click="Edit({{ $p->id }})">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button type="button" title="Añadir a la lista de Participantes"
+                                        <button type="button" wire:click="deleteConfirm({{$p->id}})" title="Añadir a la lista de Participantes"
                                             class="btn btn-sm btn-rounded btn-danger">
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -158,8 +158,28 @@
     </div>
     <!-- END MODAL-->
 
+    @livewire('administrate-commons.alerts')
 
     <script>
+        window.addEventListener('swal-confirm-pagos-boletas', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('viajes-admin.pago-boletas-viaje.pago-boletas-viaje',
+                        'deletePagoBoletas',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             //Lo que llega de CategoriesController
             window.livewire.on('show-modal', msg => {
@@ -172,5 +192,6 @@
         });
     </script>
 
+    
 
 </div>

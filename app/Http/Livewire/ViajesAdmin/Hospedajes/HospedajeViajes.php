@@ -16,6 +16,12 @@ class HospedajeViajes extends Component
     public $idHospedaje, $fecha_inicial, $fecha_final, $monto, $hotel;
     public $total = 0;
 
+    protected $listeners = ['deleteHospedajes'];
+
+    public function resetUI(){
+        $this->reset(['idHospedaje', 'fecha_inicial', 'fecha_final', 'monto', 'hotel']);
+    }
+
     public function mount(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
     {
         $this->paquete = $paquete;
@@ -62,6 +68,8 @@ class HospedajeViajes extends Component
                 'hotel' => 'required|numeric|min:1',
             ]
         );
+        $title = 'MUY BIEN !';
+        $icon = 'success';
         if ($this->idHospedaje) {
             $hospedaje = Hospedajes::findOrFail($this->idHospedaje);
             $hospedaje->fecha_inicial = $this->fecha_inicial;
@@ -69,6 +77,8 @@ class HospedajeViajes extends Component
             $hospedaje->monto = $this->monto;
             $hospedaje->hoteles_id = $this->hotel;
             $hospedaje->save();
+            $text = 'Información del Hospedaje Actualizado Correctamente.';
+            $this->emit('close-modal');
         } else {
             $hospedaje = Hospedajes::create([
                 'fecha_inicial' => $this->fecha_inicial,
@@ -77,7 +87,11 @@ class HospedajeViajes extends Component
                 'viaje_paquetes_id' => $this->idViaje,
                 'hoteles_id' => $this->hotel
             ]);
+            $text = 'Información del Hospedaje Registrado Correctamente.';
         }
+        $this->emit('alert', $title, $icon, $text);
+        $this->resetUI();
+
     }
 
     public function Edit(Hospedajes $hospedaje)
@@ -90,4 +104,24 @@ class HospedajeViajes extends Component
 
         $this->emit('show-modal');
     }
+
+    public function deleteConfirm($id)
+    {
+        $this->dispatchBrowserEvent('swal-confirm-hospedaje-de-viajes', [
+            'title' => 'Está seguro que desea eliminar el Hospedaje ?',
+            'icon' => 'warning',
+            'id' => $id
+        ]);
+    }
+
+    public function deleteHospedajes(Hospedajes $actividades)
+    {
+        $title = 'MUY BIEN!';
+        $icon = 'success';
+        $text = 'Información del Hospedaje Eliminado Correctamente.';
+
+        $actividades->delete();
+        $this->emit('alert', $title, $icon, $text);
+    }
+
 }

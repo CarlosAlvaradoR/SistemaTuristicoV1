@@ -72,11 +72,16 @@ class ItinerariosCumplidos extends Component
                 'fecha_cumplimiento' => 'required|date'
             ]
         );
+        $title = 'MUY BIEN !';
+        $icon = 'success';
+        $text = 'Cumplimiento de Itinerario Registrado Correctamente.';
         if ($this->idItinerarioCumplido) {
             $itinerario = ViajesItinerariosCumplidos::findOrFail($this->idItinerarioCumplido);
             $itinerario->fecha_cumplimiento = $this->fecha_cumplimiento;
             $itinerario->save();
-            $this->emit('close-modal');
+            $text = 'Cumplimiento de Itinerario Actualizado Correctamente.';
+
+            
         } else {
             $itinerario = ViajesItinerariosCumplidos::create([
                 'estado' => 1,
@@ -84,12 +89,11 @@ class ItinerariosCumplidos extends Component
                 'itinerario_paquetes_id' => $this->itinerario->id,
                 'viaje_paquetes_id' => $this->idViaje
             ]);
-            $this->emit('fecha-itinerario-guarded', 'Fecha Guardada');
+
         }
-
+        $this->emit('close-modal');
+        $this->emit('alert', $title, $icon, $text);
         $this->resetUI();
-
-        
     }
 
     //No cump->Elimina y Edición edita
@@ -103,10 +107,16 @@ class ItinerariosCumplidos extends Component
         $this->emit('show-modal');
     }
 
-    public function delete(){
+    public function delete()
+    {
+        $title = 'MUY BIEN !';
+        $icon = 'success';
+        $text = 'Cumplimiento de Itinerario Eliminado Correctamente.';
+
         $itinerario_cumplido = ViajesItinerariosCumplidos::findOrFail($this->idItinerarioCumplido);
         $itinerario_cumplido->delete();
         $this->resetUI();
+        $this->emit('alert', $title, $icon, $text);
         $this->emit('close-modal');
     }
 }

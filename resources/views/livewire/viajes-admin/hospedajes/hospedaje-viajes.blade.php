@@ -20,7 +20,7 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <a id="modal-532427" href="#modal-traslado-viajes" role="button" class="btn btn-rounded"
+                            <a id="modal-532427" href="#modal_hospedaje_viajes" role="button" class="btn btn-rounded"
                                 data-toggle="modal">Asignar Hospedaje</a>
                         </div>
                     </div>
@@ -51,12 +51,14 @@
                                     </td>
                                     <td>
                                         <button type="button" title="Añadir a la lista de Participantes"
-                                            wire:click="Edit({{ $ho->id }})"
+                                            wire:click="Edit({{ $ho->id }})" wire:loading.attr="disabled"
                                             class="btn btn-sm btn-rounded btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button type="button" title="Añadir a la lista de Participantes"
-                                            class="btn btn-sm btn-rounded btn-danger">
+                                            class="btn btn-sm btn-rounded btn-danger"
+                                            wire:click="deleteConfirm({{ $ho->id }})"
+                                            wire:loading.attr="disabled">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
@@ -81,7 +83,7 @@
     </div>
 
     <!--MODAL --->
-    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal-traslado-viajes"
+    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal_hospedaje_viajes"
         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -152,7 +154,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                        <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal"
+                            wire:click.prevent="resetUI()">
                             Cerrar
                         </button>
                         @if ($idHospedaje)
@@ -176,4 +179,37 @@
         </div>
     </div>
     <!-- END MODAL-->
+    @livewire('administrate-commons.alerts')
+
+    <script>
+        window.addEventListener('swal-confirm-hospedaje-de-viajes', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('viajes-admin.hospedajes.hospedaje-viajes',
+                        'deleteHospedajes',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            //Lo que llega de CategoriesController
+            window.livewire.on('show-modal', msg => {
+                $('#modal_hospedaje_viajes').modal('show')
+            });
+
+            window.livewire.on('close-modal', msg => {
+                $('#modal_hospedaje_viajes').modal('hide')
+            });
+        });
+    </script>
 </div>

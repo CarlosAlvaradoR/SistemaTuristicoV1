@@ -14,6 +14,7 @@ class PagoBoletasViaje extends Component
     public $idPagoBoletosViajes, $descripcion, $fecha, $monto;
     public $total = 0;
 
+    protected $listeners = ['deletePagoBoletas'];
 
     public function resetUI()
     {
@@ -62,6 +63,9 @@ class PagoBoletasViaje extends Component
             $pago->fecha = $this->fecha;
             $pago->monto = $this->monto;
             $pago->save();
+            $title = 'MUY BIEN !';
+            $icon= 'success';
+            $text ='Información Sobre Boleta de Pago Actualizada Correctamente';
             $this->emit('close-modal');
         } else {
             $pago = PagoBoletosViajes::create([
@@ -70,8 +74,12 @@ class PagoBoletasViaje extends Component
                 'monto' => $this->monto,
                 'viaje_paquetes_id' => $this->idViaje
             ]);
+            $title = 'MUY BIEN !';
+            $icon= 'success';
+            $text ='Información Sobre Boleta de Pago Registrada Correctamente';
         }
 
+        $this->emit('alert', $title, $icon, $text);
         $this->resetUI();
     }
 
@@ -83,5 +91,20 @@ class PagoBoletasViaje extends Component
         $this->monto = $pago->monto;
 
         $this->emit('show-modal', 'abrir editar');
+    }
+
+    public function deleteConfirm($id)
+    {
+        $this->dispatchBrowserEvent('swal-confirm-pagos-boletas', [
+            'title' => 'Está seguro que desea eliminar el Pago del Viaje ?',
+            'icon' => 'warning',
+            'id' => $id
+        ]);
+    }
+
+    public function deletePagoBoletas(PagoBoletosViajes $pago)
+    {
+        $pago->delete();
+        $this->emit('alert','MUY BIEN!', 'success','Pago del Viaje Eliminado Correctamente');
     }
 }

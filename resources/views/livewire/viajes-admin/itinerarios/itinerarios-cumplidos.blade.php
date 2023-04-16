@@ -43,17 +43,19 @@
                                         @endif
                                     </td>
                                     <td>
+
                                         @if ($i->fecha_cumplimiento != 'No cumplido')
-                                            <button type="button" wire:click="Edit({{ $i->id }})" title="Editar"
-                                                class="btn btn-sm btn-rounded btn-warning">
-                                                <i class="fal fa-plus"></i>
+                                            <button type="button" title="Editar Fecha de Cumplimiento"
+                                            wire:click="Edit({{ $i->id }})"
+                                                wire:loading.attr="disabled" class="btn btn-sm btn-rounded btn-warning">
+                                                <i class="fas fa-marker"></i>
                                             </button>
+
                                         @else
-                                            <button type="button"
+                                            <button type="button" title="Añadir Fecha de Cumplimiento"
                                                 wire:click="AñadirFechaCumplimiento({{ $i->id }})"
-                                                title="Marcar Como culminada"
-                                                class="btn btn-sm btn-rounded btn-success">
-                                                <i class="fal fa-plus"></i>
+                                                wire:loading.attr="disabled" class="btn btn-sm btn-rounded btn-success">
+                                                <i class="fas fa-plus-circle"></i>
                                             </button>
                                         @endif
                                     </td>
@@ -68,7 +70,7 @@
 
     </div>
 
-    <!--MODAL-->
+    @livewire('administrate-commons.alerts')
 
     <!-- Modal -->
     <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false"

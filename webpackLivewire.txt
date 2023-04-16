@@ -217,3 +217,11 @@ EQUIPOS ADMIN
 
     MARCAS
        php artisan make:livewire EquiposAdmin/Marcas/Marcas
+
+
+
+
+
+COMUNES
+
+       php artisan make:livewire AdministrateCommons/Alerts
