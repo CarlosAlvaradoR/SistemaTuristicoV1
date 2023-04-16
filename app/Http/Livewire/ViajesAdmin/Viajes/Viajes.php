@@ -3,7 +3,17 @@
 namespace App\Http\Livewire\ViajesAdmin\Viajes;
 
 use App\Models\PaquetesTuristicos;
+use App\Models\Viajes\AcemilasAlquiladas;
+use App\Models\Viajes\ActividadesAclimataciones;
+use App\Models\Viajes\AlmuerzoCelebraciones;
+use App\Models\Viajes\Hospedajes;
+use App\Models\Viajes\ItinerariosCumplidos;
+use App\Models\Viajes\PagoBoletosViajes;
+use App\Models\Viajes\Participantes;
+use App\Models\Viajes\TrasladoViajes;
 use App\Models\Viajes\ViajePaquetes;
+use App\Models\Viajes\ViajePaquetesCocineros;
+use App\Models\Viajes\ViajePaquetesGuias;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
@@ -12,9 +22,14 @@ class Viajes extends Component
     public $paquete;
     public $descripcion, $fecha, $hora, $cantidad_participantes, $estado, $paquete_id;
 
-    public $title = 'CREAR VIAJES DEL PAQUETE', $idViajePaquete, $edicion = false;
+    public $title = 'CREAR VIAJES DEL PAQUETE', $idViajePaquete;
 
     protected $listeners = ['deleteViaje'];
+
+    public function resetUI()
+    {
+        $this->reset(['descripcion', 'fecha', 'hora', 'cantidad_participantes', 'estado', 'idViajePaquete', 'title']);
+    }
 
     public function mount(PaquetesTuristicos $paquete)
     {
@@ -38,6 +53,7 @@ class Viajes extends Component
             'estado' => 'required|numeric|min:1|max:3',
             'cantidad_participantes' => 'required',
         ]);
+
         if ($this->idViajePaquete) {
             $viaje = ViajePaquetes::findOrFail($this->idViajePaquete);
             $viaje->descripcion = $this->descripcion;
@@ -46,9 +62,9 @@ class Viajes extends Component
             $viaje->estado = $this->estado;
             $viaje->cantidad_participantes = $this->cantidad_participantes;
             $viaje->save();
-            $title='MUY BIEN !';
-            $icon='success';
-            $text ='Viaje Actualizado Correctamente';
+            $title = 'MUY BIEN !';
+            $icon = 'success';
+            $text = 'Viaje Actualizado Correctamente';
 
             $this->emit('close-modal-pago-servicio', 'Edicion de Atractivos');
         } else {
@@ -61,11 +77,11 @@ class Viajes extends Component
                 'cod_string' => strval(random_int(100000, 999999)),
                 'paquete_id' => $this->paquete->id
             ]);
-            $title='MUY BIEN !';
-            $icon='success';
-            $text ='Viaje Registrado Correctamente';
+            $title = 'MUY BIEN !';
+            $icon = 'success';
+            $text = 'Viaje Registrado Correctamente';
         }
-
+        $this->resetUI();
         $this->alert($title, $icon, $text);
     }
 
@@ -77,24 +93,9 @@ class Viajes extends Component
         $this->fecha = $viaje->fecha;
         $this->hora = $viaje->hora;
         $this->cantidad_participantes = $viaje->cantidad_participantes;
-        $this->edicion = true;
         $this->emit('show-modal-viaje-paquete', 'Edicion de Viaje Paquete');
     }
 
-    public function Update()
-    {
-        $this->validate([
-            'descripcion' => 'required',
-            'fecha' => 'required',
-            'hora' => 'required',
-            'cantidad_participantes' => 'required',
-        ]);
-
-
-
-
-        //$this->resetUI();
-    }
 
     public function deleteConfirm($id)
     {
@@ -108,12 +109,29 @@ class Viajes extends Component
 
     public function deleteViaje(ViajePaquetes $viaje)
     {
+
+        $itinerarios_cumplidos = ItinerariosCumplidos::where('viaje_paquetes_id', $viaje->id)->get();
+        $traslado_viajes = TrasladoViajes::where('viaje_paquetes_id', $viaje->id)->get();
+        $pago_boletas_viaje = PagoBoletosViajes::where('viaje_paquetes_id', $viaje->id)->get();
+        $actividades_aclimataciones = ActividadesAclimataciones::where('viaje_paquetes_id', $viaje->id)->get();
+        $participantes = Participantes::where('viaje_paquetes_id', $viaje->id)->get();
+        $viaje_paquete_cocineros = ViajePaquetesCocineros::where('viaje_paquetes_id', $viaje->id)->get();
+        $viaje_paquete_arrieros = AcemilasAlquiladas::where('viaje_paquetes_id', $viaje->id)->get();
+        $viaje_paquete_guias = ViajePaquetesGuias::where('viaje_paquetes_id', $viaje->id)->get();
+        $hospedajes = Hospedajes::where('viaje_paquetes_id', $viaje->id)->get();
+        $almuerzo_celebraciones = AlmuerzoCelebraciones::where('viaje_paquetes_id', $viaje->id)->get();
+        if (
+            count($itinerarios_cumplidos) > 0 || count($traslado_viajes) > 0 || count($pago_boletas_viaje) > 0
+            || count($actividades_aclimataciones) > 0 || count($participantes) > 0 || count($viaje_paquete_cocineros) > 0
+            || count($viaje_paquete_arrieros) > 0 || count($viaje_paquete_guias) > 0 || count($hospedajes) > 0
+            || count($almuerzo_celebraciones) > 0
+        ) {
+            $this->alert('ERROR', 'error', 'No se puede Eliminar el Registro porque está contenida la información de la misma en uno o varios Módulos.');
+            return;
+        }
+
         $viaje->delete();
-        $this->dispatchBrowserEvent('swal', [
-            'title' => 'MUY BIEN !',
-            'icon' => 'success',
-            'text' => 'Viaje Eliminado de forma Correcta'
-        ]);
+        $this->alert('MUY BIEN !', 'success', 'Viaje Eliminado de forma Correcta');
     }
 
     function alert($title, $icon, $text)

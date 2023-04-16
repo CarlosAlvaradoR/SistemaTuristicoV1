@@ -139,7 +139,7 @@
                                             class="tabledit-edit-button btn btn-sm btn-primary" style="float: none;">
                                             <i class="glyphicon fas fa-shuttle-van"></i>
                                         </a>
-                                        <button type="button" wire:click="deleteConfirm({{ $v->slug }})"
+                                        <button type="button" wire:click="deleteConfirm('{{ $v->slug }}')"
                                             class="tabledit-delete-button btn btn-sm btn-danger" style="float: none;">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </button>

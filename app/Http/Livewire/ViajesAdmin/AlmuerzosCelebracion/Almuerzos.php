@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\ViajesAdmin\AlmuerzosCelebracion;
 
+use App\Http\Livewire\ViajesAdmin\TrasladosViaje\TrasladosViaje;
 use App\Models\PaquetesTuristicos;
 use App\Models\Viajes\AlmuerzoCelebraciones;
 use App\Models\Viajes\Asociaciones;
@@ -14,6 +15,8 @@ class Almuerzos extends Component
     public $paquete, $viaje, $idViaje;
     public $idAlmuerzoCelebracion, $descripcion, $cantidad, $monto, $asociacion, $viaje_paquetes_id;
     public $total = 0;
+
+    protected $listeners = ['deleteAlmuerzos'];
 
     public function resetUI()
     {
@@ -68,6 +71,9 @@ class Almuerzos extends Component
             $almuerzoCelebracion->asociaciones_id = $this->asociacion;
             $almuerzoCelebracion->save();
             $this->emit('close-modal', '');
+            $title='MUY BIEN !';
+            $icon = 'success';
+            $text = 'Información Actualizada Satisfactoriamente';
         } else {
             $almuerzoCelebracion = AlmuerzoCelebraciones::create([
                 'descripcion' => $this->descripcion,
@@ -76,7 +82,11 @@ class Almuerzos extends Component
                 'asociaciones_id' => $this->asociacion,
                 'viaje_paquetes_id' => $this->idViaje
             ]);
+            $title='MUY BIEN !';
+            $icon = 'success';
+            $text = 'Información Registrada Satisfactoriamente';
         }
+        $this->alert($title, $icon, $text);
         $this->resetUI();
     }
 
@@ -91,7 +101,27 @@ class Almuerzos extends Component
         $this->emit('show-modal', 'abrir editar');
     }
 
-    public function Eliminar(){
-        
+    public function deleteConfirm($id)
+    {
+        $this->dispatchBrowserEvent('swal-confirm-almuerzos', [
+            'title' => 'Estás seguro que desea eliminar el Almuerzo de Celebración ?',
+            'icon' => 'warning',
+            'id' => $id
+        ]);
+    }
+
+    public function deleteAlmuerzos(AlmuerzoCelebraciones $traslados)
+    {
+        $traslados->delete();
+        $this->alert('MUY BIEN!', 'success','Traslado Eliminado Correctamente');
+    }
+
+    public function alert($title, $icon, $text)
+    {
+        $this->dispatchBrowserEvent('swal', [
+            'title' => $title,
+            'icon' => $icon,
+            'text' => $text
+        ]);
     }
 }

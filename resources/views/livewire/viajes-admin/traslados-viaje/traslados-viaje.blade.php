@@ -4,10 +4,11 @@
             <div class="card">
                 <div class="card-block">
                     <h5 class="card-title">
-                        <a  class="btn btn-primary btn-sm btn-rounded" href="{{ route('paquete.viajes', $paquete) }}" title="Volver">
+                        <a class="btn btn-primary btn-sm btn-rounded" href="{{ route('paquete.viajes', $paquete) }}"
+                            title="Volver">
                             <i class="fas fa-arrow-left"></i>
                         </a>
-                        
+
                         Lista de Traslados - {{ $paquete->nombre }}
                     </h5>
 
@@ -60,7 +61,8 @@
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button type="button" title="Añadir a la lista de Participantes"
-                                            class="btn btn-sm btn-rounded btn-danger">
+                                            class="btn btn-sm btn-rounded btn-danger"
+                                            wire:click="deleteConfirm({{ $t->idTraslado }})">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
@@ -156,11 +158,13 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                        <button type="button" class="btn btn-rounded btn-danger" wire:click.prevent="resetUI()"
+                            data-dismiss="modal">
                             Cerrar
                         </button>
                         @if ($idTrasladoViaje)
-                            <button type="button" wire:click="guardatTrasladoDeLosViajes" class="btn btn-rounded btn-primary">
+                            <button type="button" wire:click="guardatTrasladoDeLosViajes"
+                                class="btn btn-rounded btn-primary">
                                 Actualizar
                             </button>
                         @else
@@ -182,22 +186,36 @@
 
 
     <script>
+        window.addEventListener('swal-confirm-Traslados', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('viajes-admin.traslados-viaje.traslados-viaje',
+                        'deleteTraslado',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+
+
         document.addEventListener('DOMContentLoaded', function() {
             //Lo que llega de CategoriesController
             window.livewire.on('show-modal-edit', msg => {
                 $('#modal-traslado-viajes').modal('show')
             });
-            window.livewire.on('traslados-updated', msg => {
+            window.livewire.on('close-modal', msg => {
                 $('#modal-traslado-viajes').modal('hide')
-                Swal.fire(
-                    'MUY BIEN',
-                    msg,
-                    'success'
-                )
-            });
-            window.livewire.on('category-updated', msg => {
-                $('#modal-empresa-transporte').modal('hide')
             });
         });
     </script>
+
+    @include('common.alerts')
 </div>

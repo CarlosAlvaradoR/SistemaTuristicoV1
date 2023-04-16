@@ -11,10 +11,11 @@ use Livewire\Component;
 
 class TrasladosViaje extends Component
 {
-    public $paquete,$viaje, $idViaje;
+    public $paquete, $viaje, $idViaje;
     public $descripcion, $fecha, $monto, $vehiculo, $idTrasladoViaje; // PARA EL INSERT DE LOS TRASLADOS DEL VIAJE
     public $total = 0;
     //public $descripcion, $fecha, $monto, $viaje_paquetes_id, $vehiculos_id;
+    protected $listeners = ['deleteTraslado'];
 
     public function resetUI()
     {
@@ -70,8 +71,8 @@ class TrasladosViaje extends Component
             $traslados->vehiculos_id = $this->vehiculo;
 
             $traslados->save();
-
-            $this->emit('traslados-updated', 'Registro Actualizado Correctamente');
+            $this->alert('MUY BIEN!', 'success', 'Registro Actualizado Correctamente');
+            $this->emit('close-modal', '');
         } else {
             $traslados = TrasladoViajes::create([
                 'descripcion' => $this->descripcion,
@@ -80,6 +81,7 @@ class TrasladosViaje extends Component
                 'viaje_paquetes_id' => $this->idViaje,
                 'vehiculos_id' => $this->vehiculo
             ]);
+            $msg = '';
         }
 
         $this->resetUI();
@@ -96,7 +98,27 @@ class TrasladosViaje extends Component
         $this->emit('show-modal-edit', 'abrir editar');
     }
 
-    public function Eliminar()
+    public function deleteConfirm($id)
     {
+        $this->dispatchBrowserEvent('swal-confirm-Traslados', [
+            'title' => 'Estás seguro que desea eliminar el Traslado del Viaje ?',
+            'icon' => 'warning',
+            'id' => $id
+        ]);
+    }
+   
+    public function deleteTraslado(TrasladoViajes $traslados)
+    {
+        $traslados->delete();
+        $this->alert('MUY BIEN!', 'success','Traslado Eliminado Correctamente');
+    }
+
+    public function alert($title, $icon, $text)
+    {
+        $this->dispatchBrowserEvent('swal', [
+            'title' => $title,
+            'icon' => $icon,
+            'text' => $text
+        ]);
     }
 }
