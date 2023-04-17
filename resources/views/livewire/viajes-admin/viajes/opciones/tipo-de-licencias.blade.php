@@ -32,11 +32,12 @@
                                     </td>
                                     <td>
                                         <button type="button" wire:click="Edit({{ $tl->id }})"
-                                            title="Añadir a la lista de Participantes"
+                                            wire:loading.attr="disabled" title="Añadir a la lista de Participantes"
                                             class="btn btn-sm btn-rounded btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button type="button" title="Añadir a la lista de Participantes"
+                                            wire:click="deleteConfirm({{ $tl->id }})" wire:loading.attr="disabled"
                                             class="btn btn-sm btn-rounded btn-danger">
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -95,15 +96,18 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                        <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger"
+                            data-dismiss="modal">
                             Cerrar
                         </button>
                         @if ($idTipoLicencias)
-                            <button type="button" wire:click="saveTipoDeLicencias" class="btn btn-rounded btn-primary">
+                            <button type="button" wire:click="saveTipoDeLicencias" wire:loading.attr="disabled"
+                                class="btn btn-rounded btn-primary">
                                 Actualizar
                             </button>
                         @else
-                            <button type="button" wire:click="saveTipoDeLicencias" class="btn btn-rounded btn-primary">
+                            <button type="button" wire:click="saveTipoDeLicencias" wire:loading.attr="disabled"
+                                class="btn btn-rounded btn-primary">
                                 Guardar
                             </button>
                         @endif
@@ -117,23 +121,33 @@
     </div>
     <!-- END MODAL-->
 
-
+    @livewire('administrate-commons.alerts')
     <script>
+         window.addEventListener('swal-confirm-licencias', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('viajes-admin.viajes.opciones.tipo-de-licencias',
+                        'deleteTipoLicencia',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
-            //Lo que llega de CategoriesController
             window.livewire.on('show-modal', msg => {
                 $('#modal-tipo-de-vehiculo').modal('show')
             });
-            window.livewire.on('traslados-updated', msg => {
+            window.livewire.on('close-modal', msg => {
                 $('#modal-tipo-de-vehiculo').modal('hide')
-                Swal.fire(
-                    'MUY BIEN',
-                    msg,
-                    'success'
-                )
-            });
-            window.livewire.on('category-updated', msg => {
-                $('#modal-empresa-transporte').modal('hide')
             });
         });
     </script>

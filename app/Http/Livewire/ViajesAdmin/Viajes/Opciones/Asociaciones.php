@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\ViajesAdmin\Viajes\Opciones;
 
+use App\Models\Viajes\AlmuerzoCelebraciones;
+use App\Models\Viajes\Arrieros;
 use App\Models\Viajes\Asociaciones as ViajesAsociaciones;
 use Livewire\Component;
 
@@ -9,6 +11,12 @@ class Asociaciones extends Component
 {
     public $idAsociaciones, $nombre, $estado;
 
+    protected $listeners = ['deleteAsociaciones'];
+
+    public function resetUI()
+    {
+        $this->reset(['idAsociaciones', 'nombre', 'estado']);
+    }
     public function render()
     {
         $asociaciones = ViajesAsociaciones::all();
@@ -29,9 +37,10 @@ class Asociaciones extends Component
             $asociaciones->nombre = $this->nombre;
             $asociaciones->estado = $this->estado;
             $asociaciones->save();
-            $title='MUY BIEN !';
-            $icon='success';
-            $text='Información de la Asociación Actualizada Satisfactoriamente';
+            $this->emit('close-modal');
+            $title = 'MUY BIEN !';
+            $icon = 'success';
+            $text = 'Información de la Asociación Actualizada Satisfactoriamente';
         } else {
             $asociaciones = ViajesAsociaciones::create(
                 [
@@ -39,11 +48,11 @@ class Asociaciones extends Component
                     'estado' => $this->estado
                 ]
             );
-            $title='MUY BIEN !';
-            $icon='success';
-            $text='Asociación Registrada Satisfactoriamente';
+            $title = 'MUY BIEN !';
+            $icon = 'success';
+            $text = 'Asociación Registrada Satisfactoriamente';
         }
-
+        $this->resetUI();
         $this->alert($title, $icon, $text);
     }
 
@@ -57,7 +66,33 @@ class Asociaciones extends Component
         $this->emit('show-modal', 'abrir editar');
     }
 
-    function alert($title, $icon, $text){
+    public function deleteConfirm($id)
+    {
+        $this->dispatchBrowserEvent('swal-confirm-asociaciones', [
+            'title' => 'Está seguro que desea eliminar la Asociación ?',
+            'icon' => 'warning',
+            'id' => $id
+        ]);
+    }
+
+    public function deleteAsociaciones(ViajesAsociaciones $asociaciones)
+    {
+        $almuerzos = AlmuerzoCelebraciones::where('asociaciones_id', $asociaciones->id)->get();
+        $arrieros = Arrieros::where('asociaciones_id', $asociaciones->id)->get();
+
+        if (count($almuerzos) > 0 || count($arrieros) > 0) {
+            $this->alert('ERROR !', 'error', 'No se puede Eliminar a la Asociación porque la Información de la misma se encuentra contenida en otros módulos.');
+            return;
+        } else {
+            $asociaciones->delete();
+            $this->alert('MUY BIEN!', 'success', 'Asociación Eliminada Satisfactoriamente');
+        }
+        
+    }
+
+
+    function alert($title, $icon, $text)
+    {
         $this->dispatchBrowserEvent('swal', [
             'title' => $title,
             'icon' => $icon,

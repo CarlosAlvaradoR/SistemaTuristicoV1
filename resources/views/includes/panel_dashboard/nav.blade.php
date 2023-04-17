@@ -91,7 +91,7 @@
                 <li><a href="{{ route('viajes.cocinero') }}"><span class="lbl">Cocinero</span></a></li>
                 <li><a href="{{ route('viajes.guia') }}"><span class="lbl">Guía</span></a></li>
                 <li><a href="{{ route('viajes.arriero') }}"><span class="lbl">Arriero</span></a></li>
-                <li><a href="#!"><span class="lbl">Asociaciones</span></a></li>
+                <li><a href="{{ route('viajes.mostrar.asociaciones') }}"><span class="lbl">Asociaciones</span></a></li>
                 <li><a href="{{ route('viajes.mostrar.hoteles') }}"><span class="lbl">Hoteles</span></a></li>
                 <li class="with-sub">
                     <span>
@@ -101,15 +101,7 @@
                         <li><a href="{{ route('viajes.tipos.de.vehiculos') }}"><span class="lbl">Tipos de Vehículo</span></a></li>
                         <li><a href="{{ route('viajes.tipos.de.licencias') }}"><span class="lbl">Tipos de Licencias</span></a></li>
                         <li><a href="{{ route('viajes.mostrar.asociaciones') }}"><span class="lbl">Asociaciones</span></a></li>
-                        <li class="with-sub">
-                            <span>
-                                <span class="lbl">Level 3</span>
-                            </span>
-                            <ul style="">
-                                <li><a href="#"><span class="lbl">Level 3</span></a></li>
-                                <li><a href="#"><span class="lbl">Level 3</span></a></li>
-                            </ul>
-                        </li>
+                        
                     </ul>
                 </li>
             </ul>

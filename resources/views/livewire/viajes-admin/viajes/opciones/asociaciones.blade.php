@@ -40,11 +40,14 @@
                                     </td>
                                     <td>
                                         <button type="button" wire:click="Edit({{ $a->id }})"
+                                            wire:loading.attr="disabled"
                                             title="Añadir a la lista de Participantes"
                                             class="btn btn-sm btn-rounded btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button type="button" title="Añadir a la lista de Participantes"
+                                            wire:click="deleteConfirm({{$a->id}})"
+                                            wire:loading.attr="disabled"
                                             class="btn btn-sm btn-rounded btn-danger">
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -115,15 +118,16 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                        <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal"
+                            wire:click.prevent="resetUI()">
                             Cerrar
                         </button>
                         @if ($idAsociaciones)
-                            <button type="button" wire:click="saveAsociacion" class="btn btn-rounded btn-primary">
+                            <button type="button" wire:click="saveAsociacion" wire:loading.attr="disabled" class="btn btn-rounded btn-primary">
                                 Actualizar
                             </button>
                         @else
-                            <button type="button" wire:click="saveAsociacion" class="btn btn-rounded btn-primary">
+                            <button type="button" wire:click="saveAsociacion" wire:loading.attr="disabled" class="btn btn-rounded btn-primary">
                                 Guardar
                             </button>
                         @endif
@@ -139,21 +143,32 @@
 
 
     <script>
+         window.addEventListener('swal-confirm-asociaciones', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('viajes-admin.viajes.opciones.asociaciones',
+                        'deleteAsociaciones',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             //Lo que llega de CategoriesController
             window.livewire.on('show-modal', msg => {
                 $('#modal_asociaciones').modal('show')
             });
-            window.livewire.on('traslados-updated', msg => {
+            window.livewire.on('close-modal', msg => {
                 $('#modal_asociaciones').modal('hide')
-                Swal.fire(
-                    'MUY BIEN',
-                    msg,
-                    'success'
-                )
-            });
-            window.livewire.on('category-updated', msg => {
-                $('#modal-empresa-transporte').modal('hide')
             });
         });
     </script>
