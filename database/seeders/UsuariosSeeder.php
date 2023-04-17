@@ -19,7 +19,7 @@ class UsuariosSeeder extends Seeder
     public function run()
     {
         //
-        Personas::create([
+        $carlos = Personas::create([
             'dni'=>'70988855', 
             'nombre' => 'Carlos Emilio', 
             'apellidos' => 'Alvarado Robles', 
@@ -33,7 +33,7 @@ class UsuariosSeeder extends Seeder
             'email' => 'carlos2000emilioa@gmail.com', 
             'email_verified_at' =>'2022-12-12', 
             'password' => bcrypt('123456789'), 
-            'persona_id' => 1
+            'persona_id' => $carlos->id
         ]);
         $user1->assignRole('admin');
 

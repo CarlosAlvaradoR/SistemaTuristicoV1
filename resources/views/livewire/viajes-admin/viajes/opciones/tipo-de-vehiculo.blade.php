@@ -32,11 +32,12 @@
                                     </td>
                                     <td>
                                         <button type="button" wire:click="Edit({{ $tv->id }})"
-                                            title="Añadir a la lista de Participantes"
+                                            wire:loading.attr="disabled" title="Editar Tipo de Vehículo"
                                             class="btn btn-sm btn-rounded btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button type="button" title="Añadir a la lista de Participantes"
+                                        <button type="button" title="Eliminar Tipo de Vehículo"
+                                            wire:click="deleteConfirm({{ $tv->id }})" wire:loading.attr="disabled"
                                             class="btn btn-sm btn-rounded btn-danger">
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -45,16 +46,6 @@
                             @endforeach
 
                         </tbody>
-                        {{-- <tfoot>
-                            <tr>
-
-                                <th colspan="4">Total</th>
-
-                                <th colspan="2">S/. {{-- $tvotal[0]->Monto }}</th>
-
-                            </tr>
-
-                        </tfoot> --}}
                     </table>
                 </div>
             </div>
@@ -70,7 +61,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">
-                        CREAR TRASLADO DE VIAJES
+                        {{ $title }}
                     </h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">×</span>
@@ -95,15 +86,16 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                        <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger"
+                            data-dismiss="modal">
                             Cerrar
                         </button>
                         @if ($idTipoVehiculo)
-                            <button type="button" wire:click="saveTipoDeVehiculo" class="btn btn-rounded btn-primary">
+                            <button type="button" wire:click="saveTipoDeVehiculo" wire:loading.attr="disabled" class="btn btn-rounded btn-primary">
                                 Actualizar
                             </button>
                         @else
-                            <button type="button" wire:click="saveTipoDeVehiculo" class="btn btn-rounded btn-primary">
+                            <button type="button" wire:click="saveTipoDeVehiculo" wire:loading.attr="disabled" class="btn btn-rounded btn-primary">
                                 Guardar
                             </button>
                         @endif
@@ -117,23 +109,34 @@
     </div>
     <!-- END MODAL-->
 
+    @livewire('administrate-commons.alerts')
 
     <script>
+        window.addEventListener('swal-confirm-tipoVehiculo', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('viajes-admin.viajes.opciones.tipo-de-vehiculo',
+                        'deleteTipoVehiculo',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
-            //Lo que llega de CategoriesController
             window.livewire.on('show-modal', msg => {
                 $('#modal-tipo-de-vehiculo').modal('show')
             });
-            window.livewire.on('traslados-updated', msg => {
+            window.livewire.on('close-modal', msg => {
                 $('#modal-tipo-de-vehiculo').modal('hide')
-                Swal.fire(
-                    'MUY BIEN',
-                    msg,
-                    'success'
-                )
-            });
-            window.livewire.on('category-updated', msg => {
-                $('#modal-empresa-transporte').modal('hide')
             });
         });
     </script>
