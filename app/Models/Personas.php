@@ -9,4 +9,9 @@ class Personas extends Model
 {
     use HasFactory;
     protected $fillable = ['dni','nombre','apellidos', 'genero','telefono', 'dirección'];
+
+    public static function crear($datos){
+        $persona = Personas::create($datos);
+        return $persona;
+    }
 }

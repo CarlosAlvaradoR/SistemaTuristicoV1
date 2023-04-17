@@ -219,10 +219,10 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
-                                    <label class="form-label semibold" for="dni_persona">DNI</label>
-                                    <input type="text" class="form-control" wire:model.defer="dni_persona"
-                                        id="dni_persona" placeholder="Ingrese Nº de DNI">
-                                    @error('dni_persona')
+                                    <label class="form-label semibold" for="dni">DNI</label>
+                                    <input type="text" class="form-control" wire:model.defer="dni"
+                                        id="dni" placeholder="Ingrese Nº de DNI">
+                                    @error('dni')
                                         <small class="text-muted text-danger">{{ $message }}</small>
                                     @enderror
                                     <!---->
@@ -313,8 +313,13 @@
 
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                        <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger"
+                            data-dismiss="modal">
                             Cerrar
+                        </button>
+                        <button type="button" class="btn btn-rounded btn-primary"
+                         wire:click="resetUI" title="Reiniciar">
+                            <i class="fas fa-redo-alt"></i>
                         </button>
                         @if ($encontradoComoPersona && !$encontradoComoChofer)
                             <button type="button" wire:click="guardarPersonaChofer"
@@ -337,9 +342,6 @@
                             </button>
                         @endif
 
-                        <button type="button" wire:click="saveViaje" class="btn btn-rounded btn-primary">
-                            Guardar
-                        </button>
 
                     </div>
 

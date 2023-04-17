@@ -11,19 +11,23 @@ use Livewire\Component;
 
 class Chofer extends Component
 {
-    public $empresa;
-    public $numero_placa, $descripcion, $empresa_transportes_id, $tipo_de_vehiculo, $idSeleccionado; //PARA GUARDAR VEHÍCULO
-    public $numero_licencia, $tipo_de_licencia;
-    public $idVehiculo;
-
     /** Para buscar Choferes */
-    public $idChofer = 0;
-    public $dni, $buscar;
+    public $idChofer;
+    public $buscar;
     public $nombres_apellidos, $dni_encontrado, $telefono_arriero, $idPersona;
-    public $asociacion;
     public $encontradoComoPersona = false, $encontradoComoChofer = false, $no_existe = false;
-    public $dni_persona, $nombre, $apellidos, $genero, $telefono, $dirección;
+    public $dni, $nombre, $apellidos, $genero, $telefono, $dirección;
+    public $numero_licencia, $tipo_de_licencia;
 
+    public function resetUI()
+    {
+        $this->reset([
+            'idChofer', 'buscar', 'nombres_apellidos', 'dni_encontrado', 'telefono_arriero', 'idPersona', 
+            'encontradoComoPersona', 'encontradoComoChofer', 'no_existe',
+            'dni', 'nombre', 'apellidos', 'genero', 'telefono', 'dirección',
+            'numero_licencia', 'tipo_de_licencia'
+        ]);
+    }
 
     public function render()
     {
@@ -69,7 +73,7 @@ class Chofer extends Component
         } else {
             session()->flash('message-error', 'No se encontró informacion correspondiente al DNI: ' . $this->dni);
             $this->no_existe = true;
-            $this->dni_persona = $this->dni;
+            $this->dni = $this->dni;
             $this->resetValidation();
             $this->reset(['dni']);
         }
@@ -91,40 +95,29 @@ class Chofer extends Component
             ]
         );
 
-        /*$vehiculo_chofer = VehiculoChoferes::create(
-            [
-                'vehiculos_id' => $this->idVehiculo,
-                'choferes_id' => $chofer->id
-            ]
-        );*/
+        $this->resetUI();
     }
 
 
     public function NuevoChofer()
     {
-        $this->validate(
+        $personas = $this->validate(
             [
-                'dni_persona' => 'required|min:3|unique:personas,dni',
+                'dni' => 'required|min:3|unique:personas,dni',
                 'nombre' => 'required|min:3',
                 'apellidos' => 'required|min:3',
                 'genero' => 'required|numeric|min:0|max:1',
                 'telefono' => 'required|min:3',
                 'dirección' => 'required|min:3',
+            ]
+        );
+        $chofer = $this->validate(
+            [
                 'numero_licencia' => 'required|min:3',
                 'tipo_de_licencia' => 'required|min:0',
             ]
         );
-
-        $personas = Personas::create(
-            [
-                'dni' => $this->dni_persona,
-                'nombre' => $this->nombre,
-                'apellidos' => $this->apellidos,
-                'genero' => $this->genero,
-                'telefono' => $this->telefono,
-                'dirección' => $this->dirección
-            ]
-        );
+        $personas = Personas::crear($personas);
         $chofer = Choferes::create([
             'numero_licencia' => $this->numero_licencia,
             'tipo_licencias_id' => $this->tipo_de_licencia,
@@ -136,7 +129,7 @@ class Chofer extends Component
             'choferes_id' => $chofer->id
         ]);*/
 
-        //$this->resetUI();
+        $this->resetUI();
     }
 
 
@@ -144,15 +137,5 @@ class Chofer extends Component
     {
         $this->resetValidation($name);
         $this->resetErrorBag($name);
-    }
-
-
-    function resetUI()
-    {
-        $this->reset([
-            'dni_persona', 'nombre', 'apellidos', 'genero', 'telefono', 'telefono', 'dirección',
-            'asociacion', 'monto', 'cantidad', 'tipo_de_acemila', 'idPersona', 'idChofer'
-        ]);
-        $this->reset(['buscar', 'encontradoComoPersona', 'encontradoComoChofer', 'no_existe']);
     }
 }
