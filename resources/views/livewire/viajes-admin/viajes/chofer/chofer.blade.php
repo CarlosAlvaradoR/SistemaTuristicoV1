@@ -137,11 +137,10 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <br>
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control" wire:model="dni"
-                                    wire:keydown.enter="buscarChofer" placeholder="Buscar cliente por DNI">
+                                <input type="text" class="form-control" wire:model="dni_buscado"
+                                    wire:keydown.enter="buscarChofer" placeholder="Buscar chófer por DNI">
                             </div>
                             @if (session()->has('message-error'))
                                 <div class="alert alert-danger" role="alert">
@@ -251,8 +250,11 @@
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
                                     <label class="form-label semibold" for="genero">Género</label>
-                                    <input type="text" class="form-control" wire:model.defer="genero"
-                                        id="genero" placeholder="Ingrese el Género">
+                                    <select class="form-control" wire:model.defer="genero" id="genero">
+                                        <option value="" selected>...Seleccione...</option>
+                                        <option value="1">Masculino</option>
+                                        <option value="2">Femenino</option>
+                                    </select>
                                     @error('genero')
                                         <small class="text-muted text-danger">{{ $message }}</small>
                                     @enderror
@@ -278,7 +280,7 @@
                                     @enderror
                                 </fieldset>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <fieldset class="form-group">
                                     <label for="numero_licencia">
                                         Numero de Licencia
@@ -290,7 +292,7 @@
                                     @enderror
                                 </fieldset>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <fieldset class="form-group">
                                     <label for="tipo_de_licencia">
                                         Tipo de Licencia
@@ -313,12 +315,12 @@
 
 
                     <div class="modal-footer">
-                        <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger"
+                        <button type="button" wire:click.prevent="resetear" class="btn btn-rounded btn-danger"
                             data-dismiss="modal">
                             Cerrar
                         </button>
-                        <button type="button" class="btn btn-rounded btn-primary"
-                         wire:click="resetUI" title="Reiniciar">
+                        <button type="button" class="btn btn-rounded btn-primary" wire:click="resetear"
+                            title="Reiniciar">
                             <i class="fas fa-redo-alt"></i>
                         </button>
                         @if ($encontradoComoPersona && !$encontradoComoChofer)
@@ -352,19 +354,14 @@
     </div>
     <!-- END MODAL-->
 
+    @livewire('administrate-commons.alerts')
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             //Lo que llega de CategoriesController
             window.livewire.on('show-modal-edit', msg => {
                 $('#modal-traslado-viajes').modal('show')
-            });
-            window.livewire.on('mensaje-info', msg => {
-                $('#modal-traslado-viajes').modal('hide')
-                Swal.fire(
-                    'ALERTA',
-                    msg,
-                    'warning'
-                )
             });
             window.livewire.on('category-updated', msg => {
                 $('#modal-empresa-transporte').modal('hide')

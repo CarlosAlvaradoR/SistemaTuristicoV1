@@ -16,6 +16,7 @@ class Chofer extends Component
     public $buscar;
     public $nombres_apellidos, $dni_encontrado, $telefono_arriero, $idPersona;
     public $encontradoComoPersona = false, $encontradoComoChofer = false, $no_existe = false;
+    public $dni_buscado;
     public $dni, $nombre, $apellidos, $genero, $telefono, $dirección;
     public $numero_licencia, $tipo_de_licencia;
 
@@ -27,6 +28,11 @@ class Chofer extends Component
             'dni', 'nombre', 'apellidos', 'genero', 'telefono', 'dirección',
             'numero_licencia', 'tipo_de_licencia'
         ]);
+    }
+
+    public function resetear(){
+        $this->resetUI();
+        $this->reset(['dni_buscado']);
     }
 
     public function render()
@@ -47,9 +53,11 @@ class Chofer extends Component
 
     public function buscarChofer()
     {
+        $this->resetUI();
         $this->validate(
-            ['dni' => 'required|min:3']
+            ['dni_buscado' => 'required|min:3']
         );
+        $this->dni = $this->dni_buscado;
         //$this->resetUI();
         $sql = "SELECT * FROM v_viajes_pesonas_choferes
         WHERE dni = '" . $this->dni . "' LIMIT 1";
@@ -67,11 +75,11 @@ class Chofer extends Component
             if ($this->buscar[0]->idChofer) {
                 $this->idChofer = $this->buscar[0]->idChofer;
                 $this->encontradoComoChofer = true;
-                $this->emit('mensaje-info', 'La persona identificada con DNI: ' . $this->dni . ' ya se encuentra registrada como Chofer');
+                $this->emit('alert','ALERTA', 'warning','La persona identificada con DNI: ' . $this->dni . ' ya se encuentra registrada como Chofer');
             }
             $this->reset(['dni']);
         } else {
-            session()->flash('message-error', 'No se encontró informacion correspondiente al DNI: ' . $this->dni);
+            $this->emit('alert', 'ALERTA!', 'warning', 'No se encontró informacion correspondiente al DNI: ' . $this->dni);
             $this->no_existe = true;
             $this->dni = $this->dni;
             $this->resetValidation();
@@ -84,9 +92,10 @@ class Chofer extends Component
         $this->validate(
             [
                 'numero_licencia' => 'required|min:3',
-                'tipo_de_licencia' => 'required|min:0',
+                'tipo_de_licencia' => 'required|numeric|min:1',
             ]
         );
+        
         $chofer = Choferes::create(
             [
                 'numero_licencia' => $this->numero_licencia,
@@ -95,7 +104,10 @@ class Chofer extends Component
             ]
         );
 
-        $this->resetUI();
+        $this->resetear();
+        $this->emit('alert','MUY BIEN', 'success','Chófer Añadido Correctamente');
+        /*$this->resetUI();
+        $this->reset(['dni_buscado']);*/
     }
 
 
@@ -106,7 +118,7 @@ class Chofer extends Component
                 'dni' => 'required|min:3|unique:personas,dni',
                 'nombre' => 'required|min:3',
                 'apellidos' => 'required|min:3',
-                'genero' => 'required|numeric|min:0|max:1',
+                'genero' => 'required|numeric|min:1|max:2',
                 'telefono' => 'required|min:3',
                 'dirección' => 'required|min:3',
             ]
@@ -114,9 +126,10 @@ class Chofer extends Component
         $chofer = $this->validate(
             [
                 'numero_licencia' => 'required|min:3',
-                'tipo_de_licencia' => 'required|min:0',
+                'tipo_de_licencia' => 'required|numeric|min:1',
             ]
         );
+        
         $personas = Personas::crear($personas);
         $chofer = Choferes::create([
             'numero_licencia' => $this->numero_licencia,
@@ -129,7 +142,10 @@ class Chofer extends Component
             'choferes_id' => $chofer->id
         ]);*/
 
-        $this->resetUI();
+        /*$this->resetUI();
+        $this->reset(['dni_buscado']);*/
+        $this->resetear();
+        $this->emit('alert','MUY BIEN', 'success','Chófer Añadido Correctamente');
     }
 
 
