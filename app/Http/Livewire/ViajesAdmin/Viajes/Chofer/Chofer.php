@@ -23,14 +23,15 @@ class Chofer extends Component
     public function resetUI()
     {
         $this->reset([
-            'idChofer', 'buscar', 'nombres_apellidos', 'dni_encontrado', 'telefono_arriero', 'idPersona', 
+            'idChofer', 'buscar', 'nombres_apellidos', 'dni_encontrado', 'telefono_arriero', 'idPersona',
             'encontradoComoPersona', 'encontradoComoChofer', 'no_existe',
             'dni', 'nombre', 'apellidos', 'genero', 'telefono', 'dirección',
             'numero_licencia', 'tipo_de_licencia'
         ]);
     }
 
-    public function resetear(){
+    public function resetear()
+    {
         $this->resetUI();
         $this->reset(['dni_buscado']);
     }
@@ -75,7 +76,7 @@ class Chofer extends Component
             if ($this->buscar[0]->idChofer) {
                 $this->idChofer = $this->buscar[0]->idChofer;
                 $this->encontradoComoChofer = true;
-                $this->emit('alert','ALERTA', 'warning','La persona identificada con DNI: ' . $this->dni . ' ya se encuentra registrada como Chofer');
+                $this->emit('alert', 'ALERTA', 'warning', 'La persona identificada con DNI: ' . $this->dni . ' ya se encuentra registrada como Chofer');
             }
             $this->reset(['dni']);
         } else {
@@ -95,7 +96,7 @@ class Chofer extends Component
                 'tipo_de_licencia' => 'required|numeric|min:1',
             ]
         );
-        
+
         $chofer = Choferes::create(
             [
                 'numero_licencia' => $this->numero_licencia,
@@ -105,7 +106,7 @@ class Chofer extends Component
         );
 
         $this->resetear();
-        $this->emit('alert','MUY BIEN', 'success','Chófer Añadido Correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Chófer Añadido Correctamente');
         /*$this->resetUI();
         $this->reset(['dni_buscado']);*/
     }
@@ -113,9 +114,17 @@ class Chofer extends Component
 
     public function NuevoChofer()
     {
+        $title = 'MUY BIEN !';
+        $icon = 'success';
+        $text = 'Chófer Registrado Correctamente';
+        $val = '';
+        if ($this->no_existe && $this->idPersona) {
+            $val = ','.$this->idPersona;
+        }
+
         $personas = $this->validate(
             [
-                'dni' => 'required|min:3|unique:personas,dni',
+                'dni' => 'required|min:3|unique:personas,dni'.$val,
                 'nombre' => 'required|min:3',
                 'apellidos' => 'required|min:3',
                 'genero' => 'required|numeric|min:1|max:2',
@@ -129,25 +138,59 @@ class Chofer extends Component
                 'tipo_de_licencia' => 'required|numeric|min:1',
             ]
         );
-        
-        $personas = Personas::crear($personas);
-        $chofer = Choferes::create([
-            'numero_licencia' => $this->numero_licencia,
-            'tipo_licencias_id' => $this->tipo_de_licencia,
-            'persona_id' => $personas->id
-        ]);
 
-        /*$vehiculo = VehiculoChoferes::create([
-            'vehiculos_id' => $this->idVehiculo,
-            'choferes_id' => $chofer->id
-        ]);*/
+        if ($this->no_existe && $this->idPersona) {
+            #UPDATE
+            $personas = Personas::findOrFail($this->idPersona);
+            $personas->dni = $this->dni;
+            $personas->nombre = $this->nombre;
+            $personas->apellidos = $this->apellidos;
+            $personas->genero = $this->genero;
+            $personas->telefono = $this->telefono;
+            $personas->dirección = $this->dirección;
+            $personas->save();
 
-        /*$this->resetUI();
-        $this->reset(['dni_buscado']);*/
+            $chofer = Choferes::findOrFail($this->idChofer);
+            $chofer->numero_licencia= $this->numero_licencia;
+            $chofer->tipo_licencias_id= $this->tipo_de_licencia;
+            $chofer->save();
+            $text = 'Información del Chófer Actualizada Correctamente.';
+            $this->emit('close-modal');
+        } else {
+            #INSERT
+            $personas = Personas::crear($personas);
+            $chofer = Choferes::create([
+                'numero_licencia' => $this->numero_licencia,
+                'tipo_licencias_id' => $this->tipo_de_licencia,
+                'persona_id' => $personas->id
+            ]);
+        }
+
         $this->resetear();
-        $this->emit('alert','MUY BIEN', 'success','Chófer Añadido Correctamente');
+        $this->emit('alert', $title, $icon, $text);
     }
 
+    public function Edit(Choferes $chofer)
+    {
+        //dd($chofer);
+
+        $personas = Personas::where('id', $chofer->persona_id)->limit(1)->get();
+        $this->idPersona = $personas[0]->id;
+        $this->dni = $personas[0]->dni;
+        $this->nombre = $personas[0]->nombre;
+        $this->apellidos = $personas[0]->apellidos;
+        $this->genero = $personas[0]->genero;
+        $this->telefono = $personas[0]->telefono;
+        $this->dirección = $personas[0]->dirección;
+
+        $this->idChofer = $chofer->id;
+        $this->numero_licencia = $chofer->numero_licencia;
+        $this->tipo_de_licencia = $chofer->tipo_licencias_id;
+
+        $this->no_existe = true;
+
+        $this->emit('show-modal');
+    }
 
     public function updated($name, $value)
     {
