@@ -47,7 +47,8 @@
                                         </button>
 
                                         <button type="button" class="tabledit-delete-button btn btn-sm btn-danger"
-                                            style="float: none;">
+                                            style="float: none;" wire:click="deleteConfirm({{ $ch->idChofer }})"
+                                            wire:loading.attr="disabled">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </button>
                                     </td>
@@ -309,6 +310,25 @@
 
 
     <script>
+        window.addEventListener('swal-confirm-choferes', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('viajes-admin.viajes.chofer.chofer',
+                        'deleteChoferes',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             window.livewire.on('show-modal', msg => {
                 $('#modal_choferes').modal('show')
