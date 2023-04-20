@@ -4,25 +4,36 @@ namespace App\Http\Livewire\ViajesAdmin\Viajes\Guia;
 
 use App\Models\Personas;
 use App\Models\Viajes\Guias;
+use App\Models\Viajes\ViajePaquetesGuias;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Guia extends Component
 {
-    public $empresa;
-    public $numero_placa, $descripcion, $empresa_transportes_id, $tipo_de_vehiculo, $idSeleccionado; //PARA GUARDAR VEHÍCULO
-    public $numero_licencia, $tipo_de_licencia;
-    public $idVehiculo;
-
     /** Para buscar Choferes */
-    public $idGuia = 0;
-    public $dni, $buscar;
+    public $idGuia;
+    public $dni, $buscar, $dni_buscado;
     public $nombres_apellidos, $dni_encontrado, $telefono_arriero, $idPersona;
-    public $asociacion;
     public $encontradoComoPersona = false, $encontradoComoGuia = false, $no_existe = false;
     public $dni_persona, $nombre, $apellidos, $genero, $telefono, $dirección;
 
-    
+    public function resetUI()
+    {
+        $this->reset([
+            'idGuia', 'dni', 'apellidos', 'genero', 'telefono', 'dirección',
+            'idPersona', 'dni', 'nombres_apellidos', 'dni_encontrado',
+            'telefono_arriero', 'nombre', 'apellidos', 'genero', 'telefono', 'dirección'
+        ]);
+        $this->reset(['buscar', 'encontradoComoPersona', 'encontradoComoGuia', 'no_existe']);
+    }
+
+    public function resetear()
+    {
+        $this->resetUI();
+        $this->reset(['dni_buscado']);
+    }
+
+
     public function render()
     {
         $guias = DB::table('personas as p')
@@ -39,9 +50,11 @@ class Guia extends Component
 
     public function buscarGuia()
     {
+        $this->resetUI();
         $this->validate(
-            ['dni' => 'required|min:3']
+            ['dni_buscado' => 'required|min:3']
         );
+        $this->dni = $this->dni_buscado;
         //$this->resetUI();
         $sql = "SELECT * FROM v_viajes_pesonas_guias
         WHERE dni = '" . $this->dni . "' LIMIT 1";
@@ -59,11 +72,11 @@ class Guia extends Component
             if ($this->buscar[0]->idGuia) {
                 $this->idGuia = $this->buscar[0]->idGuia;
                 $this->encontradoComoGuia = true;
-                $this->emit('mensaje-info', 'La persona identificada con DNI: ' . $this->dni . ' ya se encuentra registrada como Cocinero');
+                $this->emit('alert', 'ALERTA', 'warning', 'La persona identificada con DNI: ' . $this->dni . ' ya se encuentra registrada como Guía');
             }
             $this->reset(['dni']);
         } else {
-            session()->flash('message-error', 'No se encontró informacion correspondiente al DNI: ' . $this->dni);
+            $this->emit('alert', 'ALERTA!', 'warning', 'No se encontró informacion correspondiente al DNI: ' . $this->dni);
             $this->no_existe = true;
             $this->dni_persona = $this->dni;
             $this->resetValidation();
@@ -73,57 +86,126 @@ class Guia extends Component
 
     public function guardarPersonaGuia()
     { //Guarda la persona que ya existe y los atributos del Cliente
-        $cocinero = Guias::create(
+        $guias = Guias::create(
             [
                 'persona_id' => $this->idPersona
             ]
         );
 
-        /*$vehiculo_chofer = VehiculoChoferes::create(
-            [
-                'vehiculos_id' => $this->idVehiculo,
-                'choferes_id' => $chofer->id
-            ]
-        );*/
+        $this->resetear();
+        $this->emit('alert', 'MUY BIEN !', 'success', 'Guía Guardado Correctamente.');
     }
 
-    
-    public function NuevoChofer()
+
+    public function NuevoGuia()
     {
-        $this->validate(
+        $title = 'MUY BIEN !';
+        $icon = 'success';
+        $text = 'Chófer Registrado Correctamente';
+        $val = '';
+        if ($this->no_existe && $this->idPersona) {
+            $val = ',' . $this->idPersona;
+        }
+        $personas = $this->validate(
             [
-                'dni_persona' => 'required|min:3|unique:personas,dni',
+                'dni' => 'required|min:3|unique:personas,dni' . $val,
                 'nombre' => 'required|min:3',
                 'apellidos' => 'required|min:3',
-                'genero' => 'required|numeric|min:0|max:1',
+                'genero' => 'required|numeric|min:1|max:2',
                 'telefono' => 'required|min:3',
                 'dirección' => 'required|min:3',
             ]
         );
+        if ($this->no_existe && $this->idPersona) {
+            $personas = Personas::findOrFail($this->idPersona);
+            $personas->dni = $this->dni;
+            $personas->nombre = $this->nombre;
+            $personas->apellidos = $this->apellidos;
+            $personas->genero = $this->genero;
+            $personas->telefono = $this->telefono;
+            $personas->dirección = $this->dirección;
+            $personas->save();
+            $text = 'Información del Guía Actualizada Correctamente.';
+            $this->emit('close-modal');
+        } else {
+            $personas = Personas::crear($personas);
 
-        $personas = Personas::create(
-            [
-                'dni' => $this->dni_persona,
-                'nombre' => $this->nombre,
-                'apellidos' => $this->apellidos,
-                'genero' => $this->genero,
-                'telefono' => $this->telefono,
-                'dirección' => $this->dirección
-            ]
-        );
-        
-        $cocinero = Guias::create(
-            [
-                'persona_id' => $personas->id
-            ]
-        );
+            $guias = Guias::create(
+                [
+                    'persona_id' => $personas->id
+                ]
+            );
+        }
 
-        /*$vehiculo = VehiculoChoferes::create([
-            'vehiculos_id' => $this->idVehiculo,
-            'choferes_id' => $chofer->id
-        ]);*/
 
-        //$this->resetUI();
+
+        $this->emit('alert', $title, $icon, $text);
+        $this->resetear();
+    }
+
+    public function Edit(Guias $guias)
+    {
+        //dd($guias);
+        $personas = Personas::where('id', $guias->persona_id)->limit(1)->get();
+        $this->idPersona = $personas[0]->id;
+        $this->dni = $personas[0]->dni;
+        $this->nombre = $personas[0]->nombre;
+        $this->apellidos = $personas[0]->apellidos;
+        $this->genero = $personas[0]->genero;
+        $this->telefono = $personas[0]->telefono;
+        $this->dirección = $personas[0]->dirección;
+
+        $this->idGuia = $guias->id;
+
+
+        $this->no_existe = true;
+
+        $this->emit('show-modal');
+    }
+
+
+    public function deleteConfirm($id)
+    {
+        $this->dispatchBrowserEvent('swal-confirm-guias', [
+            'title' => 'Está seguro que desea eliminar al Guía ?',
+            'icon' => 'warning',
+            'id' => $id
+        ]);
+    }
+    protected $listeners = ['deleteGuias'];
+    public function deleteGuias(Guias $guias)
+    {
+        //$personas = Personas::findOrFail($guias->id);
+        # Elimiar ambos
+        # Eliminar como chófer y no como persona si esque la persona está en otras tablas (BUSCAR LA PERSONA EN TABLAS DIFERENTES)
+
+        $title = 'MUY BIEN!';
+        $icon = 'success';
+        $text = 'Se eliminó correctamente la Información del Guía';
+        $viaje_paquete_guias = ViajePaquetesGuias::where('guias_id', $guias->id)->get();
+
+        $personas = Personas::verificaQueExista($guias->persona_id, 4);
+        #dd($personas);
+        if ($personas == 1) { //QUIERE DECIR QUE LA PERSONA CON ESE ID TIENE REGISTROS EN DIFERENTES CAMPOS
+            $title = 'ERROR';
+            $icon = 'error';
+            $text = 'No se puede Eliminar la Información porque la misma se encuentra registrada en otro módulo.';
+            $this->emit('alert', $title, $icon, $text);
+            return;
+        } else {
+            if (count($viaje_paquete_guias) > 0) {
+                $title = 'ERROR!';
+                $icon = 'error';
+                $text = 'No se puede Eliminar la Información del Chófer la misma se encuentra registrada en otro módulo.';
+                $this->emit('alert', $title, $icon, $text);
+                return;
+            } else {
+                $guias->delete();
+                $personas = Personas::findOrFail($guias->persona_id);
+                $personas->delete();
+                $this->emit('alert', $title, $icon, $text);
+            }
+        }
     }
 
 
@@ -131,15 +213,5 @@ class Guia extends Component
     {
         $this->resetValidation($name);
         $this->resetErrorBag($name);
-    }
-
-
-    function resetUI()
-    {
-        $this->reset([
-            'dni_persona', 'nombre', 'apellidos', 'genero', 'telefono', 'telefono', 'dirección',
-            'asociacion', 'monto', 'cantidad', 'tipo_de_acemila', 'idPersona', 'idGuia'
-        ]);
-        $this->reset(['buscar', 'encontradoComoPersona', 'encontradoComoGuia', 'no_existe']);
     }
 }
