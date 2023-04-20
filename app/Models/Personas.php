@@ -14,8 +14,24 @@ class Personas extends Model
     use HasFactory;
     protected $fillable = ['dni', 'nombre', 'apellidos', 'genero', 'telefono', 'dirección'];
 
+    public function validar(){
+        $val = '';
+        $validate = $this->validate(
+            [
+                'dni' => ['required|min:3|unique:personas,dni' . $val],
+                'nombre' => ['required|min:3'],
+                'apellidos' => ['required|min:3'],
+                'genero' => ['required|numeric|min:1|max:2'],
+                'telefono' => ['required|min:3'],
+                'dirección' => ['required|min:3'],
+            ]
+        );
+    }
+
     public static function crear($datos)
     {
+        // dd($datos['genero']);
+        // return;
         $persona = Personas::create($datos);
         return $persona;
     }
