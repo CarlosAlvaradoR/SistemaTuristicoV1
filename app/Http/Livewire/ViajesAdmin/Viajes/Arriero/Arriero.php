@@ -49,8 +49,7 @@ class Arriero extends Component
             )
             ->get();
 
-        return view(
-            'livewire.viajes-admin.viajes.arriero.arriero',
+        return view('livewire.viajes-admin.viajes.arriero.arriero',
             compact('asociaciones', 'arrieros')
         );
     }
@@ -131,7 +130,7 @@ class Arriero extends Component
 
         $asociaciones = $this->validate(
             [
-                'asociacion' => 'required|min:1',
+                'asociacion' => 'required|numeric|min:1',
             ]
         );
 
@@ -195,7 +194,7 @@ class Arriero extends Component
     protected $listeners = ['deleteArrieros'];
     public function deleteArrieros(Arrieros $arrieros)
     {
-        //dd($arrieros);
+        dd($arrieros);
         //$personas = Personas::findOrFail($arrieros->id);
         # Elimiar ambos
         # Eliminar como chófer y no como persona si esque la persona está en otras tablas (BUSCAR LA PERSONA EN TABLAS DIFERENTES)

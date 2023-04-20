@@ -8,6 +8,7 @@ use App\Models\TipoAcemilas;
 use App\Models\Viajes\AcemilasAlquiladas;
 use App\Models\Viajes\Arrieros as ViajesArrieros;
 use App\Models\Viajes\Asociaciones;
+use App\Models\Viajes\ViajePaquetes;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -15,7 +16,7 @@ class Arrieros extends Component
 {
     public $paquete, $idViaje;
     public $idArriero = 0;
-    public $monto, $cantidad, $tipo_de_acemila;
+    public $idAcemilasAlquiladas, $monto, $cantidad, $tipo_de_acemila;
     public $total = 0;
     /** Para buscar Arrieros */
     public $dni, $buscar;
@@ -24,10 +25,14 @@ class Arrieros extends Component
     public $encontradoComoPersona = false, $encontradoComoArriero = false, $no_existe = false;
     public $dni_persona, $nombre, $apellidos, $genero, $telefono, $dirección;
 
-    public function mount(PaquetesTuristicos $paquete, $idViaje)
+    public function resetUI(){
+        $this->reset(['monto', 'cantidad', 'tipo_de_acemila','idAcemilasAlquiladas']);
+    }
+
+    public function mount(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
     {
         $this->paquete = $paquete;
-        $this->idViaje = $idViaje;
+        $this->idViaje = $viaje->id;
     }
 
 
@@ -43,10 +48,11 @@ class Arrieros extends Component
             ->where('viaje_paquetes_id', $this->idViaje)
             ->get();
 
-
+        //dd($arrieros_participantes);
         $asociaciones = Asociaciones::all(['id', 'nombre']);
         $tipo_acemilas = TipoAcemilas::all(['id', 'nombre']);
-        return view('livewire.viajes-admin.arrieros.arrieros',
+        return view(
+            'livewire.viajes-admin.arrieros.arrieros',
             compact(
                 'arrieros',
                 'tipo_acemilas',
@@ -64,18 +70,70 @@ class Arrieros extends Component
 
     public function guardarAcemilasAlquiladas()
     {
-        $acemilasAlquiladas = AcemilasAlquiladas::create([
-            'monto' => $this->monto,
-            'cantidad' => $this->cantidad,
-            'viaje_paquetes_id' => $this->idViaje,
-            'arrieros_id' => $this->idArriero,
-            'tipo_acemilas_id' => $this->tipo_de_acemila
-        ]);
+        $title = 'MUY BIEN !';
+        $icon = 'success';
+        $text = 'Acémilas Alquiladas Añadidas correctamente.';
+        $this->validate(
+            [
+                'monto' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+                'cantidad' => 'required|numeric|min:1',
+                // 'viaje_paquetes_id' => $this->idViaje,
+                // 'arrieros_id' => $this->idArriero,
+                'tipo_de_acemila' => 'required|numeric|min:1'
+            ]
+        );
+        if ($this->idAcemilasAlquiladas) {
+            $acemilasAlquiladas = AcemilasAlquiladas::findOrFail($this->idAcemilasAlquiladas);
+            $acemilasAlquiladas->monto = $this->monto;
+            $acemilasAlquiladas->cantidad = $this->cantidad;
+            $acemilasAlquiladas->tipo_acemilas_id = $this->tipo_de_acemila;
+            $acemilasAlquiladas->save();
+            $text = 'Acémilas Alquiladas Actualizadas correctamente.';
+        } else {
+            $acemilasAlquiladas = AcemilasAlquiladas::create([
+                'monto' => $this->monto,
+                'cantidad' => $this->cantidad,
+                'viaje_paquetes_id' => $this->idViaje,
+                'arrieros_id' => $this->idArriero,
+                'tipo_acemilas_id' => $this->tipo_de_acemila
+            ]);
+        }
+
+
 
         $this->resetUI();
+        $this->emit('alert', $title, $icon, $text);
         $this->emit('fecha-itinerario-guarded', 'close');
     }
 
+    public function deleteConfirm($id)
+    {
+        $this->dispatchBrowserEvent('swal-confirm-arrieros', [
+            'title' => 'Está seguro que desea eliminar el Alquiler de Acémila ?',
+            'icon' => 'warning',
+            'id' => $id
+        ]);
+    }
+    protected $listeners = ['deleteAlquiler'];
+    public function deleteAlquiler(AcemilasAlquiladas $acemilasAlquiladas)
+    {
+        $title = 'MUY BIEN !';
+        $icon = 'success';
+        $text= 'Alquiler de Acémila Eliminado Correctamente';
+        $acemilasAlquiladas->delete();
+        $this->emit('alert', $title, $icon, $text);
+
+    }
+
+    public function Edit(AcemilasAlquiladas $acemilasAlquiladas)
+    {
+        $this->idAcemilasAlquiladas = $acemilasAlquiladas->id;
+        $this->monto = $acemilasAlquiladas->monto;
+        $this->cantidad = $acemilasAlquiladas->cantidad;
+        $this->tipo_de_acemila = $acemilasAlquiladas->tipo_acemilas_id;
+        $this->emit('show-modal');
+    }
+/*
     public function buscarArriero()
     {
         $this->validate(
@@ -104,7 +162,7 @@ class Arrieros extends Component
         } else {
             session()->flash('message-error', 'No se encontró informacion correspondiente al DNI: ' . $this->dni);
             $this->no_existe = true;
-            $this->dni_persona= $this->dni;
+            $this->dni_persona = $this->dni;
             $this->resetValidation();
             $this->reset(['dni']);
         }
@@ -176,12 +234,13 @@ class Arrieros extends Component
         $this->resetUI();
     }
 
-
-    function resetUI(){
-        $this->reset([
-            'dni_persona', 'nombre', 'apellidos', 'genero', 'telefono', 'telefono', 'dirección',
-            'asociacion', 'monto', 'cantidad', 'tipo_de_acemila','idPersona','idArriero'
-        ]);
-        $this->reset(['buscar','encontradoComoPersona', 'encontradoComoArriero', 'no_existe']);
-    }
+*/
+    // function resetUI()
+    // {
+    //     $this->reset([
+    //         'dni_persona', 'nombre', 'apellidos', 'genero', 'telefono', 'telefono', 'dirección',
+    //         'asociacion', 'monto', 'cantidad', 'tipo_de_acemila', 'idPersona', 'idArriero'
+    //     ]);
+    //     $this->reset(['buscar', 'encontradoComoPersona', 'encontradoComoArriero', 'no_existe']);
+    // }
 }

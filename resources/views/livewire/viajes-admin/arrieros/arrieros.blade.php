@@ -19,8 +19,8 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <a id="modal-532427" href="#modal-traslado-viajes" role="button" class="btn btn-rounded"
-                                data-toggle="modal">Nuevo Arriero</a>
+                            <a target="_blank" href="{{ route('viajes.arriero') }}" class="btn btn-rounded"
+                                >Nuevo Arriero</a>
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -39,7 +39,7 @@
                                     <td>
                                         <button type="button"
                                             wire:click="AñadirAcemilasAlquiladas({{ $a->idArriero }})"
-                                            title="Añadir a la lista de Participantes"
+                                            wire:loading.attr="disabled" title="Añadir a la lista de Participantes"
                                             class="btn btn-sm btn-rounded btn-success">
                                             <i class="fas fa-plus"></i>
                                         </button>
@@ -79,7 +79,13 @@
                                     </td>
                                     <td>
                                         <button type="button" title="Quitar de la Lista de Participantes"
-                                            class="btn btn-sm btn-rounded btn-danger">
+                                            class="btn btn-sm btn-rounded btn-warning"
+                                            wire:click="Edit({{ $ap->idAcemilasAlquiladas }})">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <button type="button" title="Quitar de la Lista de Participantes"
+                                            class="btn btn-sm btn-rounded btn-danger"
+                                            wire:click="deleteConfirm({{ $ap->idAcemilasAlquiladas }})">
                                             <i class="fas fa-minus"></i>
                                         </button>
                                     </td>
@@ -105,7 +111,7 @@
 
 
     <!--MODAL --->
-    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal-traslado-viajes"
+    {{-- <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal-traslado-viajes"
         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -385,7 +391,7 @@
 
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- END MODAL-->
 
 
@@ -404,15 +410,6 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group has-search">
-                                    <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" class="form-control"
-                                        placeholder="Buscar Almuerzos de Celebración">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="monto">
@@ -420,6 +417,9 @@
                                     </label>
                                     <input type="text" autocomplete="off" wire:model.defer="monto"
                                         class="form-control" id="monto" />
+                                    @error('monto')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -429,6 +429,9 @@
                                     </label>
                                     <input type="number" wire:model.defer="cantidad" autocomplete="off"
                                         class="form-control" id="cantidad" />
+                                    @error('cantidad')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -447,26 +450,59 @@
                                             <option value="{{ $ta->id }}">{{ $ta->nombre }}</option>
                                         @endforeach
                                     </select>
+                                    @error('tipo_de_acemila')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                    <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger"
+                        data-dismiss="modal">
                         Cerrar
                     </button>
-                    <button type="button" wire:click="guardarAcemilasAlquiladas"
-                        class="btn btn-rounded btn-primary">
-                        Guardar
-                    </button>
+                    @if ($idAcemilasAlquiladas)
+                        <button type="button" wire:click="guardarAcemilasAlquiladas" wire:loading.attr="disabled"
+                            class="btn btn-rounded btn-primary">
+                            Actualizar
+                        </button>
+                    @else
+                        <button type="button" wire:click="guardarAcemilasAlquiladas" wire:loading.attr="disabled"
+                            class="btn btn-rounded btn-primary">
+                            Guardar
+                        </button>
+                    @endif
+
                 </div>
             </div>
         </div>
     </div>
     <!-- END MODAL-->
 
+    @livewire('administrate-commons.alerts')
+
     <script>
+        window.addEventListener('swal-confirm-arrieros', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('viajes-admin.arrieros.arrieros',
+                        'deleteAlquiler',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             //Lo que llega de CategoriesController
             window.livewire.on('show-modal', msg => {
