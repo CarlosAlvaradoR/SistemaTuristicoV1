@@ -8,6 +8,7 @@ use App\Models\TipoAcemilas;
 use App\Models\Viajes\AcemilasAlquiladas;
 use App\Models\Viajes\Asociaciones;
 use App\Models\Viajes\Cocineros as ViajesCocineros;
+use App\Models\Viajes\ViajePaquetes;
 use App\Models\Viajes\ViajePaquetesCocineros;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -16,8 +17,8 @@ class Cocineros extends Component
 {
 
     public $paquete, $idViaje;
-    public $idCocinero = 0;
-    public $monto, $cantidad, $tipo_de_acemila;
+    public $idCocinero;
+    public $idViajePaqueteCocinero, $monto;
     public $total = 0;
     /** Para buscar Arrieros */
     public $dni, $buscar;
@@ -26,10 +27,15 @@ class Cocineros extends Component
     public $encontradoComoPersona = false, $encontradoComoCocinero = false, $no_existe = false;
     public $dni_persona, $nombre, $apellidos, $genero, $telefono, $dirección;
 
-    public function mount(PaquetesTuristicos $paquete, $idViaje)
+    public function resetUI()
+    {
+        $this->reset(['monto', 'idCocinero', 'idViajePaqueteCocinero']);
+    }
+
+    public function mount(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
     {
         $this->paquete = $paquete;
-        $this->idViaje = $idViaje;
+        $this->idViaje = $viaje->id;
     }
 
 
@@ -44,11 +50,12 @@ class Cocineros extends Component
         $cocineros_participantes = DB::table('v_viaje_personas_cocineros_participantes_viaje')
             ->where('viaje_paquetes_id', $this->idViaje)
             ->get();
-
+        //dd($cocineros_participantes);
 
         $asociaciones = Asociaciones::all(['id', 'nombre']);
         $tipo_acemilas = TipoAcemilas::all(['id', 'nombre']);
-        return view('livewire.viajes-admin.cocineros.cocineros',
+        return view(
+            'livewire.viajes-admin.cocineros.cocineros',
             compact(
                 'cocineros',
                 'tipo_acemilas',
@@ -66,14 +73,57 @@ class Cocineros extends Component
 
     public function AñadirAlCocinero()
     {
-        $viaje_paquete_cocineros = ViajePaquetesCocineros::create([
-            'monto_pagar' => $this->monto, 
-            'viaje_paquetes_id' => $this->idViaje, 
-            'cocinero_id' => $this->idCocinero
-        ]);
-
+        $title = 'MUY BIEN !';
+        $icon = 'success';
+        $text = 'Cocinero Añadido Correctamente al Viaje.';
+        $this->validate(
+            [
+                'monto' => 'required|regex:/^\d+(\.\d{1,2})?$/'
+            ]
+        );
+        if ($this->idViajePaqueteCocinero) {
+            $viaje_paquete_cocineros = ViajePaquetesCocineros::findOrFail($this->idViajePaqueteCocinero);
+            $viaje_paquete_cocineros->monto_pagar = $this->monto;
+            $viaje_paquete_cocineros->save();
+            $text = 'Información Actualizada Correctamente';
+        } else {
+            $viaje_paquete_cocineros = ViajePaquetesCocineros::create([
+                'monto_pagar' => $this->monto,
+                'viaje_paquetes_id' => $this->idViaje,
+                'cocinero_id' => $this->idCocinero
+            ]);
+        }
+        $this->emit('close-modal');
+        $this->emit('alert', $title, $icon, $text);
         $this->resetUI();
-        $this->emit('fecha-itinerario-guarded', 'close');
+    }
+
+    public function Edit(ViajePaquetesCocineros $viaje_paquete_cocineros)
+    {
+        //dd($viaje_paquete_cocineros);
+        $this->idViajePaqueteCocinero = $viaje_paquete_cocineros->id;
+        $this->monto = $viaje_paquete_cocineros->monto_pagar;
+        $this->emit('show-modal');
+    }
+
+    public function deleteConfirm($id)
+    {
+        $this->dispatchBrowserEvent('swal-confirm-cocineros', [
+            'title' => 'Está seguro que desea eliminar al Cocinero del Viaje ?',
+            'icon' => 'warning',
+            'id' => $id
+        ]);
+    }
+    protected $listeners = ['deleteCoineroViaje'];
+    public function deleteCoineroViaje(ViajePaquetesCocineros $viaje_paquete_cocineros)
+    {
+        //dd($viaje_paquete_cocineros);
+        $title = 'MUY BIEN !';
+        $icon = 'success';
+        $text= 'Alquiler de Acémila Eliminado Correctamente';
+        $viaje_paquete_cocineros->delete();
+        $this->emit('alert', $title, $icon, $text);
+
     }
 
     public function buscarArriero()
@@ -84,7 +134,7 @@ class Cocineros extends Component
         $this->resetUI();
         $sql = "SELECT p.id, p.dni, concat(p.nombre,' ',p.apellidos) as datos, p.telefono, a.id as idCocinero FROM personas p
         LEFT JOIN cocineros a on a.persona_id = p.id
-        WHERE p.dni = '".$this->dni."' LIMIT 1";
+        WHERE p.dni = '" . $this->dni . "' LIMIT 1";
 
         //dd($this->dni);
         $this->buscar = DB::select($sql);
@@ -104,24 +154,24 @@ class Cocineros extends Component
         } else {
             session()->flash('message-error', 'No se encontró informacion correspondiente al DNI: ' . $this->dni);
             $this->no_existe = true;
-            $this->dni_persona= $this->dni;
+            $this->dni_persona = $this->dni;
             $this->resetValidation();
             $this->reset(['dni']);
         }
     }
 
-    public function updated($name, $value)
-    {
-        $this->resetValidation($name);
-        $this->resetErrorBag($name);
-    }
+    // public function updated($name, $value)
+    // {
+    //     $this->resetValidation($name);
+    //     $this->resetErrorBag($name);
+    // }
 
     public function guardarCocineroViaje()
     { //Cuado lo encuentre como Arriero
         // id del Arriero
         $viaje_paquete_cocineros = ViajePaquetesCocineros::create([
-            'monto_pagar' => $this->monto, 
-            'viaje_paquetes_id' => $this->idViaje, 
+            'monto_pagar' => $this->monto,
+            'viaje_paquetes_id' => $this->idViaje,
             'cocinero_id' => $this->idCocinero
         ]);
 
@@ -136,8 +186,8 @@ class Cocineros extends Component
         ]);
 
         $viaje_paquete_cocineros = ViajePaquetesCocineros::create([
-            'monto_pagar' => $this->monto, 
-            'viaje_paquetes_id' => $this->idViaje, 
+            'monto_pagar' => $this->monto,
+            'viaje_paquetes_id' => $this->idViaje,
             'cocinero_id' => $cocinero->id
         ]);
 
@@ -162,8 +212,8 @@ class Cocineros extends Component
         ]);
 
         $viaje_paquete_cocineros = ViajePaquetesCocineros::create([
-            'monto_pagar' => $this->monto, 
-            'viaje_paquetes_id' => $this->idViaje, 
+            'monto_pagar' => $this->monto,
+            'viaje_paquetes_id' => $this->idViaje,
             'cocinero_id' => $cocinero->id
         ]);
 
@@ -171,11 +221,11 @@ class Cocineros extends Component
     }
 
 
-    function resetUI(){
-        $this->reset([
-            'dni_persona', 'nombre', 'apellidos', 'genero', 'telefono', 'telefono', 'dirección',
-            'asociacion', 'monto', 'cantidad', 'tipo_de_acemila','idPersona','idCocinero'
-        ]);
-        $this->reset(['buscar','encontradoComoPersona', 'encontradoComoCocinero', 'no_existe']);
-    }
+    // function resetUI(){
+    //     $this->reset([
+    //         'dni_persona', 'nombre', 'apellidos', 'genero', 'telefono', 'telefono', 'dirección',
+    //         'asociacion', 'monto', 'cantidad', 'tipo_de_acemila','idPersona','idCocinero'
+    //     ]);
+    //     $this->reset(['buscar','encontradoComoPersona', 'encontradoComoCocinero', 'no_existe']);
+    // }
 }
