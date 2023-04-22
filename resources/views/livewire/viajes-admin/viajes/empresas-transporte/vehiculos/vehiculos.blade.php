@@ -16,8 +16,7 @@
                         </div>
                         <div class="col-md-2">
                             <br>
-                            <a id="modal-918849" href="#modal-container-918849" role="button" class="btn"
-                                data-toggle="modal">Nuevo Vehículo</a>
+                            <button class="btn" wire:click="abrirModalVehiculo">Nuevo Vehículo</button>
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -39,19 +38,21 @@
                                     </td>
                                     <td>
                                         <button type="button" wire:click="Edit({{ $v->id }})"
+                                            wire:loading.attr="disabled"
                                             class="tabledit-edit-button btn btn-sm btn-warning" style="float: none;"
                                             title="Editar Información del Vehículo">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </button>
                                         <button type="button" wire:click="modalNuevoChofer({{ $v->id }})"
-                                            title="Añadir Chófer al Vehículo"
-                                            class="tabledit-edit-button btn btn-sm btn-primary" data-toggle="modal"
-                                            data-target="#staticBackdrop" style="float: none;">
+                                            wire:loading.attr="disabled" title="Añadir Chófer al Vehículo"
+                                            class="tabledit-edit-button btn btn-sm btn-primary">
                                             <i class="glyphicon fas fa-biking"></i>
                                         </button>
 
-                                        <button type="button" class="tabledit-delete-button btn btn-sm btn-danger"
-                                            style="float: none;" title="Eliminar Vehículo">
+                                        <button type="button" wire:click="deleteConfirm({{ $v->id }})"
+                                            wire:loading.attr="disabled"
+                                            class="tabledit-delete-button btn btn-sm btn-danger" style="float: none;"
+                                            title="Eliminar Vehículo">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </button>
                                     </td>
@@ -136,28 +137,24 @@
                                     <input type="text" class="form-control" wire:model="dni"
                                         wire:keydown.enter="buscarChofer" placeholder="Buscar chófer por DNI">
                                 </div>
-                                @if (session()->has('message-error'))
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ session('message-error') }}
-                                    </div>
-                                @endif
+
                             </div>
                         </div>
                     @endif
 
 
-                    @if ($encontradoComoPersona && !$encontradoComoChofer)
+                    {{-- @if ($encontradoComoPersona && !$encontradoComoChofer)
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <span class="badge badge-default font-weight-bold">INFORMACIÓN:</span>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-8">
                                 <span class="badge badge-default">{{ $nombres_apellidos }}</span>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <span class="badge badge-default font-weight-bold">TELÉFONO:</span>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-8">
                                 <span class="badge badge-default">{{ $telefono_arriero }}</span>
                             </div>
                             <br>
@@ -190,27 +187,40 @@
                                     @enderror
                                 </div>
                             </div>
+                            
                         </div>
-                    @endif
+                    @endif --}}
 
                     @if ($encontradoComoChofer)
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <span class="badge badge-default">INFORMACIÓN DEL CHÓFER:</span>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-8">
                                 <span class="badge badge-default">{{ $nombres_apellidos }}</span>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <span class="badge badge-default">TELÉFONO</span>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-8">
                                 <span class="badge badge-default">{{ $telefono_arriero }}</span>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <button class="btn btn-primary btn-rounded">Agregar</button>
+                                </div>
                             </div>
                         </div>
                     @endif
 
-                    @if ($no_existe)
+                    @if ($mostrarEnlace)
+                        <div class="alert alert-primary" role="alert">
+                            <a target="_blank" href="{{ route('viajes.chofer') }}" class="alert-link">Crear Nuevo
+                                Chófer ?</a>
+                        </div>
+                    @endif
+
+                    {{-- @if ($no_existe)
                         <div class="row">
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
@@ -302,34 +312,63 @@
                                 </fieldset>
                             </div>
                         </div>
+                    @endif --}}
+                    @if ($idVehiculo)
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">NOMBRES</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $contador = 1;
+                                @endphp
+                                @foreach ($choferes as $ch)
+                                    <tr>
+                                        <th scope="row">{{ $contador++ }}</th>
+                                        <td>{{ $ch->nombre }} {{ $ch->apellidos }}</td>
+                                        <td>
+                                            <button wire:click="deleteConfirmChoferes({{$ch->idVehiculoChofer}})" class="btn btn-danger">
+                                                Quitar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
                     @endif
+
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" wire:click.prevent="resetUI(1)" class="btn btn-rounded btn-danger"
+                    <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger"
                         data-dismiss="modal">
                         Cerrar
                     </button>
-                    @if ($encontradoComoPersona && !$encontradoComoChofer)
+                    {{-- @if ($encontradoComoPersona && !$encontradoComoChofer)
                         <button type="button" wire:click="guardarPersonaCliente"
                             class="btn btn-rounded btn-primary">
                             <i class="fas fa-save"></i> Guardar
                         </button>
-                    @endif
+                    @endif --}}
 
                     @if ($encontradoComoChofer)
                         <button type="button" title="Añadir Chofer" wire:click="agregarChoferAlVehiculo"
                             class="btn btn-rounded btn-primary">
-                            <i class="fas fa-save"></i> Guardar
+                            <i class="fas fa-save"></i> Agregar Chófer al Vehículo
                         </button>
                     @endif
 
-                    @if ($no_existe)
+                    {{-- @if ($no_existe)
                         <button type="button" title="Grabar Nuevo Chofer" wire:click="NuevoChofer"
                             class="btn btn-rounded btn-primary">
                             <i class="fas fa-save"></i> Guardar
                         </button>
-                    @endif
+                    @endif --}}
 
                     @if (!$idVehiculo)
                         @if ($idSeleccionado)
@@ -354,8 +393,47 @@
 </div>
 <!-- END MODAL-->
 
+@livewire('administrate-commons.alerts')
 
 <script>
+    window.addEventListener('swal-confirm-vehiculos', event => {
+        Swal.fire({
+            title: event.detail.title,
+            icon: event.detail.icon,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, quiero eliminarlo!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Livewire.emitTo('viajes-admin.viajes.empresas-transporte.vehiculos.vehiculos',
+                    'deleteVehiculos',
+                    event.detail
+                    .id);
+            }
+        })
+    });
+
+    window.addEventListener('swal-confirm-vehiculosChoferes', event => {
+        Swal.fire({
+            title: event.detail.title,
+            icon: event.detail.icon,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, quiero eliminarlo!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Livewire.emitTo('viajes-admin.viajes.empresas-transporte.vehiculos.vehiculos',
+                    'deleteVehiculosChofer',
+                    event.detail
+                    .id);
+            }
+        })
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
         //Lo que llega de CategoriesController
         window.livewire.on('show-modal', msg => {
