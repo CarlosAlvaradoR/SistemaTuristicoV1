@@ -6,7 +6,7 @@
                     <h5 class="card-title font-weight-bold"><i class="fas fa-list"></i> Lista de Todos los Viajes</h5>
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <br>
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
@@ -32,6 +32,12 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-2">
+                            <br>
+                            <a target="_blank" href="{{ route('mostrar.viajes.actuales') }}" class="btn"
+                                title="Ver Reporte de Viajes Actuales"><i class="fas fa-file-pdf"></i> Viajes
+                                Actuales</a>
                         </div>
                         <div class="col-md-2">
                             <br>
@@ -62,7 +68,7 @@
                                         {{ $v->descripcion }}
                                     </td>
                                     <td>
-                                        {{ $v->fecha }}
+                                        {{ date('d/m/Y', strtotime($v->fecha)) }}
                                     </td>
                                     <td>
                                         {{ $v->cantidad_participantes }}
@@ -119,7 +125,7 @@
                                                 <a class="dropdown-item"
                                                     href="{{ route('paquete.viajes.itinerario', [$paquete, $v->slug]) }}"><i
                                                         class="fas fa-clipboard-list"></i> Itinerarios del Viaje</a>
-                                                
+
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item"
                                                     href="{{ route('paquete.viajes.arriero', [$paquete, $v->slug]) }}">Arrieros</a>
@@ -127,6 +133,23 @@
                                                     href="{{ route('paquete.viajes.cocineros', [$paquete, $v->slug]) }}">Cocineros</a>
                                                 <a class="dropdown-item"
                                                     href="{{ route('paquete.viajes.guias', [$paquete, $v->slug]) }}">Guías</a>
+
+
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" target="_blank"
+                                                    href="{{ route('paquete.viajes.arriero', [$paquete, $v->slug]) }}"
+                                                    target="_blank"><i class="fas fa-file-pdf"></i> Reporte de
+                                                    Participantes</a>
+                                                <a class="dropdown-item" target="_blank"
+                                                    href="{{ route('mostrar.viajes.itinerarios.cumplidos', [$paquete, $v->slug]) }}"
+                                                    target="_blank"><i class="fas fa-file-pdf"></i> Itinerarios
+                                                    Cumplidos </a>
+                                                <a class="dropdown-item" target="_blank"
+                                                    href="{{ route('paquete.viajes.guias', [$paquete, $v->slug]) }}"
+                                                    target="_blank"><i class="fas fa-file-pdf"></i> Gastos de la
+                                                    Empresa</a>
+
+
                                             </div>
                                         </div>
                                     </td>

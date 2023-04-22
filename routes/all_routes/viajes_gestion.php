@@ -35,3 +35,8 @@ Route::get('/viajes/tipos-de-vehiculos', [App\Http\Controllers\ViajePaquetesCont
 Route::get('/viajes/tipos-de-licencias', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarTiposDeLicencias'])->name('viajes.tipos.de.licencias')->middleware(['auth', 'verified']);
 Route::get('/viajes/asociaciones', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarAsociaciones'])->name('viajes.mostrar.asociaciones')->middleware(['auth', 'verified']);
 Route::get('/viajes/hoteles', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarHoteles'])->name('viajes.mostrar.hoteles')->middleware(['auth', 'verified']);
+
+
+/** REPORTES */
+Route::get('/viajes/reporte/viajes-actuales', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarViajesActuales'])->name('mostrar.viajes.actuales')->middleware(['auth', 'verified']);
+Route::get('/viajes/reporte/{paquete}/{viaje}/itinerario-cumplido', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarItinerariosCumplidos'])->name('mostrar.viajes.itinerarios.cumplidos')->middleware(['auth', 'verified']);

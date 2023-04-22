@@ -6,6 +6,7 @@ use App\Models\PaquetesTuristicos;
 use App\Models\Viajes\EmpresaTransportes;
 use App\Models\Viajes\Participantes;
 use App\Models\Viajes\ViajePaquetes;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class ViajePaquetesController extends Controller
@@ -92,7 +93,8 @@ class ViajePaquetesController extends Controller
         return view('viajes_admin.viajes_participantes', compact('paquete', 'viaje'));
     }
 
-    public function EntregaDeEquipos(PaquetesTuristicos $paquete, ViajePaquetes $viaje, Participantes $participante){
+    public function EntregaDeEquipos(PaquetesTuristicos $paquete, ViajePaquetes $viaje, Participantes $participante)
+    {
         //$participante = Participantes::findOrFail($participante);
         //return $participante;
         return view('viajes_admin.viajes_participantes_entrega_equipos', compact('paquete', 'viaje', 'participante'));
@@ -138,11 +140,13 @@ class ViajePaquetesController extends Controller
         return view('viajes_admin.viajes_arrieros-guia_cocinero', compact('paquete', 'idViaje'));
     }
 
-    public function viajeCocineros(PaquetesTuristicos $paquete, $idViaje){
+    public function viajeCocineros(PaquetesTuristicos $paquete, $idViaje)
+    {
         return view('viajes_admin.viajes_cocineros', compact('paquete', 'idViaje'));
     }
 
-    public function viajeGuias(PaquetesTuristicos $paquete, $idViaje){
+    public function viajeGuias(PaquetesTuristicos $paquete, $idViaje)
+    {
         return view('viajes_admin.viajes_guias', compact('paquete', 'idViaje'));
     }
 
@@ -171,27 +175,53 @@ class ViajePaquetesController extends Controller
         return view('viajes_admin.cocinero.cocinero');
     }
 
-    public function mostrarListaGuias(){
+    public function mostrarListaGuias()
+    {
         return view('viajes_admin.guia.guia');
     }
 
-    public function mostrarArrieros(){
+    public function mostrarArrieros()
+    {
         return view('viajes_admin.arriero.arriero');
     }
 
-    public function mostrarTiposDeVehiculos(){
+    public function mostrarTiposDeVehiculos()
+    {
         return view('viajes_admin.opciones.tipo_de_vehiculos');
     }
 
-    public function mostrarTiposDeLicencias(){
+    public function mostrarTiposDeLicencias()
+    {
         return view('viajes_admin.opciones.tipo_de_licencias');
     }
 
-    public function mostrarAsociaciones(){
+    public function mostrarAsociaciones()
+    {
         return view('viajes_admin.opciones.asociaciones');
     }
 
-    public function mostrarHoteles(){
+    public function mostrarHoteles()
+    {
         return view('viajes_admin.opciones.hoteles');
+    }
+
+    /** REPORTES */
+
+    public function mostrarViajesActuales()
+    {
+
+        $viajes = ViajePaquetes::where('estado', 2)->get();
+        $pdf = Pdf::loadView('viajes_admin.reportes.viajesActuales', compact('viajes'));
+        //return $pdf->download('invoice.pdf');
+        return $pdf->stream('Reporte de Viajes Actuales.pdf');
+        // return view('viajes_admin.reportes.viajesActuales', compact('viajes'));
+    }
+
+    public function mostrarItinerariosCumplidos(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
+    {
+        $itinerarios = ViajePaquetes::mostrarItinerariosCumplidos($paquete->id, $viaje->id);
+        $pdf = Pdf::loadView('viajes_admin.reportes.itinerariosDelViaje', compact('itinerarios', 'paquete', 'viaje'));
+        return $pdf->stream('Cumplimiento de Itinerario del Viaje.pdf');
+        // return view('viajes_admin.reportes.itinerariosDelViaje', compact('itinerarios'));
     }
 }

@@ -19,7 +19,7 @@ use Livewire\Component;
 
 class Participantes extends Component
 {
-    public $paquete, $viaje,$idViaje;
+    public $paquete, $viaje, $idViaje;
     public $autorizaciones_medicas, $riesgos, $condiciones_puntualidad;
 
     public function mount(PaquetesTuristicos $paquete, $viaje)
@@ -49,17 +49,7 @@ class Participantes extends Component
         $this->condiciones_puntualidad = CondicionPuntualidades::where('paquete_id', $this->paquete->id)->get();
         /**  */
 
-        $participantes = DB::table('personas as p')
-            ->join('clientes as  c', 'p.id', '=', 'c.persona_id')
-            ->join('reservas as r', 'c.id', '=', 'r.cliente_id')
-            ->join('estado_reservas as er', 'r.estado_reservas_id', '=', 'er.id')
-            ->join('participantes as parti', 'parti.reserva_id', '=', 'r.id')
-            ->where('parti.viaje_paquetes_id', $this->idViaje)
-            ->select(
-                DB::raw('CONCAT(p.nombre, " ", p.apellidos) AS datos'),
-                'parti.id'
-            )
-            ->get();
+        $participantes = ViajePaquetes::mostrarParticipantesDelViaje($this->idViaje);
         return view('livewire.viajes-admin.participantes.participantes', compact(
             'clientes_reservados',
             'participantes'
@@ -72,12 +62,12 @@ class Participantes extends Component
         /** VERIFICAMOS SI EL PAGO ESTÁ COMPLETADA */
         DB::statement("SET sql_mode = '' ");
         $verifica_completado = DB::select("SELECT * FROM v_reserva_reservas_general vrg
-        WHERE vrg.idReserva = ".$reservas->id."
+        WHERE vrg.idReserva = " . $reservas->id . "
         LIMIT 1");
 
         if (($verifica_completado[0]->estado_oficial) != 'PAGO COMPLETADO') {
             $this->alert('ALERTA', 'warning', 'Los Pagos del Cliente están incompletos o Faltan Verificación.
-             Por favor vaya a: '. Request::root().'/reservas/pagos/'.$reservas->slug);
+             Por favor vaya a: ' . Request::root() . '/reservas/pagos/' . $reservas->slug);
             return;
         }
 
@@ -100,7 +90,7 @@ class Participantes extends Component
             //VERIFICAMOS SI ACEPTÓ AL MENOS UNA CONDICIÓN
             $consulta_condiciones_aceptadas = CondicionesAceptadas::where('reserva_id', $reservas->id)->get();
             if (count($consulta_condiciones_aceptadas) == 0) {
-                $this->alert('ALERTA', 'error', 'El cliente Aún No Acepta las Condiciones de Puntualidad. Por favor vaya a: '. Request::root() . '/paquetes/reserva/condiciones-riesgos-justificacionMedica/' . $reservas->slug);
+                $this->alert('ALERTA', 'error', 'El cliente Aún No Acepta las Condiciones de Puntualidad. Por favor vaya a: ' . Request::root() . '/paquetes/reserva/condiciones-riesgos-justificacionMedica/' . $reservas->slug);
                 return;
             }
         }
@@ -108,7 +98,7 @@ class Participantes extends Component
             //VERIFICAMOS SI ACEPTÓ AL MENOS UNA CONDICIÓN
             $consulta_autorizaciones_aceptadas = AutorizacionesPresentadas::where('reserva_id', $reservas->id)->get();
             if (count($consulta_autorizaciones_aceptadas) == 0) {
-                $this->alert('ALERTA', 'error', 'El cliente Aún No Sube un archivo de Autorización Requerido para este Viaje. Por favor vaya a: '. Request::root() . '/paquetes/reserva/condiciones-riesgos-justificacionMedica/' . $reservas->slug);
+                $this->alert('ALERTA', 'error', 'El cliente Aún No Sube un archivo de Autorización Requerido para este Viaje. Por favor vaya a: ' . Request::root() . '/paquetes/reserva/condiciones-riesgos-justificacionMedica/' . $reservas->slug);
                 return;
             }
         }

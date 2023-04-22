@@ -44,15 +44,9 @@ class ItinerariosCumplidos extends Component
             )
             ->where('ai.paquete_id', $this->paquete->id)
             ->get();
-        $itinerarios = DB::select("SELECT ai.nombre_actividad,ip.id,ip.descripcion, ip.actividad_id,
-        (CASE
-            WHEN (SELECT COUNT(*) FROM itinerarios_cumplidos ic WHERE ic.viaje_paquetes_id = " . $this->idViaje . " AND ic.itinerario_paquetes_id = ip.id) > 0 
-            THEN (SELECT ic.fecha_cumplimiento FROM itinerarios_cumplidos ic WHERE ic.viaje_paquetes_id = " . $this->idViaje . " AND ic.itinerario_paquetes_id = ip.id LIMIT 1)
-            ELSE 'No cumplido'
-        END) as fecha_cumplimiento  
-        FROM actividades_itinerarios ai
-        INNER JOIN itinerario_paquetes ip on ai.id = ip.actividad_id
-        WHERE ai.paquete_id = " . $this->paquete->id . "");
+        
+
+        $itinerarios = ViajePaquetes::mostrarItinerariosCumplidos($this->paquete->id, $this->idViaje);
         //dd($itinerarios);
         return view('livewire.viajes-admin.itinerarios.itinerarios-cumplidos', compact('itinerarios'));
     }
