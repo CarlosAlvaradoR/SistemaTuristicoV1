@@ -137,7 +137,7 @@
 
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" target="_blank"
-                                                    href="{{ route('paquete.viajes.arriero', [$paquete, $v->slug]) }}"
+                                                    href="{{ route('mostrar.participantesDelViaje', [$paquete, $v->slug]) }}"
                                                     target="_blank"><i class="fas fa-file-pdf"></i> Reporte de
                                                     Participantes</a>
                                                 <a class="dropdown-item" target="_blank"

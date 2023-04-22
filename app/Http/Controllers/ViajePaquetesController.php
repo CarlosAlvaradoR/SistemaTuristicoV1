@@ -217,6 +217,15 @@ class ViajePaquetesController extends Controller
         // return view('viajes_admin.reportes.viajesActuales', compact('viajes'));
     }
 
+    public function mostrarParticipantesDelViaje (PaquetesTuristicos $paquete, ViajePaquetes $viaje){
+        $participantes = ViajePaquetes::mostrarParticipantesDelViaje($viaje->id);
+        // $viajes = ViajePaquetes::where('estado', 2)->get();
+        $pdf = Pdf::loadView('viajes_admin.reportes.participantesDelViaje', compact('participantes'));
+        
+        return $pdf->stream('Lista de Participantes del Viaje.pdf');
+        // return view('viajes_admin.reportes.participantesDelViaje', compact('participantes'));
+    }
+
     public function mostrarItinerariosCumplidos(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
     {
         $itinerarios = ViajePaquetes::mostrarItinerariosCumplidos($paquete->id, $viaje->id);
