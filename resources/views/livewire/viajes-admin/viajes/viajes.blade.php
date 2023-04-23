@@ -145,7 +145,7 @@
                                                     target="_blank"><i class="fas fa-file-pdf"></i> Itinerarios
                                                     Cumplidos </a>
                                                 <a class="dropdown-item" target="_blank"
-                                                    href="{{ route('paquete.viajes.guias', [$paquete, $v->slug]) }}"
+                                                    href="{{ route('mostrar.boletasDePago', [$paquete, $v->slug]) }}"
                                                     target="_blank"><i class="fas fa-file-pdf"></i> Gastos de la
                                                     Empresa</a>
 

@@ -8,6 +8,7 @@ use App\Models\Viajes\Participantes;
 use App\Models\Viajes\ViajePaquetes;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ViajePaquetesController extends Controller
 {
@@ -217,11 +218,12 @@ class ViajePaquetesController extends Controller
         // return view('viajes_admin.reportes.viajesActuales', compact('viajes'));
     }
 
-    public function mostrarParticipantesDelViaje (PaquetesTuristicos $paquete, ViajePaquetes $viaje){
+    public function mostrarParticipantesDelViaje(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
+    {
         $participantes = ViajePaquetes::mostrarParticipantesDelViaje($viaje->id);
         // $viajes = ViajePaquetes::where('estado', 2)->get();
         $pdf = Pdf::loadView('viajes_admin.reportes.participantesDelViaje', compact('participantes'));
-        
+
         return $pdf->stream('Lista de Participantes del Viaje.pdf');
         // return view('viajes_admin.reportes.participantesDelViaje', compact('participantes'));
     }
@@ -232,5 +234,16 @@ class ViajePaquetesController extends Controller
         $pdf = Pdf::loadView('viajes_admin.reportes.itinerariosDelViaje', compact('itinerarios', 'paquete', 'viaje'));
         return $pdf->stream('Cumplimiento de Itinerario del Viaje.pdf');
         // return view('viajes_admin.reportes.itinerariosDelViaje', compact('itinerarios'));
+    }
+
+    public function mostrarBoletasDePago(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
+    {
+        $pagos = DB::table('pago_boletos_viajes as pbv')
+            ->select('id', 'descripcion', 'fecha', 'monto', 'viaje_paquetes_id')
+            ->where('pbv.viaje_paquetes_id', $viaje->id)
+            ->get();
+        $pdf = Pdf::loadView('viajes_admin.reportes.gastosIncurridosPorEmpresa', compact('pagos', 'paquete', 'viaje'));
+        return $pdf->stream('Gastos Incurridos por la Empresa.pdf');
+        // return view('viajes_admin.reportes.gastosIncurridosPorEmpresa', compact('pagos'));
     }
 }

@@ -10,34 +10,51 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
-    <title>Lista de Participantes del Viaje</title>
+    <title>Gastos Incurridos por la Empresa</title>
 </head>
 
 <body>
-    <h4>Lista de Participantes del Viaje</h4>
+    <h4>Gastos Incurridos por la Empresa</h4>
 
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">Nº</th>
-                <th scope="col">CLIENTE</th>
+                <th scope="col">DESCRIPCIÓN</th>
+                <th scope="col">FECHA</th>
+                <th scope="col">MONTO</th>
             </tr>
         </thead>
         <tbody>
             @php
-                $cont = 1;
+                $sum = 0;
             @endphp
-            @foreach ($participantes as $p)
+            @foreach ($pagos as $p)
                 <tr>
                     <td>
-                        {{ $cont++ }}
+                        {{ $p->descripcion }}
                     </td>
                     <td>
-                        {{ strtoupper($p->datos) }}
+                        {{ date('d-m-Y', strtotime($p->fecha)) }}
+                    </td>
+                    <td>
+                        {{ $p->monto }}
+                        @php
+                            $sum = $sum + $p->monto;
+                        @endphp
                     </td>
                 </tr>
             @endforeach
         </tbody>
+        <tfoot>
+            <tr>
+
+                <th colspan="2">Total</th>
+
+                <th colspan="4">S/. {{ number_format($sum, 2) }}</th>
+
+            </tr>
+
+        </tfoot>
     </table>
     <!-- Optional JavaScript; choose one of the two! -->
 

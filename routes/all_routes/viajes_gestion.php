@@ -41,3 +41,4 @@ Route::get('/viajes/hoteles', [App\Http\Controllers\ViajePaquetesController::cla
 Route::get('/viajes/reporte/viajes-actuales', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarViajesActuales'])->name('mostrar.viajes.actuales')->middleware(['auth', 'verified']);
 Route::get('/viajes/reporte/{paquete}/{viaje}/participantes-del-viaje', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarParticipantesDelViaje'])->name('mostrar.participantesDelViaje')->middleware(['auth', 'verified']);
 Route::get('/viajes/reporte/{paquete}/{viaje}/itinerario-cumplido', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarItinerariosCumplidos'])->name('mostrar.viajes.itinerarios.cumplidos')->middleware(['auth', 'verified']);
+Route::get('/viajes/reporte/{paquete}/{viaje}/boletas-de-pago', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarBoletasDePago'])->name('mostrar.boletasDePago')->middleware(['auth', 'verified']);
