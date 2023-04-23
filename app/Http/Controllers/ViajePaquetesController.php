@@ -208,14 +208,27 @@ class ViajePaquetesController extends Controller
 
     /** REPORTES */
 
-    public function mostrarViajesActuales()
+    public function mostrarViajesActuales($fecha_inicial = false, $fecha_final = false)
     {
+        $title_descarga = 'Reporte de Viajes Actuales';
+        if ($fecha_inicial && $fecha_final) { //
+            $title_descarga = 'Reporte de Viajes en un Periodo de Tiempo';
+            $viajes = ViajePaquetes::where('estado', 3)
+                ->whereBetween('fecha', [$fecha_inicial, $fecha_final])
+                ->get();
+            // $pdf = Pdf::loadView('viajes_admin.reportes.viajesActuales', compact('viajes'));
+            // //return $pdf->download('invoice.pdf');
+            // return $pdf->stream('Reporte de Viajes Actuales.pdf');
+        }else {
+            $viajes = ViajePaquetes::where('estado', 2)->get();
+        }
 
-        $viajes = ViajePaquetes::where('estado', 2)->get();
-        $pdf = Pdf::loadView('viajes_admin.reportes.viajesActuales', compact('viajes'));
+        
+        $pdf = Pdf::loadView('viajes_admin.reportes.viajesActuales', compact('viajes', 'fecha_inicial', 'fecha_final', 'title_descarga'));
         //return $pdf->download('invoice.pdf');
-        return $pdf->stream('Reporte de Viajes Actuales.pdf');
+        return $pdf->stream($title_descarga . '.pdf');
         // return view('viajes_admin.reportes.viajesActuales', compact('viajes'));
+
     }
 
     public function mostrarParticipantesDelViaje(PaquetesTuristicos $paquete, ViajePaquetes $viaje)

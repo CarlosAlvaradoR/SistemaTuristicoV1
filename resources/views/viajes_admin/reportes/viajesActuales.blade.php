@@ -10,11 +10,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
-    <title>Reporte de Viajes Actuales</title>
+    <title>{{$title_descarga}}</title>
 </head>
 
 <body>
-    <h4>Reporte de Viajes Actuales</h4>
+    <h4>{{$title_descarga}}</h4>
+    <h6><b>Fecha Inicial:</b> <small>{{ date('d/m/Y', strtotime($fecha_inicial)) }}</small></h6>
+    <h6><b>Fecha Final:</b> <small>{{ date('d/m/Y', strtotime($fecha_final)) }}</small></h6>
     {{-- date('d/m/Y', strtotime($informacion[0]->fecha_presentacion)) --}}
     <table class="table table-striped">
         <thead>

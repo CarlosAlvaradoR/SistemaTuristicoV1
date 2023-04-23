@@ -40,7 +40,7 @@
                                         {{ $p->descripcion }}
                                     </td>
                                     <td>
-                                        {{ $p->fecha }}
+                                        {{ date('d-m-Y', strtotime($p->fecha)) }}
                                     </td>
                                     <td>
                                         {{ $p->monto }}

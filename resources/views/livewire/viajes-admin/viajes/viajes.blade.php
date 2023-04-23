@@ -10,39 +10,48 @@
                             <br>
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control" placeholder="Search">
+                                <input type="text" wire:model="search" class="form-control" placeholder="Ingresa Código de Viaje">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">
+                                        <label for="fecha_inicial">
                                             Fecha Inicial
                                         </label>
-                                        <input type="date" class="form-control" id="exampleInputEmail1" />
+                                        <input type="date" class="form-control" wire:model="fecha_inicial"
+                                            id="fecha_inicial" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">
-                                            Fecha Inicial
+                                        <label for="fecha_final">
+                                            Fecha Final
                                         </label>
-                                        <input type="date" class="form-control" id="exampleInputEmail1" />
+                                        <input type="date" class="form-control" wire:model="fecha_final"
+                                            id="fecha_final" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <br>
-                            <a target="_blank" href="{{ route('mostrar.viajes.actuales') }}" class="btn"
-                                title="Ver Reporte de Viajes Actuales"><i class="fas fa-file-pdf"></i> Viajes
-                                Actuales</a>
+                            @if ($fecha_inicial && $fecha_final)
+                                <a target="_blank" href="{{ route('mostrar.viajes.actuales', [$fecha_inicial, $fecha_final]) }}" class="btn btn-rounded"
+                                    title="Ver Reporte de Viajes Realizados en un periodo De Tiempo"><i class="fas fa-file-pdf"></i> Viajes
+                                    Realizados</a>
+                            @else
+                                <a target="_blank" href="{{ route('mostrar.viajes.actuales') }}" class="btn btn-rounded"
+                                    title="Ver Reporte de Viajes Actuales"><i class="fas fa-file-pdf"></i> Viajes
+                                    Actuales</a>
+                            @endif
+
                         </div>
                         <div class="col-md-2">
                             <br>
-                            <a id="modal-918849" href="#modal-viaje-paquete" role="button" class="btn"
-                                data-toggle="modal">Nuevo Viaje</a>
+                            <button id="modal-918849" href="#modal-viaje-paquete" role="button" class="btn btn-rounded"
+                                data-toggle="modal">Nuevo Viaje</button>
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -245,9 +254,9 @@
                                     </label>
                                     <select class="form-control" wire:model.defer="estado" id="estado">
                                         <option value="">...Seleccione...</option>
-                                        <option value="1">PROGRAMANDO</option>
-                                        <option value="2">REALIZÁNDOCE</option>
-                                        <option value="3">FINALIZADO</option>
+                                        <option value="1" >PROGRAMANDO</option>
+                                        <option value="2" >REALIZÁNDOCE</option>
+                                        <option value="3" >FINALIZADO</option>
                                     </select>
                                     @error('estado')
                                         <span class="text-danger">{{ $message }}</span>
