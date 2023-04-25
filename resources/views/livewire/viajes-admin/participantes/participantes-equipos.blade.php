@@ -3,13 +3,15 @@
         <div class="col-lg-12 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title font-weight-bold">FORMULARIO DE ENTREGA DE EQUIPOS</h5>
+                    <h5 class="card-title font-weight-bold"><i class="fas fa-plus-circle"></i> FORMULARIO DE ENTREGA DE
+                        EQUIPOS</h5>
                     <div class="row">
                         <div class="col-md-2">
                             <span class="badge badge-default font-weight-bold">PARTICIPANTE:</span>
                         </div>
                         <div class="col-md-10">
-                            <span class="badge badge-default">CARLOS EMILIO ALVARADO ROBLES</span>
+                            <span
+                                class="badge badge-default">{{ strtoupper($informacion_participantes[0]->nombre . ' ' . $informacion_participantes[0]->apellidos) }}</span>
                         </div>
                     </div>
                     <br>
@@ -19,6 +21,9 @@
                                 <label class="form-label" for="fecha_entrega">Fecha de Entrega</label>
                                 <input type="date" class="form-control" wire:model.defer="fecha_entrega"
                                     id="fecha_entrega" placeholder="First Name" maxlength="15">
+                                @error('fecha_entrega')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </fieldset>
                         </div>
                         <div class="col-lg-6">
@@ -27,6 +32,9 @@
                                 <input type="time" class="form-control maxlength-custom-message"
                                     wire:model.defer="hora_entrega" id="hora_entrega" placeholder="Enter email"
                                     maxlength="20">
+                                @error('hora_entrega')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </fieldset>
                         </div>
                         <div class="col-lg-6">
@@ -34,13 +42,19 @@
                                 <label class="form-label" for="fecha_devoluvion">Fecha de Devolución</label>
                                 <input type="date" class="form-control maxlength-always-show"
                                     wire:model.defer="fecha_devoluvion" id="fecha_devoluvion">
+                                @error('fecha_devoluvion')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </fieldset>
                         </div>
                         <div class="col-lg-6">
                             <fieldset class="form-group">
                                 <label class="form-label" for="hora_devolucion">Hora de Devolución</label>
                                 <input type="time" class="form-control" wire:model.defer="hora_devolucion"
-                                    id="hora_devolucion" placeholder="Password">
+                                    id="hora_devolucion"">
+                                @error('hora_devolucion')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </fieldset>
                         </div>
                         <div class="col-lg-6">
@@ -48,18 +62,22 @@
                                 <label class="form-label" for="estado">Estado de Devolución</label>
                                 <input type="date" class="form-control maxlength-always-show"
                                     wire:model.defer="estado" id="estado" placeholder="Password" maxlength="10">
+                                @error('estado')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </fieldset>
                         </div>
                         <div class="col-lg-6">
-                            @if ($idEntregaEquipo)
-                                <button class="btn btn-primary btn-rounded" wire:click="saveEntregaEquipos">
+                            <button class="btn btn-primary btn-rounded" wire:click="saveEntregaEquipos"
+                                wire:loading.attr="disabled">
+                                <i class="fas fa-save"></i>
+                                @if ($idEntregaEquipo)
                                     Actualizar
-                                </button>
-                            @else
-                                <button class="btn btn-primary btn-rounded" wire:click="saveEntregaEquipos">
+                                @else
                                     Guardar
-                                </button>
-                            @endif
+                                @endif
+
+                            </button>
                         </div>
                     </div>
 
@@ -95,11 +113,11 @@
                                             {{ $e->stock }}
                                         </td>
                                         <td>
-                                            <button type="button" title="Añadir a la lista de Participantes"
+                                            <button type="button" title="Añadir Equipo a la Entregas"
                                                 class="btn btn-sm btn-rounded btn-success"
                                                 wire:click="AñadirAlPedido({{ $e->id }})"
                                                 wire:loading.attr="disabled">
-                                                <i class="fal fa-plus"></i>
+                                                <i class="fas fa-plus-circle"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -140,13 +158,15 @@
                                             <small>{{ $ea->observacion }}</small>
                                         </td>
                                         <td>
-                                            <a href="{{-- route('paquete.viajes.participantes.entregaEquipos', [$eaaquete->slug, $viaje->slug, $ea->id]) --}}" title="Entregar Equipo al Participante"
-                                                class="btn btn-sm btn-rounded btn-primary" wire:loading.attr="disabled">
-                                                <i class="fas fa-minus"></i>
-                                            </a>
+                                            <button title="Editar Entrega de Equipo del Participante"
+                                                wire:click="Edit({{ $ea->id }})"
+                                                class="btn btn-sm btn-rounded btn-warning"
+                                                wire:loading.attr="disabled">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
                                             <button type="button"
-                                                wire:click="quitarParticipante({{-- $ea->id --}})"
-                                                title="Quitar de la Lista de Participantes"
+                                                wire:click="deleteConfirm({{ $ea->id }})"
+                                                title="Quitar Equipo de la Entrega del Participante."
                                                 class="btn btn-sm btn-rounded btn-danger"
                                                 wire:loading.attr="disabled">
                                                 <i class="fas fa-minus"></i>
@@ -166,9 +186,9 @@
 
 
     <!-- Button trigger modal -->
-    {{--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_entrega_de_equipos">
+    {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_entrega_de_equipos">
         Launch static backdrop modal
-    </button>--}}
+    </button> --}}
 
     <!-- Modal -->
     <div class="modal fade" wire:ignore.self id="modal_entrega_de_equipos" data-backdrop="static"
@@ -176,7 +196,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal_entrega_de_equiposLabel">{{$title}}</h5>
+                    <h5 class="modal-title" id="modal_entrega_de_equiposLabel">{{ $title }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -207,29 +227,52 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" wire:click="saveDetalleEntregas">Guardar</button>
+                    <button type="button" class="btn btn-danger btn-rounded" wire:click.prevent="resetUI()"
+                        data-dismiss="modal">Cerrar</button>
+
+                    <button type="button" class="btn btn-primary btn-rounded" wire:click="saveDetalleEntregas"
+                        wire:loading.attr="disabled">
+                        <i class="fas fa-save"></i>
+                        @if ($idDetalleEntregas)
+                            Actualizar
+                        @else
+                            Guardar
+                        @endif
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
+    @livewire('administrate-commons.alerts')
 
     <script>
+        window.addEventListener('swal-confirm-DetalleEquipo', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('viajes-admin.participantes.participantes-equipos',
+                        'quitarEquipoAlParticipante',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             window.livewire.on('show-modal', msg => {
                 $('#modal_entrega_de_equipos').modal('show')
             });
-            window.livewire.on('traslados-updated', msg => {
+
+            window.livewire.on('close-modal', msg => {
                 $('#modal_entrega_de_equipos').modal('hide')
-                Swal.fire(
-                    'MUY BIEN',
-                    msg,
-                    'success'
-                )
-            });
-            window.livewire.on('category-updated', msg => {
-                $('#modal-empresa-transporte').modal('hide')
             });
         });
     </script>

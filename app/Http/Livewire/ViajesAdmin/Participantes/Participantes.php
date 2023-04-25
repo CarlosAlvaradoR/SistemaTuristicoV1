@@ -11,6 +11,7 @@ use App\Models\Reservas\AutorizacionesPresentadas;
 use App\Models\Reservas\CondicionesAceptadas;
 use App\Models\Reservas\Reservas as ReservasReservas;
 use App\Models\Reservas\RiesgosAceptados;
+use App\Models\Viajes\Asistentes;
 use App\Models\Viajes\Participantes as ViajesParticipantes;
 use App\Models\Viajes\ViajePaquetes;
 use Illuminate\Support\Facades\DB;
@@ -124,15 +125,19 @@ class Participantes extends Component
 
     public function quitarParticipante(ViajesParticipantes $participantes)
     {
-        $participantes->delete();
+        $asistentes = Asistentes::where('participantes_id', $participantes->id)->get();
+        if (count($asistentes) > 0) {
+            $this->alert('ERROR !', 'error', 'No se puede Eliminar al Participante porque ya participa de una Actividad de Aclimatación.');
+            return;
+        } else {
+            $participantes->delete();
+            $this->alert('MUY BIEN !','success','Participate Eliminado del Viaje con Éxito.');
+        }
+        
+        
     }
 
-    function alert($title, $icon, $text)
-    {
-        $this->dispatchBrowserEvent('swal', [
-            'title' => $title,
-            'icon' => $icon,
-            'text' => $text
-        ]);
-    }
+   
+    
+    
 }

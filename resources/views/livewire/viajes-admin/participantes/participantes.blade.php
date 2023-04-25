@@ -4,7 +4,8 @@
             <div class="card">
                 <div class="card-block">
                     <h5 class="card-title">
-                        <a  class="btn btn-primary btn-sm btn-rounded" href="{{ route('paquete.viajes', $paquete) }}" title="Volver">
+                        <a class="btn btn-primary btn-sm btn-rounded" href="{{ route('paquete.viajes', $paquete) }}"
+                            title="Volver">
                             <i class="fas fa-arrow-left"></i>
                         </a>
                         Lista de Reservas
@@ -65,21 +66,23 @@
                             @foreach ($participantes as $p)
                                 <tr>
                                     <td>
-                                        {{$p->datos}}
+                                        {{ $p->datos }}
                                     </td>
                                     <td>
-                                        <a href="{{ route('paquete.viajes.participantes.entregaEquipos', [$paquete->slug, $viaje->slug, $p->id]) }}" title="Entregar Equipo al Participante"
-                                            class="btn btn-sm btn-rounded btn-primary" wire:loading.attr="disabled">
-                                            <i class="fas fa-minus"></i>
+                                        <a href="{{ route('paquete.viajes.participantes.entregaEquipos', [$paquete->slug, $viaje->slug, $p->id]) }}"
+                                            type="button" title="Entregar Equipo al Participante"
+                                            class="btn btn-sm btn-rounded btn-primary">
+                                            <i class="fas fa-plus-square"></i>
                                         </a>
-                                        <button type="button" wire:click="quitarParticipante({{$p->id}})" title="Quitar de la Lista de Participantes"
-                                            class="btn btn-sm btn-rounded btn-danger" wire:loading.attr="disabled">
-                                            <i class="fas fa-minus"></i>
+                                        <button type="button" wire:click="quitarParticipante({{ $p->id }})"
+                                            wire:loading.attr="disabled" title="Quitar de la Lista de Participantes"
+                                            class="btn btn-sm btn-rounded btn-danger">
+                                            <i class="fas fa-minus-circle"></i>
                                         </button>
                                     </td>
                                 </tr>
                             @endforeach
-                            
+
                         </tbody>
                     </table>
                 </div>

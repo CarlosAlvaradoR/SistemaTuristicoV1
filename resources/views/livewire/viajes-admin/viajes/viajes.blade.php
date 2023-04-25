@@ -10,7 +10,8 @@
                             <br>
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" wire:model="search" class="form-control" placeholder="Ingresa Código de Viaje">
+                                <input type="text" wire:model="search" class="form-control"
+                                    placeholder="Ingresa Código de Viaje">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -38,8 +39,11 @@
                         <div class="col-md-2">
                             <br>
                             @if ($fecha_inicial && $fecha_final)
-                                <a target="_blank" href="{{ route('mostrar.viajes.actuales', [$fecha_inicial, $fecha_final]) }}" class="btn btn-rounded"
-                                    title="Ver Reporte de Viajes Realizados en un periodo De Tiempo"><i class="fas fa-file-pdf"></i> Viajes
+                                <a target="_blank"
+                                    href="{{ route('mostrar.viajes.actuales', [$fecha_inicial, $fecha_final]) }}"
+                                    class="btn btn-rounded"
+                                    title="Ver Reporte de Viajes Realizados en un periodo De Tiempo"><i
+                                        class="fas fa-file-pdf"></i> Viajes
                                     Realizados</a>
                             @else
                                 <a target="_blank" href="{{ route('mostrar.viajes.actuales') }}" class="btn btn-rounded"
@@ -164,14 +168,13 @@
                                     </td>
                                     <td>
                                         <button type="button" wire:click="Edit('{{ $v->slug }}')"
+                                            wire:loading.attr="disabled"
                                             class="tabledit-edit-button btn btn-sm btn-warning" style="float: none;">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </button>
-                                        <a href="{{-- route('viajes.empresas_transporte.vehiculos', $e) --}}" title="Ver vehículos de la empresa"
-                                            class="tabledit-edit-button btn btn-sm btn-primary" style="float: none;">
-                                            <i class="glyphicon fas fa-shuttle-van"></i>
-                                        </a>
+                                        
                                         <button type="button" wire:click="deleteConfirm('{{ $v->slug }}')"
+                                            wire:loading.attr="disabled"
                                             class="tabledit-delete-button btn btn-sm btn-danger" style="float: none;">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </button>
@@ -254,9 +257,9 @@
                                     </label>
                                     <select class="form-control" wire:model.defer="estado" id="estado">
                                         <option value="">...Seleccione...</option>
-                                        <option value="1" >PROGRAMANDO</option>
-                                        <option value="2" >REALIZÁNDOCE</option>
-                                        <option value="3" >FINALIZADO</option>
+                                        <option value="1">PROGRAMANDO</option>
+                                        <option value="2">REALIZÁNDOCE</option>
+                                        <option value="3">FINALIZADO</option>
                                     </select>
                                     @error('estado')
                                         <span class="text-danger">{{ $message }}</span>
@@ -266,8 +269,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="cl-v-p" class="btn btn-rounded btn-danger"
-                            wire:loading.attr="disabled" data-dismiss="modal">
+                        <button type="button" id="cl-v-p" wire:click.prevent="resetUI()"
+                            class="btn btn-rounded btn-danger" wire:loading.attr="disabled" data-dismiss="modal">
                             Cerrar
                         </button>
                         @if ($idViajePaquete)

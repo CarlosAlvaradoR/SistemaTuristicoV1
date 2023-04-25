@@ -361,6 +361,14 @@ ruta_archivo_pago, reserva_id, cuenta_pagos_id, boleta_id
 FROM pagos pa WHERE reserva_id = 10;
 
 
+-- CONOCER LOS NOMBRES Y APELLIDOS DE UN PARTICIPANTE AL QUE SE LE PRESTA UN EQUIPO
+SELECT p.nombre, p.apellidos, par.id FROM personas p
+INNER JOIN clientes c on p.id = c.persona_id
+INNER JOIN reservas r on r.cliente_id = c.id
+INNER JOIN participantes par on par.reserva_id = r.id
+WHERE par.id = 2
+LIMIT 1;
+SELECT * FROM entrega_equipos;
 
 SELECT id as idAutorizacionMedica, numero_autorizacion, ruta_archivo, reserva_id, autorizaciones_medicas_id FROM autorizaciones_presentadas
 WHERE reserva_id = 6
@@ -829,15 +837,17 @@ INNER JOIN asociaciones aso on aso.id = a.asociaciones_id;
 SELECT * FROM entrega_equipos ee
 WHERE ee.participantes_id = 1
 LIMIT 1;
-DESC entrega_equipos;
 
+
+SELECT * FROM entrega_equipos;
 
 -- SELECCIONAR LOS EQUIPOS QUE ESTÁ ASIGNADO AL PARTICIPANTE DEL VIAJE
 SELECT e.nombre, m.nombre as marca, de.cantidad, de.observacion, de.id FROM entrega_equipos ee
 INNER JOIN detalle_entregas de on de.entrega_equipos_id = ee.id
 INNER JOIN equipos e on e.id = de.equipo_id
 INNER JOIN marcas m on m.id = e.marca_id
-WHERE de.entrega_equipos_id = 1;
+WHERE de.entrega_equipos_id = 1
+LIMIT 1;
 
 
 DESC vehiculos;
