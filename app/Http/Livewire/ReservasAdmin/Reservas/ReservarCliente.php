@@ -123,6 +123,7 @@ class ReservarCliente extends Component
                 'monto' => 'required|regex:/^\d+(\.\d{1,2})?$/',
                 'numero_autorizacion' => 'nullable|min:2|max:15',
                 'archivo_autorizacion' => 'nullable|mimes:jpeg,png,pdf|required_if:numero_autorizacion,min:2',
+                'estado_de_pago' => 'required|string|in:EN PROCESO,ACEPTADO,NO ACEPTADO'
             ]
         );
 
@@ -255,7 +256,8 @@ class ReservarCliente extends Component
                 'monto' => 'required|regex:/^\d+(\.\d{1,2})?$/',
                 'numero_autorizacion' => 'nullable|min:2|max:15',
                 'archivo_autorizacion' => 'nullable|mimes:jpeg,png,pdf|required_if:numero_autorizacion,min:2',
-            ]
+                'estado_de_pago' => 'required|string|in:EN PROCESO,ACEPTADO,NO ACEPTADO'
+            ] // enum('','','')
         );
 
 

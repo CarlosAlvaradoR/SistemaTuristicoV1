@@ -850,7 +850,7 @@ WHERE de.entrega_equipos_id = 1
 LIMIT 1;
 DESC entrega_equipos;
 
-DESC vehiculos;
+SELECT * FROM users;
 DESC choferes;
 
 

@@ -33,7 +33,7 @@ class ReservarClienteNuevo extends Component
         'dni' => 'required|min:3|unique:personas',
         'nombres' => 'required',
         'apellidos' => 'required',
-        'genero' => 'required',
+        'genero' => 'required|numeric|min:1|max:2',
         'telefono' => 'required',
         'direccion' => 'required',
         'nacionalidad' => 'required',
@@ -44,6 +44,8 @@ class ReservarClienteNuevo extends Component
         'monto' => 'required|regex:/^\d+(\.\d{1,2})?$/',
         'numero_autorizacion' => 'nullable|min:2|max:15',
         'archivo_autorizacion' => 'nullable|mimes:jpeg,png,pdf',
+        'estado_de_pago' => 'required|string|in:EN PROCESO,ACEPTADO,NO ACEPTADO'
+        
     ];
 
     public function mount($paquete, $reserva)

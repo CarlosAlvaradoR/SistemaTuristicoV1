@@ -181,7 +181,7 @@
                                     <label class="form-label" for="fecha_reserva"
                                         title="Fecha para la cuál va a comprar/reservar el paquete turístico">Fecha de
                                         Reserva <span class="text-danger font-weight-bold">(*)</span></label>
-                                    <input type="date" wire:model="fecha_reserva" class="form-control"
+                                    <input type="date" min="{{date('Y-m-d')}}" wire:model="fecha_reserva" class="form-control"
                                         id="fecha_reserva">
                                     @error('fecha_reserva')
                                         <span class="text-danger">{{ $message }}</span>
@@ -244,7 +244,7 @@
                                             class="text-danger font-weight-bold">(*)</span></label>
                                     <select class="form-control" wire:model.defer="estado_de_pago"
                                         id="estado_de_pago">
-                                        <option selected>... Seleccione ...</option>
+                                        <option value="" selected>... Seleccione ...</option>
                                         <option value="ACEPTADO" class="label-success">ACEPTADO</option>
                                         <option value="EN PROCESO" class="label-default">EN PROCESO</option>
                                         <option value="NO ACEPTADO" class="label-danger">NO ACEPTADO</option>

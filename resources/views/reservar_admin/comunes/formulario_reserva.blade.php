@@ -37,7 +37,7 @@
                     <fieldset class="form-group">
                         <label for="genero">Género <span class="text-danger">(*)</span></label>
                         <select class="form-control" wire:model="genero" id="paquete">
-                            <option selected>Seleccione...</option>
+                            <option value="" selected>Seleccione...</option>
                             <option value="1">Masculino</option>
                             <option value="2">Femenino</option>
                         </select>
@@ -168,7 +168,7 @@
                     <fieldset class="form-group">
                         <label class="form-label" for="fecha_reserva">Fecha de Reserva <span
                                 class="text-danger font-weight-bold">(*)</span></label>
-                        <input type="date" wire:model.defer="fecha_reserva" class="form-control"
+                        <input type="date" min="{{date('Y-m-d')}}" wire:model.defer="fecha_reserva" class="form-control"
                             id="fecha_reserva">
                         @error('fecha_reserva')
                             <span class="text-danger">{{ $message }}</span>
@@ -224,7 +224,7 @@
     <div class="card">
         <div class="card-block">
             <h5 class="card-title font-weight-bold">PAGO POR RESERVA/COMPRA</h5>
-            @if ($idPago)
+            {{--@if ($idPago)--}}
                 <div class="row">
                     <div class="col-lg-4">
                         <fieldset class="form-group">
@@ -316,7 +316,7 @@
                     <button class="btn btn-danger">Cancelar</button>
                 @endif
                 <br>
-            @endif
+            {{--@endif--}}
 
 
 
