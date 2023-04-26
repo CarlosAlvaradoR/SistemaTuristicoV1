@@ -839,16 +839,16 @@ WHERE ee.participantes_id = 1
 LIMIT 1;
 
 
-SELECT * FROM entrega_equipos;
+SELECT * FROM detalle_entregas;
 
 -- SELECCIONAR LOS EQUIPOS QUE ESTÁ ASIGNADO AL PARTICIPANTE DEL VIAJE
-SELECT e.nombre, m.nombre as marca, de.cantidad, de.observacion, de.id FROM entrega_equipos ee
+SELECT e.nombre, m.nombre as marca, de.cantidad, de.observacion, de.id, de.equipo_id, de.cantidad_devuelta FROM entrega_equipos ee
 INNER JOIN detalle_entregas de on de.entrega_equipos_id = ee.id
 INNER JOIN equipos e on e.id = de.equipo_id
 INNER JOIN marcas m on m.id = e.marca_id
 WHERE de.entrega_equipos_id = 1
 LIMIT 1;
-
+SELECT * FROM detalle_entregas;
 
 DESC vehiculos;
 DESC choferes;

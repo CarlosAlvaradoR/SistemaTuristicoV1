@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('cantidad');
             $table->text('observacion')->nullable();
+            $table->integer('cantidad_devuelta')->nullable(1);
 
             $table->unsignedBigInteger('equipo_id');
             $table->foreign('equipo_id')->references('id')->on('equipos');

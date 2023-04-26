@@ -137,7 +137,14 @@ class Participantes extends Component
         
     }
 
-   
+    function alert($title, $icon, $text)
+    {
+        $this->dispatchBrowserEvent('swal', [
+            'title' => $title,
+            'icon' => $icon,
+            'text' => $text
+        ]);
+    }
     
     
 }

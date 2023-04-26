@@ -130,54 +130,68 @@
             </div>
             <div class="col-lg-6 ks-panels-column-section">
                 <div class="card">
-                    <div class="card-block">
-                        <h5 class="card-title">Lista de Equipos Entregados</h5>
-                        <div class="form-group has-search">
-                            <span class="fa fa-search form-control-feedback"></span>
-                            <input type="text" class="form-control" placeholder="Buscar Cliente">
-                        </div>
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Equipo/Marca</th>
-                                    <th scope="col">Cantidad</th>
-                                    <th scope="col">Observación</th>
-                                    <th scope="col">Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($equipos_asignados as $ea)
+                    <form wire:submit.prevent="saved">
+                        <div class="card-block">
+                            <h5 class="card-title">Lista de Equipos Entregados <button type="submit"
+                                    class="btn btn-primary">Guardar</button></h5>
+                            <div class="form-group has-search">
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input type="text" class="form-control" placeholder="Buscar Cliente">
+                            </div>
+                            <table class="table table-hover">
+                                <thead>
                                     <tr>
-                                        <td>
-                                            <small>{{ $ea->nombre }} - {{ $ea->marca }}</small>
-                                        </td>
-                                        <td>
-                                            <small>{{ $ea->cantidad }}</small>
-                                        </td>
-                                        <td>
-                                            <small>{{ $ea->observacion }}</small>
-                                        </td>
-                                        <td>
-                                            <button title="Editar Entrega de Equipo del Participante"
-                                                wire:click="Edit({{ $ea->id }})"
-                                                class="btn btn-sm btn-rounded btn-warning"
-                                                wire:loading.attr="disabled">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button type="button"
-                                                wire:click="deleteConfirm({{ $ea->id }})"
-                                                title="Quitar Equipo de la Entrega del Participante."
-                                                class="btn btn-sm btn-rounded btn-danger"
-                                                wire:loading.attr="disabled">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
-                                        </td>
+                                        <th scope="col">Equipo/Marca</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Observación</th>
+                                        <th scope="col">Cant. Entregada</th>
+                                        <th scope="col">Acción</th>
                                     </tr>
-                                @endforeach
+                                </thead>
+                                <tbody>
+                                    @foreach ($entrega_equipos_general as $index => $ea)
+                                        <tr>
+                                            <td>
+                                                <small>{{ $ea->nombre }} - {{ $ea->marca }}</small>
+                                            </td>
+                                            <td>
+                                                <small>{{ $ea->cantidad }}</small>
+                                            </td>
+                                            <td>
+                                                <small>{{ $ea->observacion }} - {{ $index }}</small>
+                                            </td>
+                                            <td>
+                                                <input type="number"
+                                                    wire:model.defer="entrega_equipos_general.{{ $index }}.cantidad_devuelta"
+                                                    wire:key="nota-{{ $ea->id }}" class="form-control"
+                                                    min="0" max="{{ $ea->cantidad }}" placeholder="ej:3">
+                                                @error('entrega_equipos_general.' . $index . '.cantidad_devuelta')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </td>
+                                            <td>
+                                                <button title="Editar Entrega de Equipo del Participante"
+                                                    wire:click="Edit({{ $ea->id }})"
+                                                    class="btn btn-sm btn-rounded btn-warning"
+                                                    wire:loading.attr="disabled">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button"
+                                                    wire:click="deleteConfirm({{ $ea->id }})"
+                                                    title="Quitar Equipo de la Entrega del Participante."
+                                                    class="btn btn-sm btn-rounded btn-danger"
+                                                    wire:loading.attr="disabled">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
 
-                            </tbody>
-                        </table>
-                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         @endif

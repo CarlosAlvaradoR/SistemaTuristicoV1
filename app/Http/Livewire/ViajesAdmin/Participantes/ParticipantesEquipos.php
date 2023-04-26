@@ -18,7 +18,9 @@ class ParticipantesEquipos extends Component
     /** ATRIBUTOS DE LA TABLA ENTREGA-EQUIPOS*/
     public $idEntregaEquipo, $fecha_entrega, $hora_entrega, $fecha_devoluvion, $hora_devolucion, $estado;
     /** ATRIBUTOS DE LA TABLA DETALLE ENTREGAS */
-    public $idDetalleEntregas, $cantidad, $observacion;
+    public $idDetalleEntregas, $cantidad, $observacion, $cantidad_devuelta;
+
+    public $entrega_equipos_general = [];
 
     protected $rules = [
         'fecha_entrega' => 'required|date',
@@ -60,6 +62,7 @@ class ParticipantesEquipos extends Component
             ->get();
 
         $equipos = Equipos::all();
+        // dd($equipos[0]['id']);
         /** VERIFICAMOS QUE HAYA INFORMACIÓN EN EL CAMPO ENTREGA-EQUIPOS CON EL IDENTIFICADOR
          *  DEL ID DEL PARTICIPANTE
          */
@@ -74,12 +77,23 @@ class ParticipantesEquipos extends Component
             $this->hora_devolucion = $entrega_equipos[0]->hora_devolucion;
             $this->estado = $entrega_equipos[0]->estado;
 
-            $equipos_asignados = DB::select('SELECT e.nombre, m.nombre as marca, de.cantidad, de.observacion, de.id FROM entrega_equipos ee
-            INNER JOIN detalle_entregas de on de.entrega_equipos_id = ee.id
-            INNER JOIN equipos e on e.id = de.equipo_id
-            INNER JOIN marcas m on m.id = e.marca_id
-            WHERE de.entrega_equipos_id = ' . $this->idEntregaEquipo . '');
+            // $equipos_asignados = DB::select('SELECT e.nombre, m.nombre as marca, de.cantidad, de.observacion, de.id FROM entrega_equipos ee
+            // INNER JOIN detalle_entregas de on de.entrega_equipos_id = ee.id
+            // INNER JOIN equipos e on e.id = de.equipo_id
+            // INNER JOIN marcas m on m.id = e.marca_id
+            // WHERE de.entrega_equipos_id = ' . $this->idEntregaEquipo . '');
+
+            $equipos_asignados = DB::table('entrega_equipos as ee')
+                ->join('detalle_entregas as de', 'de.entrega_equipos_id', '=', 'ee.id')
+                ->join('equipos as e', 'e.id', '=', 'de.equipo_id')
+                ->join('marcas as m', 'm.id', '=', 'e.marca_id')
+                ->where('de.entrega_equipos_id', $this->idEntregaEquipo)
+                ->select('e.nombre', 'm.nombre as marca', 'de.cantidad', 'de.observacion', 'de.id', 'de.equipo_id', 'de.cantidad_devuelta')
+                ->get();
         }
+
+        $this->entrega_equipos_general = $equipos_asignados->toArray();
+
         return view(
             'livewire.viajes-admin.participantes.participantes-equipos',
             compact(
@@ -273,5 +287,55 @@ class ParticipantesEquipos extends Component
         $equipo->save();
 
         $this->emit('alert', 'MUY BIEN', 'success', 'Préstamo del Equipo Eliminado Correctamente.');
+    }
+
+    public function saved()
+    {
+        $this->validate(
+            [
+                'entrega_equipos_general.*.cantidad_devuelta' => 'nullable|integer|min:0'
+            ]
+        );
+        // $a = [];
+        foreach ($this->entrega_equipos_general as $entrega_equipos_general) {
+            // $a[] = $entrega_equipos_general;
+            //Inserto la cantidad que se ha devuelto
+            $detalle_entregas = DetalleEntregas::findOrFail($entrega_equipos_general['id']);
+            $equipo = Equipos::findOrFail($entrega_equipos_general['equipo_id']);
+            
+            if ($detalle_entregas->cantidad_devuelta) { //CUANDO YA EXISTE UN VAOR EN LA BASE DE DATOS
+                switch ($detalle_entregas->cantidad_devuelta) {
+                    case $detalle_entregas->cantidad_devuelta > $entrega_equipos_general['cantidad_devuelta']:
+                        $equipo->stock = ($equipo->stock) - ($detalle_entregas->cantidad_devuelta - $entrega_equipos_general['cantidad_devuelta']);
+                        break;
+                    case $detalle_entregas->cantidad_devuelta == $entrega_equipos_general['cantidad_devuelta']:
+                        $equipo->stock = ($equipo->stock) + 0;
+                        break;
+                    case $detalle_entregas->cantidad_devuelta < $entrega_equipos_general['cantidad_devuelta']:
+                        $equipo->stock = ($equipo->stock) + ($entrega_equipos_general['cantidad_devuelta'] - $detalle_entregas->cantidad_devuelta);
+                        break;
+
+                    default:
+                        # code...
+                        break;
+                }
+            } else { //SI AÚN NO AY CANTIDAD DEVUELTA EN LA BASE DE DATOSS
+                //Devuevo la cantidad al Stock
+                $equipo->stock = $equipo->stock + $entrega_equipos_general['cantidad_devuelta'];
+            }
+
+
+            if ($entrega_equipos_general['cantidad_devuelta']) {
+                $detalle_entregas->cantidad_devuelta = $entrega_equipos_general['cantidad_devuelta'];
+            } else {
+                $detalle_entregas->cantidad_devuelta = 0;
+            }
+
+            $detalle_entregas->save();
+            $equipo->save();
+
+        }
+        //dd($detalle_entregas);
+        $this->emit('alert', 'MUY BIEN', 'success', 'Registrado Correctamente.');
     }
 }
