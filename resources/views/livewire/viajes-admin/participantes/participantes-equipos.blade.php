@@ -60,8 +60,12 @@
                         <div class="col-lg-6">
                             <fieldset class="form-group">
                                 <label class="form-label" for="estado">Estado de Devolución</label>
-                                <input type="date" class="form-control maxlength-always-show"
-                                    wire:model.defer="estado" id="estado" placeholder="Password" maxlength="10">
+
+                                <select wire:model.defer="estado" class="form-control" id="estado">
+                                    <option value="">...Seleccione...</option>
+                                    <option value="COMPLETADO">COMPLETADO</option>
+                                    <option value="PENDIENTE DE ENTREGAR">PENDIENTE DE ENTREGAR</option>
+                                </select>
                                 @error('estado')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -132,12 +136,40 @@
                 <div class="card">
                     <form wire:submit.prevent="saved">
                         <div class="card-block">
-                            <h5 class="card-title">Lista de Equipos Entregados <button type="submit"
-                                    class="btn btn-primary">Guardar</button></h5>
-                            <div class="form-group has-search">
-                                <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control" placeholder="Buscar Cliente">
+                            <h5 class="card-title">Lista de Equipos Entregados
+                            </h5>
+                            @if ($estado == 'PENDIENTE DE ENTREGAR')
+                                <div class="alert alert-danger alert-no-border alert-close alert-dismissible fade in"
+                                    role="alert">
+                                    <i class="font-icon font-icon-inline font-icon-warning"></i>
+                                    <strong>AÚN NO SE COMPLETÓ LA ENTREGA DE LOS EQUIPOS</strong>
+                                </div>
+                            @else
+                                <div class="alert alert-success alert-no-border alert-close alert-dismissible fade in"
+                                    role="alert">
+                                    <i class="font-icon font-icon-inline font-icon-warning"></i>
+                                    <strong>TODO EN ORDEN</strong>
+                                </div>
+                            @endif
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control" placeholder="Buscar Cliente">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    @if ($estado == 'PENDIENTE DE ENTREGAR')
+                                        <button type="submit" class="btn btn-primary btn-rounded"><i
+                                                class="fas fa-save"></i> Guardar</button>
+                                    @endif
+
+                                </div>
                             </div>
+
+
+
                             <table class="table table-hover">
                                 <thead>
                                     <tr>

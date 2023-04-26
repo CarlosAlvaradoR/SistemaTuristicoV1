@@ -40,7 +40,7 @@
                                         {{ $a->descripcion }}
                                     </td>
                                     <td>
-                                        {{ $a->fecha }}
+                                        {{ date('d/m/Y', strtotime($a->fecha)) }}
                                     </td>
                                     <td>
                                         {{ $a->monto }}
@@ -57,7 +57,8 @@
                                             <i class="fas fa-users"></i>
                                         </a>
                                         <button type="button" title="Añadir a la lista de Participantes"
-                                            class="btn btn-sm btn-rounded btn-danger" wire:click="deleteConfirm({{$a->id}})">
+                                            class="btn btn-sm btn-rounded btn-danger"
+                                            wire:click="deleteConfirm({{ $a->id }})">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
@@ -131,7 +132,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                        <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger"
+                            data-dismiss="modal">
                             Cerrar
                         </button>
                         @if ($idActividadAcimatacion)
@@ -159,7 +161,7 @@
     @livewire('administrate-commons.alerts')
 
     <script>
-         window.addEventListener('swal-confirm-actividades-aclimatacion', event => {
+        window.addEventListener('swal-confirm-actividades-aclimatacion', event => {
             Swal.fire({
                 title: event.detail.title,
                 icon: event.detail.icon,

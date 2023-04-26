@@ -13,8 +13,8 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <a id="modal-532427" href="#modal_hoteles" role="button" class="btn btn-rounded"
-                                data-toggle="modal">Crear Hotel</a>
+                            <button id="modal-532427" href="#modal_hoteles" role="button" class="btn btn-rounded"
+                                data-toggle="modal">Crear Hotel</button>
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -44,11 +44,12 @@
                                     </td>
                                     <td>
                                         <button type="button" wire:click="Edit({{ $h->id }})"
-                                            title="Añadir a la lista de Participantes"
+                                            wire:loading.attr="disabled" title="Editar Hotel"
                                             class="btn btn-sm btn-rounded btn-warning">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button type="button" title="Añadir a la lista de Participantes"
+                                        <button type="button" wire:click="deleteConfirm({{ $h->id }})"
+                                            wire:loading.attr="disabled" title="Eliminar Hotel"
                                             class="btn btn-sm btn-rounded btn-danger">
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -116,7 +117,8 @@
                                 <label for="direccion">
                                     Dirección <span class="text-danger">(*)</span>
                                 </label>
-                                <input type="text" wire:model.defer="direccion" class="form-control" id="direccion" />
+                                <input type="text" wire:model.defer="direccion" class="form-control"
+                                    id="direccion" />
                                 @error('direccion')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -133,7 +135,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                        <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger"
+                            data-dismiss="modal">
                             Cerrar
                         </button>
                         @if ($idHoteles)
@@ -155,8 +158,27 @@
     </div>
     <!-- END MODAL-->
 
-
+    @livewire('administrate-commons.alerts')
     <script>
+        window.addEventListener('swal-confirm-hoteles', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('viajes-admin.viajes.opciones.hoteles',
+                        'deleteHoteles',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             //Lo que llega de CategoriesController
             window.livewire.on('show-modal', msg => {

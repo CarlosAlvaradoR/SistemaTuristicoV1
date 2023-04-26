@@ -40,10 +40,7 @@ class ActividadesAclimatacion extends Component
             ->where('ac.viaje_paquetes_id', $this->idViaje)
             ->get();
 
-        return view(
-            'livewire.viajes-admin.actividades-aclimatacion.actividades-aclimatacion',
-            compact('actividades')
-        );
+        return view('livewire.viajes-admin.actividades-aclimatacion.actividades-aclimatacion', compact('actividades'));
     }
 
     public function guardarActividadesAclimatacion()

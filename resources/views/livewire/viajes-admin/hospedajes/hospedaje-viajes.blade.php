@@ -20,8 +20,8 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <a id="modal-532427" href="#modal_hospedaje_viajes" role="button" class="btn btn-rounded"
-                                data-toggle="modal">Asignar Hospedaje</a>
+                            <button id="modal-532427" href="#modal_hospedaje_viajes" role="button" class="btn btn-rounded"
+                                data-toggle="modal">Asignar Hospedaje</button>
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -38,10 +38,10 @@
                             @foreach ($hospedajes_ocupados as $ho)
                                 <tr>
                                     <td>
-                                        {{ $ho->fecha_inicial }}
+                                        {{ date('d/m/Y', strtotime($ho->fecha_inicial)) }}
                                     </td>
                                     <td>
-                                        {{ $ho->fecha_final }}
+                                        {{ date('d/m/Y', strtotime($ho->fecha_final)) }}
                                     </td>
                                     <td>
                                         {{ $ho->monto }}

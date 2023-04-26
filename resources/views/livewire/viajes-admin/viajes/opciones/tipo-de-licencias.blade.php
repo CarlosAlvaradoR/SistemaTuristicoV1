@@ -123,7 +123,7 @@
 
     @livewire('administrate-commons.alerts')
     <script>
-         window.addEventListener('swal-confirm-licencias', event => {
+        window.addEventListener('swal-confirm-licencias', event => {
             Swal.fire({
                 title: event.detail.title,
                 icon: event.detail.icon,

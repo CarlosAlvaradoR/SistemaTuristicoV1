@@ -36,7 +36,7 @@
 
                                         @if ($i->fecha_cumplimiento != 'No cumplido')
                                             <span
-                                                class="label label-primary">{{ date('d-m-Y', strtotime($i->fecha_cumplimiento)) }}
+                                                class="label label-primary">{{ date('d/m/Y', strtotime($i->fecha_cumplimiento)) }}
                                             </span>
                                         @else
                                             <span class="label label-danger">{{ $i->fecha_cumplimiento }}</span>

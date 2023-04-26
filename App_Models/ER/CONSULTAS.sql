@@ -848,7 +848,7 @@ INNER JOIN equipos e on e.id = de.equipo_id
 INNER JOIN marcas m on m.id = e.marca_id
 WHERE de.entrega_equipos_id = 1
 LIMIT 1;
-SELECT * FROM detalle_entregas;
+DESC entrega_equipos;
 
 DESC vehiculos;
 DESC choferes;

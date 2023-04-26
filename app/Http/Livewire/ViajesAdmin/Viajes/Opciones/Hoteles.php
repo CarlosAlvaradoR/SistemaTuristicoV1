@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\ViajesAdmin\Viajes\Opciones;
 
+use App\Models\Viajes\Hospedajes;
 use App\Models\Viajes\Hoteles as ViajesHoteles;
 use Livewire\Component;
 
@@ -9,7 +10,7 @@ class Hoteles extends Component
 {
     public $idHoteles, $nombre, $direccion, $telefono, $email;
 
-    function resetUI(){
+    public function resetUI(){
         $this->reset(['idHoteles','nombre','direccion','telefono','email']);
     }
 
@@ -69,6 +70,34 @@ class Hoteles extends Component
         $this->emit('show-modal', 'abrir editar');
     }
 
+    public function deleteConfirm($id)
+    {
+        $this->dispatchBrowserEvent('swal-confirm-hoteles', [
+            'title' => 'Está seguro que desea eliminar el Hotel ?',
+            'icon' => 'warning',
+            'id' => $id
+        ]);
+    }
+    protected $listeners = ['deleteHoteles'];
+    public function deleteHoteles(ViajesHoteles $hotel)
+    {
+        
+        $title = 'MUY BIEN!';
+        $icon = 'success';
+        $text = 'Hotel Eliminado Correctamente.';
+        $hospedajes = Hospedajes::where('hoteles_id', $hotel->id)->get();
+        if (count($hospedajes) > 0) {
+            $title = 'ERROR !';
+            $icon = 'error';
+            $text = 'No se puede Eliminar el Hotel, porque ya se usó en uno o más hospedajes.';
+            $this->emit('alert', $title, $icon, $text);
+            return;
+        } else {
+            $hotel->delete();
+            $this->emit('alert', $title, $icon, $text);
+        }
+        
+    }
 
     function alert($title, $icon, $text)
     {

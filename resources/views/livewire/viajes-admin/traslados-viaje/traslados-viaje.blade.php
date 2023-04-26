@@ -48,7 +48,7 @@
                                         {{ $t->descripcion }}
                                     </td>
                                     <td>
-                                        {{ $t->fecha }}
+                                        {{ date('d/m/Y', strtotime($t->fecha)) }}
                                     </td>
                                     <td>
                                         {{ $t->monto }}

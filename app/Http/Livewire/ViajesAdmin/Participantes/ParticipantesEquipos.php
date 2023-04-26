@@ -66,6 +66,7 @@ class ParticipantesEquipos extends Component
         /** VERIFICAMOS QUE HAYA INFORMACIÓN EN EL CAMPO ENTREGA-EQUIPOS CON EL IDENTIFICADOR
          *  DEL ID DEL PARTICIPANTE
          */
+
         $equipos_asignados = [];
         $entrega_equipos = EntregaEquipos::where('participantes_id', $this->participante->id)->limit(1)->get();
 
@@ -92,10 +93,10 @@ class ParticipantesEquipos extends Component
                 ->get();
         }
 
+
         $this->entrega_equipos_general = $equipos_asignados->toArray();
 
-        return view(
-            'livewire.viajes-admin.participantes.participantes-equipos',
+        return view('livewire.viajes-admin.participantes.participantes-equipos',
             compact(
                 'equipos',
                 'entrega_equipos',
@@ -148,7 +149,7 @@ class ParticipantesEquipos extends Component
                     'hora_entrega' => $this->hora_entrega,
                     'fecha_devoluvion' => $fecha_devoluccion,
                     'hora_devolucion' => $hora_devolucion,
-                    'estado' => 'COMPLETADO',
+                    'estado' => 'PENDIENTE DE ENTREGAR',
                     'participantes_id' => $this->participante->id
                 ]
             );
@@ -302,7 +303,7 @@ class ParticipantesEquipos extends Component
             //Inserto la cantidad que se ha devuelto
             $detalle_entregas = DetalleEntregas::findOrFail($entrega_equipos_general['id']);
             $equipo = Equipos::findOrFail($entrega_equipos_general['equipo_id']);
-            
+
             if ($detalle_entregas->cantidad_devuelta) { //CUANDO YA EXISTE UN VAOR EN LA BASE DE DATOS
                 switch ($detalle_entregas->cantidad_devuelta) {
                     case $detalle_entregas->cantidad_devuelta > $entrega_equipos_general['cantidad_devuelta']:
@@ -333,7 +334,6 @@ class ParticipantesEquipos extends Component
 
             $detalle_entregas->save();
             $equipo->save();
-
         }
         //dd($detalle_entregas);
         $this->emit('alert', 'MUY BIEN', 'success', 'Registrado Correctamente.');

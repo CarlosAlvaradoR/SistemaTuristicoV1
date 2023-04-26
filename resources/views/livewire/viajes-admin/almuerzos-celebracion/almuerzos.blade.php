@@ -135,7 +135,7 @@
 
                                 <label for="asociacion">
                                     Asociación <span class="text-danger">(*)</span>
-                                    <a href="{{ route('viajes.tipos.de.vehiculos') }}" target="_blank"
+                                    <a href="{{ route('viajes.mostrar.asociaciones') }}" target="_blank"
                                         title="Ver Asociaciones Registradas" wire:click="render"><i
                                             class="fas fa-exclamation"></i></a>
                                     <button type="button" class="btn btn-sm btn-rounded" title="Refrescar"
