@@ -751,7 +751,7 @@ INNER JOIN choferes ch on p.id = ch.persona_id
 INNER JOIN vehiculo_choferes vc on vc.choferes_id = ch.id
 INNER JOIN vehiculos v on v.id = vc.vehiculos_id
 WHERE v.id = 1;
-SELECT * FROM traslado_viajes;
+
 
 
 

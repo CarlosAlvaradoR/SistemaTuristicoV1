@@ -49,7 +49,8 @@ class Arriero extends Component
             )
             ->get();
 
-        return view('livewire.viajes-admin.viajes.arriero.arriero',
+        return view(
+            'livewire.viajes-admin.viajes.arriero.arriero',
             compact('asociaciones', 'arrieros')
         );
     }
@@ -159,7 +160,6 @@ class Arriero extends Component
 
         $this->emit('alert', $title, $icon, $text);
         $this->resetear();
-
     }
 
     public function Edit(Arrieros $arrieros)
@@ -192,9 +192,9 @@ class Arriero extends Component
         ]);
     }
     protected $listeners = ['deleteArrieros'];
-    public function deleteArrieros(Arrieros $arrieros)
+    public function deleteArrieros(Arrieros $arrieros, $opcion)
     {
-        dd($arrieros);
+        
         //$personas = Personas::findOrFail($arrieros->id);
         # Elimiar ambos
         # Eliminar como chófer y no como persona si esque la persona está en otras tablas (BUSCAR LA PERSONA EN TABLAS DIFERENTES)
@@ -202,27 +202,39 @@ class Arriero extends Component
         $title = 'MUY BIEN!';
         $icon = 'success';
         $text = 'Se eliminó correctamente la Información del Guía';
-        $viaje_paquete_guias = AcemilasAlquiladas::where('arrieros_id', $arrieros->id)->get();
-
-        $personas = Personas::verificaQueExista($arrieros->persona_id, 3);
-        #dd($personas);
-        if ($personas == 1) { //QUIERE DECIR QUE LA PERSONA CON ESE ID TIENE REGISTROS EN DIFERENTES CAMPOS
-            $title = 'ERROR';
-            $icon = 'error';
-            $text = 'No se puede Eliminar la Información porque la misma se encuentra registrada en otro módulo.';
-            $this->emit('alert', $title, $icon, $text);
-            return;
+        $viaje_paquete_arrieros = AcemilasAlquiladas::where('arrieros_id', $arrieros->id)->get();
+        if ($opcion == 1) {
+            $personas = Personas::verificaQueExista($arrieros->persona_id, 3);
+            #dd($personas);
+            if ($personas == 1) { //QUIERE DECIR QUE LA PERSONA CON ESE ID TIENE REGISTROS EN DIFERENTES CAMPOS
+                $title = 'ERROR';
+                $icon = 'error';
+                $text = 'No se puede Eliminar la Información porque la misma se encuentra registrada en otro módulo.';
+                $this->emit('alert', $title, $icon, $text);
+                return;
+            } else {
+                if (count($viaje_paquete_arrieros) > 0) {
+                    $title = 'ERROR!';
+                    $icon = 'error';
+                    $text = 'No se puede Eliminar la Información del Arriero, la misma se encuentra registrada en otro módulo.';
+                    $this->emit('alert', $title, $icon, $text);
+                    return;
+                } else {
+                    $arrieros->delete();
+                    $personas = Personas::findOrFail($arrieros->persona_id);
+                    $personas->delete();
+                    $this->emit('alert', $title, $icon, $text);
+                }
+            }
         } else {
-            if (count($viaje_paquete_guias) > 0) {
+            if (count($viaje_paquete_arrieros) > 0) {
                 $title = 'ERROR!';
                 $icon = 'error';
-                $text = 'No se puede Eliminar la Información del Chófer la misma se encuentra registrada en otro módulo.';
+                $text = 'No se puede Eliminar la Información del Arriero, la misma se encuentra registrada en otro módulo.';
                 $this->emit('alert', $title, $icon, $text);
                 return;
             } else {
                 $arrieros->delete();
-                $personas = Personas::findOrFail($arrieros->persona_id);
-                $personas->delete();
                 $this->emit('alert', $title, $icon, $text);
             }
         }

@@ -299,17 +299,25 @@
             Swal.fire({
                 title: event.detail.title,
                 icon: event.detail.icon,
+                showDenyButton: true,
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
+                denyButtonColor: '#1C2833',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, quiero eliminarlo!',
-                cancelButtonText: 'Cancelar'
+                confirmButtonText: 'Eliminar Todo',
+                denyButtonText: 'Eliminar Guia',
+                cancelButtonText: 'Cancelar',
             }).then((result) => {
                 if (result.isConfirmed) {
                     Livewire.emitTo('viajes-admin.viajes.guia.guia',
                         'deleteGuias',
                         event.detail
-                        .id);
+                        .id, 1);
+                } else if (result.isDenied) {
+                    Livewire.emitTo('viajes-admin.viajes.guia.guia',
+                        'deleteGuias',
+                        event.detail
+                        .id, 2);
                 }
             })
         });

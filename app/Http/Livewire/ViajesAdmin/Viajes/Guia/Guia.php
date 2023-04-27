@@ -173,36 +173,48 @@ class Guia extends Component
         ]);
     }
     protected $listeners = ['deleteGuias'];
-    public function deleteGuias(Guias $guias)
+    public function deleteGuias(Guias $guias, $opcion)
     {
         //$personas = Personas::findOrFail($guias->id);
         # Elimiar ambos
         # Eliminar como chófer y no como persona si esque la persona está en otras tablas (BUSCAR LA PERSONA EN TABLAS DIFERENTES)
-
+        
         $title = 'MUY BIEN!';
         $icon = 'success';
         $text = 'Se eliminó correctamente la Información del Guía';
         $viaje_paquete_guias = ViajePaquetesGuias::where('guias_id', $guias->id)->get();
-
-        $personas = Personas::verificaQueExista($guias->persona_id, 4);
-        #dd($personas);
-        if ($personas == 1) { //QUIERE DECIR QUE LA PERSONA CON ESE ID TIENE REGISTROS EN DIFERENTES CAMPOS
-            $title = 'ERROR';
-            $icon = 'error';
-            $text = 'No se puede Eliminar la Información porque la misma se encuentra registrada en otro módulo.';
-            $this->emit('alert', $title, $icon, $text);
-            return;
+        if ($opcion == 1) {
+            $personas = Personas::verificaQueExista($guias->persona_id, 4);
+            #dd($personas);
+            if ($personas == 1) { //QUIERE DECIR QUE LA PERSONA CON ESE ID TIENE REGISTROS EN DIFERENTES CAMPOS
+                $title = 'ERROR';
+                $icon = 'error';
+                $text = 'No se puede Eliminar la Información porque la misma se encuentra registrada en otro módulo.';
+                $this->emit('alert', $title, $icon, $text);
+                return;
+            } else {
+                if (count($viaje_paquete_guias) > 0) {
+                    $title = 'ERROR!';
+                    $icon = 'error';
+                    $text = 'No se puede Eliminar la Información del Guía, la misma se encuentra registrada en otro módulo.';
+                    $this->emit('alert', $title, $icon, $text);
+                    return;
+                } else {
+                    $guias->delete();
+                    $personas = Personas::findOrFail($guias->persona_id);
+                    $personas->delete();
+                    $this->emit('alert', $title, $icon, $text);
+                }
+            }
         } else {
             if (count($viaje_paquete_guias) > 0) {
                 $title = 'ERROR!';
                 $icon = 'error';
-                $text = 'No se puede Eliminar la Información del Chófer la misma se encuentra registrada en otro módulo.';
+                $text = 'No se puede Eliminar la Información del Guía, la misma se encuentra registrada en otro módulo.';
                 $this->emit('alert', $title, $icon, $text);
                 return;
             } else {
                 $guias->delete();
-                $personas = Personas::findOrFail($guias->persona_id);
-                $personas->delete();
                 $this->emit('alert', $title, $icon, $text);
             }
         }

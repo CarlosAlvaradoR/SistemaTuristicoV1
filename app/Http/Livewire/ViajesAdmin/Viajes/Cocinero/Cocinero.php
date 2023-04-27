@@ -169,7 +169,7 @@ class Cocinero extends Component
         ]);
     }
     protected $listeners = ['deleteCocineros'];
-    public function deleteCocineros(Cocineros $cocinero)
+    public function deleteCocineros(Cocineros $cocinero, $opcion)
     {
         //$personas = Personas::findOrFail($cocinero->id);
         # Elimiar ambos
@@ -177,28 +177,40 @@ class Cocinero extends Component
 
         $title = 'MUY BIEN!';
         $icon = 'success';
-        $text = 'Se eliminó correctamente la Información del Chófer';
+        $text = 'Se eliminó correctamente la Información del Cocinero';
         $viaje_paquete_cocineros = ViajePaquetesCocineros::where('cocinero_id', $cocinero->id)->get();
-
-        $personas = Personas::verificaQueExista($cocinero->persona_id, 2);
-        #dd($personas);
-        if ($personas == 1) { //QUIERE DECIR QUE LA PERSONA CON ESE ID TIENE REGISTROS EN DIFERENTES CAMPOS
-            $title = 'ERROR';
-            $icon = 'error';
-            $text = 'No se puede Eliminar la Información porque la misma se encuentra registrada en otro módulo.';
-            $this->emit('alert', $title, $icon, $text);
-            return;
+        if ($opcion == 1) {
+            $personas = Personas::verificaQueExista($cocinero->persona_id, 2);
+            #dd($personas);
+            if ($personas == 1) { //QUIERE DECIR QUE LA PERSONA CON ESE ID TIENE REGISTROS EN DIFERENTES CAMPOS
+                $title = 'ERROR';
+                $icon = 'error';
+                $text = 'No se puede Eliminar la Información porque la misma se encuentra registrada en otro módulo.';
+                $this->emit('alert', $title, $icon, $text);
+                return;
+            } else {
+                if (count($viaje_paquete_cocineros) > 0) {
+                    $title = 'ERROR!';
+                    $icon = 'error';
+                    $text = 'No se puede Eliminar la Información del Cocinero la misma se encuentra registrada en otro módulo.';
+                    $this->emit('alert', $title, $icon, $text);
+                    return;
+                } else {
+                    $cocinero->delete();
+                    $personas = Personas::findOrFail($cocinero->persona_id);
+                    $personas->delete();
+                    $this->emit('alert', $title, $icon, $text);
+                }
+            }
         } else {
             if (count($viaje_paquete_cocineros) > 0) {
                 $title = 'ERROR!';
                 $icon = 'error';
-                $text = 'No se puede Eliminar la Información del Chófer la misma se encuentra registrada en otro módulo.';
+                $text = 'No se puede Eliminar la Información del Cocinero la misma se encuentra registrada en otro módulo.';
                 $this->emit('alert', $title, $icon, $text);
                 return;
             } else {
                 $cocinero->delete();
-                $personas = Personas::findOrFail($cocinero->persona_id);
-                $personas->delete();
                 $this->emit('alert', $title, $icon, $text);
             }
         }

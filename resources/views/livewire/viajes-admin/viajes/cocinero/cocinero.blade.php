@@ -281,17 +281,25 @@
             Swal.fire({
                 title: event.detail.title,
                 icon: event.detail.icon,
+                showDenyButton: true,
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
+                denyButtonColor: '#1C2833',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, quiero eliminarlo!',
-                cancelButtonText: 'Cancelar'
+                confirmButtonText: 'Eliminar Todo',
+                denyButtonText: 'Eliminar Cocinero',
+                cancelButtonText: 'Cancelar',
             }).then((result) => {
                 if (result.isConfirmed) {
                     Livewire.emitTo('viajes-admin.viajes.cocinero.cocinero',
                         'deleteCocineros',
                         event.detail
-                        .id);
+                        .id, 1);
+                } else if (result.isDenied) {
+                    Livewire.emitTo('viajes-admin.viajes.cocinero.cocinero',
+                        'deleteCocineros',
+                        event.detail
+                        .id, 2);
                 }
             })
         });
