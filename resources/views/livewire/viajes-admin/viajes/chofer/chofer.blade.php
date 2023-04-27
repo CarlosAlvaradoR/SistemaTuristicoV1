@@ -310,23 +310,104 @@
 
 
     <script>
+       
         window.addEventListener('swal-confirm-choferes', event => {
             Swal.fire({
                 title: event.detail.title,
                 icon: event.detail.icon,
+                showDenyButton: true,
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
+                denyButtonColor: '#1C2833',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, quiero eliminarlo!',
-                cancelButtonText: 'Cancelar'
+                confirmButtonText: 'Eliminar Todo',
+                denyButtonText: 'Eliminar Chófer',
+                cancelButtonText: 'Cancelar',
+                
             }).then((result) => {
                 if (result.isConfirmed) {
                     Livewire.emitTo('viajes-admin.viajes.chofer.chofer',
                         'deleteChoferes',
                         event.detail
-                        .id);
+                        .id, 1);
+                } else if (result.isDenied) {
+                    Livewire.emitTo('viajes-admin.viajes.chofer.chofer',
+                        'deleteChoferes',
+                        event.detail
+                        .id, 2);
                 }
-            })
+            });
+
+            // let chofer = event.detail.id; 
+            // //alert(chofer);
+            // Swal.fire({
+            //     title: event.detail.title,
+            //     icon: event.detail.icon,
+            //     showConfirmButton: false,
+            //     // showCloseButton: true,
+            //     html: `
+        //         <p>select an action</p>
+        //         <div>
+        //             <button class="btn btn-primary" id="reply" onclick="onBtnClicked('delete', chofer)">Sí, quiero Eliminarlo</button>
+        //             <button class="btn btn-secondary" onclick="onBtnClicked('masivo', chofer)">Eliminación Masiva</button>
+        //             <button class="btn btn-danger" onclick="onBtnClicked('cancel',0)">Cancelar</button>
+        //         </div>`
+            // });
+
+
+            // Swal.fire({
+            //     title: event.detail.title,
+            //     icon: event.detail.icon,
+            //     showCancelButton: true,
+            //     confirmButtonColor: '#3085d6',
+            //     cancelButtonColor: '#d33',
+            //     confirmButtonText: 'Sí, quiero eliminarlo!',
+            //     cancelButtonText: 'Cancelar'
+            //     buttons: {
+            //         buttonOne: {
+            //             text: "First",
+            //             value: "firstVal",
+            //             visible: true,
+            //             className: "swal-btn-cancel",
+            //             closeModal: true,
+            //         },
+            //         buttonTwo: {
+            //             text: "Second",
+            //             value: "secondVal",
+            //             visible: true,
+            //             className: "swal-btn-confirm",
+            //             closeModal: true
+            //         },
+            //         buttonThree: {
+            //             text: "Third",
+            //             value: "thirdVal",
+            //             visible: true,
+            //             className: "swal-btn-confirm",
+            //             closeModal: true
+            //         },
+            //         buttonFour: {
+            //             text: "Fourth",
+            //             value: "fourthVal",
+            //             visible: true,
+            //             className: "swal-btn-confirm",
+            //             closeModal: true
+            //         },
+            //         buttonFive: {
+            //             text: "Fifth",
+            //             value: "fifthVal",
+            //             visible: true,
+            //             className: "swal-btn-confirm",
+            //             closeModal: true
+            //         }
+            //     },
+            // }).then((result) => {
+            //     if (result.isConfirmed) {
+            //         Livewire.emitTo('viajes-admin.viajes.chofer.chofer',
+            //             'deleteChoferes',
+            //             event.detail
+            //             .id);
+            //     }
+            // })
         });
 
         document.addEventListener('DOMContentLoaded', function() {

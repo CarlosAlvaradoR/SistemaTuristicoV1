@@ -202,27 +202,44 @@ class Chofer extends Component
         ]);
     }
     protected $listeners = ['deleteChoferes'];
-    public function deleteChoferes(Choferes $chofer)
+    public function deleteChoferes(Choferes $chofer, $opcion)
     {
-        //$personas = Personas::findOrFail($chofer->id);
-
-        # Elimiar ambos
-        # Eliminar como chófer y no como persona si esque la persona está en otras tablas (BUSCAR LA PERSONA EN TABLAS DIFERENTES)
+        # OPCIÓN 1, ELIMINAR TODO | OPCIÓN 2 ELIMINA SÓLO AL CHÓFER
+        // if ($opcion != 1 || $opcion != 2) {
+        //     $this->emit('alert', 'ERROR !','error','Se ha producido un error');
+        //     return;
+        // }
 
         $title = 'MUY BIEN!';
         $icon = 'success';
         $text = 'Se eliminó correctamente la Información del Chófer';
         $vehiculos_choferes = VehiculoChoferes::where('choferes_id', $chofer->id)->get();
 
-        $personas = Personas::verificaQueExista($chofer->persona_id, 5);
-        #dd($personas);
-        if ($personas == 1) { //QUIERE DECIR QUE LA PERSONA CON ESE ID TIENE REGISTROS EN DIFERENTES CAMPOS
-            $title = 'ERROR';
-            $icon = 'error';
-            $text = 'No se puede Eliminar la Información porque la misma se encuentra registrada en otro módulo.';
-            $this->emit('alert', $title, $icon, $text);
-            return;
+        if ($opcion == 1) {
+            $personas = Personas::verificaQueExista($chofer->persona_id, 5);
+            #dd($personas);
+            if ($personas == 1) { //QUIERE DECIR QUE LA PERSONA CON ESE ID TIENE REGISTROS EN DIFERENTES CAMPOS
+                $title = 'ERROR';
+                $icon = 'error';
+                $text = 'No se puede Eliminar la Información porque la misma se encuentra registrada en otro módulo.';
+                $this->emit('alert', $title, $icon, $text);
+                return;
+            } else {
+                if (count($vehiculos_choferes) > 0) {
+                    $title = 'ERROR!';
+                    $icon = 'error';
+                    $text = 'No se puede Eliminar la Información del Chófer la misma se encuentra registrada en otro módulo.';
+                    $this->emit('alert', $title, $icon, $text);
+                    return;
+                } else {
+                    $chofer->delete();
+                    $personas = Personas::findOrFail($chofer->persona_id);
+                    $personas->delete();
+                    $this->emit('alert', $title, $icon, $text);
+                }
+            }
         } else {
+
             if (count($vehiculos_choferes) > 0) {
                 $title = 'ERROR!';
                 $icon = 'error';
@@ -231,11 +248,13 @@ class Chofer extends Component
                 return;
             } else {
                 $chofer->delete();
-                $personas = Personas::findOrFail($chofer->persona_id);
-                $personas->delete();
                 $this->emit('alert', $title, $icon, $text);
             }
         }
+
+        
+
+
     }
 
 

@@ -62,14 +62,13 @@ class Vehiculos extends Component
             ->where('v.empresa_transportes_id', $this->empresa->id)
             ->get();
         if ($this->idVehiculo) {
-            $choferes = DB::select("SELECT p.nombre, p.apellidos, v.id, ch.id as idVehiculoChofer FROM personas p
+            $choferes = DB::select("SELECT p.nombre, p.apellidos, v.id, ch.id as idVehiculoChofer, vc.id as idVChofer FROM personas p
             INNER JOIN choferes ch on p.id = ch.persona_id
             INNER JOIN vehiculo_choferes vc on vc.choferes_id = ch.id
             INNER JOIN vehiculos v on v.id = vc.vehiculos_id
             WHERE v.id = " . $this->idVehiculo . "");
         }
-        return view(
-            'livewire.viajes-admin.viajes.empresas-transporte.vehiculos.vehiculos',
+        return view('livewire.viajes-admin.viajes.empresas-transporte.vehiculos.vehiculos',
             compact('tipoVehiculos', 'vehiculos', 'tipoLicencias', 'choferes')
         );
     }
@@ -171,32 +170,6 @@ class Vehiculos extends Component
         }
     }
 
-    // public function guardarPersonaCliente()
-    // { //Guarda la persona que ya existe y los atributos del Cliente
-    //     $this->validate(
-    //         [
-    //             'numero_licencia' => 'required|string|min:3',
-    //             'tipo_de_licencia' => 'required|numeric|min:1',
-    //         ]
-    //     );
-
-    //     $chofer = Choferes::create(
-    //         [
-    //             'numero_licencia' => $this->numero_licencia,
-    //             'tipo_licencias_id' => $this->tipo_de_licencia,
-    //             'persona_id' => $this->idPersona
-    //         ]
-    //     );
-
-    //     $vehiculo_chofer = VehiculoChoferes::create(
-    //         [
-    //             'vehiculos_id' => $this->idVehiculo,
-    //             'choferes_id' => $chofer->id
-    //         ]
-    //     );
-
-    //     $this->resetUI(2);
-    // }
 
     public function agregarChoferAlVehiculo()
     {
@@ -256,7 +229,7 @@ class Vehiculos extends Component
     //protected $listeners = ['deleteVehiculos'];
     public function deleteVehiculosChofer(VehiculoChoferes $vehiculo)
     {
-        //dd('HOOLA MUNDOS');
+        // dd($vehiculo);
         $title = 'MUY BIEN !';
         $icon = 'success';
         $text = 'Chofer Quitado del Vehículo con Éxito';

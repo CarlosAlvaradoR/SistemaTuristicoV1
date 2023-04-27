@@ -746,7 +746,7 @@ WHERE p.dni = '70988855' LIMIT 1;
 
 
 -- SELECCIONAR LOS CHOFERES DE UN VEHÍCULO
-SELECT p.nombre, p.apellidos, v.id, ch.id as idVehiculoChofer FROM personas p
+SELECT p.nombre, p.apellidos, v.id, ch.id as idVehiculoChofer, vc.id as idVChofer FROM personas p
 INNER JOIN choferes ch on p.id = ch.persona_id
 INNER JOIN vehiculo_choferes vc on vc.choferes_id = ch.id
 INNER JOIN vehiculos v on v.id = vc.vehiculos_id
@@ -850,7 +850,8 @@ WHERE de.entrega_equipos_id = 1
 LIMIT 1;
 DESC entrega_equipos;
 
-SELECT * FROM users;
+SELECT * FROM personas; -- 59
+SELECT * FROM vehiculo_choferes; -- 1
 DESC choferes;
 
 

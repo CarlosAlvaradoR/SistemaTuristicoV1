@@ -331,7 +331,7 @@
                                         <th scope="row">{{ $contador++ }}</th>
                                         <td>{{ $ch->nombre }} {{ $ch->apellidos }}</td>
                                         <td>
-                                            <button wire:click="deleteConfirmChoferes({{$ch->idVehiculoChofer}})" class="btn btn-danger">
+                                            <button wire:click="deleteConfirmChoferes({{$ch->idVChofer}})" class="btn btn-danger">
                                                 Quitar
                                             </button>
                                         </td>
