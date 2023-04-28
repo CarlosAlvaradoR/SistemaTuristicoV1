@@ -863,7 +863,7 @@ DESC choferes;
 
 
 /********************** PEDIDOS PROVEEDORES *********************/
-SELECT * FROM proveedores;
+DESC proveedores;
 
 
 
