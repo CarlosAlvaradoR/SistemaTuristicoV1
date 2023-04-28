@@ -68,7 +68,7 @@
                         <div class="col-lg-6">
 
                             @if ($mostrarEquipos)
-                                <button class="btn btn-primary btn-rounded center" wire:click="UpdatePedido"
+                                <button class="btn btn-primary btn-rounded center" wire:click="savePedido"
                                     wire:loading.attr="disabled">Actualizar</button>
                             @else
                                 <button class="btn btn-primary btn-rounded center" wire:click="savePedido"
@@ -171,9 +171,9 @@
                             <thead>
                                 <tr>
                                     <th scope="col">EQUIPO</th>
-                                    <th scope="col">Cantidad</th>
-                                    <th scope="col">Entrante</th>
-                                    <th scope="col">Precio</th>
+                                    <th scope="col">Cantidad Solicitada</th>
+                                    <th scope="col">Cantidad Entrante</th>
+                                    <th scope="col">Precio C/U</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
@@ -184,27 +184,29 @@
                                         <td>{{ $ep->cantidad }}</td>
                                         <td>
                                             <div class="form-group">
-                                                <input type="text" wire:model.defer="cantidad_entrante"
-                                                    class="form-control" id="cantidad_entrante" placeholder="ej: 3">
+                                                <input type="number" autocomplete="off"
+                                                    wire:model.defer="cantidad_entrante" class="form-control"
+                                                    id="cantidad_entrante" placeholder="ej: 3">
                                             </div>
 
                                         </td>
                                         <td>{{ $ep->precio_real }}</td>
                                         <td>
-                                            <button id="delete"
+                                            {{-- <button id="delete"
                                                 wire:click="entradaEquipoInventario({{ $ep->id }})"
                                                 title="Añadir Equipo al Pedido" class="btn btn-success btn-sm">
                                                 <i class="fas fa-plus-circle"></i>
-                                            </button>
+                                            </button> --}}
                                             <button id="view" title="Editar Detalle del Pedido"
                                                 data-target="#exampleModal" data-toggle="modal"
-                                                wire:click="quitarDelPedido({{ $ep->id }})"
+                                                wire:click="Edit({{ $ep->id }})" wire:loading.attr="disabled"
                                                 title="Ver Atractivos" class="btn btn-warning btn-sm">
                                                 <span class="fa fa-pencil-square-o"></span>
                                             </button>
                                             <button id="view" title="Quitar Equipo del Pedido"
-                                                wire:click="quitarDelPedido({{ $ep->id }})"
-                                                title="Ver Atractivos" class="btn btn-danger btn-sm">
+                                                wire:click="deleteConfirm({{ $ep->id }})"
+                                                wire:loading.attr="disabled" title="Ver Atractivos"
+                                                class="btn btn-danger btn-sm">
                                                 <i class="fas fa-minus"></i>
                                             </button>
                                         </td>
@@ -262,6 +264,9 @@
                                     <input type="number" autocomplete="off" wire:model.defer="cantidad"
                                         class="form-control" id="cantidad"
                                         placeholder="Ingrese cantidad de Equipo a Pedir" />
+                                    @error('cantidad')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-5">
@@ -272,29 +277,27 @@
                                     <input type="text" wire:model.defer="monto_del_equipo" autocomplete="off"
                                         class="form-control" id="monto_del_equipo"
                                         placeholder="Ingrese Monto del Equipo" />
+                                    @error('monto_del_equipo')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
-                            <!--<div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="tipo_de_acemila">
-                                        Tipo de Acémilas
-                                    </label>
-                                    <select class="form-control" wiremodel="tipo_de_acemila" id="tipo_de_acemila">
-                                        <option value="0" select>...Seleccione...</option>
-
-                                    </select>
-                                </div>
-                            </div>-->
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                    <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger" data-dismiss="modal">
                         Cerrar
                     </button>
                     <button type="button" title="Añadir al Pedido" wire:click="add"
                         class="btn btn-rounded btn-primary">
-                        <i class="fas fa-cart-plus"></i> Añadir
+                        <i class="fas fa-cart-plus"></i>
+                        @if ($idDetalleIngreso)
+                            Actualizar
+                        @else
+                            Añadir
+                        @endif
+
                     </button>
                 </div>
             </div>
@@ -302,13 +305,32 @@
     </div>
     <!-- END MODAL-->
 
+    @livewire('administrate-commons.alerts')
+
     <script>
+        window.addEventListener('swal-confirm-detallePedido', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('proveedores-admin.proveedores.proveedores.detalles-pedido', 'delete',
+                        event.detail.id);
+                }
+            })
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             //Lo que llega de CategoriesController
             window.livewire.on('show-modal', msg => {
                 $('#modal-agregar-equipo-pedido').modal('show')
             });
-            window.livewire.on('fecha-itinerario-guarded', msg => {
+            window.livewire.on('close-modal', msg => {
                 $('#modal-agregar-equipo-pedido').modal('hide')
             });
             window.livewire.on('category-updated', msg => {

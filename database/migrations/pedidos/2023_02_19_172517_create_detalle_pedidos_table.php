@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('cantidad');
             $table->decimal('precio_real', 10,2);
+            $table->integer('cantidad_entrante')->nullable();
 
             $table->unsignedBigInteger('pedidos_id');
             $table->foreign('pedidos_id')->references('id')->on('pedidos');
