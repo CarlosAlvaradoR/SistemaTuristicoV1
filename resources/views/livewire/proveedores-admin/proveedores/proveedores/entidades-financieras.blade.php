@@ -24,15 +24,14 @@
                         </div>
                         <div class="col-md-3">
                             <button id="modal-532427" href="#modal_cuentas_bancarias" role="button"
-                                class="btn btn-rounded" data-toggle="modal">CREAR NUEVA CUENTA</button>
+                                class="btn btn-rounded" data-toggle="modal">Crear Ent. Financiera</button>
                         </div>
                     </div>
                     <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th scope="col">Banco</th>
-                                <th scope="col">Nº Cuenta</th>
-                                <th scope="col">Estado</th>
+                                <th scope="col">Dirección</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
@@ -41,7 +40,7 @@
                                 <tr>
                                     <td>{{ $b->nombre_banco }}</td>
                                     <td>{{ $b->direccion }}</td>
-                                    
+
                                     <td>
                                         <button title="Editar Información de la Cuenta Bancaria"
                                             wire:click="Edit({{ $b->id }})" wire:loading.attr="disabled"
@@ -100,7 +99,7 @@
                                 <fieldset class="form-group">
                                     <label class="form-label" for="direccion">Dirección</label>
                                     <textarea class="form-control" wire:model.defer="direccion" id="direccion" rows="3"
-                                    placeholder="ej: Av. Los Girasoles"></textarea>
+                                        placeholder="ej: Av. Los Girasoles"></textarea>
                                     @error('direccion')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror

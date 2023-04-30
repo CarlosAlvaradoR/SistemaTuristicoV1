@@ -25,7 +25,7 @@
                         </div>
                         <div class="col-md-3">
                             <button id="modal-532427" href="#modal_cuentas_bancarias" role="button"
-                                class="btn btn-rounded" data-toggle="modal">CREAR NUEVA CUENTA</button>
+                                class="btn btn-rounded" data-toggle="modal">Añadir Cuenta Bancaria</button>
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -95,7 +95,14 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
-                                    <label class="form-label" for="banco">Banco</label>
+                                    <label for="banco">
+                                        Banco <span class="text-danger">(*) </span>
+                                        <a href="{{ route('mostrar.bancos') }}" target="_blank" title="Crear Vehículo"
+                                            class="font-weight-bold"><i class="fas fa-exclamation"></i></a>
+                                        <button class="btn btn-sm btn-rounded" title="Refrescar" wire:click="render"><i
+                                                class="fas fa-sync-alt"></i></button>
+                                    </label>
+
                                     <select class="form-control" wire:model.defer="banco" id="banco">
                                         <option value="">---Seleccione---</option>
                                         @foreach ($bancos as $b)

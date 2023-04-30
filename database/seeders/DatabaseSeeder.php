@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Pedidos\BancosSeeder;
 use Database\Seeders\Pedidos\EstadoPedidosSeeder;
 use Database\Seeders\Reservas\CuentaPagosSeeder;
 use Database\Seeders\Reservas\EstadoReservasSeeder;
@@ -37,5 +38,6 @@ class DatabaseSeeder extends Seeder
 
         /** MÓDULO PEDIDOS */
         $this->call(EstadoPedidosSeeder::class);
+        $this->call(BancosSeeder::class);
     }
 }

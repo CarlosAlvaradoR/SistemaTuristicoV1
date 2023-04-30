@@ -41,8 +41,7 @@ class CuentasBancarias extends Component
             )
             ->get();
 
-        return view(
-            'livewire.proveedores-admin.proveedores.proveedores.cuentas-bancarias',
+        return view('livewire.proveedores-admin.proveedores.proveedores.cuentas-bancarias',
             compact('bancos', 'cuentas')
         );
     }
