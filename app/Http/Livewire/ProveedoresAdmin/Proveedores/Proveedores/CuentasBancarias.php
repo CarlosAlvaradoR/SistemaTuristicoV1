@@ -114,7 +114,7 @@ class CuentasBancarias extends Component
         if (count($pago_proveedores) > 0) {
             $title = 'ERROR !';
             $icon = 'error';
-            $text = 'No se puede Eliminar la Cuenta del Proveedor, porque ya se le registraron pagos en ella.';
+            $text = 'No se puede Eliminar la Cuenta Bancaria del Proveedor, porque ya se le registraron pagos en ella.';
             $this->emit('alert', $title, $icon, $text);
         } else {
             $cuentaProveedorBancos->delete();
