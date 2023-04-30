@@ -881,7 +881,7 @@ WHERE dp.pedidos_id = 2;
 SELECT * FROM detalle_pedidos
 WHERE pedidos_id = 2;
 
-
+SELECT * FROM bancos;
 
 
 -- LISTA DE PEDIDOS A PROVEEDORES

@@ -169,7 +169,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                    <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger" data-dismiss="modal">
                         Cerrar
                     </button>
                     <button type="button" wire:click="saveProveedor" wire:loading.attr="disabled"

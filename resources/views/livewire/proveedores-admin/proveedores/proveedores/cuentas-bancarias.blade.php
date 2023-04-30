@@ -13,35 +13,14 @@
                                 <input type="text" class="form-control" placeholder="Buscar Proveedores">
                             </div>
                         </div>
-                        <div class="col-md-1">
-                            <div class="form-group">
-
-                                <label for="exampleFormControlSelect1">Mostrar</label>
-                                {{-- <select class="form-control" id="exampleFormControlSelect1">
-                                  <option>1</option>
-                                  <option>2</option>
-                                  <option>3</option>
-                                  <option>4</option>
-                                  <option>5</option>
-                                </select> --}}
-                            </div>
-                        </div>
-                        <div class="col-md-1">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 {{-- <label for="exampleFormControlSelect1">Example select</label> --}}
                                 <select class="form-control" id="exampleFormControlSelect1">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
+                                    <option>Mostrar 20</option>
+                                    <option>Mostrar 20</option>
+                                    <option>Mostrar 20</option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1">Registros</label>
-
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -61,9 +40,9 @@
                         <tbody>
                             @foreach ($cuentas as $c)
                                 <tr>
-                                    <td>{{$c->nombre_banco}}</td>
-                                    <td>{{$c->numero_cuenta}}</td>
-                                    <td>{{$c->estado}}</td>
+                                    <td>{{ $c->nombre_banco }}</td>
+                                    <td>{{ $c->numero_cuenta }}</td>
+                                    <td>{{ $c->estado }}</td>
                                     <td>
                                         <button id="edit" title="Editar Información de Proveedor"
                                             wire:click="Edit()" class="btn btn-warning btn-sm">
@@ -84,10 +63,6 @@
                                             class="btn btn-danger btn-sm">
                                             <i class="fas fa-minus"></i>
                                         </button>
-                                        {{-- <button id="delete" title="Dar de baja" class="btn btn-danger btn-sm"
-                                        wire:click="deleteConfirm()">
-                                        <i class="fas fa-ban"></i>
-                                    </button> --}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -106,27 +81,31 @@
     <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal-traslado-viajes"
         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="myModalLabel">
-                        ASIGANAR NUEVOS LUGARES
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="container-fluid">
+            <form wire:submit.prevent="saveCuenta">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myModalLabel">
+                            {{$title}}
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
                         <div class="row">
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
                                     <label class="form-label" for="banco">Banco</label>
                                     <select class="form-control" wire:model.defer="banco" id="banco">
-                                        <option value="0">---Seleccione---</option>
+                                        <option value="">---Seleccione---</option>
                                         @foreach ($bancos as $b)
                                             <option value="{{ $b->id }}">{{ $b->nombre_banco }}</option>
                                         @endforeach
                                     </select>
+                                    @error('banco')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -135,114 +114,47 @@
                                     <input type="text" wire:model.defer="numero_cuenta"
                                         class="form-control maxlength-custom-message" id="numero_cuenta"
                                         placeholder="Ingrese Nº de Cuenta Bancaria" maxlength="20">
+                                    @error('numero_cuenta')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
                                     <label class="form-label" for="estado">Estado</label>
                                     <select class="form-control" wire:model.defer="estado" id="estado">
-                                        <option value="0">---Seleccione---</option>
+                                        <option value="">---Seleccione---</option>
                                         <option value="1">ACTIVA</option>
                                         <option value="2">NO ACTIVA</option>
                                     </select>
+                                    @error('estado')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                         </div>
+
                     </div>
+
+                    <div class="modal-footer">
+                        <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                            Cerrar
+                        </button>
+
+                        <button type="submit" class="btn btn-rounded btn-primary">
+                            Guardar
+                        </button>
+
+                    </div>
+
                 </div>
+            </form>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
-                        Cerrar
-                    </button>
-
-                    <button type="button" wire:click="saveCuenta" class="btn btn-rounded btn-primary">
-                        Guardar
-                    </button>
-
-
-
-                </div>
-
-            </div>
         </div>
     </div>
     <!-- END MODAL-->
 
-
-    <!-- MODAL MONTO-->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalMontoArriero"
-        data-whatever="@fat">
-        Open modal for @fat
-    </button>
-    <!-- Modal -->
-    <div class="modal fade" wire:ignore.self id="modalMontoArriero" data-backdrop="static" data-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Añadir Monto y Fecha del Arriero</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group has-search">
-                                    <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" class="form-control"
-                                        placeholder="Buscar Almuerzos de Celebración">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="monto">
-                                        Monto
-                                    </label>
-                                    <input type="text" autocomplete="off" wire:model.defer="monto"
-                                        class="form-control" id="monto" />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="cantidad">
-                                        Cantidad de Acémilas
-                                    </label>
-                                    <input type="number" wire:model.defer="cantidad" autocomplete="off"
-                                        class="form-control" id="cantidad" />
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="tipo_de_acemila">
-                                        Tipo de Acémilas
-                                    </label>
-                                    <select class="form-control" wire:model="tipo_de_acemila" id="tipo_de_acemila">
-                                        <option value="0" select>...Seleccione...</option>
-
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
-                        Cerrar
-                    </button>
-                    <button type="button" wire:click="guardarAcemilasAlquiladas"
-                        class="btn btn-rounded btn-primary">
-                        Guardar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- END MODAL-->
+    @livewire('administrate-commons.alerts')
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

@@ -12,7 +12,11 @@ class CuentasBancarias extends Component
 {
     public $proveedor;
     public $numero_cuenta, $estado, $banco;
+    public $title = 'CREAR CUENTAS BANCARIAS';
 
+    public function resetUI(){
+        $this->reset(['numero_cuenta', 'estado', 'banco']);
+    }
 
     public function mount(Proveedores $proveedor){
         $this->proveedor = $proveedor;
@@ -38,6 +42,14 @@ class CuentasBancarias extends Component
     }
 
     public function saveCuenta(){
+        $this->validate(
+            [
+                'numero_cuenta' => 'required|string|min:3',
+                'estado' => 'required|numeric|min:1|max:2',
+                'banco' => 'required|numeric|min:1',
+            ]
+        );
+
         $banco = CuentaProveedorBancos::create(
             [
                 'numero_cuenta' => $this->numero_cuenta, 
@@ -46,5 +58,12 @@ class CuentasBancarias extends Component
                 'bancos_id' => $this->banco
             ]
         );
+
+        $this->resetUI();
+        $this->emit('alert', 'MUY BIEN', 'success', 'Cuenta Bancaria Registrada Correctamente.');
+    }
+
+    public function Edit(){
+
     }
 }
