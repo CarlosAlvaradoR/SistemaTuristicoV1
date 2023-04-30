@@ -171,6 +171,10 @@ class PaquetesTuristicosController extends Controller
         //return view('pedidos_proveedores_admin.pedidos_proveedor');
     }
 
+    public function mostrarBancos(){
+        return view('pedidos_proveedores_admin.bancos');
+    }
+
 
 
 

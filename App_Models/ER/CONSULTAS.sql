@@ -865,7 +865,7 @@ DESC choferes;
 /********************** PEDIDOS PROVEEDORES *********************/
 DESC proveedores;
 
-
+	
 
 SELECT b.nombre_banco, b.direccion, cpb.numero_cuenta, cpb.estado, cpb.id FROM bancos b
 INNER JOIN cuenta_proveedor_bancos cpb on b.id = cpb.bancos_id

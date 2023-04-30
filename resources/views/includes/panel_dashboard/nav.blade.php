@@ -112,6 +112,7 @@
                             class="label label-custom label-pill label-danger">new</span></a></li>
                 <li><a href="{{ route('pedidos.proveedores.general') }}"><span class="lbl">Pedidos
                             Proveedor</span></a></li>
+                <li><a href="{{ route('mostrar.bancos') }}"><span class="lbl">Bancos</span></a></li>
             </ul>
         </li>
 
