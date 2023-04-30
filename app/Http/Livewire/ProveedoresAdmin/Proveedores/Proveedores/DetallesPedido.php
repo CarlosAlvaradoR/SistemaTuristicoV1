@@ -16,12 +16,14 @@ use Illuminate\Support\Facades\DB;
 use Livewire\WithFileUploads;
 use Livewire\Component;
 
+use function PHPUnit\Framework\isNull;
+
 class DetallesPedido extends Component
 {
     use WithFileUploads;
 
 
-    public $proveedor, $pedido;
+    public $proveedor, $pedido, $equipos_pedidos;
     public $fecha, $monto, $observación_pedido, $estado_pedido;
     public $idPedido = 0;
     public $title = '', $idEquipo = 0, $mostrarEquipos = false;
@@ -91,18 +93,20 @@ class DetallesPedido extends Component
             )
             ->get();
 
-        $equipos_pedidos = DB::table('equipos as e')
+        $this->equipos_pedidos = DB::table('equipos as e')
             ->join('marcas as m', 'm.id', '=', 'e.marca_id')
             ->join('detalle_pedidos as dp', 'dp.equipo_id', '=', 'e.id')
             ->where('dp.pedidos_id', $this->idPedido)
             ->select(
+                'e.id as idEquipo',
                 'e.nombre',
                 'm.nombre as marca',
                 'dp.cantidad',
+                'dp.cantidad_entrante',
                 'dp.precio_real',
                 'dp.id'
             )
-            ->get();
+            ->get()->toArray();
 
         $pagos_proveedores = DB::table('bancos as b')
             ->join('cuenta_proveedor_bancos as cpb', 'b.id', '=', 'cpb.bancos_id')
@@ -127,7 +131,6 @@ class DetallesPedido extends Component
             compact(
                 'estado_pedidos',
                 'equipos',
-                'equipos_pedidos',
                 'tipo_comprobantes',
                 'pagos_proveedores'
             )
@@ -266,7 +269,9 @@ class DetallesPedido extends Component
 
     public function añadirAlPedido(Equipos $equipo)
     {
-        $detalle = DetallePedidos::where('equipo_id', $equipo->id)->get();
+        $detalle = DetallePedidos::where('equipo_id', $equipo->id)
+            ->where('pedidos_id', $this->idPedido)
+            ->get();
         if (count($detalle) > 0) {
             $this->emit(
                 'alert',
@@ -304,7 +309,7 @@ class DetallesPedido extends Component
         $title = 'MUY BIEN !';
         $icon = 'success';
         $text = 'Información Actualizada Correctamente';
-        
+
         if ($this->idDetalleIngreso) {
             $detalle = DetallePedidos::findOrFail($this->idDetalleIngreso);
             $detalle->cantidad = $this->cantidad;
@@ -324,10 +329,9 @@ class DetallesPedido extends Component
             $text = 'Se Insertó la cantidad de ' . $this->cantidad . ' de ' . strtoupper($equipo->nombre) . ' al Pedido.';
         }
         $this->emit('alert', $title, $icon, $text);
-        
+
         $this->emit('close-modal');
         $this->resetUI();
-        
     }
 
 
@@ -338,6 +342,63 @@ class DetallesPedido extends Component
             'icon' => 'warning',
             'id' => $id
         ]);
+    }
+
+    public function guardarEntradaPedido()
+    {
+        $this->validate(
+            [
+                'equipos_pedidos.*.ep' => 'nullable|integer|min:1'
+            ]
+        );
+        // dd($this->equipos_pedidos);
+
+        foreach ($this->equipos_pedidos as $equipos) {
+
+            $cantidad_entrante = 0;
+            $cantidad_existente = 0;
+            $detalle = DetallePedidos::findOrFail($equipos['id']);
+            $equipo = Equipos::findOrFail($equipos['idEquipo']);
+            # ENTRA LO MISMO 5 = 5
+
+            # ENTRA MENOR -> 3 < 5
+            # ENTRA MAYOR A 5 -> 7 > 5 | SE INSERTA 0 O SINO EL MOTO QUE YA TIENE CANT. ENTRANTE
+            if (isset($equipos['cantidad_entrante'])) {
+                $cantidad_entrante = $equipos['cantidad_entrante'];
+            }
+            
+            if ($detalle->cantidad_entrante) { //SI HAY Y ES NO NULL
+                switch ($detalle->cantidad_entrante) {
+                    case ($cantidad_entrante == $detalle->cantidad_entrante):
+                        $equipo->stock = $equipo->stock + 0;
+                        $detalle->cantidad_entrante = $detalle->cantidad_entrante;
+                        break;
+
+                    case ($cantidad_entrante < $detalle->cantidad_entrante && $cantidad_entrante > 0):
+                        $equipo->stock = ($equipo->stock) - ($detalle->cantidad_entrante - $cantidad_entrante);
+                        $detalle->cantidad_entrante = $detalle->cantidad_entrante;
+                        break;
+
+                    case ($cantidad_entrante > $detalle->cantidad_entrante || $cantidad_entrante < 0):
+                        $equipo->stock = $equipo->stock;
+                        $detalle->cantidad_entrante = $detalle->cantidad_entrante;
+                        break;
+
+                    default:
+                        // $detalle->cantidad_entrante = $detalle->cantidad_entrante;
+                        // $equipo->stock = $equipo->stock;
+                        break;
+                }
+            } else {
+                $equipo->stock = $equipo->stock + $cantidad_entrante;
+                $detalle->cantidad_entrante = $cantidad_entrante;
+            }
+
+            $detalle->save();
+            $equipo->save();
+        }
+
+        $this->emit('alert', 'MUY BIEN !', 'success', 'Información Registrada Correctamente');
     }
 
     public function delete(DetallePedidos $detalle)

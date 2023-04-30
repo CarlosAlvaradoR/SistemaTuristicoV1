@@ -134,16 +134,6 @@
                                                 class="btn btn-success btn-sm">
                                                 <i class="fas fa-plus-circle"></i>
                                             </button>
-                                            {{-- <button id="view" title="Añadir Pedidos de Proveedor"
-                                            data-target="#exampleModal" data-toggle="modal"
-                                            wire:click="mostrarAtractivosDelLugar()" title="Ver Atractivos"
-                                            class="btn btn-danger btn-sm">
-                                            <i class="fas fa-minus"></i>
-                                        </button> --}}
-                                            {{-- <button id="delete" title="Dar de baja" class="btn btn-danger btn-sm"
-                                        wire:click="deleteConfirm()">
-                                        <i class="fas fa-ban"></i>
-                                    </button> --}}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -159,63 +149,76 @@
                     <div class="card-block">
                         <h5 class="card-title"><i class="fab fa-steam-symbol"></i> Equipos Añadidos al Pedido</h5>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group has-search">
-                                    <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" class="form-control" placeholder="Buscar Proveedores">
+                        <form wire:submit.prevent="guardarEntradaPedido">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control" placeholder="Buscar Proveedores">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <button class="btn btn-primary btn-rounded"
+                                       type="submit">Guardar</button>
                                 </div>
                             </div>
-                        </div>
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">EQUIPO</th>
-                                    <th scope="col">Cantidad Solicitada</th>
-                                    <th scope="col">Cantidad Entrante</th>
-                                    <th scope="col">Precio C/U</th>
-                                    <th scope="col">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($equipos_pedidos as $ep)
+                            <table class="table table-hover">
+                                <thead>
                                     <tr>
-                                        <td>{{ $ep->nombre }}-{{ $ep->marca }}</td>
-                                        <td>{{ $ep->cantidad }}</td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="number" autocomplete="off"
-                                                    wire:model.defer="cantidad_entrante" class="form-control"
-                                                    id="cantidad_entrante" placeholder="ej: 3">
-                                            </div>
-
-                                        </td>
-                                        <td>{{ $ep->precio_real }}</td>
-                                        <td>
-                                            {{-- <button id="delete"
-                                                wire:click="entradaEquipoInventario({{ $ep->id }})"
-                                                title="Añadir Equipo al Pedido" class="btn btn-success btn-sm">
-                                                <i class="fas fa-plus-circle"></i>
-                                            </button> --}}
-                                            <button id="view" title="Editar Detalle del Pedido"
-                                                data-target="#exampleModal" data-toggle="modal"
-                                                wire:click="Edit({{ $ep->id }})" wire:loading.attr="disabled"
-                                                title="Ver Atractivos" class="btn btn-warning btn-sm">
-                                                <span class="fa fa-pencil-square-o"></span>
-                                            </button>
-                                            <button id="view" title="Quitar Equipo del Pedido"
-                                                wire:click="deleteConfirm({{ $ep->id }})"
-                                                wire:loading.attr="disabled" title="Ver Atractivos"
-                                                class="btn btn-danger btn-sm">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
-                                        </td>
+                                        <th scope="col">EQUIPO</th>
+                                        <th scope="col">Cantidad Solicitada</th>
+                                        <th scope="col">Cantidad Entrante</th>
+                                        <th scope="col">Precio C/U</th>
+                                        <th scope="col">Acciones</th>
                                     </tr>
-                                @endforeach
+                                </thead>
+                                <tbody>
+                                    @foreach ($equipos_pedidos as $index => $ep)
+                                        <tr>
+                                            <td>{{ $ep->nombre }}-{{ $ep->marca }}</td>
+                                            <td>{{ $ep->cantidad }}</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input type="number" min="1" max="{{ $ep->cantidad }}"
+                                                        autocomplete="off"
+                                                        wire:model.defer="equipos_pedidos.{{ $index }}.cantidad_entrante"
+                                                        wire:key="ep-{{ $ep->id }}" class="form-control"
+                                                        id="cantidad_entrante" placeholder="ej: 3">
+                                                    @error('equipos_pedidos.' . $index . '.ep')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
+                                                </div>
+
+                                            </td>
+                                            <td>{{ $ep->precio_real }}</td>
+                                            <td>
+                                                {{-- <button id="delete"
+                                                    wire:click="entradaEquipoInventario({{ $ep->id }})"
+                                                    title="Añadir Equipo al Pedido" class="btn btn-success btn-sm">
+                                                    <i class="fas fa-plus-circle"></i>
+                                                </button> --}}
+                                                <button id="view" title="Editar Detalle del Pedido"
+                                                    data-target="#exampleModal" data-toggle="modal"
+                                                    wire:click="Edit({{ $ep->id }})"
+                                                    wire:loading.attr="disabled" title="Ver Atractivos"
+                                                    class="btn btn-warning btn-sm">
+                                                    <span class="fa fa-pencil-square-o"></span>
+                                                </button>
+                                                <button id="view" title="Quitar Equipo del Pedido"
+                                                    wire:click="deleteConfirm({{ $ep->id }})"
+                                                    wire:loading.attr="disabled" title="Ver Atractivos"
+                                                    class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
 
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -286,7 +289,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                    <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger"
+                        data-dismiss="modal">
                         Cerrar
                     </button>
                     <button type="button" title="Añadir al Pedido" wire:click="add"

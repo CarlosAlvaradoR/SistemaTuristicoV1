@@ -92,9 +92,12 @@ class ParticipantesEquipos extends Component
                 ->select('e.nombre', 'm.nombre as marca', 'de.cantidad', 'de.observacion', 'de.id', 'de.equipo_id', 'de.cantidad_devuelta')
                 ->get();
         }
-
-
-        $this->entrega_equipos_general = $equipos_asignados->toArray();
+        $this->entrega_equipos_general = [];
+        if (count($equipos_asignados) > 0) {
+            $this->entrega_equipos_general = $equipos_asignados->toArray();
+        }
+        
+        
 
         return view('livewire.viajes-admin.participantes.participantes-equipos',
             compact(
@@ -320,11 +323,11 @@ class ParticipantesEquipos extends Component
                         # code...
                         break;
                 }
-            } else { //SI AÚN NO AY CANTIDAD DEVUELTA EN LA BASE DE DATOSS
+            } else { //SI AÚN NO HAY CANTIDAD DEVUELTA EN LA BASE DE DATOS
                 //Devuevo la cantidad al Stock
                 $equipo->stock = $equipo->stock + $entrega_equipos_general['cantidad_devuelta'];
             }
-
+            
 
             if ($entrega_equipos_general['cantidad_devuelta']) {
                 $detalle_entregas->cantidad_devuelta = $entrega_equipos_general['cantidad_devuelta'];
