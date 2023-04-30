@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\ProveedoresAdmin\Proveedores;
 
+use App\Models\Pedidos\Pedidos;
 use App\Models\Pedidos\Proveedores as PedidosProveedores;
 use Livewire\Component;
 
@@ -36,6 +37,9 @@ class Proveedores extends Component
             'web' => 'required|string|min:3',
         ]);
 
+        $title = 'MUY BIEN !';
+        $icon = 'success';
+        $text = 'Proveedor Registrado con Éxito.';
         if ($this->idProveedor) {
             $proveedor = PedidosProveedores::findOrFail($this->idProveedor);
             $proveedor->ruc = $this->ruc;
@@ -45,6 +49,7 @@ class Proveedores extends Component
             $proveedor->email = $this->email;
             $proveedor->web = $this->web;
             $proveedor->save();
+            $text = 'Proveedor Actualizado con Éxito.';
             $this->emit('close-modal');
         } else {
             $proveedor =  PedidosProveedores::create(
@@ -58,6 +63,8 @@ class Proveedores extends Component
                 ]
             );
         }
+        
+        $this->emit('alert', $title, $icon, $text);
         $this->resetUI();
     }
 
@@ -74,5 +81,36 @@ class Proveedores extends Component
 
         $this->title = 'EDITAR PROVEEDOR';
         $this->emit('show-modal', 'Edicion de Mapas');
+    }
+
+    public function deleteConfirm(PedidosProveedores $proveedor)
+    {
+        $id = $proveedor->slug;
+        $this->dispatchBrowserEvent('swal-confirm-proveedores', [
+            'title' => 'Está seguro que desea eliminar al Proveedor ?',
+            'icon' => 'warning',
+            'id' => $id
+        ]);
+    }
+
+    protected $listeners = ['deleteProveedor'];
+    public function deleteProveedor(PedidosProveedores $proveedores)
+    {
+
+        $title = 'MUY BIEN!';
+        $icon = 'success';
+        $text = 'Proveedor Eliminado Correctamente.';
+
+        $pedidos = Pedidos::where('proveedores_id', $proveedores->id)->get();
+
+        if (count($pedidos) > 0) {
+            $title = 'ERROR !';
+            $icon = 'error';
+            $text = 'No se puede Eliminar al Proveedor, porque ya se le realizaron pedidos.';
+            $this->emit('alert', $title, $icon, $text);
+        } else {
+            $proveedores->delete();
+            $this->emit('alert', $title, $icon, $text);
+        }
     }
 }
