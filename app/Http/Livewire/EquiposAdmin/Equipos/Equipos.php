@@ -4,7 +4,11 @@ namespace App\Http\Livewire\EquiposAdmin\Equipos;
 
 use App\Models\EquipoPaquetes;
 use App\Models\Equipos as ModelsEquipos;
+use App\Models\Inventario\BajaEquipos;
+use App\Models\Inventario\DetalleEntregas;
+use App\Models\Inventario\Mantenimientos;
 use App\Models\Marcas;
+use App\Models\Pedidos\DetallePedidos;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -15,12 +19,14 @@ class Equipos extends Component
     public $title = 'CREAR EQUIPOS/IMPLEMENTOS', $idEquipo, $edicion = false;
     public $title2 = '', $opcion = 0, $cantidad_entrante;
 
-    function resetUI()
+    protected $listeners = ['deleteEquipo'];
+
+    public function resetUI()
     {
         $this->reset([
             'nombre_de_equipo', 'descripcion', 'cantidad', 'precio_referencial', 'tipo', 'marca',
             'title', 'idEquipo', 'edicion',
-            'title2', 'opcion', 'cantidad_entrante'
+            'title2', 'opcion', 'cantidad_entrante', 'search'
         ]);
     }
 
@@ -45,6 +51,17 @@ class Equipos extends Component
 
     public function saveEquipo()
     {
+        $this->validate(
+            [
+                'nombre_de_equipo' => 'required|min:3',
+                'descripcion' => 'required|string|min:5',
+                'cantidad' => 'required|numeric|min:0',
+                'precio_referencial' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+                'tipo' => 'required|in:EQUIPO,IMPLEMENTO',
+                'marca' => 'required|numeric|min:1',
+            ]
+        );
+
         $this->validateEquipos();
         $equipo = ModelsEquipos::create(
             [
@@ -129,12 +146,21 @@ class Equipos extends Component
             //Agregamos al STOCK
             $equipo->stock = $equipo->stock + $this->cantidad_entrante;
             $equipo->save();
-            $msg = 'Se acaba de Añadir la cantidad de '.$this->cantidad_entrante . ' a '. $equipo->nombre;
+            $msg = 'Se acaba de Añadir la cantidad de ' . $this->cantidad_entrante . ' a ' . $equipo->nombre;
         } else {
             //Quitamos al STOCK
-            $equipo->stock = $equipo->stock - $this->cantidad_entrante;
-            $equipo->save();
-            $msg = 'Se acaba de Quitar la cantidad de '.$this->cantidad_entrante . ' a '. $equipo->nombre;
+            $var = ModelsEquipos::diferenciaStock($equipo->stock, $this->cantidad_entrante);
+            if ($var < 0) {
+                $title = 'ALERTA !';
+                $icon = 'warning';
+                $text = 'La cantidad que se le intenta quitar al equipo '.$equipo->nombre. ' excede a lo que se cuenta en el Stock Actualmente';
+                $this->emit('alert', $title, $icon, $text);
+                return;
+            } else {
+                $equipo->stock = $equipo->stock - $this->cantidad_entrante;
+                $equipo->save();
+                $msg = 'Se acaba de Quitar la cantidad de ' . $this->cantidad_entrante . ' a ' . $equipo->nombre;
+            }
         }
 
 
@@ -149,7 +175,46 @@ class Equipos extends Component
         $this->emit('close-modal-equipo-stock', 'Edicion de Atractivos');
     }
 
-    public function closed(){
+    public function deleteConfirm($id)
+    {
+
+        $this->dispatchBrowserEvent('swal-confirmMarca', [
+            'title' => 'Está seguro que desea Eliminar el Equipo ?',
+            'icon' => 'warning',
+            'id' => $id
+        ]);
+    }
+
+    public function deleteEquipo(ModelsEquipos $equipo)
+    {
+        $baja_equipos = BajaEquipos::where('equipo_id', $equipo->id)->get();
+        $mantenimiento_equipos = Mantenimientos::where('equipo_id', $equipo->id)->get();
+        $detalle_de_entregas = DetalleEntregas::where('equipo_id', $equipo->id)->get();
+        $equipo_paquetes = EquipoPaquetes::where('equipo_id', $equipo->id)->get();
+        $detalle_pedidos = DetallePedidos::where('equipo_id', $equipo->id)->get();
+        //dd($var);
+        if (
+            count($baja_equipos) > 0 || count($mantenimiento_equipos) > 0 || count($detalle_de_entregas) > 0 ||
+            count($equipo_paquetes) > 0 || count($detalle_pedidos) > 0
+        ) {
+            $this->dispatchBrowserEvent('swal', [
+                'title' => 'ERROR',
+                'icon' => 'error',
+                'text' => 'No se puede Eliminar el Equipo porque ya se hizo uso de la misma en otros Módulos.'
+            ]);
+        } else {
+            $equipo->delete();
+            $this->dispatchBrowserEvent('swal', [
+                'title' => 'MUY BIEN !',
+                'icon' => 'success',
+                'text' => 'Equipo Eliminado Correctamente'
+            ]);
+        }
+    }
+
+
+    public function closed()
+    {
         $this->resetUI();
         $this->emit('close-modal-equipo', 'Edicion de Atractivos');
         $this->emit('close-modal-equipo-stock', 'Edicion de Atractivos');
