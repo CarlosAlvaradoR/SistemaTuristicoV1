@@ -374,6 +374,7 @@ MIGRACIONES Y MÓDELOS
         *) Tabla Tipo Comprobantes
         php artisan make:migration create_tipo_comprobantes_table --path=/database/migrations/pedidos
         php artisan make:model Pedidos/TipoComprobantes -r
+        php artisan make:seeder Pedidos/TipoComprobantesSeeder
 
         *) Tabla Comprobante Pagos
         php artisan make:migration create_comprobante_pagos_table --path=/database/migrations/pedidos

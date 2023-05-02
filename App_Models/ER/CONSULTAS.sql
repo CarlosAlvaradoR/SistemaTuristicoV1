@@ -863,8 +863,8 @@ DESC choferes;
 
 
 /********************** PEDIDOS PROVEEDORES *********************/
-DESC proveedores;
-
+DESC tipo_comprobantes;
+SELECT * FROM tipo_comprobantes;
 	
 
 SELECT b.nombre_banco, b.direccion, cpb.numero_cuenta, cpb.estado, cpb.id FROM bancos b

@@ -175,7 +175,9 @@ class PaquetesTuristicosController extends Controller
         return view('pedidos_proveedores_admin.bancos');
     }
 
-
+    public function mostrarTiposDeComprobante(){
+        return view('pedidos_proveedores_admin.tiposDeComprobante');
+    }
 
 
 

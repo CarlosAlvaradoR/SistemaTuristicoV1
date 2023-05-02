@@ -179,6 +179,8 @@ PEDIDOS ADMIN
 
        php artisan make:livewire ProveedoresAdmin/Proveedores/Proveedores/CuentasBancarias
 
+       php artisan make:livewire ProveedoresAdmin/TiposDeComprobante
+
        php artisan make:livewire ProveedoresAdmin/Proveedores/Proveedores/DetallesPedido
 
        php artisan make:livewire ProveedoresAdmin/Proveedores/Proveedores/PedidosGenerales

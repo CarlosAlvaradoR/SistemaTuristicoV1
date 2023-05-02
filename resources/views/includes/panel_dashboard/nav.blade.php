@@ -113,6 +113,7 @@
                 <li><a href="{{ route('pedidos.proveedores.general') }}"><span class="lbl">Pedidos
                             Proveedor</span></a></li>
                 <li><a href="{{ route('mostrar.bancos') }}"><span class="lbl">Bancos</span></a></li>
+                <li><a href="{{ route('mostrar.tipos.de.comprobante') }}"><span class="lbl">Tipos de Comprobante</span></a></li>
             </ul>
         </li>
 

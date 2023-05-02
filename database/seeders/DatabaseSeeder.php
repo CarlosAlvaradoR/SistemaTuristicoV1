@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Database\Seeders\Pedidos\BancosSeeder;
 use Database\Seeders\Pedidos\EstadoPedidosSeeder;
+use Database\Seeders\Pedidos\TipoComprobantesSeeder;
 use Database\Seeders\Reservas\CuentaPagosSeeder;
 use Database\Seeders\Reservas\EstadoReservasSeeder;
 use Database\Seeders\Reservas\EventoPostergacionesSeeder;
@@ -39,5 +40,6 @@ class DatabaseSeeder extends Seeder
         /** MÓDULO PEDIDOS */
         $this->call(EstadoPedidosSeeder::class);
         $this->call(BancosSeeder::class);
+        $this->call(TipoComprobantesSeeder::class);
     }
 }
