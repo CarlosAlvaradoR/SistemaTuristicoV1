@@ -220,6 +220,8 @@ EQUIPOS ADMIN
     EQUIPOS
        php artisan make:livewire EquiposAdmin/Equipos/Equipos
        php artisan make:livewire EquiposAdmin/Equipos/EquiposMantenimientoBajas
+       php artisan make:livewire EquiposAdmin/Equipos/EquiposMantenimientoBajas/Mantenimiento
+       php artisan make:livewire EquiposAdmin/Equipos/EquiposMantenimientoBajas/Bajas
 
     MARCAS
        php artisan make:livewire EquiposAdmin/Marcas/Marcas
