@@ -63,9 +63,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($mantenimientos as $m)
+            @foreach ($mantenimientos as $index => $m)
                 <tr>
-                    <th scope="row">1</th>
+                    <th scope="row">{{ $index + 1 }}</th>
                     <td>{{ $m->fecha_salida_mantenimiento }}</td>
                     <td>{{ $m->cantidad }}</td>
                     <td>{{ $m->observacion }}</td>
@@ -94,8 +94,8 @@
 
                     </td>
                     <td>
-                        <button id="delete" title="Añadir Stock" data-target="#modal-stock"
-                            class="btn btn-success btn-sm" wire:click="Edit({{ $m->idMantenimiento }}, 1)">
+                        <button title="Añadir Stock" class="btn btn-success btn-sm"
+                            wire:click="Edit({{ $m->idMantenimiento }}, 1)">
                             <i class="fas fa-plus-circle"></i>
                         </button>
                     </td>
@@ -190,12 +190,15 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger btn-rounded" data-dismiss="modal">Cerrar</button>
 
-                    <button type="button" wire:click="Update" class="btn btn-primary btn-rounded">Actualizar
-                    </button>
-
                     <button type="button" wire:click="saveMantenimientoDevoluciones"
                         class="btn btn-primary btn-rounded">
-                        Guardar</button>
+                        @if ($idMantenimiento)
+                            Actualizar
+                        @else
+                            Guardar
+                        @endif
+
+                    </button>
                 </div>
             </div>
         </div>

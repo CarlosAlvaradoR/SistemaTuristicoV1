@@ -867,6 +867,7 @@ DESC tipo_comprobantes;
 SELECT * FROM tipo_comprobantes;
 	
 
+
 SELECT b.nombre_banco, b.direccion, cpb.numero_cuenta, cpb.estado, cpb.id FROM bancos b
 INNER JOIN cuenta_proveedor_bancos cpb on b.id = cpb.bancos_id
 WHERE cpb.proveedores_id = 1;
@@ -939,7 +940,9 @@ WHERE dp.pedidos_id = 2;
 
 
 
-SELECT * FROM equipos;
+SELECT * FROM devolucion_mantenimientos dm
+WHERE dm.mantenimientos_id = 16
+LIMIT 1;
 
 
 
