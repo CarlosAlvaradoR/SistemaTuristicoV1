@@ -262,9 +262,13 @@ class ViajePaquetesController extends Controller
 
     public function mostrarEquiposEnPrestamo(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
     {
+       
+        $nombre_paquete = $paquete->nombre;
+        $codigo_viaje = $viaje->slug;
+        $title = 'Equipos Entregados en el Viaje de '. $nombre_paquete .' con Código '.$codigo_viaje;
         $participantes = ViajePaquetes::mostrarParticipantesDelViaje($viaje->id);
-        $pdf = Pdf::loadView('viajes_admin.reportes.equiposEnPrestamo', compact('participantes'));
-        return $pdf->stream('Préstamos de Equipos Realizado en el Viaje.pdf');
+        $pdf = Pdf::loadView('viajes_admin.reportes.equiposEnPrestamo', compact('participantes', 'nombre_paquete', 'codigo_viaje','title'));
+        return $pdf->stream($title.'.pdf');
        
         // return view('viajes_admin.reportes.equiposEnPrestamo', compact('participantes'));
     }

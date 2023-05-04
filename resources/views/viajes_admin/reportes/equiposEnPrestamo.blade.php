@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>{{ $title }}</title>
 
     @php
         use App\Models\Inventario\DetalleEntregas;
@@ -19,9 +19,12 @@
 </head>
 
 <body>
+    <h6>PAQUETE: <small>{{ $nombre_paquete }}</small></h6>
+    <h6>CÓDIGO DE VIAJE: <small>{{ $codigo_viaje }}</small></h6>
+
 
     @foreach ($participantes as $p)
-        <h6>{{ $p->datos }}</h6>
+        <h6>{{ $p->datos }} :</h6>
         @php
             $entrega_equipos = EntregaEquipos::where('participantes_id', $p->id)
                 ->limit(1)
@@ -46,7 +49,7 @@
                     @foreach ($equipos_asignados as $index => $ea)
                         <tr>
                             <td>
-                                {{$index + 1}}
+                                {{ $index + 1 }}
                             </td>
                             <td>
                                 <small>{{ $ea->nombre }} - {{ $ea->marca }}</small>
