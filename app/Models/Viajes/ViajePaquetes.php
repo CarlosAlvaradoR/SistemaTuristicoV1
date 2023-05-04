@@ -44,6 +44,7 @@ class ViajePaquetes extends Model
         return $participantes;
     }
 
+
     public static function mostrarItinerariosCumplidos($idPaquete, $idViaje)
     {
         $itinerarios = DB::select("SELECT ai.nombre_actividad,ip.id,ip.descripcion, ip.actividad_id,

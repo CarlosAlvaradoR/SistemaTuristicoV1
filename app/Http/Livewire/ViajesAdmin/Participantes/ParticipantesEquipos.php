@@ -7,7 +7,6 @@ use App\Models\Inventario\DetalleEntregas;
 use App\Models\Inventario\EntregaEquipos;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-use Illuminate\Support\Str;
 
 class ParticipantesEquipos extends Component
 {
@@ -84,13 +83,7 @@ class ParticipantesEquipos extends Component
             // INNER JOIN marcas m on m.id = e.marca_id
             // WHERE de.entrega_equipos_id = ' . $this->idEntregaEquipo . '');
 
-            $equipos_asignados = DB::table('entrega_equipos as ee')
-                ->join('detalle_entregas as de', 'de.entrega_equipos_id', '=', 'ee.id')
-                ->join('equipos as e', 'e.id', '=', 'de.equipo_id')
-                ->join('marcas as m', 'm.id', '=', 'e.marca_id')
-                ->where('de.entrega_equipos_id', $this->idEntregaEquipo)
-                ->select('e.nombre', 'm.nombre as marca', 'de.cantidad', 'de.observacion', 'de.id', 'de.equipo_id', 'de.cantidad_devuelta')
-                ->get();
+            $equipos_asignados = EntregaEquipos::consultarEquiposEntregadosParticipante($this->idEntregaEquipo);
         }
         $this->entrega_equipos_general = [];
         if (count($equipos_asignados) > 0) {

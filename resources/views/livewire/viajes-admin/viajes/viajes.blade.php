@@ -161,7 +161,10 @@
                                                     href="{{ route('mostrar.boletasDePago', [$paquete, $v->slug]) }}"
                                                     target="_blank"><i class="fas fa-file-pdf"></i> Gastos de la
                                                     Empresa</a>
-
+                                                <a class="dropdown-item" target="_blank"
+                                                    href="{{ route('mostrar.equipos.en prestamo', [$paquete, $v->slug]) }}"
+                                                    target="_blank"><i class="fas fa-file-pdf"></i> Reporte de Equipos
+                                                    en Préstamo</a>
 
                                             </div>
                                         </div>
@@ -172,7 +175,7 @@
                                             class="tabledit-edit-button btn btn-sm btn-warning" style="float: none;">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </button>
-                                        
+
                                         <button type="button" wire:click="deleteConfirm('{{ $v->slug }}')"
                                             wire:loading.attr="disabled"
                                             class="tabledit-delete-button btn btn-sm btn-danger" style="float: none;">

@@ -219,11 +219,11 @@ class ViajePaquetesController extends Controller
             // $pdf = Pdf::loadView('viajes_admin.reportes.viajesActuales', compact('viajes'));
             // //return $pdf->download('invoice.pdf');
             // return $pdf->stream('Reporte de Viajes Actuales.pdf');
-        }else {
+        } else {
             $viajes = ViajePaquetes::where('estado', 2)->get();
         }
 
-        
+
         $pdf = Pdf::loadView('viajes_admin.reportes.viajesActuales', compact('viajes', 'fecha_inicial', 'fecha_final', 'title_descarga'));
         //return $pdf->download('invoice.pdf');
         return $pdf->stream($title_descarga . '.pdf');
@@ -258,5 +258,14 @@ class ViajePaquetesController extends Controller
         $pdf = Pdf::loadView('viajes_admin.reportes.gastosIncurridosPorEmpresa', compact('pagos', 'paquete', 'viaje'));
         return $pdf->stream('Gastos Incurridos por la Empresa.pdf');
         // return view('viajes_admin.reportes.gastosIncurridosPorEmpresa', compact('pagos'));
+    }
+
+    public function mostrarEquiposEnPrestamo(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
+    {
+        $participantes = ViajePaquetes::mostrarParticipantesDelViaje($viaje->id);
+        $pdf = Pdf::loadView('viajes_admin.reportes.equiposEnPrestamo', compact('participantes'));
+        return $pdf->stream('Préstamos de Equipos Realizado en el Viaje.pdf');
+       
+        // return view('viajes_admin.reportes.equiposEnPrestamo', compact('participantes'));
     }
 }
