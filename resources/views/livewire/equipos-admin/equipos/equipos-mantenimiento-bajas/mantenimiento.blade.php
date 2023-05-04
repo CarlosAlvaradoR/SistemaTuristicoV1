@@ -119,89 +119,97 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="fecha_salida_mantenimiento">Fecha de Salida</label>
-                                <input type="date" wire:model.defer="fecha_salida_mantenimiento"
-                                    class="form-control maxlength-simple" id="fecha_salida_mantenimiento"
-                                    placeholder="Nombre de Equipo">
-                                @error('fecha_salida_mantenimiento')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-4">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="cantidad">Cantidad de Salida</label>
-                                <input type="number" wire:model.defer="cantidad"
-                                    class="form-control maxlength-custom-message" id="cantidad" placeholder="ej: 5"
-                                    maxlength="20">
-                                @error('cantidad')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-4">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="observacion">Observación</label>
-                                <textarea class="form-control" wire:model.defer="observacion" id="observacion" rows="3"></textarea>
-                                @error('observacion')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-4">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="fecha_entrada_equipo">Fecha de Entrada</label>
-                                <input type="date" wire:model.defer="fecha_entrada_equipo"
-                                    class="form-control maxlength-always-show" id="fecha_entrada_equipo"
-                                    placeholder="ej: 67.00" maxlength="10">
-                                @error('fecha_entrada_equipo')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-4">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="cantidad_equipos_arreglados_buen_estado">Cantidad en
-                                    buen estado</label>
-                                <input type="number" wire:model.defer="cantidad_equipos_arreglados_buen_estado"
-                                    class="form-control maxlength-custom-message"
-                                    id="cantidad_equipos_arreglados_buen_estado" placeholder="ej: 5"
-                                    autocomplete="off">
-                                @error('cantidad_equipos_arreglados_buen_estado')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-4">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="observacion_de_entrada">Observación de Entradas</label>
-                                <textarea class="form-control" wire:model.defer="observacion_de_entrada" id="observacion_de_entrada" rows="3"></textarea>
-                                @error('observacion_de_entrada')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
+                <form wire:submit.prevent="saveMantenimientoDevoluciones">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="fecha_salida_mantenimiento">Fecha de Salida</label>
+                                    <input type="date" wire:model.defer="fecha_salida_mantenimiento"
+                                        class="form-control maxlength-simple" id="fecha_salida_mantenimiento"
+                                        placeholder="Nombre de Equipo">
+                                    @error('fecha_salida_mantenimiento')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="cantidad">Cantidad de Salida</label>
+                                    <input type="number" wire:model.defer="cantidad"
+                                        class="form-control maxlength-custom-message" id="cantidad" placeholder="ej: 5"
+                                        maxlength="20">
+                                    @error('cantidad')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="observacion">Observación</label>
+                                    <textarea class="form-control" wire:model.defer="observacion" id="observacion" rows="3"></textarea>
+                                    @error('observacion')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="fecha_entrada_equipo">Fecha de Entrada</label>
+                                    <input type="date" wire:model.defer="fecha_entrada_equipo"
+                                        class="form-control maxlength-always-show" id="fecha_entrada_equipo"
+                                        placeholder="ej: 67.00" maxlength="10">
+                                    @error('fecha_entrada_equipo')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="cantidad_equipos_arreglados_buen_estado">Cantidad
+                                        en
+                                        buen estado</label>
+                                    <input type="number" wire:model.defer="cantidad_equipos_arreglados_buen_estado"
+                                        class="form-control maxlength-custom-message"
+                                        id="cantidad_equipos_arreglados_buen_estado" placeholder="ej: 5"
+                                        autocomplete="off">
+                                    @error('cantidad_equipos_arreglados_buen_estado')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="observacion_de_entrada">Observación de
+                                        Entradas</label>
+                                    <textarea class="form-control" wire:model.defer="observacion_de_entrada" id="observacion_de_entrada" rows="3"></textarea>
+                                    @error('observacion_de_entrada')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </fieldset>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger btn-rounded" data-dismiss="modal">Cerrar</button>
+                    <div class="modal-footer">
+                        <button type="button" wire:click.prevent="resetUI()" class="btn btn-danger btn-rounded"
+                            data-dismiss="modal">Cerrar</button>
 
-                    <button type="button" wire:click="saveMantenimientoDevoluciones"
-                        class="btn btn-primary btn-rounded">
-                        @if ($idMantenimiento)
-                            Actualizar
-                        @else
-                            Guardar
-                        @endif
+                        <button type="submit"
+                            class="btn btn-primary btn-rounded">
+                            @if ($idMantenimiento)
+                                Actualizar
+                            @else
+                                Guardar
+                            @endif
 
-                    </button>
-                </div>
+                        </button>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
+
+    @livewire('administrate-commons.alerts')
 
 </div>

@@ -63,7 +63,12 @@
                     <td>{{ $b->fecha_baja }}</td>
                     <td>{{ $b->motivo_baja }}</td>
                     <td>{{ $b->cantidad }}</td>
-                    <td>@mdo</td>
+                    <td>
+                        <button title="Añadir Stock" class="btn btn-success btn-sm"
+                            wire:click="Edit({{ $b->id }})">
+                            <i class="fas fa-plus-circle"></i>
+                        </button>
+                    </td>
                 </tr>
             @endforeach
 
@@ -75,53 +80,68 @@
     <!-- Modal BAJA DE EQUIPOS-->
     <div wire:ignore.self class="modal fade" id="modal-bajas" data-backdrop="static" data-keyboard="false"
         tabindex="-1" aria-labelledby="modal-bajasLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal-bajasLabel">Bajas</h5>
+                    <h5 class="modal-title" id="modal-bajasLabel">{{ $title }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="fecha_baja">Fecha de Baja</label>
-                                <input type="date" wire:model.defer="fecha_baja"
-                                    class="form-control maxlength-simple" id="fecha_baja"
-                                    placeholder="Nombre de Equipo">
-                                @error('fecha_baja')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-6">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="cantidad_de_baja">Cantidad dada de Baja</label>
-                                <input type="number" wire:model.defer="cantidad_de_baja" class="form-control"
-                                    id="cantidad_de_baja" placeholder="ej: 5">
-                                @error('cantidad_de_baja')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-12">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="motivo_baja">Motivo de Baja</label>
-                                <textarea class="form-control" wire:model.defer="motivo_baja" id="motivo_baja" rows="3"></textarea>
-                                @error('motivo_baja')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
+                <form wire:submit.prevent="saveBaja">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="fecha_baja">Fecha de Baja</label>
+                                    <input type="date" wire:model.defer="fecha_baja"
+                                        class="form-control maxlength-simple" id="fecha_baja"
+                                        placeholder="Nombre de Equipo">
+                                    @error('fecha_baja')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-6">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="cantidad_de_baja">Cantidad dada de Baja</label>
+                                    <input type="number" wire:model.defer="cantidad_de_baja" class="form-control"
+                                        id="cantidad_de_baja" placeholder="ej: 5">
+                                    @error('cantidad_de_baja')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-12">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="motivo_baja">Motivo de Baja</label>
+                                    <textarea class="form-control" wire:model.defer="motivo_baja" id="motivo_baja" rows="3"></textarea>
+                                    @error('motivo_baja')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </fieldset>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger btn-rounded" data-dismiss="modal">Cerrar</button>
-                    <button type="button" wire:click="saveBaja" class="btn btn-primary btn-rounded">Guardar</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" wire:click.prevent="resetUI()" class="btn btn-danger btn-rounded"
+                            data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary btn-rounded">
+                            @if ($idBajaEquipo)
+                                Actualizar
+                            @else
+                                Guardar
+                            @endif
+                        </button>
+                    </div>
+                </form>
+
+
+
             </div>
         </div>
     </div>
+
+
+
 </div>

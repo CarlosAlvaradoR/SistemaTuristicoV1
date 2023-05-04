@@ -80,14 +80,11 @@
             window.livewire.on('close-modal-equipo', msg => {
                 $('#modal-equipo').modal('hide')
             });
-            window.livewire.on('show-modal-equipo-stock', msg => {
-                $('#modal-stock').modal('show')
+            window.livewire.on('show-modal-bajas', msg => {
+                $('#modal-bajas').modal('show')
             });
-            window.livewire.on('close-modal-equipo-stock', msg => {
-                $('#modal-stock').modal('hide')
-            });
-            window.livewire.on('category-updated', msg => {
-                $('#theModal').modal('hide')
+            window.livewire.on('close-modal-bajas', msg => {
+                $('#modal-bajas').modal('hide')
             });
         });
     </script>

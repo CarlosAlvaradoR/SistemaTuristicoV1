@@ -10,39 +10,48 @@ use Livewire\Component;
 class Bajas extends Component
 {
     public $equipo;
-    public $opcion = 0;
-    public $fecha_inicial, $fecha_final;
-    public $fecha_salida_mantenimiento, $cantidad, $observacion;
-    public $fecha_entrada_equipo, $cantidad_equipos_arreglados_buen_estado, $observacion_de_entrada;
-    public $title = 'AÑADIR EQUIPO EN MANTENIMIENTO';
+
+    public $title = 'AÑADIR BAJA DE EQUIPO';
 
     /** ATRIBUTOS DE BAJA DE EQUIPOS */
-    public $fecha_baja, $motivo_baja, $cantidad_de_baja;
-    
-    public function mount($equipo){
+    public $idBajaEquipo, $fecha_baja, $motivo_baja, $cantidad_de_baja;
+
+    public function resetUI(){
+        $this->reset(['idBajaEquipo', 'fecha_baja', 'motivo_baja', 'cantidad_de_baja']);
+    }
+    public function mount($equipo)
+    {
         $this->equipo = $equipo;
     }
 
     public function render()
     {
         $bajas = DB::table('baja_equipos')
-        ->where('equipo_id', $this->equipo->id)
-        ->select('id', 
-        DB::raw('date_format(fecha_baja, "%d-%m-%Y") as fecha_baja' 
-            ), 'motivo_baja', 'cantidad', 'equipo_id')
-        ->paginate(20, ['*'], 'bajesPage');
-        
+            ->where('equipo_id', $this->equipo->id)
+            ->select(
+                'id',
+                DB::raw(
+                    'date_format(fecha_baja, "%d-%m-%Y") as fecha_baja'
+                ),
+                'motivo_baja',
+                'cantidad',
+                'equipo_id'
+            )
+            ->paginate(20, ['*'], 'bajesPage');
+
         return view('livewire.equipos-admin.equipos.equipos-mantenimiento-bajas.bajas', compact('bajas'));
     }
 
-    public function saveBaja(){
+    public function saveBaja()
+    {
         $this->validate(
             [
-               'fecha_baja' => 'required', 
-               'motivo_baja' => 'required', 
-               'cantidad_de_baja' => 'required|numeric|min:1',  
+                'fecha_baja' => 'required',
+                'motivo_baja' => 'required',
+                'cantidad_de_baja' => 'required|numeric|min:1',
             ]
         );
+
         $equipo = Equipos::findOrFail($this->equipo->id);
         if (($equipo->stock - $this->cantidad_de_baja) <= 0) {
             $this->dispatchBrowserEvent('swal', [
@@ -55,23 +64,54 @@ class Bajas extends Component
             return;
         }
 
-        $baja = BajaEquipos::create(
-            [
-                'fecha_baja' => $this->fecha_baja, 
-                'motivo_baja' => $this->motivo_baja, 
-                'cantidad' => $this->cantidad_de_baja, 
-                'equipo_id' => $this->equipo->id
-            ]
-        );
+        $title = 'MUY BIEN !';
+        $icon = 'success';
+        $text = '';
+        if ($this->idBajaEquipo) {
+            $baja = BajaEquipos::findOrFail($this->idBajaEquipo);
+            $cantidad_llenada = $baja->cantidad;
+            $baja->fecha_baja = $this->fecha_baja;
+            $baja->motivo_baja = $this->motivo_baja;
+            $equipo->stock = $equipo->stock;
+            if ($this->cantidad_de_baja > $cantidad_llenada) {
+                $equipo->stock = $equipo->stock - ($this->cantidad_de_baja - $cantidad_llenada);
+            }
+            if ($this->cantidad_de_baja < $cantidad_llenada) {
+                $equipo->stock = $equipo->stock + ($cantidad_llenada - $this->cantidad_de_baja);
+            }
+            $baja->cantidad = $this->cantidad_de_baja;
+            $baja->save();
 
+
+            $this->emit('close-modal-bajas');
+            $text = 'Baja de Equipos Actuaizada Correctamente.';
+        } else {
+            $baja = BajaEquipos::create(
+                [
+                    'fecha_baja' => $this->fecha_baja,
+                    'motivo_baja' => $this->motivo_baja,
+                    'cantidad' => $this->cantidad_de_baja,
+                    'equipo_id' => $this->equipo->id
+                ]
+            );
+            $equipo->stock = $equipo->stock - $this->cantidad_de_baja;
+            $text = 'Se dió de baja la cantidad de: '.$this->cantidad_de_baja. ' a '.$equipo->nombre ;
+        }
         
-        $equipo->stock = $equipo->stock - $this->cantidad_de_baja;
         $equipo->save();
 
-        $this->dispatchBrowserEvent('swal', [
-            'title' => 'MUY BIEN !',
-            'icon' => 'success',
-            'text' => 'Se dió de baja la cantidad de: '.$this->cantidad_de_baja. ' a '.$equipo->nombre
-        ]);
+        $this->emit('alert', $title, $icon, $text);
+
+        $this->resetUI();
+    }
+
+    public function Edit(BajaEquipos $baja)
+    {
+        $this->idBajaEquipo = $baja->id;
+        $this->fecha_baja = $baja->fecha_baja;
+        $this->motivo_baja = $baja->motivo_baja;
+        $this->cantidad_de_baja = $baja->cantidad;
+
+        $this->emit('show-modal-bajas');
     }
 }

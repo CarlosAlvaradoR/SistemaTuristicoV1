@@ -63,6 +63,7 @@ class Mantenimiento extends Component
             ]
         );
         $msg = 'BUENÍSIMAS';
+
         if (
             $this->fecha_entrada_equipo ||
             $this->cantidad_equipos_arreglados_buen_estado ||
@@ -76,6 +77,12 @@ class Mantenimiento extends Component
                     'observacion_de_entrada' => 'nullable|string|min:5',
                 ]
             );
+            
+            if ($this->cantidad_equipos_arreglados_buen_estado > $this->cantidad) {
+                $this->emit('alert', 'ALERTA !', 'warning', 'La Cantidad Entrante de Equipos no puede ser mayor 
+                a la Cantidad que se dió en la Salida de Equipos.');
+                return;
+            }
 
             if ($this->idMantenimiento || $this->idDevolucionMantenimientos) {
                 if ($this->idMantenimiento && $this->idDevolucionMantenimientos) {
