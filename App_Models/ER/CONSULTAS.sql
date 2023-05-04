@@ -967,7 +967,7 @@ LIMIT 1;
 /**------------------------------------------------ EQUIPOS --------------------------------------------------------------*/
 -- SACAR EQUIPOS CON SU MARCA 
 SELECT e.id, e.nombre, e.descripcion, e.stock,e.precio_referencial, e.tipo, m.nombre as marca FROM equipos e
-INner join marcas m on m.id = e.marca_id;
+INNER JOIN marcas m on m.id = e.marca_id;
 
 
 SELECT * FROM equipos;

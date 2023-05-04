@@ -5,7 +5,7 @@
                 <div class="card-block">
                     <h5 class="card-title">Lista de Todas los Equipos</h5>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-9">
                             <br>
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
@@ -13,44 +13,13 @@
                                     placeholder="Buscar Equipo">
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">
-                                            Fecha Inicial
-                                        </label>
-                                        <input type="date" class="form-control" id="exampleInputEmail1" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">
-                                            Fecha Inicial
-                                        </label>
-                                        <input type="date" class="form-control" id="exampleInputEmail1" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div class="col-md-1">
                             <br>
-                            <a id="modal-918849" title="Imprimir" href="#modal-container-918849" role="button"
-                                class="btn btn-rounded btn-sm" data-toggle="modal"><i
-                                    class="fas fa-file-invoice"></i></a>
+                            <a href="{{ route('reporte.de.equipos.en.inventario') }}" target="_blank" title="Imprimir"
+                                class="btn btn-rounded"><i class="fas fa-file-invoice"></i> Ver </a>
                         </div>
-                        <div class="col-md-1">
-                            <br>
-                            <a id="modal-918849" title="Ver Reporte Equipos en Mantenimiento"
-                                href="#modal-container-918849" role="button" class="btn btn-rounded btn-sm"
-                                data-toggle="modal"><i class="fas fa-file-invoice"></i></a>
-                        </div>
-                        <div class="col-md-1">
-                            <br>
-                            <a id="modal-918849" title="Ver Reporte de equipos dados de baja"
-                                href="#modal-container-918849" role="button" class="btn btn-rounded btn-sm"
-                                data-toggle="modal"><i class="fas fa-file-invoice"></i></a>
-                        </div>
+                        
                         <div class="col-md-2">
                             <br>
                             <button type="button" class="btn btn-rounded btn-primary" data-toggle="modal"
@@ -84,9 +53,8 @@
                                     <td>{{ $e->tipo }}</td>
                                     <td>{{ $e->marca }}</td>
                                     <td>
-                                        <button title="Editar Equipo"
-                                            wire:click="Edit({{ $e->id }})" wire:loading.attr="disabled"
-                                            class="btn btn-warning btn-sm">
+                                        <button title="Editar Equipo" wire:click="Edit({{ $e->id }})"
+                                            wire:loading.attr="disabled" class="btn btn-warning btn-sm">
                                             <span class="fa fa-pencil-square-o"></span>
                                         </button>
                                         <button wire:click="deleteConfirm({{ $e->id }})"
@@ -94,20 +62,18 @@
                                             class="btn btn-danger btn-sm">
                                             <span class="fa fa-trash"></span>
                                         </button>
-                                        <button title="Añadir Stock"
-                                            class="btn btn-success btn-sm"
+                                        <button title="Añadir Stock" class="btn btn-success btn-sm"
                                             wire:click="addRemoveStock({{ $e->id }}, 1)"
                                             wire:loading.attr="disabled">
                                             <i class="fas fa-plus-circle"></i>
                                         </button>
-                                        <button title="Remover Stock"
-                                            class="btn btn-danger btn-sm"
+                                        <button title="Remover Stock" class="btn btn-danger btn-sm"
                                             wire:click="addRemoveStock({{ $e->id }}, 2)"
                                             wire:loading.attr="disabled">
                                             <i class="fas fa-minus"></i>
                                         </button>
                                         <a href="{{ route('equipos.index.bajas.mantenimientos', $e->id) }}"
-                                             title="Dar de baja" class="btn btn-primary btn-sm">
+                                            title="Dar de baja" class="btn btn-primary btn-sm">
                                             <i class="fas fa-cogs"></i>
                                         </a>
                                     </td>
@@ -266,7 +232,7 @@
             </div>
         </div>
     </div>
-    
+
     @livewire('administrate-commons.alerts')
 
     <script>

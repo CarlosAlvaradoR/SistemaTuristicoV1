@@ -9,6 +9,7 @@ use App\Models\Pedidos\Proveedores;
 use App\Models\TipoPaquetes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PaquetesTuristicosController extends Controller
 {
@@ -148,17 +149,21 @@ class PaquetesTuristicosController extends Controller
 
     public function VerPedidosGenerales()
     {
-        
+
         return view('pedidos_proveedores_admin.pedidos_proveedor');
     }
 
-    public function VerPedidosGeneralesDetalle(Proveedores $proveedor, Pedidos $pedido){
+    public function VerPedidosGeneralesDetalle(Proveedores $proveedor, Pedidos $pedido)
+    {
         return view('pedidos_proveedores_admin.pedido_proveedor_detalle', compact('proveedor', 'pedido'));
     }
 
-    public function VerPedidosGeneralesDetalleComponentes(Pedidos $pedido){
-        return view('pedidos_proveedores_admin.pedidos_proveedor_pagos_deudas_entradas', 
-        compact('pedido'));
+    public function VerPedidosGeneralesDetalleComponentes(Pedidos $pedido)
+    {
+        return view(
+            'pedidos_proveedores_admin.pedidos_proveedor_pagos_deudas_entradas',
+            compact('pedido')
+        );
     }
 
     public function RealizarPedido(Proveedores $proveedor)
@@ -171,11 +176,13 @@ class PaquetesTuristicosController extends Controller
         //return view('pedidos_proveedores_admin.pedidos_proveedor');
     }
 
-    public function mostrarBancos(){
+    public function mostrarBancos()
+    {
         return view('pedidos_proveedores_admin.bancos');
     }
 
-    public function mostrarTiposDeComprobante(){
+    public function mostrarTiposDeComprobante()
+    {
         return view('pedidos_proveedores_admin.tiposDeComprobante');
     }
 
@@ -193,7 +200,24 @@ class PaquetesTuristicosController extends Controller
         return view('equipos_admin.marcas_index');
     }
 
-    public function VerMantenimientoBajas(Equipos $equipo){
+    public function VerMantenimientoBajas(Equipos $equipo)
+    {
         return view('equipos_admin.detalle_equipos', compact('equipo'));
+    }
+
+    /** REPORTES */
+
+    public function VerReporteDeEquiposEnStock()
+    {
+        
+        $title = 'Lista de Equipos con los que se cuenta Actualmente';
+        $equipos = DB::select('SELECT e.id, e.nombre, e.descripcion, e.stock,e.precio_referencial, e.tipo, m.nombre as marca FROM equipos e
+       INNER JOIN marcas m on m.id = e.marca_id');
+        
+        
+        $pdf = Pdf::loadView('equipos_admin.reportes.reporteDeEquiposGeneral', compact('equipos','title'));
+        return $pdf->stream($title.'.pdf');
+
+        // return view('equipos_admin.reportes.reporteDeEquiposGeneral', compact('equipos'));
     }
 }
