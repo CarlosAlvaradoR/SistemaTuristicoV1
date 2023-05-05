@@ -1,44 +1,39 @@
 <div>
-    <div class="col-md-4">
-        <br>
-        <small class="form-label semibold">F. Baja</small>
-    </div>
-    <div class="col-md-3">
+    <div class="col-md-6">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">
                         Fecha Inicial
                     </label>
-                    <input type="date" class="form-control" id="exampleInputEmail1" />
+                    <input type="date" wire:model="fecha_inicial" class="form-control" />
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">
-                        Fecha Inicial
+                        Fecha Final
                     </label>
-                    <input type="date" class="form-control" id="exampleInputEmail1" />
+                    <input type="date" wire:model="fecha_final" class="form-control" />
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-1">
+    <div class="col-md-3">
         <br>
-        <a id="modal-918849" title="Imprimir" href="#modal-container-918849" role="button"
-            class="btn btn-rounded btn-sm" data-toggle="modal"><i class="fas fa-file-invoice"></i></a>
+        @if ($fecha_inicial && $fecha_final)
+            <a target="_blank"
+                href="{{ route('reporte.de.baja.de.equipos', [$equipo->id, $fecha_inicial, $fecha_final]) }}"
+                title="Imprimir" class="btn btn-primary btn-rounded"><i class="fas fa-file-invoice"></i> Ver Reporte
+                por Rangos</a>
+        @else
+            <a target="_blank" href="{{ route('reporte.de.baja.de.equipos', [$equipo->id]) }}" title="Imprimir"
+                class="btn btn-primary btn-rounded"><i class="fas fa-file-invoice"></i> Ver Reporte
+                General</a>
+        @endif
+
     </div>
-    <div class="col-md-1">
-        <br>
-        <a id="modal-918849" title="Ver Reporte Equipos en Mantenimiento" href="#modal-container-918849" role="button"
-            class="btn btn-rounded btn-sm" data-toggle="modal"><i class="fas fa-file-invoice"></i></a>
-    </div>
-    <div class="col-md-1">
-        <br>
-        <a id="modal-918849" title="Ver Reporte de equipos dados de baja" href="#modal-container-918849" role="button"
-            class="btn btn-rounded btn-sm" data-toggle="modal"><i class="fas fa-file-invoice"></i></a>
-    </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
         <br>
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary btn-rounded" data-toggle="modal" data-target="#modal-bajas">
@@ -57,9 +52,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($bajas as $b)
+            @foreach ($bajas as $index => $b)
                 <tr>
-                    <th scope="row">1</th>
+                    <th scope="row">{{ $index + 1 }}</th>
                     <td>{{ $b->fecha_baja }}</td>
                     <td>{{ $b->motivo_baja }}</td>
                     <td>{{ $b->cantidad }}</td>

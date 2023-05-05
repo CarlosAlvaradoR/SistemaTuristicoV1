@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipos;
+use App\Models\Inventario\BajaEquipos;
 use App\Models\Inventario\Mantenimientos;
 use App\Models\PaquetesTuristicos;
 use App\Models\Pedidos\Pedidos;
@@ -236,5 +237,21 @@ class PaquetesTuristicosController extends Controller
         return $pdf->stream($title.'.pdf');
 
         // return view('equipos_admin.reportes.reporteDeMantenimientos', compact('equipos'));
+    }
+
+    public function VerReporteDeBajaDeEquipos($idEquipo, $fechaInicial = false, $fechaFinal = false){
+        $bajas = BajaEquipos::mostrarBajaDeEquipos($idEquipo, 2, $fechaInicial, $fechaFinal);
+        $title = 'Información General de la Baja de Equipos';
+        
+        if ($fechaInicial & $fechaFinal) {
+            $title = 'Baja de Equipos En el Rango de Fechas: '.
+            date('d/m/Y', strtotime($fechaInicial)).' - '. date('d/m/Y', strtotime($fechaFinal));
+        }//{{ date('d-m-Y', strtotime($i->fecha_cumplimiento)) }}
+        
+        
+        $pdf = Pdf::loadView('equipos_admin.reportes.reporteDeBajas', compact('bajas','title'));
+        return $pdf->stream($title.'.pdf');
+
+        // return view('equipos_admin.reportes.reporteDeBajas', compact('equipos'));
     }
 }

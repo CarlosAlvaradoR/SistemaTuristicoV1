@@ -22,7 +22,10 @@ class Bajas extends Component
     /** ATRIBUTOS DE BAJA DE EQUIPOS */
     public $idBajaEquipo, $fecha_baja, $motivo_baja, $cantidad_de_baja;
 
-    public function resetUI(){
+    public $fecha_inicial, $fecha_final;
+
+    public function resetUI()
+    {
         $this->reset(['idBajaEquipo', 'fecha_baja', 'motivo_baja', 'cantidad_de_baja']);
     }
     public function mount($equipo)
@@ -32,18 +35,8 @@ class Bajas extends Component
 
     public function render()
     {
-        $bajas = DB::table('baja_equipos')
-            ->where('equipo_id', $this->equipo->id)
-            ->select(
-                'id',
-                DB::raw(
-                    'date_format(fecha_baja, "%d-%m-%Y") as fecha_baja'
-                ),
-                'motivo_baja',
-                'cantidad',
-                'equipo_id'
-            )
-            ->paginate(20, ['*'], 'bajesPage');
+        $bajas = BajaEquipos::mostrarBajaDeEquipos($this->equipo->id, 1, $this->fecha_inicial, $this->fecha_final);
+        
 
         return view('livewire.equipos-admin.equipos.equipos-mantenimiento-bajas.bajas', compact('bajas'));
     }
@@ -101,9 +94,9 @@ class Bajas extends Component
                 ]
             );
             $equipo->stock = $equipo->stock - $this->cantidad_de_baja;
-            $text = 'Se dió de baja la cantidad de: '.$this->cantidad_de_baja. ' a '.$equipo->nombre ;
+            $text = 'Se dió de baja la cantidad de: ' . $this->cantidad_de_baja . ' a ' . $equipo->nombre;
         }
-        
+
         $equipo->save();
 
         $this->emit('alert', $title, $icon, $text);

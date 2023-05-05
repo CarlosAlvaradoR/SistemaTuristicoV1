@@ -12,3 +12,4 @@ Route::get('/equipos/ver-equipos/{equipo}/mantenimiento-bajas', [App\Http\Contro
 /** REPORTES */
 Route::get('/equipos/reporte-de-equipos', [App\Http\Controllers\PaquetesTuristicosController::class, 'VerReporteDeEquiposEnStock'])->name('reporte.de.equipos.en.inventario')->middleware(['auth', 'verified']);
 Route::get('/equipos/reporte-mantenimiento-de-equipos/{idEquipo}/{fechaSalida?}/{fechaEntrada?}', [App\Http\Controllers\PaquetesTuristicosController::class, 'VerReporteDeMantenimientoDeEquipos'])->name('reporte.de.mantenimiento.de.equipos')->middleware(['auth', 'verified']);
+Route::get('/equipos/reporte-de-baja-de-equipos/{idEquipo}/{fechaInicial?}/{fechaFinal?}', [App\Http\Controllers\PaquetesTuristicosController::class, 'VerReporteDeBajaDeEquipos'])->name('reporte.de.baja.de.equipos')->middleware(['auth', 'verified']);
