@@ -1,53 +1,54 @@
 <div>
-    <div class="col-md-1">
-        <br>
-        <small class="form-label semibold">F. Salida</small>
-    </div>
-    <div class="col-md-5">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="fecha_inicial">
-                        Fecha Inicial
-                    </label>
-                    <input type="date" wire:model="fecha_inicial" class="form-control" id="fecha_inicial" />
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="fecha_final">
-                        Fecha Final
-                    </label>
-                    <input type="date" wire:model="fecha_final" class="form-control" id="fecha_final" />
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <br>
-        <a id="modal-918849" title="Imprimir" href="#modal-container-918849" role="button"
-            class="btn btn-rounded btn-sm" data-toggle="modal"><i class="fas fa-file-invoice"></i></a>
-    </div>
-    <div class="col-md-2">
-        <br>
-        <a id="modal-918849" title="Ver Reporte Equipos en Mantenimiento" href="#modal-container-918849" role="button"
-            class="btn btn-rounded btn-sm" data-toggle="modal"><i class="fas fa-file-invoice"></i></a>
-    </div>
-    <div class="col-md-3">
-        <br>
-        <button type="button" class="btn btn-rounded btn-primary" data-toggle="modal"
-            data-target="#modal-mantenimiento-bajas">
-            Añadir Mantenimiento
-        </button>
-    </div>
+
     <div class="row">
-        <div style="float: none">
-            <div wire:loading class="loader"></div>
-            <div wire:loading class="alert alert-primary" role="alert">
-                <a href="#!" class="alert-link">Cargando ...</a>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="fecha_inicial">
+                            Fecha de Salida
+                        </label>
+                        <input type="date" wire:model="fecha_de_salida" class="form-control" id="fecha_inicial" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="fecha_final">
+                            Fecha de Entrada
+                        </label>
+                        <input type="date" wire:model="fecha_de_entrada" class="form-control" id="fecha_final" />
+                    </div>
+                </div>
             </div>
         </div>
 
+        <div class="col-md-3">
+            <br>
+            @if ($fecha_de_salida && $fecha_de_entrada)
+                <a target="_blank"
+                    href="{{ route('reporte.de.mantenimiento.de.equipos', [$equipo->id, $fecha_de_salida, $fecha_de_entrada]) }}"
+                    title="Imprimir por Rangos" class="btn btn-primary btn-rounded"><i class="fas fa-file-invoice"></i>
+                    Ver Reporte por Rango</a>
+            @else
+                <a target="_blank" href="{{ route('reporte.de.mantenimiento.de.equipos', $equipo->id) }}" title="Imprimir"
+                    class="btn btn-primary btn-rounded"><i class="fas fa-file-invoice"></i> Ver Reporte General</a>
+            @endif
+        </div>
+        <div class="col-md-3">
+            <br>
+            <button type="button" class="btn btn-rounded btn-primary" data-toggle="modal"
+                data-target="#modal-mantenimiento-bajas">
+                Añadir Mantenimiento
+            </button>
+        </div>
+    </div>
+    <div wire:loading class="row">
+        <div class="col-md-12 clearfix">
+            <div class="justify-content-start">
+                <div class="loader"></div> <span class="text-primary">Cargando ...</span>
+            </div>
+
+        </div>
     </div>
     <table class="table table-hover">
         <thead>
@@ -104,7 +105,10 @@
 
         </tbody>
     </table>
-    {{ $mantenimientos->links() }}
+    @if (count($mantenimientos) > 0)
+        {{ $mantenimientos->links() }}
+    @endif
+
 
 
 
@@ -194,8 +198,7 @@
                         <button type="button" wire:click.prevent="resetUI()" class="btn btn-danger btn-rounded"
                             data-dismiss="modal">Cerrar</button>
 
-                        <button type="submit"
-                            class="btn btn-primary btn-rounded">
+                        <button type="submit" class="btn btn-primary btn-rounded">
                             @if ($idMantenimiento)
                                 Actualizar
                             @else

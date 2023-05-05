@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipos;
+use App\Models\Inventario\Mantenimientos;
 use App\Models\PaquetesTuristicos;
 use App\Models\Pedidos\Pedidos;
 use App\Models\Pedidos\Proveedores;
@@ -219,5 +220,21 @@ class PaquetesTuristicosController extends Controller
         return $pdf->stream($title.'.pdf');
 
         // return view('equipos_admin.reportes.reporteDeEquiposGeneral', compact('equipos'));
+    }
+
+    public function VerReporteDeMantenimientoDeEquipos($idEquipo, $fechaSalida = false, $fechaEntrada = false){
+        $mantenimientos = Mantenimientos::mostrarMantenimientos($idEquipo, 2, $fechaSalida, $fechaEntrada);
+        $title = 'Información General de Mantenimiento de Equipos';
+        
+        if ($fechaSalida & $fechaEntrada) {
+            $title = 'Mantenimiento de Equipos Fecha de Salida - Entrada: '.
+            date('d/m/Y', strtotime($fechaSalida)).' - '. date('d/m/Y', strtotime($fechaEntrada));
+        }//{{ date('d-m-Y', strtotime($i->fecha_cumplimiento)) }}
+        
+        
+        $pdf = Pdf::loadView('equipos_admin.reportes.reporteDeMantenimientos', compact('mantenimientos','title'));
+        return $pdf->stream($title.'.pdf');
+
+        // return view('equipos_admin.reportes.reporteDeMantenimientos', compact('equipos'));
     }
 }

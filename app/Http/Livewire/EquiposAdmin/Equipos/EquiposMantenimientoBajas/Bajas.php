@@ -6,9 +6,15 @@ use App\Models\Equipos;
 use App\Models\Inventario\BajaEquipos;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Bajas extends Component
 {
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
+
+
     public $equipo;
 
     public $title = 'AÑADIR BAJA DE EQUIPO';

@@ -50,11 +50,11 @@
 
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane fade in active" id="tabs-1-tab-1">
-                        Tab 1
+                     
                         @livewire('equipos-admin.equipos.equipos-mantenimiento-bajas.mantenimiento', [$equipo])
                     </div><!--.tab-pane-->
 					<div role="tabpanel" class="tab-pane fade" id="tabs-1-tab-2">
-                        Tab 2
+                      
                         @livewire('equipos-admin.equipos.equipos-mantenimiento-bajas.bajas', [$equipo])
                     </div><!--.tab-pane-->
 					

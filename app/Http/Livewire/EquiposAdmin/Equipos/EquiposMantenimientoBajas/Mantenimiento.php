@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\EquiposAdmin\Equipos\EquiposMantenimientoBajas;
 
+use Livewire\WithPagination;
 use App\Models\Equipos;
-use App\Models\Inventario\BajaEquipos;
 use App\Models\Inventario\DevolucionMantenimientos;
 use App\Models\Inventario\Mantenimientos;
 use Illuminate\Support\Facades\DB;
@@ -11,12 +11,18 @@ use Livewire\Component;
 
 class Mantenimiento extends Component
 {
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
+
     public $equipo;
     public $opcion = 0;
     public $fecha_inicial, $fecha_final;
     public $idMantenimiento, $fecha_salida_mantenimiento, $cantidad, $observacion;
     public $idDevolucionMantenimientos, $fecha_entrada_equipo, $cantidad_equipos_arreglados_buen_estado, $observacion_de_entrada;
     public $title = 'AÑADIR EQUIPO EN MANTENIMIENTO';
+
+    public $fecha_de_salida, $fecha_de_entrada;
 
     public function resetUI()
     {
@@ -29,27 +35,12 @@ class Mantenimiento extends Component
     public function mount($equipo)
     {
         $this->equipo = $equipo;
+        
     }
     public function render()
     {
-        $mantenimientos = DB::table('equipos as e')
-            ->leftJoin('mantenimientos as m', 'm.equipo_id', '=', 'e.id')
-            ->leftJoin('devolucion_mantenimientos as dm', 'dm.mantenimientos_id', '=', 'm.id')
-            ->where('m.equipo_id', $this->equipo->id)
-            //->whereBetween('fecha_salida_mantenimiento', [$this->fecha_inicial, $this->fecha_final])
-            ->select(
-                'm.id as idMantenimiento',
-                DB::raw('date_format(m.fecha_salida_mantenimiento, "%d-%m-%Y") as fecha_salida_mantenimiento'),
-                'm.cantidad',
-                'm.observacion',
-                'dm.id as idDevolucionMantenimiento',
-                DB::raw('date_format(dm.fecha_entrada_equipo, "%d-%m-%Y") as fecha_entrada_equipo'),
-                'dm.cantidad_equipos_arreglados_buen_estado',
-                'dm.observacion as obsDevolucion'
-            )
-            // ->toSql();
-            // dd($mantenimientos);
-            ->paginate(20, ['*'], 'mantenentPage');
+        $mantenimientos = Mantenimientos::mostrarMantenimientos($this->equipo->id, 1,$this->fecha_de_salida, $this->fecha_de_entrada);
+        // dd($mantenimientos);
         return view('livewire.equipos-admin.equipos.equipos-mantenimiento-bajas.mantenimiento', compact('mantenimientos'));
     }
 
