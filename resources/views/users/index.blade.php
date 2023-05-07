@@ -16,14 +16,22 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 col-lg-pull-6 col-md-6 col-sm-6">
+            <div class="col-lg-6 col-lg-pull-6 col-md-6 col-sm-6">
                 <section class="box-typical">
+                    <div style="background-color: #00a8ff" class="container-fluid">
+                        <div class="row">
+                            <br>
+                            <h5 style="text-align: center; color: aliceblue"><b>Información Personal</b></h5>
+                        </div>
+                    </div>
+
                     <div class="profile-card">
                         <div class="profile-card-photo">
                             <img src="{{ asset('dashboard_assets/img/photo-220-1.jpg') }}" alt="">
                         </div>
-                        <div class="profile-card-name">{{strtoupper(Auth::user()->name)}} {{strtoupper('Alvarado Robles')}}</div>
-                        <div class="profile-card-status">{{$userRole}} - ll</div>
+                        <div class="profile-card-name">{{ strtoupper(Auth::user()->name) }}
+                            {{ strtoupper('Alvarado Robles') }}</div>
+                        <div class="profile-card-status">{{ $userRole }} - ll</div>
                         <div class="profile-card-location">Greater Seattle Area</div>
                         <button type="button" class="btn btn-rounded">Follow</button>
                         <div class="btn-group">
@@ -56,6 +64,35 @@
                             <div class="tbl-cell">
                                 <b>1.9M</b>
                                 Followers
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="exampleInput">First Name</label>
+                                    <input type="text" class="form-control maxlength-simple" id="exampleInput"
+                                        placeholder="First Name" maxlength="15">
+                                    <small class="text-muted">Max length 15, simple</small>
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-12">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="exampleInputEmail1">Email address</label>
+                                    <input type="email" class="form-control maxlength-custom-message"
+                                        id="exampleInputEmail1" placeholder="Enter email" maxlength="20">
+                                    <small class="text-muted">Max length 20, custom message</small>
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-12">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="exampleInputPassword1">Password</label>
+                                    <input type="password" class="form-control maxlength-always-show"
+                                        id="exampleInputPassword1" placeholder="Password" maxlength="10">
+                                    <small class="text-muted">Max length 10, always show</small>
+                                </fieldset>
                             </div>
                         </div>
                     </div>
@@ -106,7 +143,8 @@
                                         </a>
                                     </div>
                                     <div class="tbl-cell">
-                                        <p class="user-card-row-name status-online"><a href="#">Dan Cederholm</a></p>
+                                        <p class="user-card-row-name status-online"><a href="#">Dan Cederholm</a>
+                                        </p>
                                         <p class="user-card-row-location">New York</p>
                                     </div>
                                 </div>
@@ -178,7 +216,185 @@
             </div>
             <!--.col- -->
 
-            <div class="col-lg-6 col-lg-push-3 col-md-12">
+            <div class="col-lg-6 col-lg-pull-6 col-md-6 col-sm-6">
+                <section class="box-typical">
+                    <div style="background-color: #00a8ff" class="container-fluid">
+                        <div class="row">
+                            <br>
+                            <h5 style="text-align: center; color: aliceblue"><b>Cambiar Contraseña</b></h5>
+                        </div>
+                    </div>
+
+                    <div class="container-fluid">
+                        <br>
+                        @if (session('notificationSuccess'))
+                            <div class="alert alert-success alert-fill alert-close alert-dismissible fade in"
+                                role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                {{ session('notificationSuccess') }}
+                            </div>
+                        @endif
+
+                        @if (session('notification'))
+                            <div class="alert alert-danger alert-fill alert-close alert-dismissible fade in"
+                                role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                {{ session('notification') }}
+                            </div>
+                        @endif
+
+
+                        <form action="{{ route('perfil.change') }}" method="post">
+                            @csrf
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <fieldset class="form-group">
+                                        <label class="form-label" for="password_actual"><b>PASSWORD ACTUAL</b></label>
+                                        <input type="password" class="form-control" name="password_actual"
+                                            id="password_actual" required placeholder="Ingrese su Contraseña Actual">
+
+                                        @if ($errors->first('password_actual'))
+                                            <small class="text-danger">{{ $errors->first('password_actual') }}</small>
+                                        @endif
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-12">
+                                    <fieldset class="form-group">
+                                        <label class="form-label" for="password"><b>CONTRASEÑA NUEVA</b></label>
+                                        <input type="password" class="form-control" name="password" id="password" required
+                                            placeholder="Ingrese su Contraseña Nueva">
+                                        @if ($errors->first('password'))
+                                            <small class="text-danger">{{ $errors->first('password') }}</small>
+                                        @endif
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-12">
+                                    <fieldset class="form-group">
+                                        <label class="form-label" for="password_confirmation"><b>CONFIRMAR CONTRASEÑA
+                                                NUEVA</b></label>
+                                        <input type="password" class="form-control" name="password_confirmation"
+                                            id="password_confirmation" required placeholder="Repita Su Contraseña Nueva">
+                                        @if ($errors->first('password_confirmation'))
+                                            <small
+                                                class="text-danger">{{ $errors->first('password_confirmation') }}</small>
+                                        @endif
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-12" style="text-align: center">
+                                    <button type="submit" class="btn btn-primary btn-rounded">Actualizar
+                                        Contraseña</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <ul class="profile-links-list">
+
+                        <li class="divider"></li>
+                        <li>
+                            <i class="font-icon font-icon-pdf-fill"></i>
+                            <a href="#!">Exportar PDF</a>
+                        </li>
+                    </ul>
+                </section>
+                <!--.box-typical-->
+
+                {{-- <section class="box-typical">
+                    <header class="box-typical-header-sm">
+                        Friends
+                        &nbsp;
+                        <a href="#" class="full-count">268</a>
+                    </header>
+                    <div class="friends-list">
+                        <article class="friends-list-item">
+                            <div class="user-card-row">
+                                <div class="tbl-row">
+                                    <div class="tbl-cell tbl-cell-photo">
+                                        <a href="#">
+                                            <img src="dashboard_assets/img/photo-64-2.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="tbl-cell">
+                                        <p class="user-card-row-name status-online"><a href="#">Dan Cederholm</a>
+                                        </p>
+                                        <p class="user-card-row-location">New York</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="friends-list-item">
+                            <div class="user-card-row">
+                                <div class="tbl-row">
+                                    <div class="tbl-cell tbl-cell-photo">
+                                        <a href="#">
+                                            <img src="dashboard_assets/img/photo-64-1.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="tbl-cell">
+                                        <p class="user-card-row-name"><a href="#">Oykun Yilmaz</a></p>
+                                        <p class="user-card-row-location">Los Angeles</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="friends-list-item">
+                            <div class="user-card-row">
+                                <div class="tbl-row">
+                                    <div class="tbl-cell tbl-cell-photo">
+                                        <a href="#">
+                                            <img src="dashboard_assets/img/photo-64-3.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="tbl-cell">
+                                        <p class="user-card-row-name"><a href="#">Bill S Kenney</a></p>
+                                        <p class="user-card-row-location">Cardiff</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="friends-list-item">
+                            <div class="user-card-row">
+                                <div class="tbl-row">
+                                    <div class="tbl-cell tbl-cell-photo">
+                                        <a href="#">
+                                            <img src="dashboard_assets/img/photo-64-4.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="tbl-cell">
+                                        <p class="user-card-row-name"><a href="#">Maggy Smith</a></p>
+                                        <p class="user-card-row-location">Dusseldorf</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="friends-list-item">
+                            <div class="user-card-row">
+                                <div class="tbl-row">
+                                    <div class="tbl-cell tbl-cell-photo">
+                                        <a href="#">
+                                            <img src="dashboard_assets/img/photo-64-2.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="tbl-cell">
+                                        <p class="user-card-row-name"><a href="#">Dan Cederholm</a></p>
+                                        <p class="user-card-row-location">New York</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section> --}}
+                <!--.box-typical-->
+            </div>
+            <!--.col- -->
+
+
+            {{--  <div class="col-lg-6 col-lg-push-6 col-md-6">
                 <form class="box-typical">
                     <input type="text" class="write-something" placeholder="Write Something...">
                     <div class="box-typical-footer">
@@ -605,9 +821,12 @@
                                 </div>
                                 <div class="tbl-cell tbl-cell-txt">Social Media Marketing</div>
                                 <div class="tbl-cell tbl-cell-users">
-                                    <img class="skill-user-photo" src="dashboard_assets/img/avatar-1-64.png" alt="">
-                                    <img class="skill-user-photo" src="dashboard_assets/img/photo-64-3.jpg" alt="">
-                                    <img class="skill-user-photo" src="dashboard_assets/img/photo-64-4.jpg" alt="">
+                                    <img class="skill-user-photo" src="dashboard_assets/img/avatar-1-64.png"
+                                        alt="">
+                                    <img class="skill-user-photo" src="dashboard_assets/img/photo-64-3.jpg"
+                                        alt="">
+                                    <img class="skill-user-photo" src="dashboard_assets/img/photo-64-4.jpg"
+                                        alt="">
                                     <div class="skill-circle skill-circle-users">+74</div>
                                 </div>
                             </div>
@@ -621,9 +840,12 @@
                                 </div>
                                 <div class="tbl-cell tbl-cell-txt">Web Development</div>
                                 <div class="tbl-cell tbl-cell-users">
-                                    <img class="skill-user-photo" src="dashboard_assets/img/avatar-2-64.png" alt="">
-                                    <img class="skill-user-photo" src="dashboard_assets/img/photo-64-2.jpg" alt="">
-                                    <img class="skill-user-photo" src="dashboard_assets/img/photo-64-3.jpg" alt="">
+                                    <img class="skill-user-photo" src="dashboard_assets/img/avatar-2-64.png"
+                                        alt="">
+                                    <img class="skill-user-photo" src="dashboard_assets/img/photo-64-2.jpg"
+                                        alt="">
+                                    <img class="skill-user-photo" src="dashboard_assets/img/photo-64-3.jpg"
+                                        alt="">
                                     <div class="skill-circle skill-circle-users">+82</div>
                                 </div>
                             </div>
@@ -637,9 +859,12 @@
                                 </div>
                                 <div class="tbl-cell tbl-cell-txt">Search Engine Optimization</div>
                                 <div class="tbl-cell tbl-cell-users">
-                                    <img class="skill-user-photo" src="dashboard_assets/img/avatar-3-64.png" alt="">
-                                    <img class="skill-user-photo" src="dashboard_assets/img/photo-64-1.jpg" alt="">
-                                    <img class="skill-user-photo" src="dashboard_assets/img/photo-64-2.jpg" alt="">
+                                    <img class="skill-user-photo" src="dashboard_assets/img/avatar-3-64.png"
+                                        alt="">
+                                    <img class="skill-user-photo" src="dashboard_assets/img/photo-64-1.jpg"
+                                        alt="">
+                                    <img class="skill-user-photo" src="dashboard_assets/img/photo-64-2.jpg"
+                                        alt="">
                                     <div class="skill-circle skill-circle-users">+4</div>
                                 </div>
                             </div>
@@ -653,9 +878,12 @@
                                 </div>
                                 <div class="tbl-cell tbl-cell-txt">User Experience Design</div>
                                 <div class="tbl-cell tbl-cell-users">
-                                    <img class="skill-user-photo" src="dashboard_assets/img/photo-64-3.jpg" alt="">
-                                    <img class="skill-user-photo" src="dashboard_assets/img/photo-64-4.jpg" alt="">
-                                    <img class="skill-user-photo" src="dashboard_assets/img/photo-64-1.jpg" alt="">
+                                    <img class="skill-user-photo" src="dashboard_assets/img/photo-64-3.jpg"
+                                        alt="">
+                                    <img class="skill-user-photo" src="dashboard_assets/img/photo-64-4.jpg"
+                                        alt="">
+                                    <img class="skill-user-photo" src="dashboard_assets/img/photo-64-1.jpg"
+                                        alt="">
                                     <div class="skill-circle skill-circle-users">+13</div>
                                 </div>
                             </div>
@@ -920,8 +1148,8 @@
                             <div class="col">
                                 <article class="follow-group">
                                     <div class="follow-group-logo">
-                                        <a href="#" class="follow-group-logo-in"><img src="dashboard_assets/img/logo-2.png"
-                                                alt=""></a>
+                                        <a href="#" class="follow-group-logo-in"><img
+                                                src="dashboard_assets/img/logo-2.png" alt=""></a>
                                     </div>
                                     <div class="follow-group-name">
                                         <a href="#">KIPP Foundation</a>
@@ -937,8 +1165,8 @@
                             <div class="col">
                                 <article class="follow-group">
                                     <div class="follow-group-logo">
-                                        <a href="#" class="follow-group-logo-in"><img src="dashboard_assets/img/logo-2.png"
-                                                alt=""></a>
+                                        <a href="#" class="follow-group-logo-in"><img
+                                                src="dashboard_assets/img/logo-2.png" alt=""></a>
                                     </div>
                                     <div class="follow-group-name">
                                         <a href="#">KIPP Foundation</a>
@@ -954,8 +1182,8 @@
                             <div class="col">
                                 <article class="follow-group">
                                     <div class="follow-group-logo">
-                                        <a href="#" class="follow-group-logo-in"><img src="dashboard_assets/img/logo-2.png"
-                                                alt=""></a>
+                                        <a href="#" class="follow-group-logo-in"><img
+                                                src="dashboard_assets/img/logo-2.png" alt=""></a>
                                     </div>
                                     <div class="follow-group-name">
                                         <a href="#">KIPP Foundation</a>
@@ -971,8 +1199,8 @@
                             <div class="col">
                                 <article class="follow-group">
                                     <div class="follow-group-logo">
-                                        <a href="#" class="follow-group-logo-in"><img src="dashboard_assets/img/logo-2.png"
-                                                alt=""></a>
+                                        <a href="#" class="follow-group-logo-in"><img
+                                                src="dashboard_assets/img/logo-2.png" alt=""></a>
                                     </div>
                                     <div class="follow-group-name">
                                         <a href="#">KIPP Foundation</a>
@@ -991,10 +1219,10 @@
                     <!--.profile-following-->
                 </section>
                 <!--.box-typical-->
-            </div>
+            </div> --}}
             <!--.col- -->
 
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            {{-- <div class="col-lg-3 col-md-6 col-sm-6">
                 <section class="box-typical">
                     <header class="box-typical-header-sm">People also viewed</header>
                     <div class="friends-list stripped">
@@ -1228,7 +1456,7 @@
                     </div>
                 </section>
                 <!--.box-typical-->
-            </div>
+            </div> --}}
             <!--.col- -->
         </div>
         <!--.row-->

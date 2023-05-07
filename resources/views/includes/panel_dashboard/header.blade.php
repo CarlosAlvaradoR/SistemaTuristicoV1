@@ -181,7 +181,7 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
                             <a href="{{ route('mi.perfil.de.usuario') }}" class="dropdown-item" href="#"><span
-                                    class="font-icon glyphicon glyphicon-user"></span>Profile</a>
+                                    class="font-icon glyphicon glyphicon-user"></span>Mi Perfil</a>
                             <a class="dropdown-item" href="#"><span
                                     class="font-icon glyphicon glyphicon-cog"></span>Settings</a>
                             <a class="dropdown-item" href="#"><span
@@ -190,7 +190,7 @@
                             <a class="dropdown-item" href="#" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
-                                <span class="font-icon glyphicon glyphicon-log-out"></span>Logout
+                                <span class="font-icon glyphicon glyphicon-log-out"></span>Cerrar Sesión
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf

@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -15,9 +18,9 @@ class UserController extends Controller
     public function index()
     {
         //
-        
+
         $userRole = auth()->user()->getRoleNames()->first();
-        return view('users.index', compact('userRole')); 
+        return view('users.index', compact('userRole'));
     }
 
     /**
@@ -75,6 +78,47 @@ class UserController extends Controller
         //
     }
 
+    public function changeUser(Request $request)
+    {
+        //return $request;
+        $this->validate($request, [
+            'password_actual' => 'required|min:8',
+            'password' => 'required|confirmed|min:8'
+        ]);
+
+        $user = Auth::user(); //Instancia
+        $userId = $user->id;
+        $userEmail = $user->email;
+        $userPassword = $user->password;
+
+        if ($request->password_actual != "") {
+            $NuevoPassword = $request->password;
+            $confirmPassword = $request->password_confirmation;
+
+            //Verifico si la clave actual es igual a la del usuario en sesión
+            if (Hash::check($request->password_actual, $userPassword)) {
+                //Valido que tanto el 1 como el 2 sean iguales
+                if ($NuevoPassword == $confirmPassword) {
+                    //Valido que la clave no sea menor a 6 digitos
+                    $user->password = Hash::make($request->password);
+                    $sqlBD = DB::table('users')
+                        ->where('id', $user->id)
+                        ->update(['password' => $user->password]);
+                    $notificationSuccess = "Contraseña actualizada correctamente";
+                    return redirect()->route('mi.perfil.de.usuario')->with(compact('notificationSuccess'));
+                } else {
+                    $notification = "Las contraseña nueva y la confirmación no coinciden";
+                    return redirect()->route('mi.perfil.de.usuario')->with(compact('notification'));
+                }
+            } else {
+                $notification = "Su clave actual no coincide con nuestros registros";
+                return redirect()->route('mi.perfil.de.usuario')->with(compact('notification'));
+            }
+        } else {
+            $notification = "El Password actual no puede ser vacío";
+            return redirect()->route('mi.perfil.de.usuario')->with(compact('notification'));
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *
