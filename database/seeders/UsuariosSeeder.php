@@ -56,7 +56,7 @@ class UsuariosSeeder extends Seeder
             'persona_id' => $jefferson->id
         ]);
         $user2->assignRole('admin');
-        $user1->givePermissionTo(['crear-paquetes']);
+        $user2->givePermissionTo(['crear-paquetes']);
 
         
         $persona3 = Personas::create([

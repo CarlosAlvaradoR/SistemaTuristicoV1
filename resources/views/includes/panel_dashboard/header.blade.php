@@ -180,7 +180,7 @@
                             <img src="{{ asset('dashboard_assets/img/avatar-2-64.png') }}" alt="">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-                            <a class="dropdown-item" href="#"><span
+                            <a href="{{ route('mi.perfil.de.usuario') }}" class="dropdown-item" href="#"><span
                                     class="font-icon glyphicon glyphicon-user"></span>Profile</a>
                             <a class="dropdown-item" href="#"><span
                                     class="font-icon glyphicon glyphicon-cog"></span>Settings</a>

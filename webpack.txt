@@ -1,5 +1,7 @@
 MIGRACIONES Y MÓDELOS
     MÓDULO USERS
+        *) php artisan make:controller Users/UserController --resource
+
         *) php artisan make:seeder Users/RolPermissionSeeder
     
     MÓDULO CATÁLOGO

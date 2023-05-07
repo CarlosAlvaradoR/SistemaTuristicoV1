@@ -27,13 +27,13 @@ class PaquetesTuristicosController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
-        if ($user->hasAnyPermission(['delete-a-post']) || $user->hasPermissionTo('delete-a-post')) {
+        // $user = auth()->user();
+        // if ($user->hasAnyPermission(['ver-paquetes'])) {
             // Do some stuff here
             return view('paquetes_admin.index');
-        }else{
-            return abort(404);
-        }
+        //  }//else{
+        //     return abort(404);
+        // }
 
         //$paquetes = PaquetesTuristicos::paginate(12);
         

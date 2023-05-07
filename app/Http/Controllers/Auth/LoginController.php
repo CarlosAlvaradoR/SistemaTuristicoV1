@@ -21,6 +21,10 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+    // BLOQUEAR ACCESO POR INTENTOS FALLIDOS
+    public $maxAttempts = 3; //Cantidadad de Intentos.
+    public $decayMinutes = 30; //Cantidad de Minutos.
+
     /**
      * Where to redirect users after login.
      *

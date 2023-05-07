@@ -16,7 +16,8 @@
     <link href="{{ asset('dashboard_assets/img/favicon.57x57.png') }}" rel="apple-touch-icon" type="image/png">
     <link href="{{ asset('dashboard_assets/img/favicon.png') }}" rel="icon" type="image/png">
     <link href="{{ asset('dashboard_assets/img/favicon.ico') }}" rel="shortcut icon">
-
+    <link rel="stylesheet" href="{{ asset('dashboard_assets/css/separate/vendor/slick.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard_assets/css/separate/pages/profile.min.css') }}">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
