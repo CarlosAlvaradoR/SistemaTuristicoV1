@@ -36,6 +36,8 @@ class UsuariosSeeder extends Seeder
             'persona_id' => 1
         ]);
         $user1->assignRole('admin');
+        $user1->givePermissionTo(['ver-paquetes', 'crear-paquetes', 'editar-paquetes']);
+
 
         $jefferson = Personas::create([
             'dni'=>'89837441', 
@@ -54,6 +56,7 @@ class UsuariosSeeder extends Seeder
             'persona_id' => $jefferson->id
         ]);
         $user2->assignRole('admin');
+        $user1->givePermissionTo(['crear-paquetes']);
 
        
 

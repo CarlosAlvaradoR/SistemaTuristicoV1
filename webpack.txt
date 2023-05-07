@@ -1,4 +1,7 @@
 MIGRACIONES Y MÓDELOS
+    MÓDULO USERS
+        *) php artisan make:seeder Users/RolPermissionSeeder
+    
     MÓDULO CATÁLOGO
         *) Tabla Tipo Paquete
         php artisan make:migration create_tipo_paquetes_table

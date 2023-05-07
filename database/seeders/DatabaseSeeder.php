@@ -9,6 +9,7 @@ use Database\Seeders\Reservas\EventoPostergacionesSeeder;
 use Database\Seeders\Reservas\nacionalidadesesSeeder;
 use Database\Seeders\Reservas\NacionalidadesSeeder;
 use Database\Seeders\Reservas\TipoPagosSeeder;
+use Database\Seeders\Users\RolPermissionSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call(NacionalidadesSeeder::class);
         $this->call(RolsSeeder::class);
+        $this->call(RolPermissionSeeder::class);
         $this->call(UsuariosSeeder::class);
         $this->call(TipoPaquetesSeeder::class);
         //$this->call(PaquetesTuristicosSeeder::class);

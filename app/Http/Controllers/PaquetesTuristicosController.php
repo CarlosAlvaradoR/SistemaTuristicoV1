@@ -9,6 +9,8 @@ use App\Models\Pedidos\Proveedores;
 use App\Models\TipoPaquetes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class PaquetesTuristicosController extends Controller
 {
@@ -19,9 +21,16 @@ class PaquetesTuristicosController extends Controller
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+        if ($user->hasAnyPermission(['delete-a-post']) || $user->hasPermissionTo('delete-a-post')) {
+            // Do some stuff here
+            return view('paquetes_admin.index');
+        }else{
+            return abort(404);
+        }
+
         //$paquetes = PaquetesTuristicos::paginate(12);
-        return view('paquetes_admin.index');
+        
     }
 
     /**
@@ -155,21 +164,31 @@ class PaquetesTuristicosController extends Controller
             ->leftJoin('tipo_comprobantes as tc', 'tc.id', '=', 'cp.tipo_comprobante_id')
             ->leftJoin('archivo_comprobantes as ac', 'ac.comprobante_id', '=', 'cp.id')
             ->select(
-                'p.nombre_proveedor', 'p.ruc', 'pe.fecha', 'pe.monto',
-                'cp.numero_comprobante', 'ac.ruta_archivo', 'ep.estado',
-                'p.slug','pe.id as idPedido'
+                'p.nombre_proveedor',
+                'p.ruc',
+                'pe.fecha',
+                'pe.monto',
+                'cp.numero_comprobante',
+                'ac.ruta_archivo',
+                'ep.estado',
+                'p.slug',
+                'pe.id as idPedido'
             )
             ->get();
         return view('pedidos_proveedores_admin.pedidos_proveedor', compact('pedidos'));
     }
 
-    public function VerPedidosGeneralesDetalle(Proveedores $proveedor, Pedidos $pedido){
+    public function VerPedidosGeneralesDetalle(Proveedores $proveedor, Pedidos $pedido)
+    {
         return view('pedidos_proveedores_admin.pedido_proveedor_detalle', compact('proveedor', 'pedido'));
     }
 
-    public function VerPedidosGeneralesDetalleComponentes(Pedidos $pedido){
-        return view('pedidos_proveedores_admin.pedidos_proveedor_pagos_deudas_entradas', 
-        compact('pedido'));
+    public function VerPedidosGeneralesDetalleComponentes(Pedidos $pedido)
+    {
+        return view(
+            'pedidos_proveedores_admin.pedidos_proveedor_pagos_deudas_entradas',
+            compact('pedido')
+        );
     }
 
     public function RealizarPedido(Proveedores $proveedor)
@@ -198,7 +217,8 @@ class PaquetesTuristicosController extends Controller
         return view('equipos_admin.marcas_index');
     }
 
-    public function VerMantenimientoBajas(Equipos $equipo){
+    public function VerMantenimientoBajas(Equipos $equipo)
+    {
         return view('equipos_admin.detalle_equipos', compact('equipo'));
     }
 }
