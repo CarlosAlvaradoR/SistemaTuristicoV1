@@ -106,6 +106,11 @@ class PublicPaquetesController extends Controller
             ->select('r.descripcion')
             ->get();
 
+        $autorizaciones = DB::table('autorizaciones_medicas')
+            ->where('paquete_id', $paquete->id)
+            ->select('detalle_de_archivos')
+            ->first();
+        
         return view('paquetes_publico.detalle_destinos',
             compact(
                 'paquete',
@@ -122,7 +127,8 @@ class PublicPaquetesController extends Controller
                 'tipo_acemilas',
                 'tipo_almuerzos',
                 'condicionespuntualidad',
-                'riesgos'
+                'riesgos',
+                'autorizaciones'
             )
         );
     }

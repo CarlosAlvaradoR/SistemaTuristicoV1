@@ -49,6 +49,9 @@ PAQUETES
         TIPO ALMUERZO PAQUETES
             php artisan make:livewire PaquetesAdmin/TipoAlmuerzoPaquetes/MostrarTipoAlmuerzoPaquetes
 
+        AUTORIZACIONES MÉDICAS
+            php artisan make:livewire PaquetesAdmin/AutorizacionesMedicas/MostrarAutorizacionesMedicas
+
         CONDICIONES DE PUNTUALIDAD
             php artisan make:livewire PaquetesAdmin/CondicionesPuntualidad/MostrarCondicionesPuntualidad
         
@@ -81,15 +84,21 @@ RESERVAS
 
        php artisan make:livewire ReservasAdmin/Reservas/EventosPostergacion/EventosPostergacion 
 
-       php artisan make:livewire ReservasAdmin/Reservas/SolicitudesDevolucion/SolicitudesDevolucion 
+       php artisan make:livewire ReservasAdmin/Reservas/SolicitudesDevolucion/SolicitudesDevolucion
 
-       php artisan make:livewire ReservasAdmin/Reservas/Pagos/PagosPendientes 
+       php artisan make:livewire ReservasAdmin/Reservas/CriteriosMedicos/CriteriosMedicos 
+
+       php artisan make:livewire ReservasAdmin/Reservas/Pagos/PagosPendientes
+
+       php artisan make:livewire ReservasAdmin/Reservas/Reservas 
 
 
     RESERVAS PÚBLICAS
 
         RESERVAR CLIENTE
         php artisan make:livewire ReservasPublicas/Reservas/FormularioReservas
+
+        php artisan make:livewire ReservasPublicas/Reservas/PaquetesReservadosCliente
 
     RESERVAS OPCIONES MENÚ
 
@@ -110,6 +119,10 @@ VIAJES
        php artisan make:livewire ViajesAdmin/Viajes/Viajes
        
        php artisan make:livewire ViajesAdmin/Participantes/Participantes
+
+       php artisan make:livewire ViajesAdmin/Participantes/ParticipantesEntregaEquipos
+
+       php artisan make:livewire ViajesAdmin/Participantes/ParticipantesEquipos
 
        php artisan make:livewire ViajesAdmin/AlmuerzosCelebracion/Almuerzos
 
@@ -146,6 +159,14 @@ VIAJES
 
        php artisan make:livewire ViajesAdmin/Viajes/Arriero/Arriero
 
+       php artisan make:livewire ViajesAdmin/Viajes/Opciones/TipoDeVehiculo
+
+       php artisan make:livewire ViajesAdmin/Viajes/Opciones/TipoDeLicencias
+
+       php artisan make:livewire ViajesAdmin/Viajes/Opciones/Asociaciones
+
+       php artisan make:livewire ViajesAdmin/Viajes/Opciones/Hoteles
+
 
 
 
@@ -158,7 +179,13 @@ PEDIDOS ADMIN
 
        php artisan make:livewire ProveedoresAdmin/Proveedores/Proveedores/CuentasBancarias
 
+       php artisan make:livewire ProveedoresAdmin/TiposDeComprobante
+
        php artisan make:livewire ProveedoresAdmin/Proveedores/Proveedores/DetallesPedido
+
+       php artisan make:livewire ProveedoresAdmin/Proveedores/Proveedores/PedidosGenerales
+
+       php artisan make:livewire ProveedoresAdmin/Proveedores/Proveedores/EntidadesFinancieras
 
        php artisan make:livewire ProveedoresAdmin/Proveedores/Proveedores/PedidosProveedorPagosDeudasEntradas
 
@@ -193,6 +220,16 @@ EQUIPOS ADMIN
     EQUIPOS
        php artisan make:livewire EquiposAdmin/Equipos/Equipos
        php artisan make:livewire EquiposAdmin/Equipos/EquiposMantenimientoBajas
+       php artisan make:livewire EquiposAdmin/Equipos/EquiposMantenimientoBajas/Mantenimiento
+       php artisan make:livewire EquiposAdmin/Equipos/EquiposMantenimientoBajas/Bajas
 
     MARCAS
        php artisan make:livewire EquiposAdmin/Marcas/Marcas
+
+
+
+
+
+COMUNES
+
+       php artisan make:livewire AdministrateCommons/Alerts

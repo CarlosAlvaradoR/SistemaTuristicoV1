@@ -18,7 +18,8 @@ return new class extends Migration
         $query = 'CREATE OR REPLACE VIEW v_reserva_reservas_general as
         SELECT p.dni, concat(p.nombre, " ",p.apellidos) as datos,
         r.id as idReserva, 
-        pt.nombre, r.fecha_reserva, 
+        pt.id as idPaquete, pt.nombre,
+        r.fecha_reserva, 
         SUM(pa.monto) as pago, 
         (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "ACEPTADO" AND ps.reserva_id = r.id) as aceptado,
         (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "NO ACEPTADO" AND ps.reserva_id = r.id) as no_aceptado,
@@ -30,7 +31,7 @@ return new class extends Migration
             ELSE "PENDIENTE DE PAGO"
         END) as estado_oficial,
         b.numero_boleta,r.id,
-        (SELECT DATEDIFF(fecha_reserva, curdate())) as dias_faltantes,
+        (SELECT (DATEDIFF(fecha_reserva, curdate()))) as dias_faltantes,
         case 
           when (SELECT fecha_reserva-curdate())>=0 AND (SELECT fecha_reserva-curdate()) <=10  then "PRÓXIMA A CUMPLIRSE"  
           when  (SELECT fecha_reserva-curdate())>10 then "EN PROGRAMACIÓN"  

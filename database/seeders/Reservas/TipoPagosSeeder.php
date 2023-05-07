@@ -19,9 +19,9 @@ class TipoPagosSeeder extends Seeder
     {
         //
         $tipo_pago = TipoPagos::create(['nombre_tipo_pago' => 'PRESENCIAL']);
-        $asociaciones = Asociaciones::create(['nombre' => 'YUNGAY ALTO', 'estado' => 'En cumplimiento']);
-        $asociaciones = Asociaciones::create(['nombre' => 'RECUAY HERMOSO', 'estado' => 'En cumplimiento']);
-        $asociaciones = Asociaciones::create(['nombre' => 'LOS ANDES ALPES', 'estado' => 'En cumplimiento']);
+        // $asociaciones = Asociaciones::create(['nombre' => 'YUNGAY ALTO', 'estado' => 'En cumplimiento']);
+        // $asociaciones = Asociaciones::create(['nombre' => 'RECUAY HERMOSO', 'estado' => 'En cumplimiento']);
+        // $asociaciones = Asociaciones::create(['nombre' => 'LOS ANDES ALPES', 'estado' => 'En cumplimiento']);
 
         $hoteles = Hoteles::create(['nombre' => 'EL CIELO', 'direccion' => 'AV. LOS ALPES', 'telefono' => 999, 'email' => 'h.com']);
         $hoteles = Hoteles::create(['nombre' => 'EL CIELO 2', 'direccion' => 'AV. LOS ALPES', 'telefono' => 999, 'email' => 'h.com']);

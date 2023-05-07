@@ -2,7 +2,7 @@
 
 
 @section('content')
-    <section class="sample-text-area">
+    <section>
         <div class="container box_1170">
             <div class="row">
                 <div class="col-md-6">
@@ -25,7 +25,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">NOMBRES</label>
+                                    <label for="exampleInputEmail1" class="font-weight-bold">NOMBRES</label>
                                     <input class="form-control valid" name="name" id="name" type="text"
                                     autocomplete="off"    
                                     onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'"

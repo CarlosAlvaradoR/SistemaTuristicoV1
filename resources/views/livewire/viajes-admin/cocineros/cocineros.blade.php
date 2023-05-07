@@ -3,7 +3,14 @@
         <div class="col-lg-6 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Lista de Cocineros</h5>
+                    <h5 class="card-title">
+                        <a class="btn btn-primary btn-sm btn-rounded" href="{{ route('paquete.viajes', $paquete) }}"
+                            title="Volver">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+
+                        Lista de Cocineros
+                    </h5>
 
                     <div class="row">
                         <div class="col-md-8">
@@ -13,8 +20,8 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <a id="modal-532427" href="#modal-traslado-viajes" role="button" class="btn btn-rounded"
-                                data-toggle="modal">Nuevo Cocinero</a>
+                            <a target="_blank" href="{{ route('viajes.cocinero') }}" class="btn btn-rounded">Nuevo
+                                Cocinero</a>
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -31,9 +38,8 @@
                                         {{ $a->datos }}
                                     </td>
                                     <td>
-                                        <button type="button"
-                                            wire:click="AñadirCocinero({{ $a->idCocinero }})"
-                                            title="Añadir a la lista de Participantes"
+                                        <button type="button" wire:click="AñadirCocinero({{ $a->idCocinero }})"
+                                            wire:loading.attr="disabled" title="Añadir a la lista de Participantes"
                                             class="btn btn-sm btn-rounded btn-success">
                                             <i class="fas fa-plus"></i>
                                         </button>
@@ -62,18 +68,30 @@
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
+                        @php
+                            $sum = 0;
+                        @endphp
                         <tbody>
                             @foreach ($cocineros_participantes as $ap)
                                 <tr>
                                     <td>
-                                        {{ $ap->datos }}
+                                        <small>{{ $ap->datos }}</small>
                                     </td>
                                     <td>
-                                        {{ $ap->monto_pagar }}
+                                        <small>S/. {{ $ap->monto_pagar }}</small>
+                                        @php
+                                            $sum = $sum + $ap->monto_pagar;
+                                        @endphp
                                     </td>
                                     <td>
+                                        <button type="button" title="Editar Información"
+                                            class="btn btn-sm btn-rounded btn-warning"
+                                            wire:click="Edit({{ $ap->idViajePaqueteCocinero }})">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
                                         <button type="button" title="Quitar de la Lista de Participantes"
-                                            class="btn btn-sm btn-rounded btn-danger">
+                                            class="btn btn-sm btn-rounded btn-danger"
+                                            wire:click="deleteConfirm({{ $ap->idViajePaqueteCocinero }})">
                                             <i class="fas fa-minus"></i>
                                         </button>
                                     </td>
@@ -86,7 +104,7 @@
 
                                 <th colspan="1">Total</th>
 
-                                <th colspan="2">{{-- $total[0]->Monto --}}</th>
+                                <th colspan="2">S/. {{ $sum }}</th>
 
                             </tr>
 
@@ -95,33 +113,6 @@
                 </div>
             </div>
         </div>
-        <!--<div class="col-lg-6 ks-panels-column-section">
-                                        <div class="card">
-                                            <div class="card-block">
-                                                <h5 class="card-title">Validation</h5>
-                                                <div>
-                                                    <fieldset class="form-group has-success">
-                                                        <div class="fl-flex-label">
-                                                            <input type="text" class="form-control form-control-success" id="inputSuccess1"
-                                                                placeholder="Input with success">
-                                                        </div>
-                                                    </fieldset>
-                                                    <fieldset class="form-group has-warning">
-                                                        <div class="fl-flex-label">
-                                                            <input type="text" class="form-control form-control-warning"
-                                                                placeholder="Input with warning">
-                                                        </div>
-                                                    </fieldset>
-                                                    <fieldset class="form-group has-danger">
-                                                        <div class="fl-flex-label">
-                                                            <input type="text" class="form-control form-control-danger"
-                                                                placeholder="Input with danger">
-                                                        </div>
-                                                    </fieldset>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>-->
     </div>
 
 
@@ -170,7 +161,7 @@
                                     <span class="badge badge-default">{{ $telefono_arriero }}</span>
                                 </div>
                                 <br>
-                                {{--<div class="col-md-4">
+                                {{-- <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="asociacion">
                                             Asociación
@@ -182,7 +173,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>--}}
+                                </div> --}}
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="monto">
@@ -192,7 +183,7 @@
                                             id="monto" />
                                     </div>
                                 </div>
-                                {{--<div class="col-md-4">
+                                {{-- <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="cantidad">
                                             Cantidad
@@ -214,7 +205,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>--}}
+                                </div> --}}
                             </div>
                         @endif
 
@@ -241,7 +232,7 @@
                                             id="monto" />
                                     </div>
                                 </div>
-                               {{-- <div class="col-md-4">
+                                {{-- <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="cantidad">
                                             Cantidad
@@ -263,7 +254,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>--}}
+                                </div> --}}
                             </div>
                         @endif
 
@@ -312,7 +303,7 @@
                                             id="dirección" placeholder="Ingrese la Dirección">
                                     </fieldset>
                                 </div>
-                                {{--<div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <fieldset class="form-group">
                                         <label class="form-label semibold" for="asociacion">Asociación</label>
                                         <select class="form-control" wire:model="asociacion" id="asociacion">
@@ -322,7 +313,7 @@
                                             @endforeach
                                         </select>
                                     </fieldset>
-                                </div>--}}
+                                </div> --}}
                                 <div class="col-lg-12">
                                     <fieldset class="form-group">
                                         <label class="form-label semibold" for="monto">Monto de Pago S/.</label>
@@ -330,7 +321,7 @@
                                             id="monto" placeholder="ej: 45.70">
                                     </fieldset>
                                 </div>
-                                {{--<div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <fieldset class="form-group">
                                         <label class="form-label semibold" for="cantidad">Cantidad de Acémilas</label>
                                         <input type="number" class="form-control" wire:model.defer="cantidad"
@@ -349,7 +340,7 @@
                                             @endforeach
                                         </select>
                                     </fieldset>
-                                </div>--}}
+                                </div> --}}
                             </div>
                         @endif
 
@@ -361,8 +352,7 @@
                         Cerrar
                     </button>
                     @if ($encontradoComoCocinero)
-                        <button type="button" wire:click="guardarCocineroViaje"
-                            class="btn btn-rounded btn-primary">
+                        <button type="button" wire:click="guardarCocineroViaje" class="btn btn-rounded btn-primary">
                             <i class="fas fa-save"></i> Guardar
                         </button>
                     @endif
@@ -394,7 +384,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Añadir Monto y Fecha del Arriero</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Añadir Monto y Fecha del Cocinero</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -403,51 +393,71 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group has-search">
-                                    <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" class="form-control"
-                                        placeholder="Buscar Almuerzos de Celebración">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="monto">
                                         Monto de Pago S/.
                                     </label>
                                     <input type="text" autocomplete="off" wire:model.defer="monto"
                                         class="form-control" id="monto" placeholder="ej: 45.00" />
+                                    @error('monto')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                    <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger" data-dismiss="modal">
                         Cerrar
                     </button>
-                    <button type="button" wire:click="AñadirAlCocinero"
-                        class="btn btn-rounded btn-primary">
-                        Guardar
-                    </button>
+                    @if ($idViajePaqueteCocinero)
+                        <button type="button" wire:click="AñadirAlCocinero" wire:loading.attr="disabled"
+                            class="btn btn-rounded btn-primary">
+                            Actualizar
+                        </button>
+                    @else
+                        <button type="button" wire:click="AñadirAlCocinero" wire:loading.attr="disabled"
+                            class="btn btn-rounded btn-primary">
+                            Guardar
+                        </button>
+                    @endif
+
                 </div>
             </div>
         </div>
     </div>
     <!-- END MODAL-->
 
+    @livewire('administrate-commons.alerts')
+
     <script>
+        window.addEventListener('swal-confirm-cocineros', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('viajes-admin.cocineros.cocineros',
+                        'deleteCoineroViaje',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             //Lo que llega de CategoriesController
             window.livewire.on('show-modal', msg => {
                 $('#modalMontoArriero').modal('show')
             });
-            window.livewire.on('fecha-itinerario-guarded', msg => {
+            window.livewire.on('close-modal', msg => {
                 $('#modalMontoArriero').modal('hide')
-            });
-            window.livewire.on('category-updated', msg => {
-                $('#theModal').modal('hide')
             });
         });
     </script>

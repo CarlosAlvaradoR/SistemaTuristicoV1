@@ -19,7 +19,7 @@ class UsuariosSeeder extends Seeder
     public function run()
     {
         //
-        Personas::create([
+        $carlos = Personas::create([
             'dni'=>'70988855', 
             'nombre' => 'Carlos Emilio', 
             'apellidos' => 'Alvarado Robles', 
@@ -33,7 +33,7 @@ class UsuariosSeeder extends Seeder
             'email' => 'carlos2000emilioa@gmail.com', 
             'email_verified_at' =>'2022-12-12', 
             'password' => bcrypt('123456789'), 
-            'persona_id' => 1
+            'persona_id' => $carlos->id
         ]);
         $user1->assignRole('admin');
         $user1->givePermissionTo(['ver-paquetes', 'crear-paquetes', 'editar-paquetes']);
@@ -58,6 +58,25 @@ class UsuariosSeeder extends Seeder
         $user2->assignRole('admin');
         $user1->givePermissionTo(['crear-paquetes']);
 
+        
+        $persona3 = Personas::create([
+            'dni'=>'192828188', 
+            'nombre' => 'Miguel', 
+            'apellidos' => 'Silva Zapata', 
+            'genero' => 1, 
+            'telefono' => '98827277', 
+            'dirección' => 'Av. Las Canteras'
+        ]);
+
+        $user3 = User::create([
+            'name' => 'Miguel', 
+            'email' => 'jmiguelsilzajym@gmail.com', 
+            'email_verified_at' =>'2022-12-12', 
+            'password' => bcrypt('123456789'), 
+            'persona_id' => $persona3->id
+        ]);
+        $user3->assignRole('admin');
+
        
 
 
@@ -68,7 +87,7 @@ class UsuariosSeeder extends Seeder
                 'dni'=> $faker->unique()->postcode, 
                 'nombre' => $faker->name, 
                 'apellidos' => $faker->lastname, 
-                'genero' => rand(0, 200), 
+                'genero' => rand(1,2), 
                 'telefono' => $faker->phoneNumber, 
                 'dirección' => $faker->address
             ]);
@@ -85,7 +104,7 @@ class UsuariosSeeder extends Seeder
             $cliente = Clientes::create([
                 'persona_id' => $persona->id, 
                 'user_id' => $user->id,
-                'nacionalidad_id' => rand(1,3)
+                'nacionalidad_id' => rand(1,200)
             ]);
         }
     }

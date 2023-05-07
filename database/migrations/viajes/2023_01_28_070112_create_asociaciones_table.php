@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('asociaciones', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 45);
-            $table->string('estado', 45);
+            $table->integer('estado');
             $table->timestamps();
         });
     }

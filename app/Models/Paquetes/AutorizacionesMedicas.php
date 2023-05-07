@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Reservas;
+namespace App\Models\Paquetes;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class AutorizacionesMedicas extends Model
 {
     use HasFactory;
-    protected $fillable = ['numero_autorizacion', 'ruta_archivo', 'reserva_id'];
+    protected $fillable = ['detalle_de_archivos', 'paquete_id'];
 }

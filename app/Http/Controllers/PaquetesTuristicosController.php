@@ -3,14 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipos;
+use App\Models\Inventario\BajaEquipos;
+use App\Models\Inventario\Mantenimientos;
 use App\Models\PaquetesTuristicos;
 use App\Models\Pedidos\Pedidos;
 use App\Models\Pedidos\Proveedores;
 use App\Models\TipoPaquetes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class PaquetesTuristicosController extends Controller
 {
@@ -157,6 +163,7 @@ class PaquetesTuristicosController extends Controller
 
     public function VerPedidosGenerales()
     {
+
         $pedidos = DB::table('proveedores as p')
             ->join('pedidos as pe', 'p.id', '=', 'pe.proveedores_id')
             ->join('estado_pedidos as ep', 'ep.id', '=', 'pe.estado_pedidos_id')
@@ -176,6 +183,7 @@ class PaquetesTuristicosController extends Controller
             )
             ->get();
         return view('pedidos_proveedores_admin.pedidos_proveedor', compact('pedidos'));
+
     }
 
     public function VerPedidosGeneralesDetalle(Proveedores $proveedor, Pedidos $pedido)
@@ -201,7 +209,15 @@ class PaquetesTuristicosController extends Controller
         //return view('pedidos_proveedores_admin.pedidos_proveedor');
     }
 
+    public function mostrarBancos()
+    {
+        return view('pedidos_proveedores_admin.bancos');
+    }
 
+    public function mostrarTiposDeComprobante()
+    {
+        return view('pedidos_proveedores_admin.tiposDeComprobante');
+    }
 
 
 
@@ -220,5 +236,53 @@ class PaquetesTuristicosController extends Controller
     public function VerMantenimientoBajas(Equipos $equipo)
     {
         return view('equipos_admin.detalle_equipos', compact('equipo'));
+    }
+
+    /** REPORTES */
+
+    public function VerReporteDeEquiposEnStock()
+    {
+        
+        $title = 'Lista de Equipos con los que se cuenta Actualmente';
+        $equipos = DB::select('SELECT e.id, e.nombre, e.descripcion, e.stock,e.precio_referencial, e.tipo, m.nombre as marca FROM equipos e
+       INNER JOIN marcas m on m.id = e.marca_id');
+        
+        
+        $pdf = Pdf::loadView('equipos_admin.reportes.reporteDeEquiposGeneral', compact('equipos','title'));
+        return $pdf->stream($title.'.pdf');
+
+        // return view('equipos_admin.reportes.reporteDeEquiposGeneral', compact('equipos'));
+    }
+
+    public function VerReporteDeMantenimientoDeEquipos($idEquipo, $fechaSalida = false, $fechaEntrada = false){
+        $mantenimientos = Mantenimientos::mostrarMantenimientos($idEquipo, 2, $fechaSalida, $fechaEntrada);
+        $title = 'Información General de Mantenimiento de Equipos';
+        
+        if ($fechaSalida & $fechaEntrada) {
+            $title = 'Mantenimiento de Equipos Fecha de Salida - Entrada: '.
+            date('d/m/Y', strtotime($fechaSalida)).' - '. date('d/m/Y', strtotime($fechaEntrada));
+        }//{{ date('d-m-Y', strtotime($i->fecha_cumplimiento)) }}
+        
+        
+        $pdf = Pdf::loadView('equipos_admin.reportes.reporteDeMantenimientos', compact('mantenimientos','title'));
+        return $pdf->stream($title.'.pdf');
+
+        // return view('equipos_admin.reportes.reporteDeMantenimientos', compact('equipos'));
+    }
+
+    public function VerReporteDeBajaDeEquipos($idEquipo, $fechaInicial = false, $fechaFinal = false){
+        $bajas = BajaEquipos::mostrarBajaDeEquipos($idEquipo, 2, $fechaInicial, $fechaFinal);
+        $title = 'Información General de la Baja de Equipos';
+        
+        if ($fechaInicial & $fechaFinal) {
+            $title = 'Baja de Equipos En el Rango de Fechas: '.
+            date('d/m/Y', strtotime($fechaInicial)).' - '. date('d/m/Y', strtotime($fechaFinal));
+        }//{{ date('d-m-Y', strtotime($i->fecha_cumplimiento)) }}
+        
+        
+        $pdf = Pdf::loadView('equipos_admin.reportes.reporteDeBajas', compact('bajas','title'));
+        return $pdf->stream($title.'.pdf');
+
+        // return view('equipos_admin.reportes.reporteDeBajas', compact('equipos'));
     }
 }

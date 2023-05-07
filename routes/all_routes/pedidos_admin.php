@@ -9,3 +9,5 @@ Route::get('/pedidos/pedidos-generales/{pedido}/detalles', [App\Http\Controllers
 Route::get('/pedidos/pedidos-generales/{proveedor}/{pedido}', [App\Http\Controllers\PaquetesTuristicosController::class, 'VerPedidosGeneralesDetalle'])->name('pedidos.proveedores.general.detalle')->middleware(['auth', 'verified']);
 Route::get('/pedidos/proveedores/{proveedor}/realizar-pedido', [App\Http\Controllers\PaquetesTuristicosController::class, 'RealizarPedido'])->name('pedidos.proveedores.formulario.pedidos')->middleware(['auth', 'verified']);
 Route::get('/pedidos/proveedor/santa-rosa/detalle', [App\Http\Controllers\PaquetesTuristicosController::class, 'detallePedido'])->name('detalle.pedidos')->middleware(['auth', 'verified']);
+Route::get('/pedidos/entidades-financieras', [App\Http\Controllers\PaquetesTuristicosController::class, 'mostrarBancos'])->name('mostrar.bancos')->middleware(['auth', 'verified']);
+Route::get('/pedidos/tipos-de-comprobante', [App\Http\Controllers\PaquetesTuristicosController::class, 'mostrarTiposDeComprobante'])->name('mostrar.tipos.de.comprobante')->middleware(['auth', 'verified']);

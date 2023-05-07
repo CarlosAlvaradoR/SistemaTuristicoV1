@@ -3,46 +3,65 @@
         <div class="col-lg-12 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Lista de Todas los Viajes</h5>
+                    <h5 class="card-title font-weight-bold"><i class="fas fa-list"></i> Lista de Todos los Viajes</h5>
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <br>
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control" placeholder="Search">
+                                <input type="text" wire:model="search" class="form-control"
+                                    placeholder="Ingresa Código de Viaje">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">
+                                        <label for="fecha_inicial">
                                             Fecha Inicial
                                         </label>
-                                        <input type="date" class="form-control" id="exampleInputEmail1" />
+                                        <input type="date" class="form-control" wire:model="fecha_inicial"
+                                            id="fecha_inicial" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">
-                                            Fecha Inicial
+                                        <label for="fecha_final">
+                                            Fecha Final
                                         </label>
-                                        <input type="date" class="form-control" id="exampleInputEmail1" />
+                                        <input type="date" class="form-control" wire:model="fecha_final"
+                                            id="fecha_final" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <br>
-                            <a id="modal-918849" href="#modal-viaje-paquete" role="button" class="btn"
-                                data-toggle="modal">Nuevo Viaje</a>
+                            @if ($fecha_inicial && $fecha_final)
+                                <a target="_blank"
+                                    href="{{ route('mostrar.viajes.actuales', [$fecha_inicial, $fecha_final]) }}"
+                                    class="btn btn-rounded"
+                                    title="Ver Reporte de Viajes Realizados en un periodo De Tiempo"><i
+                                        class="fas fa-file-pdf"></i> Viajes
+                                    Realizados</a>
+                            @else
+                                <a target="_blank" href="{{ route('mostrar.viajes.actuales') }}" class="btn btn-rounded"
+                                    title="Ver Reporte de Viajes Actuales"><i class="fas fa-file-pdf"></i> Viajes
+                                    Actuales</a>
+                            @endif
+
+                        </div>
+                        <div class="col-md-2">
+                            <br>
+                            <button id="modal-918849" href="#modal-viaje-paquete" role="button" class="btn btn-rounded"
+                                data-toggle="modal">Nuevo Viaje</button>
                         </div>
                     </div>
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <!--<th scope="col">#</th>-->
+                                <th scope="col">Cod.</th>
                                 <th scope="col">VIAJE</th>
                                 <th scope="col">Fecha</th>
                                 <th scope="col">CANT. PART.</th>
@@ -56,10 +75,13 @@
                             @foreach ($viajes as $v)
                                 <tr>
                                     <td>
+                                        {{ $v->cod_string }}
+                                    </td>
+                                    <td>
                                         {{ $v->descripcion }}
                                     </td>
                                     <td>
-                                        {{ $v->fecha }}
+                                        {{ date('d/m/Y', strtotime($v->fecha)) }}
                                     </td>
                                     <td>
                                         {{ $v->cantidad_participantes }}
@@ -68,65 +90,95 @@
                                         {{ $v->hora }}
                                     </td>
                                     <td>
-                                        {{ $v->estado }}
+                                        @switch($v->estado)
+                                            @case(1)
+                                                <span class="label label-warning">PROGRAMANDO</span>
+                                            @break
+
+                                            @case(2)
+                                                <span class="label label-primary">REALIZÁNDOCE</span>
+                                            @break
+
+                                            @case(3)
+                                                <span class="label label-success">FINALIZADO</span>
+                                            @break
+
+                                            @default
+                                        @endswitch
                                     </td>
                                     <td>
-
                                         <div class="dropdown dropdown-status"><button
                                                 class="btn btn-success dropdown-toggle" type="button"
                                                 data-toggle="dropdown" aria-haspopup="true"
                                                 aria-expanded="false">Opciones</button>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.participantes', [$paquete, $v->id]) }}"><i
+                                                    href="{{ route('paquete.viajes.participantes', [$paquete, $v->slug]) }}"><i
                                                         class="fas fa-user-friends"></i> Part. del
                                                     Viaje</a>
                                                 <a class="dropdown-item" href="#"><i class="fa-solid fa-eye"></i>
                                                     Detalles del
                                                     Viaje</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.traslados', [$paquete, $v->id]) }}"><i
+                                                    href="{{ route('paquete.viajes.traslados', [$paquete, $v->slug]) }}"><i
                                                         class="fas fa-map"></i> Traslados del
                                                     Viaje</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.almuerzos', [$paquete, $v->id]) }}"><i
+                                                    href="{{ route('paquete.viajes.almuerzos', [$paquete, $v->slug]) }}"><i
                                                         class="fas fa-utensils"></i> Almuerzos del Viaje</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.boletas_pago', [$paquete, $v->id]) }}"><i
+                                                    href="{{ route('paquete.viajes.boletas_pago', [$paquete, $v->slug]) }}"><i
                                                         class="fas fa-money-check"></i> Boletas de Pago del Viaje</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.actividades_aclimatacion', [$paquete, $v->id]) }}"><i
+                                                    href="{{ route('paquete.viajes.actividades_aclimatacion', [$paquete, $v->slug]) }}"><i
                                                         class="fas fa-snowboarding"></i> Actividades de Aclimatación</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.hospedaje', [$paquete, $v->id]) }}"><i
+                                                    href="{{ route('paquete.viajes.hospedaje', [$paquete, $v->slug]) }}"><i
                                                         class="fas fa-hotel"></i> Hospedajes</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.itinerario', [$paquete, $v->id]) }}"><i
+                                                    href="{{ route('paquete.viajes.itinerario', [$paquete, $v->slug]) }}"><i
                                                         class="fas fa-clipboard-list"></i> Itinerarios del Viaje</a>
-                                                <a class="dropdown-item" href="#!"><i
-                                                        class="glyphicon fas fa-users"></i> Arrieros, Cocineros y
-                                                    Guías</a>
+
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.arriero', [$paquete, $v->id]) }}">Arrieros</a>
+                                                    href="{{ route('paquete.viajes.arriero', [$paquete, $v->slug]) }}">Arrieros</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.cocineros', [$paquete, $v->id]) }}">Cocineros</a>
+                                                    href="{{ route('paquete.viajes.cocineros', [$paquete, $v->slug]) }}">Cocineros</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('paquete.viajes.guias', [$paquete, $v->id]) }}">Guías</a>
+                                                    href="{{ route('paquete.viajes.guias', [$paquete, $v->slug]) }}">Guías</a>
+
+
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" target="_blank"
+                                                    href="{{ route('mostrar.participantesDelViaje', [$paquete, $v->slug]) }}"
+                                                    target="_blank"><i class="fas fa-file-pdf"></i> Reporte de
+                                                    Participantes</a>
+                                                <a class="dropdown-item" target="_blank"
+                                                    href="{{ route('mostrar.viajes.itinerarios.cumplidos', [$paquete, $v->slug]) }}"
+                                                    target="_blank"><i class="fas fa-file-pdf"></i> Itinerarios
+                                                    Cumplidos </a>
+                                                <a class="dropdown-item" target="_blank"
+                                                    href="{{ route('mostrar.boletasDePago', [$paquete, $v->slug]) }}"
+                                                    target="_blank"><i class="fas fa-file-pdf"></i> Gastos de la
+                                                    Empresa</a>
+                                                <a class="dropdown-item" target="_blank"
+                                                    href="{{ route('mostrar.equipos.en prestamo', [$paquete, $v->slug]) }}"
+                                                    target="_blank"><i class="fas fa-file-pdf"></i> Reporte de Equipos
+                                                    en Préstamo</a>
+
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <button type="button" wire:click="Edit({{ $v->id }})"
+                                        <button type="button" wire:click="Edit('{{ $v->slug }}')"
+                                            wire:loading.attr="disabled"
                                             class="tabledit-edit-button btn btn-sm btn-warning" style="float: none;">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </button>
-                                        <a href="{{-- route('viajes.empresas_transporte.vehiculos', $e) --}}" title="Ver vehículos de la empresa"
-                                            class="tabledit-edit-button btn btn-sm btn-primary" style="float: none;">
-                                            <i class="glyphicon fas fa-shuttle-van"></i>
-                                        </a>
-                                        <button type="button" wire:click="deleteConfirm({{ $v->id }})" class="tabledit-delete-button btn btn-sm btn-danger"
-                                            style="float: none;">
+
+                                        <button type="button" wire:click="deleteConfirm('{{ $v->slug }}')"
+                                            wire:loading.attr="disabled"
+                                            class="tabledit-delete-button btn btn-sm btn-danger" style="float: none;">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </button>
                                     </td>
@@ -193,7 +245,6 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-
                                     <label for="cantidad_participantes">
                                         Cantidad de Participantes <span class="text-danger">(*)</span>
                                     </label>
@@ -203,17 +254,31 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                <div class="form-group">
+                                    <label for="estado">
+                                        Estado del Viaje <span class="text-danger">(*)</span>
+                                    </label>
+                                    <select class="form-control" wire:model.defer="estado" id="estado">
+                                        <option value="">...Seleccione...</option>
+                                        <option value="1">PROGRAMANDO</option>
+                                        <option value="2">REALIZÁNDOCE</option>
+                                        <option value="3">FINALIZADO</option>
+                                    </select>
+                                    @error('estado')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </form>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="cl-v-p" class="btn btn-rounded btn-danger"
-                            wire:loading.attr="disabled" data-dismiss="modal">
+                        <button type="button" id="cl-v-p" wire:click.prevent="resetUI()"
+                            class="btn btn-rounded btn-danger" wire:loading.attr="disabled" data-dismiss="modal">
                             Cerrar
                         </button>
-                        @if ($edicion)
-                            <button type="button" id="upd-v-p" wire:click="Update" wire:loading.attr="disabled"
-                                class="btn btn-rounded btn-primary">
+                        @if ($idViajePaquete)
+                            <button type="button" id="upd-v-p" wire:click="saveViaje"
+                                wire:loading.attr="disabled" class="btn btn-rounded btn-primary">
                                 Actualizar
                             </button>
                         @else

@@ -78,6 +78,10 @@ WHERE cp.paquete_id = 1;
 SELECT r.descripcion FROM riesgos r
 WHERE r.paquete_id = 1;
 
+-- AUTORIZACIONES MÉDICAS PARA LA PARTE PÚBLICA
+SELECT * FROM autorizaciones_medicas
+WHERE paquete_id = 1
+limit 1;
 
 
 
@@ -113,6 +117,14 @@ DESC solicitud_devolucion_dineros;
 
 
 
+SELECT * FROM autorizaciones_medicas
+WHERE paquete_id = 1
+limit 1;
+
+SELECT * FROM autorizaciones_presentadas;
+
+
+
 
 
 
@@ -129,7 +141,7 @@ INNER JOIN clientes c ON c.persona_id = p.id
 INNER JOIN reservas r on r.cliente_id = c.id
 INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
 WHERE r.id = 2;
-
+SELECT * FROM pagos;
 
 -- SELECCIONAR LAS SOLICITUDES PAGOS DE UNA RESERVA
 SELECT sp.id, sp.estdo_solicitud, sp.observacion, p.monto FROM solicitud_pagos sp
@@ -172,6 +184,37 @@ WHERE NOT EXISTS
 (SELECT NULL FROM condiciones_aceptadas ca WHERE ca.condicion_puntualidades_id = cp.id AND ca.reserva_id = 2)
 AND cp.paquete_id = 1;
 
+
+-- VERIFICAR SI LA RESERVA QUE TIENE EL ID DEL PAQUETE NECESITA ARCHIVOS
+SELECT * FROM autorizaciones_medicas am WHERE am.paquete_id = 1; 
+-- VERIFICAR QUE HAYAN ARCHIVOS MÉDICOS SUBIDOS POR EL CLIENTE QUE HIZO LA RESERVA
+SELECT * FROM autorizaciones_presentadas ap WHERE ap.reserva_id = 1;
+
+/* CONSULTAR LOS CRITERIOS MÉDICOS ACEPTADOS Y POR ACEPTRAR DE UN CLIENTE QUE REALIZÓ UNA RESERVA*/
+-- cm.descripcion_criterio_medico, if(ifm.autorizaciones_presentadas_id > 0, ifm.autorizaciones_presentadas_id,0) as a
+SELECT cm.descripcion_criterio_medico, cm.id,
+-- (SELECT COUNT(*) FROM item_fichas_medicas ifm WHERE ifm.criterios_medicos_id = cm.id AND ifm.autorizaciones_presentadas_id=2), 
+(CASE
+    WHEN (SELECT COUNT(ifm.criterios_medicos_id) FROM item_fichas_medicas ifm WHERE ifm.criterios_medicos_id = cm.id AND ifm.autorizaciones_presentadas_id=1) > 0 THEN "1"
+    ELSE "0"
+END) as existe
+ FROM criterios_medicos cm;
+ 
+-- CONSULTA PARA ELIMINAR LOS CRITERIOS ACEPTADOS 
+SELECT * FROM item_fichas_medicas ifm WHERE ifm.criterios_medicos_id = 2;
+
+/*SELECT cm.descripcion_criterio_medico FROM criterios_medicos cm
+WHERE cm.id IN (SELECT ifm.criterios_medicos_id FROM item_fichas_medicas ifm WHERE ifm.criterios_medicos_id = cm.id)
+ OR cm.id NOT IN (SELECT ifm.criterios_medicos_id FROM item_fichas_medicas ifm WHERE ifm.criterios_medicos_id = cm.id);
+*/
+
+SELECT * FROM item_fichas_medicas ifm WHERE ifm.criterios_medicos_id = 2;
+SELECT COUNT(*) FROM item_fichas_medicas;
+SELECT * FROM autorizaciones_presentadas;
+-- https://www.google.com/search?q=criterios+medicos+de+riesgo+viaje&oq=criterios+medicos++de+riesgo+viaje&aqs=chrome..69i57.14530j0j1&sourceid=chrome&ie=UTF-8
+-- https://www.central-vuelos-ambulancia.es/blog/enfermedades-que-impiden-viajar-en-avion_8474.html
+
+
 SELECT * FROM estado_reservas; /* COMPLETADO, PENDIENTE DE PAGO */
 
 
@@ -186,7 +229,8 @@ INNER JOIN estado_reservas er on er.id = r.estado_reservas_id;
 CREATE OR REPLACE VIEW v_reserva_reservas_general as
 SELECT p.dni, concat(p.nombre, " ",p.apellidos) as datos,
 r.id as idReserva, 
-pt.nombre, r.fecha_reserva, 
+pt.id as idPaquete, pt.nombre,
+r.fecha_reserva, 
 SUM(pa.monto) as pago, 
 (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "ACEPTADO" AND ps.reserva_id = r.id) as aceptado,
 (SELECT SUM(ps.monto) FROM pagos ps WHERE ps.estado_pago = "NO ACEPTADO" AND ps.reserva_id = r.id) as no_aceptado,
@@ -216,8 +260,26 @@ GROUP BY pa.reserva_id , pa.estado_pago
 ORDER BY r.updated_at;
 
 
-SELECT * FROM v_reserva_reservas_general;
-SELECT * FROM v_reserva_lista_reservas_general vrg WHERE vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr);
+-- SELECCIÓN GENERAL
+SELECT * FROM v_reserva_reservas_general vrg
+WHERE (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par))
+AND (vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr));
+-- SELECCIONAR CUANDO HAY UN ESTADO DE PAGO Y ESTADO DE CUMPLIMIENTO
+SELECT * FROM v_reserva_reservas_general vrg
+WHERE (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par))
+AND (vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr))
+AND vrg.estado_reserva = 'PASADOS DE FECHA' AND vrg.estado_oficial = 'PAGO COMPLETADO';
+
+SELECT * FROM v_reserva_reservas_general vrg
+WHERE vrg.estado_oficial = 'PAGO COMPLETADO'
+AND vrg.idPaquete = 1
+AND (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par))
+AND (vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr));
+
+SELECT * FROM participantes;
+SELECT * FROM v_reserva_lista_reservas_general;
+SELECT * FROM v_reserva_lista_reservas_general vrg 
+WHERE vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr);
 -- WHERE idReserva NOT IN (SELECT parti.reserva_id FROM participantes parti) OR 
 -- idReserva NOT IN (SELECT posr.reserva_id FROM postergacion_reservas posr);
 
@@ -241,7 +303,8 @@ WHERE pr.reserva_id = 22;
 
 -- CONSULTAR LOS PAQUETES QUE COMPRÓ UN CLIENTE
 SELECT p.dni, concat(p.nombre, ' ',p.apellidos) as datos, 
-pt.nombre, r.fecha_reserva, SUM(pa.monto) as pago,er.nombre_estado, b.numero_boleta,r.id 
+pt.nombre, r.fecha_reserva, SUM(pa.monto) as pago,er.nombre_estado, b.numero_boleta,r.id,
+r.slug
 FROM personas p
 INNER JOIN clientes c on p.id=c.persona_id
 INNER JOIN reservas r on r.cliente_id=c.id
@@ -249,12 +312,12 @@ INNER JOIN paquetes_turisticos pt on pt.id=r.paquete_id
 INNER JOIN estado_reservas er on er.id = r.estado_reservas_id
 INNER JOIN pagos pa on pa.reserva_id = r.id
 INNER JOIN boletas b on b.id = pa.boleta_id
-WHERE c.id = 2
+WHERE c.id = 52
 GROUP BY pa.reserva_id
 ORDER BY r.updated_at;
 
 
-SELECT * FROM reservas;
+SELECT * FROM boletas;
 
 
 
@@ -275,6 +338,43 @@ GROUP BY pa.reserva_id;
 -- LIMIT 1;
 
 
+-- CONSULTA PARA CONOCER SI UN CLIENTE YA SESERVÓ PARA UNA DETERMINADA FECHA
+SELECT * FROM reservas WHERE cliente_id = 2 AND fecha_reserva = '2023-03-21';
+
+
+/* 
+CONSULTA PARA FILTRAR INFORMACIÓN EN LA EDICIÓN DE RESERVAS
+*/
+-- SACAR LOS CLIENTES Y SU FECHA DE RESERVA
+SELECT p.id as idPersona, p.dni, p.nombre, p.apellidos, p.genero, p.telefono, p.dirección, n.id as idNacionalidad, c.id as idCliente,
+pa.numero_pasaporte, pa.ruta_archivo_pasaporte, pa.id as idPasaporte,
+r.fecha_reserva, r.observacion, r.id as idReserva
+FROM personas p
+INNER JOIN clientes c on c. persona_id=p.id
+INNER JOIN nacionalidades n on n.id = c.nacionalidad_id
+LEFT JOIN pasaportes pa on pa.cliente_id = c.id
+INNER JOIN reservas r on r.cliente_id = c.id
+WHERE r.id = 1;
+
+SELECT id as idPago, monto, fecha_pago, numero_de_operacion, estado_pago, observacion_del_pago, 
+ruta_archivo_pago, reserva_id, cuenta_pagos_id, boleta_id 
+FROM pagos pa WHERE reserva_id = 10;
+
+
+-- CONOCER LOS NOMBRES Y APELLIDOS DE UN PARTICIPANTE AL QUE SE LE PRESTA UN EQUIPO
+SELECT p.nombre, p.apellidos, par.id FROM personas p
+INNER JOIN clientes c on p.id = c.persona_id
+INNER JOIN reservas r on r.cliente_id = c.id
+INNER JOIN participantes par on par.reserva_id = r.id
+WHERE par.id = 2
+LIMIT 1;
+SELECT * FROM entrega_equipos;
+
+SELECT id as idAutorizacionMedica, numero_autorizacion, ruta_archivo, reserva_id, autorizaciones_medicas_id FROM autorizaciones_presentadas
+WHERE reserva_id = 6
+LIMIT 1;
+
+SELECT * FROM solicitud_devolucion_dineros;
 -- CONOCER LOS PAGOS REALIZADOS POR CADA RESERVA
 SELECT p.id as idPago, r.id,p.fecha_pago, p.monto, p.numero_de_operacion, p.estado_pago, p.observacion_del_pago,
 p.ruta_archivo_pago,tp.nombre_tipo_pago, cp.numero_cuenta, b.numero_boleta 
@@ -289,7 +389,8 @@ SELECT * FROM pagos;
 
 -- SELECCIONAR LOS TIPOS DE PAGO CON SUS RESPECTIVAS CUENTAS BANCARIAS PARA LAS RESERVAS
 SELECT tp.nombre_tipo_pago, cp.id as idCuentaPago, cp.numero_cuenta FROM tipo_pagos tp
-INNER join cuenta_pagos cp on tp.id = cp.tipo_pagos_id;
+INNER join cuenta_pagos cp on tp.id = cp.tipo_pagos_id
+WHERE cp.id != 1;
 
 -- CONSULTA PARA CONOCER LOS CLIENTES QUE SOLICITARON DEVOLUCIÓN
 SELECT concat(p.nombre,' ', p.apellidos) as datos, sdv.estado, sdv.fecha_presentacion,
@@ -343,6 +444,38 @@ SELECT * FROM nacionalidades;
 /*
 REPORTES
 */
+-- INFORMACIÓN DEL CLIENTE EN SUS RESERVAS PARA IMPRIMIR SOLICITUDES
+SELECT CONCAT(p.nombre, ' ',p.apellidos) as datos, p.telefono, pt.nombre, r.fecha_reserva, r.id,
+ep.nombre_evento, pr.fecha_postergacion, pr.descripcion_motivo, pr.documento_sustentatorio,
+sdd.pedido, sdd.fecha_presentacion, sdd.estado, sdd.descripcion_solicitud
+FROM personas p
+INNER JOIN clientes c on p.id = c.persona_id
+INNER JOIN reservas r on r.cliente_id = c.id
+INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
+LEFT JOIN postergacion_reservas pr on pr.reserva_id = r.id
+LEFT JOIN evento_postergaciones ep on ep.id = pr.evento_postergaciones_id
+LEFT JOIN solicitud_devolucion_dineros sdd on sdd.postergacion_reservas_id = pr.id
+WHERE r.id = 4
+LIMIT 1;
+
+-- COMPROBANTE DE LAS RESERVAS
+SELECT CONCAT(p.nombre, ' ',p.apellidos) as datos, p.telefono, pt.nombre, r.fecha_reserva, r.id FROM personas p
+INNER JOIN clientes c on p.id = c.persona_id
+INNER JOIN reservas r on r.cliente_id = c.id
+INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
+WHERE r.id = 19;
+
+-- PAGOS ACEPTADOS
+SELECT p.monto, p.fecha_pago, b.numero_boleta, r.id FROM reservas r
+INNER JOIN pagos p on p.reserva_id = r.id
+INNER JOIN cuenta_pagos cp on cp.id = p.cuenta_pagos_id
+INNER JOIN tipo_pagos tp on tp.id = cp.tipo_pagos_id
+INNER JOIN boletas b on b.id = p.boleta_id
+WHERE r.id = 10 AND p.estado_pago = 'ACEPTADO';
+
+SELECT * FROM pagos;
+SELECT COUNT(*) FROM reservas;
+-- REPORTE DE LAS RESERVAS
 SELECT * FROM v_reserva_reservas_general vrg
 WHERE (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR
 vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr));
@@ -351,8 +484,12 @@ SELECT * FROM v_reserva_reservas_general vrg
 WHERE vrg.fecha_reserva between "2023-03-14" and "2023-03-17" AND estado_reserva = "EN PROCESO" AND (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR
 vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr));
 
-SELECT * FROM v_reserva_reservas_general vrg
-WHERE vrg.fecha_reserva between "2023-03-14" and "2023-03-17";
+SELECT 
+    *
+FROM
+    v_reserva_reservas_general vrg
+WHERE
+    vrg.fecha_reserva BETWEEN '2023-03-14' AND '2023-03-17';
 
 SELECT * FROM v_reserva_lista_reservas_general vrg
 WHERE estado_oficial = "EN PROCESO";
@@ -408,7 +545,17 @@ INNER JOIN pagos pa on sp.pagos_id = pa.id
 INNER JOIN devolucion_dineros dd on dd.solicitud_pagos_id = sp.id
 WHERE dd.fecha_hora between "2023-03-11" and "2023-03-20";
 
-SELECT * FROM solicitud_devolucion_dineros;
+
+
+
+SELECT * FROM personas;
+
+
+
+
+
+
+
 
 
 
@@ -443,8 +590,9 @@ SELECT concat(p.nombre, '', p.apellidos) as datos, parti.id FROM personas p
 INNER JOIN clientes c on p.id = c.persona_id
 INNER join reservas r on c.id = r.cliente_id
 INNER JOIN estado_reservas er on r.estado_reservas_id = er.id
-INNER JOIN participantes parti on parti.reserva_id = r.id;
-
+INNER JOIN participantes parti on parti.reserva_id = r.id
+																													s;
+SELECT * FROM participantes WHERE reserva_id = 1;
 
 
 
@@ -457,10 +605,18 @@ SELECT sum(ac.monto) as Monto from almuerzo_celebraciones ac
 WHERE ac.viaje_paquetes_id = 1;
 
 
+
+-- VERIFICAR SI EL PAGO QUE HIZO UN CLIENTE ESTÁ COMPLLETADO
+SELECT * FROM v_reserva_reservas_general vrg
+WHERE vrg.idReserva = 1
+LIMIT 1;
+
+
+
 -- PAGOS DE BOLETOS DE VIAJES
 SELECT id, descripcion, fecha, monto, viaje_paquetes_id FROM pago_boletos_viajes pbv
 WHERE pbv.viaje_paquetes_id = 1;
-
+	
 
 
 
@@ -490,7 +646,7 @@ INNER JOIN reservas r on r.cliente_id = c.id
 INNER JOIN participantes par on par.reserva_id = r.id
 INNER JOIN asistentes a on a.participantes_id = par.id;
 
-
+SELECT * FROM tipo_licencias;
 
 select * from v_viaje_clientes_participantes_reservas
 WHERE id NOT IN (SELECT a.participantes_id FROM asistentes as a 
@@ -506,13 +662,17 @@ WHERE hos.viaje_paquetes_id = 3;
 
 
 -- SELECCIONAR LAS ACTIVIDAES QUE LE CORRESPONDEN AL VIAJE POR PAQUETE
-SELECT ai.nombre_actividad,ip.id,ip.descripcion, ip.actividad_id, ic.fecha_cumplimiento  
+SELECT ai.nombre_actividad,ip.id,ip.descripcion, ip.actividad_id,
+(CASE
+    WHEN (SELECT COUNT(*) FROM itinerarios_cumplidos ic WHERE ic.viaje_paquetes_id = 1 AND ic.itinerario_paquetes_id = ip.id) > 0 
+    THEN (SELECT ic.fecha_cumplimiento FROM itinerarios_cumplidos ic WHERE ic.viaje_paquetes_id = 1 AND ic.itinerario_paquetes_id = ip.id LIMIT 1)
+    ELSE 'No cumplido'
+END) as fecha_cumplimiento  
 FROM actividades_itinerarios ai
 INNER JOIN itinerario_paquetes ip on ai.id = ip.actividad_id
-left join itinerarios_cumplidos ic on ic.itinerario_paquetes_id = ip.id
 WHERE ai.paquete_id = 1;
-SELECT * FROM itinerarios_cumplidos;
 
+SELECT * FROM itinerarios_cumplidos;
 
 
 -- PERSONAS QUE SON ARRIEROS
@@ -585,6 +745,12 @@ LEFT JOIN guias g on g.persona_id = p.id
 WHERE p.dni = '70988855' LIMIT 1;
 
 
+-- SELECCIONAR LOS CHOFERES DE UN VEHÍCULO
+SELECT p.nombre, p.apellidos, v.id, ch.id as idVehiculoChofer, vc.id as idVChofer FROM personas p
+INNER JOIN choferes ch on p.id = ch.persona_id
+INNER JOIN vehiculo_choferes vc on vc.choferes_id = ch.id
+INNER JOIN vehiculos v on v.id = vc.vehiculos_id
+WHERE v.id = 1;
 
 
 
@@ -667,12 +833,26 @@ inner join arrieros a on a.persona_id = p.id
 INNER JOIN asociaciones aso on aso.id = a.asociaciones_id;
 
 
+-- SELECCIONAR LA TABLA ENTREGA EQUIPOS
+SELECT * FROM entrega_equipos ee
+WHERE ee.participantes_id = 1
+LIMIT 1;
 
 
+SELECT * FROM detalle_entregas;
 
+-- SELECCIONAR LOS EQUIPOS QUE ESTÁ ASIGNADO AL PARTICIPANTE DEL VIAJE
+SELECT e.nombre, m.nombre as marca, de.cantidad, de.observacion, de.id, de.equipo_id, de.cantidad_devuelta FROM entrega_equipos ee
+INNER JOIN detalle_entregas de on de.entrega_equipos_id = ee.id
+INNER JOIN equipos e on e.id = de.equipo_id
+INNER JOIN marcas m on m.id = e.marca_id
+WHERE de.entrega_equipos_id = 1
+LIMIT 1;
+DESC entrega_equipos;
 
-
-
+SELECT * FROM personas; -- 59
+SELECT * FROM vehiculo_choferes; -- 1
+DESC choferes;
 
 
 
@@ -683,8 +863,9 @@ INNER JOIN asociaciones aso on aso.id = a.asociaciones_id;
 
 
 /********************** PEDIDOS PROVEEDORES *********************/
-SELECT * FROM proveedores;
-
+DESC tipo_comprobantes;
+SELECT * FROM tipo_comprobantes;
+	
 
 
 SELECT b.nombre_banco, b.direccion, cpb.numero_cuenta, cpb.estado, cpb.id FROM bancos b
@@ -692,7 +873,7 @@ INNER JOIN cuenta_proveedor_bancos cpb on b.id = cpb.bancos_id
 WHERE cpb.proveedores_id = 1;
 
 -- CONOCER LOS EQUIPOS QUE SE HICIERON PEDIDO
-SELECT e.nombre, m.nombre as marca, dp.cantidad,dp.precio_real, dp.id FROM equipos e
+SELECT e.id as idEquipo, e.nombre, m.nombre as marca, dp.cantidad, dp.cantidad_entrante, dp.precio_real, dp.id FROM equipos e
 INNER JOIN marcas m on m.id = e.marca_id
 INNER JOIN detalle_pedidos dp on dp.equipo_id = e.id
 WHERE dp.pedidos_id = 2;
@@ -701,7 +882,7 @@ WHERE dp.pedidos_id = 2;
 SELECT * FROM detalle_pedidos
 WHERE pedidos_id = 2;
 
-
+SELECT * FROM bancos;
 
 
 -- LISTA DE PEDIDOS A PROVEEDORES
@@ -759,7 +940,9 @@ WHERE dp.pedidos_id = 2;
 
 
 
-SELECT * FROM equipos;
+SELECT * FROM devolucion_mantenimientos dm
+WHERE dm.mantenimientos_id = 16
+LIMIT 1;
 
 
 
@@ -784,7 +967,7 @@ SELECT * FROM equipos;
 /**------------------------------------------------ EQUIPOS --------------------------------------------------------------*/
 -- SACAR EQUIPOS CON SU MARCA 
 SELECT e.id, e.nombre, e.descripcion, e.stock,e.precio_referencial, e.tipo, m.nombre as marca FROM equipos e
-INner join marcas m on m.id = e.marca_id;
+INNER JOIN marcas m on m.id = e.marca_id;
 
 
 SELECT * FROM equipos;
@@ -793,11 +976,12 @@ SELECT * FROM hoteles;
 
 -- SELECCIONAR LOS EQUIPOS EN MANTENIMIENTO
 SELECT m.id as idMantenimiento,date_format(m.fecha_salida_mantenimiento, "%d-%m-%Y") as fecha_salida_mantenimiento, m.cantidad, m.observacion, 
-dm.id as idDevolucionMantenimiento,date_format(dm.fecha_entrada_equipo, "%d-%m-%Y") as fecha_entrada_equipo, dm.cantidad_equipos_arreglados_buen_estado, dm.observacion as obsDevolucion
+dm.id as idDevolucionMantenimiento,date_format(dm.fecha_entrada_equipo, "%d-%m-%Y") as fecha_entrada_equipo, 
+dm.cantidad_equipos_arreglados_buen_estado, dm.observacion as obsDevolucion
 FROM equipos e
 LEFT JOIN mantenimientos m on m.equipo_id = e.id
 LEFT JOIN devolucion_mantenimientos dm on dm.mantenimientos_id = m.id
-WHERE m.equipo_id = 1;
+WHERE (m.equipo_id = 1) AND (m.fecha_salida_mantenimiento >= '2005-05-05' AND dm.fecha_entrada_equipo <= '2023-05-27');
 
 
 

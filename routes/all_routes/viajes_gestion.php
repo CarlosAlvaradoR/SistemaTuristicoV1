@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/paquete/{paquete}/viajes', [App\Http\Controllers\ViajePaquetesController::class, 'index'])->name('paquete.viajes')->middleware(['auth', 'verified']);
 Route::get('/paquete/{paquete}/viajes/{viaje}/participantes', [App\Http\Controllers\ViajePaquetesController::class, 'viajeParticipantes'])->name('paquete.viajes.participantes')->middleware(['auth', 'verified']);
+Route::get('/paquete/{paquete}/viajes/{viaje}/participantes/entrega-de-equipos/{participante}', [App\Http\Controllers\ViajePaquetesController::class, 'EntregaDeEquipos'])->name('paquete.viajes.participantes.entregaEquipos')->middleware(['auth', 'verified']);
 
 
 Route::get('/paquete/{paquete}/viajes/{viaje}/traslados', [App\Http\Controllers\ViajePaquetesController::class, 'trasladoViajes'])->name('paquete.viajes.traslados')->middleware(['auth', 'verified']);
@@ -27,3 +28,18 @@ Route::get('/viajes/chofer', [App\Http\Controllers\ViajePaquetesController::clas
 Route::get('/viajes/cocinero', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarListaCocineros'])->name('viajes.cocinero')->middleware(['auth', 'verified']);
 Route::get('/viajes/guia', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarListaGuias'])->name('viajes.guia')->middleware(['auth', 'verified']);
 Route::get('/viajes/arriero', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarArrieros'])->name('viajes.arriero')->middleware(['auth', 'verified']);
+
+
+
+Route::get('/viajes/tipos-de-vehiculos', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarTiposDeVehiculos'])->name('viajes.tipos.de.vehiculos')->middleware(['auth', 'verified']);
+Route::get('/viajes/tipos-de-licencias', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarTiposDeLicencias'])->name('viajes.tipos.de.licencias')->middleware(['auth', 'verified']);
+Route::get('/viajes/asociaciones', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarAsociaciones'])->name('viajes.mostrar.asociaciones')->middleware(['auth', 'verified']);
+Route::get('/viajes/hoteles', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarHoteles'])->name('viajes.mostrar.hoteles')->middleware(['auth', 'verified']);
+
+
+/** REPORTES */
+Route::get('/viajes/reporte/viajes-actuales/{fecha_inicial?}/{fecha_final?}', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarViajesActuales'])->name('mostrar.viajes.actuales')->middleware(['auth', 'verified']);
+Route::get('/viajes/reporte/{paquete}/{viaje}/participantes-del-viaje', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarParticipantesDelViaje'])->name('mostrar.participantesDelViaje')->middleware(['auth', 'verified']);
+Route::get('/viajes/reporte/{paquete}/{viaje}/itinerario-cumplido', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarItinerariosCumplidos'])->name('mostrar.viajes.itinerarios.cumplidos')->middleware(['auth', 'verified']);
+Route::get('/viajes/reporte/{paquete}/{viaje}/boletas-de-pago', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarBoletasDePago'])->name('mostrar.boletasDePago')->middleware(['auth', 'verified']);
+Route::get('/viajes/reporte/{paquete}/{viaje}/equipos-en préstamo', [App\Http\Controllers\ViajePaquetesController::class, 'mostrarEquiposEnPrestamo'])->name('mostrar.equipos.en prestamo')->middleware(['auth', 'verified']);

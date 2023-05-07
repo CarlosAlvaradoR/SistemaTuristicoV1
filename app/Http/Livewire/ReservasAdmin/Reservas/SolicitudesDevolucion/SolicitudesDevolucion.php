@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\ReservasAdmin\Reservas\SolicitudesDevolucion;
 
-use App\Models\Personas;
+use Livewire\WithFileUploads;
 use App\Models\Reservas\Clientes;
 use App\Models\Reservas\DevolucionDineros;
 use App\Models\Reservas\EventoPostergaciones;
@@ -16,22 +16,25 @@ use Illuminate\Support\Facades\DB;
 
 class SolicitudesDevolucion extends Component
 {
+    use WithFileUploads;
+
+
     public $reserva;
     public $cliente, $persona;
     /** ATRUBUTOS GENERALES */
     public $datos, $dni, $nombre_paquete, $fecha_reserva;
     /** ATRIBUTOS DE POSTERGACIÓN RESERVAS */
     public $idPostergacionReserva;
-    public $fecha_postergacion, $descripcion_motivo, $evento, $pago, $monto_solicitado;
+    public $fecha_postergacion, $descripcion_motivo, $documento_sustentatorio, $evento, $pago, $monto_solicitado, $ver_documento;
     /** ATRIBUTO DE SOLICITUD DEVOLUCIÓN DINEROS */
-    public $idSolicitudDevolucionDineros, $fecha_presentacion, $estado_solicitud, $descripcion_de_solicitud = ''; //Para presentar Solicitud
+    public $idSolicitudDevolucionDineros, $pedido, $fecha_presentacion, $estado_solicitud, $descripcion_de_solicitud = ''; //Para presentar Solicitud
     /** ATRIBUTOS DE SOLICITUD PAGOS */
-    public $observacion_de_pago, $idSolicitudPagos, $estado_de_solicitud='';
+    public $observacion_de_pago, $idSolicitudPagos, $estado_de_solicitud = '';
     /** ATRIBUTOS DE DEVOLUCIÓN DE DINEROS */
     public $monto_devolucion, $observacion_devolucion, $fecha_hora, $idDevolucionDineros;
     public $solicitud, $devolucion_dinero, $query, $id_reserva;
     public $solicitud_existe = false, $solicitud_dinero_existe = false;
-
+    
     public function mount(Reservas $reserva)
     {
         //Verificar si ya llenó una solicitud --> Si ya llenó verificar si ya llenó una devolución
@@ -69,15 +72,19 @@ class SolicitudesDevolucion extends Component
             $this->fecha_postergacion = $postergacion_reserva[0]->fecha_postergacion;
             $this->descripcion_motivo = $postergacion_reserva[0]->descripcion_motivo;
             $this->evento = $postergacion_reserva[0]->evento_postergaciones_id;
+            $this->ver_documento = $postergacion_reserva[0]->documento_sustentatorio;
         }
         if ($this->idPostergacionReserva) {
             # code...
             $solicitudDevolucionDineros = SolicitudDevolucionDineros::where('postergacion_reservas_id', $this->idPostergacionReserva)
                 ->limit(1)
                 ->get();
+            //dd($solicitudDevolucionDineros);
             if (count($solicitudDevolucionDineros) > 0) {
                 $this->idSolicitudDevolucionDineros = $solicitudDevolucionDineros[0]->id;
+                $this->pedido = $solicitudDevolucionDineros[0]->pedido;
                 $this->fecha_presentacion = $solicitudDevolucionDineros[0]->fecha_presentacion;
+                $this->estado_solicitud = $solicitudDevolucionDineros[0]->estado;
                 $this->descripcion_de_solicitud = $solicitudDevolucionDineros[0]->descripcion_solicitud;
             }
         }
@@ -87,10 +94,17 @@ class SolicitudesDevolucion extends Component
             ->join('cuenta_pagos as cp', 'cp.id', '=', 'p.cuenta_pagos_id')
             ->join('tipo_pagos as tp', 'tp.id', '=', 'cp.tipo_pagos_id')
             ->where('p.reserva_id', $this->reserva->id)
-            ->select('p.id', 'monto', 'fecha_pago', 'estado_pago', 'ruta_archivo_pago', 
-            'tp.nombre_tipo_pago', 'cp.numero_cuenta')
+            ->select(
+                'p.id',
+                'monto',
+                'fecha_pago',
+                'estado_pago',
+                'ruta_archivo_pago',
+                'tp.nombre_tipo_pago',
+                'cp.numero_cuenta'
+            )
             ->get();
-        
+
         $solicitud_pagos = DB::table('solicitud_pagos as sp')
             ->join('pagos as p', 'sp.pagos_id', '=', 'p.id')
             ->where('p.reserva_id', $this->reserva->id)
@@ -128,6 +142,7 @@ class SolicitudesDevolucion extends Component
                 'fecha_postergacion' => 'required|date',
                 'descripcion_motivo' => 'required|string|min:5',
                 'evento' => 'nullable|numeric|min:1',
+                'documento_sustentatorio' => 'nullable|mimes:pdf,jpeg,jpg,png',
             ]
         );
         $evento = null;
@@ -136,18 +151,41 @@ class SolicitudesDevolucion extends Component
         }
         if ($this->idPostergacionReserva) {
             # Actualizo
+            $documento = $this->ver_documento;
+            if ($this->documento_sustentatorio) {
+                if ($this->ver_documento) {
+                    $eliminar = unlink($this->ver_documento);
+                }
+                $documento = 'storage/' . $this->documento_sustentatorio->store('documentos_sustentatorios_postergacion', 'public');
+            }
             $postergacion = PostergacionReservas::findOrFail($this->idPostergacionReserva);
             $postergacion->fecha_postergacion = $this->fecha_postergacion;
             $postergacion->descripcion_motivo = $this->descripcion_motivo;
+            $postergacion->documento_sustentatorio = $documento;
             $postergacion->evento_postergaciones_id = $this->evento;
             $postergacion->save();
             $msg = 'Se Actualizó correctamente el Evento de Postergación Correspondiente a la Reserva';
         } else {
             # Creando
+            /*$documento = '';
+            if ($this->documento_sustentatorio) {
+                $documento = 'storage/' . $this->documento_sustentatorio->store('documentos_sustentatorios_postergacion', 'public');
+            }*/
+            $ruta = '';
+            if ($this->documento_sustentatorio) {
+                $filename = uniqid() . '_' . time() . rand(1, 1000);
+
+                //$image = $this->ruta_archivo_pago->getRealPath();
+                $ext = $this->documento_sustentatorio->getClientOriginalExtension();
+
+                $ruta = $this->documento_sustentatorio->storeAs('Reservas/DocumentosSustentatorios', $filename . '.' . $ext, 'private');
+                //$ruta = Storage::disk('private')->putFileAs('photos', $image, $filename);;
+            }
             $postergacion = PostergacionReservas::create(
                 [
                     'fecha_postergacion' => $this->fecha_postergacion,
                     'descripcion_motivo' => $this->descripcion_motivo,
+                    'documento_sustentatorio' => $ruta,
                     'reserva_id' => $this->reserva->id,
                     'evento_postergaciones_id' => $evento
                 ]
@@ -175,6 +213,7 @@ class SolicitudesDevolucion extends Component
     {
         $this->validate(
             [
+                'pedido' => 'required|string|min:1|max:45',
                 'fecha_presentacion' => 'required|date',
                 //'estado_solicitud' => 'required|numeric|min:1',
                 'descripcion_de_solicitud' => 'nullable|string|min:5',
@@ -184,6 +223,8 @@ class SolicitudesDevolucion extends Component
         if ($this->idSolicitudDevolucionDineros) {
             # Actualizar
             $solicitud = SolicitudDevolucionDineros::findOrFail($this->idSolicitudDevolucionDineros);
+            $solicitud->pedido = $this->pedido;
+            $solicitud->estado = $this->estado_solicitud;
             $solicitud->fecha_presentacion = $this->fecha_presentacion;
             $solicitud->descripcion_solicitud = $this->descripcion_de_solicitud;
             $solicitud->save();
@@ -191,6 +232,7 @@ class SolicitudesDevolucion extends Component
         } else {
             # CRear
             $solicitud = SolicitudDevolucionDineros::create([
+                'pedido' => $this->pedido,
                 'fecha_presentacion' => $this->fecha_presentacion,
                 'estado' => 'POR PROCESAR',
                 'descripcion_solicitud' => $this->descripcion_de_solicitud,
@@ -244,7 +286,7 @@ class SolicitudesDevolucion extends Component
     {
         //dd($solicitud);
         switch ($opcion) {
-            case 1:
+            case 1: 
                 # Seleccionar Solicitud Pagos
                 $this->idSolicitudPagos = $solicitud->id;
                 $this->observacion_de_pago = $solicitud->observacion;
@@ -297,7 +339,7 @@ class SolicitudesDevolucion extends Component
             $devolucion_dinero->observacion = $this->observacion_devolucion;
             $devolucion_dinero->fecha_hora = $this->fecha_hora;
             $devolucion_dinero->save();
-            
+
             $msg = 'Información de Devolución Actualizada Correctamente';
         } else {
             # Creamos

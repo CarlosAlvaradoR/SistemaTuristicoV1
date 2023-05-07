@@ -15,7 +15,7 @@
                         </div>
                         <div class="col-md-2">
                             <br>
-                            <a id="modal-918849" href="#modal-container-918849" role="button" class="btn"
+                            <a id="modal-918849" href="#modal_arrieros" role="button" class="btn"
                                 data-toggle="modal">Nuevo Arriero</a>
                         </div>
                     </div>
@@ -42,17 +42,14 @@
                                         {{-- $a->idArriero --}}
                                     </td>
                                     <td>
-                                        <button type="button" class="tabledit-edit-button btn btn-sm btn-default"
-                                            style="float: none;">
+                                        <button type="button" class="tabledit-edit-button btn btn-sm btn-warning"
+                                            style="float: none;" wire:click="Edit({{ $a->idArriero }})"
+                                            wire:loading.attr="disabled">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </button>
-                                        <button type="button" class="tabledit-edit-button btn btn-sm btn-default"
-                                            data-toggle="modal" data-target="#staticBackdrop" style="float: none;">
-                                            <i class="glyphicon fas fa-biking"></i>
-                                        </button>
-
-                                        <button type="button" class="tabledit-delete-button btn btn-sm btn-default"
-                                            style="float: none;">
+                                        <button type="button" class="tabledit-delete-button btn btn-sm btn-danger"
+                                            style="float: none;"wire:click="deleteConfirm({{ $a->idArriero }})"
+                                            wire:loading.attr="disabled">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </button>
                                     </td>
@@ -64,70 +61,12 @@
                 </div>
             </div>
         </div>
-        <!--<div class="col-lg-6 ks-panels-column-section">
-                                <div class="card">
-                                    <div class="card-block">
-                                        <h5 class="card-title">Lista de Participantes</h5>
-                                        <div class="form-group has-search">
-                                            <span class="fa fa-search form-control-feedback"></span>
-                                            <input type="text" class="form-control" placeholder="Buscar Cliente">
-                                        </div>
-                                        <table class="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">CLIENTE</th>
-                                                    <th scope="col">Acción</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        1
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" title="Quitar de la Lista de Participantes"
-                                                            class="btn btn-sm btn-rounded btn-danger">
-                                                            <i class="fas fa-minus"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 ks-panels-column-section">
-                                <div class="card">
-                                    <div class="card-block">
-                                        <h5 class="card-title">Validation</h5>
-                                        <div>
-                                            <fieldset class="form-group has-success">
-                                                <div class="fl-flex-label">
-                                                    <input type="text" class="form-control form-control-success" id="inputSuccess1"
-                                                        placeholder="Input with success">
-                                                </div>
-                                            </fieldset>
-                                            <fieldset class="form-group has-warning">
-                                                <div class="fl-flex-label">
-                                                    <input type="text" class="form-control form-control-warning"
-                                                        placeholder="Input with warning">
-                                                </div>
-                                            </fieldset>
-                                            <fieldset class="form-group has-danger">
-                                                <div class="fl-flex-label">
-                                                    <input type="text" class="form-control form-control-danger"
-                                                        placeholder="Input with danger">
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>-->
+
     </div>
 
 
     <!--MODAL --->
-    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal-container-918849"
+    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal_arrieros"
         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -146,7 +85,7 @@
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
                                 <input type="text" class="form-control" wire:keydown.enter="buscarArriero"
-                                    wire:model="dni" placeholder="Buscar Arrieros">
+                                    wire:model="dni_buscado" placeholder="Buscar Arrieros">
                             </div>
                             @if (session()->has('message-error'))
                                 <div class="alert alert-danger" role="alert">
@@ -275,13 +214,12 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
-                                    <label class="form-label semibold" for="dni_persona">DNI</label>
-                                    <input type="text" class="form-control" wire:model.defer="dni_persona"
-                                        id="dni_persona" placeholder="Ingrese Nº de DNI">
-                                    @error('dni_persona')
+                                    <label class="form-label semibold" for="dni">DNI</label>
+                                    <input type="text" class="form-control" wire:model.defer="dni"
+                                        id="dni" placeholder="Ingrese Nº de DNI">
+                                    @error('dni')
                                         <small class="text-muted text-danger">{{ $message }}</small>
                                     @enderror
-                                    <!--<small class="text-muted text-danger">We'll never share your email with anyone else.</small>-->
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -307,8 +245,11 @@
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
                                     <label class="form-label semibold" for="genero">Género</label>
-                                    <input type="text" class="form-control" wire:model.defer="genero"
-                                        id="genero" placeholder="Ingrese el Género">
+                                    <select class="form-control" wire:model.defer="genero" id="genero">
+                                        <option value="" selected>...Seleccione...</option>
+                                        <option value="1">Masculino</option>
+                                        <option value="2">Femenino</option>
+                                    </select>
                                     @error('genero')
                                         <small class="text-muted text-danger">{{ $message }}</small>
                                     @enderror
@@ -378,8 +319,13 @@
                         </div>
                     @endif
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                        <button type="button" wire:click.prevent="resetear" class="btn btn-rounded btn-danger"
+                            data-dismiss="modal">
                             Cerrar
+                        </button>
+                        <button type="button" class="btn btn-rounded btn-primary" wire:click="resetear"
+                            wire:loading.attr="disabled" title="Reiniciar">
+                            <i class="fas fa-redo-alt"></i>
                         </button>
                         @if ($encontradoComoArriero)
                             <button type="button" wire:click="guardarArrieroAlquilerAcemila"
@@ -394,13 +340,19 @@
                             </button>
                         @endif
                         @if ($no_existe)
-                            <button type="button" wire:click="nuevoArriero" class="btn btn-rounded btn-primary">
-                                <i class="fas fa-save"></i> Guardar
-                            </button>
+                            @if ($idPersona)
+                                <button type="button" title="Actualizar Información del Arriero"
+                                    wire:click="nuevoArriero" class="btn btn-rounded btn-primary">
+                                    <i class="fas fa-save"></i> Actuaizar
+                                </button>
+                            @else
+                                <button type="button" title="Guardar Informació del Arriero"
+                                    wire:click="nuevoArriero" class="btn btn-rounded btn-primary">
+                                    <i class="fas fa-save"></i> Guardar
+                                </button>
+                            @endif
+
                         @endif
-                        <button type="button" wire:click="saveViaje" class="btn btn-rounded btn-primary">
-                            Guardar
-                        </button>
 
                     </div>
 
@@ -411,24 +363,44 @@
     </div>
     <!-- END MODAL-->
 
-
+    @livewire('administrate-commons.alerts')
 
     <script>
+        window.addEventListener('swal-confirm-guias', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                denyButtonColor: '#1C2833',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Eliminar Todo',
+                denyButtonText: 'Eliminar Arriero',
+                cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('viajes-admin.viajes.arriero.arriero',
+                        'deleteArrieros',
+                        event.detail
+                        .id, 1);
+                } else if (result.isDenied) {
+                    Livewire.emitTo('viajes-admin.viajes.arriero.arriero',
+                        'deleteArrieros',
+                        event.detail
+                        .id, 2);
+                }
+
+            })
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             //Lo que llega de CategoriesController
-            window.livewire.on('show-modal-edit', msg => {
-                $('#modal-traslado-viajes').modal('show')
+            window.livewire.on('show-modal', msg => {
+                $('#modal_arrieros').modal('show')
             });
-            window.livewire.on('mensaje-info', msg => {
-                $('#modal-traslado-viajes').modal('hide')
-                Swal.fire(
-                    'ALERTA',
-                    msg,
-                    'warning'
-                )
-            });
-            window.livewire.on('category-updated', msg => {
-                $('#modal-empresa-transporte').modal('hide')
+            window.livewire.on('close-modal', msg => {
+                $('#modal_arrieros').modal('hide')
             });
         });
     </script>

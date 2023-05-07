@@ -109,6 +109,10 @@ MIGRACIONES Y MÓDELOS
         php artisan make:migration create_riesgos_table --path=/database/migrations/paquetes
         php artisan make:model Paquetes/Riesgos -r
 
+        *) Tabla Autorizaciones Medicas
+        php artisan make:migration create_autorizaciones_medicas_table --path=/database/migrations/paquetes
+        php artisan make:model Paquetes/AutorizacionesMedicas -r
+
     MÓDULO RESERVAS
         *) Tabla Nacionalidades
         php artisan make:migration create_nacionalidades_table --path=/database/migrations/reservas
@@ -187,9 +191,9 @@ MIGRACIONES Y MÓDELOS
         php artisan make:migration create_item_fichas_medicas_table --path=/database/migrations/reservas
         php artisan make:model Reservas/ItemFichasMedicas -r
 
-        *) Tabla Autorizaciones Medicas
-        php artisan make:migration create_autorizaciones_medicas_table --path=/database/migrations/reservas
-        php artisan make:model Reservas/AutorizacionesMedicas -r
+        *) Tabla Autorizaciones Presentadas
+        php artisan make:migration create_autorizaciones_presentadas_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/AutorizacionesPresentadas -r
 
     
         /* VISTAS*/
@@ -351,11 +355,12 @@ MIGRACIONES Y MÓDELOS
         *) Tabla Bancos
         php artisan make:migration create_bancos_table --path=/database/migrations/pedidos
         php artisan make:model Pedidos/Bancos -r
+        php artisan make:seeder Pedidos/BancosSeeder
 
         *) Tabla Cuenta Proveedor Bancos
         php artisan make:migration create_cuenta_proveedor_bancos_table --path=/database/migrations/pedidos
         php artisan make:model Pedidos/CuentaProveedorBancos -r
-
+        
         *) Tabla Estado Pedidos
         php artisan make:migration create_estado_pedidos_table --path=/database/migrations/pedidos
         php artisan make:model Pedidos/EstadoPedidos -r
@@ -372,6 +377,7 @@ MIGRACIONES Y MÓDELOS
         *) Tabla Tipo Comprobantes
         php artisan make:migration create_tipo_comprobantes_table --path=/database/migrations/pedidos
         php artisan make:model Pedidos/TipoComprobantes -r
+        php artisan make:seeder Pedidos/TipoComprobantesSeeder
 
         *) Tabla Comprobante Pagos
         php artisan make:migration create_comprobante_pagos_table --path=/database/migrations/pedidos

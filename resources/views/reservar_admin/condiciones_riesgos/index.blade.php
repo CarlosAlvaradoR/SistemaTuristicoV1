@@ -2,7 +2,6 @@
 
 
 @section('contenido')
-    <div class="container-fluid">
         <header class="section-header">
             <div class="tbl">
                 <h3>Reservar</h3>
@@ -17,6 +16,4 @@
 
         @livewire('reservas-admin.reservas.reservar-condiciones-riesgos', [$reserva])
 
-    </div>
-    <!--.container-fluid-->
 @endsection

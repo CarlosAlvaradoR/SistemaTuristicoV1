@@ -15,12 +15,11 @@ return new class extends Migration
     {
         Schema::create('autorizaciones_medicas', function (Blueprint $table) {
             $table->id();
-            $table->string('numero_autorizacion');
-            $table->string('ruta_archivo');
-
-            $table->unsignedBigInteger('reserva_id')->nullable();
-            $table->foreign('reserva_id')->references('id')->on('reservas');
+            $table->text('detalle_de_archivos');
             
+            $table->unsignedBigInteger('paquete_id');
+            $table->foreign('paquete_id')->references('id')->on('paquetes_turisticos');
+
             $table->timestamps();
         });
     }

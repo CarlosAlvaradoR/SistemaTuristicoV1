@@ -16,8 +16,7 @@
                         </div>
                         <div class="col-md-2">
                             <br>
-                            <a id="modal-918849" href="#modal-container-918849" role="button" class="btn"
-                                data-toggle="modal">Nuevo Vehículo</a>
+                            <button class="btn" wire:click="abrirModalVehiculo">Nuevo Vehículo</button>
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -39,17 +38,21 @@
                                     </td>
                                     <td>
                                         <button type="button" wire:click="Edit({{ $v->id }})"
-                                            class="tabledit-edit-button btn btn-sm btn-warning" style="float: none;">
+                                            wire:loading.attr="disabled"
+                                            class="tabledit-edit-button btn btn-sm btn-warning" style="float: none;"
+                                            title="Editar Información del Vehículo">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </button>
                                         <button type="button" wire:click="modalNuevoChofer({{ $v->id }})"
-                                            class="tabledit-edit-button btn btn-sm btn-primary" data-toggle="modal"
-                                            data-target="#staticBackdrop" style="float: none;">
+                                            wire:loading.attr="disabled" title="Añadir Chófer al Vehículo"
+                                            class="tabledit-edit-button btn btn-sm btn-primary">
                                             <i class="glyphicon fas fa-biking"></i>
                                         </button>
 
-                                        <button type="button" class="tabledit-delete-button btn btn-sm btn-danger"
-                                            style="float: none;">
+                                        <button type="button" wire:click="deleteConfirm({{ $v->id }})"
+                                            wire:loading.attr="disabled"
+                                            class="tabledit-delete-button btn btn-sm btn-danger" style="float: none;"
+                                            title="Eliminar Vehículo">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </button>
                                     </td>
@@ -61,65 +64,6 @@
                 </div>
             </div>
         </div>
-        <!--<div class="col-lg-6 ks-panels-column-section">
-                        <div class="card">
-                            <div class="card-block">
-                                <h5 class="card-title">Lista de Participantes</h5>
-                                <div class="form-group has-search">
-                                    <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" class="form-control" placeholder="Buscar Cliente">
-                                </div>
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">CLIENTE</th>
-                                            <th scope="col">Acción</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>
-                                                <button type="button" title="Quitar de la Lista de Participantes"
-                                                    class="btn btn-sm btn-rounded btn-danger">
-                                                    <i class="fas fa-minus"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 ks-panels-column-section">
-                        <div class="card">
-                            <div class="card-block">
-                                <h5 class="card-title">Validation</h5>
-                                <div>
-                                    <fieldset class="form-group has-success">
-                                        <div class="fl-flex-label">
-                                            <input type="text" class="form-control form-control-success" id="inputSuccess1"
-                                                placeholder="Input with success">
-                                        </div>
-                                    </fieldset>
-                                    <fieldset class="form-group has-warning">
-                                        <div class="fl-flex-label">
-                                            <input type="text" class="form-control form-control-warning"
-                                                placeholder="Input with warning">
-                                        </div>
-                                    </fieldset>
-                                    <fieldset class="form-group has-danger">
-                                        <div class="fl-flex-label">
-                                            <input type="text" class="form-control form-control-danger"
-                                                placeholder="Input with danger">
-                                        </div>
-                                    </fieldset>
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
     </div>
 
     <!--MODAL --->
@@ -129,82 +73,88 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">
-                        CREAR NUEVOS VEHÍCULOS
+                        {{ $title }}
                     </h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="numero_placa">
-                                    Nº de Placa <span class="text-danger">(*)</span>
-                                </label>
-                                <input type="text" wire:model.defer="numero_placa" class="form-control"
-                                    id="numero_placa" />
-                                @error('numero_placa')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <label for="tipo_de_vehiculo">
-                                Tipo de Vehículo <span class="text-danger">(*)</span>
-                            </label>
-                            <select class="form-control" wire:model.defer="tipo_de_vehiculo" id="tipo_de_vehiculo">
-                                <option selected value="0">... Seleccione Tipo de Vehículo ...</option>
-                                @foreach ($tipoVehiculos as $tv)
-                                    <option value="{{ $tv->id }}">{{ $tv->nombre_tipo }}</option>
-                                @endforeach
-                            </select>
-                            @error('tipo_de_vehiculo')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="descripcion">
-                                    Descripción <span class="text-danger">(*)</span>
-                                </label>
-                                <textarea class="form-control" wire:model.defer="descripcion" id="descripcion" rows="4"></textarea>
-                                @error('descripcion')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <br>
-                            <div class="form-group has-search">
-                                <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control" wire:model="dni"
-                                    wire:keydown.enter="buscarChofer" placeholder="Buscar cliente por DNI">
-                            </div>
-                            @if (session()->has('message-error'))
-                                <div class="alert alert-danger" role="alert">
-                                    {{ session('message-error') }}
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-
-                    @if ($encontradoComoPersona && !$encontradoComoChofer)
+                    @if (!$idVehiculo)
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="numero_placa">
+                                        Nº de Placa <span class="text-danger">(*)</span>
+                                    </label>
+                                    <input type="text" wire:model.defer="numero_placa" class="form-control"
+                                        id="numero_placa" />
+                                    @error('numero_placa')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <label for="tipo_de_vehiculo">
+                                    Tipo de Vehículo <span class="text-danger">(*)</span>
+                                    <a href="{{ route('viajes.tipos.de.vehiculos') }}" target="_blank"
+                                        title="Ver Tipos de Vehículo" wire:click="render"><i
+                                            class="fas fa-exclamation"></i></a>
+                                    <button class="btn btn-sm btn-rounded" title="Refrescar" wire:click="render"><i
+                                            class="fas fa-sync-alt"></i></button>
+                                </label>
+                                <select class="form-control" wire:model.defer="tipo_de_vehiculo" id="tipo_de_vehiculo">
+                                    <option selected value="">... Seleccione Tipo de Vehículo ...</option>
+                                    @foreach ($tipoVehiculos as $tv)
+                                        <option value="{{ $tv->id }}">{{ $tv->nombre_tipo }}</option>
+                                    @endforeach
+                                </select>
+                                @error('tipo_de_vehiculo')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="descripcion">
+                                        Descripción <span class="text-danger">(*)</span>
+                                    </label>
+                                    <textarea class="form-control" wire:model.defer="descripcion" id="descripcion" rows="4"></textarea>
+                                    @error('descripcion')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+
+                    @if ($idVehiculo)
+                        <div class="row">
+                            <div class="col-md-12">
+                                <br>
+                                <div class="form-group has-search">
+                                    <span class="fa fa-search form-control-feedback"></span>
+                                    <input type="text" class="form-control" wire:model="dni"
+                                        wire:keydown.enter="buscarChofer" placeholder="Buscar chófer por DNI">
+                                </div>
+
+                            </div>
+                        </div>
+                    @endif
+
+
+                    {{-- @if ($encontradoComoPersona && !$encontradoComoChofer)
+                        <div class="row">
+                            <div class="col-md-4">
                                 <span class="badge badge-default font-weight-bold">INFORMACIÓN:</span>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-8">
                                 <span class="badge badge-default">{{ $nombres_apellidos }}</span>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <span class="badge badge-default font-weight-bold">TELÉFONO:</span>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-8">
                                 <span class="badge badge-default">{{ $telefono_arriero }}</span>
                             </div>
                             <br>
@@ -215,6 +165,9 @@
                                     </label>
                                     <input type="text" wire:model.defer="numero_licencia" class="form-control"
                                         id="numero_licencia" />
+                                    @error('numero_licencia')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -223,42 +176,60 @@
                                         Tipo de Licencia
                                     </label>
                                     <select class="form-control" wire:model="tipo_de_licencia" id="tipo_de_licencia">
-                                        <option value="0" select>...Seleccione...</option>
+                                        <option value="" select>...Seleccione...</option>
                                         @foreach ($tipoLicencias as $tl)
                                             <option value="{{ $tl->id }}" select>{{ $tl->nombre_tipo }}
                                             </option>
                                         @endforeach
                                     </select>
+                                    @error('tipo_de_licencia')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            
+                        </div>
+                    @endif --}}
+
+                    @if ($encontradoComoChofer)
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span class="badge badge-default">INFORMACIÓN DEL CHÓFER:</span>
+                            </div>
+                            <div class="col-md-8">
+                                <span class="badge badge-default">{{ $nombres_apellidos }}</span>
+                            </div>
+                            <div class="col-md-4">
+                                <span class="badge badge-default">TELÉFONO</span>
+                            </div>
+                            <div class="col-md-8">
+                                <span class="badge badge-default">{{ $telefono_arriero }}</span>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <button class="btn btn-primary btn-rounded">Agregar</button>
                                 </div>
                             </div>
                         </div>
                     @endif
 
-                    @if ($encontradoComoChofer)
-                        <div class="row">
-                            <div class="col-md-3">
-                                <span class="badge badge-default">INFORMACIÓN DEL CHÓFER:</span>
-                            </div>
-                            <div class="col-md-9">
-                                <span class="badge badge-default">{{ $nombres_apellidos }}</span>
-                            </div>
-                            <div class="col-md-3">
-                                <span class="badge badge-default">TELÉFONO</span>
-                            </div>
-                            <div class="col-md-9">
-                                <span class="badge badge-default">{{ $telefono_arriero }}</span>
-                            </div>
+                    @if ($mostrarEnlace)
+                        <div class="alert alert-primary" role="alert">
+                            <a target="_blank" href="{{ route('viajes.chofer') }}" class="alert-link">Crear Nuevo
+                                Chófer ?</a>
                         </div>
                     @endif
 
-                    @if ($no_existe)
+                    {{-- @if ($no_existe)
                         <div class="row">
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
                                     <label class="form-label semibold" for="dni_persona">DNI</label>
-                                    <input type="text" class="form-control" wire:model.defer="dni_persona"
-                                        id="dni_persona" placeholder="Ingrese Nº de DNI">
-                                    <!--<small class="text-muted text-danger">We'll never share your email with anyone else.</small>-->
+                                    <input type="text" class="form-control" wire:model.defer="dni"
+                                        id="dni" placeholder="Ingrese Nº de DNI">
+                                    @error('dni')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -266,6 +237,9 @@
                                     <label class="form-label semibold" for="nombre">Nombres</label>
                                     <input type="text" class="form-control" wire:model.defer="nombre"
                                         id="nombre" placeholder="Ingrese Nombres" value="ej: Mike Alejandro">
+                                    @error('nombre')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -273,6 +247,9 @@
                                     <label class="form-label semibold" for="apellidos">Apellidos</label>
                                     <input type="text" class="form-control" wire:model.defer="apellidos"
                                         id="apellidos" placeholder="Ingrese los Apellidos">
+                                    @error('apellidos')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -280,6 +257,9 @@
                                     <label class="form-label semibold" for="genero">Género</label>
                                     <input type="text" class="form-control" wire:model.defer="genero"
                                         id="genero" placeholder="Ingrese el Género">
+                                    @error('genero')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -287,6 +267,9 @@
                                     <label class="form-label semibold" for="telefono">Teléfono</label>
                                     <input type="tel" class="form-control" wire:model.defer="telefono"
                                         id="telefono" placeholder="Ingrese el Teléfono">
+                                    @error('telefono')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -294,6 +277,9 @@
                                     <label class="form-label semibold" for="dirección">Dirección</label>
                                     <input type="text" class="form-control" wire:model.defer="dirección"
                                         id="dirección" placeholder="Ingrese la Dirección">
+                                    @error('dirección')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-6">
@@ -303,6 +289,9 @@
                                     </label>
                                     <input type="text" wire:model.defer="numero_licencia" class="form-control"
                                         id="numero_licencia" />
+                                    @error('numero_licencia')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-6">
@@ -311,52 +300,88 @@
                                         Tipo de Licencia
                                     </label>
                                     <select class="form-control" wire:model="tipo_de_licencia" id="tipo_de_licencia">
-                                        <option value="0" select>...Seleccione...</option>
+                                        <option value="" select>...Seleccione...</option>
                                         @foreach ($tipoLicencias as $tl)
-                                            <option value="{{ $tl->id }}" select>{{ $tl->nombre_tipo }}
+                                            <option value="{{ $tl->id }}">{{ $tl->nombre_tipo }}
                                             </option>
                                         @endforeach
                                     </select>
+                                    @error('tipo_de_licencia')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                         </div>
+                    @endif --}}
+                    @if ($idVehiculo)
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">NOMBRES</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $contador = 1;
+                                @endphp
+                                @foreach ($choferes as $ch)
+                                    <tr>
+                                        <th scope="row">{{ $contador++ }}</th>
+                                        <td>{{ $ch->nombre }} {{ $ch->apellidos }}</td>
+                                        <td>
+                                            <button wire:click="deleteConfirmChoferes({{$ch->idVChofer}})" class="btn btn-danger">
+                                                Quitar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
                     @endif
+
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                    <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger"
+                        data-dismiss="modal">
                         Cerrar
                     </button>
-                    @if ($encontradoComoPersona && !$encontradoComoChofer)
+                    {{-- @if ($encontradoComoPersona && !$encontradoComoChofer)
                         <button type="button" wire:click="guardarPersonaCliente"
                             class="btn btn-rounded btn-primary">
                             <i class="fas fa-save"></i> Guardar
                         </button>
-                    @endif
+                    @endif --}}
 
                     @if ($encontradoComoChofer)
                         <button type="button" title="Añadir Chofer" wire:click="agregarChoferAlVehiculo"
                             class="btn btn-rounded btn-primary">
-                            <i class="fas fa-save"></i> Guardar
+                            <i class="fas fa-save"></i> Agregar Chófer al Vehículo
                         </button>
                     @endif
 
-                    @if ($no_existe)
+                    {{-- @if ($no_existe)
                         <button type="button" title="Grabar Nuevo Chofer" wire:click="NuevoChofer"
                             class="btn btn-rounded btn-primary">
                             <i class="fas fa-save"></i> Guardar
                         </button>
+                    @endif --}}
+
+                    @if (!$idVehiculo)
+                        @if ($idSeleccionado)
+                            <button type="button" wire:click="guardarVehículo" class="btn btn-rounded btn-primary">
+                                Actualizar
+                            </button>
+                        @else
+                            <button type="button" wire:click="guardarVehículo" class="btn btn-rounded btn-primary">
+                                Guardar
+                            </button>
+                        @endif
                     @endif
 
-                    @if ($idSeleccionado)
-                        <button type="button" wire:click="Actualizar" class="btn btn-rounded btn-primary">
-                            Actualizar
-                        </button>
-                    @else
-                        <button type="button" wire:click="guardarVehículo" class="btn btn-rounded btn-primary">
-                            Guardar
-                        </button>
-                    @endif
 
 
                 </div>
@@ -368,8 +393,47 @@
 </div>
 <!-- END MODAL-->
 
+@livewire('administrate-commons.alerts')
 
 <script>
+    window.addEventListener('swal-confirm-vehiculos', event => {
+        Swal.fire({
+            title: event.detail.title,
+            icon: event.detail.icon,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, quiero eliminarlo!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Livewire.emitTo('viajes-admin.viajes.empresas-transporte.vehiculos.vehiculos',
+                    'deleteVehiculos',
+                    event.detail
+                    .id);
+            }
+        })
+    });
+
+    window.addEventListener('swal-confirm-vehiculosChoferes', event => {
+        Swal.fire({
+            title: event.detail.title,
+            icon: event.detail.icon,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, quiero eliminarlo!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Livewire.emitTo('viajes-admin.viajes.empresas-transporte.vehiculos.vehiculos',
+                    'deleteVehiculosChofer',
+                    event.detail
+                    .id);
+            }
+        })
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
         //Lo que llega de CategoriesController
         window.livewire.on('show-modal', msg => {

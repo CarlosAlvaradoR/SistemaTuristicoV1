@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class TipoComprobantes extends Model
 {
     use HasFactory;
+    protected $fillable = ['nombre_tipo'];
 }

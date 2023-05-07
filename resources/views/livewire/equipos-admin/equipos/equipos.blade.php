@@ -5,7 +5,7 @@
                 <div class="card-block">
                     <h5 class="card-title">Lista de Todas los Equipos</h5>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-9">
                             <br>
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
@@ -13,44 +13,13 @@
                                     placeholder="Buscar Equipo">
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">
-                                            Fecha Inicial
-                                        </label>
-                                        <input type="date" class="form-control" id="exampleInputEmail1" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">
-                                            Fecha Inicial
-                                        </label>
-                                        <input type="date" class="form-control" id="exampleInputEmail1" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div class="col-md-1">
                             <br>
-                            <a id="modal-918849" title="Imprimir" href="#modal-container-918849" role="button"
-                                class="btn btn-rounded btn-sm" data-toggle="modal"><i
-                                    class="fas fa-file-invoice"></i></a>
+                            <a href="{{ route('reporte.de.equipos.en.inventario') }}" target="_blank" title="Imprimir"
+                                class="btn btn-rounded"><i class="fas fa-file-invoice"></i> Ver </a>
                         </div>
-                        <div class="col-md-1">
-                            <br>
-                            <a id="modal-918849" title="Ver Reporte Equipos en Mantenimiento"
-                                href="#modal-container-918849" role="button" class="btn btn-rounded btn-sm"
-                                data-toggle="modal"><i class="fas fa-file-invoice"></i></a>
-                        </div>
-                        <div class="col-md-1">
-                            <br>
-                            <a id="modal-918849" title="Ver Reporte de equipos dados de baja"
-                                href="#modal-container-918849" role="button" class="btn btn-rounded btn-sm"
-                                data-toggle="modal"><i class="fas fa-file-invoice"></i></a>
-                        </div>
+                        
                         <div class="col-md-2">
                             <br>
                             <button type="button" class="btn btn-rounded btn-primary" data-toggle="modal"
@@ -59,7 +28,7 @@
                             </button>
                         </div>
                     </div>
-                    <div wire:loading class="alert alert-primary" role="alert">
+                    <div wire:loading wire:target="search" class="alert alert-primary" role="alert">
                         <a href="#!" class="alert-link">Cargando ...</a>
                     </div>
                     <table class="table table-hover">
@@ -84,27 +53,27 @@
                                     <td>{{ $e->tipo }}</td>
                                     <td>{{ $e->marca }}</td>
                                     <td>
-                                        <button id="edit" title="Editar Equipo"
-                                            wire:click="Edit({{ $e->id }})" class="btn btn-warning btn-sm">
+                                        <button title="Editar Equipo" wire:click="Edit({{ $e->id }})"
+                                            wire:loading.attr="disabled" class="btn btn-warning btn-sm">
                                             <span class="fa fa-pencil-square-o"></span>
                                         </button>
-                                        <button id="view"
-                                            wire:click="mostrarAtractivosDelLugar({{ $e->id }})"
-                                            title="Eliminar Equipo" class="btn btn-danger btn-sm">
+                                        <button wire:click="deleteConfirm({{ $e->id }})"
+                                            wire:loading.attr="disabled" title="Eliminar Equipo"
+                                            class="btn btn-danger btn-sm">
                                             <span class="fa fa-trash"></span>
                                         </button>
-                                        <button id="delete" title="Añadir Stock" data-target="#modal-stock"
-                                            class="btn btn-success btn-sm"
-                                            wire:click="addRemoveStock({{ $e->id }}, 1)">
+                                        <button title="Añadir Stock" class="btn btn-success btn-sm"
+                                            wire:click="addRemoveStock({{ $e->id }}, 1)"
+                                            wire:loading.attr="disabled">
                                             <i class="fas fa-plus-circle"></i>
                                         </button>
-                                        <button id="view" title="Remover Stock" data-target="#modal-stock"
-                                            class="btn btn-danger btn-sm"
-                                            wire:click="addRemoveStock({{ $e->id }}, 2)">
+                                        <button title="Remover Stock" class="btn btn-danger btn-sm"
+                                            wire:click="addRemoveStock({{ $e->id }}, 2)"
+                                            wire:loading.attr="disabled">
                                             <i class="fas fa-minus"></i>
                                         </button>
                                         <a href="{{ route('equipos.index.bajas.mantenimientos', $e->id) }}"
-                                            id="delete" title="Dar de baja" class="btn btn-primary btn-sm">
+                                            title="Dar de baja" class="btn btn-primary btn-sm">
                                             <i class="fas fa-cogs"></i>
                                         </a>
                                     </td>
@@ -208,7 +177,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger btn-rounded" data-dismiss="modal">Cerrar</button>
+                    <button type="button" wire:click.prevent="resetUI()" class="btn btn-danger btn-rounded"
+                        data-dismiss="modal">Cerrar</button>
                     @if ($edicion)
                         <button type="button" wire:click="Update" class="btn btn-primary btn-rounded">Actualizar
                         </button>
@@ -263,6 +233,7 @@
         </div>
     </div>
 
+    @livewire('administrate-commons.alerts')
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -281,6 +252,25 @@
             window.livewire.on('category-updated', msg => {
                 $('#theModal').modal('hide')
             });
+        });
+
+        window.addEventListener('swal-confirmMarca', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('equipos-admin.equipos.equipos',
+                        'deleteEquipo',
+                        event.detail
+                        .id);
+                }
+            })
         });
     </script>
 

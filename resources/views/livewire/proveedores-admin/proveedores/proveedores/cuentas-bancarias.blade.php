@@ -13,40 +13,19 @@
                                 <input type="text" class="form-control" placeholder="Buscar Proveedores">
                             </div>
                         </div>
-                        <div class="col-md-1">
-                            <div class="form-group">
-
-                                <label for="exampleFormControlSelect1">Mostrar</label>
-                                {{-- <select class="form-control" id="exampleFormControlSelect1">
-                                  <option>1</option>
-                                  <option>2</option>
-                                  <option>3</option>
-                                  <option>4</option>
-                                  <option>5</option>
-                                </select> --}}
-                            </div>
-                        </div>
-                        <div class="col-md-1">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 {{-- <label for="exampleFormControlSelect1">Example select</label> --}}
                                 <select class="form-control" id="exampleFormControlSelect1">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
+                                    <option>Mostrar 20</option>
+                                    <option>Mostrar 20</option>
+                                    <option>Mostrar 20</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-1">
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1">Registros</label>
-
-                            </div>
-                        </div>
                         <div class="col-md-3">
-                            <a id="modal-532427" href="#modal-traslado-viajes" role="button" class="btn btn-rounded"
-                                data-toggle="modal">CREAR NUEVA CUENTA</a>
+                            <button id="modal-532427" href="#modal_cuentas_bancarias" role="button"
+                                class="btn btn-rounded" data-toggle="modal">Añadir Cuenta Bancaria</button>
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -61,33 +40,28 @@
                         <tbody>
                             @foreach ($cuentas as $c)
                                 <tr>
-                                    <td>{{$c->nombre_banco}}</td>
-                                    <td>{{$c->numero_cuenta}}</td>
-                                    <td>{{$c->estado}}</td>
+                                    <td>{{ $c->nombre_banco }}</td>
+                                    <td>{{ $c->numero_cuenta }}</td>
                                     <td>
-                                        <button id="edit" title="Editar Información de Proveedor"
-                                            wire:click="Edit()" class="btn btn-warning btn-sm">
+                                        @if ($c->estado == 1)
+                                            <span class="label label-success">ACTIVA</span>
+                                        @else
+                                            <span class="label label-danger">NO ACTIVA</span>
+                                        @endif
+
+                                    </td>
+                                    <td>
+                                        <button title="Editar Información de la Cuenta Bancaria"
+                                            wire:click="Edit({{ $c->id }})" wire:loading.attr="disabled"
+                                            class="btn btn-warning btn-sm">
                                             <span class="fa fa-pencil-square-o"></span>
                                         </button>
-                                        <button id="view" wire:click="mostrarAtractivosDelLugar()"
-                                            title="Eliminar Proveedor" class="btn btn-danger btn-sm">
+                                        <button title="Eliminar Cuenta Bancaria del Proveedor"
+                                            wire:click="deleteConfirm({{ $c->id }})" wire:loading.attr="disabled"
+                                            class="btn btn-danger btn-sm">
                                             <span class="fa fa-trash"></span>
                                         </button>
-                                        <button id="delete" title="Añadir Cuentas Bancarias"
-                                            data-target="#exampleModal" data-toggle="modal"
-                                            class="btn btn-success btn-sm" wire:click="deleteConfirm()">
-                                            <i class="fas fa-plus-circle"></i>
-                                        </button>
-                                        <button id="view" title="Añadir Pedidos de Proveedor"
-                                            data-target="#exampleModal" data-toggle="modal"
-                                            wire:click="mostrarAtractivosDelLugar()" title="Ver Atractivos"
-                                            class="btn btn-danger btn-sm">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        {{-- <button id="delete" title="Dar de baja" class="btn btn-danger btn-sm"
-                                        wire:click="deleteConfirm()">
-                                        <i class="fas fa-ban"></i>
-                                    </button> --}}
+
                                     </td>
                                 </tr>
                             @endforeach
@@ -103,30 +77,41 @@
 
 
     <!--MODAL --->
-    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal-traslado-viajes"
+    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal_cuentas_bancarias"
         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="myModalLabel">
-                        ASIGANAR NUEVOS LUGARES
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="container-fluid">
+            <form wire:submit.prevent="saveCuenta">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myModalLabel">
+                            {{ $title }}
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
                         <div class="row">
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
-                                    <label class="form-label" for="banco">Banco</label>
+                                    <label for="banco">
+                                        Banco <span class="text-danger">(*) </span>
+                                        <a href="{{ route('mostrar.bancos') }}" target="_blank" title="Crear Vehículo"
+                                            class="font-weight-bold"><i class="fas fa-exclamation"></i></a>
+                                        <button class="btn btn-sm btn-rounded" title="Refrescar" wire:click="render"><i
+                                                class="fas fa-sync-alt"></i></button>
+                                    </label>
+
                                     <select class="form-control" wire:model.defer="banco" id="banco">
-                                        <option value="0">---Seleccione---</option>
+                                        <option value="">---Seleccione---</option>
                                         @foreach ($bancos as $b)
                                             <option value="{{ $b->id }}">{{ $b->nombre_banco }}</option>
                                         @endforeach
                                     </select>
+                                    @error('banco')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
@@ -135,126 +120,81 @@
                                     <input type="text" wire:model.defer="numero_cuenta"
                                         class="form-control maxlength-custom-message" id="numero_cuenta"
                                         placeholder="Ingrese Nº de Cuenta Bancaria" maxlength="20">
+                                    @error('numero_cuenta')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
                                     <label class="form-label" for="estado">Estado</label>
                                     <select class="form-control" wire:model.defer="estado" id="estado">
-                                        <option value="0">---Seleccione---</option>
+                                        <option value="">---Seleccione---</option>
                                         <option value="1">ACTIVA</option>
                                         <option value="2">NO ACTIVA</option>
                                     </select>
+                                    @error('estado')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </fieldset>
                             </div>
                         </div>
+
                     </div>
+
+                    <div class="modal-footer">
+                        <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger"
+                            data-dismiss="modal">
+                            Cerrar
+                        </button>
+
+                        <button type="submit" class="btn btn-rounded btn-primary">
+                            @if ($idCuentaProveedorBanco)
+                                Actualizar
+                            @else
+                                Guardar
+                            @endif
+
+                        </button>
+
+                    </div>
+
                 </div>
+            </form>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
-                        Cerrar
-                    </button>
-
-                    <button type="button" wire:click="saveCuenta" class="btn btn-rounded btn-primary">
-                        Guardar
-                    </button>
-
-
-
-                </div>
-
-            </div>
         </div>
     </div>
     <!-- END MODAL-->
 
-
-    <!-- MODAL MONTO-->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalMontoArriero"
-        data-whatever="@fat">
-        Open modal for @fat
-    </button>
-    <!-- Modal -->
-    <div class="modal fade" wire:ignore.self id="modalMontoArriero" data-backdrop="static" data-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Añadir Monto y Fecha del Arriero</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group has-search">
-                                    <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" class="form-control"
-                                        placeholder="Buscar Almuerzos de Celebración">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="monto">
-                                        Monto
-                                    </label>
-                                    <input type="text" autocomplete="off" wire:model.defer="monto"
-                                        class="form-control" id="monto" />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="cantidad">
-                                        Cantidad de Acémilas
-                                    </label>
-                                    <input type="number" wire:model.defer="cantidad" autocomplete="off"
-                                        class="form-control" id="cantidad" />
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="tipo_de_acemila">
-                                        Tipo de Acémilas
-                                    </label>
-                                    <select class="form-control" wire:model="tipo_de_acemila" id="tipo_de_acemila">
-                                        <option value="0" select>...Seleccione...</option>
-
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
-                        Cerrar
-                    </button>
-                    <button type="button" wire:click="guardarAcemilasAlquiladas"
-                        class="btn btn-rounded btn-primary">
-                        Guardar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- END MODAL-->
+    @livewire('administrate-commons.alerts')
 
     <script>
+        window.addEventListener('swal-confirm-cuentas', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('proveedores-admin.proveedores.proveedores.cuentas-bancarias',
+                        'deleteCuentaBancaria',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             //Lo que llega de CategoriesController
             window.livewire.on('show-modal', msg => {
-                $('#modalMontoArriero').modal('show')
+                $('#modal_cuentas_bancarias').modal('show')
             });
-            window.livewire.on('fecha-itinerario-guarded', msg => {
-                $('#modalMontoArriero').modal('hide')
-            });
-            window.livewire.on('category-updated', msg => {
-                $('#theModal').modal('hide')
+            window.livewire.on('close-modal', msg => {
+                $('#modal_cuentas_bancarias').modal('hide')
             });
         });
     </script>

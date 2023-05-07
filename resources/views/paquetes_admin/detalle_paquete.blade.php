@@ -17,7 +17,7 @@
                             <li><a href="{{ route('paquetes.index') }}">Paquetes</a></li>
                             <li><a href="#">Detalles</a></li>
                             <li class="active">
-                                Paquete Santa Rous
+                                {{ $paquete->nombre }}
                             </li>
                         </ol>
                     </div>
@@ -222,7 +222,15 @@
                 <div class="tbl">
                     <ul class="nav" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#tab-condiciones" role="tab" data-toggle="tab">
+                            <a class="nav-link active" href="#tab-autorizaciones" role="tab" data-toggle="tab">
+                                <span class="nav-link-in">
+                                    <i class="font-icon font-icon-cogwheel"></i>
+                                    Autorizaciones / Expedientes Médicos
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#tab-condiciones" role="tab" data-toggle="tab">
                                 <span class="nav-link-in">
                                     <i class="font-icon font-icon-cogwheel"></i>
                                     Condiciones de Puntualidad
@@ -242,13 +250,18 @@
             </div><!--.tabs-section-nav-->
 
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active" id="tab-condiciones">
-                    @livewire('paquetes-admin.condiciones-puntualidad.mostrar-condiciones-puntualidad', [$paquete->id])
-
+                <div role="tabpanel" class="tab-pane fade in active" id="tab-autorizaciones">
+                    @livewire('paquetes-admin.autorizaciones-medicas.mostrar-autorizaciones-medicas', [$paquete->id])
                 </div><!--.tab-pane-->
+
+                <div role="tabpanel" class="tab-pane fade" id="tab-condiciones">
+                    @livewire('paquetes-admin.condiciones-puntualidad.mostrar-condiciones-puntualidad', [$paquete->id])
+                </div><!--.tab-pane-->
+
                 <div role="tabpanel" class="tab-pane fade" id="tab-riesgos">
                     @livewire('paquetes-admin.riesgos.mostrar-riesgos', [$paquete->id])
                 </div><!--.tab-pane-->
+
             </div><!--.tab-content-->
         </section><!--.tabs-section-->
     </div>

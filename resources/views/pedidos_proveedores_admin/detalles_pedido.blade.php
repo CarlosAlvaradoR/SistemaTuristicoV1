@@ -33,7 +33,7 @@
         </div>
     </header>
 
-    @livewire('proveedores-admin.proveedores.proveedores.detalles-pedido', [$proveedor])
+    @livewire('proveedores-admin.proveedores.proveedores.detalles-pedido', [$proveedor, null])
 
 
 

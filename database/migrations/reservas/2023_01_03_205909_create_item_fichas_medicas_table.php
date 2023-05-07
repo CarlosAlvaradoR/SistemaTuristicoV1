@@ -17,12 +17,11 @@ return new class extends Migration
             $table->id();
             $table->boolean('evaluacion')->default(0);
 
-            $table->unsignedBigInteger('reserva_id')->nullable();
-            $table->foreign('reserva_id')->references('id')->on('reservas');
-
             $table->unsignedBigInteger('criterios_medicos_id')->nullable();
             $table->foreign('criterios_medicos_id')->references('id')->on('criterios_medicos');
 
+            $table->unsignedBigInteger('autorizaciones_presentadas_id')->nullable();
+            $table->foreign('autorizaciones_presentadas_id')->references('id')->on('autorizaciones_presentadas');
 
             $table->timestamps();
         });

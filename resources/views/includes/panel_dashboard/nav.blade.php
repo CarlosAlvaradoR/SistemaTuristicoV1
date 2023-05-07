@@ -18,17 +18,6 @@
             </ul>
         </li>
 
-        <!--<li class="blue with-sub">
-            <span>
-                <i class="fa fa-user"></i>
-                <span class="lbl">Usuarios</span>
-            </span>
-            <ul>
-                <li><a href="acemilaAsociaciones.php"><span class="lbl">Organizaciones</span><span
-                            class="label label-custom label-pill label-succes">new</span></a></li>
-                <li><a href="#"><span class="lbl">Acémilas</span></a></li>
-            </ul>
-        </li>-->
 
         <li class="green">
             <a href="equipos.php">
@@ -77,10 +66,13 @@
                             class="label label-custom label-pill label-success">new</span></a></li>
                 <li><a href="{{ route('solicitudes.all') }}"><span class="lbl">Solicitudes</span></a></li>
                 <li><a href="{{ route('devoluciones.all') }}"><span class="lbl">Devoluciones (Nuevo)</span></a></li>
+                <li><a href="{{ route('criterios_medicos.all') }}"><span class="lbl">Criterios Médicos</span></a>
+                </li>
                 <li><a href="{{ route('eventos.postergacion.index') }}"><span class="lbl">Eventos de
                             Postergación</span><span class="label label-custom label-pill label-success">new</span></a>
-                </li> 
-                <li><a href="{{ route('tipo.pagos.cuentas') }}"><span class="lbl">Tipo de Pago - Cuentas</span></a></li>
+                </li>
+                <li><a href="{{ route('tipo.pagos.cuentas') }}"><span class="lbl">Tipo de Pago - Cuentas</span></a>
+                </li>
                 <li><a href="{{ route('consultar.reservas') }}"><span class="lbl">Consultar Reservas</span></a></li>
                 <li><a href="{{ route('reservas.reportes.generales') }}"><span class="lbl">Reportes</span></a></li>
             </ul>
@@ -99,8 +91,14 @@
                 <li><a href="{{ route('viajes.cocinero') }}"><span class="lbl">Cocinero</span></a></li>
                 <li><a href="{{ route('viajes.guia') }}"><span class="lbl">Guía</span></a></li>
                 <li><a href="{{ route('viajes.arriero') }}"><span class="lbl">Arriero</span></a></li>
-                <li><a href="#!"><span class="lbl">Asociaciones</span></a></li>
-                <li><a href="#!"><span class="lbl">Hoteles</span></a></li>
+                <li><a href="{{ route('viajes.mostrar.asociaciones') }}"><span class="lbl">Asociaciones</span></a>
+                </li>
+                <li><a href="{{ route('viajes.mostrar.hoteles') }}"><span class="lbl">Hoteles</span></a></li>
+                <li><a href="{{ route('viajes.tipos.de.vehiculos') }}"><span class="lbl">Tipos de
+                            Vehículo</span></a></li>
+                <li><a href="{{ route('viajes.tipos.de.licencias') }}"><span class="lbl">Tipos de
+                            Licencias</span></a></li>
+
             </ul>
         </li>
 
@@ -114,6 +112,8 @@
                             class="label label-custom label-pill label-danger">new</span></a></li>
                 <li><a href="{{ route('pedidos.proveedores.general') }}"><span class="lbl">Pedidos
                             Proveedor</span></a></li>
+                <li><a href="{{ route('mostrar.bancos') }}"><span class="lbl">Bancos</span></a></li>
+                <li><a href="{{ route('mostrar.tipos.de.comprobante') }}"><span class="lbl">Tipos de Comprobante</span></a></li>
             </ul>
         </li>
 

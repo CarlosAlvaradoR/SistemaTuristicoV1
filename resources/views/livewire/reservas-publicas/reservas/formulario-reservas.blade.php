@@ -18,7 +18,7 @@
                     <div class="form-group">
                         <label for="tipo_pago">Fecha que desea Reservar</label>
                         <input class="form-control" wire:model.defer="fecha_reserva" name="fecha_reserva"
-                            id="fecha_reserva" type="date">
+                            id="fecha_reserva" type="date" min="{{date('Y-m-d')}}">
                         @error('fecha_reserva')
                             <h6 class="text-danger">{{ $message }}</h6>
                         @enderror

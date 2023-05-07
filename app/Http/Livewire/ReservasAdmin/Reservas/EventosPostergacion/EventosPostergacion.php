@@ -27,8 +27,7 @@ class EventosPostergacion extends Component
     {
         $eventos = EventoPostergaciones::all();
 
-        return view(
-            'livewire.reservas-admin.reservas.eventos-postergacion.eventos-postergacion',
+        return view('livewire.reservas-admin.reservas.eventos-postergacion.eventos-postergacion',
             compact('eventos')
         );
     }

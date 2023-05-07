@@ -3,7 +3,13 @@
         <div class="col-lg-12 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Lista de Itinerarios - {Semana Santa}</h5>
+                    <h5 class="card-title">
+                        <a class="btn btn-primary btn-sm btn-rounded" href="{{ route('paquete.viajes', $paquete) }}"
+                            title="Volver">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                        Lista de Itinerarios - {{ $paquete->nombre }}
+                    </h5>
                     <div class="form-group has-search">
                         <span class="fa fa-search form-control-feedback"></span>
                         <input type="text" class="form-control" placeholder="Buscar Itinerario">
@@ -28,26 +34,28 @@
                                     </td>
                                     <td>
 
-                                        @if ($i->fecha_cumplimiento)
-                                            {{ $i->fecha_cumplimiento }}
+                                        @if ($i->fecha_cumplimiento != 'No cumplido')
+                                            <span
+                                                class="label label-primary">{{ date('d/m/Y', strtotime($i->fecha_cumplimiento)) }}
+                                            </span>
                                         @else
-                                            <span class="label label-danger">No cumplido</span>
+                                            <span class="label label-danger">{{ $i->fecha_cumplimiento }}</span>
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($i->fecha_cumplimiento)
-                                            <button type="button"
-                                                wire:click=""
-                                                title="Editar"
-                                                class="btn btn-sm btn-rounded btn-warning">
-                                                <i class="fal fa-plus"></i>
+
+                                        @if ($i->fecha_cumplimiento != 'No cumplido')
+                                            <button type="button" title="Editar Fecha de Cumplimiento"
+                                            wire:click="Edit({{ $i->id }})"
+                                                wire:loading.attr="disabled" class="btn btn-sm btn-rounded btn-warning">
+                                                <i class="fas fa-marker"></i>
                                             </button>
+
                                         @else
-                                            <button type="button"
+                                            <button type="button" title="Añadir Fecha de Cumplimiento"
                                                 wire:click="AñadirFechaCumplimiento({{ $i->id }})"
-                                                title="Marcar Como culminada"
-                                                class="btn btn-sm btn-rounded btn-success">
-                                                <i class="fal fa-plus"></i>
+                                                wire:loading.attr="disabled" class="btn btn-sm btn-rounded btn-success">
+                                                <i class="fas fa-plus-circle"></i>
                                             </button>
                                         @endif
                                     </td>
@@ -62,11 +70,11 @@
 
     </div>
 
-    <!--MODAL-->
+    @livewire('administrate-commons.alerts')
 
     <!-- Modal -->
-    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal-itinerario-fecha-cumplimiento" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false"
+        id="modal-itinerario-fecha-cumplimiento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -79,27 +87,49 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
-                                <form role="form">
+                                <div class="form-group">
+
+                                    <label for="fecha_cumplimiento">
+                                        Seleccione Fecha de Cumplimiento
+                                    </label>
+                                    <input type="date" class="form-control" wire:model.defer="fecha_cumplimiento"
+                                        id="fecha_cumplimiento" />
+                                    @error('fecha_cumplimiento')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                            </div>
+                            @if ($idItinerarioCumplido)
+                                <div class="col-md-12">
                                     <div class="form-group">
 
-                                        <label for="fecha_cumplimiento">
-                                            Seleccione Fecha de Cumplimiento
-                                        </label>
-                                        <input type="date" class="form-control" wire:model.defer="fecha_cumplimiento"
-                                            id="fecha_cumplimiento" />
+                                        <button class="btn btn-danger btn-rounded" wire:click="delete">Eliminar
+                                            Cumplimiento ?</button>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            @endif
+
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                    <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger"
+                        data-dismiss="modal">
                         Cerrar
                     </button>
-                    <button type="button" wire:click="guardarFechaCumplimiento" class="btn btn-rounded btn-primary">
-                        Guardar
-                    </button>
+                    @if ($idItinerarioCumplido)
+                        <button type="button" wire:click="guardarFechaCumplimiento"
+                            class="btn btn-rounded btn-primary">
+                            Actualizar
+                        </button>
+                    @else
+                        <button type="button" wire:click="guardarFechaCumplimiento"
+                            class="btn btn-rounded btn-primary">
+                            Guardar
+                        </button>
+                    @endif
+
                 </div>
             </div>
         </div>
@@ -112,7 +142,7 @@
             window.livewire.on('show-modal', msg => {
                 $('#modal-itinerario-fecha-cumplimiento').modal('show')
             });
-            window.livewire.on('fecha-itinerario-guarded', msg => {
+            window.livewire.on('close-modal', msg => {
                 $('#modal-itinerario-fecha-cumplimiento').modal('hide')
             });
             window.livewire.on('category-updated', msg => {

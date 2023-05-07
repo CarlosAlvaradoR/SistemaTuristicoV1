@@ -6,11 +6,14 @@ use App\Models\Paquetes\CondicionPuntualidades;
 use App\Models\Paquetes\Riesgos;
 use App\Models\PaquetesTuristicos;
 use App\Models\Personas;
+use App\Models\Reservas\Pagos;
 use App\Models\Reservas\Reservas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Stmt\Return_;
 use Symfony\Component\Console\Input\Input as InputInput;
 
@@ -98,10 +101,10 @@ class ReservasController extends Controller
         return view('reservar_admin.index', compact('slug'));
     }
 
-    public function reservarCrearCliente()
+    public function reservarCrearCliente(PaquetesTuristicos $paquete)
     {
-
-        return view('reservar_admin.create');
+        $opcion = 'CREAR';
+        return view('reservar_admin.create', compact('paquete','opcion'));
     }
 
     public function reservaCondicionesPuntualidad(Reservas $reserva)
@@ -145,20 +148,72 @@ class ReservasController extends Controller
             ->groupBy('pa.reserva_id')
             ->orderBy('r.updated_at', 'DESC')
             ->get();*/
-        $reservas = DB::select('SELECT * FROM v_reserva_reservas_general');
+        
         //return $reservas;
         //return $consulta;
-        return view('reservar_admin.all_reservas', compact('reservas'));
+        return view('reservar_admin.all_reservas');
     }
 
-    public function comprobante()
+    public function editarReserva(Reservas $reserva){
+        //dd($reserva);
+        $paquete = PaquetesTuristicos::findOrFail($reserva->paquete_id);
+        $opcion = 'EDITAR';
+        return view('reservar_admin.create', compact('paquete','reserva','opcion'));
+    }
+
+    public function comprobante(Reservas $reserva)
     {
-        return view('reservar_admin.reportes.comprobante');
+        //SACAR INFORMACIÓN DE PERSONAS, Y EL PAQUETE
+        $informacion = DB::select("SELECT CONCAT(p.nombre, ' ',p.apellidos) as datos, 
+        p.telefono,
+        pt.nombre, r.fecha_reserva, r.id FROM personas p
+        INNER JOIN clientes c on p.id = c.persona_id
+        INNER JOIN reservas r on r.cliente_id = c.id
+        INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
+        WHERE r.id = " . $reserva->id . "");
+
+        $pagos_aceptados = DB::select("SELECT p.monto, p.fecha_pago, b.numero_boleta, r.id FROM reservas r
+        INNER JOIN pagos p on p.reserva_id = r.id
+        INNER JOIN cuenta_pagos cp on cp.id = p.cuenta_pagos_id
+        INNER JOIN tipo_pagos tp on tp.id = cp.tipo_pagos_id
+        INNER JOIN boletas b on b.id = p.boleta_id
+        WHERE r.id = " . $reserva->id . " AND p.estado_pago = 'ACEPTADO'");
+        //return $pagos_aceptados;
+        return view('reservar_admin.reportes.comprobante', compact('informacion', 'pagos_aceptados'));
     }
 
+    public function mostrarComprobante(Pagos $pago){ //id del Pago
+        //return $pago->ruta_archivo_pago;
+        if (Storage::disk('private')->exists($pago->ruta_archivo_pago)) {
+            // Devolver el archivo como una respuesta HTTP
+            //return 'EXISTE';
+            return response()->file(Storage::disk('private')->path($pago->ruta_archivo_pago));
+        } else {
+            // Devolver una respuesta de error si el archivo no existe
+            //return response()->json(['error' => 'El archivo no existe'], 404);
+            return abort(404);
+        }
+
+        /*if (Storage::exists($filename)) {
+            return response()->file(storage_path('private/archivo/' . $filename));
+        } else {
+            abort(404);
+        }*/
+    }
+
+    public function deleteImage(){
+        $eliminar = Storage::disk('private')->delete('archivo/642756776b3f5');
+        return $eliminar;
+    }
+    public function archivo(){
+        return 'AAAA';
+    }
 
     public function mostrarSolicitudes(Reservas $reserva)
     {
+        /*if (Auth::user()->hasRole('cliente')) {
+            //return abort(404,'AAA');
+        }*/
         return view('reservar_admin.solicitudes.index', compact('reserva'));
     }
 
@@ -194,7 +249,7 @@ class ReservasController extends Controller
                 'dd.monto',
                 'r.id'*/
             )
-            ->paginate(50);
+            ->get();
         //$solicitudes =  [];
         //return $solicitudes;
         return view('reservar_admin.solicitudes.all_solicitudes', compact('solicitudes'));
@@ -207,6 +262,42 @@ class ReservasController extends Controller
         //return $pdf->download('invoice.pdf');
         return $pdf->stream('invoice.pdf');
         //return view('reservar_admin.solicitudes.report', compact('solicitudes'));
+    }
+
+    public function reportSolicitudesRealizadas(Reservas $reserva)
+    {
+        //return $reserva;
+        $informacion = DB::select("SELECT CONCAT(p.nombre, ' ',p.apellidos) as datos, p.telefono, pt.nombre, r.fecha_reserva, r.id,
+        ep.nombre_evento, pr.fecha_postergacion, pr.descripcion_motivo, pr.documento_sustentatorio,
+        sdd.pedido, sdd.fecha_presentacion, sdd.estado, sdd.descripcion_solicitud
+        FROM personas p
+        INNER JOIN clientes c on p.id = c.persona_id
+        INNER JOIN reservas r on r.cliente_id = c.id
+        INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
+        LEFT JOIN postergacion_reservas pr on pr.reserva_id = r.id
+        LEFT JOIN evento_postergaciones ep on ep.id = pr.evento_postergaciones_id
+        LEFT JOIN solicitud_devolucion_dineros sdd on sdd.postergacion_reservas_id = pr.id
+        WHERE r.id = ".$reserva->id."
+        LIMIT 1");
+
+        $solicitud_pagos_devoluciones = DB::table('solicitud_pagos as sp')
+            ->join('pagos as p', 'sp.pagos_id', '=', 'p.id')
+            ->leftJoin('devolucion_dineros as dd', 'dd.solicitud_pagos_id', '=', 'sp.id')
+            ->where('p.reserva_id', $reserva->id)
+            ->select(
+                'sp.id',
+                'sp.estdo_solicitud',
+                'sp.observacion',
+                'p.monto',
+                'dd.monto as montoDevolucion',
+                'dd.observacion as observacionDevolucion',
+                'dd.fecha_hora'
+            )
+            ->get();
+        $pdf = Pdf::loadView('reservar_admin.reportes.solicitud_de_presentacion', compact('solicitud_pagos_devoluciones', 'informacion'));
+        //return $pdf->download('invoice.pdf');
+        $pdf->set_paper('a4', 'landscape');
+        return $pdf->stream('invoice.pdf');
     }
 
     public function reportComprobante()
@@ -242,6 +333,12 @@ class ReservasController extends Controller
             )
             ->get();
         return view('reservar_admin.devoluciones.all_devoluciones', compact('devoluciones'));
+    }
+
+    public function mostrarCriteriosMedicos()
+    {
+
+        return view('reservar_admin.criterios_medicos.index');
     }
 
     public function mostrarEventosPostergacion()
@@ -325,7 +422,7 @@ class ReservasController extends Controller
             INNER JOIN solicitud_pagos sp on sp.solicitud_devolucion_dinero_id = sdd.id
             INNER JOIN pagos pa on sp.pagos_id = pa.id
             INNER JOIN devolucion_dineros dd on dd.solicitud_pagos_id = sp.id
-            WHERE dd.fecha_hora between "'.$fecha_inicial_devoluciones.'" and "'.$fecha_final_devoluciones.'"';
+            WHERE dd.fecha_hora between "' . $fecha_inicial_devoluciones . '" and "' . $fecha_final_devoluciones . '"';
             $consulta = DB::select($query);
         } else {
             $query = 'SELECT CONCAT(p.nombre," ", p.apellidos)as datos, p.dni, pt.nombre, r.fecha_reserva, 

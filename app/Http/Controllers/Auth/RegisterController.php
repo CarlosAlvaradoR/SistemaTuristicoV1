@@ -62,10 +62,10 @@ class RegisterController extends Controller
             'dni' => ['required', 'string', 'max:255', 'unique:personas'],
             'name_personal' => ['required', 'string', 'max:255'],
             'apellido_personal' => ['required', 'string', 'max:255'],
-            'genero' => ['required'],
+            'genero' => ['required', 'numeric','min:1','max:2'],
             'telefono' => ['required', 'max:20'],
             'direccion' => ['required', 'string', 'max:255'],
-            //'name' => ['required', 'string', 'max:255'],
+            'nacionalidad' => ['required', 'numeric', 'min:1'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -102,7 +102,8 @@ class RegisterController extends Controller
 
         $cliente = Clientes::create([
             'persona_id' => $persona_id,
-            'user_id' => $user_id
+            'user_id' => $user_id,
+            'nacionalidad_id' => $data['nacionalidad']
         ]);
         //Rol de Cliente y genéricamente trabajadores
         $user->assignRole('cliente');

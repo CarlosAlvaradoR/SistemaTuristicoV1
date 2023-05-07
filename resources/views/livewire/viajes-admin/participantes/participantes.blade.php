@@ -3,7 +3,13 @@
         <div class="col-lg-6 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Lista de Reservas</h5>
+                    <h5 class="card-title">
+                        <a class="btn btn-primary btn-sm btn-rounded" href="{{ route('paquete.viajes', $paquete) }}"
+                            title="Volver">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                        Lista de Reservas
+                    </h5>
                     <div class="form-group has-search">
                         <span class="fa fa-search form-control-feedback"></span>
                         <input type="text" class="form-control" placeholder="Buscar Cliente">
@@ -27,7 +33,7 @@
                                     </td>
                                     <td>
                                         <button type="button"
-                                            wire:click="AsignarParticipanteViaje({{ $cr->idReserva }})"
+                                            wire:click="AsignarParticipanteViaje('{{ $cr->slug }}')"
                                             title="Añadir a la lista de Participantes"
                                             class="btn btn-sm btn-rounded btn-success" wire:loading.attr="disabled">
                                             <i class="fal fa-plus"></i>
@@ -60,17 +66,23 @@
                             @foreach ($participantes as $p)
                                 <tr>
                                     <td>
-                                        {{$p->datos}}
+                                        {{ $p->datos }}
                                     </td>
                                     <td>
-                                        <button type="button" wire:click="quitarParticipante({{$p->id}})" title="Quitar de la Lista de Participantes"
-                                            class="btn btn-sm btn-rounded btn-danger" wire:loading.attr="disabled">
-                                            <i class="fas fa-minus"></i>
+                                        <a href="{{ route('paquete.viajes.participantes.entregaEquipos', [$paquete->slug, $viaje->slug, $p->id]) }}"
+                                            type="button" title="Entregar Equipo al Participante"
+                                            class="btn btn-sm btn-rounded btn-primary">
+                                            <i class="fas fa-plus-square"></i>
+                                        </a>
+                                        <button type="button" wire:click="quitarParticipante({{ $p->id }})"
+                                            wire:loading.attr="disabled" title="Quitar de la Lista de Participantes"
+                                            class="btn btn-sm btn-rounded btn-danger">
+                                            <i class="fas fa-minus-circle"></i>
                                         </button>
                                     </td>
                                 </tr>
                             @endforeach
-                            
+
                         </tbody>
                     </table>
                 </div>

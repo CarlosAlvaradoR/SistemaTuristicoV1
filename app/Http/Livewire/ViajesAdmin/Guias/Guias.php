@@ -7,6 +7,7 @@ use App\Models\Personas;
 use App\Models\TipoAcemilas;
 use App\Models\Viajes\Asociaciones;
 use App\Models\Viajes\Guias as ViajesGuias;
+use App\Models\Viajes\ViajePaquetes;
 use App\Models\Viajes\ViajePaquetesGuias;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -15,7 +16,7 @@ class Guias extends Component
 {
     public $paquete, $idViaje;
     public $idGuia = 0;
-    public $monto, $cantidad, $tipo_de_acemila;
+    public $idviajePaqueteGuias, $monto, $cantidad, $tipo_de_acemila;
     public $total = 0;
     /** Para buscar Arrieros */
     public $dni, $buscar;
@@ -24,10 +25,14 @@ class Guias extends Component
     public $encontradoComoPersona = false, $encontradoComoCocinero = false, $no_existe = false;
     public $dni_persona, $nombre, $apellidos, $genero, $telefono, $dirección;
 
-    public function mount(PaquetesTuristicos $paquete, $idViaje)
+    public function resetUI(){
+        $this->reset(['idviajePaqueteGuias', 'monto', 'idGuia']);
+    }
+
+    public function mount(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
     {
         $this->paquete = $paquete;
-        $this->idViaje = $idViaje;
+        $this->idViaje = $viaje->id;
     }
 
 
@@ -43,12 +48,13 @@ class Guias extends Component
             ->where('viaje_paquetes_id', $this->idViaje)
             ->get();
 
-        
+        //dd($guias_participantes);
         $asociaciones = Asociaciones::all(['id', 'nombre']);
         $tipo_acemilas = TipoAcemilas::all(['id', 'nombre']);
 
 
-        return view('livewire.viajes-admin.guias.guias',
+        return view(
+            'livewire.viajes-admin.guias.guias',
             compact(
                 'guias',
                 'tipo_acemilas',
@@ -64,16 +70,60 @@ class Guias extends Component
         $this->emit('show-modal', 'show modal');
     }
 
-    public function AñadirAlCocinero()
+    public function AñadirAlGuia()
     {
-        $viaje_paquete_guias = ViajePaquetesGuias::create([
-            'monto_pagar' => $this->monto, 
-            'viaje_paquetes_id' => $this->idViaje, 
-            'guias_id' => $this->idGuia
-        ]);
+        $title = 'MUY BIEN !';
+        $icon = 'success';
+        $text = 'Guía Añadido Correctamente al Viaje.';
+        $this->validate(
+            [
+                'monto' => 'required|regex:/^\d+(\.\d{1,2})?$/'
+            ]
+        );
+        if ($this->idviajePaqueteGuias) {
+            $viaje_paquete_guias = ViajePaquetesGuias::findOrFail($this->idviajePaqueteGuias);
+            $viaje_paquete_guias->monto_pagar = $this->monto;
+            $viaje_paquete_guias->save();
+            $text = 'Información Actualizada Corretamente';
+        } else {
+            $viaje_paquete_guias = ViajePaquetesGuias::create([
+                'monto_pagar' => $this->monto,
+                'viaje_paquetes_id' => $this->idViaje,
+                'guias_id' => $this->idGuia
+            ]);
+        }
 
         $this->resetUI();
+        $this->emit('alert', $title, $icon, $text);
         $this->emit('fecha-itinerario-guarded', 'close');
+    }
+
+    public function Edit(ViajePaquetesGuias $viaje_paquete_guias)
+    {
+        //dd($viaje_paquete_guias);
+        $this->idviajePaqueteGuias = $viaje_paquete_guias->id;
+        $this->monto = $viaje_paquete_guias->monto_pagar;
+        $this->emit('show-modal');
+    }
+
+    public function deleteConfirm($id)
+    {
+        $this->dispatchBrowserEvent('swal-confirm-guias', [
+            'title' => 'Está seguro que desea eliminar al Guía del Viaje ?',
+            'icon' => 'warning',
+            'id' => $id
+        ]);
+    }
+    protected $listeners = ['deleteGuiaViaje'];
+    public function deleteGuiaViaje(ViajePaquetesGuias $viaje_paquete_guias)
+    {
+        //dd($viaje_paquete_guias);
+        $title = 'MUY BIEN !';
+        $icon = 'success';
+        $text= 'Información Eliminada Correctamente';
+        $viaje_paquete_guias->delete();
+        $this->emit('alert', $title, $icon, $text);
+
     }
 
     public function buscarArriero()
@@ -84,7 +134,7 @@ class Guias extends Component
         $this->resetUI();
         $sql = "SELECT p.id, p.dni, concat(p.nombre,' ',p.apellidos) as datos, p.telefono, g.id as idGuia FROM personas p
         LEFT JOIN guias g on g.persona_id = p.id
-        WHERE p.dni = '".$this->dni."' LIMIT 1";
+        WHERE p.dni = '" . $this->dni . "' LIMIT 1";
 
         //dd($this->dni);
         $this->buscar = DB::select($sql);
@@ -116,17 +166,21 @@ class Guias extends Component
         $this->resetErrorBag($name);
     }
 
-    public function guardarGuiaViaje()
-    { //Cuado lo encuentre como Arriero
-        // id del Arriero
-        $viaje_paquete_guias = ViajePaquetesGuias::create([
-            'monto_pagar' => $this->monto, 
-            'viaje_paquetes_id' => $this->idViaje, 
-            'guias_id' => $this->idGuia
-        ]);
+    // public function guardarGuiaViaje()
+    // { //Cuado lo encuentre como Arriero
+    //     $this->validate(
+    //         [
+    //             'monto' => 'required'
+    //         ]
+    //     );
+    //     $viaje_paquete_guias = ViajePaquetesGuias::create([
+    //         'monto_pagar' => $this->monto, 
+    //         'viaje_paquetes_id' => $this->idViaje, 
+    //         'guias_id' => $this->idGuia
+    //     ]);
 
-        $this->resetUI();
-    }
+    //     $this->resetUI();
+    // }
 
     public function guardarGuiaYAñadirAlViaje()
     { //Cuando lo encontré como Persona, pero no como cocinero
@@ -136,8 +190,8 @@ class Guias extends Component
         ]);
 
         $viaje_paquete_guias = ViajePaquetesGuias::create([
-            'monto_pagar' => $this->monto, 
-            'viaje_paquetes_id' => $this->idViaje, 
+            'monto_pagar' => $this->monto,
+            'viaje_paquetes_id' => $this->idViaje,
             'guias_id' => $guia->id
         ]);
 
@@ -162,8 +216,8 @@ class Guias extends Component
         ]);
 
         $viaje_paquete_guias = ViajePaquetesGuias::create([
-            'monto_pagar' => $this->monto, 
-            'viaje_paquetes_id' => $this->idViaje, 
+            'monto_pagar' => $this->monto,
+            'viaje_paquetes_id' => $this->idViaje,
             'guias_id' => $guia->id
         ]);
 
@@ -171,12 +225,5 @@ class Guias extends Component
     }
 
 
-    function resetUI()
-    {
-        $this->reset([
-            'dni_persona', 'nombre', 'apellidos', 'genero', 'telefono', 'telefono', 'dirección',
-            'asociacion', 'monto', 'cantidad', 'tipo_de_acemila', 'idPersona', 'idGuia'
-        ]);
-        $this->reset(['buscar', 'encontradoComoPersona', 'encontradoComoCocinero', 'no_existe']);
-    }
+   
 }
