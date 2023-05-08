@@ -1,5 +1,8 @@
 PAQUETES
 
+    USERS
+    php artisan make:livewire UsuariosAdmin/Usuarios/MostrarUsuarios
+
     ADMIN
         Para los paquetes:
         php artisan make:livewire PaquetesAdmin/ShowPaquetes

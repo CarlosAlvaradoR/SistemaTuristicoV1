@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
+use App\Models\Personas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -20,7 +22,9 @@ class UserController extends Controller
         //
 
         $userRole = auth()->user()->getRoleNames()->first();
-        return view('users.index', compact('userRole'));
+        $persona = Personas::findOrFail(auth()->user()->persona_id);
+        // return $persona;
+        return view('users.index', compact('persona','userRole'));
     }
 
     /**
@@ -50,9 +54,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
         //
+        $roles = Role::get();
+        // dd($roles);
+        return view('users.verUsuarios');
     }
 
     /**

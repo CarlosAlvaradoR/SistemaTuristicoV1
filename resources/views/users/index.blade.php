@@ -29,190 +29,119 @@
                         <div class="profile-card-photo">
                             <img src="{{ asset('dashboard_assets/img/photo-220-1.jpg') }}" alt="">
                         </div>
-                        <div class="profile-card-name">{{ strtoupper(Auth::user()->name) }}
-                            {{ strtoupper('Alvarado Robles') }}</div>
-                        <div class="profile-card-status">{{ $userRole }} - ll</div>
-                        <div class="profile-card-location">Greater Seattle Area</div>
-                        <button type="button" class="btn btn-rounded">Follow</button>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-rounded btn-primary-outline dropdown-toggle"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Connect
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant
-                                    and Verbal</a>
-                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real
-                                    Gmat Test</a>
-                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep
-                                    Official App</a>
-                                <a class="dropdown-item" href="#"><span
-                                        class="font-icon font-icon-users"></span>CATprer Test</a>
-                                <a class="dropdown-item" href="#"><span
-                                        class="font-icon font-icon-comments"></span>Third Party Test</a>
-                            </div>
+                        <div class="profile-card-name">{{ strtoupper($persona->nombre . ' ' . $persona->apellidos) }}
                         </div>
+                        {{-- <div class="profile-card-status"> - ll</div> --}}
+                        <div class="profile-card-location">{{ $userRole }}</div>
+                        {{-- <button type="button" class="btn btn-rounded">Follow</button> --}}
+
                     </div>
                     <!--.profile-card-->
 
-                    <div class="profile-statistic tbl">
-                        <div class="tbl-row">
-                            <div class="tbl-cell">
-                                <b>200</b>
-                                Connections
-                            </div>
-                            <div class="tbl-cell">
-                                <b>1.9M</b>
-                                Followers
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <fieldset class="form-group">
-                                    <label class="form-label" for="exampleInput">First Name</label>
-                                    <input type="text" class="form-control maxlength-simple" id="exampleInput"
-                                        placeholder="First Name" maxlength="15">
-                                    <small class="text-muted">Max length 15, simple</small>
-                                </fieldset>
+                        <form action="{{ route('perfil.change') }}" method="post">
+                            @csrf
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <fieldset class="form-group">
+                                        <label class="form-label" for="dni"><b>DNI</b></label>
+                                        <input type="text" class="form-control" name="dni"
+                                            id="dni" value="{{ $persona->dni }}" required
+                                            placeholder="Ingrese DNI del Usuario">
+
+                                        @if ($errors->first('dni'))
+                                            <small class="text-danger">{{ $errors->first('dni') }}</small>
+                                        @endif
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-12">
+                                    <fieldset class="form-group">
+                                        <label class="form-label" for="nombre"><b>NOMBRES</b></label>
+                                        <input type="text" class="form-control" value="{{ $persona->nombre }}"
+                                            name="nombre" id="nombre" required
+                                            placeholder="Ingrese Nombres del Usuario">
+                                        @if ($errors->first('nombre'))
+                                            <small class="text-danger">{{ $errors->first('nombre') }}</small>
+                                        @endif
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-12">
+                                    <fieldset class="form-group">
+                                        <label class="form-label" for="apellidos"><b>APELLIDOS
+                                            </b></label>
+                                        <input type="text" class="form-control" value="{{ $persona->apellidos }}"
+                                            name="apellidos" id="apellidos" required
+                                            placeholder="Ingrese Apellidos del Usuario">
+                                        @if ($errors->first('apellidos'))
+                                            <small class="text-danger">{{ $errors->first('apellidos') }}</small>
+                                        @endif
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-12">
+                                    <fieldset class="form-group">
+                                        <label class="form-label" for="genero"><b>GÉNERO</b></label>
+                                        <select class="form-control" id="genero" name="genero">
+                                            <option value="">...Seleccione...</option>
+                                            <option value="1" @if ($persona->genero == 1) selected @endif>
+                                                Masculino</option>
+                                            <option value="2" @if ($persona->genero == 2) selected @endif>
+                                                Femenino</option>
+                                        </select>
+                                        
+                                        @if ($errors->first('genero'))
+                                            <small
+                                                class="text-danger">{{ $errors->first('genero') }}</small>
+                                        @endif
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-12">
+                                    <fieldset class="form-group">
+                                        <label class="form-label" for="telefono"><b>TELÉFONO</b></label>
+                                        <input type="text" value="{{ $persona->telefono }}" class="form-control"
+                                            name="telefono" id="telefono" required
+                                            placeholder="Ingrese Teléfono del Usuario">
+                                        @if ($errors->first('telefono'))
+                                            <small
+                                                class="text-danger">{{ $errors->first('telefono') }}</small>
+                                        @endif
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-12">
+                                    <fieldset class="form-group">
+                                        <label class="form-label" for="dirección"><b>DIRECCIÓN</b></label>
+                                        <input type="text" value="{{ $persona->dirección }}" class="form-control"
+                                            name="dirección" id="dirección" required
+                                            placeholder="Ingrese Dirección del Usuario">
+                                        @if ($errors->first('dirección'))
+                                            <small
+                                                class="text-danger">{{ $errors->first('dirección') }}</small>
+                                        @endif
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-12">
+                                    <fieldset class="form-group">
+                                        <label class="form-label" for="email"><b>CORREO
+                                                ELECTRÓNICO</b></label>
+                                        <input type="email" value="{{ auth()->user()->email }}" class="form-control"
+                                            name="email" id="email" required
+                                            placeholder="Ingrese Correo Electrónico del Usuario">
+                                        @if ($errors->first('email'))
+                                            <small
+                                                class="text-danger">{{ $errors->first('email') }}</small>
+                                        @endif
+                                    </fieldset>
+                                </div>
+                                {{-- <div class="col-lg-12" style="text-align: center">
+                                    <button type="submit" class="btn btn-primary btn-rounded">Actualizar
+                                        Contraseña</button>
+                                </div> --}}
                             </div>
-                            <div class="col-lg-12">
-                                <fieldset class="form-group">
-                                    <label class="form-label" for="exampleInputEmail1">Email address</label>
-                                    <input type="email" class="form-control maxlength-custom-message"
-                                        id="exampleInputEmail1" placeholder="Enter email" maxlength="20">
-                                    <small class="text-muted">Max length 20, custom message</small>
-                                </fieldset>
-                            </div>
-                            <div class="col-lg-12">
-                                <fieldset class="form-group">
-                                    <label class="form-label" for="exampleInputPassword1">Password</label>
-                                    <input type="password" class="form-control maxlength-always-show"
-                                        id="exampleInputPassword1" placeholder="Password" maxlength="10">
-                                    <small class="text-muted">Max length 10, always show</small>
-                                </fieldset>
-                            </div>
-                        </div>
+                        </form>
                     </div>
 
-                    <ul class="profile-links-list">
-                        <li class="nowrap">
-                            <i class="font-icon font-icon-earth-bordered"></i>
-                            <a href="#">example.com</a>
-                        </li>
-                        <li class="nowrap">
-                            <i class="font-icon font-icon-fb-fill"></i>
-                            <a href="#">facebook.com/example</a>
-                        </li>
-                        <li class="nowrap">
-                            <i class="font-icon font-icon-vk-fill"></i>
-                            <a href="#">vk.com/example</a>
-                        </li>
-                        <li class="nowrap">
-                            <i class="font-icon font-icon-in-fill"></i>
-                            <a href="#">linked.in/example</a>
-                        </li>
-                        <li class="nowrap">
-                            <i class="font-icon font-icon-tw-fill"></i>
-                            <a href="#">twitter.com/example</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <i class="font-icon font-icon-pdf-fill"></i>
-                            <a href="#">Export page as PDF</a>
-                        </li>
-                    </ul>
                 </section>
                 <!--.box-typical-->
 
-                <section class="box-typical">
-                    <header class="box-typical-header-sm">
-                        Friends
-                        &nbsp;
-                        <a href="#" class="full-count">268</a>
-                    </header>
-                    <div class="friends-list">
-                        <article class="friends-list-item">
-                            <div class="user-card-row">
-                                <div class="tbl-row">
-                                    <div class="tbl-cell tbl-cell-photo">
-                                        <a href="#">
-                                            <img src="dashboard_assets/img/photo-64-2.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="tbl-cell">
-                                        <p class="user-card-row-name status-online"><a href="#">Dan Cederholm</a>
-                                        </p>
-                                        <p class="user-card-row-location">New York</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                        <article class="friends-list-item">
-                            <div class="user-card-row">
-                                <div class="tbl-row">
-                                    <div class="tbl-cell tbl-cell-photo">
-                                        <a href="#">
-                                            <img src="dashboard_assets/img/photo-64-1.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="tbl-cell">
-                                        <p class="user-card-row-name"><a href="#">Oykun Yilmaz</a></p>
-                                        <p class="user-card-row-location">Los Angeles</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                        <article class="friends-list-item">
-                            <div class="user-card-row">
-                                <div class="tbl-row">
-                                    <div class="tbl-cell tbl-cell-photo">
-                                        <a href="#">
-                                            <img src="dashboard_assets/img/photo-64-3.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="tbl-cell">
-                                        <p class="user-card-row-name"><a href="#">Bill S Kenney</a></p>
-                                        <p class="user-card-row-location">Cardiff</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                        <article class="friends-list-item">
-                            <div class="user-card-row">
-                                <div class="tbl-row">
-                                    <div class="tbl-cell tbl-cell-photo">
-                                        <a href="#">
-                                            <img src="dashboard_assets/img/photo-64-4.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="tbl-cell">
-                                        <p class="user-card-row-name"><a href="#">Maggy Smith</a></p>
-                                        <p class="user-card-row-location">Dusseldorf</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                        <article class="friends-list-item">
-                            <div class="user-card-row">
-                                <div class="tbl-row">
-                                    <div class="tbl-cell tbl-cell-photo">
-                                        <a href="#">
-                                            <img src="dashboard_assets/img/photo-64-2.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="tbl-cell">
-                                        <p class="user-card-row-name"><a href="#">Dan Cederholm</a></p>
-                                        <p class="user-card-row-location">New York</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                </section>
-                <!--.box-typical-->
             </div>
             <!--.col- -->
 
@@ -265,8 +194,8 @@
                                 <div class="col-lg-12">
                                     <fieldset class="form-group">
                                         <label class="form-label" for="password"><b>CONTRASEÑA NUEVA</b></label>
-                                        <input type="password" class="form-control" name="password" id="password" required
-                                            placeholder="Ingrese su Contraseña Nueva">
+                                        <input type="password" class="form-control" name="password" id="password"
+                                            required placeholder="Ingrese su Contraseña Nueva">
                                         @if ($errors->first('password'))
                                             <small class="text-danger">{{ $errors->first('password') }}</small>
                                         @endif

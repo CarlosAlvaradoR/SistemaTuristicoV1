@@ -12,7 +12,7 @@
                 <span class="lbl">Usuarios</span>
             </span>
             <ul>
-                <li><a href="#"><span class="lbl">Nuevo</span><span
+                <li><a href="{{ route('mostrar.usuarios') }}"><span class="lbl">Nuevo</span><span
                             class="label label-custom label-pill label-succes">new</span></a></li>
                 <li><a href="#"><span class="lbl">Permisos</span></a></li>
             </ul>
