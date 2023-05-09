@@ -32,12 +32,14 @@
                             <tr>
                                 <th scope="col">Usuario</th>
                                 <th scope="col">Usuario</th>
+                                <th scope="col">Usuario</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($usuarios as $u)
+                            @foreach ($usuarios as $index => $u)
                                 <tr>
+                                    <td>{{ $index+1 }}</td>
                                     <td>{{ $u->name }}</td>
                                     <td>
                                         @if (!empty($u->getRoleNames()))
@@ -77,7 +79,7 @@
     <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal_cuentas_bancarias"
         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
-            <form wire:submit.prevent="saveEntidad">
+            <form wire:submit.prevent="CrearUsuario">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="myModalLabel">
@@ -90,28 +92,126 @@
                     <div class="modal-body">
 
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <fieldset class="form-group">
-                                    <label class="form-label" for="nombre_banco">Nombre del Banco / Ent.
-                                        Financiera</label>
-                                    <input type="text" wire:model.defer="nombre_banco"
-                                        class="form-control maxlength-custom-message" id="nombre_banco"
-                                        placeholder="ej: Banco de la Nación">
-                                    @error('nombre_banco')
-                                        <span class="text-danger">{{ $message }}</span>
+                                    <label class="form-label" for="dni"><b>DNI</b></label>
+                                    <input type="text" wire:model.defer="dni" class="form-control " id="dni"
+                                        placeholder="First Name">
+                                    @error('dni')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
+
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="nombre"><b>NOMBRES</b></label>
+                                    <input type="text" wire:model.defer="nombre" class="form-control " id="nombre"
+                                        placeholder="Enter email">
+                                    @error('nombre')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
                                     @enderror
                                 </fieldset>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <fieldset class="form-group">
-                                    <label class="form-label" for="direccion">Dirección</label>
-                                    <textarea class="form-control" wire:model.defer="direccion" id="direccion" rows="3"
-                                        placeholder="ej: Av. Los Girasoles"></textarea>
-                                    @error('direccion')
-                                        <span class="text-danger">{{ $message }}</span>
+                                    <label class="form-label" for="apellidos"><b>APELLIDOS</b></label>
+                                    <input type="text" wire:model.defer="apellidos"
+                                        class="form-control maxlength-always-show" id="apellidos"
+                                        placeholder="Password">
+                                    @error('apellidos')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
                                     @enderror
                                 </fieldset>
                             </div>
+
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="genero"><b>GÉNERO</b></label>
+                                    <select wire:model.defer="genero" class="form-control " id="genero">
+                                        <option selected>...Seleccione...</option>
+                                        <option value="1">Masculino</option>
+                                        <option value="2">Femenino</option>
+                                    </select>
+                                    @error('genero')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="telefono"><b>TELÉFONO</b></label>
+                                    <input type="text" wire:model.defer="telefono" class="form-control "
+                                        id="telefono" placeholder="Enter email">
+                                    @error('telefono')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="dirección"><b>DIRECCIÓN</b></label>
+                                    <input type="text" wire:model.defer="dirección"
+                                        class="form-control maxlength-always-show" id="dirección"
+                                        placeholder="Password">
+                                    @error('dirección')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
+                                </fieldset>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="email"><b>CORREO ELECTRÓNICO</b></label>
+                                    <input type="text" wire:model.defer="email" class="form-control "
+                                        id="email" placeholder="First Name">
+                                    @error('email')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="password"><b>PASSWORD</b></label>
+                                    <input type="password" wire:model.defer="password" class="form-control " id="password"
+                                        placeholder="Enter email">
+                                    @error('password')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="password_confirmation"><b>PASSWORD
+                                            REPEAT</b></label>
+                                    <input type="password" wire:model.defer="password_confirmation"
+                                        name="password_confirmation" class="form-control maxlength-always-show"
+                                        id="password_confirmation" placeholder="Password">
+                                    @error('password_confirmation')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
+                                </fieldset>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="rol"><b>ROL DE
+                                            USUARIO</b></label>
+                                    <select class="form-control" wire:model.defer="rol"
+                                        id="rol">
+
+                                        @foreach ($roles as $r)
+                                            <option value="{{ $r }}">{{ strtoupper($r) }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('rol')
+                                        <small class="text-muted text-danger">{{ $message }}</small>
+                                    @enderror
+                                </fieldset>
+                            </div>
+
+
                         </div>
 
                     </div>

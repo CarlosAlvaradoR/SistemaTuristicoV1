@@ -1,8 +1,32 @@
+/**
+	MÓDULO DE USUARIOS
+*/
+SELECT p.nombre, p.apellidos, u.email FROM personas p
+INNER JOIN users u on u.persona_id = p.id;
+
+SELECT * FROM users;
+
+
+
+
+
+
+
+
+
+/*
+MÓDULO DE PAQUETES
+*/
 
 -- SELECCIONAR LAS CONDICIONES DE PUNTUALIDAD DE UN PAQUETE
 SELECT cp.descripcion, cp.id FROM paquetes_turisticos pt
 INNER JOIN condicion_puntualidades cp on cp.paquete_id = pt.id
 WHERE cp.paquete_id = 1;
+
+
+
+
+
 
 
 -- SELECCIONAMOS LOS RIESGOS DEL PAQUETE
