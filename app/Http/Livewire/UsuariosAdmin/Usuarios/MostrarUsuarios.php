@@ -63,13 +63,16 @@ class MostrarUsuarios extends Component
     {
         $val = '';
         $valemail = '';
+        $valPass = 'required|string|min:8|confirmed';
         if ($this->idPersona) {
             $val = ',' . $this->idPersona;
         }
 
         if ($this->idUser) {
             $valemail = ',email,' . $this->idUser;
+            $valPass = 'nullable|string|min:8|confirmed';
         }
+
 
         $personas = $this->validate(
             [
@@ -85,7 +88,7 @@ class MostrarUsuarios extends Component
         $usuarios = $this->validate(
             [
                 'email' => 'required|string|email|max:255|unique:users' . $valemail,
-                'password' => 'required|string|min:8|confirmed',
+                'password' => $valPass,
             ]
         );
         $rol = $this->validate(
@@ -94,14 +97,22 @@ class MostrarUsuarios extends Component
             ]
         );
         $rol = Role::findByName($this->rol);
+
+        $title = 'MUY BIEN !';
+        $icon = 'success';
+        $text = 'Usuario Creado con Éxito';
+
         if ($this->idUser) {
             $usuarios = User::findOrFail($this->idUser);
             $personas = Personas::findOrFail($usuarios->persona_id);
 
 
             $usuarios->email = $this->email;
-
-
+            $usuarios->name = $this->nombre;
+            if ($this->password) {
+                $usuarios->password = Hash::make($this->password);
+            }
+            
             $personas->dni = $this->dni;
             $personas->nombre = $this->nombre;
             $personas->apellidos =  $this->apellidos;
@@ -112,6 +123,8 @@ class MostrarUsuarios extends Component
             $usuarios->save();
             $personas->save();
             $usuarios->syncRoles([$rol]);
+
+            $text = 'Información de Usuario Actualizada Correctamente.';
         } else {
             $rol = Role::findByName($this->rol);
 
@@ -131,9 +144,9 @@ class MostrarUsuarios extends Component
         }
 
 
+        $this->emit('alert', $title, $icon, $text);
 
-
-        $this->emit('alert', 'MUY BIEN !', 'success', 'Usuario Creado Correctamente');
+        $this->resetUI();
     }
 
 

@@ -27,7 +27,7 @@
 
                     <div class="profile-card">
                         <div class="profile-card-photo">
-                            <img src="{{ asset('dashboard_assets/img/photo-220-1.jpg') }}" alt="">
+                            <img src="{{ asset('dashboard_assets/img/avatar-2-256.png') }}" alt="">
                         </div>
                         <div class="profile-card-name">{{ strtoupper($persona->nombre . ' ' . $persona->apellidos) }}
                         </div>

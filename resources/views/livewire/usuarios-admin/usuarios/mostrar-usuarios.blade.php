@@ -37,6 +37,7 @@
                             <tr>
                                 <th scope="col">Nº</th>
                                 <th scope="col">USUARIO</th>
+                                <th scope="col">EMAIL</th>
                                 <th scope="col">ROL</th>
                                 <th scope="col">Acciones</th>
                             </tr>
@@ -44,8 +45,9 @@
                         <tbody>
                             @foreach ($usuarios as $index => $u)
                                 <tr>
-                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $index + 1 }}</td> 
                                     <td>{{ $u->nombre_persona . ' ' . $u->apellidos }}</td>
+                                    <td>{{ $u->email }}</td>
                                     <td>
                                         {{ strtoupper($u->nombres_roles) }}
                                     </td>
