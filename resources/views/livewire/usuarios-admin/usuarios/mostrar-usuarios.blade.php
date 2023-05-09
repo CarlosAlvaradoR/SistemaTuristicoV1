@@ -23,30 +23,31 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <button id="modal-532427" href="#modal_cuentas_bancarias" role="button"
-                                class="btn btn-rounded" data-toggle="modal">Crear Ent. Financiera</button>
+                            <button id="modal-532427" href="#modal_users" role="button" class="btn btn-rounded"
+                                data-toggle="modal"><i class="fas fa-user-plus"></i>
+                                Nuevo
+                                Usuario</button>
                         </div>
                     </div>
+                    @php
+                        use App\Models\User;
+                    @endphp
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">Usuario</th>
-                                <th scope="col">Usuario</th>
-                                <th scope="col">Usuario</th>
+                                <th scope="col">Nº</th>
+                                <th scope="col">USUARIO</th>
+                                <th scope="col">ROL</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($usuarios as $index => $u)
                                 <tr>
-                                    <td>{{ $index+1 }}</td>
-                                    <td>{{ $u->name }}</td>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $u->nombre_persona . ' ' . $u->apellidos }}</td>
                                     <td>
-                                        @if (!empty($u->getRoleNames()))
-                                            @foreach ($u->getRoleNames() as $rolNombre)
-                                                {{ strtoupper($rolNombre) }}
-                                            @endforeach
-                                        @endif
+                                        {{ strtoupper($u->nombres_roles) }}
                                     </td>
 
                                     <td>
@@ -76,7 +77,7 @@
 
 
     <!--MODAL --->
-    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal_cuentas_bancarias"
+    <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal_users"
         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <form wire:submit.prevent="CrearUsuario">
@@ -173,8 +174,8 @@
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
                                     <label class="form-label" for="password"><b>PASSWORD</b></label>
-                                    <input type="password" wire:model.defer="password" class="form-control " id="password"
-                                        placeholder="Enter email">
+                                    <input type="password" wire:model.defer="password" class="form-control "
+                                        id="password" placeholder="Enter email">
                                     @error('password')
                                         <small class="text-muted text-danger">{{ $message }}</small>
                                     @enderror
@@ -197,8 +198,7 @@
                                 <fieldset class="form-group">
                                     <label class="form-label" for="rol"><b>ROL DE
                                             USUARIO</b></label>
-                                    <select class="form-control" wire:model.defer="rol"
-                                        id="rol">
+                                    <select class="form-control" wire:model.defer="rol" id="rol">
 
                                         @foreach ($roles as $r)
                                             <option value="{{ $r }}">{{ strtoupper($r) }}</option>
@@ -223,11 +223,11 @@
                         </button>
 
                         <button type="submit" class="btn btn-rounded btn-primary">
-
-                            {{-- Actualizar --}}
-
-                            Guardar
-
+                            @if ($idUser)
+                                Actualizar
+                            @else
+                                Guardar
+                            @endif
 
                         </button>
 
@@ -265,10 +265,10 @@
         document.addEventListener('DOMContentLoaded', function() {
             //Lo que llega de CategoriesController
             window.livewire.on('show-modal', msg => {
-                $('#modal_cuentas_bancarias').modal('show')
+                $('#modal_users').modal('show')
             });
             window.livewire.on('close-modal', msg => {
-                $('#modal_cuentas_bancarias').modal('hide')
+                $('#modal_users').modal('hide')
             });
         });
     </script>

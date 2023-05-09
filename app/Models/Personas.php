@@ -14,6 +14,11 @@ class Personas extends Model
     use HasFactory;
     protected $fillable = ['dni', 'nombre', 'apellidos', 'genero', 'telefono', 'dirección'];
 
+    public function user()
+    {
+        return $this->hasOne(User::class, 'persona_id');
+    }
+
     public function validar(){
         $val = '';
         $validate = $this->validate(

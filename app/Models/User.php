@@ -27,6 +27,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'persona_id',
     ];
 
+    
+    public function personas()
+    {
+        return $this->belongsTo(Personas::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
