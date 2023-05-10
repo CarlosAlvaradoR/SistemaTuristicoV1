@@ -62,6 +62,10 @@ class UserController extends Controller
         return view('users.verUsuarios');
     }
 
+    public function mostrarRoles(){
+        return view('users.roles.index');
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

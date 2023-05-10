@@ -13,18 +13,11 @@
             </span>
             <ul>
                 <li><a href="{{ route('mostrar.usuarios') }}"><span class="lbl">Nuevo</span><span
-                            class="label label-custom label-pill label-succes">new</span></a></li>
-                <li><a href="#"><span class="lbl">Permisos</span></a></li>
+                            class="label label-custom label-pill label-success">new</span></a></li>
+                <li><a href="{{ route('mostrar.roles') }}"><span class="lbl">Roles</span></a></li>
             </ul>
         </li>
 
-
-        <li class="green">
-            <a href="equipos.php">
-                <i class="font-icon glyphicon glyphicon-send"></i>
-                <span class="lbl">Equipos</span>
-            </a>
-        </li>
 
         <li class="green">
             <a href="{{ route('personas') }}">
@@ -113,7 +106,8 @@
                 <li><a href="{{ route('pedidos.proveedores.general') }}"><span class="lbl">Pedidos
                             Proveedor</span></a></li>
                 <li><a href="{{ route('mostrar.bancos') }}"><span class="lbl">Bancos</span></a></li>
-                <li><a href="{{ route('mostrar.tipos.de.comprobante') }}"><span class="lbl">Tipos de Comprobante</span></a></li>
+                <li><a href="{{ route('mostrar.tipos.de.comprobante') }}"><span class="lbl">Tipos de
+                            Comprobante</span></a></li>
             </ul>
         </li>
 

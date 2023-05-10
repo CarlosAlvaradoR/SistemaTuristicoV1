@@ -14,7 +14,7 @@
         </div>
     </header>
 
-    <div class="container-fluid">
+
         <div class="row">
             <div class="col-lg-6 col-lg-pull-6 col-md-6 col-sm-6">
                 <section class="box-typical">
@@ -1389,5 +1389,4 @@
             <!--.col- -->
         </div>
         <!--.row-->
-    </div>
 @endsection
