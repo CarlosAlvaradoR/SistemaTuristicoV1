@@ -20,18 +20,6 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <form role="form">
-                                    @csrf
-
-                                    @if (session()->has('SatisfaccionGaleria'))
-                                        <div class="alert alert-aquamarine alert-fill alert-border-left alert-close alert-dismissible fade in"
-                                            role="alert">
-                                            <button type="button" class="close" data-dismiss="alert"
-                                                aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                            {{ session('SatisfaccionGaleria') }}
-                                        </div>
-                                    @endif
 
                                     <div class="form-group">
                                         <label for="descripcion_foto">Descripcion</label>
@@ -76,7 +64,7 @@
                     @else
                         <button type="button" wire:loading.attr="disabled" wire:click="saveGaleria"
                             class="btn btn-primary">Guardar
-                            Cambios</button>
+                            </button>
                     @endif
 
                 </div>
@@ -135,17 +123,11 @@
         </div>
     </div>
 
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                title: "{{ session('success') }}",
-                icon: 'success'
-            })
-        </script>
-    @endif
 
 
 </div>
+
+@livewire('administrate-commons.alerts')
 
 @section('scripts')
     <script>

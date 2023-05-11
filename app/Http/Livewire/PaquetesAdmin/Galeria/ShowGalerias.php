@@ -47,7 +47,7 @@ class ShowGalerias extends Component
             'paquete_id' => $this->idPaquete
         ]);
         $this->resetUI();
-        session()->flash('SatisfaccionGaleria', 'Fotografía añadida correctamente al paquete.');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Galería Registrada Correctamente.');
     }
 
     public function EditarGaleria($idFotoGaleria)
@@ -89,7 +89,7 @@ class ShowGalerias extends Component
         $this->resetUI();
 
         $this->emit('close-modal', 'Edición de Galerías');
-        session()->flash('success', 'Fotografía Actualizada Correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Galería Actualizada Correctamente.');
         
     }
 
@@ -118,6 +118,8 @@ class ShowGalerias extends Component
         //session()->flash('message2', 'Pago por servicio eliminado correctamente');
 
         $this->resetUI();
+        $this->emit('alert', 'MUY BIEN', 'success', 'Galería Eliminada Correctamente.');
+
     }
 
     function close(){

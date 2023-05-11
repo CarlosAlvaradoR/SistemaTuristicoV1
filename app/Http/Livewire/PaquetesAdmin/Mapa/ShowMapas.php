@@ -15,7 +15,7 @@ class ShowMapas extends Component
     public $idPaquete;
     public $title = 'CREACIÓN DE MAPAS DEL PAQUETE';
     public $ruta, $descripcion;
-    public $conta = 0, $idMapa, $mapa_anterior, $edicion=false;
+    public $conta = 0, $idMapa, $mapa_anterior, $edicion = false;
 
     protected $listeners = ['deleteMapa' => 'deleteMapa'];
 
@@ -25,37 +25,41 @@ class ShowMapas extends Component
     ];
 
 
-    public function mount($idPaquete){
+    public function mount($idPaquete)
+    {
         $this->idPaquete = $idPaquete;
     }
-    
+
     public function render()
     {
-        $mapas = MapaPaquetes::where('paquete_id','=',$this->idPaquete)->get();
+        $mapas = MapaPaquetes::where('paquete_id', '=', $this->idPaquete)->get();
         if ($mapas) {
             $this->conta = count($mapas);
         }
         return view('livewire.paquetes-admin.mapa.show-mapas', compact('mapas'));
     }
 
-    public function saveMapa(){
+    public function saveMapa()
+    {
         $this->validate();
         if ($this->conta > 0) {
-            session()->flash('warning', 'Este Paquete ya tiene asignado su mapa');
+            $this->emit('alert', 'ALERTA !', 'warning', 'El Paquete ya tiene asignado su mapa');
+
             return;
         }
 
         $mapa = MapaPaquetes::create([
-            'ruta' => 'storage/'.$this->ruta->store('mapas','public'),
+            'ruta' => 'storage/' . $this->ruta->store('mapas', 'public'),
             'descripcion' => $this->descripcion,
             'paquete_id' => $this->idPaquete
         ]);
 
         $this->resetUI();
-        $this->sessionMessage('success', 'Mapa Guardado Correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Mapa Registrado Correctamente.');
     }
 
-    public function Edit($idMapaPaquete){
+    public function Edit($idMapaPaquete)
+    {
         $this->resetUI();
         $mapaPaquete = MapaPaquetes::findOrFail($idMapaPaquete);
         $this->title = 'EDICIÓN DE MAPA DEL PAQUETE';
@@ -65,11 +69,12 @@ class ShowMapas extends Component
         $this->edicion = true;
 
         //$this->emit('show-modal', 'Edición de Mapas');
-        
+
         $this->emit('show-modal', 'Edicion de Mapas');
     }
 
-    public function Update(){
+    public function Update()
+    {
         if ($this->ruta) {
             if (file_exists(public_path('fotos/$this->mapa_anterior'))) {
                 $eliminar = unlink($this->mapa_anterior);
@@ -85,12 +90,13 @@ class ShowMapas extends Component
         $mapa->descripcion = $this->descripcion;
         $mapa->save();
         $this->resetUI();
-        $this->sessionMessage('success','Mapa Actualizado Correctamente');
+        $this->emit('alert', 'MUY BIEN !', 'success', 'Mapa Actualizado Correctamente');
 
         $this->emit('close-modal', 'Edicion de Mapas');
     }
 
-    public function closeModal(){
+    public function closeModal()
+    {
         $this->emit('close-modal', 'Edicion de Mapas');
     }
 
@@ -105,21 +111,23 @@ class ShowMapas extends Component
 
     public function deleteMapa($idMapa)
     {
-        
-
         $mapa_paquete = MapaPaquetes::findOrFail($idMapa);
 
         $mapa_paquete->delete();
         $eliminar = unlink($mapa_paquete->ruta . '');
 
         $this->resetUI();
+        $this->emit('alert', 'MUY BIEN !', 'success', 'Mapa Eliminado Correctamente');
+
     }
 
-    function resetUI(){
-        $this->reset(['title','ruta','descripcion','conta','idMapa','mapa_anterior','edicion']);
+    function resetUI()
+    {
+        $this->reset(['title', 'ruta', 'descripcion', 'conta', 'idMapa', 'mapa_anterior', 'edicion']);
     }
 
-    function sessionMessage($nombre_session, $mensaje){
+    function sessionMessage($nombre_session, $mensaje)
+    {
         session()->flash($nombre_session, $mensaje);
     }
 }

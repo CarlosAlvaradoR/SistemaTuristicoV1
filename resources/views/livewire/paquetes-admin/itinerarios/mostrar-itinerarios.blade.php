@@ -94,7 +94,7 @@
                                                 Actividad
                                             </th>
                                             <th>
-                                                Descripcion
+                                                Descripcion del Itinerario
                                             </th>
                                             <th>
                                                 Acciones
@@ -112,12 +112,10 @@
                                                 <td>{{ $ai->nombre_actividad }}</td>
                                                 <td>{{ $ai->descripcion }}</td>
                                                 <td>
-                                                    <a href="!#" title="Quitar Itinerario"
+                                                    <button title="Quitar Itinerario" class="btn btn-danger btn-sm"
                                                         wire:click="quitarActividadItinerario({{ $ai->idItinerario }})">
-                                                        <span class="btn btn-danger btn-sm">
-                                                            <span class="fa fa-minus"></span>
-                                                        </span>
-                                                    </a>
+                                                        <span class="fa fa-minus"></span>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -144,13 +142,17 @@
                 <thead>
                     <tr>
                         <th>
+                            Agregar Itinerario
+                        </th>
+                        <th>
                             #
                         </th>
                         <th>
                             Actividad
                         </th>
+
                         <th>
-                            Descripcion
+                            Descripcion del Itinerario
                         </th>
                         <th>
                             Acciones
@@ -160,51 +162,86 @@
                 <tbody>
                     @php
                         $cont = 1;
+                        use App\Models\ItinerarioPaquetes;
                     @endphp
-                    @foreach ($actividades_itinerarios as $ai)
+
+                    @foreach ($actividades as $index => $a)
                         <tr>
-                            <th scope="row">{{ $cont++ }}</th>
-                            <td>
-                                {{ $ai->nombre_actividad }}
+                            @php
+                                $itinerario = ItinerarioPaquetes::where('actividad_id', $a->id)->get();
+                            @endphp
 
+                            <td rowspan="{{ $itinerario->count() + 1 }}">
+                                <button wire:click="addItinerarios({{ $a->id }})"
+                                    title="Añadir Itinerarios a la Actividad" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </td>
+                            <td scope="row" rowspan="{{ $itinerario->count() + 1 }}">
+                                <b>{{ $index + 1 }}</b>
+                            </td>
+                            <td rowspan="{{ $itinerario->count() + 1 }}">
+                                {{ $a->nombre_actividad }}
                             </td>
 
-                            <td>
-                                {{ $ai->descripcion }}
-                                @if (!$ai->descripcion)
+
+                            @if (count($itinerario) == 0)
+                                <td rowspan="1">
                                     <span class="label label-danger">Sin Itinerarios Registrados</span>
-                                @endif
-                            </td>
-                            <td>
-
-                                @if (!$ai->descripcion)
-                                    <button wire:click="EditActividad({{ $ai->id }})" title="Editar Actividad"
+                                </td>
+                                <td rowspan="1">
+                                    <button wire:click="EditActividad({{ $a->id }})" title="Editar Actividad"
                                         class="btn btn-warning btn-sm">
                                         <span class="fa fa-pencil-square-o"></span>
                                     </button>
-                                    <button wire:click="addItinerarios({{ $ai->id }})"
-                                        title="Añadir Itinerarios a la Actividad" class="btn btn-primary btn-sm">
-                                        <span class="fa fa-pencil-square-o"></span>
-                                    </button>
                                     <button class="btn btn-danger btn-sm"
-                                        wire:click="deleteConfirmActividad({{ $ai->id }})"
+                                        wire:click="deleteConfirmActividad({{ $a->id }})"
                                         title="Eliminar Actividad">
                                         <span class="fa fa-trash"></span>
                                     </button>
-                                @else
-                                    <button wire:click="Edit({{ $ai->idItinerario }})" title="Editar Itinerario"
-                                        class="btn btn-warning btn-sm">
-                                        <span class="fa fa-pencil-square-o"></span>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm"
-                                        wire:click="deleteConfirm({{ $ai->idItinerario }})"
-                                        title="Eliminar Itinerario">
-                                        <span class="fa fa-trash"></span>
-                                    </button>
-                                @endif
-                            </td>
+                                </td>
+                            @endif
                         </tr>
+
+                        @if (count($itinerario) > 0)
+                            @foreach ($itinerario as $ai)
+                                <tr>
+                                    <td>
+
+                                        {{ $ai->descripcion }}
+                                        @if (!$ai->descripcion)
+                                            <span class="label label-danger">Sin Itinerarios Registrados</span>
+                                        @endif
+                                    </td>
+                                    <td>
+
+                                        @if (!$ai->descripcion)
+                                            <button wire:click="EditActividad({{ $ai->actividad_id }})"
+                                                title="Editar Actividad" class="btn btn-warning btn-sm">
+                                                <span class="fa fa-pencil-square-o"></span>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm"
+                                                wire:click="deleteConfirmActividad({{ $ai->actividad_id }})"
+                                                title="Eliminar Actividad">
+                                                <span class="fa fa-trash"></span>
+                                            </button>
+                                        @else
+                                            <button wire:click="Edit({{ $ai->id }})" title="Editar Itinerario"
+                                                class="btn btn-warning btn-sm">
+                                                <span class="fa fa-pencil-square-o"></span>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm"
+                                                wire:click="deleteConfirm({{ $ai->id }})"
+                                                title="Eliminar Itinerario">
+                                                <span class="fa fa-trash"></span>
+                                            </button>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                     @endforeach
+
 
                 </tbody>
             </table>
@@ -222,7 +259,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">EDITAR INFORMACIÓN DE LA ACTIVIDAD</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -262,8 +299,8 @@
                     <button type="button" id="cl-act-iti" class="btn btn-danger" wire:loading.attr="disabled"
                         data-dismiss="modal">Cerrar</button>
                     @if ($edicionActividad)
-                        <button type="button" id="update-acti" wire:click="UpdateActividad" wire:loading.attr="disabled"
-                            class="btn btn-primary">Actualizar Actividad</button>
+                        <button type="button" id="update-acti" wire:click="UpdateActividad"
+                            wire:loading.attr="disabled" class="btn btn-primary">Actualizar Actividad</button>
                     @else
                         <button type="button" id="update-iti" wire:click="Update" wire:loading.attr="disabled"
                             class="btn btn-primary">Actualizar</button>

@@ -12,20 +12,23 @@ class MostrarItinerarios extends Component
     public $idPaquete;
     public $actividad, $descripcion_itinerario;
     public $idActividad = 0, $nombre_actividadRegistrado = '', $mostrarNombre = false;
-    
+
     /** PARA LA EDICIÓN DE ITINEARIOS */
-    public $title='EDITAR ACTIVIDADES', $idActividadSeleccionado, $idItinerario, $edicionActividad=false;
+    public $title = 'EDITAR ACTIVIDADES', $idActividadSeleccionado, $idItinerario, $edicionActividad = false;
     public $nombre_de_actividad, $descripcion_de_itinerario;
 
-    protected $listeners = ['quitarActividadItinerario','quitarActividad'];
+    protected $listeners = ['quitarActividadItinerario', 'quitarActividad'];
 
     protected $rules = [
         'actividad' => 'required'
     ];
 
-    function resetUI(){
-        $this->reset(['title','idActividadSeleccionado','idItinerario','edicionActividad',
-        'nombre_de_actividad','descripcion_de_itinerario']);
+    function resetUI()
+    {
+        $this->reset([
+            'title', 'idActividadSeleccionado', 'idItinerario', 'edicionActividad',
+            'nombre_de_actividad', 'descripcion_de_itinerario'
+        ]);
     }
 
     public function mount($idPaquete)
@@ -37,11 +40,13 @@ class MostrarItinerarios extends Component
     public function render()
     {
         //dd($this->idPaquete);
+        $actividades = ActividadesItinerarios::where('paquete_id', $this->idPaquete)->get();
         $actividades_itinerarios = DB::select('SELECT a.id, a.nombre_actividad, i.descripcion, i.id as idItinerario FROM `actividades_itinerarios` a
         LEFT JOIN `itinerario_paquetes` i on a.id = i.actividad_id
-        WHERE a.paquete_id = '.$this->idPaquete.'
+        WHERE a.paquete_id = ' . $this->idPaquete . '
         ORDER BY a.id');
-        return view('livewire.paquetes-admin.itinerarios.mostrar-itinerarios', compact('actividades_itinerarios'));
+
+        return view('livewire.paquetes-admin.itinerarios.mostrar-itinerarios', compact('actividades', 'actividades_itinerarios'));
     }
 
     public function guardarActividadItinerario()
@@ -60,7 +65,7 @@ class MostrarItinerarios extends Component
 
 
         $this->reset(['actividad']);
-        session()->flash('insertado_correctamente', 'Registro insertado correctamente.');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Registro insertado correctamente.');
     }
 
     public function agregarItinerarioaActividad()
@@ -69,13 +74,12 @@ class MostrarItinerarios extends Component
             'descripcion_itinerario' => 'required|min:3'
         ]);
 
-        $itinerarioG=ItinerarioPaquetes::create([
-            'descripcion' => $this->descripcion_itinerario, 
+        $itinerarioG = ItinerarioPaquetes::create([
+            'descripcion' => $this->descripcion_itinerario,
             'actividad_id' => $this->idActividad
         ]);
         $this->reset(['descripcion_itinerario']);
-        session()->flash('insertado_correctamente', 'Registro insertado correctamente.');
-
+        $this->emit('alert', 'MUY BIEN', 'success', 'Registro insertado correctamente.');
     }
 
     public function Edit(ItinerarioPaquetes $itinerario)
@@ -104,14 +108,14 @@ class MostrarItinerarios extends Component
         $itinerario = ItinerarioPaquetes::findOrFail($this->idItinerario);
         $itinerario->descripcion = $this->descripcion_de_itinerario;
         $itinerario->save();
-
-        session()->flash('success', 'Actualizado Correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Actualizado Correctamente.');
 
         $this->emit('close-modal-editar-itinerario', 'edicionActividad de Atractivos');
         $this->resetUI();
     }
 
-    public function EditActividad(ActividadesItinerarios $actividad){
+    public function EditActividad(ActividadesItinerarios $actividad)
+    {
         $this->title = 'EDITAR TIPO DE ALIMENTACIÓN';
         $this->idItinerario = 0;
         $this->idActividadSeleccionado = $actividad->id;
@@ -120,18 +124,18 @@ class MostrarItinerarios extends Component
         $this->edicionActividad = true;
         $this->emit('show-modal-editar-itinerario', 'edicionActividad de Atractivos');
     }
-    public function UpdateActividad(){
+    public function UpdateActividad()
+    {
         $actividad = ActividadesItinerarios::findOrFail($this->idActividadSeleccionado);
         $actividad->nombre_actividad = $this->nombre_de_actividad;
         $actividad->save();
-
-        session()->flash('success', 'Actualizado Correctamente');
-
+        $this->emit('alert', 'MUY BIEN', 'success', 'Actualizado Correctamente.');
         $this->emit('close-modal-editar-itinerario', 'edicionActividad de Atractivos');
         $this->resetUI();
     }
 
-    public function addItinerarios(ActividadesItinerarios $actividad){
+    public function addItinerarios(ActividadesItinerarios $actividad)
+    {
         $this->idActividad = $actividad->id;
         $this->nombre_actividadRegistrado = $actividad->nombre_actividad;
         $this->mostrarNombre = true;
@@ -162,19 +166,21 @@ class MostrarItinerarios extends Component
 
 
 
-    public function limpiar(){
-        $this->idActividad = 0 ;
+    public function limpiar()
+    {
+        $this->idActividad = 0;
         $this->mostrarNombre = false;
     }
 
     public function quitarActividadItinerario(ItinerarioPaquetes $itinerario)
     {
         $itinerario->delete();
-        session()->flash('success', 'Eliminado Correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Eliminado Correctamente.');
     }
 
-    public function quitarActividad(ActividadesItinerarios $actividad){
+    public function quitarActividad(ActividadesItinerarios $actividad)
+    {
         $actividad->delete();
-        session()->flash('success', 'Eliminado Correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Eliminado Correctamente.');
     }
 }
