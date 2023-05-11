@@ -5,7 +5,7 @@ use App\Http\Livewire\ShowPaquetes;
 
 Route::get('/paquetes', [App\Http\Controllers\PaquetesTuristicosController::class, 'index'])->name('paquetes.index')->middleware(['auth', 'verified', 'can:ver-paquetes']);
 Route::get('/paquetes/crear', [App\Http\Controllers\PaquetesTuristicosController::class, 'create'])->name('paquetes.create')->middleware(['auth', 'verified', 'can:crear-paquetes']);
-Route::get('/paquetes/editar/{slug}', [App\Http\Controllers\PaquetesTuristicosController::class, 'edit'])->name('paquetes.edit')->middleware(['auth', 'verified']);
+Route::get('/paquetes/editar/{slug}', [App\Http\Controllers\PaquetesTuristicosController::class, 'edit'])->name('paquetes.edit')->middleware(['auth', 'verified', 'can:editar-paquetes']);
 Route::get('/paquetes/detalle/{slug}', [App\Http\Controllers\PaquetesTuristicosController::class, 'show'])->name('paquetes.detalle')->middleware(['auth', 'verified']);
 
 Route::get('/paquetes/lugares-atractivos', [App\Http\Controllers\PaquetesTuristicosController::class, 'lugares_atractivos'])->name('paquetes.lugares_atractivos')->middleware(['auth', 'verified']);

@@ -20,6 +20,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class PaquetesTuristicosController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -29,14 +30,14 @@ class PaquetesTuristicosController extends Controller
     {
         // $user = auth()->user();
         // if ($user->hasAnyPermission(['ver-paquetes'])) {
-            // Do some stuff here
-            return view('paquetes_admin.index');
-        //  }//else{
+        // Do some stuff here
+        return view('paquetes_admin.index');
+        //  }else{
         //     return abort(404);
         // }
 
         //$paquetes = PaquetesTuristicos::paginate(12);
-        
+
     }
 
     /**
@@ -183,7 +184,6 @@ class PaquetesTuristicosController extends Controller
             )
             ->get();
         return view('pedidos_proveedores_admin.pedidos_proveedor', compact('pedidos'));
-
     }
 
     public function VerPedidosGeneralesDetalle(Proveedores $proveedor, Pedidos $pedido)
@@ -242,46 +242,48 @@ class PaquetesTuristicosController extends Controller
 
     public function VerReporteDeEquiposEnStock()
     {
-        
+
         $title = 'Lista de Equipos con los que se cuenta Actualmente';
         $equipos = DB::select('SELECT e.id, e.nombre, e.descripcion, e.stock,e.precio_referencial, e.tipo, m.nombre as marca FROM equipos e
        INNER JOIN marcas m on m.id = e.marca_id');
-        
-        
-        $pdf = Pdf::loadView('equipos_admin.reportes.reporteDeEquiposGeneral', compact('equipos','title'));
-        return $pdf->stream($title.'.pdf');
+
+
+        $pdf = Pdf::loadView('equipos_admin.reportes.reporteDeEquiposGeneral', compact('equipos', 'title'));
+        return $pdf->stream($title . '.pdf');
 
         // return view('equipos_admin.reportes.reporteDeEquiposGeneral', compact('equipos'));
     }
 
-    public function VerReporteDeMantenimientoDeEquipos($idEquipo, $fechaSalida = false, $fechaEntrada = false){
+    public function VerReporteDeMantenimientoDeEquipos($idEquipo, $fechaSalida = false, $fechaEntrada = false)
+    {
         $mantenimientos = Mantenimientos::mostrarMantenimientos($idEquipo, 2, $fechaSalida, $fechaEntrada);
         $title = 'Información General de Mantenimiento de Equipos';
-        
+
         if ($fechaSalida & $fechaEntrada) {
-            $title = 'Mantenimiento de Equipos Fecha de Salida - Entrada: '.
-            date('d/m/Y', strtotime($fechaSalida)).' - '. date('d/m/Y', strtotime($fechaEntrada));
-        }//{{ date('d-m-Y', strtotime($i->fecha_cumplimiento)) }}
-        
-        
-        $pdf = Pdf::loadView('equipos_admin.reportes.reporteDeMantenimientos', compact('mantenimientos','title'));
-        return $pdf->stream($title.'.pdf');
+            $title = 'Mantenimiento de Equipos Fecha de Salida - Entrada: ' .
+                date('d/m/Y', strtotime($fechaSalida)) . ' - ' . date('d/m/Y', strtotime($fechaEntrada));
+        } //{{ date('d-m-Y', strtotime($i->fecha_cumplimiento)) }}
+
+
+        $pdf = Pdf::loadView('equipos_admin.reportes.reporteDeMantenimientos', compact('mantenimientos', 'title'));
+        return $pdf->stream($title . '.pdf');
 
         // return view('equipos_admin.reportes.reporteDeMantenimientos', compact('equipos'));
     }
 
-    public function VerReporteDeBajaDeEquipos($idEquipo, $fechaInicial = false, $fechaFinal = false){
+    public function VerReporteDeBajaDeEquipos($idEquipo, $fechaInicial = false, $fechaFinal = false)
+    {
         $bajas = BajaEquipos::mostrarBajaDeEquipos($idEquipo, 2, $fechaInicial, $fechaFinal);
         $title = 'Información General de la Baja de Equipos';
-        
+
         if ($fechaInicial & $fechaFinal) {
-            $title = 'Baja de Equipos En el Rango de Fechas: '.
-            date('d/m/Y', strtotime($fechaInicial)).' - '. date('d/m/Y', strtotime($fechaFinal));
-        }//{{ date('d-m-Y', strtotime($i->fecha_cumplimiento)) }}
-        
-        
-        $pdf = Pdf::loadView('equipos_admin.reportes.reporteDeBajas', compact('bajas','title'));
-        return $pdf->stream($title.'.pdf');
+            $title = 'Baja de Equipos En el Rango de Fechas: ' .
+                date('d/m/Y', strtotime($fechaInicial)) . ' - ' . date('d/m/Y', strtotime($fechaFinal));
+        } //{{ date('d-m-Y', strtotime($i->fecha_cumplimiento)) }}
+
+
+        $pdf = Pdf::loadView('equipos_admin.reportes.reporteDeBajas', compact('bajas', 'title'));
+        return $pdf->stream($title . '.pdf');
 
         // return view('equipos_admin.reportes.reporteDeBajas', compact('equipos'));
     }
