@@ -105,7 +105,7 @@
                                     <span class="fa fa-pencil-square-o"></span>
                                 </button>
                                 <button class="btn btn-danger btn-sm" wire:click="deleteConfirm({{ $a->id }})"
-                                    title="Eliminar Tipo de Personal">
+                                    title="Eliminar Autorización Médica">
                                     <span class="fa fa-trash"></span>
                                 </button>
                             </td>

@@ -24,17 +24,6 @@
                                         <span class="text-info">Procesando</span>
                                     </div>
 
-                                    @if (session()->has('SatisfaccionTipoAcemila'))
-                                        <div class="alert alert-aquamarine alert-fill alert-border-left alert-close alert-dismissible fade in"
-                                            role="alert">
-                                            <button type="button" class="close" data-dismiss="alert"
-                                                aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                            {{ session('SatisfaccionTipoAcemila') }}
-                                        </div>
-                                    @endif
-
                                     <div class="form-group">
 
                                         <label for="tipo">
@@ -42,7 +31,7 @@
                                         </label>
                                         <select class="form-control" wire:model.defer="tipo" id="tipo"
                                             wire:loading.attr="disabled">
-                                            <option selected>---Seleccione---</option>
+                                            <option selected value="">---Seleccione---</option>
                                             @foreach ($tipos as $t)
                                                 <option value="{{ $t->id }}">{{ $t->nombre }}</option>
                                             @endforeach
@@ -150,24 +139,6 @@
         </div>
     </div>
 
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                title: 'MUY BIEN',
-                text: "{{ session('success') }}",
-                icon: 'success'
-            })
-        </script>
-    @endif
-
-    @if (session('error'))
-        <script>
-            Swal.fire({
-                title: "{{ session('error') }}",
-                icon: 'error'
-            })
-        </script>
-    @endif
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

@@ -14,15 +14,18 @@ class MostrarRiesgos extends Component
 
     public $idPaquete;
     public $descripcion;
-    public $title = 'CREAR RIESGOS ASOCIADOS AL PAQUETE', $idRiesgo, $edicion=false;
+    public $title = 'CREAR RIESGOS ASOCIADOS AL PAQUETE', $idRiesgo, $edicion = false;
 
     protected $listeners = ['deleteRiesgo' => 'deleteRiesgo'];
 
-    function resetUI(){
-        $this->reset(['descripcion','title','idRiesgo','edicion']);
+    function resetUI()
+    {
+        $this->reset(['descripcion', 'title', 'idRiesgo', 'edicion']);
+        $this->resetValidation();
     }
 
-    public function mount($idPaquete){
+    public function mount($idPaquete)
+    {
         $this->idPaquete = $idPaquete;
     }
 
@@ -33,14 +36,15 @@ class MostrarRiesgos extends Component
             ->join('riesgos as r', 'r.paquete_id', '=', 'pt.id')
             ->where('r.paquete_id', $this->idPaquete)
             ->select(
-                'r.descripcion', 
+                'r.descripcion',
                 'r.id'
-                )
+            )
             ->paginate(2);
         return view('livewire.paquetes-admin.riesgos.mostrar-riesgos', compact('riesgos'));
     }
 
-    public function guardarRiesgodelPaquete(){
+    public function guardarRiesgodelPaquete()
+    {
         $this->validate([
             'descripcion' => 'required|min:3'
         ]);
@@ -104,10 +108,10 @@ class MostrarRiesgos extends Component
         $var = count($tipos);
         //dd($var);
         if ($var > 0) {
-            session()->flash('error', 'No se Puede Eliminar porque ya se aceptó en una reserva');
+            $this->emit('alert', 'ALERTA !', 'warning', 'No se Puede Eliminar porque ya se aceptó en una reserva.');
         } else {
             $tipo->delete();
-            session()->flash('success', 'Eliminado Correctamente');
+            $this->emit('alert', 'MUY BIEN !', 'success', 'Riesgo Eliminado Correctamente.');
         }
     }
 
@@ -116,6 +120,4 @@ class MostrarRiesgos extends Component
         $this->emit('close-modal-riesgo-paquete', 'Edicion de Atractivos');
         $this->resetUI();
     }
-
-
 }

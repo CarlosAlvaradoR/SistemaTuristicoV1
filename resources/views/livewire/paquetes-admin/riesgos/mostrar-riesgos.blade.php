@@ -24,17 +24,7 @@
                                         <span class="text-info">Procesando</span>
                                     </div>
 
-                                    @if (session()->has('SatisfaccionAlmuerzo'))
-                                        <div class="alert alert-aquamarine alert-fill alert-border-left alert-close alert-dismissible fade in"
-                                            role="alert">
-                                            <button type="button" class="close" data-dismiss="alert"
-                                                aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                            {{ session('SatisfaccionAlmuerzo') }}
-                                        </div>
-                                    @endif
-
+                                
 
                                     <div class="form-group">
 
@@ -113,7 +103,7 @@
                                     <span class="fa fa-pencil-square-o"></span>
                                 </button>
                                 <button class="btn btn-danger btn-sm" wire:click="deleteConfirm({{ $r->id }})"
-                                    title="Eliminar Tipo de Personal">
+                                    title="Eliminar Riesgo">
                                     <span class="fa fa-trash"></span>
                                 </button>
                             </td>

@@ -17,14 +17,15 @@ class MostrarEquipoPaquetes extends Component
     protected $listeners = ['quitarEquipoPaquetes' => 'quitarEquipoPaquetes'];
 
     protected $rules = [
-        'equipo' => 'required',
+        'equipo' => 'required|numeric|min:1',
         'cantidad' => 'required|numeric|min:1',
-        'observacion' => 'required'
+        'observacion' => 'required|min:5'
     ];
 
     function resetUI()
     {
         $this->reset(['equipo', 'cantidad', 'observacion', 'title', 'idEquipoPaquete', 'edicion']);
+        $this->resetValidation();
     }
 
     public function mount($idPaquete)
@@ -40,8 +41,7 @@ class MostrarEquipoPaquetes extends Component
         INNER JOIN equipo_paquetes ep on e.id = ep.equipo_id
         WHERE ep.paquete_id = ' . $this->idPaquete . '');
 
-        return view(
-            'livewire.paquetes-admin.equipo-paquete.mostrar-equipo-paquetes',
+        return view('livewire.paquetes-admin.equipo-paquete.mostrar-equipo-paquetes',
             compact('equipos', 'equipo_paquetes')
         );
     }
@@ -59,11 +59,8 @@ class MostrarEquipoPaquetes extends Component
         ]);
 
         $this->reset(['cantidad', 'observacion', 'equipo']);
-        $this->dispatchBrowserEvent('swal', [
-            'title' => 'MUY BIEN !',
-            'icon' => 'success',
-            'text' => 'Registrado Correctamente'
-        ]);
+        $this->emit('alert', 'MUY BIEN', 'success', 'Equipos Asignados Correctamente.');
+        
     }
 
     public function Edit(EquipoPaquetes $tipo)
@@ -90,7 +87,7 @@ class MostrarEquipoPaquetes extends Component
         $tipo->equipo_id = $this->equipo;
         $tipo->save();
 
-        session()->flash('success', 'Actualizado Correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Equipos Actualizados Correctamente.');
 
         $this->emit('close-modal-equipo-paquete', 'Edicion de Atractivos');
         $this->resetUI();
@@ -110,7 +107,8 @@ class MostrarEquipoPaquetes extends Component
     {
         $equipo_paquetes = EquipoPaquetes::findOrFail($idEquipoPaquetes);
         $equipo_paquetes->delete();
-        session()->flash('success', 'Equipo Quitado de la Asignación de Paquetes');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Equipos Eliminado del Paquete Correctamente.');
+
     }
 
     public function cerrarModal()

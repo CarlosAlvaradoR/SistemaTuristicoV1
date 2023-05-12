@@ -92,7 +92,7 @@
                                     <button wire:click="Edit({{ $categoria->id }})" class="btn btn-warning btn-sm">
                                         <span class="fa fa-pencil-square-o"></span>
                                     </button>
-                                    <button title="Quitar Pago por servicio"
+                                    <button title="Quitar Categoría de Hotel"
                                         wire:click="deleteConfirm({{ $categoria->id }})" class="btn btn-danger btn-sm">
                                         <span class="fa fa-trash"></span>
                                     </button>

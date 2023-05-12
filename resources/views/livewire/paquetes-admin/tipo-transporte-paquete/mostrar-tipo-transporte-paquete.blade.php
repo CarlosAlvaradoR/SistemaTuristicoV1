@@ -142,7 +142,7 @@
                                     <span class="fa fa-pencil-square-o"></span>
                                 </button>
 
-                                <button class="btn btn-danger btn-sm" title="Quitar Tipo de Personal"
+                                <button class="btn btn-danger btn-sm" title="Quitar Tipo de Transporte"
                                     wire:loading.attr="disabled"
                                     wire:click="deleteConfirm({{ $lv->id }})">
                                     <span class="fa fa-minus"></span>

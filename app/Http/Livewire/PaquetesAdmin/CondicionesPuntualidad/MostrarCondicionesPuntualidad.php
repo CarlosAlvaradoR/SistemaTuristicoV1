@@ -14,16 +14,19 @@ class MostrarCondicionesPuntualidad extends Component
 
     public $idPaquete;
     public $descripcion;
-    public $title = 'CREAR CONDICIONES DE PUNTUALIDAD DEL PAQUETE', $idCondicionPuntualidad, $edicion=false;
-    
+    public $title = 'CREAR CONDICIONES DE PUNTUALIDAD DEL PAQUETE', $idCondicionPuntualidad, $edicion = false;
+
     protected $listeners = ['deleteCondicionPuntualidad' => 'deleteCondicionPuntualidad'];
 
-    function resetUI(){
-        $this->reset(['descripcion','title','idCondicionPuntualidad','edicion']);
+    public function resetUI()
+    {
+        $this->reset(['descripcion', 'title', 'idCondicionPuntualidad', 'edicion']);
+        $this->resetValidation();
     }
 
 
-    public function mount($idPaquete){
+    public function mount($idPaquete)
+    {
         $this->idPaquete = $idPaquete;
     }
 
@@ -33,16 +36,18 @@ class MostrarCondicionesPuntualidad extends Component
             ->join('condicion_puntualidades as cp', 'cp.paquete_id', '=', 'pt.id')
             ->where('cp.paquete_id', $this->idPaquete)
             ->select(
-                'cp.descripcion', 
+                'cp.descripcion',
                 'cp.id'
-                )
+            )
             ->paginate(2);
-       
+
         return view('livewire.paquetes-admin.condiciones-puntualidad.mostrar-condiciones-puntualidad',
-    compact('condiciones'));
+            compact('condiciones')
+        );
     }
 
-    public function guardarCondicionesPuntualidadPaquete(){
+    public function guardarCondicionesPuntualidadPaquete()
+    {
         $this->validate([
             'descripcion' => 'required|min:3'
         ]);
@@ -56,7 +61,7 @@ class MostrarCondicionesPuntualidad extends Component
         $this->dispatchBrowserEvent('swal', [
             'title' => 'MUY BIEN',
             'icon' => 'success',
-            'text' => 'Confición Registrada Correctamente' 
+            'text' => 'Confición Registrada Correctamente'
         ]);
     }
 
@@ -81,7 +86,7 @@ class MostrarCondicionesPuntualidad extends Component
         $this->dispatchBrowserEvent('swal', [
             'title' => 'MUY BIEN',
             'icon' => 'success',
-            'text' => 'Condición Actualizada Correctamente' 
+            'text' => 'Condición Actualizada Correctamente'
         ]);
 
         $this->emit('close-modal-tipo-personal', 'Edicion de Atractivos');
@@ -106,10 +111,10 @@ class MostrarCondicionesPuntualidad extends Component
         $var = count($tipos);
         //dd($var);
         if ($var > 0) {
-            session()->flash('error', 'No se Puede Eliminar porque ya se aceptó en una reserva');
+            $this->emit('alert', 'ALERTA !', 'warning', 'No se Puede Eliminar porque ya se aceptó en una reserva.');
         } else {
             $tipo->delete();
-            session()->flash('success', 'Eliminado Correctamente');
+            $this->emit('alert', 'MUY BIEN !', 'success', 'Condición de Puntualidad Eliminado Correctamente.');
         }
     }
 
@@ -118,6 +123,4 @@ class MostrarCondicionesPuntualidad extends Component
         $this->emit('close-modal-tipo-personal', 'Edicion de Atractivos');
         $this->resetUI();
     }
-
-
 }

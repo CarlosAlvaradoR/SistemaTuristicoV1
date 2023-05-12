@@ -10,7 +10,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{$title}}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ $title }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -99,7 +99,7 @@
                     @else
                         <button type="button" wire:loading.attr="disabled" wire:click="guardarEquipoPaquetes"
                             class="btn btn-rounded btn-primary">Guardar
-                            Cambios</button>
+                            </button>
                     @endif
 
                 </div>
@@ -157,8 +157,7 @@
                                     <span class="fa fa-pencil-square-o"></span>
                                 </button>
                                 <button class="btn btn-danger btn-sm" title="Quitar Equipo del Paquete"
-                                    wire:loading.attr="disabled"
-                                    wire:click="deleteConfirm({{ $lv->id }})">
+                                    wire:loading.attr="disabled" wire:click="deleteConfirm({{ $lv->id }})">
                                     <span class="fa fa-minus"></span>
                                 </button>
                             </td>
@@ -170,25 +169,6 @@
         </div>
     </div>
 
-
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                title: 'MUY BIEN',
-                text: "{{ session('success') }}",
-                icon: 'success'
-            })
-        </script>
-    @endif
-
-    @if (session('error'))
-        <script>
-            Swal.fire({
-                title: "{{ session('error') }}",
-                icon: 'error'
-            })
-        </script>
-    @endif
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -223,13 +203,5 @@
                 }
             })
         });
-        /*window.addEventListener('swal', event => {
-            
-            Swal.fire(
-                event.detail.title,
-                event.detail.text,
-                event.detail.icon
-            );
-        });*/
     </script>
 </div>

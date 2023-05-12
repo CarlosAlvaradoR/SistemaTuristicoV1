@@ -111,7 +111,7 @@
                                     </span>
                                 </a>
                                 <button type="button" wire:click="deleteConfirm({{ $f->id }})"
-                                    class="btn btn-danger btn-sm" title="Eliminar Foto">
+                                    class="btn btn-danger btn-sm" title="Eliminar Galería">
                                     <span class="fa fa-trash"></span>
                                 </button>
                             </td>

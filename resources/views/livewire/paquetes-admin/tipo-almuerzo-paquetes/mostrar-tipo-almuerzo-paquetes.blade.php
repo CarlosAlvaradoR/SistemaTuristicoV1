@@ -24,17 +24,6 @@
                                         <span class="text-info">Procesando</span>
                                     </div>
 
-                                    @if (session()->has('SatisfaccionAlmuerzo'))
-                                        <div class="alert alert-aquamarine alert-fill alert-border-left alert-close alert-dismissible fade in"
-                                            role="alert">
-                                            <button type="button" class="close" data-dismiss="alert"
-                                                aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                            {{ session('SatisfaccionAlmuerzo') }}
-                                        </div>
-                                    @endif
-
                                     <div class="form-group">
 
                                         <label for="tipo_de_almuerzo">
@@ -137,7 +126,7 @@
                                     <span class="fa fa-pencil-square-o"></span>
                                 </button>
 
-                                <button class="btn btn-danger btn-sm" title="Quitar Tipo de Acémila del Paquete"
+                                <button class="btn btn-danger btn-sm" title="Quitar Almuerzo de Celebración"
                                     wire:loading.attr="disabled"
                                     wire:click="deleteConfirm({{ $lv->id }})">
                                     <span class="fa fa-minus"></span>
@@ -152,24 +141,6 @@
     </div>
 
 
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                title: 'MUY BIEN',
-                text: "{{ session('success') }}",
-                icon: 'success'
-            })
-        </script>
-    @endif
-
-    @if (session('error'))
-        <script>
-            Swal.fire({
-                title: "{{ session('error') }}",
-                icon: 'error'
-            })
-        </script>
-    @endif
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -203,14 +174,6 @@
                         .id);
                 }
             })
-        });
-        window.addEventListener('swal', event => {
-
-            Swal.fire(
-                event.detail.title,
-                event.detail.text,
-                event.detail.icon
-            );
         });
     </script>
 

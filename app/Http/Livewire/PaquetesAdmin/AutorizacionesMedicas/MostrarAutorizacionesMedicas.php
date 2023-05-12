@@ -17,6 +17,7 @@ class MostrarAutorizacionesMedicas extends Component
     function resetUI()
     {
         $this->reset(['title', 'detalle_de_archivos', 'idAutorizacionesMedicas']);
+        $this->resetValidation();
     }
     public function mount($idPaquete)
     {
@@ -41,8 +42,6 @@ class MostrarAutorizacionesMedicas extends Component
             $title = 'MUY BIEN';
             $icon = 'success';
             $text = 'Detalle de la Autorización Actualizada Correctamente';
-
-            $this->emit('close-modal-autorizaciones-medicas', 'Edicion de Atractivos');
         } else {
             $autorizacion = AutorizacionesMedicas::create(
                 [
@@ -56,6 +55,7 @@ class MostrarAutorizacionesMedicas extends Component
             $text = 'Detalle de la Autorización Registrada Correctamente';
             $this->resetUI();
         }
+        $this->emit('close-modal-autorizaciones-medicas', 'Edicion de Atractivos');
         $this->alert($title, $icon, $text);
     }
 
@@ -79,11 +79,12 @@ class MostrarAutorizacionesMedicas extends Component
 
     public function deleteAutorizacionesMedicas(AutorizacionesMedicas $autorizacion)
     {
+
         $autorizacions =  DB::table('autorizaciones_presentadas')
             ->where('autorizaciones_medicas_id', $autorizacion->id)
             ->get();
         $var = count($autorizacions);
-        //dd($var);
+        // dd($var);
         if ($var > 0) {
             $title = 'ERROR';
             $icon = 'error';

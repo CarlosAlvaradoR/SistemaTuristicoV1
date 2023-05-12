@@ -17,12 +17,13 @@ class MostrarTipoAcemilaPaquetes extends Component
     protected $listeners = ['quitarTipoAcemilaPaquete' => 'quitarTipoAcemilaPaquete'];
 
     protected $rules = [
-        'tipo' => 'required',
+        'tipo' => 'required|numeric|min:1',
         'cantidad' => 'required|numeric|min:1'
     ];
 
     public function resetUI(){
         $this->reset(['tipo','cantidad','title','idTipoAcemila','edicion']);
+        $this->resetValidation();
     }
 
     public function mount($idPaquete){
@@ -50,7 +51,8 @@ class MostrarTipoAcemilaPaquetes extends Component
         ]);
 
         $this->resetUI();
-        session()->flash('success', 'Tipo de Acémila añadido correctamente al paquete');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Tipo de Acémila añadido correctamente al paquete.');
+        
     }
 
     public function Edit(TipoacemilaPaquetes $tipo)
@@ -74,7 +76,7 @@ class MostrarTipoAcemilaPaquetes extends Component
         $tipo->tipo_acemila_id = $this->tipo;
         $tipo->save();
 
-        session()->flash('success', 'Actualizado Correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Tipo de Acémila Actualizado Correctamente.');
 
         $this->emit('close-modal-acemila-paquete', 'Edicion de Atractivos');
         $this->resetUI();
@@ -93,7 +95,7 @@ class MostrarTipoAcemilaPaquetes extends Component
     public function quitarTipoAcemilaPaquete($idTipoAcemilaPaquete){
         $tipo_acemila_paquete = TipoacemilaPaquetes::findOrFail($idTipoAcemilaPaquete);
         $tipo_acemila_paquete->delete();
-        session()->flash('success', 'Tipo de Acémila Eliminado Correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Tipo de Acémila Eliminado Correctamente.');
     }
 
     public function cerrarModal()

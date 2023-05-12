@@ -11,18 +11,22 @@ class MostrarTipoAlmuerzoPaquetes extends Component
 {
     public $idPaquete;
     public $tipo_de_almuerzo, $observacion_del_almuerzo;
-    public $title ='ASIGNAR ALMUERZOS DE CELEBRACIÓN AL PAQUETE', $idTipoAlmuerzo,$edicion = false;
+    public $title = 'ASIGNAR ALMUERZOS DE CELEBRACIÓN AL PAQUETE', $idTipoAlmuerzo, $edicion = false;
 
     protected $listeners = ['quitarTipoAlmuerzoPaquete' => 'quitarTipoAlmuerzoPaquete'];
 
     protected $rules = [
-        'tipo_de_almuerzo' => 'required',
+        'tipo_de_almuerzo' => 'required|numeric|min:1',
         'observacion_del_almuerzo' => 'required'
     ];
 
-    function resetUI(){
-        $this->reset(['tipo_de_almuerzo','observacion_del_almuerzo','title','idTipoAlmuerzo',
-    'edicion']);
+    function resetUI()
+    {
+        $this->reset([
+            'tipo_de_almuerzo', 'observacion_del_almuerzo', 'title', 'idTipoAlmuerzo',
+            'edicion'
+        ]);
+        $this->resetValidation();
     }
 
     public function mount($idPaquete)
@@ -37,8 +41,7 @@ class MostrarTipoAlmuerzoPaquetes extends Component
         $tipos_almuerzos = DB::select('SELECT tap.id,  tap.observacion, ta.nombre FROM tipo_almuerzos ta
         INNER JOIN tipoalmuerzo_paquetes tap on ta.id = tap.tipo_almuerzo_id
         WHERE tap.paquete_id = ' . $this->idPaquete . '');
-        return view(
-            'livewire.paquetes-admin.tipo-almuerzo-paquetes.mostrar-tipo-almuerzo-paquetes',
+        return view('livewire.paquetes-admin.tipo-almuerzo-paquetes.mostrar-tipo-almuerzo-paquetes',
             compact('tipos', 'tipos_almuerzos')
         );
     }
@@ -53,7 +56,7 @@ class MostrarTipoAlmuerzoPaquetes extends Component
         ]);
 
         $this->resetUI();
-        session()->flash('success', 'Tipo de Almuerzo añadido correctamente al paquete');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Tipo de Almuerzo añadido correctamente al paquete.');
     }
 
     public function Edit(TipoalmuerzoPaquetes $tipo)
@@ -76,8 +79,8 @@ class MostrarTipoAlmuerzoPaquetes extends Component
         $tipo->observacion = $this->observacion_del_almuerzo;
         $tipo->tipo_almuerzo_id = $this->tipo_de_almuerzo;
         $tipo->save();
+        $this->emit('alert', 'MUY BIEN', 'success', 'Tipo de Almuerzo Actualizado correctamente.');
 
-        session()->flash('success', 'Actualizado Correctamente');
 
         $this->emit('close-modal-tipo-almuerzo', 'Edicion de Atractivos');
         $this->resetUI();
@@ -98,7 +101,7 @@ class MostrarTipoAlmuerzoPaquetes extends Component
     {
         $tipo_almuerzo_paquete = TipoalmuerzoPaquetes::findOrFail($idTipoAlmuerzoPaquete);
         $tipo_almuerzo_paquete->delete();
-        session()->flash('success', 'Tipo de Almuerzo eliminado correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Tipo de Almuerzo Eliminado correctamente.');
     }
 
     public function cerrarModal()
