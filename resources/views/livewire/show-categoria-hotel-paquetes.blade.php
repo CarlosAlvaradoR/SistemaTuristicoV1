@@ -11,7 +11,7 @@
                     Categoría de Hoteles</a>
                 <div wire:ignore.self data-backdrop="static" data-keyboard="false" class="modal fade"
                     id="modal-categoria-hotel" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
+                    <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myModalLabel">
@@ -106,25 +106,7 @@
         </div>
     </div>
 
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                title: 'MUY BIEN',
-                text: "{{ session('success') }}",
-                icon: 'success'
-            })
-        </script>
-    @endif
-
-    @if (session('error'))
-        <script>
-            Swal.fire({
-                title: "{{ session('error') }}",
-                icon: 'error'
-            })
-        </script>
-    @endif
-
+  
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {

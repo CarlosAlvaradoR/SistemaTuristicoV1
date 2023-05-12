@@ -12,7 +12,7 @@ class MostrarPagosServicios extends Component
     public $descripcion, $precio;
     public $title = 'CREAR PAGOS POR SERVICIO', $idBoletosPagosServicios, $edicion = false;
 
-    protected $listeners = ['quitarPagosPorServicio' => 'quitarPagosPorServicio'];
+    protected $listeners = ['quitarPagos'];
 
     protected $rules = [
         'descripcion' => 'required',
@@ -21,7 +21,9 @@ class MostrarPagosServicios extends Component
 
     function resetUI(){
         $this->reset(['descripcion','precio','title','idBoletosPagosServicios','edicion']);
+        $this->resetValidation();
     }
+
     public function mount($idPaquete)
     {
         $this->idPaquete = $idPaquete;
@@ -30,8 +32,9 @@ class MostrarPagosServicios extends Component
 
     public function render()
     {
-        $pagos = DB::select('SELECT id, descripcion, precio, paquete_id FROM boletos_pagar_paquetes
-        WHERE paquete_id = ' . $this->idPaquete . '');
+        // $pagos = DB::select('SELECT id, descripcion, precio, paquete_id FROM boletos_pagar_paquetes
+        // WHERE paquete_id = ' . $this->idPaquete . '');
+        $pagos = BoletosPagarPaquetes::where('paquete_id', $this->idPaquete)->get();
         return view('livewire.paquetes-admin.boletos.mostrar-pagos-servicios', compact('pagos'));
     }
 
@@ -45,7 +48,7 @@ class MostrarPagosServicios extends Component
         ]);
 
         $this->resetUI();
-        session()->flash('message', 'Pago por servicio añadido correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Pago por servicio añadido correctamente.');
     }
 
     public function Edit(BoletosPagarPaquetes $boleto)
@@ -69,7 +72,7 @@ class MostrarPagosServicios extends Component
         $boleto->precio = $this->precio;
         $boleto->save();
 
-        session()->flash('success', 'Actualizado Correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Pago por servicio Actualizado Correctamente.');
 
         $this->emit('close-modal-pago-servicio', 'Edicion de Atractivos');
         $this->resetUI();
@@ -84,18 +87,17 @@ class MostrarPagosServicios extends Component
 
     public function deleteConfirm($id)
     {
-
-        $this->dispatchBrowserEvent('swal-confirmTipoPersonal', [
+        $this->dispatchBrowserEvent('swal-confirmPagoServicios', [
             'title' => 'Estás seguro que deseas eliminar el Pago por Servicio ?',
             'icon' => 'warning',
             'id' => $id
         ]);
     }
 
-    public function quitarPagosPorServicio($idPagoPorServicio)
+    public function quitarPagos(BoletosPagarPaquetes $pagosPorServicio)
     {
-        $pagosPorServicio = BoletosPagarPaquetes::findOrFail($idPagoPorServicio);
         $pagosPorServicio->delete();
-        session()->flash('message2', 'Pago por servicio eliminado correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Pago por servicio eliminado correctamente.');
+
     }
 }

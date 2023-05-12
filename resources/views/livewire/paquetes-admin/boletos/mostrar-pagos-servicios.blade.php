@@ -22,49 +22,24 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form wire:submit.prevent="saveGaleria">
 
-                                    @if (session()->has('message'))
-                                        <script>
-                                            Swal.fire({
-                                                position: 'top-end',
-                                                icon: 'success',
-                                                title: "Pago por servicio añadido correctamente",
-                                                showConfirmButton: false,
-                                                timer: 1700
-                                            });
-                                        </script>
-                                    @endif
+                                <div class="form-group">
 
-                                    @if (session()->has('message2'))
-                                        <script>
-                                            Swal.fire({
-                                                position: 'top-end',
-                                                icon: 'success',
-                                                title: "Pago por servicio eliminado correctamente",
-                                                showConfirmButton: false,
-                                                timer: 1700
-                                            });
-                                        </script>
-                                    @endif
+                                    <label for="exampleInputEmail1">Descripcion</label>
+                                    <textarea wire:model.defer="descripcion" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    @error('descripcion')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
 
-                                    <div class="form-group">
+                                    <label for="foto">Monto</label>
+                                    <input type="text" placeholder="ej:25.60" wire:model.defer="precio"
+                                        class="form-control" id="foto">
+                                    @error('precio')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
 
-                                        <label for="exampleInputEmail1">Descripcion</label>
-                                        <textarea wire:model.defer="descripcion" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                        @error('descripcion')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
 
-                                        <label for="foto">Monto</label>
-                                        <input type="text" placeholder="ej:25.60" wire:model.defer="precio"
-                                            class="form-control" id="foto">
-                                        @error('precio')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-
-                                </form>
                             </div>
                             <div class="modal-footer">
 
@@ -133,8 +108,7 @@
                                         <span class="fa fa-pencil-square-o"></span>
                                     </button>
                                     <button title="Quitar Pago por servicio"
-                                        wire:click="deleteConfirm({{ $p->id }})"
-                                        class="btn btn-danger btn-sm">
+                                        wire:click="deleteConfirm({{ $p->id }})" class="btn btn-danger btn-sm">
                                         <span class="fa fa-trash"></span>
                                     </button>
                                 </td>
@@ -146,24 +120,7 @@
             </div>
         </div>
     </div>
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                title: 'MUY BIEN',
-                text: "{{ session('success') }}",
-                icon: 'success'
-            })
-        </script>
-    @endif
 
-    @if (session('error'))
-        <script>
-            Swal.fire({
-                title: "{{ session('error') }}",
-                icon: 'error'
-            })
-        </script>
-    @endif
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -180,7 +137,7 @@
         });
     </script>
     <script>
-        window.addEventListener('swal-confirmTipoPersonal', event => {
+        window.addEventListener('swal-confirmPagoServicios', event => {
             Swal.fire({
                 title: event.detail.title,
                 icon: event.detail.icon,
@@ -192,7 +149,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     Livewire.emitTo('paquetes-admin.boletos.mostrar-pagos-servicios',
-                        'quitarPagosPorServicio',
+                        'quitarPagos',
                         event.detail
                         .id);
                 }

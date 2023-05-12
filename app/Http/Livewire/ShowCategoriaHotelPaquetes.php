@@ -20,8 +20,10 @@ class ShowCategoriaHotelPaquetes extends Component
         'idPaquete' => 'required',
     ];
 
-    function resetUI(){
-        $this->reset(['descripcion','title','idCategoriaHotel','edicion']);
+    public function resetUI()
+    {
+        $this->reset(['descripcion', 'title', 'idCategoriaHotel', 'edicion']);
+        $this->resetValidation();
     }
 
     public function mount($idPaquete)
@@ -31,22 +33,24 @@ class ShowCategoriaHotelPaquetes extends Component
 
     public function render()
     {
-        $categorias =  CategoriaHoteles::where('paquete_id','=',$this->idPaquete)->get();
+        $categorias =  CategoriaHoteles::where('paquete_id', '=', $this->idPaquete)->get();
         return view('livewire.show-categoria-hotel-paquetes', compact('categorias'));
     }
 
-    public function save (){
+    public function save()
+    {
         $this->validate();
 
-        $categ =CategoriaHoteles::create([
+        $categ = CategoriaHoteles::create([
             'descripcion' => $this->descripcion,
-            'paquete_id'=> $this->idPaquete
+            'paquete_id' => $this->idPaquete
         ]);
         $this->resetUI();
-        session()->flash('message', 'Categoríade Hotel guardado correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Categoría de Hotel Registrado correctamente.');
     }
 
-    public function Edit(CategoriaHoteles $categoria){
+    public function Edit(CategoriaHoteles $categoria)
+    {
         $this->title = 'EDITAR CATEGORÍAS DE HOTEL';
         $this->idCategoriaHotel = $categoria->id;
         $this->descripcion = $categoria->descripcion;
@@ -54,7 +58,8 @@ class ShowCategoriaHotelPaquetes extends Component
         $this->emit('show-modal-categoria-hotel', 'Edicion de Pagos de Servicio');
     }
 
-    public function Update(){
+    public function Update()
+    {
         $this->validate([
             'descripcion' => 'required|min:5'
         ]);
@@ -62,7 +67,8 @@ class ShowCategoriaHotelPaquetes extends Component
         $categoria_hotel->descripcion = $this->descripcion;
         $categoria_hotel->save();
 
-        session()->flash('success', 'Actualizado Correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Categoría de Hotel Actualizado Correctamente.');
+
 
         $this->emit('close-modal-categoria-hotel', 'Edicion de Categorias');
         $this->resetUI();
@@ -88,7 +94,7 @@ class ShowCategoriaHotelPaquetes extends Component
     {
         $categoria = CategoriaHoteles::findOrFail($idCategoriaHotel);
         $categoria->delete();
-        session()->flash('success', 'Pago por servicio eliminado correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Categoría de Hotel Eliminado Correctamente.');
         $this->resetUI();
     }
 }

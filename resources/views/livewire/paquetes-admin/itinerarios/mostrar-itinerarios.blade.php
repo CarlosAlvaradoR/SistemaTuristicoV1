@@ -184,11 +184,10 @@
                                 {{ $a->nombre_actividad }}
                             </td>
 
-
                             @if (count($itinerario) == 0)
                                 <td rowspan="1">
                                     <span class="label label-danger">Sin Itinerarios Registrados</span>
-                                </td>
+                                </td>2o
                                 <td rowspan="1">
                                     <button wire:click="EditActividad({{ $a->id }})" title="Editar Actividad"
                                         class="btn btn-warning btn-sm">
