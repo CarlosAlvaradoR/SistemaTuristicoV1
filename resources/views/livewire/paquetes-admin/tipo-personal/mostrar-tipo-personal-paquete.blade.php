@@ -134,24 +134,6 @@
     </div>
 </div>
 
-@if (session('success'))
-    <script>
-        Swal.fire({
-            title: 'MUY BIEN',
-            text: "{{ session('success') }}",
-            icon: 'success'
-        })
-    </script>
-@endif
-
-@if (session('error'))
-    <script>
-        Swal.fire({
-            title: "{{ session('error') }}",
-            icon: 'error'
-        })
-    </script>
-@endif
 
 
 <script>

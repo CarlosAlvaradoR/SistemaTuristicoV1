@@ -18,6 +18,7 @@ class MostrarTipoAlimentacionPaquete extends Component
     function resetUI()
     {
         $this->reset(['descripcion', 'tipo', 'title', 'idTipoAlimentacion', 'edicion']);
+        $this->resetValidation();
     }
 
     protected $rules = [
@@ -39,8 +40,7 @@ class MostrarTipoAlimentacionPaquete extends Component
         INNER JOIN tipoalimentacion_paquetes tap on t.id = tap.tipoalimentacion_id
         WHERE tap.paquete_id = ' . $this->idPaquete . '');
 
-        return view(
-            'livewire.paquetes-admin.tipo-alimentacion-paquete.mostrar-tipo-alimentacion-paquete',
+        return view('livewire.paquetes-admin.tipo-alimentacion-paquete.mostrar-tipo-alimentacion-paquete',
             compact('tipos', 'alimentaciones')
         );
     }
@@ -56,11 +56,8 @@ class MostrarTipoAlimentacionPaquete extends Component
         ]);
 
         $this->resetUI();
-        $this->dispatchBrowserEvent('swal', [
-            'title' => 'MUY BIEN !',
-            'icon' => 'success',
-            'text' => 'Registrado Correctamente'
-        ]);
+        $this->emit('alert', 'MUY BIEN', 'success', 'Tipo de Alimentación Asignado Correctamente.');
+        
     }
 
     public function Edit(TipoalimentacionPaquetes $tipo)
@@ -84,7 +81,7 @@ class MostrarTipoAlimentacionPaquete extends Component
         $tipo->tipoalimentacion_id = $this->tipo;
         $tipo->save();
 
-        session()->flash('success', 'Actualizado Correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Tipo de Alimentación Actualizado Correctamente.');
 
         $this->emit('close-modal-tipo-alimentacion', 'Edicion de Atractivos');
         $this->resetUI();
@@ -110,6 +107,6 @@ class MostrarTipoAlimentacionPaquete extends Component
     {
         $alimentacion_campo = TipoalimentacionPaquetes::findOrFail($idAlimentacionCampo);
         $alimentacion_campo->delete();
-        session()->flash('message2', 'Pago por servicio eliminado correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Tipo de Alimentación Eliminado Correctamente.');
     }
 }

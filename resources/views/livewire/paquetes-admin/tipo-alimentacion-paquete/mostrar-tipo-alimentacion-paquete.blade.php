@@ -138,24 +138,6 @@
         </div>
     </div>
 
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                title: 'MUY BIEN',
-                text: "{{ session('success') }}",
-                icon: 'success'
-            })
-        </script>
-    @endif
-
-    @if (session('error'))
-        <script>
-            Swal.fire({
-                title: "{{ session('error') }}",
-                icon: 'error'
-            })
-        </script>
-    @endif
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -190,13 +172,6 @@
                 }
             })
         });
-        window.addEventListener('swal', event => {
-
-            Swal.fire(
-                event.detail.title,
-                event.detail.text,
-                event.detail.icon
-            );
-        });
+   
     </script>
 </div>

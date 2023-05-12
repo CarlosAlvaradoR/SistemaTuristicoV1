@@ -24,6 +24,7 @@ class MostrarTipoTransportePaquete extends Component
     function resetUI()
     {
         $this->reset(['cantidad', 'descripcion', 'tipo', 'title', 'idTipoTransporte', 'edicion']);
+        $this->resetValidation();
     }
 
     public function mount($idPaquete)
@@ -38,8 +39,7 @@ class MostrarTipoTransportePaquete extends Component
         INNER JOIN tipotransporte_paquetes ttp on tt.id = ttp.tipotransporte_id
         WHERE ttp.paquete_id = ' . $this->idPaquete . '');
 
-        return view(
-            'livewire.paquetes-admin.tipo-transporte-paquete.mostrar-tipo-transporte-paquete',
+        return view('livewire.paquetes-admin.tipo-transporte-paquete.mostrar-tipo-transporte-paquete',
             compact('tipos', 'tipos_paquetes')
         );
     }
@@ -56,11 +56,9 @@ class MostrarTipoTransportePaquete extends Component
         ]);
 
         $this->resetUI();
-        $this->dispatchBrowserEvent('swal', [
-            'title' => 'MUY BIEN !',
-            'icon' => 'success',
-            'text' => 'Registrado Correctamente'
-        ]);
+        $this->emit('alert', 'MUY BIEN', 'success', 'Tipo de Transporte Asignado Correctamente.');
+
+        
     }
 
     public function Edit(TipotransportePaquetes $tipo)
@@ -86,8 +84,8 @@ class MostrarTipoTransportePaquete extends Component
         $tipo->cantidad = $this->cantidad;
         $tipo->tipotransporte_id = $this->tipo;
         $tipo->save();
+        $this->emit('alert', 'MUY BIEN', 'success', 'Tipo de Transporte Actualizado Correctamente.');
 
-        session()->flash('success', 'Actualizado Correctamente');
 
         $this->emit('close-modal-tipo-transporte-paquete', 'Edicion de Atractivos');
         $this->resetUI();
@@ -113,6 +111,6 @@ class MostrarTipoTransportePaquete extends Component
     {
         $tipo_transporte = TipotransportePaquetes::findOrFail($idTipoTransportePaquete);
         $tipo_transporte->delete();
-        session()->flash('success', 'Tipo de Transporte Eliminado Correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Tipo de Transporte Elminado Correctamente.');
     }
 }

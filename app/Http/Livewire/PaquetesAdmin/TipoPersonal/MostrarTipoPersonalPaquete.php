@@ -23,6 +23,7 @@ class MostrarTipoPersonalPaquete extends Component
 
     function resetUI(){
         $this->reset(['cantidad','tipo_id','title','idPersonalTipo','edicion']);
+        $this->resetValidation();
     }
 
     public function mount($idPaquete)
@@ -52,6 +53,8 @@ class MostrarTipoPersonalPaquete extends Component
             'paquete_id' => $this->idPaquete
         ]);
         $this->resetUI();
+        $this->emit('alert', 'MUY BIEN', 'success', 'Tipo de Personal Asignado Correctamente.');
+
     }
 
     public function Edit(PersonalTipos $tipo)
@@ -75,8 +78,7 @@ class MostrarTipoPersonalPaquete extends Component
         $tipo->tipo_id = $this->tipo_id;
         $tipo->save();
 
-        session()->flash('success', 'Actualizado Correctamente');
-
+        $this->emit('alert', 'MUY BIEN', 'success', 'Tipo de Personal Actualizado Correctamente.');
         $this->emit('close-modal-tipo-personal', 'Edicion de Atractivos');
         $this->resetUI();
     }
@@ -100,6 +102,7 @@ class MostrarTipoPersonalPaquete extends Component
     {
         $personal_tipo = PersonalTipos::findOrFail($idPersonalTipo);
         $personal_tipo->delete();
-        session()->flash('message2', 'Pago por servicio eliminado correctamente');
+        $this->emit('alert', 'MUY BIEN', 'success', 'Tipo de Personal Eliminado Correctamente.');
+
     }
 }
