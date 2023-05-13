@@ -90,7 +90,7 @@
                                         </label>
 
                                         <select wire:model.defer="tipo_de_paquete" name="idtipopaquete"
-                                             class="form-control">
+                                            class="form-control">
                                             <option value="">...Seleccione...</option>
                                             @foreach ($tipos as $tipo)
                                                 <option value="{{ $tipo->id }}">{{ $tipo->nombre }}</option>
@@ -104,11 +104,11 @@
 
                                     <div class="form-group">
                                         <label for="visibilidad">
-                                            Visibilidad - {{$visibilidad}}
+                                            Visibilidad - {{ $visibilidad }}
                                         </label>
 
-                                        <select wire:model="visibilidad" name="visibilidad"
-                                            id="visibilidad" class="form-control">
+                                        <select wire:model="visibilidad" name="visibilidad" id="visibilidad"
+                                            class="form-control">
                                             <option value="">...Seleccione...</option>
                                             <option value="PUBLICO">PUBLICO</option>
                                             <option value="PRIVADO">PRIVADO</option>
@@ -130,7 +130,12 @@
                                         @error('imagen_principal')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
+                                        <div wire:loading wire:target="imagen_principal">
+                                            <span class="text-primary">Cargando Imagen ...</span>
+                                        </div>
+
                                         <br><br>
+
                                         <hr>
                                         <div>
                                             <button type="button" wire:click="crearPaquete"
@@ -138,7 +143,7 @@
                                                 Guardar
                                             </button>
 
-                                            <a href="{{-- route('paquetes.activos.galeria') --}}" class="btn btn-danger">Cancelar</a>
+                                            <button class="btn btn-danger" type="reset">Cancelar</button>
                                         </div>
                                     </div>
 

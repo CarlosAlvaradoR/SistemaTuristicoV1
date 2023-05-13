@@ -2,18 +2,19 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="main">
 
-                    <!-- Actual search box -->
-                    <div class="form-group has-search">
-                        <span class="fa fa-search form-control-feedback"></span>
-                        <input type="text" class="form-control" placeholder="Buscar Paquete" wire:model="search">
-                    </div>
-
+                <!-- Actual search box -->
+                <div class="form-group has-search">
+                    <span class="fa fa-search form-control-feedback"></span>
+                    <input type="text" class="form-control" placeholder="Buscar Paquete" wire:model="search">
                 </div>
+
             </div>
+
         </div>
     </div>
+
+
     {{-- $todo --}}
     <section class="activity-line">
         <article class="activity-line-item box-typical">
@@ -36,8 +37,24 @@
                 </div>
                 <div class="card-user-name">{{ $paquete->nombre }}</div>
                 <div class="card-user-status">S/.{{ $paquete->precio }}</div>
+                <div class="card-user-status">
+                    @if ($paquete->visibilidad == 'PUBLICO')
+                        <span class="label label-success">
+                            {{ $paquete->visibilidad }}
+                        </span>
+                    @else
+                        <span class="label label-secondary">
+                            {{ $paquete->visibilidad }}
+                        </span>
+                    @endif
 
-                <a href="{{ route('paquetes.detalle', $paquete) }}" class="btn btn-rounded">
+                </div>
+
+                <a href="{{ route('paquetes.detalle', $paquete) }}"
+                    class="btn btn-rounded 
+                @if ($paquete->estado == 1) btn-primary
+                @else
+                btn-danger @endif">
                     Ver Paquete
                 </a>
                 <div class="card-user-social align-items-start">
@@ -64,8 +81,17 @@
             {{-- https://codepen.io/gungorbudak/pen/ooKNpz --}}
         </div>
     @endforeach
-    <div class="justify-content-end">
-        {{ $paquetes->links() }}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <nav>
+                    <div class="pagination">
+                        {{ $paquetes->links() }}
+                    </div>
+                </nav>
+            </div>
+
+        </div>
     </div>
 
 </div>

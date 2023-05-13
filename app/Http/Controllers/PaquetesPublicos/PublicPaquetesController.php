@@ -38,7 +38,7 @@ class PublicPaquetesController extends Controller
     {
         $paquetes = PaquetesTuristicos::where('estado', 1)
             ->where('visibilidad', 'PUBLICO')
-            ->paginate(10);
+            ->paginate(12);
         
         return view('paquetes_publico.destinos', compact('paquetes'));
     }

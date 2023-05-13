@@ -120,7 +120,7 @@
                                         @enderror
                                     </div>
 
-                                    
+
                                     <div class="form-group">
 
                                         <label for="imagen_principal">
@@ -141,6 +141,9 @@
                                         @error('imagen_principal')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
+                                        <div wire:loading wire:target="imagen_principal_nuevo">
+                                            <span class="text-primary">Cargando Imagen ...</span>
+                                        </div>
                                         <br><br>
                                         <hr>
                                         <div>

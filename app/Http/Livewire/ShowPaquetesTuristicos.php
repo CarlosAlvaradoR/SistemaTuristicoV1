@@ -20,4 +20,9 @@ class ShowPaquetesTuristicos extends Component
         ->paginate(12);
         return view('livewire.show-paquetes-turisticos', compact('paquetes'));
     }
+
+     public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 }
