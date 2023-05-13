@@ -12,15 +12,16 @@ class CrearPaquetes extends Component
 {
     use WithFileUploads;
 
-    public $nombre, $precio, $precio_en_dolares, $estado, $imagen_principal, $tipo_de_paquete;
+    public $nombre, $precio, $precio_en_dolares, $estado, $visibilidad, $imagen_principal, $tipo_de_paquete;
 
     protected $rules = [
         'nombre' => 'required',
         'precio' => 'required|regex:/^\d+(\.\d{1,2})?$/',
         'precio_en_dolares' => 'required|regex:/^\d+(\.\d{1,2})?$/',
-        'estado' => 'required',
+        'estado' => 'required|numeric|min:1',
+        'visibilidad' => 'required|in:PUBLICO,PRIVADO',
         'imagen_principal' => 'required',
-        'tipo_de_paquete' => 'required',
+        'tipo_de_paquete' => 'required|numeric|min:1',
     ];
 
     public function render()
@@ -29,19 +30,24 @@ class CrearPaquetes extends Component
         return view('livewire.paquetes-admin.crear-paquetes', compact('tipos'));
     }
 
-    public function crearPaquete(){
-        $this->validate();
-
+    public function crearPaquete()
+    {
+        $crear = $this->validate();
+        // dd($crear);
         $crear = PaquetesTuristicos::create([
-            'nombre' => $this->nombre, 
+            'nombre' => $this->nombre,
             'precio' => $this->precio,
-            'precio_dolares' => $this->precio_en_dolares, 
-            'estado' => $this->estado, 
-            'imagen_principal' => 'storage/'.$this->imagen_principal->store('foto_principal','public'),
+            'precio_dolares' => $this->precio_en_dolares,
+            'estado' => $this->estado,
+            'visibilidad' => $this->visibilidad,
+            'imagen_principal' => 'storage/' . $this->imagen_principal->store('foto_principal', 'public'),
             'tipo_paquete_id' => $this->tipo_de_paquete
         ]);
 
-        $this->reset(['nombre','precio','precio_en_dolares','estado','imagen_principal','tipo_de_paquete']);
+        $this->reset([
+            'nombre', 'precio', 'precio_en_dolares', 'estado',
+            'visibilidad', 'imagen_principal', 'tipo_de_paquete'
+        ]);
         $this->imagen_principal = null;
         session()->flash('PaqueteSucces', 'Paquete añadido correctamente');
     }

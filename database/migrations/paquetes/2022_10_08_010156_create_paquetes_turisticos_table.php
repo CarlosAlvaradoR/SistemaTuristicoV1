@@ -19,6 +19,7 @@ class CreatePaquetesTuristicosTable extends Migration
             $table->decimal('precio', 10,2);
             $table->decimal('precio_dolares', 10,2);
             $table->integer('estado');
+            $table->enum('visibilidad', ['PUBLICO', 'PRIVADO']);
             $table->string('imagen_principal', 100);
             $table->string('slug')->unique();
 

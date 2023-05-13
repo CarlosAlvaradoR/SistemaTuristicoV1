@@ -94,7 +94,7 @@
             </div>
             <div class="row">
                 @foreach ($paquetes as $paquete)
-                    <a href="{{ route('detalles.destino', $paquete) }}">
+                    <a href="{{ route('detalles.destino', $paquete->slug) }}">
                         <div class="col-lg-4 col-md-6">
                             <div class="single_place">
                                 <div class="thumb">

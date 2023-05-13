@@ -14,20 +14,43 @@ class PublicPaquetesController extends Controller
     //
     public function inicio()
     {
-        $paquetes = PaquetesTuristicos::paginate(6);
+
+        // $paquetes = PaquetesTuristicos::paginate(6);
+        $paquetes = DB::table('paquetes_turisticos as pt')
+            ->select(
+                'pt.nombre',
+                'pt.precio',
+                'pt.imagen_principal',
+                'pt.slug',
+                DB::raw('(SELECT COUNT(r.paquete_id) FROM reservas r WHERE r.paquete_id = pt.id) as cantidad')
+            )
+            ->where('pt.estado', 1)
+            ->where('pt.visibilidad', 'PUBLICO')
+            ->orderBy('cantidad', 'DESC')
+            ->limit(6)
+            ->get();
+
+
         return view('paquetes_publico.inicio', compact('paquetes'));
     }
 
     public function index()
     {
-        $paquetes = PaquetesTuristicos::paginate(10);
+        $paquetes = PaquetesTuristicos::where('estado', 1)
+            ->where('visibilidad', 'PUBLICO')
+            ->paginate(10);
+        
         return view('paquetes_publico.destinos', compact('paquetes'));
     }
 
 
     public function mostrarDetalleDestinos(PaquetesTuristicos $paquete)
     {
-        //return $paquete;
+        if ($paquete->estado != 1 || $paquete->visibilidad == 'PRIVADO') {
+            return abort(404);
+        }
+
+        // return $paquete;
         // GALERÍAS
         $galerias = FotoGalerias::where('paquete_id', $paquete->id)
             ->get();
@@ -110,8 +133,9 @@ class PublicPaquetesController extends Controller
             ->where('paquete_id', $paquete->id)
             ->select('detalle_de_archivos')
             ->first();
-        
-        return view('paquetes_publico.detalle_destinos',
+
+        return view(
+            'paquetes_publico.detalle_destinos',
             compact(
                 'paquete',
                 'galerias',

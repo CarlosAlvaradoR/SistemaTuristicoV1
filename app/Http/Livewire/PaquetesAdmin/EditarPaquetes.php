@@ -12,16 +12,17 @@ class EditarPaquetes extends Component
 {
     use WithFileUploads;
 
-    public $idPaquete, $nombre, $precio, $precio_en_dolares, $estado, $imagen_principal, $tipo_de_paquete;
+    public $idPaquete, $nombre, $precio, $precio_en_dolares, $estado, $visibilidad, $imagen_principal, $tipo_de_paquete;
     public $imagen_principal_nuevo, $slug;
 
     protected $rules = [
         'nombre' => 'required',
         'precio' => 'required|regex:/^\d+(\.\d{1,2})?$/',
         'precio_en_dolares' => 'required|regex:/^\d+(\.\d{1,2})?$/',
-        'estado' => 'required|integer|min:1',
+        'estado' => 'required|numeric|min:1',
+        'visibilidad' => 'required|in:PUBLICO,PRIVADO',
         //'imagen_principal' => 'required',
-        'tipo_de_paquete' => 'required',
+        'tipo_de_paquete' => 'required|numeric|min:1',
     ];
 
 
@@ -32,6 +33,7 @@ class EditarPaquetes extends Component
         $this->precio = $paquete->precio;
         $this->precio_en_dolares = $paquete->precio_dolares;
         $this->estado = $paquete->estado;
+        $this->visibilidad = $paquete->visibilidad;
         $this->slug = $paquete->slug;
         $this->imagen_principal = $paquete->imagen_principal;
         $this->tipo_de_paquete = $paquete->tipo_paquete_id;
@@ -84,6 +86,7 @@ class EditarPaquetes extends Component
         $paquete->precio = $this->precio;
         $paquete->precio_dolares = $this->precio_en_dolares;
         $paquete->estado = $this->estado;
+        $paquete->visibilidad = $this->visibilidad; 
         $paquete->imagen_principal = $imagen_nueva_paquete;
         $paquete->tipo_paquete_id = $this->tipo_de_paquete;
 

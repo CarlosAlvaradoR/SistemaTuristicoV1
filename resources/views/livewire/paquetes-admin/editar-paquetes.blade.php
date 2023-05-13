@@ -104,6 +104,24 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="visibilidad">
+                                            Visibilidad - {{$visibilidad}}
+                                        </label>
+
+                                        <select wire:model="visibilidad" name="visibilidad"
+                                            id="visibilidad" class="form-control">
+                                            <option value="">...Seleccione...</option>
+                                            <option value="PUBLICO">PUBLICO</option>
+                                            <option value="PRIVADO">PRIVADO</option>
+
+                                        </select>
+                                        @error('visibilidad')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    
+                                    <div class="form-group">
 
                                         <label for="imagen_principal">
                                             Imagen

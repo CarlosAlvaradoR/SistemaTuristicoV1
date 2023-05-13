@@ -18,6 +18,21 @@ SELECT * FROM autorizaciones_medicas;
 MÓDULO DE PAQUETES
 */
 
+-- SELECCIONAR LOS 6 PAQUETES MÁS COMPRADOS PARA LA PARTE PÚBLICA (INICIO)
+SELECT pt.nombre, pt.precio, pt.imagen_principal, pt.slug,
+(SELECT COUNT(r.paquete_id) FROM reservas r WHERE r.paquete_id = pt.id) as cantidad
+FROM paquetes_turisticos pt
+WHERE pt.estado = 1 AND pt.visibilidad = 'PUBLICO'
+ORDER BY cantidad DESC
+LIMIT 6;
+
+-- SELECCIONAR LOS PAQUETES PARA LA PARTE PÚBLICA (INICIO)
+SELECT * FROM paquetes_turisticos pt
+WHERE pt.estado = 1 AND pt.visibilidad = 'PUBLICO';
+
+
+
+
 -- SELECCIONAR LAS CONDICIONES DE PUNTUALIDAD DE UN PAQUETE
 SELECT cp.descripcion, cp.id FROM paquetes_turisticos pt
 INNER JOIN condicion_puntualidades cp on cp.paquete_id = pt.id

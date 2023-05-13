@@ -89,15 +89,32 @@
                                             Tipo de Paquete
                                         </label>
 
-                                        <select id="inputState" wire:model.defer="tipo_de_paquete" name="idtipopaquete"
-                                            id="idtipopaquete" class="form-control">
-                                            <option selected>...Seleccione...</option>
+                                        <select wire:model.defer="tipo_de_paquete" name="idtipopaquete"
+                                             class="form-control">
+                                            <option value="">...Seleccione...</option>
                                             @foreach ($tipos as $tipo)
                                                 <option value="{{ $tipo->id }}">{{ $tipo->nombre }}</option>
                                             @endforeach
 
                                         </select>
                                         @error('tipo_de_paquete')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="visibilidad">
+                                            Visibilidad - {{$visibilidad}}
+                                        </label>
+
+                                        <select wire:model="visibilidad" name="visibilidad"
+                                            id="visibilidad" class="form-control">
+                                            <option value="">...Seleccione...</option>
+                                            <option value="PUBLICO">PUBLICO</option>
+                                            <option value="PRIVADO">PRIVADO</option>
+
+                                        </select>
+                                        @error('visibilidad')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -116,7 +133,8 @@
                                         <br><br>
                                         <hr>
                                         <div>
-                                            <button type="button" wire:click="crearPaquete" wire:loading.attr="disabled" class="btn btn-primary">
+                                            <button type="button" wire:click="crearPaquete"
+                                                wire:loading.attr="disabled" class="btn btn-primary">
                                                 Guardar
                                             </button>
 

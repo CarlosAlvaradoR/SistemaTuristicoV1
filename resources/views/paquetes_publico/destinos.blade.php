@@ -56,58 +56,12 @@
     <div class="popular_places_area">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4">
-                    <div class="filter_result_wrap">
-                        <h3>Filter Result</h3>
-                        <div class="filter_bordered">
-                            <div class="filter_inner">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="single_select">
-                                            <select>
-                                                <option data-display="Country">Country</option>
-                                                <option value="1">Africa</option>
-                                                <option value="2">canada</option>
-                                                <option value="4">USA</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="single_select">
-                                            <select>
-                                                <option data-display="Travel type">Travel type</option>
-                                                <option value="1">advance</option>
-                                                <option value="2">advance</option>
-                                                <option value="4">premium</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="range_slider_wrap">
-                                            <span class="range">Prise range</span>
-                                            <div id="slider-range"></div>
-                                            <p>
-                                                <input type="text" id="amount" readonly
-                                                    style="border:0; color:#7A838B; font-weight:400;">
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-
-                            <div class="reset_btn">
-                                <button class="boxed-btn4" type="submit">Reset</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-8">
+                
+                <div class="col-lg-12">
                     <div class="row">
                         @foreach ($paquetes as $paquete)
                             <a href="{{ route('detalles.destino', $paquete) }}">
-                                <div class="col-lg-6 col-md-6">
+                                <div class="col-lg-4 col-md-4">
                                     <div class="single_place">
                                         <div class="thumb">
                                             <!--<img src="img/place/1.png" alt="">-->
@@ -139,9 +93,9 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="more_place_btn text-center">
+                            <div class="blog-pagination justify-content-center d-flex" style="text-align: center">
                                 {{ $paquetes->links() }}
-                                <a class="boxed-btn4" href="#">More Places</a>
+                                
                             </div>
                         </div>
                     </div>
