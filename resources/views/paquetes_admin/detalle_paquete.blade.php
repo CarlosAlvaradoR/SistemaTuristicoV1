@@ -32,7 +32,7 @@
                             <a class="nav-link active" href="#tabs-2-tab-1" role="tab" data-toggle="tab">
                                 <span class="nav-link-in">
                                     Galería
-                                    <span class="label label-pill label-danger">4</span>
+                                    <span class="label label-pill label-danger">1</span>
                                 </span>
                             </a>
                         </li>
@@ -48,7 +48,7 @@
                             <a class="nav-link" href="#tabs-2-tab-3" role="tab" data-toggle="tab">
                                 <span class="nav-link-in">
                                     Lugares de visita
-                                    <span class="label label-pill label-info">4</span>
+                                    <span class="label label-pill label-info">3</span>
                                 </span>
                             </a>
                         </li>
@@ -56,7 +56,7 @@
                             <a class="nav-link" href="#tabs-2-tab-4" role="tab" data-toggle="tab">
                                 <span class="nav-link-in">
                                     Itinerario
-                                    <span class="label label-pill label-warning">6</span>
+                                    <span class="label label-pill label-warning">4</span>
                                 </span>
                             </a>
                         </li>
@@ -64,7 +64,7 @@
                             <a class="nav-link" href="#tabs-2-tab-5" role="tab" data-toggle="tab">
                                 <span class="nav-link-in">
                                     Pagos por servicios
-                                    <span class="label label-pill label-default">4</span>
+                                    <span class="label label-pill label-default">5</span>
                                 </span>
                             </a>
                         </li>
@@ -72,7 +72,7 @@
                             <a class="nav-link" href="#tabs-2-tab-6" role="tab" data-toggle="tab">
                                 <span class="nav-link-in">
                                     Categoría de Hoteles
-                                    <span class="label label-pill label-primary">4</span>
+                                    <span class="label label-pill label-primary">6</span>
                                 </span>
                             </a>
                         </li>

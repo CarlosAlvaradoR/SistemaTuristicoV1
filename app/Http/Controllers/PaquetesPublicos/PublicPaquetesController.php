@@ -22,10 +22,12 @@ class PublicPaquetesController extends Controller
                 'pt.precio',
                 'pt.imagen_principal',
                 'pt.slug',
-                DB::raw('(SELECT COUNT(r.paquete_id) FROM reservas r WHERE r.paquete_id = pt.id) as cantidad')
+                DB::raw('(SELECT COUNT(r.paquete_id) FROM reservas r WHERE r.paquete_id = pt.id) as cantidad'),
+                DB::raw('(SELECT COUNT(*) FROM foto_galerias as fg WHERE fg.paquete_id = pt.id) as cantidad_fotos')
             )
             ->where('pt.estado', 1)
             ->where('pt.visibilidad', 'PUBLICO')
+            ->having('cantidad_fotos', '>', 0)
             ->orderBy('cantidad', 'DESC')
             ->limit(6)
             ->get();
@@ -36,10 +38,15 @@ class PublicPaquetesController extends Controller
 
     public function index()
     {
-        $paquetes = PaquetesTuristicos::where('estado', 1)
+        $paquetes = PaquetesTuristicos::select(
+            '*',
+            DB::raw('(SELECT COUNT(*) FROM foto_galerias as fg WHERE fg.paquete_id = paquetes_turisticos.id) as cantidad_fotos')
+        )
+            ->where('estado', 1)
             ->where('visibilidad', 'PUBLICO')
+            ->having('cantidad_fotos', '>', 0)
             ->paginate(12);
-        
+
         return view('paquetes_publico.destinos', compact('paquetes'));
     }
 
