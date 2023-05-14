@@ -16,15 +16,29 @@
 
 
     {{-- $todo --}}
-    <section class="activity-line">
-        <article class="activity-line-item box-typical">
-            <div class="activity-line-date" wire:loading>
-                Cargando ...
-            </div>
-        </article>
-        <!--.activity-line-item-->
+    <div class="container-fluid">
+        <div wire:loading>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <section class="activity-line">
+                            <article class="activity-line-item box-typical">
+                                <div class="activity-line-date">
+                                    Cargando ...
+                                </div>
+                            </article>
+                            <!--.activity-line-item-->
 
-    </section>
+                        </section>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
 
     @foreach ($paquetes as $paquete)
         <div class="col-sm-6 col-md-4 col-xl-3">
@@ -71,9 +85,9 @@
                     <a href="{{ route('paquete.viajes', $paquete) }}" title="Viajes del Paquete">
                         <i class="fas fa-shuttle-van"></i>
                     </a>
-                    <a href="#" title="Inactivar">
+                    {{-- <a href="#" title="Inactivar">
                         <i class="fa fa-minus"></i>
-                    </a>
+                    </a> --}}
                 </div>
 
             </article>

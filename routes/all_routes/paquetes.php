@@ -14,3 +14,6 @@ Route::get('/paquetes/tipos-de-transporte', [App\Http\Controllers\PaquetesTurist
 Route::get('/paquetes/tipos-de-alimentacion', [App\Http\Controllers\PaquetesTuristicosController::class, 'tipos_alimentacion'])->name('paquetes.tipos_alimentacion')->middleware(['auth', 'verified']);
 Route::get('/paquetes/tipos-de-acemilas', [App\Http\Controllers\PaquetesTuristicosController::class, 'tipos_acemilas'])->name('paquetes.tipos_acemilas')->middleware(['auth', 'verified']);
 Route::get('/paquetes/tipos-de-almuerzos', [App\Http\Controllers\PaquetesTuristicosController::class, 'tipos_almuerzos'])->name('paquetes.tipos_almuerzos')->middleware(['auth', 'verified']);
+
+/** REPORTES */
+Route::get('/paquetes/reporte-de-itinerarios/{paquete}', [App\Http\Controllers\PaquetesTuristicosController::class, 'mostrarReporteDeItinerarios'])->name('mostrar.reporte.de.itinerarios')->middleware(['auth', 'verified']);

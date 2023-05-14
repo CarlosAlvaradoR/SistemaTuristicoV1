@@ -1,8 +1,5 @@
 <div>
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalItinerarios">
-        Añadir Itinerario
-    </button>
+
 
     <!-- Modal -->
     <div wire:ignore.self data-backdrop="static" data-keyboard="false" class="modal fade" id="modalItinerarios"
@@ -134,8 +131,22 @@
             </div>
         </div>
     </div>
-
     <div class="row">
+        <div class="col-md-8"></div>
+        <div class="col-md-2">
+            <a href="{{ route('mostrar.reporte.de.itinerarios', $paquete->slug) }}" target="_blank"
+                class="btn btn-primary btn-rounded">Imprimir Itinerario</a>
+        </div>
+        <div class="col-md-2">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary btn-rounded" data-toggle="modal"
+                data-target="#modalItinerarios">
+                Añadir Itinerario
+            </button>
+        </div>
+    </div>
+    <div class="row" id="table-print">
+
         <div class="col-md-12">
             <br>
             <table class="table">
@@ -187,7 +198,7 @@
                             @if (count($itinerario) == 0)
                                 <td rowspan="1">
                                     <span class="label label-danger">Sin Itinerarios Registrados</span>
-                                </td>2o
+                                </td>
                                 <td rowspan="1">
                                     <button wire:click="EditActividad({{ $a->id }})" title="Editar Actividad"
                                         class="btn btn-warning btn-sm">
@@ -313,26 +324,6 @@
 
 
 
-
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                title: 'MUY BIEN',
-                text: "{{ session('success') }}",
-                icon: 'success'
-            })
-        </script>
-    @endif
-
-    @if (session('error'))
-        <script>
-            Swal.fire({
-                title: "{{ session('error') }}",
-                icon: 'error'
-            })
-        </script>
-    @endif
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             //Lo que llega de CategoriesController
@@ -392,6 +383,17 @@
                 event.detail.icon
             );
         });
+    </script>
+
+    <script language="Javascript">
+        function imprSelec(nombre) {
+            var ficha = document.getElementById(nombre);
+            var ventimp = window.open(' ', 'popimpr');
+            ventimp.document.write(ficha.innerHTML);
+            ventimp.document.close();
+            ventimp.print();
+            ventimp.close();
+        }
     </script>
 
 </div>

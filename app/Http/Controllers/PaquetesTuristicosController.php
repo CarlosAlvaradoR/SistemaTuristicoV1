@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActividadesItinerarios;
 use App\Models\Equipos;
 use App\Models\Inventario\BajaEquipos;
 use App\Models\Inventario\Mantenimientos;
@@ -150,6 +151,20 @@ class PaquetesTuristicosController extends Controller
         return view('paquetes_admin.tipo_almuerzos');
     }
 
+
+    public function mostrarReporteDeItinerarios(PaquetesTuristicos $paquete)
+    {
+
+        $actividades = ActividadesItinerarios::where('paquete_id', $paquete->id)->get();
+        $title = 'Itinerarios del Paquete ' . $paquete->nombre;
+
+
+
+        $pdf = Pdf::loadView('paquetes_admin.reportes.mostrarItinerarios', compact('actividades', 'title'));
+        return $pdf->stream($title . '.pdf');
+
+        // return view('paquetes_admin.reportes.mostrarItinerarios', compact('actividades', 'title'));
+    }
 
     /** VER PEDIDOS TEMPORALMENTE */
     public function VerProveedores()

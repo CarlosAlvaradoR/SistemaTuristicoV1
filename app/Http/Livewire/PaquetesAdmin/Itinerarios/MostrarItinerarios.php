@@ -6,10 +6,11 @@ use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use App\Models\ActividadesItinerarios;
 use App\Models\ItinerarioPaquetes;
+use App\Models\PaquetesTuristicos;
 
 class MostrarItinerarios extends Component
 {
-    public $idPaquete;
+    public $paquete, $idPaquete;
     public $actividad, $descripcion_itinerario;
     public $idActividad = 0, $nombre_actividadRegistrado = '', $mostrarNombre = false;
 
@@ -34,6 +35,7 @@ class MostrarItinerarios extends Component
     public function mount($idPaquete)
     {
         $this->idPaquete = $idPaquete;
+        $this->paquete = PaquetesTuristicos::findOrFail($this->idPaquete);
     }
 
 
