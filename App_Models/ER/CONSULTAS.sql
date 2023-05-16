@@ -33,7 +33,7 @@ SELECT * , (SELECT COUNT(*) FROM foto_galerias fg WHERE fg.paquete_id = pt.id) a
 WHERE pt.estado = 1 AND pt.visibilidad = 'PUBLICO'
 HAVING cantidad_fotos > 0;
 
-
+SELECT * FROM paquetes_turisticos;
 
 
 -- SELECCIONAR LAS CONDICIONES DE PUNTUALIDAD DE UN PAQUETE
@@ -455,7 +455,7 @@ INNER JOIN clientes c on p.id = c.persona_id
 INNER JOIN reservas r on r.cliente_id = c.id
 INNER JOIN postergacion_reservas pr on pr.reserva_id =r.id
 INNER JOIN evento_postergaciones ep on ep.id = pr.evento_postergaciones_id
-INNER JOIN solicitud_devolucion_dineros sdd	on sdd.postergacion_reservas_id = pr.id
+LEFT JOIN solicitud_devolucion_dineros sdd	on sdd.postergacion_reservas_id = pr.id
 LEFT JOIN solicitud_pagos sp on sp.solicitud_devolucion_dinero_id = sdd.id
 LEFT JOIN pagos pa on pa.id = sp.pagos_id
 GROUP BY sdd.id;

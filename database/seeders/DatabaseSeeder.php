@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Reservas\PoliticaDeCumplimientos;
 use Database\Seeders\Pedidos\BancosSeeder;
 use Database\Seeders\Pedidos\EstadoPedidosSeeder;
 use Database\Seeders\Pedidos\TipoComprobantesSeeder;
@@ -33,6 +34,7 @@ class DatabaseSeeder extends Seeder
 
 
         // TODO LO QUE ES DE RESERVAS
+        $this->call(PoliticaDeCumplimientos::class);
         $this->call(EstadoReservasSeeder::class);
         $this->call(TipoPagosSeeder::class);
         $this->call(CuentaPagosSeeder::class);

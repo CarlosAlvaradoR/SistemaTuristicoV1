@@ -182,6 +182,10 @@ class ReservasController extends Controller
         return view('reservar_admin.reportes.comprobante', compact('informacion', 'pagos_aceptados'));
     }
 
+    public function mostrarPoliticas(){
+        return view('reservar_admin.politica_de_reservas.index');
+    }
+
     public function mostrarComprobante(Pagos $pago){ //id del Pago
         //return $pago->ruta_archivo_pago;
         if (Storage::disk('private')->exists($pago->ruta_archivo_pago)) {
@@ -224,13 +228,14 @@ class ReservasController extends Controller
 
     public function mostarTodasLasSolicitudes()
     {
+        DB::statement("SET sql_mode = '' ");
         $solicitudes = DB::table('personas as p')
             ->join('clientes as c', 'c.persona_id', '=', 'p.id')
             ->join('reservas as r', 'r.cliente_id', '=', 'c.id')
             //->join('paquetes_turisticos as pt', 'pt.id', '=', 'r.paquete_id')
             ->join('postergacion_reservas as pr', 'pr.reserva_id', '=', 'r.id')
             ->join('evento_postergaciones as ep', 'ep.id', '=', 'pr.evento_postergaciones_id')
-            ->join('solicitud_devolucion_dineros as sdd', 'sdd.postergacion_reservas_id', '=', 'pr.id')
+            ->leftJoin('solicitud_devolucion_dineros as sdd', 'sdd.postergacion_reservas_id', '=', 'pr.id')
             ->leftJoin('solicitud_pagos as sp', 'sp.solicitud_devolucion_dinero_id', '=', 'sdd.id')
             ->leftJoin('pagos as pa', 'pa.id', '=', 'sp.pagos_id')
             ->groupBy('sdd.id')

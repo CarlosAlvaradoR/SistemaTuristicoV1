@@ -36,7 +36,7 @@
                 <div class="col-lg-4">
                     <fieldset class="form-group">
                         <label for="genero">Género <span class="text-danger">(*)</span></label>
-                        <select class="form-control" wire:model="genero" id="paquete">
+                        <select class="form-control" wire:model.defer="genero" id="paquete">
                             <option value="" selected>Seleccione...</option>
                             <option value="1">Masculino</option>
                             <option value="2">Femenino</option>
@@ -69,7 +69,7 @@
                 <div class="col-lg-12">
                     <fieldset class="form-group">
                         <label for="nacionalidad">Nacionalidad <span class="text-danger">(*)</span></label>
-                        <select class="form-control" wire:model="nacionalidad" id="nacionalidad">
+                        <select class="form-control" wire:model.defer="nacionalidad" id="nacionalidad">
                             <option selected>Seleccione...</option>
                             @foreach ($nacionalidades as $n)
                                 <option value="{{ $n->id }}">{{ $n->nombre_nacionalidad }}</option>
@@ -93,9 +93,9 @@
                 </div>
                 <div class="col-lg-7">
                     <fieldset class="form-group">
-                        <label for="direccion">Archivo de Pasaporte <span class="text-danger">(Obligatorio, simpre y
+                        <label for="archivo_pasaporte">Archivo de Pasaporte <span class="text-danger">(Obligatorio, simpre y
                                 cuando haya un Nº de Pasaporte)</span></label>
-                        <input type="file" class="form-control" id="direccion" wire:model.defer="archivo_pasaporte">
+                        <input type="file" class="form-control" id="archivo_pasaporte" wire:model.defer="archivo_pasaporte">
                         @error('archivo_pasaporte')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -121,43 +121,7 @@
     </div>
 </div>
 
-{{-- <div class="col-lg-12 ks-panels-column-section">
-    <div class="card">
-        <div class="card-block">
-            <h5 class="card-title">Datos del Paquete</h5>
-            <div class="row">
-                <div class="col-lg-6">
-                    <fieldset class="form-group">
-                        <label for="paquete">Seleccione Paquete a Reservar</label>
-                        <select class="form-control" wire:model="paquete" name="paquete" id="paquete">
-                            <option selected value="0">Seleccione...</option>
-                            @foreach ($paquetes as $n)
-                                <option value="{{ $n->id }}"
-                                    wire:click="obtenerPreciodelPaquete({{ $n->id }})">
-                                    {{ $n->nombre }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('paquete')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </fieldset>
-                </div>
-                <div class="col-lg-6">
-                    <fieldset class="form-group">
-                        <label for="precio_del_paquete">Precio del Paquete</label>
-                        <input type="text" class="form-control" wire:model="precio_del_paquete"
-                            id="precio_del_paquete" placeholder="" readonly>
 
-                        @error('precio_del_paquete')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </fieldset>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}}
 
 <div class="col-lg-12 ks-panels-column-section">
     <div class="card">
@@ -168,8 +132,8 @@
                     <fieldset class="form-group">
                         <label class="form-label" for="fecha_reserva">Fecha de Reserva <span
                                 class="text-danger font-weight-bold">(*)</span></label>
-                        <input type="date" min="{{date('Y-m-d')}}" wire:model.defer="fecha_reserva" class="form-control"
-                            id="fecha_reserva">
+                        <input type="date" min="{{ date('Y-m-d') }}" wire:model.defer="fecha_reserva"
+                            class="form-control" id="fecha_reserva">
                         @error('fecha_reserva')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -178,7 +142,7 @@
                 <div class="col-lg-8">
                     <fieldset class="form-group">
                         <label class="form-label" for="observacion">Observación <span
-                                class="text-danger font-weight-bold">(Opcional)</span></label></label>
+                                class="text-danger font-weight-bold">(Opcional)</span></label>
                         <textarea class="form-control" wire:model.defer="observacion" id="observacion" rows="3"></textarea>
                         @error('observacion')
                             <span class="text-danger">{{ $message }}</span>
@@ -224,99 +188,99 @@
     <div class="card">
         <div class="card-block">
             <h5 class="card-title font-weight-bold">PAGO POR RESERVA/COMPRA</h5>
-            {{--@if ($idPago)--}}
-                <div class="row">
-                    <div class="col-lg-4">
-                        <fieldset class="form-group">
-                            <label class="form-label" for="exampleInputDisabled">Monto de Pago S/. <span
-                                    class="text-danger font-weight-bold">(*)</span></label>
-                            <input type="text" wire:model.defer="monto" class="form-control"
-                                id="exampleInputDisabled" placeholder="Ingrese Monto del Pago">
-                            @error('monto')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </fieldset>
-                    </div>
-                    <div class="col-lg-4">
-                        <fieldset class="form-group">
-                            <label class="form-label" for="numero_de_operacion">Nº de Operación<span
-                                    class="text-danger font-weight-bold">(Opcional)</span></label>
-                            <input type="text" wire:model.defer="numero_de_operacion" class="form-control"
-                                id="numero_de_operacion" placeholder="Ingrese Monto del Pago">
-                            @error('numero_de_operacion')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </fieldset>
-                    </div>
-                    <div class="col-lg-4">
-                        <fieldset class="form-group">
-                            <label class="form-label" for="estado_de_pago">Estado del Pago<span
-                                    class="text-danger font-weight-bold">(*)</span></label>
-                            <select class="form-control" wire:model.defer="estado_de_pago" id="estado_de_pago">
-                                <option selected>... Seleccione ...</option>
-                                <option value="ACEPTADO" class="label-success">ACEPTADO</option>
-                                <option value="EN PROCESO" class="label-default">EN PROCESO</option>
-                                <option value="NO ACEPTADO" class="label-danger">NO ACEPTADO</option>
-                            </select>
-                            @error('estado_de_pago')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </fieldset>
-                    </div>
-                    <div class="col-lg-3">
-                        <fieldset class="form-group">
-                            <label class="form-label" for="observacion_del_pago">Observación del Pago<span
-                                    class="text-danger font-weight-bold">(*)</span></label>
-                            <textarea class="form-control" wire:model.defer="observacion_del_pago" id="observacion_del_pago" rows="3"></textarea>
-                            @error('observacion_del_pago')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </fieldset>
-                    </div>
-                    <div class="col-lg-5">
-                        <fieldset class="form-group">
-                            <label class="form-label" for="archivo_pago">Archivo de Pago <span
-                                    class="text-danger font-weight-bold">(Opcional)</span></label>
-                            <input type="file" name="archivo_pago" class="form-control-file"
-                                wire:model.defer="archivo_pago" id="archivo_pago" />
-                        </fieldset>
-                    </div>
-                    <div class="col-lg-4">
-                        <fieldset class="form-group">
-                            <label for="tipo_de_pago">
-                                Tipo de Pago <span class="text-danger">(*)</span>
-                            </label>
-                            <select class="form-control" wire:model.defer="tipo_de_pago" id="tipo_de_pago">
-                                <option value="" selected>...Seleccione...</option>
-                                @foreach ($tipoPagos as $tp)
-                                    <option value="{{ $tp->idCuentaPago }}">
-                                        {{ $tp->nombre_tipo_pago }} - {{ $tp->numero_cuenta }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('tipo_de_pago')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </fieldset>
-                    </div>
-                    @if ($ver_comprobante)
-                        <div class="col-lg-2">
-                            <fieldset class="form-group">
-                                <label for="numero_pasaporte">Ver Archivo de Pago</span></label>
-                                <a href="{{ route('mostrar.comprobante.reserva', $pago) }}"
-                                    class="font-icon font-icon-page" target="_blank"> Ver Archivo
-                                    de Pago</a>
-                            </fieldset>
-                        </div>
-                    @endif
+            {{-- @if ($idPago) --}}
+            <div class="row">
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="exampleInputDisabled">Monto de Pago S/. <span
+                                class="text-danger font-weight-bold">(*)</span></label>
+                        <input type="text" wire:model.defer="monto" class="form-control"
+                            id="exampleInputDisabled" placeholder="Ingrese Monto del Pago">
+                        @error('monto')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </fieldset>
                 </div>
-
-                @if ($reserva)
-                    <button class="btn btn-primary" wire:click="UpdateInfoPagos">Actualizar</button>
-                    <button class="btn btn-danger">Cancelar</button>
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="numero_de_operacion">Nº de Operación<span
+                                class="text-danger font-weight-bold">(Opcional)</span></label>
+                        <input type="text" wire:model.defer="numero_de_operacion" class="form-control"
+                            id="numero_de_operacion" placeholder="Ingrese Monto del Pago">
+                        @error('numero_de_operacion')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </fieldset>
+                </div>
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="estado_de_pago">Estado del Pago<span
+                                class="text-danger font-weight-bold">(*)</span></label>
+                        <select class="form-control" wire:model.defer="estado_de_pago" id="estado_de_pago">
+                            <option selected>... Seleccione ...</option>
+                            <option value="ACEPTADO" class="label-success">ACEPTADO</option>
+                            <option value="EN PROCESO" class="label-default">EN PROCESO</option>
+                            <option value="NO ACEPTADO" class="label-danger">NO ACEPTADO</option>
+                        </select>
+                        @error('estado_de_pago')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </fieldset>
+                </div>
+                <div class="col-lg-3">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="observacion_del_pago">Observación del Pago<span
+                                class="text-danger font-weight-bold">(*)</span></label>
+                        <textarea class="form-control" wire:model.defer="observacion_del_pago" id="observacion_del_pago" rows="3"></textarea>
+                        @error('observacion_del_pago')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </fieldset>
+                </div>
+                <div class="col-lg-5">
+                    <fieldset class="form-group">
+                        <label class="form-label" for="archivo_pago">Archivo de Pago <span
+                                class="text-danger font-weight-bold">(Opcional)</span></label>
+                        <input type="file" name="archivo_pago" class="form-control-file"
+                            wire:model.defer="archivo_pago" id="archivo_pago" />
+                    </fieldset>
+                </div>
+                <div class="col-lg-4">
+                    <fieldset class="form-group">
+                        <label for="tipo_de_pago">
+                            Tipo de Pago <span class="text-danger">(*)</span>
+                        </label>
+                        <select class="form-control" wire:model.defer="tipo_de_pago" id="tipo_de_pago">
+                            <option value="" selected>...Seleccione...</option>
+                            @foreach ($tipoPagos as $tp)
+                                <option value="{{ $tp->idCuentaPago }}">
+                                    {{ $tp->nombre_tipo_pago }} - {{ $tp->numero_cuenta }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('tipo_de_pago')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </fieldset>
+                </div>
+                @if ($ver_comprobante)
+                    <div class="col-lg-2">
+                        <fieldset class="form-group">
+                            <label for="numero_pasaporte">Ver Archivo de Pago</span></label>
+                            <a href="{{ route('mostrar.comprobante.reserva', $pago) }}"
+                                class="font-icon font-icon-page" target="_blank"> Ver Archivo
+                                de Pago</a>
+                        </fieldset>
+                    </div>
                 @endif
-                <br>
-            {{--@endif--}}
+            </div>
+
+            @if ($reserva)
+                <button class="btn btn-primary" wire:click="UpdateInfoPagos">Actualizar</button>
+                <button class="btn btn-danger">Cancelar</button>
+            @endif
+            <br>
+            {{-- @endif --}}
 
 
 

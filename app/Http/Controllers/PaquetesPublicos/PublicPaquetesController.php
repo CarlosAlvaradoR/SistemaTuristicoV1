@@ -53,7 +53,8 @@ class PublicPaquetesController extends Controller
 
     public function mostrarDetalleDestinos(PaquetesTuristicos $paquete)
     {
-        if ($paquete->estado != 1 || $paquete->visibilidad == 'PRIVADO') {
+        $fotogalerias = FotoGalerias::where('paquete_id', $paquete->id)->get();
+        if ($paquete->estado != 1 || $paquete->visibilidad == 'PRIVADO' || count($fotogalerias) == 0) {
             return abort(404);
         }
 

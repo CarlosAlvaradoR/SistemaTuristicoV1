@@ -38,7 +38,7 @@
         </h6>
         <br>
         <br>
-        <h6>NOMBRES Y APELIDOS: <small>{{ $informacion[0]->datos }}</small> | PAQUETE RESERVADO:
+        <h6>NOMBRES Y APELIDOS: <small>{{ strtoupper($informacion[0]->datos) }}</small> | PAQUETE RESERVADO:
             <small>{{ $informacion[0]->nombre }}</small> |
             FECHA RESERVADA: <small>{{ date('d/m/Y', strtotime($informacion[0]->fecha_reserva)) }}</small>
         </h6>

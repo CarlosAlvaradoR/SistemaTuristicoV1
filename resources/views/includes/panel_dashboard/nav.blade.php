@@ -68,6 +68,7 @@
                 </li>
                 <li><a href="{{ route('consultar.reservas') }}"><span class="lbl">Consultar Reservas</span></a></li>
                 <li><a href="{{ route('reservas.reportes.generales') }}"><span class="lbl">Reportes</span></a></li>
+                <li><a href="{{ route('reservas.politicas.de.cumplimiento') }}"><span class="lbl">Política de Cumplimiento de Reserva</span></a></li>
             </ul>
         </li>
 
