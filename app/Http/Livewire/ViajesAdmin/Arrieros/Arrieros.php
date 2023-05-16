@@ -51,8 +51,7 @@ class Arrieros extends Component
         //dd($arrieros_participantes);
         $asociaciones = Asociaciones::all(['id', 'nombre']);
         $tipo_acemilas = TipoAcemilas::all(['id', 'nombre']);
-        return view(
-            'livewire.viajes-admin.arrieros.arrieros',
+        return view('livewire.viajes-admin.arrieros.arrieros',
             compact(
                 'arrieros',
                 'tipo_acemilas',

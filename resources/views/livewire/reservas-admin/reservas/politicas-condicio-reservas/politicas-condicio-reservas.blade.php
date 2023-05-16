@@ -3,23 +3,12 @@
         <div class="col-lg-12 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Eventos de Postergación</h5>
+                    <h5 class="card-title">Política de Condición de una Reserva Próxima a Cumplirse</h5>
                     <div class="spinner-border" role="status">
                         <span class="sr-only">Loading...</span>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-9">
-                            <div class="form-group has-search">
-                                <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control" wire:model="search" placeholder="Search">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <a id="modal-810730" href="#modal_evento_postergacion" role="button" class="btn"
-                                data-toggle="modal">Añadir Evento</a>
-                        </div>
-                    </div>
+
                     <div wire:loading class="alert alert-primary" role="alert">
                         <a href="#!" class="alert-link">Cargando ...</a>
                     </div>
@@ -27,7 +16,8 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Cantidad de Días en las que una reserva se considera próxima a cumplirse</th>
+                                <th scope="col">Cantidad de Días en las que una reserva se considera próxima a
+                                    cumplirse</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
@@ -35,28 +25,35 @@
                             @php
                                 $cont = 1;
                             @endphp
-                            @foreach ($eventos as $e)
-                                <tr>
-                                    <th scope="row">{{ $cont++ }}</th>
-                                    <td>{{ $e->nombre_evento }}</td>
-                                    <td>
-                                        <button type="button" wire:click="agregarEventoReserva({{ $e->id }})"
-                                            class="btn btn-inline btn-success btn-sm">
-                                            <!--<i class="fa-sharp fa-solid fa-xmark"></i>-->
-                                            <i class="fa-solid fa-check"></i>
-                                        </button>
-                                        <button type="button" wire:click="Edit({{ $e->id }})"
-                                            class="btn btn-inline btn-warning btn-sm">
-                                            <!--<i class="fa-sharp fa-solid fa-xmark"></i>-->
-                                            <i class="fa-solid fa-check"></i>
-                                        </button>
-                                        <button type="button" wire:click="deleteConfirm({{ $e->id }})"
-                                            class="btn btn-inline btn-danger btn-sm">
-                                            <!--<i class="fa-sharp fa-solid fa-xmark"></i>-->
-                                            <i class="fa-solid fa-check"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+
+                            @foreach ($politicas as $index => $politica)
+                                <form wire:submit.prevent="guardar">
+                                    <tr>
+                                        <th scope="row">{{ $index + 1 }}</th>
+                                        <td>
+                                            <div class="col-md-11">
+                                                <input type="text" class="form-control"
+                                                    wire:model.defer="politicas.{{ $index }}.cantidad_de_dias"
+                                                    wire:key="politicas-{{ $politica['id'] }}">
+                                                @error('politicas.' . $loop->index . '.cantidad_de_dias')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-1">
+                                                <b>días</b>
+                                            </div>
+
+
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-inline btn-success btn-sm">
+                                                <!--<i class="fa-sharp fa-solid fa-xmark"></i>-->
+                                                <i class="fa-solid fa-check"></i> Actualizar
+                                            </button>
+
+                                        </td>
+                                    </tr>
+                                </form>
                             @endforeach
 
                         </tbody>
@@ -66,7 +63,7 @@
             </div>
         </div>
     </div>
-
+    @livewire('administrate-commons.alerts')
     <!-- MODAL -->
     <div wire:ignore.self class="modal fade" data-backdrop="static" data-keyboard="false" id="modal_evento_postergacion"
         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -97,11 +94,13 @@
                         Cerrar
                     </button>
                     @if ($idEvento)
-                        <button type="button" wire:click="crearEvento" wire:loading.attr="disabled" class="btn btn-primary">
+                        <button type="button" wire:click="crearEvento" wire:loading.attr="disabled"
+                            class="btn btn-primary">
                             Actualizar
                         </button>
                     @else
-                        <button type="button" wire:click="crearEvento" wire:loading.attr="disabled" class="btn btn-primary">
+                        <button type="button" wire:click="crearEvento" wire:loading.attr="disabled"
+                            class="btn btn-primary">
                             Guardar
                         </button>
                     @endif
@@ -132,26 +131,26 @@
         });
     </script>
 
-<script>
-    window.addEventListener('swal-confirmEvento', event => {
-        Swal.fire({
-            title: event.detail.title,
-            icon: event.detail.icon,
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, quiero eliminarlo!',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Livewire.emitTo('reservas-admin.reservas.eventos-postergacion.eventos-postergacion',
-                'quitarEventoReserva',
-                    event.detail
-                    .id);
-            }
-        })
-    });
-</script>
+    <script>
+        window.addEventListener('swal-confirmEvento', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('reservas-admin.reservas.eventos-postergacion.eventos-postergacion',
+                        'quitarEventoReserva',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+    </script>
 
-    @include('common.alerts')
+
 </div>

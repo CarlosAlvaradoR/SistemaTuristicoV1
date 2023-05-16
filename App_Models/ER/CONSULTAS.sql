@@ -4,7 +4,7 @@
 SELECT p.nombre, p.apellidos, u.email, u.id FROM personas p
 INNER JOIN users u on u.persona_id = p.id;
 
-SELECT * FROM autorizaciones_medicas;
+SELECT * FROM users;
 
 
 
@@ -198,7 +198,7 @@ LEFT JOIN devolucion_dineros dd on dd.solicitud_pagos_id = sp.id
 WHERE p.reserva_id = 2;
 
 DESC pagos;
-SELECT * FROM personas;
+SELECT * FROM politica_de_cumplimientos;
 
 -- SELECCIONAR LOS PAGOS QUE TIENE UNA RESERVA EN BASE AL ID DE LA RESERVA PARA LAS SOLICITUDES Y DEVOLUCIONES DE DINERO
 SELECT p.id, 	monto, fecha_pago, estado_pago, ruta_archivo_pago, tp.nombre_tipo_pago, cp.numero_cuenta FROM pagos p
