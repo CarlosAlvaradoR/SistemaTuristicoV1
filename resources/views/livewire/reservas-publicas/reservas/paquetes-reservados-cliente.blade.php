@@ -15,11 +15,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($paquetes_comprados as $p)
+                        @foreach ($paquetes_comprados as $index => $p)
                             <tr>
-                                <th scope="row">1</th>
+                                <th scope="row">{{ $index + 1 }}</th>
                                 <td>{{ $p->nombre }}</td>
-                                <td>{{ $p->fecha_reserva }}</td>
+                                <td>
+                                    {{ date('d/m/Y', strtotime($p->fecha_reserva)) }}
+                                </td>
                                 <td>{{ $p->nombre_estado }}</td>
                                 <td>{{ $p->pago }}</td>
                                 <td>
@@ -65,6 +67,10 @@
                                             <input class="form-control valid" name="monto" id="monto"
                                                 type="text" wire:model.defer="monto"
                                                 placeholder="Ingrese el Monto de Pago">
+                                            @error('monto')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+
                                         </div>
                                     </div>
 
@@ -74,6 +80,9 @@
                                             <input class="form-control valid" name="fecha_pago" id="fecha_pago"
                                                 type="date" wire:model.defer="fecha_pago"
                                                 placeholder="Ingrese la Fecha de Pago">
+                                            @error('fecha_pago')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </div>
 
@@ -84,6 +93,9 @@
                                                 id="numero_de_operacion" type="text"
                                                 wire:model.defer="numero_de_operacion"
                                                 placeholder="Ingrese el Nº de Operación de la Transferencia">
+                                            @error('numero_de_operacion')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </div>
 
@@ -94,6 +106,9 @@
                                                 id="ruta_archivo_pago" type="file"
                                                 wire:model.defer="ruta_archivo_pago"
                                                 placeholder="Ingrese el Archivo de Pago Realizado">
+                                            @error('ruta_archivo_pago')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </div>
 
@@ -102,6 +117,9 @@
                                             <label for="exampleInputEmail1">Medio de Pago</label>
                                             <input type="text" readonly class="form-control valid"
                                                 wire:model="forma_de_pago">
+                                            @error('forma_de_pago')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </div>
 
@@ -151,7 +169,8 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
                         Cerrar
                     </button>
-                    <button type="button" wire:click="savePayment" class="btn btn-primary">
+                    <button type="button" wire:click="savePayment" wire:loading.attr="disabled"
+                        class="btn btn-primary">
                         Guardar
                     </button>
                 </div>
@@ -160,6 +179,8 @@
         </div>
 
     </div>
+
+    @livewire('administrate-commons.alerts')
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

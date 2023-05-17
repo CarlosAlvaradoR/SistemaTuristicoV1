@@ -16,12 +16,19 @@ class PaquetesReservadosCliente extends Component
 {
     use WithFileUploads;
 
-    
+
     public $title = '';
     public $idReserva, $monto, $fecha_pago, $numero_de_operacion, $ruta_archivo_pago;
     public $idCuentaPago, $forma_de_pago;
     public $idBoleta;
 
+    public function resetUI()
+    {
+        $this->reset([
+            'title', 'idReserva', 'monto', 'fecha_pago', 'numero_de_operacion', 'ruta_archivo_pago',
+            'idCuentaPago', 'forma_de_pago', 'idBoleta'
+        ]);
+    }
     public function render()
     {
         $tipo_pagos = DB::table('tipo_pagos as tp')
@@ -83,15 +90,24 @@ class PaquetesReservadosCliente extends Component
 
     public function savePayment()
     {
-        //$this->validate();
+        $this->validate(
+            [
+
+                'monto' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+                'fecha_pago' => 'required|date',
+                'numero_de_operacion' => 'required|min:3|max:25',
+                'ruta_archivo_pago' => 'required|mimes:jpeg,png,pdf',
+                'forma_de_pago' => 'required|string|min:3'
+            ]
+        );
         $ruta = '';
         if ($this->ruta_archivo_pago) {
-            $filename = uniqid().'_'.time().rand(1,1000);
-            
+            $filename = uniqid() . '_' . time() . rand(1, 1000);
+
             //$image = $this->ruta_archivo_pago->getRealPath();
             $ext = $this->ruta_archivo_pago->getClientOriginalExtension();
-            
-            $ruta = $this->ruta_archivo_pago->storeAs('archivo', $filename.'.'.$ext, 'private');
+
+            $ruta = $this->ruta_archivo_pago->storeAs('archivo', $filename . '.' . $ext, 'private');
             //$ruta = Storage::disk('private')->putFileAs('photos', $image, $filename);;
         }
 
@@ -107,6 +123,9 @@ class PaquetesReservadosCliente extends Component
             'boleta_id' => $this->idBoleta
         ]);
 
+        $this->resetUI();
+        $this->emit('close-modal');
+        $this->emit('alert', 'MUY BIEN !', 'success', 'Pago Registrado Correctamente.');
     }
 
     public function select($idCuentaPago)
@@ -119,9 +138,5 @@ class PaquetesReservadosCliente extends Component
             ->get();
         $this->idCuentaPago = $tipo_pago[0]->id;
         $this->forma_de_pago = $tipo_pago[0]->nombre_tipo_pago . ' - ' . $tipo_pago[0]->numero_cuenta;
-    }
-
-    public function resetUI()
-    {
     }
 }

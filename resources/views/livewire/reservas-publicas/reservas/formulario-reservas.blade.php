@@ -95,8 +95,8 @@
                         <label for="tipo_pago">Tipo de Pago</label>
                         <br>
                         <div>
-                            <select class="form-control" wire:model.defer="tipo_pago" id="tipo_pago">
-                                <option value="0">---Seleccione el Tipo de Pago---</option>
+                            <select class="form-control" wire:model="tipo_pago" id="tipo_pago">
+                                <option value="" selected>---Seleccione el Tipo de Pago---</option>
                                 @foreach ($tipo_pagos as $tp)
                                     <option value="{{ $tp->id }}">{{ $tp->nombre_tipo_pago }} -
                                         {{ $tp->numero_cuenta }} </option>

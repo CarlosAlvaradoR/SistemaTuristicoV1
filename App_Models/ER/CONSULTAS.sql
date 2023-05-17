@@ -326,7 +326,7 @@ WHERE vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR vrg
 -- WHERE idReserva NOT IN (SELECT parti.reserva_id FROM participantes parti) OR 
 -- idReserva NOT IN (SELECT posr.reserva_id FROM postergacion_reservas posr);
 
-
+SELECT * FROM pagos;
 
 
 
