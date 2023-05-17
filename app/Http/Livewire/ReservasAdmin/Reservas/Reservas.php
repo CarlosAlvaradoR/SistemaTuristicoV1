@@ -29,7 +29,7 @@ class Reservas extends Component
             })
             ->where('vrg.datos', 'like', '%' . $this->search . '%')
             ->paginate($this->cant);
-        //dd($reservas);
+        //dd($reservas);    
         //Selecciona los dos
         if ($this->estado_cumplimiento && $this->estado_pagos) {
             $reservas = DB::table('v_reserva_reservas_general as vrg')

@@ -33,8 +33,8 @@ return new class extends Migration
         b.numero_boleta,r.id,
         (SELECT (DATEDIFF(fecha_reserva, curdate()))) as dias_faltantes,
         case 
-          when (SELECT fecha_reserva-curdate())>=0 AND (SELECT fecha_reserva-curdate()) <=10  then "PRÓXIMA A CUMPLIRSE"  
-          when  (SELECT fecha_reserva-curdate())>10 then "EN PROGRAMACIÓN"  
+          when (SELECT fecha_reserva-curdate())>=0 AND (SELECT fecha_reserva-curdate()) <=(SELECT pc.cantidad_de_dias FROM politica_de_cumplimientos pc LIMIT 1)  then "PRÓXIMA A CUMPLIRSE"  
+          when  (SELECT fecha_reserva-curdate())>(SELECT pc.cantidad_de_dias FROM politica_de_cumplimientos pc LIMIT 1) then "EN PROGRAMACIÓN"  
           when (SELECT fecha_reserva-curdate())<0 then "PASADOS DE FECHA"
         end as estado_reserva,
         r.slug

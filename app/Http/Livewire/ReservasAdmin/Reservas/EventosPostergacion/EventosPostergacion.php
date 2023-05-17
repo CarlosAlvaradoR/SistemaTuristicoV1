@@ -14,7 +14,7 @@ class EventosPostergacion extends Component
     use WithPagination;
 
 
-    public $search;
+    public $search = '';
     public $reserva;
     public $id_reserva;
     public $idEvento, $nombre_del_evento;
@@ -25,9 +25,10 @@ class EventosPostergacion extends Component
 
     public function render()
     {
-        $eventos = EventoPostergaciones::all();
+        $eventos = EventoPostergaciones::where('nombre_evento', 'like', '%' . $this->search . '%')->get();
 
-        return view('livewire.reservas-admin.reservas.eventos-postergacion.eventos-postergacion',
+        return view(
+            'livewire.reservas-admin.reservas.eventos-postergacion.eventos-postergacion',
             compact('eventos')
         );
     }
@@ -88,7 +89,7 @@ class EventosPostergacion extends Component
         $postergacion = PostergacionReservas::where('evento_postergaciones_id', $evento->id)->get();
         if (count($postergacion) > 0) {
 
-            $msg ='No se puede Eliminar el Evento porque ya fue registrada en una solicitud';
+            $msg = 'No se puede Eliminar el Evento porque ya fue registrada en una solicitud';
         } else {
             $evento->delete();
             $msg = 'Eliminado Correctamente';

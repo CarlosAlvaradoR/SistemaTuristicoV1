@@ -40,20 +40,16 @@
                                     <th scope="row">{{ $cont++ }}</th>
                                     <td>{{ $e->nombre_evento }}</td>
                                     <td>
-                                        <button type="button" wire:click="agregarEventoReserva({{ $e->id }})"
-                                            class="btn btn-inline btn-success btn-sm">
-                                            <!--<i class="fa-sharp fa-solid fa-xmark"></i>-->
-                                            <i class="fa-solid fa-check"></i>
-                                        </button>
+                                        
                                         <button type="button" wire:click="Edit({{ $e->id }})"
                                             class="btn btn-inline btn-warning btn-sm">
                                             <!--<i class="fa-sharp fa-solid fa-xmark"></i>-->
-                                            <i class="fa-solid fa-check"></i>
+                                            <i class="fas fa-edit"></i>
                                         </button>
                                         <button type="button" wire:click="deleteConfirm({{ $e->id }})"
                                             class="btn btn-inline btn-danger btn-sm">
                                             <!--<i class="fa-sharp fa-solid fa-xmark"></i>-->
-                                            <i class="fa-solid fa-check"></i>
+                                            <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
                                 </tr>

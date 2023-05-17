@@ -267,6 +267,7 @@ INNER JOIN paquetes_turisticos pt on pt.id=r.paquete_id
 INNER JOIN estado_reservas er on er.id = r.estado_reservas_id;
 
 
+SELECT pc.cantidad_de_dias FROM politica_de_cumplimientos pc LIMIT 1;
 -- LISTA DE RESERCAS DE LOS CLIENTES
 CREATE OR REPLACE VIEW v_reserva_reservas_general as
 SELECT p.dni, concat(p.nombre, " ",p.apellidos) as datos,
@@ -286,8 +287,8 @@ END) as estado_oficial,
 b.numero_boleta,r.id,
 (SELECT (DATEDIFF(fecha_reserva, curdate()))) as dias_faltantes,
 case 
-  when (SELECT fecha_reserva-curdate())>=0 AND (SELECT fecha_reserva-curdate()) <=10  then "PRÓXIMA A CUMPLIRSE"  
-  when  (SELECT fecha_reserva-curdate())>10 then "EN PROGRAMACIÓN"  
+  when (SELECT fecha_reserva-curdate())>=0 AND (SELECT fecha_reserva-curdate()) <=(SELECT pc.cantidad_de_dias FROM politica_de_cumplimientos pc LIMIT 1)  then "PRÓXIMA A CUMPLIRSE"  
+  when  (SELECT fecha_reserva-curdate())>(SELECT pc.cantidad_de_dias FROM politica_de_cumplimientos pc LIMIT 1) then "EN PROGRAMACIÓN"  
   when (SELECT fecha_reserva-curdate())<0 then "PASADOS DE FECHA"
 end as estado_reserva,
 r.slug
