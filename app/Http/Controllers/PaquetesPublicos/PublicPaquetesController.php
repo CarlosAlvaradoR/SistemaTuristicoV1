@@ -142,8 +142,7 @@ class PublicPaquetesController extends Controller
             ->select('detalle_de_archivos')
             ->first();
 
-        return view(
-            'paquetes_publico.detalle_destinos',
+        return view('paquetes_publico.detalle_destinos',
             compact(
                 'paquete',
                 'galerias',

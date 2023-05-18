@@ -2,11 +2,11 @@
     <div class="footer_top">
         <div class="container">
             <div class="row">
-                <div class="col-xl-4 col-md-6 col-lg-4 ">
+                <div class="col-xl-9 col-md-9 col-lg-9 ">
                     <div class="footer_widget">
                         <div class="footer_logo">
                             <a href="#">
-                                <img src="img/footer_logo.png" alt="">
+                                <img src="{{ asset('landing_assets/img/footer_logo.png') }}" alt="">
                             </a>
                         </div>
                         <p>5th flora, 700/D kings road, green <br> lane New York-1782 <br>
@@ -45,7 +45,7 @@
 
                     </div>
                 </div>
-                <div class="col-xl-2 col-md-6 col-lg-2">
+                <!--<div class="col-xl-2 col-md-6 col-lg-2">
                     <div class="footer_widget">
                         <h3 class="footer_title">
                             Company
@@ -74,8 +74,8 @@
                             <li><a href="#">England</a></li>
                         </ul>
                     </div>
-                </div>
-                <div class="col-xl-3 col-md-6 col-lg-3">
+                </div>-->
+                <div class="col-xl-3 col-md-3 col-lg-3">
                     <div class="footer_widget">
                         <h3 class="footer_title">
                             Instagram
@@ -83,32 +83,32 @@
                         <div class="instagram_feed">
                             <div class="single_insta">
                                 <a href="#">
-                                    <img src="img/instagram/1.png" alt="">
+                                    <img src="{{ asset('landing_assets/img/instagram/1.png') }}" height="75" width="75" alt="">
                                 </a>
                             </div>
                             <div class="single_insta">
                                 <a href="#">
-                                    <img src="img/instagram/2.png" alt="">
+                                    <img src="{{ asset('landing_assets/img/instagram/2.png') }}" height="75" width="75" alt="">
                                 </a>
                             </div>
                             <div class="single_insta">
                                 <a href="#">
-                                    <img src="img/instagram/3.png" alt="">
+                                    <img src="{{ asset('landing_assets/img/instagram/3.png') }}" height="75" width="75" alt="">
                                 </a>
                             </div>
                             <div class="single_insta">
                                 <a href="#">
-                                    <img src="img/instagram/4.png" alt="">
+                                    <img src="{{ asset('landing_assets/img/instagram/4.png') }}" height="75" width="75" alt="">
                                 </a>
                             </div>
                             <div class="single_insta">
                                 <a href="#">
-                                    <img src="img/instagram/5.png" alt="">
+                                    <img src="{{ asset('landing_assets/img/instagram/5.png') }}" height="75" width="75" alt="">
                                 </a>
                             </div>
                             <div class="single_insta">
                                 <a href="#">
-                                    <img src="img/instagram/6.png" alt="">
+                                    <img src="{{ asset('landing_assets/img/instagram/6.png') }}" height="75" width="75" alt="">
                                 </a>
                             </div>
                         </div>
