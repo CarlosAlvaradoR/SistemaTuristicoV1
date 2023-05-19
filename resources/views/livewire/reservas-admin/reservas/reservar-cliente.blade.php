@@ -188,15 +188,8 @@
                                     @enderror
                                 </fieldset>
                             </div>
-                            <div class="col-lg-4">
-                                <fieldset class="form-group">
-                                    <label class="form-label" for="exampleInputDisabled">Monto S/. (Y también Para
-                                        BD)</label>
-                                    <input type="text" wire:model="precio" class="form-control"
-                                        id="exampleInputDisabled" placeholder="First Name" disabled>
-                                </fieldset>
-                            </div>
-                            <div class="col-lg-4">
+                            
+                            <div class="col-lg-8">
                                 <fieldset class="form-group">
                                     <label class="form-label" for="observacion">Observación <span
                                             class="text-danger font-weight-bold">(Opcional)</span></label></label>

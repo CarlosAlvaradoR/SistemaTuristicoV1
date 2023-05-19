@@ -49,8 +49,8 @@
                                                         height="450" />
                                                     <div class="carousel-caption">
                                                         <!--<h4>
-                                                                                                                                                                                                                                                                First Thumbnail label
-                                                                                                                                                                                                                                                            </h4>-->
+                                                                                                                                                                                                                                                                    First Thumbnail label
+                                                                                                                                                                                                                                                                </h4>-->
                                                         <p>
                                                             {{ $g->descripcion }}
                                                         </p>
@@ -129,8 +129,29 @@
                                     src="https://phantom-marca.unidadeditorial.es/125d9a348e963349022be1f9f9f2d6fa/resize/1320/f/jpg/assets/multimedia/imagenes/2023/01/26/16747279789852.jpg"
                                     alt="">
                                 <a href="#" class="blog_item_date">
-
-                                    <p>{{ \Carbon\Carbon::now()->isoFormat('d [de] MMMM [del] Y', 'months') }}</p>
+                                    @php
+                                        function convertirMesEspañol($mes)
+                                        {
+                                            $meses = [
+                                                'January' => 'enero',
+                                                'February' => 'febrero',
+                                                'March' => 'marzo',
+                                                'April' => 'abril',
+                                                'May' => 'mayo',
+                                                'June' => 'junio',
+                                                'July' => 'julio',
+                                                'August' => 'agosto',
+                                                'September' => 'septiembre',
+                                                'October' => 'octubre',
+                                                'November' => 'noviembre',
+                                                'December' => 'diciembre',
+                                            ];
+                                            $dia = date('d');
+                                            $año = date('Y');
+                                            return $dia.' de '. $meses[$mes].' del '. $año;
+                                        }
+                                    @endphp
+                                    <p>{{ convertirMesEspañol(\Carbon\Carbon::now()->format('F')) }}</p>
                                 </a>
                             </div>
                             <br>
@@ -463,7 +484,7 @@
                                         <a href="#!">
                                             <h3>{{ $ch->descripcion }}</h3>
                                         </a>
-                                        <p>{{ \Carbon\Carbon::now()->isoFormat('d [de] MMMM [del] Y', 'months') }}</p>
+                                        <p>{{ convertirMesEspañol(\Carbon\Carbon::now()->format('F')) }}</p>
                                     </div>
                                 </div>
                             @endforeach

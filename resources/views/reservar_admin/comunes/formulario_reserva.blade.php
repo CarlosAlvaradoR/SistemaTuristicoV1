@@ -177,7 +177,7 @@
                     <span class="badge badge-default font-weight-bold">COSTO DEL PAQUETE</span>
                 </div>
                 <div class="col-md-9">
-                    <span class="label label-pill label-success">{{ $precio_del_paquete }}</span>
+                    <span class="label label-pill label-success">S/. {{ $precio_del_paquete }}</span>
                 </div>
             </div>
         </div>
