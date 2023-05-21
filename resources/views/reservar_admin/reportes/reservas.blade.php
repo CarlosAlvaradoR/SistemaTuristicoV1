@@ -19,9 +19,9 @@
     </div>
 
     <div class="row">
-        <a href="#" class="badge badge-primary">PRÓXIMA A CUMPLIRSE: [1-10] días</a>
+        <a href="#" class="badge badge-primary">PRÓXIMA A CUMPLIRSE: [1-{{ $fecha_limite }}] días</a>
         <br>
-        <a href="#" class="badge badge-success">EN PROGRAMACIÓN: [Mayor a 10 días]</a>
+        <a href="#" class="badge badge-success">EN PROGRAMACIÓN: [Mayor a {{ $fecha_limite }} ] días</a>
         <br>
         <a href="#" class="badge badge-danger">PASADOS DE FECHA: [No realizados]</a>
     </div>
@@ -29,6 +29,11 @@
         <small>Fecha Inicial:</small> <small>{{ date('d/m/Y', strtotime($fecha_inicial)) }}</small>
         <br>
         <small>Fecha Final:</small> <small>{{ date('d/m/Y', strtotime($fecha_final)) }}</small>
+    </div>
+
+    <div class="row">
+        <small>{{ $texto }}</small>
+        <br>
     </div>
 
     <div class="row">
@@ -56,7 +61,11 @@
                         <td>
                             <small>{{ $c->nombre }}</small>
                         </td>
-                        <td><small>{{ $c->fecha_reserva }}</small></td>
+                        <td>
+                            <small>
+                            {{ date('d/m/Y', strtotime($c->fecha_reserva)) }}
+                            </small>
+                        </td>
                         <td><small>
                                 @switch($c->estado_reserva)
                                     @case('PRÓXIMA A CUMPLIRSE')

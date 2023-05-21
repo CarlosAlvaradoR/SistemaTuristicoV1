@@ -19,11 +19,19 @@
     </div>
 
     <div class="row">
-        <small>Fecha Inicial:</small> <small>{{ date('d/m/Y', strtotime($fecha_inicial_pago)) }}</small>
-        <br>
-        <small>Fecha Final:</small> <small>{{ date('d/m/Y', strtotime($fecha_final_pago)) }}</small>
+        @if ($fecha_inicial_pago && $fecha_final_pago)
+            <small>Fecha Inicial:</small> <small>{{ date('d/m/Y', strtotime($fecha_inicial_pago)) }}</small>
+            <br>
+            <small>Fecha Final:</small> <small>{{ date('d/m/Y', strtotime($fecha_final_pago)) }}</small>
+        @else
+            <small>Sin Fechas seleccionadas</small>
+        @endif
+
     </div>
 
+    <div class="row">
+        <h6>Reporte de Pagos realizados por las reservas.</h6>
+    </div>
     <div class="row">
         <table class="table table-striped">
             <thead>
@@ -51,8 +59,8 @@
                         </td>
                         <td><small>{{ date('d/m/Y', strtotime($c->fecha_pago)) }}</small></td>
                         <td><small>
-                            <a href="#" class="badge badge-primary">{{ $c->estado_pago }}</a>
-                                {{--@switch($c->estado_pago)
+                                <a href="#" class="badge badge-primary">{{ $c->estado_pago }}</a>
+                                {{-- @switch($c->estado_pago)
                                     @case('PRÓXIMA A CUMPLIRSE')
                                         <a href="#" class="badge badge-primary">{{ $c->estado_reserva }}</a>
                                     @break
@@ -66,7 +74,7 @@
                                     @break
 
                                     @default
-                                @endswitch--}}
+                                @endswitch --}}
                             </small></td>
                         <td><small>{{ $c->monto }}</small></td>
                     </tr>

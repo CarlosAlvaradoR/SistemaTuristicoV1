@@ -7,6 +7,7 @@ use App\Models\Paquetes\Riesgos;
 use App\Models\PaquetesTuristicos;
 use App\Models\Personas;
 use App\Models\Reservas\Pagos;
+use App\Models\Reservas\PoliticaDeCumplimientos;
 use App\Models\Reservas\Reservas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -104,7 +105,7 @@ class ReservasController extends Controller
     public function reservarCrearCliente(PaquetesTuristicos $paquete)
     {
         $opcion = 'CREAR';
-        return view('reservar_admin.create', compact('paquete','opcion'));
+        return view('reservar_admin.create', compact('paquete', 'opcion'));
     }
 
     public function reservaCondicionesPuntualidad(Reservas $reserva)
@@ -148,17 +149,18 @@ class ReservasController extends Controller
             ->groupBy('pa.reserva_id')
             ->orderBy('r.updated_at', 'DESC')
             ->get();*/
-        
+
         //return $reservas;
         //return $consulta;
         return view('reservar_admin.all_reservas');
     }
 
-    public function editarReserva(Reservas $reserva){
+    public function editarReserva(Reservas $reserva)
+    {
         //dd($reserva);
         $paquete = PaquetesTuristicos::findOrFail($reserva->paquete_id);
         $opcion = 'EDITAR';
-        return view('reservar_admin.create', compact('paquete','reserva','opcion'));
+        return view('reservar_admin.create', compact('paquete', 'reserva', 'opcion'));
     }
 
     public function comprobante(Reservas $reserva)
@@ -182,11 +184,13 @@ class ReservasController extends Controller
         return view('reservar_admin.reportes.comprobante', compact('informacion', 'pagos_aceptados'));
     }
 
-    public function mostrarPoliticas(){
+    public function mostrarPoliticas()
+    {
         return view('reservar_admin.politica_de_reservas.index');
     }
 
-    public function mostrarComprobante(Pagos $pago){ //id del Pago
+    public function mostrarComprobante(Pagos $pago)
+    { //id del Pago
         //return $pago->ruta_archivo_pago;
         if (Storage::disk('private')->exists($pago->ruta_archivo_pago)) {
             // Devolver el archivo como una respuesta HTTP
@@ -205,11 +209,13 @@ class ReservasController extends Controller
         }*/
     }
 
-    public function deleteImage(){
+    public function deleteImage()
+    {
         $eliminar = Storage::disk('private')->delete('archivo/642756776b3f5');
         return $eliminar;
     }
-    public function archivo(){
+    public function archivo()
+    {
         return 'AAAA';
     }
 
@@ -282,7 +288,7 @@ class ReservasController extends Controller
         LEFT JOIN postergacion_reservas pr on pr.reserva_id = r.id
         LEFT JOIN evento_postergaciones ep on ep.id = pr.evento_postergaciones_id
         LEFT JOIN solicitud_devolucion_dineros sdd on sdd.postergacion_reservas_id = pr.id
-        WHERE r.id = ".$reserva->id."
+        WHERE r.id = " . $reserva->id . "
         LIMIT 1");
 
         $solicitud_pagos_devoluciones = DB::table('solicitud_pagos as sp')
@@ -381,8 +387,8 @@ class ReservasController extends Controller
         DB::statement("SET sql_mode = '' ");
         switch ($request->input('action')) {
             case 'btn-procesar-reserva':
-                list($consulta, $fecha_inicial, $fecha_final) = $this->mostrarReporteReservas($request);
-                $pdf = Pdf::loadView('reservar_admin.reportes.reservas', compact('consulta', 'fecha_inicial', 'fecha_final'));
+                list($consulta, $fecha_inicial, $fecha_final, $texto, $fecha_limite) = $this->mostrarReporteReservas($request);
+                $pdf = Pdf::loadView('reservar_admin.reportes.reservas', compact('consulta', 'fecha_inicial', 'fecha_final', 'texto', 'fecha_limite'));
                 return $pdf->stream('Reporte de Reservas por Rango de Fechas.pdf');
                 break;
 
@@ -462,7 +468,7 @@ class ReservasController extends Controller
                     INNER JOIN clientes c on p.id = c.persona_id
                     INNER JOIN reservas r on r.cliente_id = c.id
                     INNER JOIN pagos pa on pa.reserva_id = r.id
-                    WHERE pa.fecha_pago BETWEEN "2023-03-10" AND "2023-04-31"
+                    WHERE pa.fecha_pago BETWEEN "'.$fecha_inicial_pago.'" AND "'.$fecha_final_pago.'"
                     ORDER BY pa.fecha_pago';
             $consulta = DB::select($query);
         } else { //NO HAY FECHAS SELECCIONADAS (Filtro General)
@@ -480,6 +486,7 @@ class ReservasController extends Controller
     {
         $fecha_inicial = null;
         $fecha_final = null;
+        $fecha_limite = PoliticaDeCumplimientos::where('id', 1)->limit(1)->get();
         $tipo = '';
         $consulta = [];
         if ($request->fecha_inicial) {
@@ -500,6 +507,8 @@ class ReservasController extends Controller
                 WHERE (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR
                 vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr))';
             $consulta = DB::select($query);
+            $texto = 'Reporte General de Reservas';
+            //dd($consulta);
             //return $consulta;
         }
         //HAY FECHAS Y TIPO
@@ -508,6 +517,8 @@ class ReservasController extends Controller
                 WHERE vrg.fecha_reserva between "' . $fecha_inicial . '" and "' . $fecha_final . '" AND estado_reserva = "' . $tipo . '" AND (vrg.idReserva NOT IN (SELECT par.reserva_id FROM participantes par) OR
                 vrg.idReserva NOT IN (SELECT pr.reserva_id FROM postergacion_reservas pr))';
             $consulta = DB::select($query);
+            $texto = 'Infomación de las reservas con Fecha Inicial ' . $fecha_inicial .
+                ' - Fecha Final ' . $fecha_final . ' y tipo ' . $tipo;
             //return '2';
         }
         //HAY FECHAS Y NO TIPO
@@ -515,15 +526,17 @@ class ReservasController extends Controller
             $query = 'SELECT * FROM v_reserva_reservas_general vrg
                      WHERE vrg.fecha_reserva between "' . $fecha_inicial . '" and "' . $fecha_final . '"';
             $consulta = DB::select($query);
+            $texto = 'Infomación de las reservas de forma general con Fecha Inicial ' . $fecha_inicial .
+                ' - Fecha Final ' . $fecha_final . '.';
             //return $query;
         }
         //HAY TIPO Y NO FECHAS
         if (!$fecha_inicial && !$fecha_final && $tipo) {
             $query = 'SELECT * FROM v_reserva_lista_reservas_general vrg
-                    WHERE estado_oficial = "EN PROCESO"';
+                    WHERE estado_oficial = "' . $tipo . '"';
             $consulta = DB::select($query);
-            //return '4';
+            $texto = 'Infomación de las reservas general del tipo ' . $tipo;
         }
-        return [$consulta, $fecha_inicial, $fecha_final];
+        return [$consulta, $fecha_inicial, $fecha_final, $texto, $fecha_limite[0]->cantidad_de_dias];
     }
 }

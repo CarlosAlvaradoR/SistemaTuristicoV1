@@ -300,7 +300,7 @@ INNER JOIN estado_reservas er on er.id = r.estado_reservas_id
 INNER JOIN pagos pa on pa.reserva_id = r.id
 INNER JOIN boletas b on b.id = pa.boleta_id
 GROUP BY pa.reserva_id , pa.estado_pago
-ORDER BY r.updated_at;
+ORDER BY r.fecha_reserva DESC;
 
 
 -- SELECCIÓN GENERAL

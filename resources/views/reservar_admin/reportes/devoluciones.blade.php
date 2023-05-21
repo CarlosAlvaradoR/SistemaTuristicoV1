@@ -15,24 +15,24 @@
 
 <body>
     <div class="row">
-        <h4>Reporte de Devoluciones realiados por cancelación de reservas</h4>
+        <h4>Reporte de Devoluciones realizados por cancelación de reservas</h4>
     </div>
 
     <div class="row">
-        <small>Fecha Inicial:</small>  
+        <small>Fecha Inicial:</small>
         @if ($fecha_inicial_devoluciones)
             <small>{{ date('d/m/Y', strtotime($fecha_inicial_devoluciones)) }}</small>
         @else
-            -
+            Sin fecha seleccionada.
         @endif
-        
+
         <br>
         <small>Fecha Final:</small>
         @if ($fecha_final_devoluciones)
             <small>{{ date('d/m/Y', strtotime($fecha_final_devoluciones)) }}</small>
         @else
-            -
-        @endif 
+            Sin fecha seleccionada.
+        @endif
     </div>
 
     <div class="row">
