@@ -12,6 +12,7 @@ use App\Models\Reservas\Reservas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
@@ -224,6 +225,15 @@ class ReservasController extends Controller
         /*if (Auth::user()->hasRole('cliente')) {
             //return abort(404,'AAA');
         }*/
+        // $fecha1 = Carbon::parse(date('Y-m-d'));
+        // $fecha2 = Carbon::parse(date('Y-m-d'));
+        
+        // $diff = $fecha1->diffInDays($fecha2);
+        // return $diff;
+        // if ($fecha1 > $fecha2) {
+        //     $diff = -$diff; // Hacer que la diferencia sea negativa
+        // }
+        
         return view('reservar_admin.solicitudes.index', compact('reserva'));
     }
 
@@ -468,7 +478,7 @@ class ReservasController extends Controller
                     INNER JOIN clientes c on p.id = c.persona_id
                     INNER JOIN reservas r on r.cliente_id = c.id
                     INNER JOIN pagos pa on pa.reserva_id = r.id
-                    WHERE pa.fecha_pago BETWEEN "'.$fecha_inicial_pago.'" AND "'.$fecha_final_pago.'"
+                    WHERE pa.fecha_pago BETWEEN "' . $fecha_inicial_pago . '" AND "' . $fecha_final_pago . '"
                     ORDER BY pa.fecha_pago';
             $consulta = DB::select($query);
         } else { //NO HAY FECHAS SELECCIONADAS (Filtro General)

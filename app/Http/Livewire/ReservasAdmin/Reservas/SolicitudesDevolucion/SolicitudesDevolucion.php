@@ -12,6 +12,8 @@ use App\Models\Reservas\Reservas;
 use Livewire\Component;
 use App\Models\Reservas\SolicitudDevolucionDineros;
 use App\Models\Reservas\SolicitudPagos;
+use App\Models\Viajes\Participantes;
+use App\Models\Viajes\ViajePaquetes;
 use Illuminate\Support\Facades\DB;
 
 class SolicitudesDevolucion extends Component
@@ -34,11 +36,12 @@ class SolicitudesDevolucion extends Component
     public $monto_devolucion, $observacion_devolucion, $fecha_hora, $idDevolucionDineros;
     public $solicitud, $devolucion_dinero, $query, $id_reserva;
     public $solicitud_existe = false, $solicitud_dinero_existe = false;
-    
+
+    public $viaje;
+
     public function mount(Reservas $reserva)
     {
         //Verificar si ya llenó una solicitud --> Si ya llenó verificar si ya llenó una devolución
-
         $this->reserva = $reserva;
         $this->cliente = Clientes::findOrFail($reserva->cliente_id, ['persona_id']);
         $this->persona = DB::table('personas as p')
@@ -64,6 +67,8 @@ class SolicitudesDevolucion extends Component
 
     public function render()
     {
+        $this->viaje = Participantes::where('reserva_id', $this->reserva->id)->get();
+        
         $postergacion_reserva = PostergacionReservas::where('reserva_id', $this->reserva->id)
             ->limit(1)
             ->get();
@@ -286,7 +291,7 @@ class SolicitudesDevolucion extends Component
     {
         //dd($solicitud);
         switch ($opcion) {
-            case 1: 
+            case 1:
                 # Seleccionar Solicitud Pagos
                 $this->idSolicitudPagos = $solicitud->id;
                 $this->observacion_de_pago = $solicitud->observacion;

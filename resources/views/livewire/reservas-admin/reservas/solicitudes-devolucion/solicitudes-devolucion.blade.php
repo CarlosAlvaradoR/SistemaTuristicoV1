@@ -29,23 +29,41 @@
                     <span class="badge badge-default font-weight-bold">FECHA RESERVADA:</span>
                 </div>
                 <div class="col-md-3">
-                    <span class="badge badge-default">{{ $fecha_reserva }}</span>
+                    <span class="badge badge-default">{{ date('d/m/Y', strtotime($fecha_reserva)) }}</span>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <span class="badge badge-default font-weight-bold">MONTO CANCELADO:</span>
+            @php
+                use Carbon\Carbon;
+                
+                $fecha1 = Carbon::parse(date('Y-m-d'));
+                $fecha2 = Carbon::parse($fecha_reserva);
+                
+                $diff = $fecha1->diffInDays($fecha2);
+                if ($fecha1 > $fecha2) {
+                    $diff = -$diff; // Hacer que la diferencia sea negativa
+                }
+            @endphp
+
+            @if ($diff < 0)
+                <div class="row">
+                    <br>
+                    <div class="alert alert-danger alert-fill alert-border-left alert-close alert-dismissible fade in"
+                        role="alert">
+                        <strong>ALERTA !</strong> La reserva pasó {{ $diff * -1 }} días.
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <span class="badge badge-default">Label</span>
+            @endif
+            
+            @if (count($viaje) > 0)
+                <div class="row">
+                    <br>
+                    <div class="alert alert-info alert-fill alert-border-left alert-close alert-dismissible fade in"
+                        role="alert">
+                        <strong>ALERTA !</strong> El Cliente está añadido como participante de un Viaje.
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <span class="badge badge-default font-weight-bold">MONTO PENDIENTE:</span>
-                </div>
-                <div class="col-md-3">
-                    <span class="badge badge-default">Label</span>
-                </div>
-            </div>
+            @endif
+
 
             <h5 class="with-border m-t-lg font-weight-bold"><i class="fas fa-calendar-times"></i> EVENTO DE POSTERGACIÓN
                 <a href="{{ route('reporte.de.solicitud', $reserva->slug) }}" target="_blank"
