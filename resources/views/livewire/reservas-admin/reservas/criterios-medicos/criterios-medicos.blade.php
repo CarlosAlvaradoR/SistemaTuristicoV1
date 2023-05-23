@@ -3,46 +3,20 @@
         <div class="col-lg-12 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Criterios Médicos</h5>
+                    <h5 class="card-title"><b>Criterios Médicos</b></h5>
                     <div class="row">
 
-                        <div class="col-md-5">
-                            <br>
+                        <div class="col-md-9">
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
                                 <input type="text" class="form-control" wire:model="search" placeholder="Search">
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">
-                                            Fecha Inicial
-                                        </label>
-                                        <input type="date" class="form-control" id="exampleInputEmail1" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">
-                                            Fecha Inicial
-                                        </label>
-                                        <input type="date" class="form-control" id="exampleInputEmail1" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <br>
-                            <a title="Ver Reporte de Devoluciones por rango" class="btn btn-primary"><i
-                                    class="fas fa-file-invoice"></i></a>
-                        </div>
-                        <div class="col-md-2">
-                            <br>
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
+
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-primary btn-rounded" data-toggle="modal"
                                 data-target="#modal_criterios_medicos">
-                                Nuevo Criterio Médico
+                                <i class="fas fa-plus-circle"></i> Nuevo Criterio Médico
                             </button>
                         </div>
                     </div>
@@ -73,11 +47,18 @@
 
                         </tbody>
                     </table>
-                    {{-- $solicitudes->links() --}}
+
                 </div>
             </div>
         </div>
 
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            {{ $criterios->links() }}
+        </div>
+        
     </div>
 
 

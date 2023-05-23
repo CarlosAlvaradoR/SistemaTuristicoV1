@@ -12,7 +12,7 @@ use Livewire\WithPagination;
 class EventosPostergacion extends Component
 {
     use WithPagination;
-
+    protected $paginationTheme = 'bootstrap';
 
     public $search = '';
     public $reserva;
@@ -25,15 +25,17 @@ class EventosPostergacion extends Component
 
     public function render()
     {
-        $eventos = EventoPostergaciones::where('nombre_evento', 'like', '%' . $this->search . '%')->get();
+        $eventos = EventoPostergaciones::where('nombre_evento', 'like', '%' . $this->search . '%')->paginate(10);
 
-        return view(
-            'livewire.reservas-admin.reservas.eventos-postergacion.eventos-postergacion',
+        return view('livewire.reservas-admin.reservas.eventos-postergacion.eventos-postergacion',
             compact('eventos')
         );
     }
 
-
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 
     public function crearEvento()
     {

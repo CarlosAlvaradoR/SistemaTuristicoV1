@@ -7,10 +7,9 @@
             <div class="tbl">
                 <h3>Reservas</h3>
                 <ol class="breadcrumb breadcrumb-simple">
-                    <li><a href="#">Reservar</a></li>
-                    <li><a href="#">Reservar</a></li>
-                    <li><a href="#">Condiciones</a></li>
-                    <li class="active">Cliente</li>
+                    <li><a href="#">Reservas</a></li>
+                    <li><a href="{{ route('reservas.index') }}">Lista de Reservas</a></li>
+                    <li class="active">Pagos</li>
                 </ol>
             </div>
         </header>

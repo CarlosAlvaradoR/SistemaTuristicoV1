@@ -39,9 +39,9 @@
     <div class="container-fluid">
         <header class="section-header">
             <div class="tbl">
-                <h3>Reserva</h3>
+                <h3>Reservas</h3>
                 <ol class="breadcrumb breadcrumb-simple">
-                    <li><a href="#">Reserva</a></li>
+                    <li><a href="#">Reservas</a></li>
                     <li class="active">Eventos de Postergación</li>
                 </ol>
             </div>

@@ -28,7 +28,7 @@
             <h3>Reservas</h3>
             <ol class="breadcrumb breadcrumb-simple">
                 <li><a href="#">Reservas</a></li>
-                <li class="active">Tipo de Pagos y Comprobantes</li>
+                <li class="active">Tipo de Pago - Cuentas</li>
             </ol>
         </div>
     </header>

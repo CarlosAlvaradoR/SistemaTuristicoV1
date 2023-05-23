@@ -31,16 +31,13 @@
                                     <tr>
                                         <th scope="row">{{ $index + 1 }}</th>
                                         <td>
-                                            <div class="col-md-11">
+                                            <div class="col-md-12">
                                                 <input type="text" class="form-control"
                                                     wire:model.defer="politicas.{{ $index }}.cantidad_de_dias"
                                                     wire:key="politicas-{{ $politica['id'] }}">
                                                 @error('politicas.' . $loop->index . '.cantidad_de_dias')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
-                                            </div>
-                                            <div class="col-md-1">
-                                                <b>días</b>
                                             </div>
 
 

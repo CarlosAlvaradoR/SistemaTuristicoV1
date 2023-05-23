@@ -27,7 +27,7 @@
                 <h3>Reservas</h3>
                 <ol class="breadcrumb breadcrumb-simple">
                     <li><a href="#">Reservas</a></li>
-                    <li class="active">Búsqueda de Información</li>
+                    <li class="active">Consulta de Reserva</li>
                 </ol>
             </div>
         </header>

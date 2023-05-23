@@ -7,18 +7,19 @@
     <div class="container-fluid">
         <header class="section-header">
             <div class="tbl">
-                <h3>Reservar</h3>
+                <h3>Reservas</h3>
                 <ol class="breadcrumb breadcrumb-simple">
-                    <li><a href="#">Paquetes</a></li>
-                    <li><a href="#">Solicitud</a></li>
-                    <li class="active">Reservar</li>
+                    <li><a href="#">Reservas</a></li>
+                    <li><a href="{{ route('reservas.index') }}">Lista de Reservas
+                        </a></li>
+                    <li class="active">Solicitud de Devolución</li>
                 </ol>
             </div>
         </header>
 
 
         @livewire('reservas-admin.reservas.solicitudes-devolucion.solicitudes-devolucion', [$reserva])
-        
+
 
 
         <!--.box-typical-->

@@ -20,7 +20,7 @@
                     </button>
                 </div>
             </div>
-            <label for="">CANT: {{ $valor }}</label>
+            {{-- <label for="">CANT: {{ $valor }}</label> --}}
             <br>
             @error('dni')
                 <div class="alert alert-danger alert-icon alert-close alert-dismissible fade in" role="alert">

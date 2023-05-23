@@ -27,7 +27,7 @@
                 <h3>Reservas</h3>
                 <ol class="breadcrumb breadcrumb-simple">
                     <li><a href="#">Reservas</a></li>
-                    <li class="active">Lista de Solicitudes</li>
+                    <li class="active">Lista de Devoluciones</li>
                 </ol>
             </div>
         </header>
@@ -72,60 +72,14 @@
             <div class="col-lg-12 ks-panels-column-section">
                 <div class="card">
                     <div class="card-block">
-                        <h5 class="card-title">Lista de Devoluciones realizados</h5>
+                        <h5 class="card-title"><b>Lista de Devoluciones realizados</b></h5>
                         <div class="row">
-                            <div class="alert alert-info alert-border-left alert-close alert-dismissible fade in"
-                                role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                                <strong>INFORMACIÓN!</strong> Para tener en Cuenta sobre el Estado de las Solicitudes
-                                <ul>
-                                    <li>POR PROCESAR: Son solicitudes de Devolución que aún no han sido procesadas y faltan
-                                        la verificación de éstas.</li>
-                                    <li>PROCESADO: Son solicitudes que ya han sido solucionados, pero tener en cuenta que
-                                        ello no implica que se haya devuelto o no el dinero, todo amerita a la situación
-                                        correspondiente a una evaluación y otros factores que se manejan.</li>
-                                </ul>
-                            </div>
 
-                            <div class="col-md-5">
-                                <br>
+                            <div class="col-md-12">
                                 <div class="form-group has-search">
                                     <span class="fa fa-search form-control-feedback"></span>
                                     <input type="text" class="form-control" wire:model="search" placeholder="Search">
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">
-                                                Fecha Inicial
-                                            </label>
-                                            <input type="date" class="form-control" id="exampleInputEmail1" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">
-                                                Fecha Inicial
-                                            </label>
-                                            <input type="date" class="form-control" id="exampleInputEmail1" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-1">
-                                <br>
-                                <a title="Ver Reporte de Devoluciones por rango"
-                                    class="btn btn-primary"><i
-                                        class="fas fa-file-invoice"></i></a>
-                            </div>
-                            <div class="col-md-2">
-                                <br>
-                                <a id="modal-918849" href="#modal-container-918849" role="button" class="btn"
-                                    data-toggle="modal">Nuevo Viaje</a>
                             </div>
                         </div>
                         <table class="table table-hover">

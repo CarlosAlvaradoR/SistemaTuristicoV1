@@ -26,7 +26,7 @@
             <h3>Reservas</h3>
             <ol class="breadcrumb breadcrumb-simple">
                 <li><a href="#">Reservas</a></li>
-                <li class="active">Lista de Solicitudes</li>
+                <li class="active">Criterios Médicos</li>
             </ol>
         </div>
     </header>

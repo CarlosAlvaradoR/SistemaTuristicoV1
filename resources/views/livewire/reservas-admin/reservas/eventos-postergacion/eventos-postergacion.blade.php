@@ -40,7 +40,7 @@
                                     <th scope="row">{{ $cont++ }}</th>
                                     <td>{{ $e->nombre_evento }}</td>
                                     <td>
-                                        
+
                                         <button type="button" wire:click="Edit({{ $e->id }})"
                                             class="btn btn-inline btn-warning btn-sm">
                                             <!--<i class="fa-sharp fa-solid fa-xmark"></i>-->
@@ -57,9 +57,15 @@
 
                         </tbody>
                     </table>
-                    {{-- $eventos->links() --}}
+
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            {{ $eventos->links() }}
         </div>
     </div>
 
@@ -93,11 +99,13 @@
                         Cerrar
                     </button>
                     @if ($idEvento)
-                        <button type="button" wire:click="crearEvento" wire:loading.attr="disabled" class="btn btn-primary">
+                        <button type="button" wire:click="crearEvento" wire:loading.attr="disabled"
+                            class="btn btn-primary">
                             Actualizar
                         </button>
                     @else
-                        <button type="button" wire:click="crearEvento" wire:loading.attr="disabled" class="btn btn-primary">
+                        <button type="button" wire:click="crearEvento" wire:loading.attr="disabled"
+                            class="btn btn-primary">
                             Guardar
                         </button>
                     @endif
@@ -128,26 +136,26 @@
         });
     </script>
 
-<script>
-    window.addEventListener('swal-confirmEvento', event => {
-        Swal.fire({
-            title: event.detail.title,
-            icon: event.detail.icon,
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, quiero eliminarlo!',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Livewire.emitTo('reservas-admin.reservas.eventos-postergacion.eventos-postergacion',
-                'quitarEventoReserva',
-                    event.detail
-                    .id);
-            }
-        })
-    });
-</script>
+    <script>
+        window.addEventListener('swal-confirmEvento', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('reservas-admin.reservas.eventos-postergacion.eventos-postergacion',
+                        'quitarEventoReserva',
+                        event.detail
+                        .id);
+                }
+            })
+        });
+    </script>
 
     @include('common.alerts')
 </div>
