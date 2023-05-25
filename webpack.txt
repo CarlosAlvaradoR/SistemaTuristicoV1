@@ -203,6 +203,14 @@ MIGRACIONES Y MÓDELOS
         php artisan make:migration create_autorizaciones_presentadas_table --path=/database/migrations/reservas
         php artisan make:model Reservas/AutorizacionesPresentadas -r
 
+        *) Tabla Serie Comprobantes
+        php artisan make:migration create_serie_comprobantes_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/SerieComprobantes -r
+
+        *) Tabla Serie Pagos
+        php artisan make:migration create_serie_pagos_table --path=/database/migrations/reservas
+        php artisan make:model Reservas/SeriePagos -r
+
     
         /* VISTAS*/
         php artisan make:migration create_view_v_reserva_lista_clientes_registrados_table --path=/database/migrations/reservas

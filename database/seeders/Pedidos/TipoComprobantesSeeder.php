@@ -16,9 +16,9 @@ class TipoComprobantesSeeder extends Seeder
     public function run()
     {
         //
+        $tipo = TipoComprobantes::create(['nombre_tipo' => 'BOLETA DE VENTA']);
         $tipo = TipoComprobantes::create(['nombre_tipo' => 'FACTURA']);
         $tipo = TipoComprobantes::create(['nombre_tipo' => 'RECIBO POR HONORARIOS']);
-        $tipo = TipoComprobantes::create(['nombre_tipo' => 'BOLETA DE VENTA']);
         $tipo = TipoComprobantes::create(['nombre_tipo' => 'LIQUIDACION DE COMPRA']);
         $tipo = TipoComprobantes::create(['nombre_tipo' => ' CARTA DE PORTE AEREO']);
         $tipo = TipoComprobantes::create(['nombre_tipo' => 'NOTA DE CREDITO']);
