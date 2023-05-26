@@ -1,30 +1,26 @@
 <div>
     <div class="row">
-        <div class="col-lg-12 ks-panels-column-section">
+        <div class="col-lg-6 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
                     <h5 class="card-title"><i class="fas fa-money-check"></i> Tipos de Comprobante</h5>
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control" placeholder="Buscar tipo de comprobante">
+                                <input type="text" wire:model="search" class="form-control"
+                                    placeholder="Buscar tipo de comprobante">
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                {{-- <label for="exampleFormControlSelect1">Example select</label> --}}
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                    <option>Mostrar 20</option>
-                                    <option>Mostrar 20</option>
-                                    <option>Mostrar 20</option>
-                                </select>
-                            </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-primary btn-sm" wire:click="resetUI" title="Resetear">
+                                <i class="fas fa-window-close"></i>
+                            </button>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <button id="modal-532427" href="#modal_cuentas_bancarias" role="button"
-                                class="btn btn-rounded" data-toggle="modal">Crear Tipo de Comprobante</button>
+                                class="btn btn-rounded btn-sm" data-toggle="modal">Crear Tipo de Comprobante</button>
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -45,6 +41,11 @@
                                             class="btn btn-warning btn-sm">
                                             <span class="fa fa-pencil-square-o"></span>
                                         </button>
+                                        <button title="Ver Series del Tipo de Comprobante"
+                                            wire:click="select({{ $tc->id }})" wire:loading.attr="disabled"
+                                            class="btn btn-primary btn-sm">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
                                         <button title="Eliminar Cuenta Bancaria del Proveedor"
                                             wire:click="deleteConfirm({{ $tc->id }})" wire:loading.attr="disabled"
                                             class="btn btn-danger btn-sm">
@@ -58,6 +59,80 @@
 
                         </tbody>
                     </table>
+                    {{ $tipo_comprobantes->links() }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 ks-panels-column-section">
+            <div class="card">
+                <div class="card-block">
+                    <h5 class="card-title"><i class="fas fa-list-ol"></i> Series {{ $textoAMostrar }}</h5>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group has-search">
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input type="text" wire:model="search" class="form-control"
+                                    placeholder="Buscar serie">
+                            </div>
+                        </div>
+
+                        <div class="col-md-7">
+                            @if ($idSeleccionado)
+                                <button id="modal-532427" href="#modal_cuentas_bancarias" role="button"
+                                    class="btn btn-rounded btn-sm" data-toggle="modal">Crear Serie</button>
+                            @else
+                                <div class="alert alert-danger alert-fill alert-close alert-dismissible fade in"
+                                    role="alert">
+                                    <small>Sin seleccionar Tipo de Comprobante</small>
+                                </div>
+                            @endif
+
+                        </div>
+                    </div>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Tipo de Comprobante</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        @if (count($series) > 0)
+                            <tbody>
+                                @foreach ($series as $s)
+                                    <tr>
+                                        <td>
+                                            {{ $s->numero_serie }} -
+                                            @if ($s->estado == 'ACTIVO')
+                                                <span class="label label-success">{{ $s->estado }}</span>
+                                            @else
+                                                <span class="label label-danger">{{ $s->estado }}</span>
+                                            @endif
+
+                                        </td>   
+
+                                        <td>
+                                            <button title="Editar Información de la Cuenta Bancaria"
+                                                wire:click="Edit({{ $s->id }})" wire:loading.attr="disabled"
+                                                class="btn btn-warning btn-sm">
+                                                <span class="fa fa-pencil-square-o"></span>
+                                            </button>
+                                            <button title="Eliminar Cuenta Bancaria del Proveedor"
+                                                wire:click="deleteConfirm({{ $s->id }})"
+                                                wire:loading.attr="disabled" class="btn btn-danger btn-sm">
+                                                <span class="fa fa-trash"></span>
+                                            </button>
+
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+
+                            </tbody>
+                        @endif
+
+                    </table>
                 </div>
             </div>
         </div>
@@ -65,11 +140,13 @@
     </div>
 
 
+
+
     <!--MODAL --->
     <div class="modal fade" wire:ignore.self data-backdrop="static" data-keyboard="false" id="modal_cuentas_bancarias"
         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
-            <form wire:submit.prevent="saveEntidad">
+            <form wire:submit.prevent="saveComprobante">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="myModalLabel">
@@ -84,22 +161,24 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <fieldset class="form-group">
-                                    <label class="form-label" for="nombre_banco">Nombre del Banco / Ent.
-                                        Financiera</label>
-                                    <input type="text" wire:model.defer="nombre_banco"
-                                        class="form-control maxlength-custom-message" id="nombre_banco"
+                                    <label class="form-label" for="numero_serie">Número de Serie</label>
+                                    <input type="text" wire:model.defer="numero_serie"
+                                        class="form-control maxlength-custom-message" id="numero_serie"
                                         placeholder="ej: Banco de la Nación">
-                                    @error('nombre_banco')
+                                    @error('numero_serie')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-6">
                                 <fieldset class="form-group">
-                                    <label class="form-label" for="direccion">Dirección</label>
-                                    <textarea class="form-control" wire:model.defer="direccion" id="direccion" rows="3"
-                                        placeholder="ej: Av. Los Girasoles"></textarea>
-                                    @error('direccion')
+                                    <label class="form-label" for="estado">Estado</label>
+                                    <select class="form-control" wire:model.defer="estado" id="estado">
+                                        <option>...Seleccione...</option>
+                                        <option value="ACTIVO">ACTIVO</option>
+                                        <option value="INACTIVO">INACTIVO</option>
+                                    </select>
+                                    @error('estado')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </fieldset>

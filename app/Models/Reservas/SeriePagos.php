@@ -11,7 +11,7 @@ class SeriePagos extends Model
     protected $fillable = ['numero_de_serie', 'estado', 'serie_comprobantes_id'];
 
 
-    public static function siguienteNumero($serie)
+    public static function siguienteNumero()
     {
         $serie_activa = SerieComprobantes::where('estado', 'ACTIVO')->firstOrFail();
 
