@@ -183,7 +183,8 @@ INNER JOIN clientes c ON c.persona_id = p.id
 INNER JOIN reservas r on r.cliente_id = c.id
 INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
 WHERE r.id = 2;
-SELECT * FROM serie_comprobantes;
+
+
 
 -- SELECCIONAR LAS SOLICITUDES PAGOS DE UNA RESERVA
 SELECT sp.id, sp.estdo_solicitud, sp.observacion, p.monto FROM solicitud_pagos sp

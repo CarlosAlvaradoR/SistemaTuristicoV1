@@ -11,6 +11,7 @@ use App\Models\Reservas\Nacionalidades;
 use App\Models\Reservas\Pagos;
 use App\Models\Reservas\Pasaportes;
 use App\Models\Reservas\Reservas;
+use App\Models\Reservas\SeriePagos;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -203,7 +204,7 @@ class ReservarClienteNuevo extends Component
                 'cliente_id' => $clientes->id
             ]);
         }
-
+        $serie_pagos = SeriePagos::RegistrarSiguienteNumeroComprobante(1);
 
         //reserva
         $reservas = Reservas::create([
@@ -220,10 +221,12 @@ class ReservarClienteNuevo extends Component
             'numero_boleta' => '',
             'monto' => $this->precio_del_paquete
         ]);
-
+        
         $boletas->numero_boleta = 'BOL-' . $boletas->id;
         $boletas->save();
 
+      
+        
         $numero_de_operacion = '';
         if ($this->numero_de_operacion) {
             $numero_de_operacion = $this->numero_de_operacion;
@@ -251,7 +254,8 @@ class ReservarClienteNuevo extends Component
             'ruta_archivo_pago' => $ruta, 
             'reserva_id' => $reservas->id,
             'cuenta_pagos_id' => $this->tipo_de_pago,
-            'boleta_id' => $boletas->id
+            'boleta_id' => $boletas->id,
+            'serie_pagos' => $serie_pagos->id
         ]);
 
 

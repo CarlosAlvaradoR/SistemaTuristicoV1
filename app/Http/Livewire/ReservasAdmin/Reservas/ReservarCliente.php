@@ -10,6 +10,7 @@ use App\Models\Reservas\Nacionalidades;
 use App\Models\Reservas\Pagos;
 use App\Models\Reservas\Pasaportes;
 use App\Models\Reservas\Reservas;
+use App\Models\Reservas\SeriePagos;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -187,6 +188,7 @@ class ReservarCliente extends Component
                 'cliente_id' => $cliente->id
             ]);
         }
+        $serie_pagos = SeriePagos::RegistrarSiguienteNumeroComprobante(1);
 
         $reserva = Reservas::create([
             'fecha_reserva' => $this->fecha_reserva,
@@ -205,6 +207,8 @@ class ReservarCliente extends Component
         $boletas->numero_boleta = 'BOL-' . $boletas->id;
         $boletas->save();
 
+       
+        
         $numero_de_operacion = '';
         if ($this->numero_de_operacion) {
             $numero_de_operacion = $this->numero_de_operacion;
@@ -232,7 +236,8 @@ class ReservarCliente extends Component
             'ruta_archivo_pago' => $ruta,
             'reserva_id' => $reserva->id,
             'cuenta_pagos_id' => $this->tipo_de_pago,
-            'boleta_id' => $boletas->id
+            'boleta_id' => $boletas->id,
+            'serie_pagos' => $serie_pagos->id
         ]);
 
         if ($this->contador > 0) {
@@ -304,7 +309,8 @@ class ReservarCliente extends Component
                 return;
             }
         }
-
+        $serie_pagos = SeriePagos::RegistrarSiguienteNumeroComprobante(1);
+        
         $reserva = Reservas::create([
             'fecha_reserva' => $this->fecha_reserva,
             'observacion' => $this->observacion,
@@ -322,6 +328,8 @@ class ReservarCliente extends Component
         $boletas->numero_boleta = 'BOL-' . $boletas->id;
         $boletas->save();
 
+        
+        
         $numero_de_operacion = '';
         if ($this->numero_de_operacion) {
             $numero_de_operacion = $this->numero_de_operacion;
@@ -349,7 +357,8 @@ class ReservarCliente extends Component
             'ruta_archivo_pago' => $ruta,
             'reserva_id' => $reserva->id,
             'cuenta_pagos_id' => $this->tipo_de_pago,
-            'boleta_id' => $boletas->id
+            'boleta_id' => $boletas->id,
+            'serie_pagos' => $serie_pagos->id
         ]);
 
         if ($this->contador > 0) {

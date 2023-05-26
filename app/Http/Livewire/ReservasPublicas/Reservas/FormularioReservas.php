@@ -7,6 +7,7 @@ use App\Models\Reservas\Boletas;
 use App\Models\Reservas\Clientes;
 use App\Models\Reservas\Pagos;
 use App\Models\Reservas\Reservas;
+use App\Models\Reservas\SeriePagos;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -80,6 +81,8 @@ class FormularioReservas extends Component
         if ($this->monto == $this->paquetesTuristicos->precio) {
             $estado = 1;
         }
+        $serie_pagos = SeriePagos::RegistrarSiguienteNumeroComprobante(1);
+        
         $reserva = Reservas::create([
             'fecha_reserva' => $this->fecha_reserva,
             'observacion' => $this->observacion,
@@ -97,6 +100,9 @@ class FormularioReservas extends Component
 
         $boletas->numero_boleta = 'BOL-' . $boletas->id;
         $boletas->save();
+
+       
+        
 
         if ($this->archivo_pago) {
             $filename = uniqid() . '_' . time() . rand(1, 1000);
@@ -116,9 +122,10 @@ class FormularioReservas extends Component
             'ruta_archivo_pago' => $ruta,
             'reserva_id' => $reserva->id,
             'cuenta_pagos_id' => $this->tipo_pago, //TIPO DE PAGO PARA INSERTAR
-            'boleta_id' => $boletas->id
+            'boleta_id' => $boletas->id,
+            'serie_pagos' => $serie_pagos->id
         ]);
-
+        
         redirect()->route('cliente.paquetes');
     }
 

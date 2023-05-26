@@ -31,7 +31,7 @@ return new class extends Migration
             $table->unsignedBigInteger('boleta_id')->nullable();
             $table->foreign('boleta_id')->references('id')->on('boletas');
 
-            $table->unsignedBigInteger('serie_pagos')->nullable();
+            $table->unsignedBigInteger('serie_pagos');
             $table->foreign('serie_pagos')->references('id')->on('serie_pagos');
             
             $table->timestamps();
