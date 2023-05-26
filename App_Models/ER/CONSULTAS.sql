@@ -270,7 +270,7 @@ INNER JOIN estado_reservas er on er.id = r.estado_reservas_id;
 
 SELECT pc.cantidad_de_dias FROM politica_de_cumplimientos pc LIMIT 1;
 -- LISTA DE RESERCAS DE LOS CLIENTES
-CREATE OR REPLACE VIEW v_reserva_reservas_general as
+-- CREATE OR REPLACE VIEW v_reserva_reservas_general as
 SELECT p.dni, concat(p.nombre, " ",p.apellidos) as datos,
 r.id as idReserva, 
 pt.id as idPaquete, pt.nombre,

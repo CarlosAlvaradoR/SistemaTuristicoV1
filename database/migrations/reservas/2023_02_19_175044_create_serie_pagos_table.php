@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('numero_de_serie');
             $table->enum('estado', ['VÁLIDO', 'NO VÁLIDO']);
+            $table->text('motivo_de_baja');
 
             $table->unsignedBigInteger('serie_comprobantes_id')->nullable();
             $table->foreign('serie_comprobantes_id')->references('id')->on('serie_comprobantes');

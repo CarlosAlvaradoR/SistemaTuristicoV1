@@ -10,8 +10,8 @@ use function PHPUnit\Framework\isNull;
 class SeriePagos extends Model
 {
     use HasFactory;
-    protected $fillable = ['numero_de_serie', 'estado', 'serie_comprobantes_id'];
-
+    protected $fillable = ['numero_de_serie', 'estado', 'motivo_de_baja','serie_comprobantes_id'];
+    
 
     public static function RegistrarSiguienteNumeroComprobante($id_tipo_de_comprobante)
     {
