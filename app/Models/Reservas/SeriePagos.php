@@ -24,7 +24,7 @@ class SeriePagos extends Model
             ->latest('id')
             ->first();
         
-        $numeroActual = 0;
+        $numeroActual = 1;
         if (!is_null($boletaNumeracion)) {
             $numeroActual = $boletaNumeracion->numero_de_serie + 1;
         }

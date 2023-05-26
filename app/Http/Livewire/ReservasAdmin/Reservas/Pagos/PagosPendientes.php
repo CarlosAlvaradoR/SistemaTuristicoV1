@@ -19,7 +19,7 @@ class PagosPendientes extends Component
 
     public $reserva, $idReserva, $reserva_object;
     public $datos = "", $paquete = "", $costo_paquete = 0, $monto_pagado = 0;
-    public $informacion, $monto_restante = 0, $idBoleta;
+    public $informacion, $monto_restante = 0, $idBoleta, $idSeriePagos;
     public $identificador;
     public $idPago, $monto_pago, $fecha_de_pago, $observacion_del_pago, $numero_operacion, $estado_de_pago, $ruta_archivo_pago, $tipo_de_pago; //Para insertar pagos
     public $url_image;
@@ -70,16 +70,20 @@ class PagosPendientes extends Component
         WHERE p.reserva_id = " . $this->idReserva . "");
 
         $pagos = DB::select("SELECT p.id as idPago, p.fecha_pago, p.monto, p.numero_de_operacion, p.estado_pago, p.observacion_del_pago,
-        p.ruta_archivo_pago,tp.nombre_tipo_pago, cp.numero_cuenta, b.numero_boleta, b.id as idBoleta 
+        p.ruta_archivo_pago,tp.nombre_tipo_pago, cp.numero_cuenta, b.numero_boleta, b.id as idBoleta, sc.numero_serie,
+        sp.numero_de_serie, sp.id as idSeriePagos
         FROM reservas r
         INNER JOIN pagos p on r.id=p.reserva_id
         INNER JOIN cuenta_pagos cp on cp.id = p.cuenta_pagos_id
         INNER JOIN tipo_pagos tp on tp.id = cp.tipo_pagos_id
         INNER JOIN boletas b on b.id = p.boleta_id
+        INNER JOIN serie_pagos sp on sp.id = p.serie_pagos
+        INNER JOIN serie_comprobantes sc on sc.id = sp.serie_comprobantes_id
         WHERE r.id =" . $this->idReserva . "");
 
         $this->monto_restante = $this->costo_paquete - $this->monto_pagado[0]->MontoPagado;
-        $this->idBoleta = $pagos[0]->idBoleta;
+        $this->idBoleta = $pagos[0]->idBoleta;//
+        $this->idSeriePagos = $pagos[0]->idSeriePagos;//idSeriePagos
         //$tipoPagos = TipoPagos::all();
         $tipoPagos = DB::table('tipo_pagos as tp')
             ->join('cuenta_pagos as cp', 'tp.id', '=', 'cp.tipo_pagos_id')
@@ -143,7 +147,8 @@ class PagosPendientes extends Component
                 'ruta_archivo_pago' => $ruta, //$this->ruta_archivo_pago, 
                 'reserva_id' => $this->idReserva,
                 'cuenta_pagos_id' => $this->tipo_de_pago,
-                'boleta_id' => $this->idBoleta
+                'boleta_id' => $this->idBoleta,
+                'serie_pagos' => $this->idSeriePagos
             ]);
         }
 
