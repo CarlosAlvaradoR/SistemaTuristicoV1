@@ -32,6 +32,7 @@ Route::get('/reservas/comprobante/{reserva}', [App\Http\Controllers\ReservasCont
 
 
 Route::get('/reservas/politicas-de-cumplimiento-de-reserva', [App\Http\Controllers\ReservasController::class, 'mostrarPoliticas'])->name('reservas.politicas.de.cumplimiento')->middleware(['auth', 'verified']);
+Route::get('/reservas/comprobantes-entregados', [App\Http\Controllers\ReservasController::class, 'mostrarComprobantesEntregados'])->name('reservas.comprobantes.entregados')->middleware(['auth', 'verified']);
 
 
 //Route::get('/storage/autorizaciones/{reserva}', [App\Http\Controllers\ReservasController::class, 'archivo'])->name('reservas.comprobante')->middleware(['auth', 'verified']);

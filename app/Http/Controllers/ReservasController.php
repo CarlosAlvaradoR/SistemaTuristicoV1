@@ -190,6 +190,9 @@ class ReservasController extends Controller
         return view('reservar_admin.politica_de_reservas.index');
     }
 
+    public function mostrarComprobantesEntregados(){
+        return view('reservar_admin.comprobantes.index');
+    }
     public function mostrarComprobante(Pagos $pago)
     { //id del Pago
         //return $pago->ruta_archivo_pago;

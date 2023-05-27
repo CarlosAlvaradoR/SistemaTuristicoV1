@@ -41,12 +41,12 @@
                 <h3>Reservas</h3>
                 <ol class="breadcrumb breadcrumb-simple">
                     <li><a href="#">Reservas</a></li>
-                    <li class="active">Políticas de Cumplimiento</li>
+                    <li class="active">Comprobantes Entregados</li>
                 </ol>
             </div>
         </header>
 
-        @livewire('reservas-admin.reservas.politicas-condicio-reservas.politicas-condicio-reservas')
+        @livewire('reservas-admin.reservas.comprobantes-entregados.comprobantes-entregados')
         
 
         <!--.box-typical-->
