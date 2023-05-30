@@ -488,8 +488,11 @@ SELECT SUM(dev.monto) FROM devolucion_dineros dev;
 SELECT * FROM nacionalidades;
 
 -- SELECCIONAR LA INFORMACIÓN DE COMPROBANTES
-SELECT p.nombre as nombreP, p.apellidos, pt.nombre, tc.nombre_tipo, 
-sc.numero_serie, sp.numero_de_serie FROM personas p
+SELECT p.nombre as nombreP, p.apellidos, p.dni, pt.nombre, 
+r.slug, tc.nombre_tipo, 
+sc.numero_serie, sp.numero_de_serie, sp.estado,
+sp.motivo_de_baja, sp.id as idSeriePago
+FROM personas p
 INNER JOIN clientes c on p.id = c.persona_id
 INNER JOIN reservas r on r.cliente_id = c.id
 INNER JOIN paquetes_turisticos pt on pt.id = r.paquete_id
@@ -497,10 +500,11 @@ INNER JOIN pagos pa on pa.reserva_id  = r.id
 INNER JOIN serie_pagos sp on sp.id = pa.serie_pagos
 INNER JOIN serie_comprobantes sc on sc.id = sp.serie_comprobantes_id
 INNER JOIN tipo_comprobantes tc on tc.id = sc.tipo_comprobantes_id
+-- WHERE p.dni = '70576811'
 GROUP BY pa.reserva_id
 ORDER BY r.fecha_reserva DESC;
 
-
+SELECT * FROM serie_pagos;
 
 
 

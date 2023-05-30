@@ -8,24 +8,47 @@
                         <span class="sr-only">Loading...</span>
                     </div>
 
-                    <div>
-                        <button class="btn btn-primary btn-sm">
-                            <img src="{{ asset('dashboard_assets/img/fancybox_loading.gif') }}"> <span>Cargando...</span>
-                        </button>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="typeahead-container">
+                                <div class="typeahead-field">
+                                    <span class="typeahead-query">
+                                        <input id="fa fa-search form-control-feedback" class="form-control"
+                                            name="q" placeholder="Buscar por DNI" wire:model.defer="dni"
+                                            type="search" autocomplete="off">
+                                    </span>
+                                    <span class="typeahead-button">
+                                        <button type="button" wire:click="search">
+                                            <span class="font-icon-search"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            {{-- <div class="form-group has-search">
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input type="text" class="form-control" placeholder="Buscar Arrieros">
+                            </div> --}}
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control" wire:model="cant" id="exampleFormControlSelect2">
+                                <option value="50">Mostrar 50 registros</option>
+                                <option value="100">Mostrar 100 registros</option>
+                                <option value="200">Mostrar 200 registros</option>
+                            </select>
+                        </div>
                     </div>
-
-                    <div wire:loading class="alert alert-primary" role="alert">
-                        <a href="#!" class="alert-link">Cargando ...</a>
-                    </div>
+                    <br>
                     <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">CLIENTE</th>
+                                <th scope="col">DNI</th>
                                 <th scope="col">PAQUETE</th>
                                 <th scope="col">T. DE COMPROBANTE</th>
                                 <th scope="col">SERIE</th>
                                 <th scope="col">Nº</th>
+                                <th scope="col">ESTADO</th>
                                 <th scope="col">M.de Baja</th>
                                 <th scope="col">Acciones</th>
                             </tr>
@@ -36,44 +59,50 @@
                             @endphp
 
                             @foreach ($comprobantes as $index => $c)
-                                <form wire:submit.prevent="guardar">
-                                    <tr>
-                                        <th scope="row">{{ $index + 1 }}</th>
-                                        <td scope="row">{{ $c->nombreP }} {{ $c->apellidos }}</td>
-                                        <td scope="row">{{ $c->nombre }}</td>
-                                        <td scope="row">{{ $c->nombre_tipo }}</td>
-                                        <td scope="row">{{ $c->numero_serie }}</td>
-                                        <td scope="row">{{ $c->numero_de_serie }}</td>
-                                        <td scope="row">
-                                            <input type="text">
-                                            {{-- {{ $c->numero_de_serie }} --}}
-                                        </td>
-                                        {{-- <td>
-                                            <div class="col-md-12">
-                                                <input type="text" class="form-control"
-                                                    wire:model.defer="politicas.{{ $index }}.cantidad_de_dias"
-                                                    wire:key="politicas-{{ $politica['id'] }}">
-                                                @error('politicas.' . $loop->index . '.cantidad_de_dias')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
+                                <tr>
+                                    <th scope="row">{{ $index + 1 }}</th>
+                                    <td scope="row">{{ $c->nombreP }} {{ $c->apellidos }}</td>
+                                    <td scope="row">{{ $c->dni }}</td>
+                                    <td scope="row">{{ $c->nombre }}</td>
+                                    <td scope="row"><small>{{ $c->nombre_tipo }}</small></td>
+                                    <td scope="row"><small>{{ $c->numero_serie }}</small></td>
+                                    <td scope="row"><small>{{ $c->numero_de_serie }}</small></td>
+                                    <td scope="row">
+                                        @if ($c->estado == 'VÁLIDO')
+                                            <span class="label label-success">{{ $c->estado }}</span>
+                                        @else
+                                            <span class="label label-danger">{{ $c->estado }}</span>
+                                        @endif
 
+                                    </td>
+                                    <td scope="row">
+                                        <small>
+                                            @if ($c->motivo_de_baja)
+                                                {{ $c->motivo_de_baja }}
+                                            @else
+                                                -
+                                            @endif
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <button type="button" wire:click="Editar({{ $c->idSeriePago }})"
+                                            wire:loading.attr="disabled" class="btn btn-warning btn-success btn-sm">
+                                            <!--<i class="fa-sharp fa-solid fa-xmark"></i>-->
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <a target="_blank" href="{{ route('reservas.comprobante', $c->slug) }}"
+                                            class="btn btn-primary btn-sm" title="Ver Comprobante de Pago">
+                                            <!--<i class="fa-sharp fa-solid fa-xmark"></i>-->
+                                            <i class="fas fa-file-invoice-dollar"></i>
+                                        </a>
 
-                                        </td> --}}
-                                        <td>
-                                            <button type="submit" class="btn btn-inline btn-success btn-sm">
-                                                <!--<i class="fa-sharp fa-solid fa-xmark"></i>-->
-                                                <i class="fa-solid fa-check"></i> Actualizar
-                                            </button>
-
-                                        </td>
-                                    </tr>
-                                </form>
+                                    </td>
+                                </tr>
                             @endforeach
 
                         </tbody>
                     </table>
-                    {{-- $eventos->links() --}}
+                    {{ $comprobantes->links() }}
                 </div>
             </div>
         </div>
@@ -86,39 +115,53 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myModalLabel">
-                        {{-- {{ $title }} --}}
+                        {{ $title }}
                     </h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="nombre_del_evento">Nombre del Evento <span
-                                class="text-danger font-weight-bold">(*)</span></label>
-                        <input type="text" autofocus wire:model.defer="nombre_del_evento" class="form-control"
-                            id="nombre_del_evento">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label for="estado">Estado del Comprobante</label>
+                            <select class="form-control" wire:model.defer="estado">
+                                <option value="">...Seleccione...</option>
+                                <option value="VÁLIDO" @if ($estado == 'VÁLIDO') selected @endif>VÁLIDO</option>
+                                <option value="NO VÁLIDO" @if ($estado == 'NO VÁLIDO') selected @endif>NO VÁLIDO
+                                </option>
+                            </select>
+                            @error('estado')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="motivo_de_baja">Nombre del Evento <span
+                                        class="text-danger font-weight-bold">(*)</span></label>
+                                <textarea class="form-control" id="motivo_de_baja" wire:model.defer="motivo_de_baja" rows="3"></textarea>
 
-                        @error('nombre_del_evento')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                                @error('motivo_de_baja')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
+
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <button type="button" class="btn btn-danger" wire:click.prevent="resetUI()"
+                        data-dismiss="modal">
                         Cerrar
                     </button>
-                    {{-- @if ($idEvento)
-                        <button type="button" wire:click="crearEvento" wire:loading.attr="disabled"
-                            class="btn btn-primary">
-                            Actualizar
-                        </button>
-                    @else
-                        <button type="button" wire:click="crearEvento" wire:loading.attr="disabled"
-                            class="btn btn-primary">
-                            Guardar
-                        </button>
-                    @endif --}}
+                    <button type="button" wire:click="guardar" wire:loading.attr="disabled"
+                        class="btn btn-primary">
+                        <div wire:loading wire:target="guardar">
+                            <img src="{{ asset('dashboard_assets/img/fancybox_loading.gif') }}">
+                        </div>
+                        Actualizar
+                    </button>
 
 
                 </div>
