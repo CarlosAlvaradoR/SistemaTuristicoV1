@@ -9,7 +9,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                             <div class="typeahead-container">
                                 <div class="typeahead-field">
                                     <span class="typeahead-query">
@@ -35,6 +35,14 @@
                                 <option value="100">Mostrar 100 registros</option>
                                 <option value="200">Mostrar 200 registros</option>
                             </select>
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-primary" wire:click="resetUI" title="Resetear Filtros">
+                                <i class="fas fa-trash-restore-alt"></i>
+                            </button>
+                        </div>
+                        <div class="col-lg-12" wire:loading wire:target="search,resetUI">
+                            <img src="{{ asset('dashboard_assets/img/fancybox_loading.gif') }}"> Cargando ...
                         </div>
                     </div>
                     <br>

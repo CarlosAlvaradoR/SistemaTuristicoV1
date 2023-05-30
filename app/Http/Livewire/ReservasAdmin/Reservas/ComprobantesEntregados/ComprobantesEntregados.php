@@ -21,6 +21,7 @@ class ComprobantesEntregados extends Component
     {
         $this->reset(['title', 'idSeriePago', 'estado', 'motivo_de_baja']);
         $this->reset('dni');
+        $this->reset('cant');
         $this->resetValidation();
     }
 
