@@ -10,6 +10,7 @@ use App\Models\Pedidos\ComprobantePagos;
 use App\Models\Pedidos\DetallePedidos;
 use App\Models\Pedidos\Deudas;
 use App\Models\Pedidos\EstadoPedidos;
+use App\Models\Pedidos\PagoProveedores;
 use App\Models\Pedidos\Pedidos;
 use App\Models\Pedidos\TipoComprobantes;
 use Illuminate\Support\Facades\DB;
@@ -30,12 +31,16 @@ class DetallesPedido extends Component
     /** ATRIBUTOS DE DETALLE DE PEDIDOS */
     public $idDetalleIngreso, $cantidad, $monto_del_equipo;
     /** ATRIBUTOS DE COMPROBANTES */
-    public $numero_de_comprobante, $fecha_de_emision, $tipo_comprobante, $archivo_comprobante, $validez;
+    public $numero_de_comprobante, $fecha_de_emision, $tipo_de_pago, $tipo_comprobante, $archivo_comprobante, $validez;
     public $mostrarComprobante = false, $existe_comprobante = false, $idComprobante = 0, $idArchivoComprobante;
     public $comprobante;
     /** ATRIBUTOS DE DEUDAS */
     public $monto_de_deuda, $estado_de_deuda;
     public $existe_deuda = false, $idDeuda;
+    /** ATRIBUTOS DE PAGOS PROVEEDORES*/
+    public $monto_equipos, $fecha_pago, $numero_depósito, $archivo_deposito_pago, $validez_pago, $monto_deuda,
+        $comprobante_id, $cuenta_proveedor_bancos, $deuda_id;
+
     /** ATRIBUTOS DE DETALLE INGRESOS */
     public $cantidad_entrante;
 
@@ -66,6 +71,7 @@ class DetallesPedido extends Component
 
     public function render()
     {
+        $comprobante = [];
         if ($this->pedido) {
             $pedido = Pedidos::where('id', $this->pedido->id)->get();
 
@@ -75,10 +81,33 @@ class DetallesPedido extends Component
             $this->observación_pedido = $pedido[0]->observación_pedido;
             $this->estado_pedido = $pedido[0]->estado_pedidos_id;
             $this->mostrarEquipos = true;
+
+            $comprobante = DB::table('comprobante_pagos as cp')
+                ->join('archivo_comprobantes as ac', 'ac.comprobante_id', '=', 'cp.id')
+                ->where('cp.pedidos_id', $this->pedido->id)
+                ->select(
+                    'cp.id',
+                    'cp.numero_comprobante',
+                    'cp.tipo_comprobante_id',
+                    'cp.fecha_emision',
+                    'ac.id as idArchivo',
+                    'ac.ruta_archivo',
+                    'ac.validez'
+                )
+                ->first();
         }
 
         $estado_pedidos = EstadoPedidos::all(['id', 'estado']);
         $tipo_comprobantes = TipoComprobantes::all(['id', 'nombre_tipo']);
+        $cuentas_bancarias = DB::table('proveedores as p')
+            ->join('cuenta_proveedor_bancos as cpb', 'cpb.proveedores_id', '=', 'p.id')
+            ->join('bancos as b', 'b.id', '=', 'cpb.bancos_id')
+            ->select(
+                'cpb.id',
+                'cpb.numero_cuenta',
+                'b.nombre_banco'
+            )
+            ->get();
         $equipos = DB::table('equipos as e')
             ->join('marcas as m', 'm.id', '=', 'e.marca_id')
             //->where('e.nombre', 'like', '%'.$this->search.'%')
@@ -125,14 +154,28 @@ class DetallesPedido extends Component
                 'pp.id as idPagoProveedor'
             )
             ->get();
+        // public $numero_de_comprobante, $, $, $tipo_comprobante, $archivo_comprobante, $validez;
+        // public $mostrarComprobante = false, $existe_comprobante = false, $idComprobante = 0, $idArchivoComprobante;
+        // public $comprobante;
+        if ($comprobante) {
+            $this->idComprobante = $comprobante->id;
+            $this->numero_de_comprobante = $comprobante->numero_comprobante;
+            $this->tipo_comprobante = $comprobante->tipo_comprobante_id;
+            $this->fecha_de_emision = $comprobante->fecha_emision;
+            $this->idArchivoComprobante = $comprobante->idArchivo;
+            $this->archivo_comprobante = $comprobante->ruta_archivo;
+            $this->validez = $comprobante->validez;
+            $this->existe_comprobante = true;
+        }
 
-        return view(
-            'livewire.proveedores-admin.proveedores.proveedores.detalles-pedido',
+        return view('livewire.proveedores-admin.proveedores.proveedores.detalles-pedido',
             compact(
+                'comprobante',
                 'estado_pedidos',
                 'equipos',
                 'tipo_comprobantes',
-                'pagos_proveedores'
+                'pagos_proveedores',
+                'cuentas_bancarias'
             )
         );
     }
@@ -184,6 +227,7 @@ class DetallesPedido extends Component
             [
                 'numero_de_comprobante' => 'required',
                 'fecha_de_emision' => 'required',
+                'tipo_de_pago' => 'required|string|in:AL CONTADO,CRÉDITO',
                 'tipo_comprobante' => 'required',
                 'archivo_comprobante' => 'required',
                 'validez' => 'required',
@@ -194,6 +238,7 @@ class DetallesPedido extends Component
             [
                 'numero_comprobante' => $this->numero_de_comprobante,
                 'fecha_emision' => $this->fecha_de_emision,
+                'tipo_de_pago' => $this->tipo_de_pago,
                 'pedidos_id' => $this->idPedido,
                 'tipo_comprobante_id' => $this->tipo_comprobante
             ]
@@ -209,12 +254,9 @@ class DetallesPedido extends Component
 
         $this->idComprobante = $comprobante->id;
         $this->idArchivoComprobante = $archivo_comprobante->id;
-        $this->existe_comprobante = true;
-        $this->dispatchBrowserEvent('swal', [
-            'title' => 'MUY BIEN !',
-            'icon' => 'success',
-            'text' => 'Comrprobante Registrado Correctamente'
-        ]);
+        // $this->existe_comprobante = true;
+
+        $this->emit('alert', 'MUY BIEN !', 'success', 'Comprobante Registrado Correctamente.');
     }
 
     public function UpdateComprobante()
@@ -222,7 +264,8 @@ class DetallesPedido extends Component
         $comprobante = ComprobantePagos::findOrFail($this->idComprobante);
         $comprobante->numero_comprobante = $this->numero_de_comprobante;
         $comprobante->fecha_emision = $this->fecha_de_emision;
-        $comprobante->tipo_comprobante_id = $this->tipo_comprobante;
+        $comprobante->tipo_de_pago = $this->tipo_de_pago;
+        $comprobante->tipo_comprobante_id = $this->tipo_comprobante; //
         $comprobante->save();
 
         $archivo_comprobante = ArchivoComprobantes::findOrFail($this->idArchivoComprobante);
@@ -266,6 +309,39 @@ class DetallesPedido extends Component
             'text' => 'Información de la Deuda Actualizada Correctamente'
         ]);
     }
+
+    public function savePagos()
+    {
+        $this->validate(
+            [
+                'monto_equipos' => 'required',
+                'fecha_pago' => 'required',
+                'numero_depósito' => 'required',
+                'archivo_deposito_pago' => 'required',
+                'validez_pago' => 'required',
+                'cuenta_proveedor_bancos' => 'required',
+                //'monto_equipos' => 'required',
+            ]
+        );
+        PagoProveedores::create([
+            'monto_equipos' => $this->monto_equipos,
+            'fecha_pago' => $this->fecha_pago,
+            'numero_depósito' => $this->numero_depósito,
+            'ruta_archivo' => 'storage/' . $this->archivo_deposito_pago->store('pedidos_pagos_proveedores', 'public'),
+            'validez_pago' => $this->validez_pago,
+            'monto_deuda' => $this->monto_de_deuda,
+            'comprobante_id' => $this->idComprobante,
+            'cuenta_proveedor_bancos_id' => $this->cuenta_proveedor_bancos,
+            //'deuda_id' => ''
+        ]);
+
+        $this->dispatchBrowserEvent('swal', [
+            'title' => 'MUY BIEN !',
+            'icon' => 'success',
+            'text' => 'El Pago que realizó al proveedor se registró correctamente'
+        ]);
+    }
+
 
     public function añadirAlPedido(Equipos $equipo)
     {
@@ -366,7 +442,7 @@ class DetallesPedido extends Component
             if (isset($equipos['cantidad_entrante'])) {
                 $cantidad_entrante = $equipos['cantidad_entrante'];
             }
-            
+
             if ($detalle->cantidad_entrante) { //SI HAY Y ES NO NULL
                 switch ($detalle->cantidad_entrante) {
                     case ($cantidad_entrante == $detalle->cantidad_entrante):

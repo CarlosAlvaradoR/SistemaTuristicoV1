@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('numero_comprobante', 45);
             $table->dateTime('fecha_emision');
+            $table->enum('tipo_de_pago', ['AL CONTADO', 'CRÉDITO']);
 
             $table->unsignedBigInteger('pedidos_id');
             $table->foreign('pedidos_id')->references('id')->on('pedidos');
