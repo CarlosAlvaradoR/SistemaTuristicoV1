@@ -236,7 +236,7 @@
                                     <tr>
                                         <th scope="col">Nº Cuenta</th>
                                         <th scope="col">Monto por Equipos</th>
-                                        <th scope="col">Monto por Deudas</th>
+                                        
                                         <th scope="col">Fecha de Pago</th>
                                         <th scope="col">Nº de Depósito</th>
                                         <th scope="col">Archivo</th>
@@ -249,7 +249,7 @@
                                         <tr>
                                             <td>{{ $pp->nombre_banco }}-{{ $pp->numero_cuenta }}</td>
                                             <td>{{ $pp->monto_equipos }}</td>
-                                            <td>{{ $pp->monto_deuda }}</td>
+                                            
                                             <td>{{ $pp->fecha_pago }}</td>
                                             <td>{{ $pp->numero_depósito }}</td>
                                             <td>
@@ -588,7 +588,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">Cerrar</button>
-                    <button type="button" wire:click="savePagos"
+                    <button type="button" wire:click="savePagos" wire:loading.attr="disabled"
                         class="btn btn-rounded btn-primary">Guardar</button>
                 </div>
             </div>

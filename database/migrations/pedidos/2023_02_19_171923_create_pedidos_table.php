@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
             $table->date('fecha');
-            $table->decimal('monto', 10,2);
+            //$table->decimal('monto', 10,2);
             $table->text('observación_pedido');
 
             $table->unsignedBigInteger('proveedores_id');

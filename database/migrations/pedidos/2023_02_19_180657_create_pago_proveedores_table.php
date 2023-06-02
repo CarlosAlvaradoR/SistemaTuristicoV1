@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('numero_depósito');
             $table->string('ruta_archivo');
             $table->boolean('validez_pago');
-            $table->decimal('monto_deuda', 10,2);
+            // $table->decimal('monto_deuda', 10,2);
 
             $table->unsignedBigInteger('comprobante_id')->nullable();
             $table->foreign('comprobante_id')->references('id')->on('comprobante_pagos');
@@ -28,8 +28,8 @@ return new class extends Migration
             $table->unsignedBigInteger('cuenta_proveedor_bancos_id');
             $table->foreign('cuenta_proveedor_bancos_id')->references('id')->on('cuenta_proveedor_bancos');
 
-            $table->unsignedBigInteger('deuda_id')->nullable();
-            $table->foreign('deuda_id')->references('id')->on('deudas');
+            // $table->unsignedBigInteger('deuda_id')->nullable();
+            // $table->foreign('deuda_id')->references('id')->on('deudas');
 
             $table->timestamps();
         });

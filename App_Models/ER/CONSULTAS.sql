@@ -983,16 +983,16 @@ WHERE comprobante_id = 3;
 
 -- SELECCIONAR LOS PAGOS CORRESPONDIENTES A UN COMPROBANTE Y UNA RESERVA
 SELECT b.nombre_banco, cpb.numero_cuenta, pp.monto_equipos, pp.fecha_pago, 
-pp.numero_depósito, pp.ruta_archivo, pp.validez_pago, pp.monto_deuda,
+pp.numero_depósito, pp.ruta_archivo, pp.validez_pago,
 pp.id as idPagoProveedor
 FROM bancos b
 INNER JOIN cuenta_proveedor_bancos cpb on b.id = cpb.bancos_id
 INNER JOIN pago_proveedores pp on pp.cuenta_proveedor_bancos_id = cpb.id
-LEFT JOIN deudas d on d.id = pp.deuda_id
+-- LEFT JOIN deudas d on d.id = pp.deuda_id
 WHERE pp.comprobante_id = 8;
 
 
-SELECT * FROM pago_proveedores;
+SELECT * FROM estado_pedidos;
 
 -- SELECCIONAR LOS PROVEEDRES Y SUS CUENTAS BANCARIAS PARA EL COMBO DE PAGOS A PROVEEDORES
 SELECT cpb.id, cpb.numero_cuenta, b.nombre_banco FROM proveedores p
