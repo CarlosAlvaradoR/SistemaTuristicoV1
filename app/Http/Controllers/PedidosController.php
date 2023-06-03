@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pedidos\PagoProveedores;
 use App\Models\Pedidos\Pedidos;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PedidosController extends Controller
 {
@@ -81,5 +83,17 @@ class PedidosController extends Controller
     public function destroy(Pedidos $pedidos)
     {
         //
+    }
+
+    public function mostrarComprobante(PagoProveedores $pago_proveedores){
+        
+        //$rutaArchivo = 'Pedidos/PagoProveedores/nombre_del_archivo'; // Obtén la ruta desde la base de datos
+        $rutaArchivo = $pago_proveedores->ruta_archivo;
+        // Obtén el contenido del archivo en el disco privado
+        $contenidoArchivo = Storage::disk('private')->get($rutaArchivo);
+
+        // Devuelve una respuesta adecuada con el contenido del archivo
+        return response($contenidoArchivo)
+            ->header('Content-Type', Storage::disk('private')->mimeType($rutaArchivo));
     }
 }

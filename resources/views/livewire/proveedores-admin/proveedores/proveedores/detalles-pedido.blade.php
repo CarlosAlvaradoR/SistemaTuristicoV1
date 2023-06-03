@@ -181,7 +181,7 @@
                                         <input type="radio" wire:model.defer="validez" wire:loading.attr="disabled"
                                             value="1" name="options" id="option1" autocomplete="off"> Válido
                                     </label>
-                                    <label class="btn btn-sm btn-rounded">
+                                    <label class="btn btn-sm btn-rounded btn-danger">
                                         <input type="radio" wire:model.defer="validez" wire:loading.attr="disabled"
                                             value="0" name="options" id="option1" autocomplete="off">
                                         No Válido
@@ -192,6 +192,7 @@
                                     @enderror
                                 </fieldset>
                             </div>
+
 
 
                             <div class="col-lg-12">
@@ -212,17 +213,22 @@
                             </div>
                         </div>
                         <br>
+
+                    @endif
+
+
+                    @if ($existe_comprobante)
                         <h5 class="card-title"><i class="fas fa-file"></i> Pagos</h5>
                         <!-- Button trigger modal -->
 
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <div class="form-group has-search">
                                     <span class="fa fa-search form-control-feedback"></span>
                                     <input type="text" class="form-control" placeholder="Buscar Proveedores">
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                     data-target="#modal-pago-proveedores">
                                     Añadir Pago
@@ -236,7 +242,7 @@
                                     <tr>
                                         <th scope="col">Nº Cuenta</th>
                                         <th scope="col">Monto por Equipos</th>
-                                        
+
                                         <th scope="col">Fecha de Pago</th>
                                         <th scope="col">Nº de Depósito</th>
                                         <th scope="col">Archivo</th>
@@ -248,12 +254,12 @@
                                     @foreach ($pagos_proveedores as $pp)
                                         <tr>
                                             <td>{{ $pp->nombre_banco }}-{{ $pp->numero_cuenta }}</td>
-                                            <td>{{ $pp->monto_equipos }}</td>
-                                            
-                                            <td>{{ $pp->fecha_pago }}</td>
+                                            <td>S/. {{ $pp->monto_equipos }}</td>
+
+                                            <td> {{ date('d/m/Y', strtotime($pp->fecha_pago)) }}</td>
                                             <td>{{ $pp->numero_depósito }}</td>
                                             <td>
-                                                <a href="{{ asset('/' . $pp->ruta_archivo) }}" target="_blank"
+                                                <a href="{{ route('mostrar.comprobantes-pagados.por.pedido', $pp->idPagoProveedor) }}" target="_blank"
                                                     class="uploading-list-item-name">
                                                     <i class="font-icon font-icon-page"></i>
                                                     Ver
@@ -266,13 +272,26 @@
                                                     <span class="label label-danger">No Válido</span>
                                                 @endif
                                             </td>
-                                            <td>@mdo</td>
+                                            <td>
+                                                <button title="Editar Información del Pago realizado"
+                                                    wire:click="EditPayment({{ $pp->idPagoProveedor }})"
+                                                    wire:loading.attr="disabled" class="btn btn-warning btn-sm">
+                                                    <span class="fa fa-pencil-square-o"></span>
+                                                </button>
+                                                <button title="Eliminar Información del Pago"
+                                                    wire:click="deleteConfirm(1)" wire:loading.attr="disabled"
+                                                    class="btn btn-danger btn-sm">
+                                                    <span class="fa fa-trash"></span>
+                                                </button>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
+
                     @endif
+
 
                 </div>
             </div>
@@ -501,96 +520,120 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="cuenta_proveedor_bancos">Nº de Cuenta</label>
-                                <select class="form-control" id="cuenta_proveedor_bancos"
-                                    wire:model.defer="cuenta_proveedor_bancos" wire:loading.attr="disabled">
-                                    <option value="" selected>...Seleccione...</option>
-                                    @foreach ($cuentas_bancarias as $cb)
-                                        <option value="{{ $cb->id }}">{{ $cb->numero_cuenta }} -
-                                            {{ $cb->nombre_banco }}</option>
-                                    @endforeach
+                <form wire:submit.prevent="savePagos">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="cuenta_proveedor_bancos">Nº de Cuenta</label>
+                                    <select class="form-control" id="cuenta_proveedor_bancos"
+                                        wire:model.defer="cuenta_proveedor_bancos" wire:loading.attr="disabled">
+                                        <option value="" selected>...Seleccione...</option>
+                                        @foreach ($cuentas_bancarias as $cb)
+                                            <option value="{{ $cb->id }}">{{ $cb->numero_cuenta }} -
+                                                {{ $cb->nombre_banco }}</option>
+                                        @endforeach
 
-                                </select>
-                                @error('cuenta_proveedor_bancos')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-4">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="monto_equipos">Monto Por Equipos</label>
-                                <input type="text" wire:model.defer="monto_equipos" wire:loading.attr="disabled"
-                                    class="form-control maxlength-simple" id="monto_equipos"
-                                    placeholder="First Name">
-                                @error('monto_equipos')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-4">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="fecha_pago">Fecha de Pago</label>
-                                <input type="date" wire:model.defer="fecha_pago" wire:loading.attr="disabled"
-                                    class="form-control maxlength-simple" id="fecha_pago" placeholder="First Name">
-                                @error('fecha_pago')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-4">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="numero_depósito">Nº de Depósito</label>
-                                <input type="text" wire:model.defer="numero_depósito" wire:loading.attr="disabled"
-                                    class="form-control maxlength-simple" id="numero_depósito"
-                                    placeholder="First Name">
-                                @error('numero_depósito')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-4">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="archivo_deposito_pago">Archivo de Depósito</label>
-                                <input type="file" wire:model.defer="archivo_deposito_pago"
-                                    wire:loading.attr="disabled" class="form-control maxlength-simple"
-                                    id="archivo_deposito_pago" placeholder="First Name">
-                                @error('archivo_deposito_pago')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-4">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="validez_pago">Validez</label>
-                                <label class="btn">
-                                    <input type="radio" wire:model.defer="validez_pago"
-                                        wire:loading.attr="disabled" value="1" name="option-val-pago"
-                                        id="option-val-pago" autocomplete="off"> Válido
-                                </label>
-                                <label class="btn">
-                                    <input type="radio" wire:model.defer="validez_pago"
-                                        wire:loading.attr="disabled" value="0" name="option-val-pago"
-                                        id="option-val-pago" autocomplete="off">
-                                    No Válido
-                                </label>
-                                @error('validez_pago')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </fieldset>
-                        </div>
+                                    </select>
+                                    @error('cuenta_proveedor_bancos')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="monto_equipos">Monto Por Equipos (S/.)</label>
+                                    <input type="text" wire:model.defer="monto_equipos"
+                                        wire:loading.attr="disabled" class="form-control maxlength-simple"
+                                        id="monto_equipos" placeholder="First Name">
+                                    @error('monto_equipos')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="fecha_pago">Fecha de Pago</label>
+                                    <input type="date" wire:model.defer="fecha_pago" wire:loading.attr="disabled"
+                                        class="form-control maxlength-simple" id="fecha_pago"
+                                        placeholder="First Name">
+                                    @error('fecha_pago')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="numero_depósito">Nº de Depósito</label>
+                                    <input type="text" wire:model.defer="numero_depósito"
+                                        wire:loading.attr="disabled" class="form-control maxlength-simple"
+                                        id="numero_depósito" placeholder="First Name">
+                                    @error('numero_depósito')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="archivo_deposito_pago">Archivo de Depósito</label>
+                                    <input type="file" wire:model="archivo_deposito_pago"
+                                        wire:loading.attr="disabled" class="form-control maxlength-simple"
+                                        id="archivo_deposito_pago" placeholder="First Name">
+                                    @error('archivo_deposito_pago')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="validez_pago">Validez</label>
+                                    <label class="btn btn-primary">
+                                        <input type="radio" wire:model.defer="validez_pago"
+                                            wire:loading.attr="disabled" value="1" name="option-val-pago"
+                                            id="option-val-pago" autocomplete="off"> Válido
+                                    </label>
+                                    <label class="btn btn-danger">
+                                        <input type="radio" wire:model.defer="validez_pago"
+                                            wire:loading.attr="disabled" value="0" name="option-val-pago"
+                                            id="option-val-pago" autocomplete="off">
+                                        No Válido
+                                    </label>
+                                    @error('validez_pago')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-12">
+                                <fieldset class="form-group">
+                                    @if ($ver_archivo_pago)
+                                        <a href="{{ asset('/' . $ver_archivo_pago) }}" target="_blank"
+                                            class="uploading-list-item-name">
+                                            <i class="font-icon font-icon-page"></i>
+                                            Ver Archivo de Pago
+                                        </a>
+                                    @endif
 
-                        
+                                </fieldset>
+                            </div>
+
+
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">Cerrar</button>
-                    <button type="button" wire:click="savePagos" wire:loading.attr="disabled"
-                        class="btn btn-rounded btn-primary">Guardar</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-rounded btn-danger"
+                            data-dismiss="modal">Cerrar</button>
+                        <button type="submit"
+                            class="btn btn-rounded btn-primary">
+                            @if ($idPagoProveedores)
+                                Actualizar
+                            @else
+                                Guardar
+                            @endif
+
+                        </button>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
@@ -626,8 +669,11 @@
             window.livewire.on('close-modal', msg => {
                 $('#modal-agregar-equipo-pedido').modal('hide')
             });
-            window.livewire.on('category-updated', msg => {
-                $('#theModal').modal('hide')
+            window.livewire.on('show-modal-payment', msg => {
+                $('#modal-pago-proveedores').modal('show')
+            });
+            window.livewire.on('close-modal-payment', msg => {
+                $('#modal-pago-proveedores').modal('hide')
             });
         });
     </script>

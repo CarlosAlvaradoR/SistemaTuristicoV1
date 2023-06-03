@@ -55,7 +55,7 @@
                                     <td>
                                         {{ date('d/m/Y', strtotime($p->fecha)) }}
                                     </td>
-                                    <td>{{ $p->monto }}</td>
+                                    <td>S/. 0</td>
                                     <td>
                                         {{ $p->numero_comprobante }}
                                     </td>

@@ -14,6 +14,7 @@ use App\Models\Pedidos\PagoProveedores;
 use App\Models\Pedidos\Pedidos;
 use App\Models\Pedidos\TipoComprobantes;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use Livewire\Component;
 
@@ -37,8 +38,9 @@ class DetallesPedido extends Component
     public $monto_de_deuda, $estado_de_deuda;
     public $existe_deuda = false, $idDeuda;
     /** ATRIBUTOS DE PAGOS PROVEEDORES*/
-    public $monto_equipos, $fecha_pago, $numero_depósito, $archivo_deposito_pago, $validez_pago, $monto_deuda,
-        $comprobante_id, $cuenta_proveedor_bancos, $deuda_id;
+    public $idPagoProveedores, $monto_equipos, $fecha_pago, $numero_depósito, $archivo_deposito_pago, $validez_pago, $monto_deuda,
+        $comprobante_id, $cuenta_proveedor_bancos, $deuda_id,
+        $ver_archivo_pago;
 
     /** ATRIBUTOS DE DETALLE INGRESOS */
     public $cantidad_entrante;
@@ -70,6 +72,7 @@ class DetallesPedido extends Component
 
     public function render()
     {
+
         $comprobante = [];
         if ($this->pedido) {
             $pedido = Pedidos::where('id', $this->pedido->id)->get();
@@ -84,6 +87,7 @@ class DetallesPedido extends Component
             $comprobante = DB::table('comprobante_pagos as cp')
                 ->join('archivo_comprobantes as ac', 'ac.comprobante_id', '=', 'cp.id')
                 ->where('cp.pedidos_id', $this->pedido->id)
+                ->limit(1)
                 ->select(
                     'cp.id',
                     'cp.numero_comprobante',
@@ -93,8 +97,10 @@ class DetallesPedido extends Component
                     'ac.ruta_archivo',
                     'ac.validez'
                 )
-                ->first();
+                ->get();
         }
+
+
 
         $estado_pedidos = EstadoPedidos::all(['id', 'estado']);
         $tipo_comprobantes = TipoComprobantes::all(['id', 'nombre_tipo']);
@@ -136,46 +142,50 @@ class DetallesPedido extends Component
             )
             ->get()->toArray();
 
-   
+
         $pagos_proveedores = [];
-        if ($comprobante) {
-            $this->idComprobante = $comprobante->id;
-            $this->numero_de_comprobante = $comprobante->numero_comprobante;
-            $this->tipo_comprobante = $comprobante->tipo_comprobante_id;
-            $this->fecha_de_emision = $comprobante->fecha_emision;
-            $this->idArchivoComprobante = $comprobante->idArchivo;
-            $this->archivo_comprobante = $comprobante->ruta_archivo;
-            $this->validez = $comprobante->validez;
+        if (count($comprobante) > 0) {
+            $this->idComprobante = $comprobante[0]->id;
+            $this->numero_de_comprobante = $comprobante[0]->numero_comprobante;
+            $this->tipo_comprobante = $comprobante[0]->tipo_comprobante_id;
+            $this->fecha_de_emision = $comprobante[0]->fecha_emision;
+            $this->idArchivoComprobante = $comprobante[0]->idArchivo;
+            $this->archivo_comprobante = $comprobante[0]->ruta_archivo;
+            $this->validez = $comprobante[0]->validez;
             $this->existe_comprobante = true;
 
             $pagos_proveedores = DB::table('bancos as b')
-            ->join('cuenta_proveedor_bancos as cpb', 'b.id', '=', 'cpb.bancos_id')
-            ->join('pago_proveedores as pp', 'pp.cuenta_proveedor_bancos_id', '=', 'cpb.id')
-            //->leftJoin('deudas as d', 'd.id', '=', 'pp.deuda_id')
-            ->where('pp.comprobante_id', $this->idComprobante)
-            ->select(
-                'b.nombre_banco',
-                'cpb.numero_cuenta',
-                'pp.monto_equipos',
-                'pp.fecha_pago',
-                'pp.numero_depósito',
-                'pp.ruta_archivo',
-                'pp.validez_pago',
-                //'pp.monto_deuda',
-                'pp.id as idPagoProveedor'
-            )
-            ->get();
-
+                ->join('cuenta_proveedor_bancos as cpb', 'b.id', '=', 'cpb.bancos_id')
+                ->join('pago_proveedores as pp', 'pp.cuenta_proveedor_bancos_id', '=', 'cpb.id')
+                //->leftJoin('deudas as d', 'd.id', '=', 'pp.deuda_id')
+                ->where('pp.comprobante_id', $this->idComprobante)
+                ->select(
+                    'b.nombre_banco',
+                    'cpb.numero_cuenta',
+                    'pp.monto_equipos',
+                    'pp.fecha_pago',
+                    'pp.numero_depósito',
+                    'pp.ruta_archivo',
+                    'pp.validez_pago',
+                    //'pp.monto_deuda',
+                    'pp.id as idPagoProveedor'
+                )
+                ->get();
         }
 
-        return view('livewire.proveedores-admin.proveedores.proveedores.detalles-pedido',
+        // $contador_comprobante = is_array($comprobante) ? count($comprobante) : 0;
+
+
+
+        return view(
+            'livewire.proveedores-admin.proveedores.proveedores.detalles-pedido',
             compact(
                 'comprobante',
                 'estado_pedidos',
                 'equipos',
                 'tipo_comprobantes',
                 'pagos_proveedores',
-                'cuentas_bancarias'
+                'cuentas_bancarias',
             )
         );
     }
@@ -310,11 +320,28 @@ class DetallesPedido extends Component
         ]);
     }
 
+    private function generateUniqueFilename($originalFilename)
+    {
+        $filename = pathinfo($originalFilename, PATHINFO_FILENAME);
+        $extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
+
+        $uniqueFilename = $filename;
+        $counter = 1;
+
+        while (Storage::disk('private')->exists("PagoProveedores/{$uniqueFilename}.{$extension}")) {
+            $uniqueFilename = $filename . '_' . $counter;
+            $counter++;
+        }
+
+        return $uniqueFilename . '.' . $extension;
+    }
+
+
     public function savePagos()
     {
         $this->validate(
             [
-                'monto_equipos' => 'required',
+                'monto_equipos' => 'required|regex:/^\d+(\.\d{1,2})?$/',
                 'fecha_pago' => 'required',
                 'numero_depósito' => 'required',
                 'archivo_deposito_pago' => 'required',
@@ -323,17 +350,41 @@ class DetallesPedido extends Component
                 // 'monto_deuda' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             ]
         );
-        PagoProveedores::create([
-            'monto_equipos' => $this->monto_equipos,
-            'fecha_pago' => $this->fecha_pago,
-            'numero_depósito' => $this->numero_depósito,
-            'ruta_archivo' => 'storage/' . $this->archivo_deposito_pago->store('pedidos_pagos_proveedores', 'public'),
-            'validez_pago' => $this->validez_pago,
-            // 'monto_deuda' => $this->monto_de_deuda,
-            'comprobante_id' => $this->idComprobante,
-            'cuenta_proveedor_bancos_id' => $this->cuenta_proveedor_bancos,
-            //'deuda_id' => ''
-        ]);
+
+
+        //dd($this->archivo_deposito_pago);
+        
+        if ($this->archivo_deposito_pago) {
+            $archivo = $this->archivo_deposito_pago->store('Pedidos/PagoProveedores', 'private');
+        } else {
+            $archivo = $this->ver_archivo_pago;
+        }
+        
+        if ($this->idPagoProveedores) {
+            $pagos_proveedores = PagoProveedores::findOrFail($this->idPagoProveedores);
+            $pagos_proveedores->monto_equipos = $this->monto_equipos;
+            $pagos_proveedores->fecha_pago = $this->fecha_pago;
+            $pagos_proveedores->numero_depósito = $this->numero_depósito;
+            $pagos_proveedores->ruta_archivo = $archivo;
+            $pagos_proveedores->validez_pago = $this->validez_pago;
+            $pagos_proveedores->cuenta_proveedor_bancos_id = $this->cuenta_proveedor_bancos;
+            $pagos_proveedores->save();
+            $this->emit('close-modal-payment');
+        } else {
+            PagoProveedores::create([
+                'monto_equipos' => $this->monto_equipos,
+                'fecha_pago' => $this->fecha_pago,
+                'numero_depósito' => $this->numero_depósito,
+                'ruta_archivo' => $archivo,
+                'validez_pago' => $this->validez_pago,
+                // 'monto_deuda' => $this->monto_de_deuda,
+                'comprobante_id' => $this->idComprobante,
+                'cuenta_proveedor_bancos_id' => $this->cuenta_proveedor_bancos,
+                //'deuda_id' => ''
+            ]);
+        }
+
+
 
         $this->dispatchBrowserEvent('swal', [
             'title' => 'MUY BIEN !',
@@ -362,6 +413,20 @@ class DetallesPedido extends Component
             $this->idEquipo = $equipo->id;
             $this->emit('show-modal', 'Añadiendo');
         }
+    }
+
+    public function EditPayment(PagoProveedores $pagos_proveedores)
+    {
+
+
+        $this->idPagoProveedores = $pagos_proveedores->id;
+        $this->monto_equipos = $pagos_proveedores->monto_equipos;
+        $this->fecha_pago = $pagos_proveedores->fecha_pago;
+        $this->numero_depósito = $pagos_proveedores->numero_depósito;
+        $this->ver_archivo_pago = $pagos_proveedores->ruta_archivo;
+        $this->validez_pago = $pagos_proveedores->validez_pago;
+        $this->cuenta_proveedor_bancos = $pagos_proveedores->cuenta_proveedor_bancos_id;
+        $this->emit('show-modal-payment');
     }
 
     public function Edit(DetallePedidos $detalle)
