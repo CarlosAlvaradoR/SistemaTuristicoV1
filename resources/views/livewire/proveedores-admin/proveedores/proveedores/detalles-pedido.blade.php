@@ -259,8 +259,8 @@
                                             <td> {{ date('d/m/Y', strtotime($pp->fecha_pago)) }}</td>
                                             <td>{{ $pp->numero_depósito }}</td>
                                             <td>
-                                                <a href="{{ route('mostrar.comprobantes-pagados.por.pedido', $pp->idPagoProveedor) }}" target="_blank"
-                                                    class="uploading-list-item-name">
+                                                <a href="{{ route('mostrar.comprobantes-pagados.por.pedido', $pp->idPagoProveedor) }}"
+                                                    target="_blank" class="uploading-list-item-name">
                                                     <i class="font-icon font-icon-page"></i>
                                                     Ver
                                                 </a>
@@ -279,8 +279,8 @@
                                                     <span class="fa fa-pencil-square-o"></span>
                                                 </button>
                                                 <button title="Eliminar Información del Pago"
-                                                    wire:click="deleteConfirm(1)" wire:loading.attr="disabled"
-                                                    class="btn btn-danger btn-sm">
+                                                    wire:click="deleteConfirmPayment({{ $pp->idPagoProveedor }})"
+                                                    wire:loading.attr="disabled" class="btn btn-danger btn-sm">
                                                     <span class="fa fa-trash"></span>
                                                 </button>
                                             </td>
@@ -622,8 +622,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-rounded btn-danger"
                             data-dismiss="modal">Cerrar</button>
-                        <button type="submit"
-                            class="btn btn-rounded btn-primary">
+                        <button type="submit" class="btn btn-rounded btn-primary">
                             @if ($idPagoProveedores)
                                 Actualizar
                             @else
@@ -656,6 +655,23 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     Livewire.emitTo('proveedores-admin.proveedores.proveedores.detalles-pedido', 'delete',
+                        event.detail.id);
+                }
+            })
+        });
+
+        window.addEventListener('swal-confirm-payment', event => {
+            Swal.fire({
+                title: event.detail.title,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, quiero eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('proveedores-admin.proveedores.proveedores.detalles-pedido', 'deletePayment',
                         event.detail.id);
                 }
             })

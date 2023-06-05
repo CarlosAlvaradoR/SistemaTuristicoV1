@@ -50,7 +50,7 @@ class DetallesPedido extends Component
         $this->reset(['idDetalleIngreso', 'cantidad', 'monto_del_equipo']);
     }
 
-    protected $listeners = ['delete'];
+    protected $listeners = ['delete', 'deletePayment'];
 
 
     public function mount($proveedor, $pedido)
@@ -353,13 +353,13 @@ class DetallesPedido extends Component
 
 
         //dd($this->archivo_deposito_pago);
-        
+
         if ($this->archivo_deposito_pago) {
             $archivo = $this->archivo_deposito_pago->store('Pedidos/PagoProveedores', 'private');
         } else {
             $archivo = $this->ver_archivo_pago;
         }
-        
+
         if ($this->idPagoProveedores) {
             $pagos_proveedores = PagoProveedores::findOrFail($this->idPagoProveedores);
             $pagos_proveedores->monto_equipos = $this->monto_equipos;
@@ -485,6 +485,15 @@ class DetallesPedido extends Component
         ]);
     }
 
+    public function deleteConfirmPayment($id)
+    {
+        $this->dispatchBrowserEvent('swal-confirm-payment', [
+            'title' => 'Estás seguro que deseas eliminar el Pago?',
+            'icon' => 'warning',
+            'id' => $id
+        ]);
+    }
+
     public function guardarEntradaPedido()
     {
         $this->validate(
@@ -552,5 +561,22 @@ class DetallesPedido extends Component
         $equipo->stock = $equipo->stock - $detalle->cantidad_entrante;
         $equipo->save();
         $this->emit('alert', 'MUY BIEN', 'success', 'Se eliminó Correctamente el Pedido');
+    }
+
+    public function deletePayment(PagoProveedores $pagos_proveedores)
+    {
+        //$rutaArchivo = 'Pedidos/PagoProveedores/nombre_del_archivo'; // Obtén la ruta desde la base de datos
+        $rutaArchivo = $pagos_proveedores->ruta_archivo;
+        // Verifica la existencia del archivo
+        if (Storage::disk('private')->exists($rutaArchivo)) {
+            // Borra el archivo
+            Storage::disk('private')->delete($rutaArchivo);
+
+            //return "El archivo ha sido borrado exitosamente.";
+        }
+
+        // return "El archivo no existe.";
+        $pagos_proveedores->delete();
+        $this->emit('alert', 'MUY BIEN', 'success', 'Pago Eliminado Correctamemte.');
     }
 }
