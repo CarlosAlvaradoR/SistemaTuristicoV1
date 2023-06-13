@@ -15,6 +15,7 @@ use App\Models\Pedidos\Pedidos;
 use App\Models\Pedidos\TipoComprobantes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Traits\GestionArchivosTrait;
 use Livewire\WithFileUploads;
 use Livewire\Component;
 
@@ -22,6 +23,7 @@ use Livewire\Component;
 class DetallesPedido extends Component
 {
     use WithFileUploads;
+    use GestionArchivosTrait;
 
 
     public $proveedor, $pedido, $equipos_pedidos;
@@ -33,7 +35,7 @@ class DetallesPedido extends Component
     /** ATRIBUTOS DE COMPROBANTES */
     public $numero_de_comprobante, $fecha_de_emision, $tipo_de_pago, $tipo_comprobante, $archivo_comprobante, $validez;
     public $mostrarComprobante = false, $existe_comprobante = false, $idComprobante = 0, $idArchivoComprobante;
-    public $comprobante;
+    public $comprobante, $ver_comprobante;
     /** ATRIBUTOS DE DEUDAS */
     public $monto_de_deuda, $estado_de_deuda;
     public $existe_deuda = false, $idDeuda;
@@ -74,6 +76,7 @@ class DetallesPedido extends Component
     {
 
         $comprobante = [];
+        $this->ver_comprobante = '';
         if ($this->pedido) {
             $pedido = Pedidos::where('id', $this->pedido->id)->get();
 
@@ -91,6 +94,7 @@ class DetallesPedido extends Component
                 ->select(
                     'cp.id',
                     'cp.numero_comprobante',
+                    'cp.tipo_de_pago',
                     'cp.tipo_comprobante_id',
                     'cp.fecha_emision',
                     'ac.id as idArchivo',
@@ -98,6 +102,10 @@ class DetallesPedido extends Component
                     'ac.validez'
                 )
                 ->get();
+            if (count($comprobante) > 0) {
+                $this->tipo_de_pago = $comprobante[0]->tipo_de_pago;
+                $this->ver_comprobante = $comprobante[0]->ruta_archivo;
+            }
         }
 
 
@@ -233,37 +241,54 @@ class DetallesPedido extends Component
     public function saveComprobante()
     {
         //dd($this->archivo_comprobante);return;
+        $validar_archivo = 'required|mimes:jpeg,png,pdf';
+
+
         $this->validate(
             [
-                'numero_de_comprobante' => 'required',
-                'fecha_de_emision' => 'required',
+                'numero_de_comprobante' => 'required|min:3',
+                'fecha_de_emision' => 'required|date',
                 'tipo_de_pago' => 'required|string|in:AL CONTADO,CRÉDITO',
-                'tipo_comprobante' => 'required',
-                'archivo_comprobante' => 'required',
+                'tipo_comprobante' => 'required|numeric|min:1',
+                'archivo_comprobante' => $validar_archivo,
                 'validez' => 'required',
                 //'numero_de_comprobante' => 'required',
             ]
         );
-        $comprobante = ComprobantePagos::create(
-            [
-                'numero_comprobante' => $this->numero_de_comprobante,
-                'fecha_emision' => $this->fecha_de_emision,
-                'tipo_de_pago' => $this->tipo_de_pago,
-                'pedidos_id' => $this->idPedido,
-                'tipo_comprobante_id' => $this->tipo_comprobante
-            ]
-        );
 
-        $archivo_comprobante = ArchivoComprobantes::create(
-            [
-                'ruta_archivo' => 'storage/' . $this->archivo_comprobante->store('pedidos_comprobantes_pago', 'public'),
-                'validez' => $this->validez,
-                'comprobante_id' => $comprobante->id
-            ]
-        );
+        if ($this->archivo_comprobante) {
+            $this->eliminarArchivo($this->ver_comprobante);
+            $archivo = $this->crearArchivo('Pedidos/ArchivoComprobantes', $this->archivo_comprobante);
+        } else {
+            $archivo = $this->ver_comprobante;
+        }
 
-        $this->idComprobante = $comprobante->id;
-        $this->idArchivoComprobante = $archivo_comprobante->id;
+        if ($this->idComprobante) {
+            $this->UpdateComprobante();
+        } else {
+            $comprobante = ComprobantePagos::create(
+                [
+                    'numero_comprobante' => $this->numero_de_comprobante,
+                    'fecha_emision' => $this->fecha_de_emision,
+                    'tipo_de_pago' => $this->tipo_de_pago,
+                    'pedidos_id' => $this->idPedido,
+                    'tipo_comprobante_id' => $this->tipo_comprobante
+                ]
+            );
+
+            $archivo_comprobante = ArchivoComprobantes::create(
+                [
+                    'ruta_archivo' => $archivo,
+                    'validez' => $this->validez,
+                    'comprobante_id' => $comprobante->id
+                ]
+            );
+
+            $this->idComprobante = $comprobante->id;
+            $this->idArchivoComprobante = $archivo_comprobante->id;
+        }
+
+
         // $this->existe_comprobante = true;
 
         $this->emit('alert', 'MUY BIEN !', 'success', 'Comprobante Registrado Correctamente.');
@@ -271,15 +296,39 @@ class DetallesPedido extends Component
 
     public function UpdateComprobante()
     {
+        $validar_archivo = 'nullable|mimes:jpeg,png,pdf';
+        
+        $this->validate(
+            [
+                'numero_de_comprobante' => 'required|min:3',
+                'fecha_de_emision' => 'required|date',
+                'tipo_de_pago' => 'required|string|in:AL CONTADO,CRÉDITO',
+                'tipo_comprobante' => 'required|numeric|min:1',
+                'archivo_comprobante' => $validar_archivo,
+                'validez' => 'required',
+                //'numero_de_comprobante' => 'required',
+            ]
+        );
+
+        if ($this->archivo_comprobante) {
+            $this->eliminarArchivo($this->ver_comprobante);
+            $archivo = $this->crearArchivo('Pedidos/ArchivoComprobantes', $this->archivo_comprobante);
+        } else {
+            $archivo = $this->ver_comprobante;
+        }
+
+
         $comprobante = ComprobantePagos::findOrFail($this->idComprobante);
         $comprobante->numero_comprobante = $this->numero_de_comprobante;
         $comprobante->fecha_emision = $this->fecha_de_emision;
         $comprobante->tipo_de_pago = $this->tipo_de_pago;
         $comprobante->tipo_comprobante_id = $this->tipo_comprobante; //
+
         $comprobante->save();
 
         $archivo_comprobante = ArchivoComprobantes::findOrFail($this->idArchivoComprobante);
         $archivo_comprobante->validez = $this->validez;
+        $comprobante->ruta_archivo = $archivo;
         $archivo_comprobante->save();
 
         $this->dispatchBrowserEvent('swal', [
@@ -320,21 +369,7 @@ class DetallesPedido extends Component
         ]);
     }
 
-    private function generateUniqueFilename($originalFilename)
-    {
-        $filename = pathinfo($originalFilename, PATHINFO_FILENAME);
-        $extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
 
-        $uniqueFilename = $filename;
-        $counter = 1;
-
-        while (Storage::disk('private')->exists("PagoProveedores/{$uniqueFilename}.{$extension}")) {
-            $uniqueFilename = $filename . '_' . $counter;
-            $counter++;
-        }
-
-        return $uniqueFilename . '.' . $extension;
-    }
 
 
     public function savePagos()
@@ -344,7 +379,7 @@ class DetallesPedido extends Component
                 'monto_equipos' => 'required|regex:/^\d+(\.\d{1,2})?$/',
                 'fecha_pago' => 'required',
                 'numero_depósito' => 'required',
-                'archivo_deposito_pago' => 'required',
+                'archivo_deposito_pago' => 'required|mimes:pdf',
                 'validez_pago' => 'required',
                 'cuenta_proveedor_bancos' => 'required',
                 // 'monto_deuda' => 'required|regex:/^\d+(\.\d{1,2})?$/',
@@ -355,7 +390,17 @@ class DetallesPedido extends Component
         //dd($this->archivo_deposito_pago);
 
         if ($this->archivo_deposito_pago) {
-            $archivo = $this->archivo_deposito_pago->store('Pedidos/PagoProveedores', 'private');
+            $rutaArchivo = $this->ver_archivo_pago;
+            // Verifica la existencia del archivo
+            $this->eliminarArchivo($rutaArchivo);
+            // if (Storage::disk('private')->exists($rutaArchivo)) {
+            //     // Borra el archivo
+            //     Storage::disk('private')->delete($rutaArchivo);
+
+            //     //return "El archivo ha sido borrado exitosamente.";
+            // }
+            $archivo = $this->crearArchivo('Pedidos/PagoProveedores', $this->archivo_deposito_pago);
+            //$archivo = $this->archivo_deposito_pago->store('Pedidos/PagoProveedores', 'private');
         } else {
             $archivo = $this->ver_archivo_pago;
         }
@@ -371,6 +416,7 @@ class DetallesPedido extends Component
             $pagos_proveedores->save();
             $this->emit('close-modal-payment');
         } else {
+
             PagoProveedores::create([
                 'monto_equipos' => $this->monto_equipos,
                 'fecha_pago' => $this->fecha_pago,
@@ -417,8 +463,6 @@ class DetallesPedido extends Component
 
     public function EditPayment(PagoProveedores $pagos_proveedores)
     {
-
-
         $this->idPagoProveedores = $pagos_proveedores->id;
         $this->monto_equipos = $pagos_proveedores->monto_equipos;
         $this->fecha_pago = $pagos_proveedores->fecha_pago;
@@ -560,7 +604,6 @@ class DetallesPedido extends Component
 
         $equipo->stock = $equipo->stock - $detalle->cantidad_entrante;
         $equipo->save();
-        $this->emit('alert', 'MUY BIEN', 'success', 'Se eliminó Correctamente el Pedido');
     }
 
     public function deletePayment(PagoProveedores $pagos_proveedores)

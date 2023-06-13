@@ -148,7 +148,7 @@
                             <div class="col-lg-3">
                                 <fieldset class="form-group">
                                     <label class="form-label" for="archivo_comprobante">Archivo de Comprobante</label>
-                                    <input type="file" wire:model.defer="archivo_comprobante"
+                                    <input type="file" wire:model="archivo_comprobante"
                                         wire:loading.attr="disabled" class="form-control maxlength-simple"
                                         id="archivo_comprobante" placeholder="First Name">
                                     @error('archivo_comprobante')
