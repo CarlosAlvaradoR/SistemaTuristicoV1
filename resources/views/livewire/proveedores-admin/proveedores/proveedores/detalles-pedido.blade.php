@@ -146,22 +146,37 @@
                                 </fieldset>
                             </div>
                             <div class="col-lg-3">
-                                <fieldset class="form-group">
-                                    <label class="form-label" for="archivo_comprobante">Archivo de Comprobante</label>
-                                    <input type="file" wire:model="archivo_comprobante"
-                                        wire:loading.attr="disabled" class="form-control maxlength-simple"
-                                        id="archivo_comprobante" placeholder="First Name">
-                                    @error('archivo_comprobante')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </fieldset>
+                                @if ($idComprobante)
+                                    <fieldset class="form-group">
+                                        <label class="form-label" for="archivo_comprobante_actualizacion">Act. Archivo
+                                            de Comprobante</label>
+                                        <input type="file" wire:model="archivo_comprobante_actualizacion"
+                                            wire:loading.attr="disabled" class="form-control"
+                                            id="archivo_comprobante_actualizacion">
+                                        @error('archivo_comprobante_actualizacion')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </fieldset>
+                                @else
+                                    <fieldset class="form-group">
+                                        <label class="form-label" for="archivo_comprobante">Archivo de
+                                            Comprobante</label>
+                                        <input type="file" wire:model="archivo_comprobante"
+                                            wire:loading.attr="disabled" class="form-control"
+                                            id="archivo_comprobante">
+                                        @error('archivo_comprobante')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </fieldset>
+                                @endif
+
                             </div>
 
                             <div class="col-lg-3">
                                 @if ($idComprobante)
                                     <fieldset class="form-group">
                                         <label class="form-label" for="">Ver</label>
-                                        <a href="{{ asset('/' . $archivo_comprobante) }}" target="_blank"
+                                        <a href="{{ route('mostrar.archivo.comprobante', $slugArchivoCompromprobante) }}" target="_blank"
                                             class="uploading-list-item-name">
                                             <i class="font-icon font-icon-page"></i>
                                             Comprobante
@@ -671,7 +686,8 @@
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Livewire.emitTo('proveedores-admin.proveedores.proveedores.detalles-pedido', 'deletePayment',
+                    Livewire.emitTo('proveedores-admin.proveedores.proveedores.detalles-pedido',
+                        'deletePayment',
                         event.detail.id);
                 }
             })

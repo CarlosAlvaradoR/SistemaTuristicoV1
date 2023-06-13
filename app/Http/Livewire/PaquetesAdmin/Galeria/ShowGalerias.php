@@ -29,7 +29,7 @@ class ShowGalerias extends Component
 
     function resetUI()
     {
-        $this->reset(['descripcion', 'foto', 'edicion','foto_anterior','idFotoGaleria']);
+        $this->reset(['descripcion', 'foto', 'edicion', 'foto_anterior', 'idFotoGaleria']);
     }
 
     public function render()
@@ -59,7 +59,7 @@ class ShowGalerias extends Component
         $this->idFotoGaleria = $idFotoGaleria;
         $this->descripcion = $foto_galeria->descripcion;
         $this->foto_anterior = $foto_galeria->directorio;
-        
+
         $this->emit('show-modal', 'Edición de Galerías');
     }
 
@@ -67,7 +67,8 @@ class ShowGalerias extends Component
     {
         $this->validate(
             [
-                'descripcion' => 'required|min:6'
+                'descripcion' => 'required|min:6',
+                'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             ]
         );
         if ($this->foto) {
@@ -90,7 +91,6 @@ class ShowGalerias extends Component
 
         $this->emit('close-modal', 'Edición de Galerías');
         $this->emit('alert', 'MUY BIEN', 'success', 'Galería Actualizada Correctamente.');
-        
     }
 
     public function deleteConfirm($id)
@@ -119,13 +119,11 @@ class ShowGalerias extends Component
 
         $this->resetUI();
         $this->emit('alert', 'MUY BIEN', 'success', 'Galería Eliminada Correctamente.');
-
     }
 
-    function close(){
+    function close()
+    {
         $this->emit('close-modal', 'Edición de Galerías');
         $this->resetUI();
     }
-
-    
 }

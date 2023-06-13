@@ -970,13 +970,13 @@ LEFT JOIN archivo_comprobantes ac on ac.comprobante_id = cp.id;
 
 -- SELECCIONAR EL PEDIDO Y ARCHIVO DE LOS COMPROBANTES
 SELECT cp.id, cp.numero_comprobante, cp.tipo_de_pago, cp.tipo_comprobante_id, cp.fecha_emision, 
-ac.id as idArchivo,ac.ruta_archivo, ac.validez,
+ac.id as idArchivo,ac.ruta_archivo, ac.slug, ac.validez,
 cp.pedidos_id
 FROM comprobante_pagos cp
 INNER JOIN archivo_comprobantes ac on ac.comprobante_id = cp.id
 WHERE cp.pedidos_id = 1;
 
-SELECT * FROM comprobante_pagos;
+SELECT * FROM archivo_comprobantes;
 
 SELECT id, monto_deuda, estado, comprobante_id FROM deudas 
 WHERE comprobante_id = 3;

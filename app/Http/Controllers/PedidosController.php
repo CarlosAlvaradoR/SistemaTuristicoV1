@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pedidos\ArchivoComprobantes;
 use App\Models\Pedidos\PagoProveedores;
 use App\Models\Pedidos\Pedidos;
 use Illuminate\Http\Request;
@@ -95,5 +96,17 @@ class PedidosController extends Controller
         // Devuelve una respuesta adecuada con el contenido del archivo
         return response($contenidoArchivo)
             ->header('Content-Type', Storage::disk('private')->mimeType($rutaArchivo));
+    }
+
+    public function mostrarArchivoComprobante(ArchivoComprobantes $archivo){
+        
+         //$rutaArchivo = 'Pedidos/PagoProveedores/nombre_del_archivo'; // Obtén la ruta desde la base de datos
+         $rutaArchivo = $archivo->ruta_archivo;
+         // Obtén el contenido del archivo en el disco privado
+         $contenidoArchivo = Storage::disk('private')->get($rutaArchivo);
+ 
+         // Devuelve una respuesta adecuada con el contenido del archivo
+         return response($contenidoArchivo)
+             ->header('Content-Type', Storage::disk('private')->mimeType($rutaArchivo));
     }
 }

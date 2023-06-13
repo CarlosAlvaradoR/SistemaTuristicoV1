@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->text('ruta_archivo');
             $table->boolean('validez');
+            $table->string('codigo_archivo');
+            $table->text('slug');
 
             $table->unsignedBigInteger('comprobante_id');
             $table->foreign('comprobante_id')->references('id')->on('comprobante_pagos');

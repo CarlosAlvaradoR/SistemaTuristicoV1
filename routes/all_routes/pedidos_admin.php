@@ -13,3 +13,5 @@ Route::get('/pedidos/proveedor/santa-rosa/detalle', [App\Http\Controllers\Paquet
 Route::get('/pedidos/entidades-financieras', [App\Http\Controllers\PaquetesTuristicosController::class, 'mostrarBancos'])->name('mostrar.bancos')->middleware(['auth', 'verified']);
 Route::get('/pedidos/tipos-de-comprobante', [App\Http\Controllers\PaquetesTuristicosController::class, 'mostrarTiposDeComprobante'])->name('mostrar.tipos.de.comprobante')->middleware(['auth', 'verified']);
 Route::get('/pedidos/ver-comprobante/{pago_proveedores}', [App\Http\Controllers\PedidosController::class, 'mostrarComprobante'])->name('mostrar.comprobantes-pagados.por.pedido')->middleware(['auth', 'verified']);
+
+Route::get('/pedidos/ver-comprobante-de-pago/{archivo}', [App\Http\Controllers\PedidosController::class, 'mostrarArchivoComprobante'])->name('mostrar.archivo.comprobante')->middleware(['auth', 'verified']);

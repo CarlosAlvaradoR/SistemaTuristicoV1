@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Traits\GestionArchivosTrait;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 
@@ -33,7 +34,8 @@ class DetallesPedido extends Component
     /** ATRIBUTOS DE DETALLE DE PEDIDOS */
     public $idDetalleIngreso, $cantidad, $monto_del_equipo;
     /** ATRIBUTOS DE COMPROBANTES */
-    public $numero_de_comprobante, $fecha_de_emision, $tipo_de_pago, $tipo_comprobante, $archivo_comprobante, $validez;
+    public $numero_de_comprobante, $fecha_de_emision, $tipo_de_pago, $tipo_comprobante, $archivo_comprobante,
+        $archivo_comprobante_actualizacion, $slugArchivoCompromprobante,$validez;
     public $mostrarComprobante = false, $existe_comprobante = false, $idComprobante = 0, $idArchivoComprobante;
     public $comprobante, $ver_comprobante;
     /** ATRIBUTOS DE DEUDAS */
@@ -99,6 +101,7 @@ class DetallesPedido extends Component
                     'cp.fecha_emision',
                     'ac.id as idArchivo',
                     'ac.ruta_archivo',
+                    'ac.slug',
                     'ac.validez'
                 )
                 ->get();
@@ -159,6 +162,7 @@ class DetallesPedido extends Component
             $this->fecha_de_emision = $comprobante[0]->fecha_emision;
             $this->idArchivoComprobante = $comprobante[0]->idArchivo;
             $this->archivo_comprobante = $comprobante[0]->ruta_archivo;
+            $this->slugArchivoCompromprobante = $comprobante[0]->slug;
             $this->validez = $comprobante[0]->validez;
             $this->existe_comprobante = true;
 
@@ -241,7 +245,7 @@ class DetallesPedido extends Component
     public function saveComprobante()
     {
         //dd($this->archivo_comprobante);return;
-        $validar_archivo = 'required|mimes:jpeg,png,pdf';
+        $validar_archivo = 'required|mimes:jpg,jpeg,png,pdf';
 
 
         $this->validate(
@@ -263,30 +267,29 @@ class DetallesPedido extends Component
             $archivo = $this->ver_comprobante;
         }
 
-        if ($this->idComprobante) {
-            $this->UpdateComprobante();
-        } else {
-            $comprobante = ComprobantePagos::create(
-                [
-                    'numero_comprobante' => $this->numero_de_comprobante,
-                    'fecha_emision' => $this->fecha_de_emision,
-                    'tipo_de_pago' => $this->tipo_de_pago,
-                    'pedidos_id' => $this->idPedido,
-                    'tipo_comprobante_id' => $this->tipo_comprobante
-                ]
-            );
 
-            $archivo_comprobante = ArchivoComprobantes::create(
-                [
-                    'ruta_archivo' => $archivo,
-                    'validez' => $this->validez,
-                    'comprobante_id' => $comprobante->id
-                ]
-            );
+        $comprobante = ComprobantePagos::create(
+            [
+                'numero_comprobante' => $this->numero_de_comprobante,
+                'fecha_emision' => $this->fecha_de_emision,
+                'tipo_de_pago' => $this->tipo_de_pago,
+                'pedidos_id' => $this->idPedido,
+                'tipo_comprobante_id' => $this->tipo_comprobante
+            ]
+        );
 
-            $this->idComprobante = $comprobante->id;
-            $this->idArchivoComprobante = $archivo_comprobante->id;
-        }
+        $archivo_comprobante = ArchivoComprobantes::create(
+            [
+                'ruta_archivo' => $archivo,
+                'validez' => $this->validez,
+                'codigo_archivo' => Str::random(10),
+                'comprobante_id' => $comprobante->id
+            ]
+        );
+
+        $this->idComprobante = $comprobante->id;
+        $this->idArchivoComprobante = $archivo_comprobante->id;
+
 
 
         // $this->existe_comprobante = true;
@@ -296,23 +299,23 @@ class DetallesPedido extends Component
 
     public function UpdateComprobante()
     {
-        $validar_archivo = 'nullable|mimes:jpeg,png,pdf';
-        
+        $validar_archivo = 'nullable|mimes:jpg,jpeg,png,pdf';
+
         $this->validate(
             [
                 'numero_de_comprobante' => 'required|min:3',
                 'fecha_de_emision' => 'required|date',
                 'tipo_de_pago' => 'required|string|in:AL CONTADO,CRÉDITO',
                 'tipo_comprobante' => 'required|numeric|min:1',
-                'archivo_comprobante' => $validar_archivo,
+                'archivo_comprobante_actualizacion' => $validar_archivo,
                 'validez' => 'required',
                 //'numero_de_comprobante' => 'required',
             ]
         );
 
-        if ($this->archivo_comprobante) {
+        if ($this->archivo_comprobante_actualizacion) {
             $this->eliminarArchivo($this->ver_comprobante);
-            $archivo = $this->crearArchivo('Pedidos/ArchivoComprobantes', $this->archivo_comprobante);
+            $archivo = $this->crearArchivo('Pedidos/ArchivoComprobantes', $this->archivo_comprobante_actualizacion);
         } else {
             $archivo = $this->ver_comprobante;
         }
@@ -328,7 +331,7 @@ class DetallesPedido extends Component
 
         $archivo_comprobante = ArchivoComprobantes::findOrFail($this->idArchivoComprobante);
         $archivo_comprobante->validez = $this->validez;
-        $comprobante->ruta_archivo = $archivo;
+        $archivo_comprobante->ruta_archivo = $archivo;
         $archivo_comprobante->save();
 
         $this->dispatchBrowserEvent('swal', [
