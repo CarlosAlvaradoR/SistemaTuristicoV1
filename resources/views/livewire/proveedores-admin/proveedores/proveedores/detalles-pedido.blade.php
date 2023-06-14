@@ -176,8 +176,8 @@
                                 @if ($idComprobante)
                                     <fieldset class="form-group">
                                         <label class="form-label" for="">Ver</label>
-                                        <a href="{{ route('mostrar.archivo.comprobante', $slugArchivoCompromprobante) }}" target="_blank"
-                                            class="uploading-list-item-name">
+                                        <a href="{{ route('mostrar.archivo.comprobante', $slugArchivoCompromprobante) }}"
+                                            target="_blank" class="uploading-list-item-name">
                                             <i class="font-icon font-icon-page"></i>
                                             Comprobante
                                         </a>
@@ -590,10 +590,10 @@
                             </div>
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
-                                    <label class="form-label" for="archivo_deposito_pago">Archivo de Depósito</label>
+                                    <label class="form-label" for="{{$identificador}}">Archivo de Depósito</label>
                                     <input type="file" wire:model="archivo_deposito_pago"
                                         wire:loading.attr="disabled" class="form-control maxlength-simple"
-                                        id="archivo_deposito_pago" placeholder="First Name">
+                                        id="{{$identificador}}">
                                     @error('archivo_deposito_pago')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -620,11 +620,11 @@
                             </div>
                             <div class="col-lg-12">
                                 <fieldset class="form-group">
-                                    @if ($ver_archivo_pago)
-                                        <a href="{{ asset('/' . $ver_archivo_pago) }}" target="_blank"
-                                            class="uploading-list-item-name">
+                                    @if ($idPagoProveedores)
+                                        <a href="{{ route('mostrar.comprobantes-pagados.por.pedido', $idPagoProveedores) }}"
+                                            target="_blank" class="uploading-list-item-name">
                                             <i class="font-icon font-icon-page"></i>
-                                            Ver Archivo de Pago
+                                            Ver
                                         </a>
                                     @endif
 
@@ -636,7 +636,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-rounded btn-danger"
-                            data-dismiss="modal">Cerrar</button>
+                            data-dismiss="modal" wire:click.prevent="resetPaymentProveedor()">Cerrar</button>
                         <button type="submit" class="btn btn-rounded btn-primary">
                             @if ($idPagoProveedores)
                                 Actualizar

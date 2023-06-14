@@ -26,6 +26,7 @@ class DetallesPedido extends Component
     use WithFileUploads;
     use GestionArchivosTrait;
 
+    public $identificador;
 
     public $proveedor, $pedido, $equipos_pedidos;
     public $fecha, $monto, $observación_pedido, $estado_pedido;
@@ -35,7 +36,7 @@ class DetallesPedido extends Component
     public $idDetalleIngreso, $cantidad, $monto_del_equipo;
     /** ATRIBUTOS DE COMPROBANTES */
     public $numero_de_comprobante, $fecha_de_emision, $tipo_de_pago, $tipo_comprobante, $archivo_comprobante,
-        $archivo_comprobante_actualizacion, $slugArchivoCompromprobante,$validez;
+        $archivo_comprobante_actualizacion, $slugArchivoCompromprobante, $validez;
     public $mostrarComprobante = false, $existe_comprobante = false, $idComprobante = 0, $idArchivoComprobante;
     public $comprobante, $ver_comprobante;
     /** ATRIBUTOS DE DEUDAS */
@@ -44,7 +45,7 @@ class DetallesPedido extends Component
     /** ATRIBUTOS DE PAGOS PROVEEDORES*/
     public $idPagoProveedores, $monto_equipos, $fecha_pago, $numero_depósito, $archivo_deposito_pago, $validez_pago, $monto_deuda,
         $comprobante_id, $cuenta_proveedor_bancos, $deuda_id,
-        $ver_archivo_pago;
+        $ver_archivo_pago = '';
 
     /** ATRIBUTOS DE DETALLE INGRESOS */
     public $cantidad_entrante;
@@ -59,6 +60,7 @@ class DetallesPedido extends Component
 
     public function mount($proveedor, $pedido)
     {
+        $this->identificador = rand();
         $this->proveedor = $proveedor;
         $this->pedido = $pedido;
         // if ($pedido) {
@@ -382,7 +384,7 @@ class DetallesPedido extends Component
                 'monto_equipos' => 'required|regex:/^\d+(\.\d{1,2})?$/',
                 'fecha_pago' => 'required',
                 'numero_depósito' => 'required',
-                'archivo_deposito_pago' => 'required|mimes:pdf',
+                'archivo_deposito_pago' => 'required|mimes:pdf,jpg,jpeg,png',
                 'validez_pago' => 'required',
                 'cuenta_proveedor_bancos' => 'required',
                 // 'monto_deuda' => 'required|regex:/^\d+(\.\d{1,2})?$/',
@@ -393,9 +395,14 @@ class DetallesPedido extends Component
         //dd($this->archivo_deposito_pago);
 
         if ($this->archivo_deposito_pago) {
-            $rutaArchivo = $this->ver_archivo_pago;
-            // Verifica la existencia del archivo
-            $this->eliminarArchivo($rutaArchivo);
+
+            if ($this->ver_archivo_pago) {
+                $rutaArchivo = $this->ver_archivo_pago;
+                // Verifica la existencia del archivo
+                $eliminiar = $this->eliminarArchivo($rutaArchivo);
+            }
+
+
             // if (Storage::disk('private')->exists($rutaArchivo)) {
             //     // Borra el archivo
             //     Storage::disk('private')->delete($rutaArchivo);
@@ -407,7 +414,8 @@ class DetallesPedido extends Component
         } else {
             $archivo = $this->ver_archivo_pago;
         }
-
+        $title = 'MUY BIEN !';
+        $icon = 'success';
         if ($this->idPagoProveedores) {
             $pagos_proveedores = PagoProveedores::findOrFail($this->idPagoProveedores);
             $pagos_proveedores->monto_equipos = $this->monto_equipos;
@@ -418,6 +426,7 @@ class DetallesPedido extends Component
             $pagos_proveedores->cuenta_proveedor_bancos_id = $this->cuenta_proveedor_bancos;
             $pagos_proveedores->save();
             $this->emit('close-modal-payment');
+            $text = 'Información del Pago Actualizado Correctamente.';
         } else {
 
             PagoProveedores::create([
@@ -431,17 +440,19 @@ class DetallesPedido extends Component
                 'cuenta_proveedor_bancos_id' => $this->cuenta_proveedor_bancos,
                 //'deuda_id' => ''
             ]);
+
+            $text = 'El Pago que realizó al proveedor se registró correctamente.';
         }
 
-
-
-        $this->dispatchBrowserEvent('swal', [
-            'title' => 'MUY BIEN !',
-            'icon' => 'success',
-            'text' => 'El Pago que realizó al proveedor se registró correctamente'
-        ]);
+        $this->identificador = rand();
+        $this->resetPaymentProveedor();
+        $this->emit('alert', $title, $icon, $text);
     }
 
+    public function resetPaymentProveedor(){
+        
+        $this->reset(['idPagoProveedores', 'monto_equipos', 'fecha_pago', 'numero_depósito', 'validez_pago', 'cuenta_proveedor_bancos']);
+    }
 
     public function añadirAlPedido(Equipos $equipo)
     {

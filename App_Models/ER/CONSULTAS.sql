@@ -976,7 +976,7 @@ FROM comprobante_pagos cp
 INNER JOIN archivo_comprobantes ac on ac.comprobante_id = cp.id
 WHERE cp.pedidos_id = 1;
 
-SELECT * FROM archivo_comprobantes;
+SELECT * FROM pago_proveedores;
 
 SELECT id, monto_deuda, estado, comprobante_id FROM deudas 
 WHERE comprobante_id = 3;
