@@ -379,6 +379,7 @@
                             </div>
                             @php
                                 $cantSolicitada = 0;
+                                $montoAcumulador=0;
                             @endphp
                             <table class="table table-hover">
                                 <thead>
@@ -423,13 +424,13 @@
                                                 <small>
                                                     @if ($ep->cantidad_entrante)
                                                         @php
-                                                            $monto = $monto + $ep->cantidad_entrante * $ep->precio_real;
+                                                            $montoAcumulador = $montoAcumulador + $ep->cantidad_entrante * $ep->precio_real;
                                                         @endphp
                                                         S/.
                                                         {{ number_format($ep->cantidad_entrante * $ep->precio_real, 2) }}
                                                     @else
                                                         @php
-                                                            $monto = $monto + 0;
+                                                            $montoAcumulador = $montoAcumulador + 0;
                                                         @endphp
                                                         S/. 0.00
                                                     @endif
@@ -471,7 +472,7 @@
                                         <td colspan="1"><small><b>{{$cantSolicitada}}</b></small></td>
                                         <td colspan="2">-</td>
 
-                                        <td colspan="1"><small><b>S/. {{ $monto = $monto }}</b></small></td>
+                                        <td colspan="1"><small><b>S/. {{ number_format($montoAcumulador, 2) }}</b></small></td>
 
                                     </tr>
 

@@ -84,10 +84,10 @@ class DetallesPedido extends Component
         $consulta = DB::select('SELECT 
         sum(monto) as montoTotal
         FROM v_pedidos_informacion_general_pedidos
-        WHERE idPedido = '.$this->pedido->id.'
+        WHERE idPedido = ' . $this->pedido->id . '
         GROUP BY pedidos_id;');
-        $this->monto = $consulta[0]->montoTotal;
-        
+        $this->monto = $consulta[0]->montoTotal ?? 0;
+
         $this->ver_comprobante = '';
         if ($this->pedido) {
             $pedido = Pedidos::where('id', $this->pedido->id)->get();
@@ -571,7 +571,7 @@ class DetallesPedido extends Component
 
         foreach ($this->equipos_pedidos as $equipos) {
 
-            $cantidad_entrante = 0;
+            $cantidad_entrante = null;
             $detalle = DetallePedidos::findOrFail($equipos['id']);
             $equipo = Equipos::findOrFail($equipos['idEquipo']);
             # ENTRA LO MISMO 5 = 5
@@ -585,16 +585,22 @@ class DetallesPedido extends Component
             if ($detalle->cantidad_entrante) { //SI HAY Y ES NO NULL
                 switch ($detalle->cantidad_entrante) {
                     case ($cantidad_entrante == $detalle->cantidad_entrante):
-                        $equipo->stock = $equipo->stock + 0;
+                        $equipo->stock = $equipo->stock;
                         $detalle->cantidad_entrante = $detalle->cantidad_entrante;
                         break;
 
-                    case ($cantidad_entrante < $detalle->cantidad_entrante && $cantidad_entrante > 0):
+                    case ($cantidad_entrante < $detalle->cantidad_entrante): //&& $cantidad_entrante > 0
                         $equipo->stock = ($equipo->stock) - ($detalle->cantidad_entrante - $cantidad_entrante);
-                        $detalle->cantidad_entrante = $detalle->cantidad_entrante;
+                        $detalle->cantidad_entrante = $cantidad_entrante;
                         break;
 
-                    case ($cantidad_entrante > $detalle->cantidad_entrante || $cantidad_entrante < 0):
+                    case ($cantidad_entrante > $detalle->cantidad_entrante): //|| $cantidad_entrante < 0
+
+                        $equipo->stock = $equipo->stock;
+                        $detalle->cantidad_entrante = $cantidad_entrante;
+                        break;
+                    case ($cantidad_entrante < 0 || $cantidad_entrante > $detalle->cantidad): //
+
                         $equipo->stock = $equipo->stock;
                         $detalle->cantidad_entrante = $detalle->cantidad_entrante;
                         break;
