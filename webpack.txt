@@ -413,6 +413,9 @@ MIGRACIONES Y MÓDELOS
 
 
 
+        VISTAS 
+
+        php artisan make:migration create_view_v_pedidos_informacion_general_pedidos_table --path=/database/migrations/pedidos
 
 
 

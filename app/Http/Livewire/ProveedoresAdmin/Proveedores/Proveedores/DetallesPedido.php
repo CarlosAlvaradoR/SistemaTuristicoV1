@@ -81,6 +81,13 @@ class DetallesPedido extends Component
     {
 
         $comprobante = [];
+        $consulta = DB::select('SELECT 
+        sum(monto) as montoTotal
+        FROM v_pedidos_informacion_general_pedidos
+        WHERE idPedido = '.$this->pedido->id.'
+        GROUP BY pedidos_id;');
+        $this->monto = $consulta[0]->montoTotal;
+        
         $this->ver_comprobante = '';
         if ($this->pedido) {
             $pedido = Pedidos::where('id', $this->pedido->id)->get();
@@ -129,7 +136,7 @@ class DetallesPedido extends Component
             ->get();
         $equipos = DB::table('equipos as e')
             ->join('marcas as m', 'm.id', '=', 'e.marca_id')
-            ->where('e.nombre', 'like', '%'.$this->search.'%')
+            ->where('e.nombre', 'like', '%' . $this->search . '%')
             ->select(
                 'e.id',
                 'e.nombre',
@@ -560,12 +567,11 @@ class DetallesPedido extends Component
                 'equipos_pedidos.*.ep' => 'nullable|integer|min:1'
             ]
         );
-        dd($this->equipos_pedidos);
+        // dd($this->equipos_pedidos);
 
         foreach ($this->equipos_pedidos as $equipos) {
 
             $cantidad_entrante = 0;
-            $cantidad_existente = 0;
             $detalle = DetallePedidos::findOrFail($equipos['id']);
             $equipo = Equipos::findOrFail($equipos['idEquipo']);
             # ENTRA LO MISMO 5 = 5

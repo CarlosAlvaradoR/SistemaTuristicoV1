@@ -34,6 +34,10 @@
                         </div>
 
                     </div>
+                    @php
+                        use Illuminate\Support\Facades\DB;
+                        DB::statement("SET sql_mode = '' ");
+                    @endphp
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -55,14 +59,16 @@
                                     <td>
                                         {{ date('d/m/Y', strtotime($p->fecha)) }}
                                     </td>
-                                    <td>S/. 0</td>
+                                    <td>
+                                        S/. {{$p->montoTotal ?? 0}}
+                                    </td>
                                     <td>
                                         {{ $p->numero_comprobante }}
                                     </td>
                                     <td>
                                         @if ($p->ruta_archivo)
-                                            <a href="{{ route('mostrar.archivo.comprobante', $p->slugArchivoComprobante) }}" target="_blank"
-                                                class="uploading-list-item-name">
+                                            <a href="{{ route('mostrar.archivo.comprobante', $p->slugArchivoComprobante) }}"
+                                                target="_blank" class="uploading-list-item-name">
                                                 <i class="font-icon font-icon-page"></i>
                                                 Ver Archivo
                                             </a>
