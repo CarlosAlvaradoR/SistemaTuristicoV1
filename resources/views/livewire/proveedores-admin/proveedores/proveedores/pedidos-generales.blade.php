@@ -61,7 +61,7 @@
                                     </td>
                                     <td>
                                         @if ($p->ruta_archivo)
-                                            <a href="{{ asset($p->ruta_archivo) }}" target="_blank"
+                                            <a href="{{ route('mostrar.archivo.comprobante', $p->slugArchivoComprobante) }}" target="_blank"
                                                 class="uploading-list-item-name">
                                                 <i class="font-icon font-icon-page"></i>
                                                 Ver Archivo

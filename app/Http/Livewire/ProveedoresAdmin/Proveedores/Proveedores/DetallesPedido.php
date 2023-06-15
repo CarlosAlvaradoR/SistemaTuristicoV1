@@ -27,9 +27,10 @@ class DetallesPedido extends Component
     use GestionArchivosTrait;
 
     public $identificador;
+    public $search;
 
     public $proveedor, $pedido, $equipos_pedidos;
-    public $fecha, $monto, $observación_pedido, $estado_pedido;
+    public $fecha, $monto = 0, $observación_pedido, $estado_pedido;
     public $idPedido = 0;
     public $title = '', $idEquipo = 0, $mostrarEquipos = false;
     /** ATRIBUTOS DE DETALLE DE PEDIDOS */
@@ -128,7 +129,7 @@ class DetallesPedido extends Component
             ->get();
         $equipos = DB::table('equipos as e')
             ->join('marcas as m', 'm.id', '=', 'e.marca_id')
-            //->where('e.nombre', 'like', '%'.$this->search.'%')
+            ->where('e.nombre', 'like', '%'.$this->search.'%')
             ->select(
                 'e.id',
                 'e.nombre',
@@ -449,8 +450,8 @@ class DetallesPedido extends Component
         $this->emit('alert', $title, $icon, $text);
     }
 
-    public function resetPaymentProveedor(){
-        
+    public function resetPaymentProveedor()
+    {
         $this->reset(['idPagoProveedores', 'monto_equipos', 'fecha_pago', 'numero_depósito', 'validez_pago', 'cuenta_proveedor_bancos']);
     }
 
@@ -559,7 +560,7 @@ class DetallesPedido extends Component
                 'equipos_pedidos.*.ep' => 'nullable|integer|min:1'
             ]
         );
-        // dd($this->equipos_pedidos);
+        dd($this->equipos_pedidos);
 
         foreach ($this->equipos_pedidos as $equipos) {
 

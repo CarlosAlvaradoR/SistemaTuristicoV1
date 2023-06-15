@@ -40,6 +40,7 @@ class PedidosGenerales extends Component
                 'ac.ruta_archivo',
                 'ep.estado',
                 'p.slug',
+                'ac.slug as slugArchivoComprobante',
                 'pe.id as idPedido'
             )
             ->paginate($this->cant);

@@ -32,9 +32,8 @@
                         <div class="col-lg-3">
                             <fieldset class="form-group">
                                 <label class="form-label" for="monto">Monto S/.</label>
-                                <input type="text" wire:model.defer="monto" wire:loading.attr="disabled"
-                                    class="form-control maxlength-custom-message" id="monto"
-                                    placeholder="Ingrese Monto del Equipo">
+                                <input type="text" wire:model="monto" wire:loading.attr="disabled"
+                                    class="form-control" id="monto" readonly placeholder="Ingrese Monto del Equipo">
                                 @error('monto')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -323,7 +322,8 @@
                             <div class="col-md-12">
                                 <div class="form-group has-search">
                                     <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" class="form-control" placeholder="Buscar Equipos">
+                                    <input type="text" wire:model="search" class="form-control"
+                                        placeholder="Buscar Equipos">
                                 </div>
                             </div>
                         </div>
@@ -377,6 +377,9 @@
                                     <button class="btn btn-primary btn-rounded" type="submit">Guardar</button>
                                 </div>
                             </div>
+                            @php
+                                $cantSolicitada = 0;
+                            @endphp
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
@@ -384,14 +387,21 @@
                                         <th scope="col">Cantidad Solicitada</th>
                                         <th scope="col">Cantidad Entrante</th>
                                         <th scope="col">Precio C/U</th>
+                                        <th scope="col">Precio Tot.</th>
                                         <th scope="col">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($equipos_pedidos as $index => $ep)
                                         <tr>
-                                            <td>{{ $ep->nombre }}-{{ $ep->marca }}</td>
-                                            <td>{{ $ep->cantidad }}</td>
+                                            <td><small>{{ $ep->nombre }}-{{ $ep->marca }}</small></td>
+                                            <td>
+                                                @php
+                                                    $cantSolicitada = $cantSolicitada + $ep->cantidad;
+                                                @endphp
+                                                <small>
+                                                    {{ $ep->cantidad }}
+                                                </small></td>
                                             <td>
                                                 <div class="form-group">
                                                     <input type="number" min="1" max="{{ $ep->cantidad }}"
@@ -405,21 +415,42 @@
                                                 </div>
 
                                             </td>
-                                            <td>{{ $ep->precio_real }}</td>
+                                            <td>
+                                                <small>S/. {{ $ep->precio_real }}</small>
+                                            </td>
+                                            <td>
+
+                                                <small>
+                                                    @if ($ep->cantidad_entrante)
+                                                        @php
+                                                            $monto = $monto + $ep->cantidad_entrante * $ep->precio_real;
+                                                        @endphp
+                                                        S/.
+                                                        {{ number_format($ep->cantidad_entrante * $ep->precio_real, 2) }}
+                                                    @else
+                                                        @php
+                                                            $monto = $monto + 0;
+                                                        @endphp
+                                                        S/. 0.00
+                                                    @endif
+                                                </small>
+
+                                            </td>
                                             <td>
                                                 {{-- <button id="delete"
                                                     wire:click="entradaEquipoInventario({{ $ep->id }})"
                                                     title="Añadir Equipo al Pedido" class="btn btn-success btn-sm">
                                                     <i class="fas fa-plus-circle"></i>
                                                 </button> --}}
-                                                <button id="view" title="Editar Detalle del Pedido"
-                                                    data-target="#exampleModal" data-toggle="modal"
-                                                    wire:click="Edit({{ $ep->id }})"
+                                                <button type="button" id="view"
+                                                    title="Editar Detalle del Pedido" data-target="#exampleModal"
+                                                    data-toggle="modal" wire:click="Edit({{ $ep->id }})"
                                                     wire:loading.attr="disabled" title="Ver Atractivos"
                                                     class="btn btn-warning btn-sm">
                                                     <span class="fa fa-pencil-square-o"></span>
                                                 </button>
-                                                <button id="view" title="Quitar Equipo del Pedido"
+                                                <button type="button" id="view"
+                                                    title="Quitar Equipo del Pedido"
                                                     wire:click="deleteConfirm({{ $ep->id }})"
                                                     wire:loading.attr="disabled" title="Ver Atractivos"
                                                     class="btn btn-danger btn-sm">
@@ -431,6 +462,20 @@
 
 
                                 </tbody>
+                                <tfoot>
+
+                                    <tr>
+
+                                        <th>Total</th>
+
+                                        <td colspan="1"><small><b>{{$cantSolicitada}}</b></small></td>
+                                        <td colspan="2">-</td>
+
+                                        <td colspan="1"><small><b>S/. {{ $monto = $monto }}</b></small></td>
+
+                                    </tr>
+
+                                </tfoot>
                             </table>
                         </form>
                     </div>
@@ -590,10 +635,10 @@
                             </div>
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
-                                    <label class="form-label" for="{{$identificador}}">Archivo de Depósito</label>
+                                    <label class="form-label" for="{{ $identificador }}">Archivo de Depósito</label>
                                     <input type="file" wire:model="archivo_deposito_pago"
                                         wire:loading.attr="disabled" class="form-control maxlength-simple"
-                                        id="{{$identificador}}">
+                                        id="{{ $identificador }}">
                                     @error('archivo_deposito_pago')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -635,8 +680,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-rounded btn-danger"
-                            data-dismiss="modal" wire:click.prevent="resetPaymentProveedor()">Cerrar</button>
+                        <button type="button" class="btn btn-rounded btn-danger" data-dismiss="modal"
+                            wire:click.prevent="resetPaymentProveedor()">Cerrar</button>
                         <button type="submit" class="btn btn-rounded btn-primary">
                             @if ($idPagoProveedores)
                                 Actualizar
