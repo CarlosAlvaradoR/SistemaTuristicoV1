@@ -7,6 +7,7 @@ use App\Models\Equipos;
 use App\Models\Inventario\DetalleIngresos;
 use App\Models\Pedidos\ArchivoComprobantes;
 use App\Models\Pedidos\ComprobantePagos;
+use App\Models\Pedidos\CuentaProveedorBancos;
 use App\Models\Pedidos\DetallePedidos;
 use App\Models\Pedidos\Deudas;
 use App\Models\Pedidos\EstadoPedidos;
@@ -131,6 +132,7 @@ class DetallesPedido extends Component
             ->select(
                 'cpb.id',
                 'cpb.numero_cuenta',
+                'cpb.estado',
                 'b.nombre_banco'
             )
             ->get();
@@ -394,13 +396,21 @@ class DetallesPedido extends Component
                 'numero_depósito' => 'required',
                 'archivo_deposito_pago' => 'required|mimes:pdf,jpg,jpeg,png',
                 'validez_pago' => 'required',
-                'cuenta_proveedor_bancos' => 'required',
+                'cuenta_proveedor_bancos' => 'required|numeric|min:1',
                 // 'monto_deuda' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             ]
         );
 
 
         //dd($this->archivo_deposito_pago);
+        $cuenta_proveedor_bancos = CuentaProveedorBancos::findOrFail($this->cuenta_proveedor_bancos);
+        if ($cuenta_proveedor_bancos->proveedores_id != $this->proveedor->id) {
+            return abort(404);
+        }
+
+        if ($cuenta_proveedor_bancos->estado == 2) {
+            return $this->emit('alert', 'ALERTA', 'warning', 'La cuenta a la que se intenta realizar el pago se encuentra NO ACTIVA.');
+        }
 
         if ($this->archivo_deposito_pago) {
 
@@ -594,11 +604,11 @@ class DetallesPedido extends Component
                         $detalle->cantidad_entrante = $cantidad_entrante;
                         break;
 
-                    case ($cantidad_entrante > $detalle->cantidad_entrante): //|| $cantidad_entrante < 0
-
-                        $equipo->stock = $equipo->stock;
+                    case ($cantidad_entrante > $detalle->cantidad_entrante):
+                        $equipo->stock = $equipo->stock + ($cantidad_entrante - $detalle->cantidad_entrante);
                         $detalle->cantidad_entrante = $cantidad_entrante;
                         break;
+                    
                     case ($cantidad_entrante < 0 || $cantidad_entrante > $detalle->cantidad): //
 
                         $equipo->stock = $equipo->stock;

@@ -138,10 +138,13 @@
 
                                         <hr>
                                         <div>
-                                            <button type="button" wire:click="crearPaquete"
-                                                wire:loading.attr="disabled" class="btn btn-primary">
-                                                Guardar
-                                            </button>
+                                            @can('crear-paquetes')
+                                                <button type="button" wire:click="crearPaquete"
+                                                    wire:loading.attr="disabled" class="btn btn-primary">
+                                                    Guardar
+                                                </button>
+                                            @endcan
+
 
                                             <button class="btn btn-danger" type="reset">Cancelar</button>
                                         </div>

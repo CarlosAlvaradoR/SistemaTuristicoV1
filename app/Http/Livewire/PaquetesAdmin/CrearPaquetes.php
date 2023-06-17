@@ -7,6 +7,7 @@ use Livewire\WithFileUploads;
 
 use App\Models\TipoPaquetes;
 use App\Models\PaquetesTuristicos;
+use Illuminate\Support\Facades\Gate;
 
 class CrearPaquetes extends Component
 {
@@ -32,23 +33,27 @@ class CrearPaquetes extends Component
 
     public function crearPaquete()
     {
-        $crear = $this->validate();
-        // dd($crear);
-        $crear = PaquetesTuristicos::create([
-            'nombre' => $this->nombre,
-            'precio' => $this->precio,
-            'precio_dolares' => $this->precio_en_dolares,
-            'estado' => $this->estado,
-            'visibilidad' => $this->visibilidad,
-            'imagen_principal' => 'storage/' . $this->imagen_principal->store('foto_principal', 'public'),
-            'tipo_paquete_id' => $this->tipo_de_paquete
-        ]);
+        if (Gate::allows('editar-paquetes')) {
+            $crear = $this->validate();
+            // dd($crear);
+            $crear = PaquetesTuristicos::create([
+                'nombre' => $this->nombre,
+                'precio' => $this->precio,
+                'precio_dolares' => $this->precio_en_dolares,
+                'estado' => $this->estado,
+                'visibilidad' => $this->visibilidad,
+                'imagen_principal' => 'storage/' . $this->imagen_principal->store('foto_principal', 'public'),
+                'tipo_paquete_id' => $this->tipo_de_paquete
+            ]);
 
-        $this->reset([
-            'nombre', 'precio', 'precio_en_dolares', 'estado',
-            'visibilidad', 'imagen_principal', 'tipo_de_paquete'
-        ]);
-        $this->imagen_principal = null;
-        session()->flash('PaqueteSucces', 'Paquete añadido correctamente');
+            $this->reset([
+                'nombre', 'precio', 'precio_en_dolares', 'estado',
+                'visibilidad', 'imagen_principal', 'tipo_de_paquete'
+            ]);
+            $this->imagen_principal = null;
+            session()->flash('PaqueteSucces', 'Paquete añadido correctamente');
+        }else{
+            return abort(403);
+        }
     }
 }

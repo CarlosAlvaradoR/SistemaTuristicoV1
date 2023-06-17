@@ -78,21 +78,27 @@
                             <a class="btn btn-success btn-rounded center"
                                 href="{{ route('pedidos.proveedores.index') }}"
                                 wire:loading.attr="disabled">Finalizar</a>
-                            <button class="btn btn-danger btn-rounded center"
-                                wire:loading.attr="disabled">Cancelar</button>
-                            @if ($idPedido)
+                            {{-- @if ($idPedido)
                                 <a href="{{ route('pedidos.proveedores.general.detalle.componentes', $idPedido) }}">
                                     Llenar componentes ?
                                 </a>
-                            @endif
+                            @endif --}}
 
                         </div>
 
                     </div>
-                    <br>
+                    <br><br>
 
                     @if ($mostrarEquipos)
-                        <h5 class="card-title with-border"><i class="fas fa-file"></i> Comprobante</h5>
+                        <h5 class="card-title with-border"><i class="fas fa-file"></i> Comprobante -
+                            @if ($tipo_de_pago == 'AL CONTADO')
+                                <span class="label label-success">{{ $tipo_de_pago }}</span>
+                            @else
+                                <span class="label label-danger">{{ $tipo_de_pago }}</span>
+                            @endif
+                        </h5>
+
+
                         <div class="row">
                             <div class="col-lg-3">
                                 <fieldset class="form-group">
@@ -119,7 +125,7 @@
                             <div class="col-lg-3">
                                 <fieldset class="form-group">
                                     <label class="form-label" for="tipo_de_pago">Tipo de Pago</label>
-                                    <select class="form-control" wire:model="tipo_de_pago">
+                                    <select class="form-control" wire:model.defer="tipo_de_pago">
                                         <option value="">...Seleccione...</option>
                                         <option value="AL CONTADO">AL CONTADO</option>
                                         <option value="CRÉDITO">CRÉDITO</option>
@@ -210,7 +216,6 @@
 
 
                             <div class="col-lg-12">
-                                <br>
                                 @if ($idComprobante)
                                     <button class="btn btn-primary btn-rounded center" wire:click="UpdateComprobante"
                                         wire:loading.attr="disabled">Actualizar</button>
@@ -219,14 +224,9 @@
                                         wire:loading.attr="disabled">Guardar</button>
                                 @endif
 
-                                <a class="btn btn-success btn-rounded center"
-                                    href="{{ route('pedidos.proveedores.index') }}"
-                                    wire:loading.attr="disabled">Finalizar</a>
-                                <button class="btn btn-danger btn-rounded center"
-                                    wire:loading.attr="disabled">Cancelar</button>
                             </div>
                         </div>
-                        <br>
+                        <br><br>
 
                     @endif
 
@@ -379,7 +379,7 @@
                             </div>
                             @php
                                 $cantSolicitada = 0;
-                                $montoAcumulador=0;
+                                $montoAcumulador = 0;
                             @endphp
                             <table class="table table-hover">
                                 <thead>
@@ -402,7 +402,8 @@
                                                 @endphp
                                                 <small>
                                                     {{ $ep->cantidad }}
-                                                </small></td>
+                                                </small>
+                                            </td>
                                             <td>
                                                 <div class="form-group">
                                                     <input type="number" min="1" max="{{ $ep->cantidad }}"
@@ -469,10 +470,11 @@
 
                                         <th>Total</th>
 
-                                        <td colspan="1"><small><b>{{$cantSolicitada}}</b></small></td>
+                                        <td colspan="1"><small><b>{{ $cantSolicitada }}</b></small></td>
                                         <td colspan="2">-</td>
 
-                                        <td colspan="1"><small><b>S/. {{ number_format($montoAcumulador, 2) }}</b></small></td>
+                                        <td colspan="1"><small><b>S/.
+                                                    {{ number_format($montoAcumulador, 2) }}</b></small></td>
 
                                     </tr>
 
@@ -589,10 +591,17 @@
                                     <label class="form-label" for="cuenta_proveedor_bancos">Nº de Cuenta</label>
                                     <select class="form-control" id="cuenta_proveedor_bancos"
                                         wire:model.defer="cuenta_proveedor_bancos" wire:loading.attr="disabled">
-                                        <option value="" selected>...Seleccione...</option>
+                                        <option value="">...Seleccione...</option>
                                         @foreach ($cuentas_bancarias as $cb)
                                             <option value="{{ $cb->id }}">{{ $cb->numero_cuenta }} -
-                                                {{ $cb->nombre_banco }}</option>
+                                                {{ $cb->nombre_banco }} - 
+                                                @if ($cb->estado == 1)
+                                                    ACTIVA
+                                                @else
+                                                    NO ACTIVA
+                                                @endif    
+                                                
+                                            </option>
                                         @endforeach
 
                                     </select>
