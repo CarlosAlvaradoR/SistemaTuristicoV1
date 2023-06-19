@@ -69,10 +69,17 @@
 
                             @if ($mostrarEquipos)
                                 <button class="btn btn-primary btn-rounded center" wire:click="savePedido"
-                                    wire:loading.attr="disabled">Actualizar</button>
+                                    wire:loading.attr="disabled">
+                                    <img wire:loading wire:target="savePedido"
+                                        src="{{ asset('dashboard_assets/img/fancybox_loading.gif') }}">
+                                    Actualizar
+                                </button>
                             @else
                                 <button class="btn btn-primary btn-rounded center" wire:click="savePedido"
-                                    wire:loading.attr="disabled">Guardar</button>
+                                    wire:loading.attr="disabled">
+                                    <img wire:loading wire:target="savePedido"
+                                        src="{{ asset('dashboard_assets/img/fancybox_loading.gif') }}"> Guardar
+                                </button>
                             @endif
 
                             <a class="btn btn-success btn-rounded center"
@@ -218,10 +225,20 @@
                             <div class="col-lg-12">
                                 @if ($idComprobante)
                                     <button class="btn btn-primary btn-rounded center" wire:click="UpdateComprobante"
-                                        wire:loading.attr="disabled">Actualizar</button>
+                                        wire:loading.attr="disabled">
+
+                                        <img wire:loading wire:target="UpdateComprobante"
+                                            src="{{ asset('dashboard_assets/img/fancybox_loading.gif') }}">
+
+                                        Actualizar
+                                    </button>
                                 @else
                                     <button class="btn btn-primary btn-rounded center" wire:click="saveComprobante"
-                                        wire:loading.attr="disabled">Guardar</button>
+                                        wire:loading.attr="disabled">
+                                        <img wire:loading wire:target="saveComprobante"
+                                            src="{{ asset('dashboard_assets/img/fancybox_loading.gif') }}">
+                                        Guardar
+                                    </button>
                                 @endif
 
                             </div>
@@ -239,7 +256,7 @@
                             <div class="col-md-10">
                                 <div class="form-group has-search">
                                     <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" class="form-control" placeholder="Buscar Proveedores">
+                                    <input type="text" class="form-control" placeholder="Buscar Pagos">
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -265,10 +282,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $acumuladorPago = 0;
+                                    @endphp
                                     @foreach ($pagos_proveedores as $pp)
                                         <tr>
                                             <td>{{ $pp->nombre_banco }}-{{ $pp->numero_cuenta }}</td>
-                                            <td>S/. {{ $pp->monto_equipos }}</td>
+                                            <td>
+                                                S/. {{ $pp->monto_equipos }}
+                                                @php
+                                                    $acumuladorPago = $acumuladorPago + $pp->monto_equipos;
+                                                @endphp
+                                            </td>
 
                                             <td> {{ date('d/m/Y', strtotime($pp->fecha_pago)) }}</td>
                                             <td>{{ $pp->numero_depósito }}</td>
@@ -301,7 +326,21 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
+                                <tfoot>
+
+                                    <tr>
+
+                                        <th>Total</th>
+
+                                        <td colspan="6">
+                                            <b>S/.{{ number_format($acumuladorPago, 2) }}</b>
+                                        </td>
+
+                                    </tr>
+
+                                </tfoot>
                             </table>
+
                         </div>
 
                     @endif
@@ -324,6 +363,9 @@
                                     <span class="fa fa-search form-control-feedback"></span>
                                     <input type="text" wire:model="search" class="form-control"
                                         placeholder="Buscar Equipos">
+                                </div>
+                                <div class="col-lg-12" wire:loading wire:target="search">
+                                    <img src="{{ asset('dashboard_assets/img/fancybox_loading.gif') }}"> Cargando ...
                                 </div>
                             </div>
                         </div>
@@ -369,12 +411,16 @@
                                 <div class="col-md-8">
                                     <div class="form-group has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
-                                        <input type="text" class="form-control" placeholder="Buscar Proveedores">
+                                        <input type="text" wire:model="buscarEquipo" class="form-control"
+                                            placeholder="Buscar Equipo">
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <button class="btn btn-primary btn-rounded" type="submit">Guardar</button>
+                                </div>
+                                <div class="col-lg-12" wire:loading wire:target="guardarEntradaPedido, buscarEquipo">
+                                    <img src="{{ asset('dashboard_assets/img/fancybox_loading.gif') }}"> Cargando ...
                                 </div>
                             </div>
                             @php
@@ -594,13 +640,13 @@
                                         <option value="">...Seleccione...</option>
                                         @foreach ($cuentas_bancarias as $cb)
                                             <option value="{{ $cb->id }}">{{ $cb->numero_cuenta }} -
-                                                {{ $cb->nombre_banco }} - 
+                                                {{ $cb->nombre_banco }} -
                                                 @if ($cb->estado == 1)
                                                     ACTIVA
                                                 @else
                                                     NO ACTIVA
-                                                @endif    
-                                                
+                                                @endif
+
                                             </option>
                                         @endforeach
 
@@ -615,7 +661,7 @@
                                     <label class="form-label" for="monto_equipos">Monto Por Equipos (S/.)</label>
                                     <input type="text" wire:model.defer="monto_equipos"
                                         wire:loading.attr="disabled" class="form-control maxlength-simple"
-                                        id="monto_equipos" placeholder="First Name">
+                                        id="monto_equipos" placeholder="ej: 56">
                                     @error('monto_equipos')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -626,7 +672,7 @@
                                     <label class="form-label" for="fecha_pago">Fecha de Pago</label>
                                     <input type="date" wire:model.defer="fecha_pago" wire:loading.attr="disabled"
                                         class="form-control maxlength-simple" id="fecha_pago"
-                                        placeholder="First Name">
+                                        >
                                     @error('fecha_pago')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -637,7 +683,7 @@
                                     <label class="form-label" for="numero_depósito">Nº de Depósito</label>
                                     <input type="text" wire:model.defer="numero_depósito"
                                         wire:loading.attr="disabled" class="form-control maxlength-simple"
-                                        id="numero_depósito" placeholder="First Name">
+                                        id="numero_depósito" placeholder="ej: A09-L6762">
                                     @error('numero_depósito')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror

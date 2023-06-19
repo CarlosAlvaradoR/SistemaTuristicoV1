@@ -28,7 +28,7 @@ class DetallesPedido extends Component
     use GestionArchivosTrait;
 
     public $identificador;
-    public $search;
+    public $search, $buscarEquipo='';
 
     public $proveedor, $pedido, $equipos_pedidos;
     public $fecha, $monto = 0, $observación_pedido, $estado_pedido;
@@ -154,6 +154,7 @@ class DetallesPedido extends Component
             ->join('marcas as m', 'm.id', '=', 'e.marca_id')
             ->join('detalle_pedidos as dp', 'dp.equipo_id', '=', 'e.id')
             ->where('dp.pedidos_id', $this->idPedido)
+            ->where('e.nombre', 'like', '%' . $this->buscarEquipo . '%')
             ->select(
                 'e.id as idEquipo',
                 'e.nombre',
