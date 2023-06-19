@@ -27,10 +27,14 @@
                                 Nuevo Equipo
                             </button>
                         </div>
+
+                        <div class="col-lg-12" wire:loading wire:target="search">
+                            <img src="{{ asset('dashboard_assets/img/fancybox_loading.gif') }}"> Cargando ...
+                        </div>
                     </div>
-                    <div wire:loading wire:target="search" class="alert alert-primary" role="alert">
+                    {{-- <div wire:loading wire:target="search" class="alert alert-primary" role="alert">
                         <a href="#!" class="alert-link">Cargando ...</a>
-                    </div>
+                    </div> --}}
                     <table class="table table-hover">
                         <thead>
                             <tr>

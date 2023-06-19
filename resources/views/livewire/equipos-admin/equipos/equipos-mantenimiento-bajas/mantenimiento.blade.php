@@ -30,8 +30,9 @@
                     title="Imprimir por Rangos" class="btn btn-primary btn-rounded"><i class="fas fa-file-invoice"></i>
                     Ver Reporte por Rango</a>
             @else
-                <a target="_blank" href="{{ route('reporte.de.mantenimiento.de.equipos', $equipo->id) }}" title="Imprimir"
-                    class="btn btn-primary btn-rounded"><i class="fas fa-file-invoice"></i> Ver Reporte General</a>
+                <a target="_blank" href="{{ route('reporte.de.mantenimiento.de.equipos', $equipo->id) }}"
+                    title="Imprimir" class="btn btn-primary btn-rounded"><i class="fas fa-file-invoice"></i> Ver Reporte
+                    General</a>
             @endif
         </div>
         <div class="col-md-3">
@@ -126,9 +127,16 @@
                 <form wire:submit.prevent="saveMantenimientoDevoluciones">
                     <div class="modal-body">
                         <div class="row">
+                            {{-- <div class="card-header">Header</div> --}}
+                            <div class="col-lg-12">
+                                <h5>INF. DE SALIDAS <small class="font-weight-bold">(Se considera la cantidad e
+                                        Información adicional cuando los equipos entran en una fase de
+                                        mantenimiento.)</small></h5>
+                            </div>
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
-                                    <label class="form-label" for="fecha_salida_mantenimiento">Fecha de Salida</label>
+                                    <label class="form-label" for="fecha_salida_mantenimiento">Fecha de
+                                        Salida</label>
                                     <input type="date" wire:model.defer="fecha_salida_mantenimiento"
                                         class="form-control maxlength-simple" id="fecha_salida_mantenimiento"
                                         placeholder="Nombre de Equipo">
@@ -157,9 +165,17 @@
                                     @enderror
                                 </fieldset>
                             </div>
+
+
+                            <div class="col-lg-12">
+                                <h5>INF. DE REINCORPORACIÓN <small class="font-weight-bold">(Siempre y cuando el equipo
+                                        se reincorpore por
+                                        reparación u otra situación.)</small></h5>
+                            </div>
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
-                                    <label class="form-label" for="fecha_entrada_equipo">Fecha de Entrada</label>
+                                    <label class="form-label" for="fecha_entrada_equipo">Fecha de
+                                        Entrada</label>
                                     <input type="date" wire:model.defer="fecha_entrada_equipo"
                                         class="form-control maxlength-always-show" id="fecha_entrada_equipo"
                                         placeholder="ej: 67.00" maxlength="10">
@@ -192,7 +208,10 @@
                                     @enderror
                                 </fieldset>
                             </div>
+
+
                         </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" wire:click.prevent="resetUI()" class="btn btn-danger btn-rounded"
