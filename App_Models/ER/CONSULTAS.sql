@@ -1066,11 +1066,12 @@ SELECT * FROM hoteles;
 -- SELECCIONAR LOS EQUIPOS EN MANTENIMIENTO
 SELECT m.id as idMantenimiento,date_format(m.fecha_salida_mantenimiento, "%d-%m-%Y") as fecha_salida_mantenimiento, m.cantidad, m.observacion, 
 dm.id as idDevolucionMantenimiento,date_format(dm.fecha_entrada_equipo, "%d-%m-%Y") as fecha_entrada_equipo, 
-dm.cantidad_equipos_arreglados_buen_estado, dm.observacion as obsDevolucion
+dm.cantidad_equipos_arreglados_buen_estado, dm.observacion as obsDevolucion, m.created_at
 FROM equipos e
 LEFT JOIN mantenimientos m on m.equipo_id = e.id
 LEFT JOIN devolucion_mantenimientos dm on dm.mantenimientos_id = m.id
-WHERE (m.equipo_id = 1) AND (m.fecha_salida_mantenimiento >= '2005-05-05' AND dm.fecha_entrada_equipo <= '2023-05-27');
+-- WHERE (m.equipo_id = 1) AND (m.fecha_salida_mantenimiento >= '2005-05-05' AND dm.fecha_entrada_equipo <= '2023-05-27')
+ORDER BY m.created_at;
 
 
 

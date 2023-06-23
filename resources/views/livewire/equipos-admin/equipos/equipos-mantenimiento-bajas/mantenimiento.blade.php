@@ -1,5 +1,7 @@
 <div>
-
+    @php
+        use Carbon\Carbon;
+    @endphp
     <div class="row">
         <div class="col-md-6">
             <div class="row">
@@ -42,13 +44,8 @@
                 Añadir Mantenimiento
             </button>
         </div>
-    </div>
-    <div wire:loading class="row">
-        <div class="col-md-12 clearfix">
-            <div class="justify-content-start">
-                <div class="loader"></div> <span class="text-primary">Cargando ...</span>
-            </div>
-
+        <div class="col-lg-12" wire:loading wire:target="fecha_de_salida, fecha_de_entrada">
+            <img src="{{ asset('dashboard_assets/img/fancybox_loading.gif') }}"> Cargando ...
         </div>
     </div>
     <table class="table table-hover">
@@ -61,6 +58,7 @@
                 <th scope="col">Fecha de Entrada</th>
                 <th scope="col">Equipos en buen estado</th>
                 <th scope="col">Observación de Entrada</th>
+                <th scope="col">Registrado</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
@@ -96,9 +94,12 @@
 
                     </td>
                     <td>
-                        <button title="Añadir Stock" class="btn btn-success btn-sm"
+                        <small class="text-secondary">{{ Carbon::parse($m->created_at)->diffForHumans() }}</small>
+                    </td>
+                    <td>
+                        <button title="Editar Información de Mantenimiento" class="btn btn-warning btn-sm"
                             wire:click="Edit({{ $m->idMantenimiento }}, 1)">
-                            <i class="fas fa-plus-circle"></i>
+                            <span class="fa fa-pencil-square-o"></span>
                         </button>
                     </td>
                 </tr>
@@ -133,6 +134,9 @@
                                         Información adicional cuando los equipos entran en una fase de
                                         mantenimiento.)</small></h5>
                             </div>
+                            <div class="col-lg-12">
+                                <h6 class="text-primary"><b>CANTIDAD EN STOCK:</b> {{ $cantidad_stock }}</h6>
+                            </div>
                             <div class="col-lg-4">
                                 <fieldset class="form-group">
                                     <label class="form-label" for="fecha_salida_mantenimiento">Fecha de
@@ -150,7 +154,7 @@
                                     <label class="form-label" for="cantidad">Cantidad de Salida</label>
                                     <input type="number" wire:model.defer="cantidad"
                                         class="form-control maxlength-custom-message" id="cantidad" placeholder="ej: 5"
-                                        maxlength="20">
+                                        min="0" {{--max="{{ $cantidad_stock }}"--}} maxlength="20">
                                     @error('cantidad')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -218,6 +222,8 @@
                             data-dismiss="modal">Cerrar</button>
 
                         <button type="submit" class="btn btn-primary btn-rounded">
+                            <img wire:loading wire:target="saveMantenimientoDevoluciones"
+                                src="{{ asset('dashboard_assets/img/fancybox_loading.gif') }}">
                             @if ($idMantenimiento)
                                 Actualizar
                             @else
@@ -233,5 +239,18 @@
     </div>
 
     @livewire('administrate-commons.alerts')
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            window.livewire.on('show-modal', msg => {
+                $('#modal-mantenimiento-bajas').modal('show')
+            });
+            window.livewire.on('close-modal', msg => {
+                $('#modal-mantenimiento-bajas').modal('hide')
+            });
+        });
+
+        
+    </script>
 
 </div>

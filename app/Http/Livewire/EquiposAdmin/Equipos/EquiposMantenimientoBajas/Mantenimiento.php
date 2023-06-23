@@ -16,7 +16,7 @@ class Mantenimiento extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $equipo;
-    public $opcion = 0;
+    public $opcion = 0, $cantidad_stock = 0;
     public $fecha_inicial, $fecha_final;
     public $idMantenimiento, $fecha_salida_mantenimiento, $cantidad, $observacion;
     public $idDevolucionMantenimientos, $fecha_entrada_equipo, $cantidad_equipos_arreglados_buen_estado, $observacion_de_entrada;
@@ -31,15 +31,17 @@ class Mantenimiento extends Component
             'idDevolucionMantenimientos', 'fecha_entrada_equipo', 'cantidad_equipos_arreglados_buen_estado', 'observacion_de_entrada',
             'title'
         ]);
+        $this->resetValidation();
     }
     public function mount($equipo)
     {
         $this->equipo = $equipo;
-        
     }
     public function render()
     {
-        $mantenimientos = Mantenimientos::mostrarMantenimientos($this->equipo->id, 1,$this->fecha_de_salida, $this->fecha_de_entrada);
+        $equipo = Equipos::findOrFail($this->equipo->id, ['stock']);
+        $this->cantidad_stock = $equipo->stock;
+        $mantenimientos = Mantenimientos::mostrarMantenimientos($this->equipo->id, 1, $this->fecha_de_salida, $this->fecha_de_entrada);
         // dd($mantenimientos);
         return view('livewire.equipos-admin.equipos.equipos-mantenimiento-bajas.mantenimiento', compact('mantenimientos'));
     }
@@ -53,7 +55,7 @@ class Mantenimiento extends Component
                 'observacion' => 'nullable|string|min:5',
             ]
         );
-        $msg = 'BUENÍSIMAS';
+        $msg = '';
 
         if (
             $this->fecha_entrada_equipo ||
@@ -68,90 +70,92 @@ class Mantenimiento extends Component
                     'observacion_de_entrada' => 'nullable|string|min:5',
                 ]
             );
-            
+
             if ($this->cantidad_equipos_arreglados_buen_estado > $this->cantidad) {
-                $this->emit('alert', 'ALERTA !', 'warning', 'La Cantidad Entrante de Equipos no puede ser mayor 
+                return $this->emit('alert', 'ALERTA !', 'warning', 'La Cantidad Entrante de Equipos no puede ser mayor 
                 a la Cantidad que se dió en la Salida de Equipos.');
-                return;
+            }
+            //LOS DOS ID
+            //SÓLO UNO DE LOS ID (CORRECCIÓN)
+            $msg = 'Información Actualizada Correctamente.';
+            if ($this->idMantenimiento) {
+                $mantenimiento = Mantenimientos::EditarMantenimiento(
+                    $this->idMantenimiento,
+                    $this->fecha_salida_mantenimiento,
+                    $this->cantidad,
+                    $this->observacion
+                );
             }
 
-            if ($this->idMantenimiento || $this->idDevolucionMantenimientos) {
-                if ($this->idMantenimiento && $this->idDevolucionMantenimientos) {
-                    $mantenimiento = Mantenimientos::findOrFail($this->idMantenimiento);
-                    $devolucion = DevolucionMantenimientos::findOrFail($this->idDevolucionMantenimientos);
+            if ($this->idDevolucionMantenimientos) {
+                $devolucion = Mantenimientos::EditarDevolucionMantenimiento(
+                    $this->idDevolucionMantenimientos,
+                    $this->fecha_entrada_equipo,
+                    $this->cantidad_equipos_arreglados_buen_estado,
+                    $this->observacion_de_entrada
+                );
+            }
 
-                    $mantenimiento->fecha_salida_mantenimiento = $this->fecha_salida_mantenimiento;
-                    $mantenimiento->cantidad = $this->cantidad;
-                    $mantenimiento->observacion = $this->observacion;
+            if (!$this->idMantenimiento && !$this->idDevolucionMantenimientos) {
+                $mantenimiento = Mantenimientos::crearMantenimiento(
+                    $this->fecha_salida_mantenimiento,
+                    $this->cantidad,
+                    $this->observacion,
+                    $this->equipo->id
+                );
 
-                    $devolucion->fecha_entrada_equipo = $this->fecha_entrada_equipo;
-                    $devolucion->cantidad_equipos_arreglados_buen_estado = $this->cantidad_equipos_arreglados_buen_estado;
-                    $devolucion->observacion = $this->observacion_de_entrada;
+                $devolucion = Mantenimientos::crearDevolucionMantenimiento(
+                    $mantenimiento->id,
+                    $this->fecha_entrada_equipo,
+                    $this->cantidad_equipos_arreglados_buen_estado,
+                    $this->observacion_de_entrada
+                );
 
-                    $mantenimiento->save();
-                    $devolucion->save();
-
-                } else {
-                    $mantenimiento = Mantenimientos::findOrFail($this->idMantenimiento);
-                    $mantenimiento->fecha_salida_mantenimiento = $this->fecha_salida_mantenimiento;
-                    $mantenimiento->cantidad = $this->cantidad;
-                    $mantenimiento->observacion = $this->observacion;
-                    $mantenimiento->save();
-                }
-            } else {
-                $mantenimiento = $this->crearMantenimiento();
-
-                $equipo = Equipos::findOrFail($this->equipo->id);
-                $equipo->stock = $equipo->stock - $this->cantidad;
-                $equipo->save();
-
-                $devolucion_mantenimientos = $this->crearDevolucionMantenimiento($mantenimiento->id);
-                $msg = 'Se insertó correctamente la Información de Mantenimiento del Equipo/Implemento';
-
-                
+                $msg = 'Se insertó correctamente la Información de Mantenimiento del Equipo/Implemento.';
             }
         } else {
-            if ($this->idMantenimiento || $this->idDevolucionMantenimientos) {
-                if ($this->idMantenimiento && $this->idDevolucionMantenimientos) {
-                    $mantenimiento = Mantenimientos::findOrFail($this->idMantenimiento);
-                    $devolucion = DevolucionMantenimientos::findOrFail($this->idDevolucionMantenimientos);
 
-                    $mantenimiento->fecha_salida_mantenimiento = $this->fecha_salida_mantenimiento;
-                    $mantenimiento->cantidad = $this->cantidad;
-                    $mantenimiento->observacion = $this->observacion;
+            $msg = 'Información Actualizada Correctamente.';
+            if ($this->idMantenimiento) {
+                $mantenimiento = Mantenimientos::EditarMantenimiento(
+                    $this->idMantenimiento,
+                    $this->fecha_salida_mantenimiento,
+                    $this->cantidad,
+                    $this->observacion
+                );
+            }
+            if ($this->idDevolucionMantenimientos) {
+                $devolucion = Mantenimientos::EditarDevolucionMantenimiento(
+                    $this->idDevolucionMantenimientos,
+                    $this->fecha_entrada_equipo,
+                    $this->cantidad_equipos_arreglados_buen_estado,
+                    $this->observacion_de_entrada
+                );
+            }
 
-                    $devolucion->fecha_entrada_equipo = $this->fecha_entrada_equipo;
-                    $devolucion->cantidad_equipos_arreglados_buen_estado = $this->cantidad_equipos_arreglados_buen_estado;
-                    $devolucion->observacion = $this->observacion_de_entrada;
+            if (!$this->idMantenimiento && !$this->idDevolucionMantenimientos) {
+                $mantenimiento = Mantenimientos::crearMantenimiento(
+                    $this->fecha_salida_mantenimiento,
+                    $this->cantidad,
+                    $this->observacion,
+                    $this->equipo->id
+                );
 
-                    $mantenimiento->save();
-                    $devolucion->save();
-                } else {
-                    $mantenimiento = Mantenimientos::findOrFail($this->idMantenimiento);
-                    $mantenimiento->fecha_salida_mantenimiento = $this->fecha_salida_mantenimiento;
-                    $mantenimiento->cantidad = $this->cantidad;
-                    $mantenimiento->observacion = $this->observacion;
-                    $mantenimiento->save();
-                }
-            } else {
-                $this->crearMantenimiento();
-                $msg = 'Registrado Correctamente.';
+                
+                $msg = 'Se insertó correctamente la Información de Mantenimiento del Equipo/Implemento.';
             }
         }
 
         $this->resetUI();
 
-
-        $this->dispatchBrowserEvent('swal', [
-            'title' => 'MUY BIEN !',
-            'icon' => 'success',
-            'text' => $msg
-        ]);
+        $this->emit('close-modal');
+        $this->emit('alert', 'MUY BIEN', 'success', $msg);
     }
 
     public function Edit(Mantenimientos $mantenimientos)
     {
         // dd($mantenimientos);
+        $this->title = 'EDITAR INFORMACIÓN DE MANTENIMIENTO';
         $this->idMantenimiento = $mantenimientos->id;
         $this->fecha_salida_mantenimiento = $mantenimientos->fecha_salida_mantenimiento;
         $this->cantidad = $mantenimientos->cantidad;
@@ -169,29 +173,5 @@ class Mantenimiento extends Component
 
         // dd($this->fecha_entrada_equipo);
         $this->emit('show-modal');
-    }
-
-    public function crearMantenimiento(){
-        $mantenimiento = Mantenimientos::create(
-            [
-                'fecha_salida_mantenimiento' => $this->fecha_salida_mantenimiento,
-                'cantidad' => $this->cantidad,
-                'observacion' => $this->observacion,
-                'equipo_id' => $this->equipo->id
-            ]
-        );
-        return $mantenimiento;
-    }
-
-    public function crearDevolucionMantenimiento($idMantenimiento){
-        $devolucion = DevolucionMantenimientos::create(
-            [
-                'fecha_entrada_equipo' => $this->fecha_entrada_equipo,
-                'cantidad_equipos_arreglados_buen_estado' => $this->cantidad_equipos_arreglados_buen_estado,
-                'observacion' => $this->observacion_de_entrada,
-                'mantenimientos_id' => $idMantenimiento
-            ]
-        );
-
     }
 }
