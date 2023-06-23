@@ -27,7 +27,7 @@
         <div class="tbl">
             <h3>Equipos</h3>
             <ol class="breadcrumb breadcrumb-simple">
-                <li><a href="#">Equipos</a></li>
+                <li><a href="{{ route('equipos.index') }}">Equipos</a></li>
                 <li class="active">Lista de Marcas</li>
             </ol>
         </div>

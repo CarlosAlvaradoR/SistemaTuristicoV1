@@ -13,25 +13,30 @@ class Marcas extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $search='';
+    public $search = '';
     public $nombre_de_marca;
     public $title = 'CREAR MARCAS PARA EQUIPOS/IMPLEMENTOS', $idMarca, $edicion = false;
 
     protected $listeners = ['deleteMarca'];
 
+    public function resetUI()
+    {
+        $this->reset(['search', 'nombre_de_marca', 'title', 'idMarca', 'edicion']);
+    }
     public function render()
     {
-        $marcas = ModelsMarcas::where('nombre', 'like', '%'.$this->search.'%')->paginate(5);
+        $marcas = ModelsMarcas::where('nombre', 'like', '%' . $this->search . '%')->paginate(5);
         return view('livewire.equipos-admin.marcas.marcas', compact('marcas'));
     }
 
-    public function saveMarca(){
+    public function saveMarca()
+    {
         $this->validate(
             [
                 'nombre_de_marca' => 'required|min:2'
             ]
         );
-        $marca=ModelsMarcas::create([
+        $marca = ModelsMarcas::create([
             'nombre' => $this->nombre_de_marca
         ]);
         $this->reset(['nombre_de_marca']);
@@ -40,23 +45,27 @@ class Marcas extends Component
             'icon' => 'success',
             'text' => 'Marca Registrada Correctamente'
         ]);
+
+        $this->resetUI();
     }
 
-    public function Edit(ModelsMarcas $marca){
-        $this->title = 'EDITAR MARCAS';
+    public function Edit(ModelsMarcas $marca)
+    {
+        $this->title = 'EDITAR MARCA';
         $this->idMarca = $marca->id;
         $this->nombre_de_marca = $marca->nombre;
         $this->edicion = true;
         $this->emit('show-modal-marca', 'Edicion de Atractivos');
     }
 
-    public function Update(){
+    public function Update()
+    {
         $this->validate(
             [
                 'nombre_de_marca' => 'required|min:2'
             ]
         );
-        
+
         $marca = ModelsMarcas::findOrFail($this->idMarca);
         $marca->nombre = $this->nombre_de_marca;
         $marca->save();
@@ -68,6 +77,8 @@ class Marcas extends Component
         ]);
         $this->reset(['nombre_de_marca']);
         $this->emit('close-modal-marca', 'Edicion de Atractivos');
+
+        $this->resetUI();
     }
 
     public function deleteConfirm($id)

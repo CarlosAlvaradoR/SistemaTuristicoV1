@@ -5,62 +5,27 @@
                 <div class="card-block">
                     <h5 class="card-title">Lista de Marcas Registradas</h5>
                     <div class="row">
-                        <div class="col-md-4">
-                            <br>
+                        <div class="col-md-10">
+                            
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
                                 <input type="text" class="form-control" wire:model="search"
                                     placeholder="Buscar Marca">
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">
-                                            Fecha Inicial
-                                        </label>
-                                        <input type="date" class="form-control" id="exampleInputEmail1" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">
-                                            Fecha Inicial
-                                        </label>
-                                        <input type="date" class="form-control" id="exampleInputEmail1" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <br>
-                            <a id="modal-918849" title="Imprimir" href="#modal-container-918849" role="button"
-                                class="btn btn-rounded btn-sm" data-toggle="modal"><i
-                                    class="fas fa-file-invoice"></i></a>
-                        </div>
-                        <div class="col-md-1">
-                            <br>
-                            <a id="modal-918849" title="Ver Reporte Equipos en Mantenimiento"
-                                href="#modal-container-918849" role="button" class="btn btn-rounded btn-sm"
-                                data-toggle="modal"><i class="fas fa-file-invoice"></i></a>
-                        </div>
-                        <div class="col-md-1">
-                            <br>
-                            <a id="modal-918849" title="Ver Reporte de equipos dados de baja"
-                                href="#modal-container-918849" role="button" class="btn btn-rounded btn-sm"
-                                data-toggle="modal"><i class="fas fa-file-invoice"></i></a>
-                        </div>
+
                         <div class="col-md-2">
-                            <br>
+                            
                             <button type="button" class="btn btn-rounded btn-primary" data-toggle="modal"
                                 data-target="#modal-marca">
                                 Nueva Marca
                             </button>
                         </div>
-                    </div>
-                    <div wire:loading class="alert alert-primary" role="alert">
-                        <a href="#!" class="alert-link">Cargando ...</a>
+
+                        <div class="col-lg-12" wire:loading wire:target="search">
+                            <img src="{{ asset('dashboard_assets/img/fancybox_loading.gif') }}"> Cargando ...
+                        </div>
+                        <br>
                     </div>
                     <table class="table table-hover">
                         <thead>
@@ -106,7 +71,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">CREAR MARCAS DE EQUIPOS -IMPMENTOS</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ $title }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -127,7 +92,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger btn-rounded" data-dismiss="modal">Cerrar</button>
+                    <button type="button" wire:click.prevent="resetUI()" class="btn btn-danger btn-rounded"
+                        data-dismiss="modal">Cerrar</button>
                     @if ($edicion)
                         <button type="button" wire:click="Update" class="btn btn-primary btn-rounded">Actualizar
                         </button>
