@@ -18,6 +18,7 @@ class BajaEquipos extends Model
                 $bajas = DB::table('baja_equipos')
                     ->where('equipo_id', $idEquipo)
                     ->whereBetween('fecha_baja', [$fechaInicial, $fechaFinal]) //BETWEEN
+                    ->orderBy('id', 'DESC')
                     ->select(
                         'id',
                         DB::raw(
@@ -25,12 +26,14 @@ class BajaEquipos extends Model
                         ),
                         'motivo_baja',
                         'cantidad',
-                        'equipo_id'
+                        'equipo_id',
+                        'created_at'
                     )
                     ->paginate(20, ['*'], 'bajesPage');
             } else {
                 $bajas = DB::table('baja_equipos')
                     ->where('equipo_id', $idEquipo)
+                    ->orderBy('id', 'DESC')
                     ->select(
                         'id',
                         DB::raw(
@@ -38,7 +41,8 @@ class BajaEquipos extends Model
                         ),
                         'motivo_baja',
                         'cantidad',
-                        'equipo_id'
+                        'equipo_id',
+                        'created_at'
                     )
                     ->paginate(20, ['*'], 'bajesPage');
             }
@@ -49,6 +53,7 @@ class BajaEquipos extends Model
                 $bajas = DB::table('baja_equipos')
                     ->where('equipo_id', $idEquipo)
                     ->whereBetween('fecha_baja', [$fechaInicial, $fechaFinal]) //BETWEEN
+                    ->orderBy('id', 'DESC')
                     ->select(
                         'id',
                         DB::raw(
@@ -56,12 +61,14 @@ class BajaEquipos extends Model
                         ),
                         'motivo_baja',
                         'cantidad',
-                        'equipo_id'
+                        'equipo_id',
+                        'created_at'
                     )
                     ->get();
             } else {
                 $bajas = DB::table('baja_equipos')
                     ->where('equipo_id', $idEquipo)
+                    ->orderBy('id', 'DESC')
                     ->select(
                         'id',
                         DB::raw(
@@ -69,7 +76,8 @@ class BajaEquipos extends Model
                         ),
                         'motivo_baja',
                         'cantidad',
-                        'equipo_id'
+                        'equipo_id',
+                        'created_at'
                     )
                     ->get();
             }

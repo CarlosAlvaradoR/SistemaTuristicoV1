@@ -1,4 +1,7 @@
 <div>
+    @php
+        use Carbon\Carbon;
+    @endphp
     <div class="col-md-6">
         <div class="row">
             <div class="col-md-6">
@@ -48,6 +51,7 @@
                 <th scope="col">Fecha de Baja</th>
                 <th scope="col">Motivo de Baja</th>
                 <th scope="col">Cantidad dado de baja</th>
+                <th scope="col">Registrado</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
@@ -58,10 +62,11 @@
                     <td>{{ $b->fecha_baja }}</td>
                     <td>{{ $b->motivo_baja }}</td>
                     <td>{{ $b->cantidad }}</td>
+                    <td><small>{{ Carbon::parse($b->created_at)->diffForHumans() }}</small></td>
                     <td>
-                        <button title="Añadir Stock" class="btn btn-success btn-sm"
-                            wire:click="Edit({{ $b->id }})">
-                            <i class="fas fa-plus-circle"></i>
+                        <button title="Añadir Stock" class="btn btn-warning btn-sm"
+                            wire:click="Edit({{ $b->id }})" wire:loading.attr="disabled">
+                            <span class="fa fa-pencil-square-o"></span>
                         </button>
                     </td>
                 </tr>
@@ -122,6 +127,8 @@
                         <button type="button" wire:click.prevent="resetUI()" class="btn btn-danger btn-rounded"
                             data-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary btn-rounded">
+                            <img wire:loading wire:target="saveBaja"
+                                src="{{ asset('dashboard_assets/img/fancybox_loading.gif') }}">
                             @if ($idBajaEquipo)
                                 Actualizar
                             @else
@@ -137,6 +144,15 @@
         </div>
     </div>
 
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            window.livewire.on('show-modal-bajas', msg => {
+                $('#modal-bajas').modal('show')
+            });
+            window.livewire.on('close-modal-bajas', msg => {
+                $('#modal-bajas').modal('hide')
+            });
+        });
+    </script>
 
 </div>

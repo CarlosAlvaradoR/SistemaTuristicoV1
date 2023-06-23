@@ -98,7 +98,7 @@
                     </td>
                     <td>
                         <button title="Editar Información de Mantenimiento" class="btn btn-warning btn-sm"
-                            wire:click="Edit({{ $m->idMantenimiento }}, 1)">
+                            wire:click="Edit({{ $m->idMantenimiento }}, 1)" wire:loading.attr="disabled">
                             <span class="fa fa-pencil-square-o"></span>
                         </button>
                     </td>

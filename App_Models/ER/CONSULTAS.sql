@@ -1071,14 +1071,15 @@ FROM equipos e
 LEFT JOIN mantenimientos m on m.equipo_id = e.id
 LEFT JOIN devolucion_mantenimientos dm on dm.mantenimientos_id = m.id
 -- WHERE (m.equipo_id = 1) AND (m.fecha_salida_mantenimiento >= '2005-05-05' AND dm.fecha_entrada_equipo <= '2023-05-27')
-ORDER BY m.created_at;
+ORDER BY m.created_at desc;
 
 
 
 
 SELECT id, date_format(fecha_baja, "%d-%m-%Y") as fecha_baja, motivo_baja, cantidad, equipo_id FROM baja_equipos
-WHERE equipo_id = 1;
-
+WHERE equipo_id = 1
+ORDER BY id desc;
+SELECT * FROM baja_equipos;
 
 
 

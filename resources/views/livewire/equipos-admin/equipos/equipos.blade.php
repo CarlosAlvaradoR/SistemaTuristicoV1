@@ -3,7 +3,7 @@
         <div class="col-lg-12 ks-panels-column-section">
             <div class="card">
                 <div class="card-block">
-                    <h5 class="card-title">Lista de Todas los Equipos</h5>
+                    <h5 class="card-title">Lista de Equipos</h5>
                     <div class="row">
                         <div class="col-md-9">
                             <br>
