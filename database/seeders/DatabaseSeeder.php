@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TipoPagosSeeder::class);
         $this->call(CuentaPagosSeeder::class);
         $this->call(EventoPostergacionesSeeder::class);
-
+        
 
         /** MÓDULO PEDIDOS */
         $this->call(EstadoPedidosSeeder::class);

@@ -21,15 +21,47 @@ class RolPermissionSeeder extends Seeder
         Permission::firstOrCreate(['name' => 'ver-paquetes']);
         Permission::firstOrCreate(['name' => 'crear-paquetes']);
         Permission::firstOrCreate(['name' => 'editar-paquetes']);
+
+
+
+        /** PERMISOS DEL MÓDULO EQUIPOS */
+        # Equipos
+        Permission::firstOrCreate(['name' => 'ver-interfaz-de-equipos']);
+        Permission::firstOrCreate(['name' => 'ver-reporte-de-equipos']);
+        Permission::firstOrCreate(['name' => 'crear-equipos']);
+        Permission::firstOrCreate(['name' => 'editar-equipos']);
+        Permission::firstOrCreate(['name' => 'eliminar-equipos']);
+        Permission::firstOrCreate(['name' => 'añadir-equipos']);
+        Permission::firstOrCreate(['name' => 'quitar-equipos']);
+        Permission::firstOrCreate(['name' => 'añadir-MantenimientoBajas-de-equipos']);
+        # Marcas
+        Permission::firstOrCreate(['name' => 'ver-interfaz-de-marcas']);
+        Permission::firstOrCreate(['name' => 'crear-marca-de-equipos']);
+        Permission::firstOrCreate(['name' => 'editar-marca-de-equipos']);
+        Permission::firstOrCreate(['name' => 'eliminar-marca-de-equipos']);
+
+
+        // Obtener el rol de superadmin
+        $superadminRole = \Spatie\Permission\Models\Role::findByName('admin');
+
+        // Asignar el rol de superadministrador al usuario
+        //$user->assignRole($superadminRole);
+
+        // Obtener todos los permisos disponibles
+        $permissions = Permission::all();
+
+        // Sincronizar los permisos al rol de superadministrador
+        $superadminRole->syncPermissions($permissions);
+
         
         // Permission::firstOrCreate(['name' => 'write-a-post']);
         // Permission::firstOrCreate(['name' => 'edit-a-post']);
         // Permission::firstOrCreate(['name' => 'delete-a-post']);
-        
+
         // // Crear roles 
         // $superAdmin = Role::firstOrCreate(['name' => 'SuperAdmin']);
         // $admin = Role::firstOrCreate(['name' => 'Admin']);
-        
+
         // // Dar permiso a cierto rol 
         // $superAdmin->givePermissionTo(['write-a-post', 'edit-a-post', 'delete-a-post']);
         // $admin->givePermissionTo(['escribir-una-publicación']);

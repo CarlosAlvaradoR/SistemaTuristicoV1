@@ -10,10 +10,14 @@ use App\Models\Inventario\Mantenimientos;
 use App\Models\Marcas;
 use App\Models\Pedidos\DetallePedidos;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class Equipos extends Component
 {
+    use AuthorizesRequests;
+
+
     public $search = '';
     public $nombre_de_equipo, $descripcion, $cantidad, $precio_referencial, $tipo, $marca;
     public $title = 'CREAR EQUIPOS/IMPLEMENTOS', $idEquipo, $edicion = false;
@@ -28,6 +32,7 @@ class Equipos extends Component
             'title', 'idEquipo', 'edicion',
             'title2', 'opcion', 'cantidad_entrante', 'search'
         ]);
+        $this->resetValidation();
     }
 
     public function render()
@@ -51,6 +56,7 @@ class Equipos extends Component
 
     public function saveEquipo()
     {
+        $this->authorize('crear-equipos');
         $this->validate(
             [
                 'nombre_de_equipo' => 'required|min:3',
@@ -83,6 +89,8 @@ class Equipos extends Component
 
     public function Edit(ModelsEquipos $equipo)
     {
+        $this->authorize('editar-equipos');
+
         $this->title = 'EDITAR EQUIPOS';
         $this->idEquipo = $equipo->id;
         $this->nombre_de_equipo = $equipo->nombre;
@@ -97,8 +105,10 @@ class Equipos extends Component
 
     public function Update()
     {
+        $this->authorize('editar-equipos');
 
         $this->validateEquipos();
+
         $equipo = ModelsEquipos::findOrFail($this->idEquipo);
         $equipo->nombre = $this->nombre_de_equipo;
         $equipo->descripcion = $this->descripcion;
@@ -121,12 +131,14 @@ class Equipos extends Component
     {
         if ($opcion == 1) {
             //Añadir al Stock
+            $this->authorize('añadir-equipos');
             $this->opcion = $opcion;
             $this->idEquipo = $equipo->id;
             $this->title2 = 'AÑADIR STOCK EN: ' . $equipo->nombre;
             $this->emit('show-modal-equipo-stock', 'Edicion de Atractivos');
         } else {
             // Remover al Stock
+            $this->authorize('quitar-equipos');
             $this->opcion = $opcion;
             $this->idEquipo = $equipo->id;
             $this->title2 = 'REMOVER/QUITAR STOCK EN: ' . $equipo->nombre;
@@ -144,11 +156,15 @@ class Equipos extends Component
         $equipo = ModelsEquipos::findOrfail($this->idEquipo);
         if ($this->opcion == 1) {
             //Agregamos al STOCK
+            $this->authorize('añadir-equipos');
+
             $equipo->stock = $equipo->stock + $this->cantidad_entrante;
             $equipo->save();
             $msg = 'Se acaba de Añadir la cantidad de ' . $this->cantidad_entrante . ' a ' . $equipo->nombre;
         } else {
             //Quitamos al STOCK
+            $this->authorize('quitar-equipos');
+
             $var = ModelsEquipos::diferenciaStock($equipo->stock, $this->cantidad_entrante);
             if ($var < 0) {
                 $title = 'ALERTA !';
@@ -170,13 +186,14 @@ class Equipos extends Component
             'icon' => 'success',
             'text' => $msg
         ]);
-
+        
         $this->resetUI();
         $this->emit('close-modal-equipo-stock', 'Edicion de Atractivos');
     }
 
     public function deleteConfirm($id)
     {
+        $this->authorize('eliminar-equipos');
 
         $this->dispatchBrowserEvent('swal-confirmMarca', [
             'title' => 'Está seguro que desea Eliminar el Equipo ?',
@@ -187,6 +204,8 @@ class Equipos extends Component
 
     public function deleteEquipo(ModelsEquipos $equipo)
     {
+        $this->authorize('eliminar-equipos');
+
         $baja_equipos = BajaEquipos::where('equipo_id', $equipo->id)->get();
         $mantenimiento_equipos = Mantenimientos::where('equipo_id', $equipo->id)->get();
         $detalle_de_entregas = DetalleEntregas::where('equipo_id', $equipo->id)->get();

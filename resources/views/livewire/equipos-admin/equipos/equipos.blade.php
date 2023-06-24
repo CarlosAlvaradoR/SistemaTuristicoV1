@@ -13,19 +13,22 @@
                                     placeholder="Buscar Equipo">
                             </div>
                         </div>
-                        
+
                         <div class="col-md-1">
                             <br>
                             <a href="{{ route('reporte.de.equipos.en.inventario') }}" target="_blank" title="Imprimir"
                                 class="btn btn-rounded"><i class="fas fa-file-invoice"></i> Ver </a>
                         </div>
-                        
+
                         <div class="col-md-2">
                             <br>
-                            <button type="button" class="btn btn-rounded btn-primary" data-toggle="modal"
-                                data-target="#modal-equipo">
-                                Nuevo Equipo
-                            </button>
+                            @can('crear-equipos')
+                                <button type="button" class="btn btn-rounded btn-primary" data-toggle="modal"
+                                    data-target="#modal-equipo">
+                                    Nuevo Equipo
+                                </button>
+                            @endcan
+
                         </div>
 
                         <div class="col-lg-12" wire:loading wire:target="search">
