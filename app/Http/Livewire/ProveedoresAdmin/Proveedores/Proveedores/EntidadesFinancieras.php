@@ -4,20 +4,29 @@ namespace App\Http\Livewire\ProveedoresAdmin\Proveedores\Proveedores;
 
 use App\Models\Pedidos\Bancos;
 use App\Models\Pedidos\CuentaProveedorBancos;
+use Livewire\WithPagination;
 use Livewire\Component;
 
 class EntidadesFinancieras extends Component
 {
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+
+
+    public $cant = 20, $search;
     public $title = 'CREAR ENTIDADES FINANCIERAS';
     public $idBanco, $nombre_banco, $direccion;
 
-    public function resetUI(){
+    public function resetUI()
+    {
         $this->reset(['title', 'idBanco', 'nombre_banco', 'direccion']);
+        $this->resetValidation();
     }
 
     public function render()
-    {
-        $bancos = Bancos::all();
+    { //
+        $bancos = Bancos::where('nombre_banco', 'like', '%' . $this->search . '%')
+            ->paginate($this->cant);
         return view('livewire.proveedores-admin.proveedores.proveedores.entidades-financieras', compact('bancos'));
     }
 
@@ -52,7 +61,8 @@ class EntidadesFinancieras extends Component
         $this->emit('alert', $title, $icon, $text);
     }
 
-    public function Edit(Bancos $bancos){
+    public function Edit(Bancos $bancos)
+    {
         $this->title = 'EDITAR INFORMACIÓN DE LA ENTIDAD BANCARIA';
         $this->idBanco = $bancos->id;
         $this->nombre_banco = $bancos->nombre_banco;
@@ -72,7 +82,7 @@ class EntidadesFinancieras extends Component
     protected $listeners = ['deleteEntidadFinanciera'];
     public function deleteEntidadFinanciera(Bancos $bancos)
     {
-        
+
         $title = 'MUY BIEN!';
         $icon = 'success';
         $text = 'Entidad Financiera Eliminada Correctamente.';

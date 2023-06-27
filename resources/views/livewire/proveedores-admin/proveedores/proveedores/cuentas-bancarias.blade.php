@@ -7,22 +7,13 @@
                         {{ $proveedor->nombre_proveedor }}</h5>
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-9">
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control" placeholder="Buscar Proveedores">
+                                <input type="text" wire:model="search" class="form-control" placeholder="Buscar Cuenta Bancaria">
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                {{-- <label for="exampleFormControlSelect1">Example select</label> --}}
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                    <option>Mostrar 20</option>
-                                    <option>Mostrar 20</option>
-                                    <option>Mostrar 20</option>
-                                </select>
-                            </div>
-                        </div>
+                        
                         <div class="col-md-3">
                             <button id="modal-532427" href="#modal_cuentas_bancarias" role="button"
                                 class="btn btn-rounded" data-toggle="modal">Añadir Cuenta Bancaria</button>

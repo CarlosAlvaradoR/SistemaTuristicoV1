@@ -9,16 +9,16 @@
                         <div class="col-md-6">
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control" placeholder="Buscar Proveedores">
+                                <input type="text" wire:model="search" class="form-control" placeholder="Buscar Banco">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 {{-- <label for="exampleFormControlSelect1">Example select</label> --}}
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                    <option>Mostrar 20</option>
-                                    <option>Mostrar 20</option>
-                                    <option>Mostrar 20</option>
+                                <select wire:model="cant" class="form-control" id="exampleFormControlSelect1">
+                                    <option value="20">Mostrar 20</option>
+                                    <option value="30">Mostrar 30</option>
+                                    <option value="50">Mostrar 50</option>
                                 </select>
                             </div>
                         </div>
@@ -60,6 +60,7 @@
 
                         </tbody>
                     </table>
+                    {{ $bancos->links() }}
                 </div>
             </div>
         </div>

@@ -21,12 +21,12 @@ class TiposDeComprobante extends Component
 
     /**ATRIBUTOS DE SERIE DE COMPROBANTES
      */
-    public $numero_serie, $estado;
+    public $idSerieComprobante, $numero_serie, $estado;
 
     public function resetUI()
     {
         $this->reset(['idSeleccionado', 'textoAMostrar']);
-        $this->reset(['numero_serie', 'estado']);
+        $this->reset(['idSerieComprobante', 'numero_serie', 'estado']);
     }
     public function render()
     {
@@ -55,7 +55,7 @@ class TiposDeComprobante extends Component
         $this->validate(
             [
                 'numero_serie' => 'required|string|min:1',
-                'estado' => 'required|string',
+                'estado' => 'required|string|in:ACTIVO,INACTIVO',
             ]
         );
 
@@ -69,21 +69,62 @@ class TiposDeComprobante extends Component
             }
         }
 
-        $series = SerieComprobantes::create(
-            [
-                'numero_serie' => $this->numero_serie,
-                'estado' => $this->estado,
-                'tipo_comprobantes_id' => $this->idSeleccionado
+        if ($this->idSerieComprobante) {
+            # UPDATE
+            $serieComprobantes = SerieComprobantes::findOrFail($this->idSerieComprobante);
+            $serieComprobantes->numero_serie = $this->numero_serie;
+            $serieComprobantes->estado = $this->estado;
+            $serieComprobantes->save();
+            $this->emit('close-modal');
+            $msg = 'Serie Actualizada Correctamente.';
+        } else {
+            # CREATE
+            $series = SerieComprobantes::create(
+                [
+                    'numero_serie' => $this->numero_serie,
+                    'estado' => $this->estado,
+                    'tipo_comprobantes_id' => $this->idSeleccionado
 
-            ]
-        );
+                ]
+            );
+
+            $msg = 'Serie Registrada Correctamente.';
+        }
+
 
         $this->resetUI();
-        $this->emit('alert', 'MUY BIEN', 'success', 'Serie Registrada Correctamente.');
+        $this->emit('alert', 'MUY BIEN', 'success', $msg);
     }
-    public function Edit($id)
+    
+    public function Edit(SerieComprobantes $serieComprobantes)
     {
+        $this->idSerieComprobante = $serieComprobantes->id;
+        $this->numero_serie = $serieComprobantes->numero_serie;
+        $this->estado = $serieComprobantes->estado;
+        $this->emit('show-modal');
     }
+
+    public function deleteConfirm($id)
+    {
+
+        $this->dispatchBrowserEvent('swal-confirm-cuentas', [
+            'title' => 'Está seguro que desea eliminar la Serie ?',
+            'icon' => 'warning',
+            'id' => $id
+        ]);
+    }
+    protected $listeners = ['deleteSerieComprobantes'];
+    public function deleteSerieComprobantes(SerieComprobantes $serie)
+    {
+        $serie_pagos = SeriePagos::where('serie_comprobantes_id', $serie->id)->get();
+        if (count($serie_pagos) > 0) {
+            return $this->emit('alert', 'ERROR', 'error', 'No se puede Eliminar el la Serie porque se hizo uso de la misma en otro módulo.');
+        } else {
+            $serie->delete();
+            $this->emit('alert', 'MUY BIEN !', 'success', 'Número de Serie Eliminado Correctamente.');
+        }
+    }
+
     public function saveTipoComprobante()
     {
     }

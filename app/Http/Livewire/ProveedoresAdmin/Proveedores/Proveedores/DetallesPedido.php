@@ -28,7 +28,7 @@ class DetallesPedido extends Component
     use GestionArchivosTrait;
 
     public $identificador;
-    public $search, $buscarEquipo='';
+    public $search, $buscarEquipo = '';
 
     public $proveedor, $pedido, $equipos_pedidos;
     public $fecha, $monto = 0, $observación_pedido, $estado_pedido;
@@ -55,6 +55,7 @@ class DetallesPedido extends Component
     public function resetUI()
     {
         $this->reset(['idDetalleIngreso', 'cantidad', 'monto_del_equipo']);
+        $this->resetValidation();
     }
 
     protected $listeners = ['delete', 'deletePayment'];
@@ -82,12 +83,19 @@ class DetallesPedido extends Component
     {
 
         $comprobante = [];
-        $consulta = DB::select('SELECT 
-        sum(monto) as montoTotal
-        FROM v_pedidos_informacion_general_pedidos
-        WHERE idPedido = ' . $this->pedido->id . '
-        GROUP BY pedidos_id;');
-        $this->monto = $consulta[0]->montoTotal ?? 0;
+        $consulta = [];
+        if (!is_null($this->pedido)) {
+            $consulta = DB::select('SELECT 
+            sum(monto) as montoTotal
+            FROM v_pedidos_informacion_general_pedidos
+            WHERE idPedido = ' . $this->pedido->id . '
+            GROUP BY pedidos_id;');
+            $this->monto = $consulta[0]->montoTotal ?? 0;
+        } else {
+            $this->monto = 0;
+        }
+
+
 
         $this->ver_comprobante = '';
         if ($this->pedido) {
@@ -202,8 +210,7 @@ class DetallesPedido extends Component
 
 
 
-        return view(
-            'livewire.proveedores-admin.proveedores.proveedores.detalles-pedido',
+        return view('livewire.proveedores-admin.proveedores.proveedores.detalles-pedido',
             compact(
                 'comprobante',
                 'estado_pedidos',
@@ -471,6 +478,7 @@ class DetallesPedido extends Component
     public function resetPaymentProveedor()
     {
         $this->reset(['idPagoProveedores', 'monto_equipos', 'fecha_pago', 'numero_depósito', 'validez_pago', 'cuenta_proveedor_bancos']);
+        $this->resetValidation();
     }
 
     public function añadirAlPedido(Equipos $equipo)
@@ -609,7 +617,7 @@ class DetallesPedido extends Component
                         $equipo->stock = $equipo->stock + ($cantidad_entrante - $detalle->cantidad_entrante);
                         $detalle->cantidad_entrante = $cantidad_entrante;
                         break;
-                    
+
                     case ($cantidad_entrante < 0 || $cantidad_entrante > $detalle->cantidad): //
 
                         $equipo->stock = $equipo->stock;

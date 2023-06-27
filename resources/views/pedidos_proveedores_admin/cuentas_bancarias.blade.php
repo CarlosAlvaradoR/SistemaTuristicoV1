@@ -26,7 +26,7 @@
             <h3>Pedidos</h3>
             <ol class="breadcrumb breadcrumb-simple">
                 <li><a href="#">Pedidos</a></li>
-                <li><a href="#">Proveedores</a></li>
+                <li><a href="{{ route('pedidos.proveedores.index') }}">Proveedores</a></li>
                 <li class="active">{{$proveedor->nombre_proveedor}}</li>
             </ol>
         </div>

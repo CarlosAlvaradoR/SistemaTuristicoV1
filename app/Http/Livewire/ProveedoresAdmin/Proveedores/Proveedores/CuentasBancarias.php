@@ -11,6 +11,7 @@ use Livewire\Component;
 
 class CuentasBancarias extends Component
 {
+    public $search;
     public $proveedor;
     public $idCuentaProveedorBanco, $numero_cuenta, $estado, $banco;
     public $title = 'CREAR CUENTAS BANCARIAS';
@@ -32,6 +33,8 @@ class CuentasBancarias extends Component
         $cuentas = DB::table('bancos as b')
             ->join('cuenta_proveedor_bancos as cpb', 'b.id', '=', 'cpb.bancos_id')
             ->where('cpb.proveedores_id', $this->proveedor->id)
+            ->where('b.nombre_banco', 'like', '%' . $this->search . '%')
+            ->orWhere('cpb.numero_cuenta', 'like', '%' . $this->search . '%')
             ->select(
                 'b.nombre_banco',
                 //'b.direccion', 

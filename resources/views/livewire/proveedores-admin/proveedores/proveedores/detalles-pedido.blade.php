@@ -369,35 +369,39 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">EQUIPO - Marca</th>
-                                    <th scope="col">Cantidad</th>
-                                    <th scope="col">Precio</th>
-                                    <th scope="col">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($equipos as $e)
+                        <div style="overflow-x:auto;">
+                            <table class="table table-hover">
+                                <thead>
                                     <tr>
-                                        <td>{{ $e->nombre }} - {{ $e->marca }}</td>
-                                        <td>{{ $e->stock }}</td>
-                                        <td>{{ $e->precio_referencial }}</td>
-                                        <td>
-                                            <button id="delete" wire:click="añadirAlPedido({{ $e->id }})"
-                                                title="Añadir Equipo al Pedido"
-                                                data-target="#modal-agregar-equipo-pedido" data-toggle="modal"
-                                                class="btn btn-success btn-sm">
-                                                <i class="fas fa-plus-circle"></i>
-                                            </button>
-                                        </td>
+                                        <th scope="col">EQUIPO - Marca</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Precio</th>
+                                        <th scope="col">Acciones</th>
                                     </tr>
-                                @endforeach
+                                </thead>
+                                <tbody>
+                                    @foreach ($equipos as $e)
+                                        <tr>
+                                            <td>{{ $e->nombre }} - {{ $e->marca }}</td>
+                                            <td>{{ $e->stock }}</td>
+                                            <td>{{ $e->precio_referencial }}</td>
+                                            <td>
+                                                <button id="delete"
+                                                    wire:click="añadirAlPedido({{ $e->id }})"
+                                                    title="Añadir Equipo al Pedido"
+                                                    data-target="#modal-agregar-equipo-pedido" data-toggle="modal"
+                                                    class="btn btn-success btn-sm">
+                                                    <i class="fas fa-plus-circle"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
 
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -427,105 +431,108 @@
                                 $cantSolicitada = 0;
                                 $montoAcumulador = 0;
                             @endphp
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">EQUIPO</th>
-                                        <th scope="col">Cantidad Solicitada</th>
-                                        <th scope="col">Cantidad Entrante</th>
-                                        <th scope="col">Precio C/U</th>
-                                        <th scope="col">Precio Tot.</th>
-                                        <th scope="col">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($equipos_pedidos as $index => $ep)
+                            <div style="overflow-x:auto;">
+                                <table class="table table-hover">
+                                    <thead>
                                         <tr>
-                                            <td><small>{{ $ep->nombre }}-{{ $ep->marca }}</small></td>
-                                            <td>
-                                                @php
-                                                    $cantSolicitada = $cantSolicitada + $ep->cantidad;
-                                                @endphp
-                                                <small>
-                                                    {{ $ep->cantidad }}
-                                                </small>
-                                            </td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <input type="number" min="1" max="{{ $ep->cantidad }}"
-                                                        autocomplete="off"
-                                                        wire:model.defer="equipos_pedidos.{{ $index }}.cantidad_entrante"
-                                                        wire:key="ep-{{ $ep->id }}" class="form-control"
-                                                        id="cantidad_entrante" placeholder="ej: 3">
-                                                    @error('equipos_pedidos.' . $index . '.ep')
-                                                        <small class="text-danger">{{ $message }}</small>
-                                                    @enderror
-                                                </div>
+                                            <th scope="col">EQUIPO</th>
+                                            <th scope="col">Cantidad Solicitada</th>
+                                            <th scope="col">Cantidad Entrante</th>
+                                            <th scope="col">Precio C/U</th>
+                                            <th scope="col">Precio Tot.</th>
+                                            <th scope="col">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($equipos_pedidos as $index => $ep)
+                                            <tr>
+                                                <td><small>{{ $ep->nombre }}-{{ $ep->marca }}</small></td>
+                                                <td>
+                                                    @php
+                                                        $cantSolicitada = $cantSolicitada + $ep->cantidad;
+                                                    @endphp
+                                                    <small>
+                                                        {{ $ep->cantidad }}
+                                                    </small>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="number" min="1"
+                                                            max="{{ $ep->cantidad }}" autocomplete="off"
+                                                            wire:model.defer="equipos_pedidos.{{ $index }}.cantidad_entrante"
+                                                            wire:key="ep-{{ $ep->id }}" class="form-control"
+                                                            id="cantidad_entrante" placeholder="ej: 3">
+                                                        @error('equipos_pedidos.' . $index . '.ep')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                        @enderror
+                                                    </div>
 
-                                            </td>
-                                            <td>
-                                                <small>S/. {{ $ep->precio_real }}</small>
-                                            </td>
-                                            <td>
+                                                </td>
+                                                <td>
+                                                    <small>S/. {{ $ep->precio_real }}</small>
+                                                </td>
+                                                <td>
 
-                                                <small>
-                                                    @if ($ep->cantidad_entrante)
-                                                        @php
-                                                            $montoAcumulador = $montoAcumulador + $ep->cantidad_entrante * $ep->precio_real;
-                                                        @endphp
-                                                        S/.
-                                                        {{ number_format($ep->cantidad_entrante * $ep->precio_real, 2) }}
-                                                    @else
-                                                        @php
-                                                            $montoAcumulador = $montoAcumulador + 0;
-                                                        @endphp
-                                                        S/. 0.00
-                                                    @endif
-                                                </small>
+                                                    <small>
+                                                        @if ($ep->cantidad_entrante)
+                                                            @php
+                                                                $montoAcumulador = $montoAcumulador + $ep->cantidad_entrante * $ep->precio_real;
+                                                            @endphp
+                                                            S/.
+                                                            {{ number_format($ep->cantidad_entrante * $ep->precio_real, 2) }}
+                                                        @else
+                                                            @php
+                                                                $montoAcumulador = $montoAcumulador + 0;
+                                                            @endphp
+                                                            S/. 0.00
+                                                        @endif
+                                                    </small>
 
-                                            </td>
-                                            <td>
-                                                {{-- <button id="delete"
+                                                </td>
+                                                <td>
+                                                    {{-- <button id="delete"
                                                     wire:click="entradaEquipoInventario({{ $ep->id }})"
                                                     title="Añadir Equipo al Pedido" class="btn btn-success btn-sm">
                                                     <i class="fas fa-plus-circle"></i>
                                                 </button> --}}
-                                                <button type="button" id="view"
-                                                    title="Editar Detalle del Pedido" data-target="#exampleModal"
-                                                    data-toggle="modal" wire:click="Edit({{ $ep->id }})"
-                                                    wire:loading.attr="disabled" title="Ver Atractivos"
-                                                    class="btn btn-warning btn-sm">
-                                                    <span class="fa fa-pencil-square-o"></span>
-                                                </button>
-                                                <button type="button" id="view"
-                                                    title="Quitar Equipo del Pedido"
-                                                    wire:click="deleteConfirm({{ $ep->id }})"
-                                                    wire:loading.attr="disabled" title="Ver Atractivos"
-                                                    class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-minus"></i>
-                                                </button>
-                                            </td>
+                                                    <button type="button" id="view"
+                                                        title="Editar Detalle del Pedido" data-target="#exampleModal"
+                                                        data-toggle="modal" wire:click="Edit({{ $ep->id }})"
+                                                        wire:loading.attr="disabled" title="Ver Atractivos"
+                                                        class="btn btn-warning btn-sm">
+                                                        <span class="fa fa-pencil-square-o"></span>
+                                                    </button>
+                                                    <button type="button" id="view"
+                                                        title="Quitar Equipo del Pedido"
+                                                        wire:click="deleteConfirm({{ $ep->id }})"
+                                                        wire:loading.attr="disabled" title="Ver Atractivos"
+                                                        class="btn btn-danger btn-sm">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+
+
+                                    </tbody>
+                                    <tfoot>
+
+                                        <tr>
+
+                                            <th>Total</th>
+
+                                            <td colspan="1"><small><b>{{ $cantSolicitada }}</b></small></td>
+                                            <td colspan="2">-</td>
+
+                                            <td colspan="1"><small><b>S/.
+                                                        {{ number_format($montoAcumulador, 2) }}</b></small></td>
+
                                         </tr>
-                                    @endforeach
 
+                                    </tfoot>
+                                </table>
+                            </div>
 
-                                </tbody>
-                                <tfoot>
-
-                                    <tr>
-
-                                        <th>Total</th>
-
-                                        <td colspan="1"><small><b>{{ $cantSolicitada }}</b></small></td>
-                                        <td colspan="2">-</td>
-
-                                        <td colspan="1"><small><b>S/.
-                                                    {{ number_format($montoAcumulador, 2) }}</b></small></td>
-
-                                    </tr>
-
-                                </tfoot>
-                            </table>
                         </form>
                     </div>
                 </div>
@@ -671,8 +678,7 @@
                                 <fieldset class="form-group">
                                     <label class="form-label" for="fecha_pago">Fecha de Pago</label>
                                     <input type="date" wire:model.defer="fecha_pago" wire:loading.attr="disabled"
-                                        class="form-control maxlength-simple" id="fecha_pago"
-                                        >
+                                        class="form-control maxlength-simple" id="fecha_pago">
                                     @error('fecha_pago')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror

@@ -6,21 +6,17 @@
                     <h5 class="card-title"><i class="fas fa-money-check"></i> Tipos de Comprobante</h5>
 
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-10">
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
                                 <input type="text" wire:model="search" class="form-control"
                                     placeholder="Buscar tipo de comprobante">
                             </div>
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-2">
                             <button class="btn btn-primary btn-sm" wire:click="resetUI" title="Resetear">
                                 <i class="fas fa-window-close"></i>
                             </button>
-                        </div>
-                        <div class="col-md-6">
-                            <button id="modal-532427" href="#modal_cuentas_bancarias" role="button"
-                                class="btn btn-rounded btn-sm" data-toggle="modal">Crear Tipo de Comprobante</button>
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -36,21 +32,21 @@
                                     <td>{{ $tc->nombre_tipo }}</td>
 
                                     <td>
-                                        <button title="Editar Información de la Cuenta Bancaria"
+                                        {{-- <button title="Editar Información de la Cuenta Bancaria"
                                             wire:click="Edit({{ $tc->id }})" wire:loading.attr="disabled"
                                             class="btn btn-warning btn-sm">
                                             <span class="fa fa-pencil-square-o"></span>
-                                        </button>
+                                        </button> --}}
                                         <button title="Ver Series del Tipo de Comprobante"
                                             wire:click="select({{ $tc->id }})" wire:loading.attr="disabled"
                                             class="btn btn-primary btn-sm">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button title="Eliminar Cuenta Bancaria del Proveedor"
+                                        {{-- <button title="Eliminar Cuenta Bancaria del Proveedor"
                                             wire:click="deleteConfirm({{ $tc->id }})" wire:loading.attr="disabled"
                                             class="btn btn-danger btn-sm">
                                             <span class="fa fa-trash"></span>
-                                        </button>
+                                        </button> --}}
 
                                     </td>
                                 </tr>
@@ -164,7 +160,7 @@
                                     <label class="form-label" for="numero_serie">Número de Serie</label>
                                     <input type="text" wire:model.defer="numero_serie"
                                         class="form-control maxlength-custom-message" id="numero_serie"
-                                        placeholder="ej: Banco de la Nación">
+                                        placeholder="ej: A0023">
                                     @error('numero_serie')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -194,7 +190,7 @@
                         </button>
 
                         <button type="submit" class="btn btn-rounded btn-primary">
-                            @if ($idTipoComprobante)
+                            @if ($idSerieComprobante)
                                 Actualizar
                             @else
                                 Guardar
@@ -214,7 +210,7 @@
     @livewire('administrate-commons.alerts')
 
     <script>
-        window.addEventListener('swal-confirm-entidadFinanciera', event => {
+        window.addEventListener('swal-confirm-cuentas', event => {
             Swal.fire({
                 title: event.detail.title,
                 icon: event.detail.icon,
@@ -225,8 +221,8 @@
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Livewire.emitTo('proveedores-admin.proveedores.proveedores.entidades-financieras',
-                        'deleteEntidadFinanciera',
+                    Livewire.emitTo('proveedores-admin.tipos-de-comprobante',
+                        'deleteSerieComprobantes',
                         event.detail
                         .id);
                 }
