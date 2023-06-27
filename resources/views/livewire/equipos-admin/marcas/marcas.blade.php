@@ -40,11 +40,11 @@
                                     <!--<th scope="row">1</th>-->
                                     <td>{{ $m->nombre }}</td>
                                     <td>
-                                        <button id="edit" wire:click="Edit({{ $m->id }})"
+                                        <button wire:click="Edit({{ $m->id }})"
                                             class="btn btn-warning btn-sm">
                                             <span class="fa fa-pencil-square-o"></span>
                                         </button>
-                                        <button id="delete" title="Dar de baja" class="btn btn-danger btn-sm"
+                                        <button title="Dar de baja" class="btn btn-danger btn-sm"
                                             wire:click="deleteConfirm({{ $m->id }})" title="Eliminar Mapa">
                                             <span class="fa fa-trash"></span>
                                         </button>

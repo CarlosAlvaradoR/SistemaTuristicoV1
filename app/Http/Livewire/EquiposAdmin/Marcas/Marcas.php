@@ -5,11 +5,14 @@ namespace App\Http\Livewire\EquiposAdmin\Marcas;
 use App\Models\Marcas as ModelsMarcas;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithPagination;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class Marcas extends Component
 {
     use WithPagination;
+    use AuthorizesRequests;
+
 
     protected $paginationTheme = 'bootstrap';
 
@@ -31,6 +34,8 @@ class Marcas extends Component
 
     public function saveMarca()
     {
+        $this->authorize('crear-marca-de-equipos');
+        
         $this->validate(
             [
                 'nombre_de_marca' => 'required|min:2'
@@ -51,6 +56,8 @@ class Marcas extends Component
 
     public function Edit(ModelsMarcas $marca)
     {
+        $this->authorize('editar-marca-de-equipos');
+
         $this->title = 'EDITAR MARCA';
         $this->idMarca = $marca->id;
         $this->nombre_de_marca = $marca->nombre;
@@ -60,6 +67,8 @@ class Marcas extends Component
 
     public function Update()
     {
+        $this->authorize('editar-marca-de-equipos');
+
         $this->validate(
             [
                 'nombre_de_marca' => 'required|min:2'
@@ -83,6 +92,7 @@ class Marcas extends Component
 
     public function deleteConfirm($id)
     {
+        $this->authorize('eliminar-marca-de-equipos');
 
         $this->dispatchBrowserEvent('swal-confirmMarca', [
             'title' => 'Estás seguro que deseas Eliminar la Marca',
@@ -93,6 +103,8 @@ class Marcas extends Component
 
     public function deleteMarca(ModelsMarcas $tipo)
     {
+        $this->authorize('eliminar-marca-de-equipos');
+
         $tipos =  DB::table('equipos')
             ->where('marca_id', $tipo->id)
             ->get();
