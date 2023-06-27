@@ -9,7 +9,8 @@
                         <div class="col-md-6">
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" wire:model="search" class="form-control" placeholder="Buscar Banco">
+                                <input type="text" wire:model="search" class="form-control"
+                                    placeholder="Buscar Banco">
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -23,8 +24,11 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <button id="modal-532427" href="#modal_cuentas_bancarias" role="button"
-                                class="btn btn-rounded" data-toggle="modal">Crear Ent. Financiera</button>
+                            @can('crear-entidades-financieras')
+                                <button id="modal-532427" href="#modal_cuentas_bancarias" role="button"
+                                    class="btn btn-rounded" data-toggle="modal">Crear Ent. Financiera</button>
+                            @endcan
+
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -87,7 +91,8 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <fieldset class="form-group">
-                                    <label class="form-label" for="nombre_banco">Nombre del Banco / Ent. Financiera</label>
+                                    <label class="form-label" for="nombre_banco">Nombre del Banco / Ent.
+                                        Financiera</label>
                                     <input type="text" wire:model.defer="nombre_banco"
                                         class="form-control maxlength-custom-message" id="nombre_banco"
                                         placeholder="ej: Banco de la Nación">

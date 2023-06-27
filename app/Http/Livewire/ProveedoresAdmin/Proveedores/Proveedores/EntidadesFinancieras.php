@@ -5,11 +5,14 @@ namespace App\Http\Livewire\ProveedoresAdmin\Proveedores\Proveedores;
 use App\Models\Pedidos\Bancos;
 use App\Models\Pedidos\CuentaProveedorBancos;
 use Livewire\WithPagination;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class EntidadesFinancieras extends Component
 {
     use WithPagination;
+    use AuthorizesRequests;
+
     protected $paginationTheme = 'bootstrap';
 
 
@@ -42,6 +45,8 @@ class EntidadesFinancieras extends Component
             ]
         );
         if ($this->idBanco) {
+            $this->authorize('editar-entidades-financieras');
+
             $bancos = Bancos::findOrFail($this->idBanco);
             $bancos->nombre_banco = $this->nombre_banco;
             $bancos->direccion = $this->direccion;
@@ -50,6 +55,8 @@ class EntidadesFinancieras extends Component
 
             $this->emit('close-modal');
         } else {
+            $this->authorize('crear-entidades-financieras');
+
             $bancos = Bancos::create(
                 [
                     'nombre_banco' => $this->nombre_banco,
@@ -63,6 +70,7 @@ class EntidadesFinancieras extends Component
 
     public function Edit(Bancos $bancos)
     {
+        $this->authorize('editar-entidades-financieras');
         $this->title = 'EDITAR INFORMACIÓN DE LA ENTIDAD BANCARIA';
         $this->idBanco = $bancos->id;
         $this->nombre_banco = $bancos->nombre_banco;
@@ -72,6 +80,8 @@ class EntidadesFinancieras extends Component
 
     public function deleteConfirm($id)
     {
+        $this->authorize('eliminar-entidades-financieras');
+
         $this->dispatchBrowserEvent('swal-confirm-entidadFinanciera', [
             'title' => 'Está seguro que desea eliminar la Entidad Financiera ?',
             'icon' => 'warning',
@@ -82,6 +92,7 @@ class EntidadesFinancieras extends Component
     protected $listeners = ['deleteEntidadFinanciera'];
     public function deleteEntidadFinanciera(Bancos $bancos)
     {
+        $this->authorize('eliminar-entidades-financieras');
 
         $title = 'MUY BIEN!';
         $icon = 'success';

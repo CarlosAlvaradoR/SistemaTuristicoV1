@@ -24,6 +24,28 @@ class RolPermissionSeeder extends Seeder
 
 
 
+
+        /** PERMISOS DEL MÓDULO PEDIDOS */
+        Permission::firstOrCreate(['name' => 'ver-interfaz-de-proveedores']);
+        Permission::firstOrCreate(['name' => 'crear-proveedores']);
+        Permission::firstOrCreate(['name' => 'editar-proveedores']);
+        Permission::firstOrCreate(['name' => 'eliminar-proveedores']);
+        Permission::firstOrCreate(['name' => 'añadir-cuentas-bancarias']);
+        Permission::firstOrCreate(['name' => 'crear-pedidos-de-proveedores']);
+
+        Permission::firstOrCreate(['name' => 'ver-interfaz-de-pedidos-generales']);
+        # Marcas
+        Permission::firstOrCreate(['name' => 'ver-interfaz-de-entidades-financieras']);
+        Permission::firstOrCreate(['name' => 'crear-entidades-financieras']);
+        Permission::firstOrCreate(['name' => 'editar-entidades-financieras']);
+        Permission::firstOrCreate(['name' => 'eliminar-entidades-financieras']);
+
+        Permission::firstOrCreate(['name' => 'ver-crear-editar-tipos-de-comprobante']);
+
+
+
+
+        
         /** PERMISOS DEL MÓDULO EQUIPOS */
         # Equipos
         Permission::firstOrCreate(['name' => 'ver-interfaz-de-equipos']);

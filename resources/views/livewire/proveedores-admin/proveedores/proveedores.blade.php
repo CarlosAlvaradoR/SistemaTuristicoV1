@@ -9,22 +9,24 @@
                         <div class="col-md-6">
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control" placeholder="Buscar Proveedores">
+                                <input type="text" wire:model="search" class="form-control" placeholder="Buscar Proveedores">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                {{-- <label for="exampleFormControlSelect1">Example select</label> --}}
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                    <option>Mostrar 20</option>
-                                    <option>Mostrar 50</option>
-                                    <option>Mostrar 100</option>
+                                <select class="form-control" wire:model="cant" id="exampleFormControlSelect1">
+                                    <option value="20">Mostrar 20</option>
+                                    <option value="50">Mostrar 50</option>
+                                    <option value="100">Mostrar 100</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <a id="modal-532427" href="#modal-lista-proveedores" role="button" class="btn btn-rounded"
-                                data-toggle="modal">Nuevo Proveedor</a>
+                            @can('crear-proveedores')
+                                <a id="modal-532427" href="#modal-lista-proveedores" role="button" class="btn btn-rounded"
+                                    data-toggle="modal">Nuevo Proveedor</a>
+                            @endcan
+
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -75,6 +77,7 @@
 
                         </tbody>
                     </table>
+                    {{ $proveedores->links() }}
                 </div>
             </div>
         </div>
@@ -169,7 +172,8 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger" data-dismiss="modal">
+                    <button type="button" wire:click.prevent="resetUI()" class="btn btn-rounded btn-danger"
+                        data-dismiss="modal">
                         Cerrar
                     </button>
                     <button type="button" wire:click="saveProveedor" wire:loading.attr="disabled"

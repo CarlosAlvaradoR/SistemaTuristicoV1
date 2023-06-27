@@ -4,10 +4,18 @@ namespace App\Http\Livewire\ProveedoresAdmin\Proveedores;
 
 use App\Models\Pedidos\Pedidos;
 use App\Models\Pedidos\Proveedores as PedidosProveedores;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Livewire\WithPagination;
 use Livewire\Component;
 
 class Proveedores extends Component
 {
+    use AuthorizesRequests;
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
+    
+    public $search = '', $cant = 20;
     public $ruc, $nombre_proveedor, $direccion, $telefono, $email, $web;
     public $title = 'CREAR PROVEEDORES', $idProveedor;
 
@@ -22,12 +30,15 @@ class Proveedores extends Component
     public function render()
     {
         // $proveedores = PedidosProveedores::all(['id', 'ruc', 'nombre_proveedor', 'slug', 'direccion', 'telefono', 'email', 'web']);
-        $proveedores = PedidosProveedores::all();
+        $proveedores = PedidosProveedores::where('nombre_proveedor', 'like', '%' . $this->search . '%')
+            ->paginate($this->cant);
         return view('livewire.proveedores-admin.proveedores.proveedores', compact('proveedores'));
     }
 
     public function saveProveedor()
     {
+
+
         $this->validate([
             'ruc' => 'required|string|min:11',
             'nombre_proveedor' => 'required|string|min:3|max:45',
@@ -41,6 +52,8 @@ class Proveedores extends Component
         $icon = 'success';
         $text = 'Proveedor Registrado con Éxito.';
         if ($this->idProveedor) {
+            $this->authorize('editar-proveedores');
+
             $proveedor = PedidosProveedores::findOrFail($this->idProveedor);
             $proveedor->ruc = $this->ruc;
             $proveedor->nombre_proveedor = $this->nombre_proveedor;
@@ -52,6 +65,7 @@ class Proveedores extends Component
             $text = 'Proveedor Actualizado con Éxito.';
             $this->emit('close-modal');
         } else {
+            $this->authorize('crear-proveedores');
             $proveedor =  PedidosProveedores::create(
                 [
                     'ruc' => $this->ruc,
@@ -63,13 +77,14 @@ class Proveedores extends Component
                 ]
             );
         }
-        
+
         $this->emit('alert', $title, $icon, $text);
         $this->resetUI();
     }
 
     public function Edit(PedidosProveedores $proveedor)
     {
+        $this->authorize('editar-proveedores');
         //1.75 
         $this->idProveedor = $proveedor->id;
         $this->ruc = $proveedor->ruc;
@@ -85,6 +100,7 @@ class Proveedores extends Component
 
     public function deleteConfirm(PedidosProveedores $proveedor)
     {
+        $this->authorize('eliminar-proveedores');
         $id = $proveedor->slug;
         $this->dispatchBrowserEvent('swal-confirm-proveedores', [
             'title' => 'Está seguro que desea eliminar al Proveedor ?',
@@ -96,6 +112,7 @@ class Proveedores extends Component
     protected $listeners = ['deleteProveedor'];
     public function deleteProveedor(PedidosProveedores $proveedores)
     {
+        $this->authorize('eliminar-proveedores');
 
         $title = 'MUY BIEN!';
         $icon = 'success';
