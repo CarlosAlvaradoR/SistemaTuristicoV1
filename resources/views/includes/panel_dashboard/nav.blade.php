@@ -46,6 +46,8 @@
                 </li>
                 <li><a href="{{ route('paquetes.tipos_almuerzos') }}"><span class="lbl">Tipos de Almuerzos</span></a>
                 </li>
+                <li><a href="{{ route('paquetes.tipo_paquetes_turisticos') }}"><span class="lbl">Tipos de P. Turísticos</span></a>
+                </li>
             </ul>
         </li>
 

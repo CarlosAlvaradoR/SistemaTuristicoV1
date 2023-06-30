@@ -151,6 +151,10 @@ class PaquetesTuristicosController extends Controller
         return view('paquetes_admin.tipo_almuerzos');
     }
 
+    public function tipoPaquetesTuristicos(){
+        return view('paquetes_admin.tipo_paquetes_turisticos');
+    }
+
 
     public function mostrarReporteDeItinerarios(PaquetesTuristicos $paquete)
     {
