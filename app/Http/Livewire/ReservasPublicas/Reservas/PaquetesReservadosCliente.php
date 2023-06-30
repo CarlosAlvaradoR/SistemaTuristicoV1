@@ -101,7 +101,8 @@ class PaquetesReservadosCliente extends Component
                 'fecha_pago' => 'required|date',
                 'numero_de_operacion' => 'required|min:3|max:25',
                 'ruta_archivo_pago' => 'required|mimes:jpeg,png,pdf',
-                'forma_de_pago' => 'required|string|min:3'
+                'forma_de_pago' => 'required|string|min:3',
+                'tipo_de_pago' => 'required|numeric|min:1'
             ]
         );
         $ruta = '';

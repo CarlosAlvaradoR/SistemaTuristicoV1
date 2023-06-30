@@ -29,7 +29,7 @@ class PagosPendientes extends Component
         'monto_pago' => 'required',
         'fecha_de_pago' => 'required',
         'estado_de_pago' => 'required|in:EN PROCESO,ACEPTADO,NO ACEPTADO',
-        'tipo_de_pago' => 'required',
+        'tipo_de_pago' => 'required|numeric|min:1'
     ];
 
     function resetUI()

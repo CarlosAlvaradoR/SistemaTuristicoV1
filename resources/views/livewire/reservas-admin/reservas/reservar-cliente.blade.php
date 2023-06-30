@@ -271,7 +271,7 @@
                                         Tipo de Pago <span class="text-danger">(*)</span>
                                     </label>
                                     <select class="form-control" wire:model.defer="tipo_de_pago" id="tipo_de_pago">
-                                        <option value="" selected>...Seleccione...</option>
+                                        <option value="">...Seleccione...</option>
                                         @foreach ($tipoPagos as $tp)
                                             <option value="{{ $tp->idCuentaPago }}">
                                                 {{ $tp->nombre_tipo_pago }} - {{ $tp->numero_cuenta }}

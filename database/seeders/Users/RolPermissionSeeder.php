@@ -33,6 +33,31 @@ class RolPermissionSeeder extends Seeder
 
 
 
+
+
+
+        /** PERMISOS DEL MÓDULO VIAJES */
+        Permission::firstOrCreate(['name' => 'ver-interfaz-de-viajes']);
+        Permission::firstOrCreate(['name' => 'añadir-participantes-de-viajes']);
+        Permission::firstOrCreate(['name' => 'añadir-traslado-de-viajes']);
+        Permission::firstOrCreate(['name' => 'añadir-almuerzos-de-viajes']);
+        Permission::firstOrCreate(['name' => 'añadir-boletas-de-pago-de-viajes']);
+        Permission::firstOrCreate(['name' => 'añadir-actividades-de-aclimatacion-de-viajes']);
+        Permission::firstOrCreate(['name' => 'añadir-hospedajes-de-viajes']);
+        Permission::firstOrCreate(['name' => 'añadir-itinerarios-de-viajes']);
+        Permission::firstOrCreate(['name' => 'manipular-componentes-de-choferes-cocineros-guias-arrieros']);
+        Permission::firstOrCreate(['name' => 'ver-reporte-de-viajes']);
+        Permission::firstOrCreate(['name' => 'manipular-componentes-de-empresas']);
+        Permission::firstOrCreate(['name' => 'crear-editar-eliminar-asociaciones']);
+        Permission::firstOrCreate(['name' => 'crear-editar-eliminar-hoteles']);
+        Permission::firstOrCreate(['name' => 'crear-editar-eliminar-tipos-de-vehiculo']);
+        Permission::firstOrCreate(['name' => 'crear-editar-eliminar-tipos-de-licencias']);
+
+            
+
+
+
+
         /** PERMISOS DEL MÓDULO PEDIDOS */
         Permission::firstOrCreate(['name' => 'ver-interfaz-de-proveedores']);
         Permission::firstOrCreate(['name' => 'crear-proveedores']);
@@ -53,7 +78,7 @@ class RolPermissionSeeder extends Seeder
 
 
 
-        
+
         /** PERMISOS DEL MÓDULO EQUIPOS */
         # Equipos
         Permission::firstOrCreate(['name' => 'ver-interfaz-de-equipos']);
@@ -83,7 +108,7 @@ class RolPermissionSeeder extends Seeder
         // Sincronizar los permisos al rol de superadministrador
         $superadminRole->syncPermissions($permissions);
 
-        
+
         // Permission::firstOrCreate(['name' => 'write-a-post']);
         // Permission::firstOrCreate(['name' => 'edit-a-post']);
         // Permission::firstOrCreate(['name' => 'delete-a-post']);

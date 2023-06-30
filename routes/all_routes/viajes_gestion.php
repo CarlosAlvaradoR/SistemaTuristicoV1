@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/paquete/{paquete}/viajes', [App\Http\Controllers\ViajePaquetesController::class, 'index'])->name('paquete.viajes')->middleware(['auth', 'verified']);
+Route::get('/paquete/{paquete}/viajes', [App\Http\Controllers\ViajePaquetesController::class, 'index'])->name('paquete.viajes')->middleware(['auth', 'verified', 'can:ver-interfaz-de-viajes']);
 Route::get('/paquete/{paquete}/viajes/{viaje}/participantes', [App\Http\Controllers\ViajePaquetesController::class, 'viajeParticipantes'])->name('paquete.viajes.participantes')->middleware(['auth', 'verified']);
 Route::get('/paquete/{paquete}/viajes/{viaje}/participantes/entrega-de-equipos/{participante}', [App\Http\Controllers\ViajePaquetesController::class, 'EntregaDeEquipos'])->name('paquete.viajes.participantes.entregaEquipos')->middleware(['auth', 'verified']);
 
