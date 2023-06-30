@@ -17,10 +17,18 @@ class RolPermissionSeeder extends Seeder
      */
     public function run()
     {
-        // Crear permisos 
-        Permission::firstOrCreate(['name' => 'ver-paquetes']);
-        Permission::firstOrCreate(['name' => 'crear-paquetes']);
-        Permission::firstOrCreate(['name' => 'editar-paquetes']);
+        /** PERMISOS DEL MÓDULO PAQUETES */
+        Permission::firstOrCreate(['name' => 'ver-interfaz-de-paquetes-turisticos']);
+        Permission::firstOrCreate(['name' => 'crear-paquetes-turisticos']);
+        Permission::firstOrCreate(['name' => 'editar-paquetes-turisticos']);
+        Permission::firstOrCreate(['name' => 'ver-manipular-componentes-de-paquetes-turisticos']);
+        Permission::firstOrCreate(['name' => 'crear-editar-eliminar-atractivos-de-paquetes-turisticos']);
+        Permission::firstOrCreate(['name' => 'crear-editar-eliminar-tipos-de-personal-de-paquetes-turisticos']);
+        Permission::firstOrCreate(['name' => 'crear-editar-eliminar-tipos-de-transporte-de-paquetes-turisticos']);
+        Permission::firstOrCreate(['name' => 'crear-editar-eliminar-tipos-de-alimentacion-de-paquetes-turisticos']);
+        Permission::firstOrCreate(['name' => 'crear-editar-eliminar-tipos-de-acemilas-de-paquetes-turisticos']);
+        Permission::firstOrCreate(['name' => 'crear-editar-eliminar-tipos-de-almuerzos-de-paquetes-turisticos']);
+        Permission::firstOrCreate(['name' => 'crear-editar-eliminar-tipos-de-paquetes-turisticos']);
 
 
 

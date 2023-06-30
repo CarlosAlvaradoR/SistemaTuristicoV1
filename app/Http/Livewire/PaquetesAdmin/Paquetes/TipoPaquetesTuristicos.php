@@ -14,6 +14,7 @@ class TipoPaquetesTuristicos extends Component
 
 
     public $title = 'CREAR TIPO DE PAQUETE TURÍSTICO';
+    public $search;
     public $idTipoPaquete, $nombre_de_tipo;
 
     public function resetUI()
@@ -24,7 +25,8 @@ class TipoPaquetesTuristicos extends Component
 
     public function render()
     {
-        $tipos = TipoPaquetes::paginate(10);
+        $tipos = TipoPaquetes::where('nombre', 'like', '%' . $this->search . '%')
+            ->paginate(10);
 
         return view('livewire.paquetes-admin.paquetes.tipo-paquetes-turisticos', compact('tipos'));
     }

@@ -4,12 +4,12 @@
             <div class="card">
                 <div class="card-block">
                     <h5 class="card-title">Tipos de Paquetes Turísticos</h5>
-
+                    
                     <div class="row">
                         <div class="col-md-9">
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control" placeholder="Buscar Tipo de Paquete Turístico">
+                                <input type="text" wire:model="search" class="form-control" placeholder="Buscar Tipo de Paquete Turístico">
                             </div>
                         </div>
                         <div class="col-md-3">
