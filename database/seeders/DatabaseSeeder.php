@@ -12,6 +12,7 @@ use Database\Seeders\Reservas\nacionalidadesesSeeder;
 use Database\Seeders\Reservas\NacionalidadesSeeder;
 use Database\Seeders\Reservas\PoliticaDeCumplimientosSeeder;
 use Database\Seeders\Reservas\TipoPagosSeeder;
+use Database\Seeders\Users\ConfiguracionImagenesSeeder;
 use Database\Seeders\Users\RolPermissionSeeder;
 use Illuminate\Database\Seeder;
 
@@ -25,6 +26,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        $this->call(ConfiguracionImagenesSeeder::class);
         $this->call(NacionalidadesSeeder::class);
         $this->call(RolsSeeder::class);
         $this->call(RolPermissionSeeder::class);

@@ -30,7 +30,7 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::user()->hasRole('cliente')) {
-            return redirect()->route('cliente.perfil');
+            return redirect()->route('cliente.paquetes');
         }
         $reservas = Reservas::where('fecha_reserva', date('Y-m-d'))->get();
         $equipos = Equipos::all();

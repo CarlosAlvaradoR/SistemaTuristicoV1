@@ -1,6 +1,8 @@
 PAQUETES
 
     USERS
+    php artisan make:livewire UsuariosAdmin/Usuarios/Config/Config
+
     php artisan make:livewire UsuariosAdmin/Usuarios/MostrarUsuarios
 
     php artisan make:livewire UsuariosAdmin/Usuarios/MostrarRoles

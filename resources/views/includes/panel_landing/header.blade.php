@@ -27,7 +27,7 @@
                                                 <li><a href="#" class="bold">{{ Auth::user()->name }}<i
                                                             class="ti-angle-down"></i></a>
                                                     <ul class="submenu">
-                                                        <li><a href="{{ route('cliente.perfil') }}">Mi Perfil</a></li>
+                                                        <li><a href="{{ route('mi.perfil.de.usuario') }}">Mi Perfil</a></li>
                                                         <li><a href="{{ route('cliente.paquetes') }}">Mis Paquetes</a>
                                                         </li>
                                                         <li><a href="{{ route('logout') }}"

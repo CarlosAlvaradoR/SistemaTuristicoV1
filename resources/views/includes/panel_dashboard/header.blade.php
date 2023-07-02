@@ -1,7 +1,8 @@
 <header class="site-header">
     <div class="container-fluid">
-
+        
         <a href="#" class="site-logo">
+
             <img class="hidden-md-down" src="{{ asset('dashboard_assets/img/logo-2.png') }}" alt="">
             <img class="hidden-lg-up" src="{{ asset('dashboard_assets/img/logo-2-mob.png') }}" alt="">
         </a>
@@ -182,8 +183,8 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
                             <a href="{{ route('mi.perfil.de.usuario') }}" class="dropdown-item" href="#"><span
                                     class="font-icon glyphicon glyphicon-user"></span>Mi Perfil</a>
-                            <a class="dropdown-item" href="#"><span
-                                    class="font-icon glyphicon glyphicon-cog"></span>Settings</a>
+                            <a class="dropdown-item" href="{{ route('configuración.del.sistema') }}"><span
+                                    class="font-icon glyphicon glyphicon-cog"></span>Configuración del Sistema</a>
                             <a class="dropdown-item" href="#"><span
                                     class="font-icon glyphicon glyphicon-question-sign"></span>Help</a>
                             <div class="dropdown-divider"></div>
