@@ -35,6 +35,27 @@ class RolPermissionSeeder extends Seeder
 
 
 
+        /** PERMISOS DEL MÓDULO RESERVAS */
+        Permission::firstOrCreate(['name' => 'crear-editar-reservas']);
+        Permission::firstOrCreate(['name' => 'ver-interfaz-de-reservas-generales']);
+        Permission::firstOrCreate(['name' => 'llenar-solicitud-de-devolucion']);
+        Permission::firstOrCreate(['name' => 'ver-informacion-de-pagos']);
+        Permission::firstOrCreate(['name' => 'ver-interfaz-de-solicitudes-generales']);
+        Permission::firstOrCreate(['name' => 'ver-interfaz-de-devoluciones-generales']);
+        Permission::firstOrCreate(['name' => 'ver-crear-editar-eliminar-criterios-medicos']);
+        Permission::firstOrCreate(['name' => 'ver-crear-editar-eliminar-eventos-de-postergacion']);
+        Permission::firstOrCreate(['name' => 'ver-crear-editar-eliminar-tipos-de-pagos']);
+        Permission::firstOrCreate(['name' => 'ver-reportes-en general-de-reservas']);
+        Permission::firstOrCreate(['name' => 'ver-crear-editar-eliminar-politica-de-cumplimiento-de-reserva']);
+        Permission::firstOrCreate(['name' => 'ver-y-manipular-comprobantes']);
+        
+
+
+
+
+
+
+
 
         /** PERMISOS DEL MÓDULO VIAJES */
         Permission::firstOrCreate(['name' => 'ver-interfaz-de-viajes']);
