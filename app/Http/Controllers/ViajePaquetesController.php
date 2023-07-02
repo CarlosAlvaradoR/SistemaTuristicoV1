@@ -153,6 +153,7 @@ class ViajePaquetesController extends Controller
 
     public function mostrarTodosLosViajes()
     {
+        return abort(404);
         return view('viajes_admin.ver_todo.ver_todo');
     }
 
