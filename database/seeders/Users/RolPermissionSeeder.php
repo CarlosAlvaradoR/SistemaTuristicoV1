@@ -17,6 +17,13 @@ class RolPermissionSeeder extends Seeder
      */
     public function run()
     {
+        /** PERMISOS DEL MÓDULO USUARIOS */
+        Permission::firstOrCreate(['name' => 'administrar-configuracion-del-sistema']);
+        Permission::firstOrCreate(['name' => 'administrar-usuarios-del-sistema']);
+        Permission::firstOrCreate(['name' => 'administrar-roles-del-sistema']);
+
+        
+        
         /** PERMISOS DEL MÓDULO PAQUETES */
         Permission::firstOrCreate(['name' => 'ver-interfaz-de-paquetes-turisticos']);
         Permission::firstOrCreate(['name' => 'crear-paquetes-turisticos']);
