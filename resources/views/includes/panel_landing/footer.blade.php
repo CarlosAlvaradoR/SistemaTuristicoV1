@@ -1,4 +1,12 @@
 <footer class="footer">
+    @php
+        use App\Models\ConfiguracionImagenes;
+        
+        $imagenGrande = ConfiguracionImagenes::find(1);
+        
+        $imagenPequeña = ConfiguracionImagenes::find(2);
+    @endphp
+
     <div class="footer_top">
         <div class="container">
             <div class="row">
@@ -6,7 +14,12 @@
                     <div class="footer_widget">
                         <div class="footer_logo">
                             <a href="#">
-                                <img src="{{ asset('landing_assets/img/footer_logo.png') }}" alt="">
+                                @if ($imagenGrande->ruta_de_imagen)
+                                    <img src="{{ asset('/' . $imagenGrande->ruta_de_imagen) }}" alt=""
+                                        height="41" width="138">
+                                @else
+                                    <img src="{{ asset('landing_assets/img/footer_logo.png') }}" alt="">
+                                @endif
                             </a>
                         </div>
                         <p>5th flora, 700/D kings road, green <br> lane New York-1782 <br>
@@ -83,32 +96,38 @@
                         <div class="instagram_feed">
                             <div class="single_insta">
                                 <a href="#">
-                                    <img src="{{ asset('landing_assets/img/instagram/1.png') }}" height="75" width="75" alt="">
+                                    <img src="{{ asset('landing_assets/img/instagram/1.png') }}" height="75"
+                                        width="75" alt="">
                                 </a>
                             </div>
                             <div class="single_insta">
                                 <a href="#">
-                                    <img src="{{ asset('landing_assets/img/instagram/2.png') }}" height="75" width="75" alt="">
+                                    <img src="{{ asset('landing_assets/img/instagram/2.png') }}" height="75"
+                                        width="75" alt="">
                                 </a>
                             </div>
                             <div class="single_insta">
                                 <a href="#">
-                                    <img src="{{ asset('landing_assets/img/instagram/3.png') }}" height="75" width="75" alt="">
+                                    <img src="{{ asset('landing_assets/img/instagram/3.png') }}" height="75"
+                                        width="75" alt="">
                                 </a>
                             </div>
                             <div class="single_insta">
                                 <a href="#">
-                                    <img src="{{ asset('landing_assets/img/instagram/4.png') }}" height="75" width="75" alt="">
+                                    <img src="{{ asset('landing_assets/img/instagram/4.png') }}" height="75"
+                                        width="75" alt="">
                                 </a>
                             </div>
                             <div class="single_insta">
                                 <a href="#">
-                                    <img src="{{ asset('landing_assets/img/instagram/5.png') }}" height="75" width="75" alt="">
+                                    <img src="{{ asset('landing_assets/img/instagram/5.png') }}" height="75"
+                                        width="75" alt="">
                                 </a>
                             </div>
                             <div class="single_insta">
                                 <a href="#">
-                                    <img src="{{ asset('landing_assets/img/instagram/6.png') }}" height="75" width="75" alt="">
+                                    <img src="{{ asset('landing_assets/img/instagram/6.png') }}" height="75"
+                                        width="75" alt="">
                                 </a>
                             </div>
                         </div>

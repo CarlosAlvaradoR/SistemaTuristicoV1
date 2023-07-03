@@ -1,5 +1,14 @@
 <!-- header-start -->
 <header>
+    @php
+        use App\Models\ConfiguracionImagenes;
+        
+        $imagenGrande = ConfiguracionImagenes::find(1);
+        
+        $imagenPequeña = ConfiguracionImagenes::find(2);
+    @endphp
+
+
     <div class="header-area ">
         <div id="sticky-header" class="main-header-area">
             <div class="container-fluid">
@@ -8,7 +17,12 @@
                         <div class="col-xl-2 col-lg-2">
                             <div class="logo">
                                 <a href="/">
-                                    <img src="{{ asset('landing_assets/img/logo.png') }}" alt="">
+                                    @if ($imagenGrande->ruta_de_imagen)
+                                        <img src="{{ asset('/'. $imagenGrande->ruta_de_imagen) }}" alt="" height="41" width="138">
+                                    @else
+                                        <img src="{{ asset('landing_assets/img/logo.png') }}" alt="">
+                                    @endif
+
                                 </a>
                             </div>
                         </div>
@@ -27,7 +41,8 @@
                                                 <li><a href="#" class="bold">{{ Auth::user()->name }}<i
                                                             class="ti-angle-down"></i></a>
                                                     <ul class="submenu">
-                                                        <li><a href="{{ route('mi.perfil.de.usuario') }}">Mi Perfil</a></li>
+                                                        <li><a href="{{ route('mi.perfil.de.usuario') }}">Mi Perfil</a>
+                                                        </li>
                                                         <li><a href="{{ route('cliente.paquetes') }}">Mis Paquetes</a>
                                                         </li>
                                                         <li><a href="{{ route('logout') }}"
@@ -41,8 +56,9 @@
                                                     </ul>
                                                 </li>
                                             @else
-                                                <li><a class="" href="{{ route('home') }}"><i class="fa fa-arrow-right"></i>
-                                                    Ir a Administración</a></li>
+                                                <li><a class="" href="{{ route('home') }}"><i
+                                                            class="fa fa-arrow-right"></i>
+                                                        Ir a Administración</a></li>
                                             @endif
                                         @else
                                             <li><a href="#">Cuenta <i class="ti-angle-down"></i></a>
