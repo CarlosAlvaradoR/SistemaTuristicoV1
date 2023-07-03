@@ -5,7 +5,8 @@
                 <div style="background-color: #00a8ff" class="container-fluid">
                     <div class="row">
                         <br>
-                        <h5 style="text-align: center; color: aliceblue"><b>LOGO PRINCIPAL DEL SISTEMA</b></h5>
+                        <h5 style="text-align: center; color: aliceblue"><b>LOGO PRINCIPAL DEL SISTEMA - MAXIMIZADO</b>
+                        </h5>
                     </div>
                 </div>
 
@@ -18,7 +19,9 @@
                                     <label><b>Imagen Maximizada del Sistema</b></label>
                                     <label class="form-label" for="dni">Subir Imagen Maximizada</label>
                                     <input type="file" wire:model.defer="imagenMaximizada" class="form-control"
-                                        name="dni" id="dni" value="" required>
+                                        value="" required>
+                                    <small class="text-primary" wire:loading wire:target="imagenMaximizada">Cargando
+                                        Imagen ...</small>
                                     @error('imagenMaximizada')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
@@ -54,28 +57,9 @@
                                 <img src="{{ asset('dashboard_assets/img/logo-2.png') }}" height="170" width="170">
                             @endif
                         </div>
-                    </div>
-                    
-                    <div class="col-lg-12">
-                        <div class="col-lg-6">
-                            <form action="">
-                                <fieldset class="form-group">
-                                    <label><b>Imagen Minimizada del Sistema</b></label>
-                                    <label class="form-label" for="dni">Subir Imagen Minimizada</label>
-                                    <input type="file" class="form-control" name="dni" id="dni"
-                                        value="" required placeholder="Ingrese DNI del Usuario">
-                                    <small class="text-danger">aaa</small>
-                                </fieldset>
-                            </form>
 
-                        </div>
-                        <div class="col-lg-3">
-                            <h1>HH</h1>
-                        </div>
-                        <div class="col-lg-3">
-                            <h1>HH</h1>
-                        </div>
                     </div>
+
 
                 </div>
 
@@ -85,90 +69,74 @@
         </div>
         <!--.col- -->
 
-        <div class="col-lg-6 col-lg-pull-6 col-md-6 col-sm-6">
+        <div class="col-lg-12 col-lg-pull-12 col-md-12 col-sm-12">
             <section class="box-typical">
                 <div style="background-color: #00a8ff" class="container-fluid">
                     <div class="row">
                         <br>
-                        <h5 style="text-align: center; color: aliceblue"><b>Cambiar Contraseña</b></h5>
+                        <h5 style="text-align: center; color: aliceblue"><b>LOGO PRINCIPAL DEL SISTEMA - MINIMIZADO</b>
+                        </h5>
                     </div>
                 </div>
 
                 <div class="container-fluid">
                     <br>
-                    @if (session('notificationSuccess'))
-                        <div class="alert alert-success alert-fill alert-close alert-dismissible fade in"
-                            role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            {{ session('notificationSuccess') }}
-                        </div>
-                    @endif
-
-                    @if (session('notification'))
-                        <div class="alert alert-danger alert-fill alert-close alert-dismissible fade in" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            {{ session('notification') }}
-                        </div>
-                    @endif
 
 
-                    <form action="{{ route('perfil.change') }}" method="post">
-                        @csrf
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <fieldset class="form-group">
-                                    <label class="form-label" for="password_actual"><b>PASSWORD ACTUAL</b></label>
-                                    <input type="password" class="form-control" name="password_actual"
-                                        id="password_actual" required placeholder="Ingrese su Contraseña Actual">
+                    <form wire:submit.prevent="saveImagenMinimizada">
+                        <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                <form action="">
+                                    <fieldset class="form-group">
+                                        <label><b>Imagen Minimizada del Sistema</b></label>
+                                        <label class="form-label" for="dni">Subir Imagen Minimizada</label>
+                                        <input type="file" class="form-control" wire:model.defer="imagenMinimizada"
+                                            required placeholder="Ingrese DNI del Usuario">
 
-                                    @if ($errors->first('password_actual'))
-                                        <small class="text-danger">{{ $errors->first('password_actual') }}</small>
+                                        <small class="text-primary" wire:loading wire:target="imagenMinimizada">Cargando
+                                            Imagen ....</small>
+                                        @error('imagenMinimizada')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </fieldset>
+                                    <button type="submit" class="btn btn-primary btn-rounded">Actualizar
+                                    </button>
+
+                                </form>
+
+                            </div>
+                            @if ($imagenMinimizada)
+                                <div class="col-lg-3">
+                                    <label for="">Previsualización de la Imagen</label>
+                                    <img src="{{ $imagenMinimizada->temporaryUrl() }}" height="170" width="170">
+                                </div>
+                            @endif
+
+                            <div class="col-lg-3">
+                                @if (count($imagenes) > 0)
+                                    @if ($imagenes[1]->ruta_de_imagen)
+                                        <label for="">Imagen Por Defecto</label>
+                                        <img src="{{ asset('/' . $imagenes[1]->ruta_de_imagen) }}" height="170"
+                                            width="170">
+                                    @else
+                                        <label for="">Imagen Por Defecto</label>
+                                        <img src="{{ asset('dashboard_assets/img/logo-2-mob.png') }}" height="170"
+                                            width="170">
                                     @endif
-                                </fieldset>
+                                @else
+                                    <label for="">Imagen Por Defecto</label>
+                                    <img src="{{ asset('dashboard_assets/img/logo-2-mob.png') }}" height="170"
+                                        width="170">
+                                @endif
                             </div>
-                            <div class="col-lg-12">
-                                <fieldset class="form-group">
-                                    <label class="form-label" for="password"><b>CONTRASEÑA NUEVA</b></label>
-                                    <input type="password" class="form-control" name="password" id="password" required
-                                        placeholder="Ingrese su Contraseña Nueva">
-                                    @if ($errors->first('password'))
-                                        <small class="text-danger">{{ $errors->first('password') }}</small>
-                                    @endif
-                                </fieldset>
-                            </div>
-                            <div class="col-lg-12">
-                                <fieldset class="form-group">
-                                    <label class="form-label" for="password_confirmation"><b>CONFIRMAR CONTRASEÑA
-                                            NUEVA</b></label>
-                                    <input type="password" class="form-control" name="password_confirmation"
-                                        id="password_confirmation" required placeholder="Repita Su Contraseña Nueva">
-                                    @if ($errors->first('password_confirmation'))
-                                        <small
-                                            class="text-danger">{{ $errors->first('password_confirmation') }}</small>
-                                    @endif
-                                </fieldset>
-                            </div>
-                            <div class="col-lg-12" style="text-align: center">
-                                <button type="submit" class="btn btn-primary btn-rounded">Actualizar
-                                    Contraseña</button>
-                            </div>
+                            
                         </div>
+
                     </form>
 
                 </div>
 
-                <ul class="profile-links-list">
-
-                    <li class="divider"></li>
-                    <li>
-                        <i class="font-icon font-icon-pdf-fill"></i>
-                        <a href="#!">Exportar PDF</a>
-                    </li>
-                </ul>
+                
             </section>
             <!--.box-typical-->
 

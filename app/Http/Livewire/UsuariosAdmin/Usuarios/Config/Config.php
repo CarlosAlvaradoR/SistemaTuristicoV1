@@ -20,13 +20,18 @@ class Config extends Component
         return view('livewire.usuarios-admin.usuarios.config.config', compact('imagenes'));
     }
 
-    public function saveImageMaximized(){
+    public function saveImageMaximized()
+    {
         $this->validate(
             [
                 'imagenMaximizada' => 'required|image',
             ]
         );
         $imagen = ConfiguracionImagenes::findOrFail(1);
+        if ($imagen->ruta_de_imagen) {
+            $eliminar = unlink($imagen->ruta_de_imagen);
+        }
+        
         $imagen->ruta_de_imagen = 'storage/' . $this->imagenMaximizada->store('Configuracion', 'public');
         $imagen->save();
 
@@ -34,4 +39,22 @@ class Config extends Component
     }
 
 
+    public function saveImagenMinimizada()
+    {
+        $this->validate(
+            [
+                'imagenMinimizada' => 'required|image',
+            ]
+        );
+
+        $imagen = ConfiguracionImagenes::findOrFail(2);
+        if ($imagen->ruta_de_imagen) {
+            $eliminar = unlink($imagen->ruta_de_imagen);
+        }
+
+        $imagen->ruta_de_imagen = 'storage/' . $this->imagenMinimizada->store('Configuracion', 'public');
+        $imagen->save();
+
+        $this->reset(['imagenMinimizada']);
+    }
 }

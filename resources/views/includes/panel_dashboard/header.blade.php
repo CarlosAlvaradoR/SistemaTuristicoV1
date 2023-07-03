@@ -1,10 +1,25 @@
 <header class="site-header">
-    <div class="container-fluid">
+    @php
+        use App\Models\ConfiguracionImagenes;
         
-        <a href="#" class="site-logo">
+        $imagenGrande = ConfiguracionImagenes::find(1);
+        
+        $imagenPequeña = ConfiguracionImagenes::find(2);
+    @endphp
+    <div class="container-fluid">
 
-            <img class="hidden-md-down" src="{{ asset('dashboard_assets/img/logo-2.png') }}" alt="">
-            <img class="hidden-lg-up" src="{{ asset('dashboard_assets/img/logo-2-mob.png') }}" alt="">
+        <a href="/home" class="site-logo">
+            @if ($imagenGrande->ruta_de_imagen)
+                <img class="hidden-md-down" src="{{ asset('/' . $imagenGrande->ruta_de_imagen) }}" alt="">
+            @else
+                <img class="hidden-md-down" src="{{ asset('dashboard_assets/img/logo-2.png') }}" alt="">
+            @endif
+
+            @if ($imagenPequeña->ruta_de_imagen)
+                <img class="hidden-lg-up" src="{{ asset('/' . $imagenPequeña->ruta_de_imagen) }}" alt="">
+            @else
+                <img class="hidden-lg-up" src="{{ asset('dashboard_assets/img/logo-2-mob.png') }}" alt="">
+            @endif
         </a>
 
         <button id="show-hide-sidebar-toggle" class="show-hide-sidebar">
@@ -100,14 +115,16 @@
                                     <div class="dropdown-menu-messages-list">
                                         <a href="#" class="mess-item">
                                             <span class="avatar-preview avatar-preview-32"><img
-                                                    src="{{ asset('dashboard_assets/img/photo-64-2.jpg') }}" alt=""></span>
+                                                    src="{{ asset('dashboard_assets/img/photo-64-2.jpg') }}"
+                                                    alt=""></span>
                                             <span class="mess-item-name">Tim Collins</span>
                                             <span class="mess-item-txt">Morgan was bothering about
                                                 something!</span>
                                         </a>
                                         <a href="#" class="mess-item">
                                             <span class="avatar-preview avatar-preview-32"><img
-                                                    src="{{ asset('dashboard_assets/img/avatar-2-64.png') }}" alt=""></span>
+                                                    src="{{ asset('dashboard_assets/img/avatar-2-64.png') }}"
+                                                    alt=""></span>
                                             <span class="mess-item-name">Christian Burton</span>
                                             <span class="mess-item-txt">Morgan was bothering about something!
                                                 Morgan was bothering about something.</span>
@@ -173,7 +190,7 @@
                         </div>
                     </div>
 
-                    
+
 
                     <div class="dropdown user-menu">
                         <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown"
@@ -183,8 +200,12 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
                             <a href="{{ route('mi.perfil.de.usuario') }}" class="dropdown-item" href="#"><span
                                     class="font-icon glyphicon glyphicon-user"></span>Mi Perfil</a>
-                            <a class="dropdown-item" href="{{ route('configuración.del.sistema') }}"><span
-                                    class="font-icon glyphicon glyphicon-cog"></span>Configuración del Sistema</a>
+
+                            @if (auth()->user()->getRoleNames()->first() == 'admin')
+                                <a class="dropdown-item" href="{{ route('configuración.del.sistema') }}"><span
+                                        class="font-icon glyphicon glyphicon-cog"></span>Configuración del Sistema</a>
+                            @endif
+
                             <a class="dropdown-item" href="#"><span
                                     class="font-icon glyphicon glyphicon-question-sign"></span>Help</a>
                             <div class="dropdown-divider"></div>
@@ -429,7 +450,7 @@
                             </div>
                         </div>
                         <!--.help-dropdown-->
-                        
+
                         <div class="site-header-search-container">
                             <form class="site-header-search closed">
                                 <input type="text" placeholder="Search" />

@@ -4,12 +4,9 @@
 @section('contenido')
     <header class="section-header">
         <div class="tbl">
-            <h3>Reservar</h3>
+            <h3>Mi Perfil</h3>
             <ol class="breadcrumb breadcrumb-simple">
-                <li><a href="#">Paquetes</a></li>
-                <li><a href="#">Reservar</a></li>
-                <li><a href="#">Condiciones</a></li>
-                <li class="active">Cliente</li>
+                <li><a href="">Mi Perfil de Usuario</a></li>
             </ol>
         </div>
     </header>
@@ -32,7 +29,7 @@
                         <div class="profile-card-name">{{ strtoupper($persona->nombre . ' ' . $persona->apellidos) }}
                         </div>
                         {{-- <div class="profile-card-status"> - ll</div> --}}
-                        <div class="profile-card-location">{{ $userRole }}</div>
+                        <div class="profile-card-location">{{ strtoupper($userRole) }}</div>
                         {{-- <button type="button" class="btn btn-rounded">Follow</button> --}}
 
                     </div>
@@ -222,14 +219,14 @@
 
                     </div>
 
-                    <ul class="profile-links-list">
+                    {{-- <ul class="profile-links-list">
 
                         <li class="divider"></li>
                         <li>
                             <i class="font-icon font-icon-pdf-fill"></i>
                             <a href="#!">Exportar PDF</a>
                         </li>
-                    </ul>
+                    </ul> --}}
                 </section>
                 <!--.box-typical-->
 
