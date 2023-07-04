@@ -6,24 +6,36 @@ use Livewire\Component;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Illuminate\Validation\Rule;
+use Livewire\WithPagination;
 
 class MostrarRoles extends Component
 {
-    public $title = 'CREAR ROLES';
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+
+    
+    public $title = 'CREAR ROLES', $search = '', $cant = 10;
     public $idRol, $nombreDeRol;
     public $selectedPermissions = [];
 
 
     public function resetUI()
     {
-        $this->reset(['title','nombreDeRol', 'selectedPermissions', 'idRol']);
+        $this->reset(['title', 'nombreDeRol', 'selectedPermissions', 'idRol']);
     }
 
     public function render()
     {
-        $roles = Role::all();
-        $permisos = Permission::all();
-
+        $roles = Role::where('name', 'like', '%' . $this->search . '%')
+            ->where('name', '!=', 'cliente')
+            ->paginate($this->cant);
+        // dd($roles);
+        //$permisos = Permission::all();
+        $permisos = Permission::where('name', '!=', 'administrar-configuracion-del-sistema')
+            ->where('name', '!=', 'administrar-usuarios-del-sistema')
+            ->where('name', '!=', 'administrar-roles-del-sistema')
+            ->get();
+        // dd($permisos);
         return view('livewire.usuarios-admin.usuarios.mostrar-roles', compact('roles', 'permisos'));
     }
 
@@ -31,16 +43,16 @@ class MostrarRoles extends Component
     {
         $val = '';
         if ($this->idRol) {
-            $val = ','.$this->idRol.'';
+            $val = ',' . $this->idRol . '';
         }
 
         $this->validate(
             [
-                'nombreDeRol' => 'required|unique:roles,name'.$val,
+                'nombreDeRol' => 'required|unique:roles,name' . $val,
                 'selectedPermissions' => 'required|array|min:1',
             ]
         );
-        
+
         $title = 'MUY BIEN !';
         $icon = 'success';
         $text = 'Rol y Permisos Registrados Correctamente.';

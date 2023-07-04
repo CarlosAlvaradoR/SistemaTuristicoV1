@@ -9,16 +9,17 @@
                         <div class="col-md-6">
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control" placeholder="Buscar Proveedores">
+                                <input type="text" wire:model="search" class="form-control"
+                                    placeholder="Buscar roles">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 {{-- <label for="exampleFormControlSelect1">Example select</label> --}}
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                    <option>Mostrar 20</option>
-                                    <option>Mostrar 20</option>
-                                    <option>Mostrar 20</option>
+                                <select wire:model="cant" class="form-control" id="exampleFormControlSelect1">
+                                    <option value="10">Mostrar 10</option>
+                                    <option value="20">Mostrar 20</option>
+                                    <option value="50">Mostrar 50</option>
                                 </select>
                             </div>
                         </div>
@@ -63,6 +64,7 @@
 
                         </tbody>
                     </table>
+                    {{ $roles->links() }}
                 </div>
             </div>
         </div>
@@ -99,38 +101,46 @@
                                 </fieldset>
                             </div>
 
-                            {{-- <div class="col-md-3 col-sm-6">
-                                
-                                <div class="checkbox-bird">
-                                    <input type="checkbox" id="check-bird-9" checked="">
-                                    <label for="check-bird-9">Standart</label>
-                                </div>
-                                <div class="checkbox-bird grey">
-                                    <input type="checkbox" id="check-bird-10" checked="">
-                                    <label for="check-bird-10">Grey</label>
-                                </div>
-                                <div class="checkbox-bird green">
-                                    <input type="checkbox" id="check-bird-11" checked="">
-                                    <label for="check-bird-11">Green</label>
-                                </div>
-                                <div class="checkbox-bird purple">
-                                    <input type="checkbox" id="check-bird-12" checked="">
-                                    <label for="check-bird-12">Purple</label>
-                                </div>
-                                <div class="checkbox-bird orange">
-                                    <input type="checkbox" id="check-bird-13" checked="">
-                                    <label for="check-bird-13">Orange</label>
-                                </div>
-                                <div class="checkbox-bird red">
-                                    <input type="checkbox" id="check-bird-14" checked="">
-                                    <label for="check-bird-14">Red</label>
-                                </div>
-                            </div> --}}
                             <div class="col-lg-12">
                                 <fieldset class="form-group">
-                                    <label class="form-label" for="rol"><b>PERMISOS DEL ROL
-                                        </b></label>
+                                    <label class="form-label" for="rol">
+                                        <b>PERMISOS DEL ROL</b>
+                                    </label>
+
                                     @foreach ($permisos as $permission)
+                                        @switch($permission->name)
+                                            @case('ver-interfaz-de-paquetes-turisticos')
+                                                <b>
+                                                    <h6>*) PAQUETES TURÍSTICOS</h6>
+                                                </b>
+                                            @break
+
+                                            @case('crear-editar-reservas')
+                                                <b>
+                                                    <h6>*) MÓDULO RESERVAS</h6>
+                                                </b>
+                                            @break
+
+                                            @case('ver-interfaz-de-viajes')
+                                                <b>
+                                                    <h6>*) MÓDULO DE VIAJES</h6>
+                                                </b>
+                                            @break
+
+                                            @case('ver-interfaz-de-proveedores')
+                                                <b>
+                                                    <h6>*) MÓDULO DE PEDIDOS</h6>
+                                                </b>
+                                            @break
+
+                                            @case('ver-interfaz-de-equipos')
+                                                <b>
+                                                    <h6>*) MÓDULO DE EQUIPOS</h6>
+                                                </b>
+                                            @break
+
+                                            @default
+                                        @endswitch
                                         <div class="checkbox-bird">
                                             <input type="checkbox" id="permission{{ $permission->id }}"
                                                 value="{{ $permission->id }}" wire:model="selectedPermissions">

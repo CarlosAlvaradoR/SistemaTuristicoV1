@@ -7,19 +7,40 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="form-group has-search">
-                                <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control" placeholder="Buscar Proveedores">
+                            <div class="typeahead-container">
+                                <div class="typeahead-field">
+                                    <span class="typeahead-query">
+                                        <input id="fa fa-search form-control-feedback" class="form-control"
+                                            wire:model.defer="search" wire:loading.attr="disabled" placeholder="Buscar por DNI" wire:model.defer="dni"
+                                            type="search" autocomplete="off">
+                                    </span>
+                                    <span class="typeahead-button">
+                                        <button type="button" wire:click="search">
+                                            <span class="font-icon-search"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                                @error('search')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 {{-- <label for="exampleFormControlSelect1">Example select</label> --}}
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                    <option>Mostrar 20</option>
-                                    <option>Mostrar 20</option>
-                                    <option>Mostrar 20</option>
+                                <select wire:model="cant" class="form-control" id="exampleFormControlSelect1">
+                                    <option value="50">Mostrar 50</option>
+                                    <option value="100">Mostrar 100</option>
+                                    <option value="200">Mostrar 200</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                {{-- <label for="exampleFormControlSelect1">Example select</label> --}}
+                                <button class="btn btn-primary" title="Restaurar Todo" wire:click="resetUI">
+                                    <i class="fas fa-trash-restore-alt"></i>
+                                </button>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -37,6 +58,7 @@
                             <tr>
                                 <th scope="col">Nº</th>
                                 <th scope="col">USUARIO</th>
+                                <th scope="col">DNI</th>
                                 <th scope="col">EMAIL</th>
                                 <th scope="col">ROL</th>
                                 <th scope="col">Acciones</th>
@@ -45,8 +67,9 @@
                         <tbody>
                             @foreach ($usuarios as $index => $u)
                                 <tr>
-                                    <td>{{ $index + 1 }}</td> 
+                                    <td>{{ $index + 1 }}</td>
                                     <td>{{ $u->nombre_persona . ' ' . $u->apellidos }}</td>
+                                    <td>{{ $u->dni }}</td>
                                     <td>{{ $u->email }}</td>
                                     <td>
                                         {{ strtoupper($u->nombres_roles) }}
@@ -58,11 +81,11 @@
                                             class="btn btn-warning btn-sm">
                                             <span class="fa fa-pencil-square-o"></span>
                                         </button>
-                                        <button title="Eliminar Cuenta Bancaria del Proveedor"
+                                        {{-- <button title="Eliminar Cuenta Bancaria del Proveedor"
                                             wire:click="deleteConfirm({{ $u->id }})" wire:loading.attr="disabled"
                                             class="btn btn-danger btn-sm">
                                             <span class="fa fa-trash"></span>
-                                        </button>
+                                        </button> --}}
 
                                     </td>
                                 </tr>
@@ -71,6 +94,7 @@
 
                         </tbody>
                     </table>
+                    {{ $usuarios->links() }}
                 </div>
             </div>
         </div>
@@ -200,7 +224,7 @@
                                 <fieldset class="form-group">
                                     <label class="form-label" for="rol"><b>ROL DE
                                             USUARIO</b></label>
-                                    <select class="form-control" wire:model.defer="rol" id="rol">
+                                    <select class="form-control" wire:model.defer="rol">
 
                                         @foreach ($roles as $r)
                                             <option value="{{ $r }}">{{ strtoupper($r) }}</option>

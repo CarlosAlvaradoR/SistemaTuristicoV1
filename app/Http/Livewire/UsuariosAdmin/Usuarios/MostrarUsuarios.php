@@ -7,11 +7,17 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Livewire\WithPagination;
 use Livewire\Component;
 
 class MostrarUsuarios extends Component
 {
-    public $title = 'CREAR USUARIOS';
+
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+
+
+    public $title = 'CREAR USUARIOS', $search = '', $cant = 50;
     public $idPersona, $dni, $nombre, $apellidos, $genero, $telefono, $dirección;
 
     public $idUser, $name, $email, $password, $password_confirmation;
@@ -20,6 +26,12 @@ class MostrarUsuarios extends Component
 
     public function resetUI()
     {
+        $this->reset([
+            'title', 'search', 'cant', 'idPersona', 'dni', 'nombre', 'apellidos',
+            'genero', 'telefono', 'dirección', 'idUser', 'name', 'email', 'password', 'password_confirmation',
+            'rol'
+        ]);
+        $this->resetValidation();
     }
     public function render()
     {
@@ -30,20 +42,44 @@ class MostrarUsuarios extends Component
         //     ->select('u.*', 'p.nombre', 'p.apellidos', 'u.email')
 
         //     ->get();
-        $usuarios = Personas::select(
-            'personas.nombre AS nombre_persona',
-            'personas.apellidos',
-            'users.name AS nombre_usuario',
-            'users.email',
-            'users.id',
-            DB::raw('GROUP_CONCAT(roles.name SEPARATOR \', \') AS nombres_roles')
-        )
-            ->leftJoin('users', 'personas.id', '=', 'users.persona_id')
-            ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
-            ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
-            ->groupBy('users.id')
-            //->where('roles.name', 'admin')
-            ->get();
+        if ($this->search) {
+            $usuarios = Personas::select(
+                'personas.nombre AS nombre_persona',
+                'personas.apellidos',
+                'personas.dni',
+                'users.name AS nombre_usuario',
+                'users.email',
+                'users.id',
+                DB::raw('GROUP_CONCAT(roles.name SEPARATOR \', \') AS nombres_roles')
+            )
+                ->leftJoin('users', 'personas.id', '=', 'users.persona_id')
+                ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+                ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                ->groupBy('users.id')
+                ->where('personas.nombre', $this->search)
+                ->orWhere('personas.apellidos', $this->search)
+                ->orWhere('personas.dni', $this->search)
+                //->where('roles.name', '!=', 'cliente')
+                ->paginate($this->cant);
+        } else {
+            $usuarios = Personas::select(
+                'personas.nombre AS nombre_persona',
+                'personas.apellidos',
+                'personas.dni',
+                'users.name AS nombre_usuario',
+                'users.email',
+                'users.id',
+                DB::raw('GROUP_CONCAT(roles.name SEPARATOR \', \') AS nombres_roles')
+            )
+                ->leftJoin('users', 'personas.id', '=', 'users.persona_id')
+                ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+                ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                ->groupBy('users.id')
+                ->where('roles.name', '!=', 'cliente')
+                ->paginate($this->cant);
+        }
+
+
 
 
         // foreach ($personasConUsuariosYRoles as $persona) {
@@ -57,6 +93,17 @@ class MostrarUsuarios extends Component
         // $roles = Role::all();
         // dd($personasConUsuariosYRoles);
         return view('livewire.usuarios-admin.usuarios.mostrar-usuarios', compact('usuarios', 'roles'));
+    }
+
+
+    public function search()
+    {
+        $this->validate(
+            [
+                'search' => 'required|min:3'
+            ]
+        );
+        $this->render();
     }
 
     public function CrearUsuario()
@@ -93,7 +140,7 @@ class MostrarUsuarios extends Component
         );
         $rol = $this->validate(
             [
-                'rol' => 'required'
+                'rol' => 'required|string|min:1'
             ]
         );
         $rol = Role::findByName($this->rol);
@@ -112,7 +159,7 @@ class MostrarUsuarios extends Component
             if ($this->password) {
                 $usuarios->password = Hash::make($this->password);
             }
-            
+
             $personas->dni = $this->dni;
             $personas->nombre = $this->nombre;
             $personas->apellidos =  $this->apellidos;
@@ -125,6 +172,7 @@ class MostrarUsuarios extends Component
             $usuarios->syncRoles([$rol]);
 
             $text = 'Información de Usuario Actualizada Correctamente.';
+            $this->emit('close-modal');
         } else {
             $rol = Role::findByName($this->rol);
 
@@ -169,5 +217,9 @@ class MostrarUsuarios extends Component
         $this->dirección = $personas->dirección;
 
         $this->emit('show-modal');
+    }
+
+    public function deleteConfirm($idUsuario){
+
     }
 }
