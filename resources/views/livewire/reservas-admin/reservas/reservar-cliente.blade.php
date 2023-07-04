@@ -100,7 +100,7 @@
                                     <span class="badge badge-default font-weight-bold">PAQUETE</span>
                                 </div>
                                 <div class="col-md-9">
-                                    <span class="badge badge-default">Semana Santa</span>
+                                    <span class="badge badge-default">{{$paquete->nombre}}</span>
                                 </div>
                             </div>
                             <div class="row">
@@ -108,7 +108,7 @@
                                     <span class="badge badge-default font-weight-bold">COSTO DEL PAQUETE</span>
                                 </div>
                                 <div class="col-md-9">
-                                    <span class="label label-pill label-success">S/. 1700.00</span>
+                                    <span class="label label-pill label-success">{{$paquete->precio}}</span>
                                 </div>
                             </div>
                         </div>

@@ -69,7 +69,7 @@
                         <div class="col-md-5">
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" wire:model="search" class="form-control"
+                                <input type="text" class="form-control"
                                     placeholder="Buscar serie">
                             </div>
                         </div>
