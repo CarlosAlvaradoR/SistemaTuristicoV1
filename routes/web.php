@@ -30,13 +30,13 @@ Route::get('/contacto', function () {
     return view('paquetes_publico.contacto');
 })->name('contacto');
 
-Route::get('/personas', function () {
+// Route::get('/personas', function () {
     
-    $personas = User::all();
-    dd($personas);
+//     $personas = User::all();
+//     dd($personas);
 
-    return view('personas', compact('personas'));
-})->name('personas');
+//     return view('personas', compact('personas'));
+// })->name('personas');
 
 /*Route::get('/crear/role', function () {
     

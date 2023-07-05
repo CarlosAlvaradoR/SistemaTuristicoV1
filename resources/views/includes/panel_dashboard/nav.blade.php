@@ -20,12 +20,12 @@
                 </ul>
             </li>
 
-            <li class="green">
+            {{-- <li class="green">
                 <a href="{{ route('personas') }}">
                     <i class="font-icon glyphicon glyphicon-send"></i>
                     <span class="lbl">Personas</span>
                 </a>
-            </li>
+            </li> --}}
 
             <li class="blue with-sub">
                 <span>

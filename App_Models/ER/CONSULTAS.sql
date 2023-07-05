@@ -17,7 +17,12 @@ SELECT * FROM users;
 /*
 MÓDULO DE PAQUETES
 */
-
+SELECT sc.numero_serie, sp.numero_de_serie, tc.nombre_tipo FROM pagos p 
+INNER JOIN serie_pagos sp on p.serie_pagos = sp.id
+INNER JOIN serie_comprobantes sc on sc.id = sp.serie_comprobantes_id
+INNER JOIN tipo_comprobantes tc on tc.id = sc.tipo_comprobantes_id
+WHERE p.reserva_id = 1;
+SELECT * FROM reservas;
 -- SELECCIONAR LOS 6 PAQUETES MÁS COMPRADOS PARA LA PARTE PÚBLICA (INICIO)
 SELECT pt.nombre, pt.precio, pt.imagen_principal, pt.slug, pt.created_at
 (SELECT COUNT(r.paquete_id) FROM reservas r WHERE r.paquete_id = pt.id) as cantidad,

@@ -160,14 +160,8 @@
                         </div>
                         <div class="col-xs-4 col-sm-4 col-md-4">
                             <div class="receipt-left">
-                                <h5><b>COMPROBANTE:</b></h5>
-                                @if (count($pagos_aceptados))
-                                    <h6>{{ $pagos_aceptados[0]->numero_boleta }}</h6>
-                                @else
-                                    <h6 style="color: red">Estamos Procesando la Información. Vuelva a consultar más tarde. Gracias por su
-                                        comprensión. Si el problema persiste, comuníquese con nosotros para ayudarlo.</h6>
-                                @endif
-
+                                <h5><b>{{$numeroSerie[0]->nombre_tipo}}</b></h5>
+                                <h6>{{$numeroSerie[0]->numero_serie}} - {{$numeroSerie[0]->numero_de_serie}}</h6>
                             </div>
                         </div>
                     </div>

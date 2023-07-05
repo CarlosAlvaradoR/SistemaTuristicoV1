@@ -182,7 +182,18 @@ class ReservasController extends Controller
         INNER JOIN boletas b on b.id = p.boleta_id
         WHERE r.id = " . $reserva->id . " AND p.estado_pago = 'ACEPTADO'");
         //return $pagos_aceptados;
-        return view('reservar_admin.reportes.comprobante', compact('informacion', 'pagos_aceptados'));
+        $pagos = Pagos::where('reserva_id', $reserva->id)
+            ->limit(1)
+            ->get();
+        $numeroSerie = DB::table('pagos as p')
+            ->join('serie_pagos as sp', 'p.serie_pagos', '=', 'sp.id')
+            ->join('serie_comprobantes as sc', 'sc.id', '=', 'sp.serie_comprobantes_id')
+            ->join('tipo_comprobantes as tc', 'tc.id', '=', 'sc.tipo_comprobantes_id')
+            ->select('sc.numero_serie', 'sp.numero_de_serie', 'tc.nombre_tipo')
+            ->where('p.reserva_id', $reserva->id)
+            ->limit(1)
+            ->get();
+        return view('reservar_admin.reportes.comprobante', compact('informacion', 'pagos_aceptados', 'numeroSerie'));
     }
 
     public function mostrarPoliticas()
@@ -190,7 +201,8 @@ class ReservasController extends Controller
         return view('reservar_admin.politica_de_reservas.index');
     }
 
-    public function mostrarComprobantesEntregados(){
+    public function mostrarComprobantesEntregados()
+    {
         return view('reservar_admin.comprobantes.index');
     }
     public function mostrarComprobante(Pagos $pago)
@@ -230,13 +242,13 @@ class ReservasController extends Controller
         }*/
         // $fecha1 = Carbon::parse(date('Y-m-d'));
         // $fecha2 = Carbon::parse(date('Y-m-d'));
-        
+
         // $diff = $fecha1->diffInDays($fecha2);
         // return $diff;
         // if ($fecha1 > $fecha2) {
         //     $diff = -$diff; // Hacer que la diferencia sea negativa
         // }
-        
+
         return view('reservar_admin.solicitudes.index', compact('reserva'));
     }
 
