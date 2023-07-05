@@ -5,9 +5,11 @@ namespace App\Http\Livewire\ReservasPublicas\Reservas;
 use App\Models\PaquetesTuristicos;
 use App\Models\Reservas\Boletas;
 use App\Models\Reservas\Clientes;
+use App\Models\Reservas\CuentaPagos;
 use App\Models\Reservas\Pagos;
 use App\Models\Reservas\Reservas;
 use App\Models\Reservas\SeriePagos;
+use App\Models\Reservas\TipoPagos;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -26,6 +28,7 @@ class FormularioReservas extends Component
     public $cliente; //Datos del Cliente
     public $fecha_reserva, $observacion, $monto; //Para Insertar Reservas
     public $numero_operacion, $archivo_pago, $tipo_pago, $fecha_de_pago; //Para insertar en Pagos
+    public $idCuentaPagos, $cuenta_seleccionada;
     public $precio = 0, $paquete_id = 0, $paquete;
     public $encontrado = false;
 
@@ -36,8 +39,9 @@ class FormularioReservas extends Component
         'monto' => 'required|regex:/^\d+(\.\d{1,2})?$/',
         'numero_operacion' => 'required|min:3|max:25',
         'archivo_pago' => 'required',
-        'tipo_pago' => 'required|numeric|min:2',
+        //'tipo_pago' => 'required|numeric|min:2',
         'fecha_de_pago' => 'required|date',
+        'cuenta_seleccionada' => 'required|string|min:1'
     ];
 
 
@@ -61,6 +65,15 @@ class FormularioReservas extends Component
         return view('livewire.reservas-publicas.reservas.formulario-reservas', compact('tipo_pagos'));
     }
 
+    public function selectedPayment(CuentaPagos $cuentaPagos)
+    {
+        // dd($cuentaPagos);
+        $tipo_de_pago = TipoPagos::findOrFail($cuentaPagos->tipo_pagos_id);
+        $this->idCuentaPagos = $cuentaPagos->id;
+
+        $this->cuenta_seleccionada = $tipo_de_pago->nombre_tipo_pago.' - '.$cuentaPagos->numero_cuenta;
+    }
+
     public function reservar()
     {
         $this->validate();
@@ -82,7 +95,7 @@ class FormularioReservas extends Component
             $estado = 1;
         }
         $serie_pagos = SeriePagos::RegistrarSiguienteNumeroComprobante(1);
-        
+
         $reserva = Reservas::create([
             'fecha_reserva' => $this->fecha_reserva,
             'observacion' => $this->observacion,
@@ -101,8 +114,8 @@ class FormularioReservas extends Component
         $boletas->numero_boleta = 'BOL-' . $boletas->id;
         $boletas->save();
 
-       
-        
+
+
 
         if ($this->archivo_pago) {
             $filename = uniqid() . '_' . time() . rand(1, 1000);
@@ -121,11 +134,11 @@ class FormularioReservas extends Component
             'estado_pago' => 'EN PROCESO', //EN VERIFICACIÓN DE ACEPTACIÓN
             'ruta_archivo_pago' => $ruta,
             'reserva_id' => $reserva->id,
-            'cuenta_pagos_id' => $this->tipo_pago, //TIPO DE PAGO PARA INSERTAR
+            'cuenta_pagos_id' => $this->idCuentaPagos, //TIPO DE PAGO PARA INSERTAR
             'boleta_id' => $boletas->id,
             'serie_pagos' => $serie_pagos->id
         ]);
-        
+
         redirect()->route('cliente.paquetes');
     }
 
@@ -137,5 +150,4 @@ class FormularioReservas extends Component
             'text' => $text
         ]);
     }
-    
 }

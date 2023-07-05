@@ -10,7 +10,7 @@
     <!-- Start Sample Area -->
     <section class="sample-text-area">
         <div class="container box_1170">
-            <h3 class="text-heading">{{$paquete->nombre}}</h3>
+            {{-- <h3 class="text-heading">{{$paquete->nombre}}</h3> --}}
             @livewire('reservas-publicas.reservas.formulario-reservas', [$paquete])
             
 

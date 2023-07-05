@@ -2,6 +2,9 @@
 
 @section('content')
     <!-- slider_area_start -->
+    @php
+        use Carbon\Carbon;
+    @endphp
     <div class="slider_area">
         <div class="slider_active owl-carousel">
             <div class="single_slider  d-flex align-items-center slider_bg_1 overlay">
@@ -61,7 +64,7 @@
                                 <input type="text" placeholder="Escribe lugar">
                             </div>
                             <div class="input_field">
-                                <input id="datepicker" autocomplete="off" placeholder="Date">
+                                <input id="datepicker" autocomplete="off" placeholder="Fecha">
                             </div>
                             <div class="input_field">
                                 <select>
@@ -110,12 +113,11 @@
                                     </a>
                                     <p>Apto a Reservación</p>
                                     <div class="rating_days d-flex justify-content-between">
-                                        <span class="d-flex justify-content-center align-items-center">
-                                            <a href="#">(20 Review)</a>
-                                        </span>
                                         <div class="days">
-                                            <i class="fa fa-clock-o"></i>
-                                            <a href="#">5 Days</a>
+                                            <a href="#">
+                                               <i class="fa fa-clock-o"></i> 
+                                                <p>{{ Carbon::parse($paquete->created_at)->diffForHumans() }}</p>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

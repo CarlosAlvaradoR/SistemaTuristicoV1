@@ -5,7 +5,7 @@ use App\Http\Livewire\ShowPaquetes;
 use App\Models\Personas;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\User;
 Auth::routes(['verify' => true]);
 
 /*Route::get('/cmd/{command}', function ($command) {
@@ -31,7 +31,10 @@ Route::get('/contacto', function () {
 })->name('contacto');
 
 Route::get('/personas', function () {
-    $personas = Personas::all();
+    
+    $personas = User::all();
+    dd($personas);
+
     return view('personas', compact('personas'));
 })->name('personas');
 

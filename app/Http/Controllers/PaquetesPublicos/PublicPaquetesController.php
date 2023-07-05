@@ -22,6 +22,7 @@ class PublicPaquetesController extends Controller
                 'pt.precio',
                 'pt.imagen_principal',
                 'pt.slug',
+                'pt.created_at',
                 DB::raw('(SELECT COUNT(r.paquete_id) FROM reservas r WHERE r.paquete_id = pt.id) as cantidad'),
                 DB::raw('(SELECT COUNT(*) FROM foto_galerias as fg WHERE fg.paquete_id = pt.id) as cantidad_fotos')
             )
@@ -46,7 +47,7 @@ class PublicPaquetesController extends Controller
             ->where('visibilidad', 'PUBLICO')
             ->having('cantidad_fotos', '>', 0)
             ->paginate(12);
-
+        // dd($paquetes);
         return view('paquetes_publico.destinos', compact('paquetes'));
     }
 

@@ -19,7 +19,7 @@ MÓDULO DE PAQUETES
 */
 
 -- SELECCIONAR LOS 6 PAQUETES MÁS COMPRADOS PARA LA PARTE PÚBLICA (INICIO)
-SELECT pt.nombre, pt.precio, pt.imagen_principal, pt.slug,
+SELECT pt.nombre, pt.precio, pt.imagen_principal, pt.slug, pt.created_at
 (SELECT COUNT(r.paquete_id) FROM reservas r WHERE r.paquete_id = pt.id) as cantidad,
 (SELECT COUNT(*) FROM foto_galerias fg WHERE fg.paquete_id = pt.id) as cantidad_fotos
 FROM paquetes_turisticos pt

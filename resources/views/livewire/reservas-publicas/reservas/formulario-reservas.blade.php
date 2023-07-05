@@ -1,5 +1,15 @@
 <div>
-
+    <aside class="single_sidebar_widget post_category_widget">
+        <h4 class="widget_title">Paquete: {{ $paquetesTuristicos->nombre }}</h4>
+        <ul class="list cat-list">
+            <li>
+                <a href="#" class="d-flex">
+                    <p>Precio: </p>
+                    <p> S/. {{ $paquetesTuristicos->precio }}</p>
+                </a>
+            </li>
+        </ul>
+    </aside>
     <div class="comment-form">
         <h4>Datos de la Reserva</h4>
 
@@ -18,7 +28,7 @@
                     <div class="form-group">
                         <label for="tipo_pago">Fecha que desea Reservar</label>
                         <input class="form-control" wire:model.defer="fecha_reserva" name="fecha_reserva"
-                            id="fecha_reserva" type="date" min="{{date('Y-m-d')}}">
+                            id="fecha_reserva" type="date" min="{{ date('Y-m-d') }}">
                         @error('fecha_reserva')
                             <h6 class="text-danger">{{ $message }}</h6>
                         @enderror
@@ -26,9 +36,9 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="tipo_pago">Costo Predefinido del Paquete</label>
-                        <input class="form-control" value="S/. " disabled name="monto_real" id="monto_real"
-                            type="text" placeholder="Monto del Paquete">
+                        <label for="tipo_pago" class="font-weigth-bold">Costo Predefinido del Paquete S/.</label>
+                        <input class="form-control" value="{{ $paquetesTuristicos->precio }}" disabled name="monto_real"
+                            id="monto_real" type="text" placeholder="Monto del Paquete">
 
                     </div>
                 </div>
@@ -90,11 +100,50 @@
                     </div>
                 </div>
 
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="tipo_pago">Tipo de Pago Selecionado</label>
+                        <input class="form-control" wire:model="cuenta_seleccionada" type="text" readonly>
+                        @error('cuenta_seleccionada')
+                            <h6 class="text-danger">{{ $message }}</h6>
+                        @enderror
+                    </div>
+                </div>
+
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="tipo_pago">Tipo de Pago</label>
                         <br>
-                        <div>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Tipo de Pago</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($tipo_pagos as $index => $tp)
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>
+                                            {{ $tp->nombre_tipo_pago }} -
+                                            {{ $tp->numero_cuenta }}
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-primary btn-sm"
+                                                wire:click="selectedPayment({{ $tp->id }})"
+                                                wire:loading.attr="disabled" title="Seleccionar Método de Pago">
+                                                <i class="fa fa-mouse-pointer"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <!--$tp->id-->
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                        {{-- <div>
                             <select class="form-control" wire:model="tipo_pago" id="tipo_pago">
                                 <option value="" selected>---Seleccione el Tipo de Pago---</option>
                                 @foreach ($tipo_pagos as $tp)
@@ -104,7 +153,7 @@
 
                             </select>
 
-                        </div>
+                        </div> --}}
 
                         @error('tipo_pago')
                             <br><br>

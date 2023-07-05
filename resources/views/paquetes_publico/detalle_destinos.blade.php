@@ -13,6 +13,18 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 posts-list">
+                    <aside class="single_sidebar_widget post_category_widget">
+                        <h4 class="widget_title">Paquete: {{ $paquete->nombre }}</h4>
+                        <ul class="list cat-list">
+                            <li>
+                                <a href="#" class="d-flex">
+                                    <p>Precio: </p>
+                                    <p> S/. {{ $paquete->precio }}</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </aside>
+
                     <div class="single-post">
                         <div class="blog_details">
                             <h2>
@@ -49,8 +61,8 @@
                                                         height="450" />
                                                     <div class="carousel-caption">
                                                         <!--<h4>
-                                                                                                                                                                                                                                                                    First Thumbnail label
-                                                                                                                                                                                                                                                                </h4>-->
+                                                                                                                                                                                                                                                                        First Thumbnail label
+                                                                                                                                                                                                                                                                    </h4>-->
                                                         <p>
                                                             {{ $g->descripcion }}
                                                         </p>
@@ -133,22 +145,22 @@
                                         function convertirMesEspañol($mes)
                                         {
                                             $meses = [
-                                                'January' => 'enero',
-                                                'February' => 'febrero',
-                                                'March' => 'marzo',
-                                                'April' => 'abril',
-                                                'May' => 'mayo',
-                                                'June' => 'junio',
-                                                'July' => 'julio',
-                                                'August' => 'agosto',
-                                                'September' => 'septiembre',
-                                                'October' => 'octubre',
-                                                'November' => 'noviembre',
-                                                'December' => 'diciembre',
+                                                'January' => 'Enero',
+                                                'February' => 'Febrero',
+                                                'March' => 'Marzo',
+                                                'April' => 'Abril',
+                                                'May' => 'Mayo',
+                                                'June' => 'Junio',
+                                                'July' => 'Julio',
+                                                'August' => 'Agosto',
+                                                'September' => 'Septiembre',
+                                                'October' => 'Octubre',
+                                                'November' => 'Noviembre',
+                                                'December' => 'Diciembre',
                                             ];
                                             $dia = date('d');
                                             $año = date('Y');
-                                            return $dia.' de '. $meses[$mes].' del '. $año;
+                                            return $dia . ' de ' . $meses[$mes] . ' del ' . $año;
                                         }
                                     @endphp
                                     <p>{{ convertirMesEspañol(\Carbon\Carbon::now()->format('F')) }}</p>
