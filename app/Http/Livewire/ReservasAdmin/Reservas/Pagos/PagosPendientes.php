@@ -26,8 +26,8 @@ class PagosPendientes extends Component
 
 
     protected $rules = [
-        'monto_pago' => 'required',
-        'fecha_de_pago' => 'required',
+        'monto_pago' => 'required||regex:/^\d+(\.\d{1,2})?$/',
+        'fecha_de_pago' => 'required|date',
         'estado_de_pago' => 'required|in:EN PROCESO,ACEPTADO,NO ACEPTADO',
         'tipo_de_pago' => 'required|numeric|min:1'
     ];
