@@ -33,8 +33,8 @@
                             {!! $conf->direccion_del_mapa_en_google_maps !!}
                         @else
                             <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3934.8561138943655!2d-77.53092518565303!3d-9.521228102652996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91a90d12eb234bf1%3A0xc860f66d7ad8abd9!2sUNIVERSIDAD%20NACIONAL%20SANTIAGO%20ANT%C3%9ANEZ%20DE%20MAYOLO!5e0!3m2!1ses!2spe!4v1675462860289!5m2!1ses!2spe"
-                                width="1100" height="600" style="border:0;" allowfullscreen="" loading="lazy"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3904.4911169063557!2d-77.13169412851069!3d-11.87085151288376!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105d386059805ff%3A0x2d68d01e88a2cc6b!2sPuente%20piedra!5e0!3m2!1ses!2spe!4v1688679403497!5m2!1ses!2spe"
+                                width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy"
                                 referrerpolicy="no-referrer-when-downgrade">
                             </iframe>
                         @endif

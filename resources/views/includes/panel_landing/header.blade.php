@@ -2,10 +2,13 @@
 <header>
     @php
         use App\Models\ConfiguracionImagenes;
+        use App\Models\ConfiguracionesGenerales;
         
         $imagenGrande = ConfiguracionImagenes::find(1);
         
         $imagenPequeña = ConfiguracionImagenes::find(2);
+        
+        $conf = ConfiguracionesGenerales::find(1);
     @endphp
 
 
@@ -18,7 +21,8 @@
                             <div class="logo">
                                 <a href="/">
                                     @if ($imagenGrande->ruta_de_imagen)
-                                        <img src="{{ asset('/'. $imagenGrande->ruta_de_imagen) }}" alt="" height="41" width="138">
+                                        <img src="{{ asset('/' . $imagenGrande->ruta_de_imagen) }}" alt=""
+                                            height="41" width="138">
                                     @else
                                         <img src="{{ asset('landing_assets/img/logo.png') }}" alt="">
                                     @endif
@@ -75,7 +79,14 @@
                         <div class="col-xl-4 col-lg-4 d-none d-lg-block">
                             <div class="social_wrap d-flex align-items-center justify-content-end">
                                 <div class="number">
-                                    <p> <i class="fa fa-phone"></i> 10(256)-928 256</p>
+                                    <p> <i class="fa fa-phone"></i>
+                                        @if ($conf->telefono_de_contacto_de_la_empresa)
+                                            {{ $conf->telefono_de_contacto_de_la_empresa }}
+                                        @else
+                                            10(256)-928 256
+                                        @endif
+
+                                    </p>
                                 </div>
                                 <div class="social_links d-none d-xl-block">
                                     <ul>

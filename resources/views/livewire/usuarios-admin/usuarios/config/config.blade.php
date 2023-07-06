@@ -240,52 +240,70 @@
                 </div>
 
                 <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="exampleInput">Nombre de la Empresa</label>
-                                <input type="text" class="form-control maxlength-simple" id="exampleInput"
-                                    placeholder="First Name" maxlength="15">
-                                <small class="text-muted">Max length 15, simple</small>
-                            </fieldset>
+                    <form wire:submit.prevent="saveConfiguracionesGenerales">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="exampleInput">Nombre de la Empresa</label>
+                                    <input type="text" wire:model.defer="nombre_de_la_empresa"
+                                        class="form-control maxlength-simple" id="exampleInput"
+                                        placeholder="ej: LA PERLA" maxlength="15">
+                                    @error('nombre_de_la_empresa')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="exampleInputEmail1">Dirección de la Empresa</label>
+                                    <input type="text" wire:model.defer="direccion_de_la_empresa"
+                                        class="form-control maxlength-custom-message" id="exampleInputEmail1"
+                                        placeholder="ej: AV. CENTENARIO - HUARAZ - ÁNCASH" maxlength="20">
+                                    @error('direccion_de_la_empresa')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="exampleInputPassword1">Teléfono de Contacto</label>
+                                    <input type="text" wire:model.defer="telefono_de_contacto_de_la_empresa"
+                                        class="form-control maxlength-always-show" id="exampleInputPassword1"
+                                        placeholder="ej: +51 987988096" maxlength="10">
+                                    @error('telefono_de_contacto_de_la_empresa')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="exampleInputEmail1">Correo de Contacto</label>
+                                    <input type="email" wire:model.defer="correo_de_contacto_de_la_empresa"
+                                        class="form-control maxlength-custom-message" id="exampleInputEmail1"
+                                        placeholder="ej: lasperlas@corporation.org" maxlength="20">
+                                    @error('correo_de_contacto_de_la_empresa')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-8">
+                                <fieldset class="form-group">
+                                    <label class="form-label" for="exampleInputPassword1">Dirección del Mapa en Google
+                                        Maps</label>
+                                    <textarea class="form-control" wire:model.defer="direccion_del_mapa_en_google_maps" id="exampleFormControlTextarea1"
+                                        rows="5" placeholder="ej: <iframe src='https://maps/puente-piedra'><iframe>"></textarea>
+                                    @error('direccion_del_mapa_en_google_maps')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-12">
+                                <button type="submit" class="btn btn-primary btn-rounded">Actualizar</button>
+                            </div>
+
                         </div>
-                        <div class="col-lg-4">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="exampleInputEmail1">Dirección de la Empresa</label>
-                                <input type="email" class="form-control maxlength-custom-message"
-                                    id="exampleInputEmail1" placeholder="Enter email" maxlength="20">
-                                <small class="text-muted">Max length 20, custom message</small>
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-4">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="exampleInputPassword1">Teléfono de Contacto</label>
-                                <input type="password" class="form-control maxlength-always-show"
-                                    id="exampleInputPassword1" placeholder="Password" maxlength="10">
-                                <small class="text-muted">Max length 10, always show</small>
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-4">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="exampleInputEmail1">Correo de Contacto</label>
-                                <input type="email" class="form-control maxlength-custom-message"
-                                    id="exampleInputEmail1" placeholder="Enter email" maxlength="20">
-                                <small class="text-muted">Max length 20, custom message</small>
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-8">
-                            <fieldset class="form-group">
-                                <label class="form-label" for="exampleInputPassword1">Dirección del Mapa en Google Maps</label>
-                                <input type="password" class="form-control maxlength-always-show"
-                                    id="exampleInputPassword1" placeholder="Password" maxlength="10">
-                                <small class="text-muted">Max length 10, always show</small>
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-12">
-                            <button class="btn btn-primary btn-rounded">Actualizar</button>
-                        </div>
-                        
-                    </div>
+                    </form>
+
                 </div>
 
             </section>

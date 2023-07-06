@@ -1,12 +1,12 @@
 /**
 	MÓDULO DE USUARIOS
 */
-SELECT * FROM configuracion_imagenes;
+SELECT * FROM configuraciones_generales;
 
 SELECT p.nombre, p.apellidos, u.email, u.id FROM personas p
 INNER JOIN users u on u.persona_id = p.id;
 
-SELECT * FROM users;
+SELECT * FROM configuraciones_generales;
 
 
 

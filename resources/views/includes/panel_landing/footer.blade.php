@@ -1,10 +1,13 @@
 <footer class="footer">
     @php
         use App\Models\ConfiguracionImagenes;
+        use App\Models\ConfiguracionesGenerales;
         
         $imagenGrande = ConfiguracionImagenes::find(1);
         
         $imagenPequeña = ConfiguracionImagenes::find(2);
+        
+        $conf = ConfiguracionesGenerales::find(1);
     @endphp
 
     <div class="footer_top">
@@ -22,9 +25,25 @@
                                 @endif
                             </a>
                         </div>
-                        <p>5th flora, 700/D kings road, green <br> lane New York-1782 <br>
-                            <a href="#">+10 367 826 2567</a> <br>
-                            <a href="#">contact@carpenter.com</a>
+                        <p>
+                            @if ($conf->direccion_de_la_empresa)
+                                {{ $conf->direccion_de_la_empresa }} <br>
+                            @else
+                                5th flora, 700/D kings road, green <br> lane New York-1782 <br>
+                            @endif
+
+                            @if ($conf->telefono_de_contacto_de_la_empresa)
+                                <a href="#">{{ $conf->telefono_de_contacto_de_la_empresa }}</a> <br>
+                            @else
+                                <a href="#">+10 367 826 2567</a> <br>
+                            @endif
+                            
+                            @if ($conf->correo_de_contacto_de_la_empresa)
+                                <a href="#">{{ $conf->correo_de_contacto_de_la_empresa }}</a> <br>
+                            @else
+                                <a href="#">contact@carpenter.com</a>
+                            @endif
+
                         </p>
                         <div class="socail_links">
                             <ul>
