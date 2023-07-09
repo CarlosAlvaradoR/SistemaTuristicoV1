@@ -122,7 +122,10 @@
 </head>
 
 <body>
-    <div class="col-md-12">
+    <div class="col-md-12" style="text-align: center">
+        <button type="button" id="crearpdf" class="btn btn-primary">Imprimir</button>
+    </div>
+    <div class="col-md-12" id="contenedor">
         <div class="row">
             <div class="receipt-main col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
                 <div class="row">
@@ -160,7 +163,7 @@
                                     @else
                                         PERÚ-ÁNCASH-HUARAZ
                                     @endif
-                                    
+
                                     <i class="fa fa-location-arrow"></i>
                                 </p>
                             </div>
@@ -259,6 +262,24 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let boton = document.getElementById("crearpdf");
+            let container = document.getElementById("contenedor");
+
+            boton.addEventListener("click", event => {
+                event.preventDefault();
+                boton.style.display = "none";
+                window.print();
+            }, false);
+
+            container.addEventListener("click", event => {
+                boton.style.display = "initial";
+            }, false);
+
+        }, false);
+    </script>
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
