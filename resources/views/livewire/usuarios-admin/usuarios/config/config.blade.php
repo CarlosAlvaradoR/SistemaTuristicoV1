@@ -247,7 +247,7 @@
                                     <label class="form-label" for="exampleInput">Nombre de la Empresa</label>
                                     <input type="text" wire:model.defer="nombre_de_la_empresa"
                                         class="form-control maxlength-simple" id="exampleInput"
-                                        placeholder="ej: LA PERLA" maxlength="15">
+                                        placeholder="ej: LA PERLA">
                                     @error('nombre_de_la_empresa')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
@@ -258,7 +258,7 @@
                                     <label class="form-label" for="exampleInputEmail1">Dirección de la Empresa</label>
                                     <input type="text" wire:model.defer="direccion_de_la_empresa"
                                         class="form-control maxlength-custom-message" id="exampleInputEmail1"
-                                        placeholder="ej: AV. CENTENARIO - HUARAZ - ÁNCASH" maxlength="20">
+                                        placeholder="ej: AV. CENTENARIO - HUARAZ - ÁNCASH">
                                     @error('direccion_de_la_empresa')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
@@ -269,7 +269,7 @@
                                     <label class="form-label" for="exampleInputPassword1">Teléfono de Contacto</label>
                                     <input type="text" wire:model.defer="telefono_de_contacto_de_la_empresa"
                                         class="form-control maxlength-always-show" id="exampleInputPassword1"
-                                        placeholder="ej: +51 987988096" maxlength="10">
+                                        placeholder="ej: +51 987988096">
                                     @error('telefono_de_contacto_de_la_empresa')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
@@ -280,7 +280,7 @@
                                     <label class="form-label" for="exampleInputEmail1">Correo de Contacto</label>
                                     <input type="email" wire:model.defer="correo_de_contacto_de_la_empresa"
                                         class="form-control maxlength-custom-message" id="exampleInputEmail1"
-                                        placeholder="ej: lasperlas@corporation.org" maxlength="20">
+                                        placeholder="ej: lasperlas@corporation.org">
                                     @error('correo_de_contacto_de_la_empresa')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror

@@ -136,12 +136,33 @@
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6 text-right">
                             <div class="receipt-right">
-                                <h5>TRAVELO</h5>
-                                <p>+51 935459929 <i class="fa fa-phone"></i></p>
+                                @if ($conf->nombre_de_la_empresa)
+                                    <h5>{{ $conf->nombre_de_la_empresa }}</h5>
+                                @else
+                                    <h5>TRAVELO</h5>
+                                @endif
+
+                                <p>
+                                    @if ($conf->telefono_de_contacto_de_la_empresa)
+                                        {{ $conf->telefono_de_contacto_de_la_empresa }}
+                                    @else
+                                        +51 939883388
+                                    @endif
+
+                                    <i class="fa fa-phone"></i>
+                                </p>
                                 {{-- <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__"
                                         data-cfemail="43202c2e33222d3a03242e222a2f6d202c2e">[email&#160;protected]</a>
                                     <i class="fa fa-envelope-o"></i></p> --}}
-                                <p>PERÚ-ÁNCASH-HUARAZ <i class="fa fa-location-arrow"></i></p>
+                                <p>
+                                    @if ($conf->direccion_de_la_empresa)
+                                        {{ $conf->direccion_de_la_empresa }}
+                                    @else
+                                        PERÚ-ÁNCASH-HUARAZ
+                                    @endif
+                                    
+                                    <i class="fa fa-location-arrow"></i>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -160,8 +181,8 @@
                         </div>
                         <div class="col-xs-4 col-sm-4 col-md-4">
                             <div class="receipt-left">
-                                <h5><b>{{$numeroSerie[0]->nombre_tipo}}</b></h5>
-                                <h6>{{$numeroSerie[0]->numero_serie}} - {{$numeroSerie[0]->numero_de_serie}}</h6>
+                                <h5><b>{{ $numeroSerie[0]->nombre_tipo }}</b></h5>
+                                <h6>{{ $numeroSerie[0]->numero_serie }} - {{ $numeroSerie[0]->numero_de_serie }}</h6>
                             </div>
                         </div>
                     </div>

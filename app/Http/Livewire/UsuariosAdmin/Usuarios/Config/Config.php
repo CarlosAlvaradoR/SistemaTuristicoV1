@@ -90,6 +90,9 @@ class Config extends Component
         $imagen->save();
 
         $this->reset(['imagenMaximizada']);
+
+        return redirect()->route('configuración.del.sistema');
+
     }
 
 
@@ -110,5 +113,8 @@ class Config extends Component
         $imagen->save();
 
         $this->reset(['imagenMinimizada']);
+
+        return redirect()->route('configuración.del.sistema');
+        
     }
 }
