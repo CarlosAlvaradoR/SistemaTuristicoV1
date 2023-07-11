@@ -123,7 +123,7 @@
 
 <body>
     <div class="col-md-12" style="text-align: center">
-        <button type="button" id="crearpdf" class="btn btn-primary">Imprimir</button>
+        <a type="button" id="crearpdf" style="display: initial;" class="btn btn-primary">Imprimir</a>
     </div>
     <div class="col-md-12" id="contenedor">
         <div class="row">
@@ -234,7 +234,7 @@
 
                                 <th colspan="5">Total</th>
 
-                                <td colspan="1"><b>{{ number_format($monto, 2) }}</b></td>
+                                <td colspan="1"><b>S/. {{ number_format($monto, 2) }}</b></td>
 
                             </tr>
                         </tfoot>
