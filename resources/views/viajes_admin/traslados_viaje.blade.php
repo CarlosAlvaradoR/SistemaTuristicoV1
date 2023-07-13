@@ -26,11 +26,13 @@
                 <h3>Viajes</h3>
                 <ol class="breadcrumb breadcrumb-simple">
                     <li><a href="#">Paquetes</a></li>
-                    <li><a href="#">Semana Santa</a></li>
+                    <li><a href="#">{{$paquete->nombre}}</a></li>
+                    <li><a href="#">Viaje</a></li>
+                    <li><a href="#">{{$viaje->cod_string}}</a></li>
                     <li class="active">Traslados del Viaje</li>
                 </ol>
             </div>
         </header>
 
-        @livewire('viajes-admin.traslados-viaje.traslados-viaje', [$paquete, $idViaje])
+        @livewire('viajes-admin.traslados-viaje.traslados-viaje', [$paquete, $viaje->slug])
 @endsection

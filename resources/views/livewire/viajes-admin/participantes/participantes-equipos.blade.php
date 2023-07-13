@@ -97,7 +97,7 @@
                         <h5 class="card-title">Lista de Equipos Registrados</h5>
                         <div class="form-group has-search">
                             <span class="fa fa-search form-control-feedback"></span>
-                            <input type="text" class="form-control" placeholder="Buscar Cliente">
+                            <input type="text" class="form-control" placeholder="Buscar Equipo">
                         </div>
                         <table class="table table-hover">
                             <thead>
@@ -156,7 +156,7 @@
                                 <div class="col-md-8">
                                     <div class="form-group has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
-                                        <input type="text" class="form-control" placeholder="Buscar Cliente">
+                                        <input type="text" class="form-control" placeholder="Buscar Equipo">
                                     </div>
                                 </div>
                                 <div class="col-md-4">

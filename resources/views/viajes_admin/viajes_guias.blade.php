@@ -26,7 +26,7 @@
             <h3>Viajes</h3>
             <ol class="breadcrumb breadcrumb-simple">
                 <li><a href="#">Paquetes</a></li>
-                <li><a href="#">Semana Santa</a></li>
+                <li><a href="#">Viaje</a></li>
                 <li class="active">Guías</li>
             </ol>
         </div>

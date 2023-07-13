@@ -27,8 +27,9 @@
                 <h3>Viajes</h3>
                 <ol class="breadcrumb breadcrumb-simple">
                     <li><a href="#">Paquetes</a></li>
-                    <li><a href="#">Semana Santa</a></li>
-                    <li><a href="#">Semana Santa</a></li>
+                    <li><a href="#">{{$paquete->nombre}}</a></li>
+                    <li><a href="#">Viaje</a></li>
+                    <li><a href="#">{{$viaje->slug}}</a></li>
                     <li class="active">Participantes</li>
                 </ol>
             </div>

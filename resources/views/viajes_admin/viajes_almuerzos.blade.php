@@ -26,11 +26,13 @@
             <h3>Viajes</h3>
             <ol class="breadcrumb breadcrumb-simple">
                 <li><a href="#">Paquetes</a></li>
-                <li><a href="#">Viajes</a></li>
+                <li><a href="#">{{ $paquete->nombre }}</a></li>
+                <li><a href="#">Viaje</a></li>
+                <li><a href="#">{{ $viaje->cod_string }}</a></li>
                 <li class="active">Almuerzos del Viaje</li>
             </ol>
         </div>
     </header>
-    
-    @livewire('viajes-admin.almuerzos-celebracion.almuerzos', [$paquete, $idViaje])
+
+    @livewire('viajes-admin.almuerzos-celebracion.almuerzos', [$paquete, $viaje->slug])
 @endsection

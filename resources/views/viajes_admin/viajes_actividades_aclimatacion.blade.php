@@ -21,17 +21,19 @@
             color: #aaa;
         }
     </style>
- 
-        <header class="section-header">
-            <div class="tbl">
-                <h3>Viajes</h3>
-                <ol class="breadcrumb breadcrumb-simple">
-                    <li><a href="#">Paquetes</a></li>
-                    <li><a href="#">Semana Santa</a></li>
-                    <li class="active">Actividades de Aclimatación</li>
-                </ol>
-            </div>
-        </header>
 
-        @livewire('viajes-admin.actividades-aclimatacion.actividades-aclimatacion', [$paquete, $idViaje])
+    <header class="section-header">
+        <div class="tbl">
+            <h3>Viajes</h3>
+            <ol class="breadcrumb breadcrumb-simple">
+                <li><a href="#">Paquetes</a></li>
+                <li><a href="#">{{ $paquete->nombre }}</a></li>
+                <li><a href="#">Viaje</a></li>
+                <li><a href="#">{{ $viaje->cod_string }}</a></li>
+                <li class="active">Actividades de Aclimatación</li>
+            </ol>
+        </div>
+    </header>
+
+    @livewire('viajes-admin.actividades-aclimatacion.actividades-aclimatacion', [$paquete, $viaje->slug])
 @endsection

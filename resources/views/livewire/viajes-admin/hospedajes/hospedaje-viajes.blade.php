@@ -16,7 +16,7 @@
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
                                 <input type="text" class="form-control"
-                                    placeholder="Buscar Almuerzos de Celebración">
+                                    placeholder="Buscar Hospedajes">
                             </div>
                         </div>
                         <div class="col-md-3">

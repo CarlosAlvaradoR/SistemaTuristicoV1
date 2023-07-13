@@ -271,7 +271,7 @@
                         </div>
                         <div class="col-xs-4 col-sm-4 col-md-4">
                             <div class="receipt-left">
-                                <h1>TRAVELO</h1>
+                                <h1></h1>
                             </div>
                         </div>
                     </div>

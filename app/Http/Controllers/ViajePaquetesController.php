@@ -101,24 +101,26 @@ class ViajePaquetesController extends Controller
         return view('viajes_admin.viajes_participantes_entrega_equipos', compact('paquete', 'viaje', 'participante'));
     }
 
-    public function trasladoViajes(PaquetesTuristicos $paquete, $idViaje)
+    public function trasladoViajes(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
     {
-        return view('viajes_admin.traslados_viaje', compact('paquete', 'idViaje'));
+        // $viaje = ViajePaquetes::find($idViaje);
+        // dd($viaje);
+        return view('viajes_admin.traslados_viaje', compact('paquete', 'viaje'));
     }
 
-    public function viajeAlmuerzos(PaquetesTuristicos $paquete, $idViaje)
+    public function viajeAlmuerzos(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
     {
-        return view('viajes_admin.viajes_almuerzos', compact('paquete', 'idViaje'));
+        return view('viajes_admin.viajes_almuerzos', compact('paquete', 'viaje'));
     }
 
-    public function viajeBoletasPago(PaquetesTuristicos $paquete, $idViaje)
+    public function viajeBoletasPago(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
     {
-        return view('viajes_admin.viajes_boletas_de_pago', compact('paquete', 'idViaje'));
+        return view('viajes_admin.viajes_boletas_de_pago', compact('paquete', 'viaje'));
     }
 
-    public function viajeActividadesAclimatacion(PaquetesTuristicos $paquete, $idViaje)
+    public function viajeActividadesAclimatacion(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
     {
-        return view('viajes_admin.viajes_actividades_aclimatacion', compact('paquete', 'idViaje'));
+        return view('viajes_admin.viajes_actividades_aclimatacion', compact('paquete', 'viaje'));
     }
 
     public function viajeActividadesAclimatacionParticipantes(PaquetesTuristicos $paquete, $idViaje, $idActividadAclimatacion)
@@ -126,14 +128,14 @@ class ViajePaquetesController extends Controller
         return view('viajes_admin.viajes_actividades_aclimatacion_participantes', compact('paquete', 'idViaje', 'idActividadAclimatacion'));
     }
 
-    public function viajeHospedajes(PaquetesTuristicos $paquete, $idViaje)
+    public function viajeHospedajes(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
     {
-        return view('viajes_admin.viajes_hospedajes', compact('paquete', 'idViaje'));
+        return view('viajes_admin.viajes_hospedajes', compact('paquete', 'viaje'));
     }
 
-    public function viajeItinerarios(PaquetesTuristicos $paquete, $idViaje)
+    public function viajeItinerarios(PaquetesTuristicos $paquete, ViajePaquetes $viaje)
     {
-        return view('viajes_admin.viajes_itinerarios_cumplidos', compact('paquete', 'idViaje'));
+        return view('viajes_admin.viajes_itinerarios_cumplidos', compact('paquete', 'viaje'));
     }
 
     public function viajeArrieros(PaquetesTuristicos $paquete, $idViaje)
