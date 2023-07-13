@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ConfiguracionesGenerales;
+use App\Models\ConfiguracionImagenes;
 use App\Models\Paquetes\CondicionPuntualidades;
 use App\Models\Paquetes\Riesgos;
 use App\Models\PaquetesTuristicos;
@@ -194,8 +195,17 @@ class ReservasController extends Controller
             ->where('p.reserva_id', $reserva->id)
             ->limit(1)
             ->get();
+        $paquete = PaquetesTuristicos::find($reserva->paquete_id);
         $conf = ConfiguracionesGenerales::find(1);
-        return view('reservar_admin.reportes.comprobante', compact('informacion', 'pagos_aceptados', 'numeroSerie', 'conf'));
+        $confImg = ConfiguracionImagenes::find(1, ['ruta_de_imagen']);
+        return view('reservar_admin.reportes.comprobante', compact(
+            'informacion',
+            'pagos_aceptados',
+            'numeroSerie',
+            'conf',
+            'paquete',
+            'confImg'
+        ));
     }
 
     public function mostrarPoliticas()

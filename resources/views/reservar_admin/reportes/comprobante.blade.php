@@ -9,6 +9,9 @@
         {{ date('d/m/Y', strtotime($informacion[0]->fecha_reserva)) }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style type="text/css">
         body {
             background: #eee;
@@ -123,7 +126,8 @@
 
 <body>
     <div class="col-md-12" style="text-align: center">
-        <a type="button" id="crearpdf" style="display: initial;" class="btn btn-primary">Imprimir</a>
+        <a type="button" id="crearpdf" style="display: initial;" class="btn btn-primary"><i class="fas fa-print"></i>
+            Imprimir</a>
     </div>
     <div class="col-md-12" id="contenedor">
         <div class="row">
@@ -132,9 +136,16 @@
                     <div class="receipt-header">
                         <div class="col-xs-6 col-sm-6 col-md-6">
                             <div class="receipt-left">
-                                <img class="img-responsive" alt="iamgurdeeposahan"
-                                    src="https://bootdey.com/img/Content/avatar/avatar6.png"
-                                    style="width: 71px; border-radius: 43px;">
+                                @if ($confImg->ruta_de_imagen)
+                                    <img class="img-responsive" alt="iamgurdeeposahan"
+                                        src="{{ asset('$confImg->ruta_de_imagen') }}"
+                                        style="width: 71px; border-radius: 43px;">
+                                @else
+                                    <img class="img-responsive" alt="iamgurdeeposahan"
+                                        src="{{ asset('/dashboard_assets/img/logo-2-mob.png') }}"
+                                        style="width: 71px; border-radius: 43px;">
+                                @endif
+
                             </div>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6 text-right">
@@ -146,25 +157,28 @@
                                 @endif
 
                                 <p>
+                                    <i class="fa fa-phone"></i>
+
                                     @if ($conf->telefono_de_contacto_de_la_empresa)
                                         {{ $conf->telefono_de_contacto_de_la_empresa }}
                                     @else
                                         +51 939883388
                                     @endif
 
-                                    <i class="fa fa-phone"></i>
+
                                 </p>
                                 {{-- <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__"
                                         data-cfemail="43202c2e33222d3a03242e222a2f6d202c2e">[email&#160;protected]</a>
                                     <i class="fa fa-envelope-o"></i></p> --}}
                                 <p>
+                                    <i class="fa fa-location-arrow"></i>
                                     @if ($conf->direccion_de_la_empresa)
                                         {{ $conf->direccion_de_la_empresa }}
                                     @else
                                         PERÚ-ÁNCASH-HUARAZ
                                     @endif
 
-                                    <i class="fa fa-location-arrow"></i>
+
                                 </p>
                             </div>
                         </div>
@@ -231,11 +245,14 @@
                         </tbody>
                         <tfoot>
                             <tr>
+                                <th colspan="5">Costo del Paquete</th>
 
-                                <th colspan="5">Total</th>
+                                <td colspan="1"><b>S/. {{ number_format($paquete->precio, 2) }}</b></td>
+                            </tr>
+                            <tr>
+                                <th colspan="5">Total Cancelado</th>
 
                                 <td colspan="1"><b>S/. {{ number_format($monto, 2) }}</b></td>
-
                             </tr>
                         </tfoot>
                     </table>
