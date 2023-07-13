@@ -5,6 +5,10 @@
 @endsection
 
 @section('content')
+    <div class="alert alert-primary" role="alert">
+        Usted deberá de presentar lo declarado de manera física, antes de realizar la excursión. Verifique la Información
+        Registrada, con la finalidad de evitar inconvenientes.
+    </div>
     <form class="login100-form validate-form" method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -97,8 +101,8 @@
                 </div>
             @enderror
 
-            <input id="telefono" type="text" class="input100 @error('telefono') is-invalid @enderror" name="telefono"
-                value="{{ old('telefono') }}" required autocomplete="telefono" autofocus
+            <input id="telefono" type="text" class="input100 @error('telefono') is-invalid @enderror"
+                name="telefono" value="{{ old('telefono') }}" required autocomplete="telefono" autofocus
                 placeholder="Ingrese su nombre de usuario">
             <!--<input class="input100" type="text" name="username" placeholder="Enter username">-->
             <span class="focus-input100"></span>
@@ -138,11 +142,11 @@
                     </button>
                 </div>
             @enderror
-            <select id="nacionalidad" class="form-control" class="@error('nacionalidad') is-invalid @enderror" name="nacionalidad"
-                value="{{ old('nacionalidad') }}" required autocomplete="nacionalidad" autofocus>
+            <select id="nacionalidad" class="form-control" class="@error('nacionalidad') is-invalid @enderror"
+                name="nacionalidad" value="{{ old('nacionalidad') }}" required autocomplete="nacionalidad" autofocus>
                 <option selected>...Seleccione...</option>
                 @foreach ($nacionalidad as $n)
-                    <option value="{{$n->id}}">{{$n->nombre_nacionalidad}}</option>
+                    <option value="{{ $n->id }}">{{ $n->nombre_nacionalidad }}</option>
                 @endforeach
             </select>
             <span class="focus-input100"></span>
