@@ -232,10 +232,10 @@
                             </tr>
                             @foreach ($pagos_aceptados as $p)
                                 <tr>
-                                    <td class="col-md-3"><i class="fa fa-inr"></i> {{ $p->monto }}</td>
-                                    <td class="col-md-3"><i class="fa fa-inr"></i>
+                                    <td class="col-md-3"> {{ $p->monto }}</td>
+                                    <td class="col-md-3">
                                         {{ date('d/m/Y', strtotime($p->fecha_pago)) }}</td>
-                                    <td class="col-md-3"><i class="fa fa-inr"></i> {{ $p->monto }}</td>
+                                    <td class="col-md-3"> {{ $p->monto }}</td>
 
                                     @php
                                         $monto += $p->monto;
