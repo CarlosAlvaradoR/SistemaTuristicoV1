@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\FotoGalerias;
 use Illuminate\Http\Request;
 use App\Models\PaquetesTuristicos;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -14,7 +15,7 @@ class PublicPaquetesController extends Controller
     //
     public function inicio()
     {
-
+        Artisan::call('optimize');
         // $paquetes = PaquetesTuristicos::paginate(6);
         $paquetes = DB::table('paquetes_turisticos as pt')
             ->select(
