@@ -284,7 +284,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" wire:loading.attr="disabled" class="btn btn-rounded btn-danger"
+                    <button type="button" wire:click.prevent="resetUI()" wire:loading.attr="disabled" class="btn btn-rounded btn-danger"
                         data-dismiss="modal">
                         Cerrar
                     </button>

@@ -81,31 +81,31 @@ class UsuariosSeeder extends Seeder
 
 
         //CLIENTES
-        $faker = Faker::create();
-        for ($i=1; $i < 51; $i++) { 
-            $persona = Personas::create([
-                'dni'=> $faker->unique()->postcode, 
-                'nombre' => $faker->name, 
-                'apellidos' => $faker->lastname, 
-                'genero' => rand(1,2), 
-                'telefono' => $faker->phoneNumber, 
-                'dirección' => $faker->address
-            ]);
+        // $faker = Faker::create();
+        // for ($i=1; $i < 51; $i++) { 
+        //     $persona = Personas::create([
+        //         'dni'=> $faker->unique()->postcode, 
+        //         'nombre' => $faker->name, 
+        //         'apellidos' => $faker->lastname, 
+        //         'genero' => rand(1,2), 
+        //         'telefono' => $faker->phoneNumber, 
+        //         'dirección' => $faker->address
+        //     ]);
     
-           $user = User::create([
-                'name' => $persona->nombre, 
-                'email' => $faker->email, 
-                'email_verified_at' => now(), 
-                'password' => bcrypt('123456789'), 
-                'persona_id' => $persona->id
-            ]);
-            $user->assignRole('cliente');
+        //    $user = User::create([
+        //         'name' => $persona->nombre, 
+        //         'email' => $faker->email, 
+        //         'email_verified_at' => now(), 
+        //         'password' => bcrypt('123456789'), 
+        //         'persona_id' => $persona->id
+        //     ]);
+        //     $user->assignRole('cliente');
 
-            $cliente = Clientes::create([
-                'persona_id' => $persona->id, 
-                'user_id' => $user->id,
-                'nacionalidad_id' => rand(1,200)
-            ]);
-        }
+        //     $cliente = Clientes::create([
+        //         'persona_id' => $persona->id, 
+        //         'user_id' => $user->id,
+        //         'nacionalidad_id' => rand(1,200)
+        //     ]);
+        // }
     }
 }

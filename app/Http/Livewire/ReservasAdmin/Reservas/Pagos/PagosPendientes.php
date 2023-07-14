@@ -35,7 +35,7 @@ class PagosPendientes extends Component
         'tipo_de_pago' => 'required|numeric|min:1'
     ];
 
-    function resetUI()
+    public function resetUI()
     {
         $this->reset([
             'idPago', 'monto_pago', 'fecha_de_pago', 'observacion_del_pago', 'numero_operacion', 'estado_de_pago', 'ruta_archivo_pago',
