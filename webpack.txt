@@ -1,5 +1,9 @@
 MIGRACIONES Y MÓDELOS
     MÓDULO USERS
+        CORREO DE RESERVAS
+        php artisan make:mail PaymentStatus
+
+
         *) Tabla Informaciones Generales
         php artisan make:migration create_configuraciones_generales_table
         php artisan make:model ConfiguracionesGenerales -r

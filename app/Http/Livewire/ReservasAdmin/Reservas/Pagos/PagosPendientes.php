@@ -2,11 +2,14 @@
 
 namespace App\Http\Livewire\ReservasAdmin\Reservas\Pagos;
 
+use App\Mail\PaymentStatus;
 use App\Models\Personas;
 use App\Models\Reservas\Pagos;
 use App\Models\Reservas\Reservas;
 use App\Models\Reservas\TipoPagos;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -16,7 +19,7 @@ class PagosPendientes extends Component
     use WithFileUploads;
 
 
-
+    public $idPersona;
     public $reserva, $idReserva, $reserva_object;
     public $datos = "", $paquete = "", $costo_paquete = 0, $monto_pagado = 0;
     public $informacion, $monto_restante = 0, $idBoleta, $idSeriePagos;
@@ -46,12 +49,13 @@ class PagosPendientes extends Component
 
         $this->idReserva = $reserva_id;
         $this->reserva_object = Reservas::findOrFail($reserva_id);
-        $cliente = DB::select("SELECT p.dni, concat(p.nombre,' ', p.apellidos)  as datos, 
+        $cliente = DB::select("SELECT p.id, p.dni, concat(p.nombre,' ', p.apellidos)  as datos, 
         r.id as idRes ,r.paquete_id 
         FROM personas p
         INNER JOIN clientes c on p.id = c.persona_id
         INNER JOIN reservas r on c.id = r.cliente_id
         WHERE r.id = " . $reserva_id . " LIMIT 1");
+        $this->idPersona = $cliente[0]->id;
 
         $paquete = DB::select("SELECT p.nombre, p.precio FROM paquetes_turisticos p
         WHERE id = " . $cliente[0]->paquete_id . "");
@@ -82,8 +86,8 @@ class PagosPendientes extends Component
         WHERE r.id =" . $this->idReserva . "");
 
         $this->monto_restante = $this->costo_paquete - $this->monto_pagado[0]->MontoPagado;
-        $this->idBoleta = $pagos[0]->idBoleta;//
-        $this->idSeriePagos = $pagos[0]->idSeriePagos;//idSeriePagos
+        $this->idBoleta = $pagos[0]->idBoleta; //
+        $this->idSeriePagos = $pagos[0]->idSeriePagos; //idSeriePagos
         //$tipoPagos = TipoPagos::all();
         $tipoPagos = DB::table('tipo_pagos as tp')
             ->join('cuenta_pagos as cp', 'tp.id', '=', 'cp.tipo_pagos_id')
@@ -97,9 +101,7 @@ class PagosPendientes extends Component
     {
         $ruta = '';
         $this->validate();
-        /*if ($this->ruta_archivo_pago) {
-            $ruta = 'storage/' . $this->ruta_archivo_pago->store('archivo_pagos', 'public');
-        }*/
+
 
 
         if ($this->idPago) {
@@ -159,6 +161,23 @@ class PagosPendientes extends Component
             'icon' => 'success',
             'text' => 'Equipo Creado Correctamente'
         ]);
+
+        $persona = Personas::findOrFail($this->idPersona);
+        $user = User::where('persona_id', $persona->id)->first();
+        if (!is_null($user)) {
+            //ACEPTADO,NO ACEPTADO
+            $mensaje = 'El pago de ' . $this->monto_pago . ' con fecha de Pago ' . $this->fecha_de_pago . '';
+            if ($this->observacion_del_pago) {
+                $observacion_correo = $this->observacion_del_pago;
+            } else {
+                $observacion_correo = 'Ninguno.';
+            }
+
+            //$user = User::find(3); // Suponiendo que tienes un modelo User para los usuarios
+            $paymentStatus = $this->estado_de_pago; // Obtén el estado del pago
+
+            Mail::to($user->email)->send(new PaymentStatus($paymentStatus, $persona, $observacion_correo, $mensaje));
+        }
 
         $this->resetUI();
         //return redirect()->route('reservas.pagos_restantes', [$this->reserva_object]);

@@ -11,14 +11,18 @@ use App\Models\Personas;
 use App\Models\Reservas\Pagos;
 use App\Models\Reservas\PoliticaDeCumplimientos;
 use App\Models\Reservas\Reservas;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PaymentStatus;
 use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Stmt\Return_;
+use PHPUnit\Util\Test;
 use Symfony\Component\Console\Input\Input as InputInput;
 
 class ReservasController extends Controller
@@ -346,6 +350,16 @@ class ReservasController extends Controller
         //return $pdf->download('invoice.pdf');
         $pdf->set_paper('a4', 'landscape');
         return $pdf->stream('invoice.pdf');
+    }
+
+    public function correo()
+    {
+        $user = User::find(3); // Suponiendo que tienes un modelo User para los usuarios
+        $paymentStatus = 'Aceptado'; // Obtén el estado del pago
+
+        Mail::to($user->email)->send(new PaymentStatus($paymentStatus, $user));
+
+        return 'BBB';
     }
 
     public function reportComprobante()
